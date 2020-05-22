@@ -6,9 +6,15 @@
     <string name="welcome_description">Deze app waarschuwt wanneer u in contact bent geweest met iemand met corona. U krijgt alleen een melding als er een risico op besmetting voor u is geweest. Zo remmen we samen de verspreiding van het virus.</string>
     <string name="enable_api_headline">De app heeft toestemming nodig om COVID-19 blootstelling bij te houden.</string>
     <string name="enable_api_description">De app maakt gebruik van bluetooth. Hierdoor kost de app weinig stroom. Er worden geen locatie of persoonsgegevens opgeslagen.</string>
-    <string name="status_no_exposure_detected_headline">U bent niet in de buurt geweest bij iemand COVID</string>
+    <string name="status_no_exposure_detected_headline">U bent niet in de buurt geweest bij iemand met COVID-19</string>
+    <string name="status_exposure_detected_headline">U bent in de buurt geweest bij iemand met COVID-19</string>
     <string name="status_notifications_active">Actief</string>
     <string name="status_menu_report">Positieve test</string>
     <string name="status_upload_success">Upload geslaagd</string>
     <string name="status_upload_failure">Upload mislukt</string>
+    <string name="notification_channel_name">Meldingen</string>
+    <string name="notification_channel_description">Meldingen over mogelijke blootstellingen aan COVID-19</string>
+    <string name="notification_title">Mogelijke blootstelling aan COVID-19</string>
+    <string name="notification_message">U bent in de buurt geweest bij iemand met COVID-19</string>
+    <string name="status_menu_check">Check besmettingen</string>
 </resources>

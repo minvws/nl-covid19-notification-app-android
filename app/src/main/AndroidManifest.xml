@@ -24,6 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".notification.ExposureNotificationReceiver"
+            android:permission="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK">
+            <intent-filter>
+                <action android:name="com.google.android.gms.exposurenotification.ACTION_EXPOSURE_STATE_UPDATED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

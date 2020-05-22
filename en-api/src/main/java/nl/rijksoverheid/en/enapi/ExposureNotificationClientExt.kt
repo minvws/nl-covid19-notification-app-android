@@ -10,6 +10,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes
+import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import timber.log.Timber
 import java.io.File
 import kotlin.coroutines.resume
@@ -89,6 +90,16 @@ suspend fun ExposureNotificationClient.processDiagnosisKeys(
         completion()
     }
 }
+
+suspend fun ExposureNotificationClient.summary(token: String) =
+    suspendCoroutine<ExposureSummary?> { c ->
+        getExposureSummary(token).addOnSuccessListener {
+            c.resume(it)
+        }.addOnFailureListener {
+            Timber.w(it, "Error getting summary for token $token")
+            c.resume(null)
+        }
+    }
 
 suspend fun ExposureNotificationClient.getStatus() = suspendCoroutine<StatusResult> { c ->
     isEnabled.apply {

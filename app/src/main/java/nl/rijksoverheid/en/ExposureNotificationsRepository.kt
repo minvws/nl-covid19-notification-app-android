@@ -8,7 +8,9 @@ package nl.rijksoverheid.en
 
 import android.app.PendingIntent
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Base64
+import androidx.core.content.edit
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import kotlinx.coroutines.Dispatchers
@@ -24,17 +26,20 @@ import nl.rijksoverheid.en.enapi.getTemporaryExposureKeys
 import nl.rijksoverheid.en.enapi.processDiagnosisKeys
 import nl.rijksoverheid.en.enapi.requestDisableNotifications
 import nl.rijksoverheid.en.enapi.requestEnableNotifications
+import nl.rijksoverheid.en.enapi.summary
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.security.SecureRandom
 
 private val EQUAL_WEIGHTS = intArrayOf(1, 1, 1, 1, 1, 1, 1, 1)
+private val KEY_TOKENS = "tokens"
 
 class ExposureNotificationsRepository(
     private val context: Context,
     private val exposureNotificationClient: ExposureNotificationClient,
-    private val api: ExposureNotificationService
+    private val api: ExposureNotificationService,
+    private val exposures: SharedPreferences
 ) {
 
     suspend fun requestEnableNotifications(): StartResult {
@@ -128,6 +133,39 @@ class ExposureNotificationsRepository(
         }
         withContext(Dispatchers.IO) {
             api.postTempExposureKeys(request)
+        }
+    }
+
+    /**
+     * Return the exposure status
+     * @return true if exposures are reported, false otherwise
+     */
+    suspend fun isExposureDetected(): Boolean {
+        val tokens = exposures.getStringSet(KEY_TOKENS, emptySet()) ?: emptySet()
+        val activeTokens = mutableSetOf<String>()
+        for (token in tokens) {
+            val exposure = exposureNotificationClient.summary(token)
+            if (exposure != null) {
+                activeTokens.add(token)
+            }
+        }
+        if (activeTokens != tokens) {
+            exposures.edit {
+                putStringSet(KEY_TOKENS, activeTokens)
+            }
+        }
+
+        return activeTokens.isNotEmpty()
+    }
+
+    fun addExposure(token: String) {
+        Timber.d("New exposure for token $token")
+        val tokens = exposures.getStringSet(KEY_TOKENS, emptySet()) ?: emptySet()
+        if (!tokens.contains(token)) {
+            val newTokens = tokens.toMutableSet().apply {
+                add(token)
+            }
+            exposures.edit { putStringSet(KEY_TOKENS, newTokens) }
         }
     }
 }
