@@ -1,0 +1,26 @@
+apply plugin: "com.diffplug.gradle.spotless"
+
+spotless {
+    format 'misc', {
+        target '**/*.md', '**/.gitignore'
+        targetExclude "**/.gradle/**"
+        indentWithTabs()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    kotlin {
+        ktlint("0.31.0")
+        target "**/src/**/*.kt"
+        // keep original license of this file
+        targetExclude 'app/src/main/java/nl/rijksoverheid/en/lifecyle/Event.kt'
+        trimTrailingWhitespace()
+        endWithNewline()
+        licenseHeaderFile rootProject.file('spotless/license.kt')
+    }
+
+    groovyGradle {
+        target "**/*.gradle"
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
