@@ -7,8 +7,11 @@
 package nl.rijksoverheid.en.enapi
 
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes
+import timber.log.Timber
+import java.io.File
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -63,6 +66,29 @@ suspend fun ExposureNotificationClient.requestDisableNotifications() =
             }
         }
     }
+
+/**
+ * Calls [ExposureNotificationClient.provideDiagnosisKeys] and cleans up the files on success or failure
+ */
+suspend fun ExposureNotificationClient.processDiagnosisKeys(
+    files: List<File>,
+    config: ExposureConfiguration,
+    token: String
+) = suspendCoroutine<Unit> { c ->
+    val completion = {
+        for (file in files) {
+            file.delete()
+        }
+        c.resume(Unit)
+    }
+
+    provideDiagnosisKeys(files.toList(), config, token).addOnSuccessListener {
+        completion()
+    }.addOnFailureListener {
+        Timber.w(it, "Error while processing diagnostic keys")
+        completion()
+    }
+}
 
 suspend fun ExposureNotificationClient.getStatus() = suspendCoroutine<StatusResult> { c ->
     isEnabled.apply {

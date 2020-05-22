@@ -21,6 +21,7 @@ import nl.rijksoverheid.en.enapi.StopResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import nl.rijksoverheid.en.enapi.getStatus
 import nl.rijksoverheid.en.enapi.getTemporaryExposureKeys
+import nl.rijksoverheid.en.enapi.processDiagnosisKeys
 import nl.rijksoverheid.en.enapi.requestDisableNotifications
 import nl.rijksoverheid.en.enapi.requestEnableNotifications
 import timber.log.Timber
@@ -78,6 +79,7 @@ class ExposureNotificationsRepository(
             try {
                 val response = api.getExposureKeysFile()
                 if (!response.isSuccessful) {
+                    //TODO handle this in a better way
                     return@withContext ImportTemporaryExposureKeysResult.Error(RuntimeException("error code ${response.code()}"))
                 }
                 val keys = response.body()!!.bytes()
@@ -86,7 +88,7 @@ class ExposureNotificationsRepository(
                 importFile.outputStream().use {
                     it.write(keys)
                 }
-                exposureNotificationClient.provideDiagnosisKeys(
+                exposureNotificationClient.processDiagnosisKeys(
                     listOf(importFile),
                     ExposureConfiguration.ExposureConfigurationBuilder()
                         .setAttenuationScores(*EQUAL_WEIGHTS)
