@@ -84,7 +84,7 @@ class ExposureNotificationsRepository(
             try {
                 val response = api.getExposureKeysFile()
                 if (!response.isSuccessful) {
-                    //TODO handle this in a better way
+                    // TODO handle this in a better way
                     return@withContext ImportTemporaryExposureKeysResult.Error(RuntimeException("error code ${response.code()}"))
                 }
                 val keys = response.body()!!.bytes()

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ *
+ *  SPDX-License-Identifier: EUPL-1.2
+ */
 package nl.rijksoverheid.en.onboarding
 
 import android.app.Activity
@@ -58,7 +64,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
                     true
                 )
                 ExposureNotificationsViewModel.NotificationsState.Unavailable -> {
-                    //TODO device is not supported
+                    // TODO device is not supported
                 }
                 ExposureNotificationsViewModel.NotificationsState.Disabled -> {
                     // user needs to enable
