@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_onboarding"
+    app:startDestination="@id/nav_welcome">
+
+    <fragment
+        android:id="@+id/nav_welcome"
+        android:name="nl.rijksoverheid.en.onboarding.WelcomeFragment">
+        <action
+            android:id="@+id/action_start_onboarding"
+            app:destination="@id/nav_enable_api" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_enable_api"
+        android:name="nl.rijksoverheid.en.onboarding.EnableApiFragment" />
+</navigation>
