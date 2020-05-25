@@ -19,7 +19,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Query
 
 interface ExposureNotificationService {
     @POST("TemporaryExposureKey")
@@ -28,7 +27,7 @@ interface ExposureNotificationService {
     )
 
     @GET("TemporaryExposureKey")
-    suspend fun getExposureKeysFile(@Query("filtered") filter: Boolean = true): Response<ResponseBody>
+    suspend fun getExposureKeysFile(): Response<ResponseBody>
 
     companion object Factory {
         private var exposureNotificationService: ExposureNotificationService? = null
