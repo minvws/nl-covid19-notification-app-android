@@ -16,15 +16,15 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ImportTemporaryExposureKeysResult
-import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class DownloadDiagnosisKeysWorker(context: Context, params: WorkerParameters) :
+class DownloadDiagnosisKeysWorker(
+    context: Context,
+    params: WorkerParameters,
+    private val repository: ExposureNotificationsRepository
+) :
     CoroutineWorker(context, params) {
-
-    private val repository: ExposureNotificationsRepository =
-        createExposureNotificationsRepository(context)
 
     override suspend fun doWork(): Result {
         return when (repository.importTemporaryExposureKeys()) {
