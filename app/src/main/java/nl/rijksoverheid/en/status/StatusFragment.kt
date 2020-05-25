@@ -99,6 +99,11 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
                 null
             )
             binding.status.setText(headline)
+            binding.resetStatus.visibility = if (it) View.VISIBLE else View.INVISIBLE
+        }
+
+        binding.resetStatus.setOnClickListener {
+            viewModel.resetExposures()
         }
     }
 

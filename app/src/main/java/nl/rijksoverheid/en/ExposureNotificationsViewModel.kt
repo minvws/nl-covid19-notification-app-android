@@ -10,7 +10,7 @@ import android.app.PendingIntent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.enapi.StartResult
@@ -27,9 +27,8 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
     val exportTemporaryKeysResult: LiveData<Event<ExportKeysResult>> = MutableLiveData()
 
     val exposureDetected: LiveData<Boolean>
-        get() = liveData {
-            emit(repository.isExposureDetected())
-        }
+        get() = repository.isExposureDetected()
+            .asLiveData(context = viewModelScope.coroutineContext)
 
     init {
         viewModelScope.launch {
@@ -107,6 +106,10 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
                 is ExportTemporaryExposureKeysResult.Error -> updateResult(ExportKeysResult.Error)
             }
         }
+    }
+
+    fun resetExposures() {
+        repository.resetExposures()
     }
 
     sealed class NotificationsState {

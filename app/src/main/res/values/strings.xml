@@ -17,4 +17,5 @@
     <string name="notification_title">Mogelijke blootstelling aan COVID-19</string>
     <string name="notification_message">U bent in de buurt geweest bij iemand met COVID-19</string>
     <string name="status_menu_check">Check besmettingen</string>
+    <string name="status_reset_exposure">Verwijder melding</string>
 </resources>

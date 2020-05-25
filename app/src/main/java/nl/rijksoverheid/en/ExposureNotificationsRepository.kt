@@ -14,6 +14,12 @@ import androidx.core.content.edit
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.ExposureNotificationService
 import nl.rijksoverheid.en.api.model.TemporaryExposureKey
@@ -33,7 +39,7 @@ import java.io.IOException
 import java.security.SecureRandom
 
 private val EQUAL_WEIGHTS = intArrayOf(1, 1, 1, 1, 1, 1, 1, 1)
-private val KEY_TOKENS = "tokens"
+private const val KEY_TOKENS = "tokens"
 
 class ExposureNotificationsRepository(
     private val context: Context,
@@ -136,26 +142,55 @@ class ExposureNotificationsRepository(
         }
     }
 
+    private fun exposureTokens(): Flow<Set<String>> = callbackFlow {
+        val listener =
+            SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+                if (key == KEY_TOKENS) {
+                    offer(
+                        sharedPreferences.getStringSet(key, emptySet<String>())
+                            ?: emptySet<String>()
+                    )
+                }
+            }
+
+        exposures.registerOnSharedPreferenceChangeListener(listener)
+
+
+        offer(exposures.getStringSet(KEY_TOKENS, emptySet<String>()) ?: emptySet<String>())
+
+        awaitClose {
+            exposures.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
+
     /**
      * Return the exposure status
      * @return true if exposures are reported, false otherwise
      */
-    suspend fun isExposureDetected(): Boolean {
-        val tokens = exposures.getStringSet(KEY_TOKENS, emptySet()) ?: emptySet()
-        val activeTokens = mutableSetOf<String>()
-        for (token in tokens) {
-            val exposure = exposureNotificationClient.summary(token)
-            if (exposure != null) {
-                activeTokens.add(token)
+    fun isExposureDetected(): Flow<Boolean> {
+        return exposureTokens().distinctUntilChanged().map {
+            val activeTokens = mutableSetOf<String>()
+            for (token in it) {
+                val exposure = exposureNotificationClient.summary(token)
+                if (exposure != null) {
+                    activeTokens.add(token)
+                }
             }
-        }
-        if (activeTokens != tokens) {
-            exposures.edit {
-                putStringSet(KEY_TOKENS, activeTokens)
-            }
-        }
 
-        return activeTokens.isNotEmpty()
+            activeTokens
+        }.onEach {
+            exposures.edit {
+                putStringSet(KEY_TOKENS, it)
+            }
+        }.map {
+            it.isNotEmpty()
+        }
+    }
+
+    fun resetExposures() {
+        exposures.edit {
+            putStringSet(KEY_TOKENS, emptySet())
+        }
     }
 
     fun addExposure(token: String) {
