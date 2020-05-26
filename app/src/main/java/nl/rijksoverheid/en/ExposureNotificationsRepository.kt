@@ -155,7 +155,6 @@ class ExposureNotificationsRepository(
 
         exposures.registerOnSharedPreferenceChangeListener(listener)
 
-
         offer(exposures.getStringSet(KEY_TOKENS, emptySet<String>()) ?: emptySet<String>())
 
         awaitClose {
