@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NLEN</string>
+    <string name="app_name">Covid-19 notificatie</string>
     <string name="welcome_start_onboarding">Beginnen</string>
     <string name="enable_api_give_consent">Geef toestemming</string>
     <string name="welcome_headline">Samen krijgen we corona onder controle</string>
