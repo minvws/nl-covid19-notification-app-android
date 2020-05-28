@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+  ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+  ~
+  ~   SPDX-License-Identifier: EUPL-1.2
+  ~
+  -->
+
+<!-- The android:opacity=”opaque” line — this is critical in preventing a flash of black as your theme transitions. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
+
+    <!-- The background color, preferably the same as your normal theme -->
+    <item android:drawable="@color/design_default_color_background" />
+
+    <item
+        android:width="320dp"
+        android:height="82dp"
+        android:drawable="@drawable/illustration_launch_screen"
+        android:gravity="center" />
+
+    <item
+        android:width="58dp"
+        android:height="129dp"
+        android:drawable="@drawable/illustration_launch_screen_label"
+        android:gravity="center_horizontal|top" />
+
+</layer-list>
