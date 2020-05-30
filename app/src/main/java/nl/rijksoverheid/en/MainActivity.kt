@@ -18,6 +18,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {
-        return ViewModelFactory(this)
+        return ViewModelFactory(applicationContext)
     }
 }

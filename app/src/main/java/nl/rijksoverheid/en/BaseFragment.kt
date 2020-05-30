@@ -13,6 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout) {
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {
-        return ViewModelFactory(requireContext())
+        return ViewModelFactory(requireContext().applicationContext)
     }
 }
