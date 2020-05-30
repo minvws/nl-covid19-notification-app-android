@@ -1,0 +1,27 @@
+name: CI Covid19 Notification
+
+on: push
+
+jobs:
+  run-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Validate checksum gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Check for code formatting violations
+        run: ./gradlew spotlessCheck
+
+      - name: Build app
+        run: ./gradlew build
