@@ -11,7 +11,7 @@
     android:opacity="opaque">
 
     <!-- The background color, preferably the same as your normal theme -->
-    <item android:drawable="@color/design_default_color_background" />
+    <item android:drawable="?attr/colorSurface" />
 
     <item
         android:width="320dp"
