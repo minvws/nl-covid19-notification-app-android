@@ -11,15 +11,15 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.databinding.FragmentWelcomeBinding
+import nl.rijksoverheid.en.databinding.FragmentExplanation3Binding
 
-class WelcomeFragment : BaseFragment(R.layout.fragment_welcome) {
+class Explanation3Fragment : BaseFragment(R.layout.fragment_explanation_3) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentWelcomeBinding.bind(view)
-        binding.onboardingStart.setOnClickListener {
-            findNavController().navigate(WelcomeFragmentDirections.actionStartOnboarding())
+        val binding = FragmentExplanation3Binding.bind(view)
+        binding.next.setOnClickListener {
+            findNavController().navigate(Explanation3FragmentDirections.actionNext())
         }
     }
 }

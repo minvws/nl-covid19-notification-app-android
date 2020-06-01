@@ -1,0 +1,37 @@
+<!--
+  ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+  ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+  ~
+  ~   SPDX-License-Identifier: EUPL-1.2
+  ~
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="320dp"
+    android:height="265dp"
+    android:viewportWidth="320"
+    android:viewportHeight="265"
+    tools:ignore="VectorRaster">
+    <path
+        android:fillColor="#A6D5EC"
+        android:pathData="M165.109,220H109.229C101.927,220 96,214.051 96,206.722V92.634C96,85.304 101.927,79.355 109.229,79.355H165.109C172.412,79.355 178.338,85.304 178.338,92.634V206.828C178.233,214.051 172.412,220 165.109,220Z" />
+    <path
+        android:fillColor="#C8E5F4"
+        android:pathData="M178.232,92.634H96V196.205H178.232V92.634Z" />
+    <path
+        android:fillColor="#C8E5F4"
+        android:pathData="M137.169,214.264C140.501,214.264 143.202,211.553 143.202,208.209C143.202,204.865 140.501,202.154 137.169,202.154C133.838,202.154 131.137,204.865 131.137,208.209C131.137,211.553 133.838,214.264 137.169,214.264Z" />
+    <path
+        android:fillColor="#007BC7"
+        android:pathData="M207.019,135.125H149.869C141.085,135.125 133.888,127.901 133.888,119.084V62.04C133.888,53.223 140.979,46 149.869,46H207.019C215.803,46 223,53.223 223,62.04V119.084C223,127.901 215.803,135.125 207.019,135.125Z" />
+    <path
+        android:fillColor="#007BC7"
+        android:pathData="M151.986,130.663V148.297C151.986,150.315 154.42,151.271 155.796,149.89L174.952,130.663H151.986Z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M181.196,71.813H175.693C174.423,71.813 173.364,72.875 173.47,74.15L174.529,94.865C174.634,96.033 175.587,96.989 176.751,96.989H180.032C181.196,96.989 182.149,96.033 182.254,94.865L183.419,74.15C183.524,72.875 182.466,71.813 181.196,71.813Z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M178.444,108.355C180.782,108.355 182.678,106.453 182.678,104.106C182.678,101.759 180.782,99.857 178.444,99.857C176.106,99.857 174.211,101.759 174.211,104.106C174.211,106.453 176.106,108.355 178.444,108.355Z" />
+</vector>
