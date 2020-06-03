@@ -6,7 +6,7 @@
     <string name="onboarding_explanation_1_headline">Bescherm je vrienden, familie, en de rest van Nederland</string>
     <string name="onboarding_explanation_1_description">Deze app waarschuwt nadat je in de buurt bent geweest van iemand met het coronavirus. Zo kunnen we samen de verspreiding stoppen.</string>
     <string name="onboarding_explanation_2_headline">De app ziet via Bluetooth of je dicht bij iemand bent geweest</string>
-    <string name="onboarding_explanation_2_description">Dit is 100% anoniem. De app ziet niet waar je bent geweest en gebruikt weinig energie.</string>
+    <string name="onboarding_explanation_2_description">Dit is 100\% anoniem. De app ziet niet waar je bent geweest en gebruikt weinig energie.</string>
     <string name="onboarding_explanation_3_headline">Krijg een melding nadat je een verhoogd risico op besmetting hebt gelopen</string>
     <string name="onboarding_explanation_3_description">Dit gebeurt als je 10 minuten dicht bij iemand bent geweest die daarna positief is getest. Deze persoon moet ook de app gebruiken.</string>
     <string name="enable_api_headline">De app heeft toestemming nodig om COVID-19 blootstelling bij te houden.</string>

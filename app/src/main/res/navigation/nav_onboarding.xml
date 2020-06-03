@@ -3,45 +3,82 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_onboarding"
-    app:startDestination="@id/nav_explanation_1">
+    app:startDestination="@id/explanationStep1">
 
     <fragment
-        android:id="@+id/nav_explanation_1"
-        android:name="nl.rijksoverheid.en.onboarding.Explanation1Fragment"
-        tools:layout="@layout/fragment_explanation_1">
+        android:id="@+id/explanationStep1"
+        android:name="nl.rijksoverheid.en.onboarding.ExplanationFragment"
+        android:label="ExplanationFragment"
+        tools:layout="@layout/fragment_explanation">
+        <argument
+            android:name="title"
+            android:defaultValue="@string/onboarding_explanation_1_headline"
+            app:argType="reference" />
+        <argument
+            android:name="description"
+            android:defaultValue="@string/onboarding_explanation_1_description"
+            app:argType="reference" />
+        <argument
+            android:name="illustration"
+            android:defaultValue="@drawable/illustration_explanation_step_1"
+            app:argType="reference" />
         <action
             android:id="@+id/action_next"
-            app:destination="@id/nav_explanation_2"
+            app:destination="@id/explanationStep2"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="title"
+                android:defaultValue="@string/onboarding_explanation_2_headline"
+                app:argType="reference" />
+            <argument
+                android:name="description"
+                android:defaultValue="@string/onboarding_explanation_2_description"
+                app:argType="reference" />
+            <argument
+                android:name="illustration"
+                android:defaultValue="@drawable/illustration_explanation_step_2"
+                app:argType="reference" />
+        </action>
     </fragment>
 
     <fragment
-        android:id="@+id/nav_explanation_2"
-        android:name="nl.rijksoverheid.en.onboarding.Explanation2Fragment"
-        tools:layout="@layout/fragment_explanation_2">
+        android:id="@+id/explanationStep2"
+        android:name="nl.rijksoverheid.en.onboarding.ExplanationFragment"
+        android:label="ExplanationFragment"
+        tools:layout="@layout/fragment_explanation">
         <action
-            android:id="@+id/action_next"
-            app:destination="@id/nav_explanation_3"
+            android:id="@id/action_next"
+            app:destination="@id/explanationStep3"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="title"
+                android:defaultValue="@string/onboarding_explanation_3_headline"
+                app:argType="reference" />
+            <argument
+                android:name="description"
+                android:defaultValue="@string/onboarding_explanation_3_description"
+                app:argType="reference" />
+            <argument
+                android:name="illustration"
+                android:defaultValue="@drawable/illustration_explanation_step_3"
+                app:argType="reference" />
+        </action>
     </fragment>
 
     <fragment
-        android:id="@+id/nav_explanation_3"
-        android:name="nl.rijksoverheid.en.onboarding.Explanation3Fragment"
-        tools:layout="@layout/fragment_explanation_3">
+        android:id="@+id/explanationStep3"
+        android:name="nl.rijksoverheid.en.onboarding.ExplanationFragment"
+        android:label="ExplanationFragment"
+        tools:layout="@layout/fragment_explanation">
         <action
-            android:id="@+id/action_next"
-            app:destination="@id/nav_enable_api"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            android:id="@id/action_next"
+            app:destination="@id/nav_enable_api" />
     </fragment>
 
     <fragment
