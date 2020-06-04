@@ -31,7 +31,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
 
         val binding = FragmentEnableApiBinding.bind(view)
 
-        binding.requestConsent.setOnClickListener {
+        binding.request.setOnClickListener {
             viewModel.requestEnableNotifications()
         }
 
