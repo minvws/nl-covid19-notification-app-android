@@ -388,7 +388,6 @@ class ExposureNotificationApiTest {
     @Test
     fun `getSummary with error returns null`() = runBlocking {
         // GIVEN
-        val summary = ExposureSummary.ExposureSummaryBuilder().build()
         val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
             override fun getExposureSummary(token: String): Task<ExposureSummary> =
                 Tasks.forException(
