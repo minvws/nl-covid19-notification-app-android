@@ -8,9 +8,21 @@ buildscript {
     ext.fragment_version = "1.2.4"
 
     repositories {
-        google()
+        google {
+            content {
+                includeGroup "com.google"
+                includeGroup "com.android"
+                includeGroupByRegex "com.google\\..*"
+                includeGroupByRegex "com.android\\..*"
+                includeGroupByRegex "androidx\\..*"
+            }
+        }
         mavenCentral()
-        jcenter()
+        jcenter() {
+            content {
+                includeGroup "org.jetbrains.trove4j"
+            }
+        }
     }
 
     dependencies {
@@ -27,15 +39,28 @@ apply from: 'gradle/spotless.gradle'
 
 allprojects {
     repositories {
-        google()
+        google {
+            content {
+                includeGroup "com.google"
+                includeGroup "com.android"
+                includeGroupByRegex "com.google\\..*"
+                includeGroupByRegex "com.android\\..*"
+                includeGroupByRegex "androidx\\..*"
+            }
+        }
         mavenCentral()
-        jcenter()
+        jcenter() {
+            content {
+                includeGroup "org.jetbrains.trove4j"
+            }
+        }
     }
 
     afterEvaluate {
         tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
             kotlinOptions {
                 jvmTarget = "1.8"
+                freeCompilerArgs += ["-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"]
             }
         }
 
