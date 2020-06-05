@@ -8,19 +8,19 @@ package nl.rijksoverheid.en.enapi
 
 import android.app.PendingIntent
 
-sealed class StartResult {
+sealed class EnableNotificationsResult {
     /**
      * Exposure notifications api is started
      */
-    object Started : StartResult()
+    object Enabled : EnableNotificationsResult()
 
     /**
      * The user needs to give consent before the api can be started.
      */
-    data class ResolutionRequired(val resolution: PendingIntent) : StartResult()
+    data class ResolutionRequired(val resolution: PendingIntent) : EnableNotificationsResult()
 
     /**
      * An unexpected error occurred
      */
-    data class UnknownError(val ex: Exception) : StartResult()
+    data class UnknownError(val exception: Exception) : EnableNotificationsResult()
 }

@@ -7,7 +7,6 @@
 package nl.rijksoverheid.en.enapi
 
 import android.app.PendingIntent
-import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 
 sealed class TemporaryExposureKeysResult {
@@ -24,5 +23,5 @@ sealed class TemporaryExposureKeysResult {
     /**
      * An unexpected API error occurred
      */
-    data class Error(val ex: ApiException) : TemporaryExposureKeysResult()
+    data class UnknownError(val exception: Exception) : TemporaryExposureKeysResult()
 }

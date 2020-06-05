@@ -12,7 +12,6 @@ import android.content.SharedPreferences
 import android.util.Base64
 import androidx.core.content.edit
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
-import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -23,16 +22,11 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.ExposureNotificationService
 import nl.rijksoverheid.en.api.model.TemporaryExposureKey
-import nl.rijksoverheid.en.enapi.StartResult
+import nl.rijksoverheid.en.enapi.ExposureNotificationApi
+import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
-import nl.rijksoverheid.en.enapi.StopResult
+import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
-import nl.rijksoverheid.en.enapi.getStatus
-import nl.rijksoverheid.en.enapi.getTemporaryExposureKeys
-import nl.rijksoverheid.en.enapi.processDiagnosisKeys
-import nl.rijksoverheid.en.enapi.requestDisableNotifications
-import nl.rijksoverheid.en.enapi.requestEnableNotifications
-import nl.rijksoverheid.en.enapi.summary
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -43,25 +37,25 @@ private const val KEY_TOKENS = "tokens"
 
 class ExposureNotificationsRepository(
     private val context: Context,
-    private val exposureNotificationClient: ExposureNotificationClient,
+    private val exposureNotificationsApi: ExposureNotificationApi,
     private val api: ExposureNotificationService,
     private val exposures: SharedPreferences
 ) {
 
-    suspend fun requestEnableNotifications(): StartResult {
-        return exposureNotificationClient.requestEnableNotifications()
+    suspend fun requestEnableNotifications(): EnableNotificationsResult {
+        return exposureNotificationsApi.requestEnableNotifications()
     }
 
-    suspend fun requestDisableNotifications(): StopResult {
-        return exposureNotificationClient.requestDisableNotifications()
+    suspend fun requestDisableNotifications(): DisableNotificationsResult {
+        return exposureNotificationsApi.disableNotifications()
     }
 
     suspend fun getStatus(): StatusResult {
-        return exposureNotificationClient.getStatus()
+        return exposureNotificationsApi.getStatus()
     }
 
     suspend fun exportTemporaryExposureKeys(): ExportTemporaryExposureKeysResult {
-        val result = exposureNotificationClient.getTemporaryExposureKeys()
+        val result = exposureNotificationsApi.requestTemporaryExposureKeyHistory()
         Timber.d("Result = $result")
 
         when (result) {
@@ -79,8 +73,8 @@ class ExposureNotificationsRepository(
             is TemporaryExposureKeysResult.RequireConsent -> return ExportTemporaryExposureKeysResult.RequireConsent(
                 result.resolution
             )
-            is TemporaryExposureKeysResult.Error -> return ExportTemporaryExposureKeysResult.Error(
-                result.ex
+            is TemporaryExposureKeysResult.UnknownError -> return ExportTemporaryExposureKeysResult.Error(
+                result.exception
             )
         }
     }
@@ -99,7 +93,7 @@ class ExposureNotificationsRepository(
                 importFile.outputStream().use {
                     it.write(keys)
                 }
-                exposureNotificationClient.processDiagnosisKeys(
+                exposureNotificationsApi.provideDiagnosisKeys(
                     listOf(importFile),
                     ExposureConfiguration.ExposureConfigurationBuilder()
                         .setAttenuationScores(*EQUAL_WEIGHTS)
@@ -170,7 +164,7 @@ class ExposureNotificationsRepository(
         return exposureTokens().distinctUntilChanged().map {
             val activeTokens = mutableSetOf<String>()
             for (token in it) {
-                val exposure = exposureNotificationClient.summary(token)
+                val exposure = exposureNotificationsApi.getSummary(token)
                 if (exposure != null) {
                     activeTokens.add(token)
                 }
