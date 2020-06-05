@@ -133,7 +133,10 @@ fun withFragment(
     activityViewModelFactory: ViewModelProvider.Factory? = null,
     block: () -> Unit
 ) {
-    TestMainActivity.launchWithFragment(theme = theme) {
+    TestMainActivity.launchWithFragment(
+        theme = theme,
+        activityViewModelFactory = activityViewModelFactory
+    ) {
         fragment.apply {
             arguments = navController.currentBackStackEntry?.arguments
         }.also { fragment ->

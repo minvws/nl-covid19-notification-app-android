@@ -98,5 +98,14 @@
     <fragment
         android:id="@+id/nav_enable_api"
         android:name="nl.rijksoverheid.en.onboarding.EnableApiFragment"
-        tools:layout="@layout/fragment_enable_api" />
+        tools:layout="@layout/fragment_enable_api">
+        <action
+            android:id="@+id/action_explain"
+            app:destination="@id/nav_how_it_works" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_how_it_works"
+        android:name="nl.rijksoverheid.en.onboarding.HowItWorksFragment"
+        tools:layout="@layout/fragment_how_it_works" />
 </navigation>

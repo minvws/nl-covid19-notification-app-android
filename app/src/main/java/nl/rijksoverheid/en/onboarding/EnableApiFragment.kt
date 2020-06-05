@@ -31,6 +31,12 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
 
         val binding = FragmentEnableApiBinding.bind(view)
 
+        binding.explanation.setOnClickListener {
+            findNavController().navigate(EnableApiFragmentDirections.actionExplain())
+        }
+        binding.skip.setOnClickListener {
+            findNavController().popBackStack(R.id.nav_onboarding, true)
+        }
         binding.request.setOnClickListener {
             viewModel.requestEnableNotifications()
         }

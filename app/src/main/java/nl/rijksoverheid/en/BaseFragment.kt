@@ -10,9 +10,12 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 
-abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout) {
+abstract class BaseFragment @JvmOverloads constructor(
+    @LayoutRes layout: Int,
+    val factoryProducer: (() -> ViewModelProvider.Factory)? = null
+) : Fragment(layout) {
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {
-        return ViewModelFactory(requireContext().applicationContext)
+        return factoryProducer?.invoke() ?: ViewModelFactory(requireContext().applicationContext)
     }
 }
