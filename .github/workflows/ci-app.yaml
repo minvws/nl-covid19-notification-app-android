@@ -4,6 +4,9 @@ on: push
 
 jobs:
   run-test:
+    env:
+      APP_CENTER_TOKEN: ${{secrets.APP_CENTER_TOKEN}}
+      APP_CENTER_APP: ${{secrets.APP_CENTER_APP}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -24,4 +27,11 @@ jobs:
         run: ./gradlew spotlessCheck
 
       - name: Build app
-        run: ./gradlew build
+        run: ./gradlew build assemAndroidTest
+
+      - name: Run instrumentation tests
+        uses: minvws/AppCenter-Github-Action@v1.0.3
+        if: ${{ env.APP_CENTER_TOKEN }}
+        with:
+          command: appcenter test run espresso --app ${{env.APP_CENTER_APP}} --devices belastingdienst/vws-covid-19-notificatie-instrumentation-test --app-path app/build/outputs/apk/debug/covid-notificatie-debug.apk --test-series master --locale en_US --test-apk-path build/outputs/apk/androidTest/debug/covid-notificatie-debug-androidTest.apk
+          token: ${{secrets.APP_CENTER_TOKEN}}
