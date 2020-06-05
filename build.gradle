@@ -52,6 +52,7 @@ allprojects {
         jcenter() {
             content {
                 includeGroup "org.jetbrains.trove4j"
+                includeGroup "com.microsoft.appcenter"
             }
         }
     }

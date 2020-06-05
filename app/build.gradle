@@ -69,5 +69,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    androidTestImplementation 'com.microsoft.appcenter:espresso-test-extension:1.4'
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 }
