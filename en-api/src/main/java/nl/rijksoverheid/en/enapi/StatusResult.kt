@@ -20,10 +20,10 @@ sealed class StatusResult {
     /**
      * Exposure notifications API is not available
      */
-    object Unavailable : StatusResult()
+    data class Unavailable(val statusCode: Int) : StatusResult()
 
     /**
      * An unknown error has occurred
      */
-    data class UnknownError(val ex: Exception) : StatusResult()
+    data class UnknownError(val exception: Exception) : StatusResult()
 }

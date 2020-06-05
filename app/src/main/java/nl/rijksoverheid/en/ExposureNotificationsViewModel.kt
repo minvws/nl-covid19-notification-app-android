@@ -13,9 +13,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import nl.rijksoverheid.en.enapi.StartResult
+import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
-import nl.rijksoverheid.en.enapi.StopResult
+import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.lifecyle.Event
 import timber.log.Timber
 
@@ -38,12 +38,12 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
                 is StatusResult.Unavailable -> updateState(NotificationsState.Unavailable)
                 is StatusResult.UnknownError -> {
                     Timber.d(
-                        result.ex,
+                        result.exception,
                         "Unknown error while getting status"
                     )
                     updateResult(
                         NotificationsStatusResult.UnknownError(
-                            result.ex
+                            result.exception
                         )
                     )
                 }
@@ -54,15 +54,15 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
     fun requestEnableNotifications() {
         viewModelScope.launch {
             when (val result = repository.requestEnableNotifications()) {
-                is StartResult.Started -> updateState(NotificationsState.Enabled)
-                is StartResult.ResolutionRequired -> updateResult(
+                is EnableNotificationsResult.Enabled -> updateState(NotificationsState.Enabled)
+                is EnableNotificationsResult.ResolutionRequired -> updateResult(
                     NotificationsStatusResult.ConsentRequired(
                         result.resolution
                     )
                 )
-                is StartResult.UnknownError -> updateResult(
+                is EnableNotificationsResult.UnknownError -> updateResult(
                     NotificationsStatusResult.UnknownError(
-                        result.ex
+                        result.exception
                     )
                 )
             }
@@ -72,10 +72,10 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
     fun requestDisableNotifications() {
         viewModelScope.launch {
             when (val result = repository.requestDisableNotifications()) {
-                is StopResult.Stopped -> updateState(NotificationsState.Disabled)
-                is StopResult.UnknownError -> updateResult(
+                is DisableNotificationsResult.Disabled -> updateState(NotificationsState.Disabled)
+                is DisableNotificationsResult.UnknownError -> updateResult(
                     NotificationsStatusResult.UnknownError(
-                        result.ex
+                        result.exception
                     )
                 )
             }

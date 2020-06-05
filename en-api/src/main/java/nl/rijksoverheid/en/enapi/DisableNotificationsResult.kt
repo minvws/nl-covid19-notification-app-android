@@ -6,14 +6,14 @@
  */
 package nl.rijksoverheid.en.enapi
 
-sealed class StopResult {
+sealed class DisableNotificationsResult {
     /**
      * Exposure notifications api has stopped
      */
-    object Stopped : StopResult()
+    object Disabled : DisableNotificationsResult()
 
     /**
      * An unexpected error occurred
      */
-    data class UnknownError(val ex: Exception) : StopResult()
+    data class UnknownError(val exception: Exception) : DisableNotificationsResult()
 }
