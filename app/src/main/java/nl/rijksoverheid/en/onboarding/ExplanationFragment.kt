@@ -8,8 +8,10 @@ package nl.rijksoverheid.en.onboarding
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionInflater
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentExplanationBinding
@@ -17,6 +19,17 @@ import nl.rijksoverheid.en.databinding.FragmentExplanationBinding
 class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
 
     private val args: ExplanationFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        enterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.slide_right)
+        exitTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.slide_left)
+
+        val sharedTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = sharedTransition
+        sharedElementReturnTransition = sharedTransition
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,7 +40,10 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
         binding.illustration.setImageResource(args.illustration)
         binding.illustration.contentDescription = getString(args.illustrationContentDescription)
         binding.next.setOnClickListener {
-            findNavController().navigate(R.id.action_next)
+            val extras = FragmentNavigatorExtras(
+                binding.next to binding.next.transitionName
+            )
+            findNavController().navigate(R.id.action_next, null, null, extras)
         }
     }
 }
