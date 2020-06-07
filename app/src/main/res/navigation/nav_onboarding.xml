@@ -11,6 +11,10 @@
         android:label="ExplanationFragment"
         tools:layout="@layout/fragment_explanation">
         <argument
+            android:name="fromFirstPage"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
             android:name="title"
             android:defaultValue="@string/onboarding_explanation_1_headline"
             app:argType="reference" />
@@ -37,6 +41,10 @@
         android:label="ExplanationFragment"
         tools:layout="@layout/fragment_explanation">
         <argument
+            android:name="fromFirstPage"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <argument
             android:name="title"
             android:defaultValue="@string/onboarding_explanation_2_headline"
             app:argType="reference" />
@@ -62,6 +70,10 @@
         android:name="nl.rijksoverheid.en.onboarding.ExplanationFragment"
         android:label="ExplanationFragment"
         tools:layout="@layout/fragment_explanation">
+        <argument
+            android:name="fromFirstPage"
+            android:defaultValue="false"
+            app:argType="boolean" />
         <argument
             android:name="title"
             android:defaultValue="@string/onboarding_explanation_3_headline"

@@ -6,16 +6,36 @@
     android:layout_height="match_parent"
     tools:background="?attr/colorSurface">
 
-    <ImageView
-        android:id="@+id/illustration"
-        android:layout_width="0dp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/cd_illustration_explanation_step_1"
-        android:src="@drawable/illustration_explanation_step_1"
-        app:layout_constraintBottom_toTopOf="@id/headline"
+        android:transitionName="toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:transitionGroup="true"
+        android:transitionName="content"
+        app:layout_constraintBottom_toTopOf="@+id/next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <ImageView
+            android:id="@+id/illustration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/cd_illustration_explanation_step_1"
+            android:src="@drawable/illustration_explanation_step_1"
+            app:layout_constraintBottom_toTopOf="@id/headline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
@@ -40,11 +60,12 @@
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:text="@string/onboarding_explanation_1_description"
         android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintBottom_toTopOf="@id/next"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headline" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <Button
         android:id="@+id/next"
         android:layout_width="0dp"
