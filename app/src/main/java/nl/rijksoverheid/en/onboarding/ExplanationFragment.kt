@@ -25,6 +25,7 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
         binding.headline.setText(args.title)
         binding.description.setText(args.description)
         binding.illustration.setImageResource(args.illustration)
+        binding.illustration.contentDescription = getString(args.illustrationContentDescription)
         binding.next.setOnClickListener {
             findNavController().navigate(R.id.action_next)
         }

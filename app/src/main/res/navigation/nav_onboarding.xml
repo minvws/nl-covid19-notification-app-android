@@ -22,26 +22,17 @@
             android:name="illustration"
             android:defaultValue="@drawable/illustration_explanation_step_1"
             app:argType="reference" />
+        <argument
+            android:name="illustration_content_description"
+            android:defaultValue="@string/cd_illustration_explanation_step_1"
+            app:argType="reference" />
         <action
             android:id="@+id/action_next"
             app:destination="@id/explanationStep2"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right">
-            <argument
-                android:name="title"
-                android:defaultValue="@string/onboarding_explanation_2_headline"
-                app:argType="reference" />
-            <argument
-                android:name="description"
-                android:defaultValue="@string/onboarding_explanation_2_description"
-                app:argType="reference" />
-            <argument
-                android:name="illustration"
-                android:defaultValue="@drawable/illustration_explanation_step_2"
-                app:argType="reference" />
-        </action>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -49,26 +40,29 @@
         android:name="nl.rijksoverheid.en.onboarding.ExplanationFragment"
         android:label="ExplanationFragment"
         tools:layout="@layout/fragment_explanation">
+        <argument
+            android:name="title"
+            android:defaultValue="@string/onboarding_explanation_2_headline"
+            app:argType="reference" />
+        <argument
+            android:name="description"
+            android:defaultValue="@string/onboarding_explanation_2_description"
+            app:argType="reference" />
+        <argument
+            android:name="illustration"
+            android:defaultValue="@drawable/illustration_explanation_step_2"
+            app:argType="reference" />
+        <argument
+            android:name="illustration_content_description"
+            android:defaultValue="@string/cd_illustration_explanation_step_2"
+            app:argType="reference" />
         <action
             android:id="@id/action_next"
             app:destination="@id/explanationStep3"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right">
-            <argument
-                android:name="title"
-                android:defaultValue="@string/onboarding_explanation_3_headline"
-                app:argType="reference" />
-            <argument
-                android:name="description"
-                android:defaultValue="@string/onboarding_explanation_3_description"
-                app:argType="reference" />
-            <argument
-                android:name="illustration"
-                android:defaultValue="@drawable/illustration_explanation_step_3"
-                app:argType="reference" />
-        </action>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -76,6 +70,22 @@
         android:name="nl.rijksoverheid.en.onboarding.ExplanationFragment"
         android:label="ExplanationFragment"
         tools:layout="@layout/fragment_explanation">
+        <argument
+            android:name="title"
+            android:defaultValue="@string/onboarding_explanation_3_headline"
+            app:argType="reference" />
+        <argument
+            android:name="description"
+            android:defaultValue="@string/onboarding_explanation_3_description"
+            app:argType="reference" />
+        <argument
+            android:name="illustration"
+            android:defaultValue="@drawable/illustration_explanation_step_3"
+            app:argType="reference" />
+        <argument
+            android:name="illustration_content_description"
+            android:defaultValue="@string/cd_illustration_explanation_step_3"
+            app:argType="reference" />
         <action
             android:id="@id/action_next"
             app:destination="@id/nav_enable_api" />
