@@ -24,11 +24,7 @@
             app:argType="reference" />
         <action
             android:id="@+id/action_next"
-            app:destination="@id/explanationStep2"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right">
+            app:destination="@id/explanationStep2">
             <argument
                 android:name="title"
                 android:defaultValue="@string/onboarding_explanation_2_headline"
@@ -51,11 +47,7 @@
         tools:layout="@layout/fragment_explanation">
         <action
             android:id="@id/action_next"
-            app:destination="@id/explanationStep3"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right">
+            app:destination="@id/explanationStep3">
             <argument
                 android:name="title"
                 android:defaultValue="@string/onboarding_explanation_3_headline"
