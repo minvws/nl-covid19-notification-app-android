@@ -11,6 +11,10 @@
         android:label="ExplanationFragment"
         tools:layout="@layout/fragment_explanation">
         <argument
+            android:name="fromFirstPage"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
             android:name="title"
             android:defaultValue="@string/onboarding_explanation_1_headline"
             app:argType="reference" />
@@ -28,11 +32,7 @@
             app:argType="reference" />
         <action
             android:id="@+id/action_next"
-            app:destination="@id/explanationStep2"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/explanationStep2" />
     </fragment>
 
     <fragment
@@ -40,6 +40,10 @@
         android:name="nl.rijksoverheid.en.onboarding.ExplanationFragment"
         android:label="ExplanationFragment"
         tools:layout="@layout/fragment_explanation">
+        <argument
+            android:name="fromFirstPage"
+            android:defaultValue="true"
+            app:argType="boolean" />
         <argument
             android:name="title"
             android:defaultValue="@string/onboarding_explanation_2_headline"
@@ -58,11 +62,7 @@
             app:argType="reference" />
         <action
             android:id="@id/action_next"
-            app:destination="@id/explanationStep3"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/explanationStep3"/>
     </fragment>
 
     <fragment
@@ -70,6 +70,10 @@
         android:name="nl.rijksoverheid.en.onboarding.ExplanationFragment"
         android:label="ExplanationFragment"
         tools:layout="@layout/fragment_explanation">
+        <argument
+            android:name="fromFirstPage"
+            android:defaultValue="false"
+            app:argType="boolean" />
         <argument
             android:name="title"
             android:defaultValue="@string/onboarding_explanation_3_headline"

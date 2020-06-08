@@ -16,15 +16,23 @@ import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
 import nl.rijksoverheid.en.BaseInstrumentationTest
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.test.withFragment
 import org.junit.Assert.assertEquals
+import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class ExplanationFragmentTest : BaseInstrumentationTest() {
+
+    companion object {
+        @ClassRule
+        @JvmField
+        val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
+    }
 
     @Test
     fun testExplanationStep1To2() {
@@ -44,6 +52,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
                 "Pressing next button in first step of explanation navigates to second step",
                 R.id.explanationStep2, navController.currentDestination?.id
             )
+            reportHelper.label("Explanation step 1")
         }
     }
 
@@ -66,6 +75,8 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
                 "Pressing next button in second step of explanation navigates to third step",
                 R.id.explanationStep3, navController.currentDestination?.id
             )
+
+            reportHelper.label("Explanation step 2")
         }
     }
 
@@ -88,6 +99,8 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
                 "Pressing next button in third step of explanation navigates to consent screen",
                 R.id.nav_enable_api, navController.currentDestination?.id
             )
+
+            reportHelper.label("Explanation step 3")
         }
     }
 }
