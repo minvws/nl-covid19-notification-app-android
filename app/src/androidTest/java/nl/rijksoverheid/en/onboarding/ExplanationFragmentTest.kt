@@ -34,6 +34,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
             setCurrentDestination(R.id.explanationStep1)
         }
         withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+            reportHelper.label("Explanation step 1")
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_1_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_1_description)))
             onView(withId(R.id.illustration)).check(matches(withContentDescription(R.string.cd_illustration_explanation_step_1)))
@@ -56,6 +57,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
         }
 
         withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+            reportHelper.label("Explanation step 2")
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_2_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_2_description)))
             onView(withId(R.id.illustration)).check(matches(withContentDescription(R.string.cd_illustration_explanation_step_2)))
@@ -78,6 +80,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
         }
 
         withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+            reportHelper.label("Explanation step 3")
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_3_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_3_description)))
             onView(withId(R.id.illustration)).check(matches(withContentDescription(R.string.cd_illustration_explanation_step_3)))
