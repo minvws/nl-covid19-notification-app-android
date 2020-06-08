@@ -15,6 +15,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
 import com.google.android.gms.common.api.Api
 import com.google.android.gms.common.api.internal.ApiKey
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
@@ -32,6 +33,7 @@ import nl.rijksoverheid.en.api.ExposureNotificationService
 import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
 import org.junit.Assert.assertEquals
+import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
@@ -39,6 +41,12 @@ import java.io.File
 @Suppress("UNCHECKED_CAST")
 @RunWith(AndroidJUnit4::class)
 class EnableApiFragmentTest {
+
+    companion object {
+        @ClassRule
+        @JvmField
+        val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
+    }
 
     private val repository = ExposureNotificationsRepository(
         ApplicationProvider.getApplicationContext(),

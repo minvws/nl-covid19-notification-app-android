@@ -14,6 +14,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
@@ -25,6 +26,18 @@ private const val RC_REQUEST_PERMISSION = 1
 
 class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
+        exitTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
+
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
+        sharedElementReturnTransition = sharedElementEnterTransition
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

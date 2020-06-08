@@ -8,74 +8,105 @@
         android:layout_height="match_parent"
         tools:background="?attr/colorSurface">
 
-        <TextView
-            android:id="@+id/headline"
-            android:layout_width="0dp"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="@string/onboarding_consent_headline"
-            android:textAppearance="?attr/textAppearanceHeadline5"
-            app:layout_constraintBottom_toTopOf="@id/check_1"
+            android:transitionName="toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:navigationIcon="?attr/homeAsUpIndicator">
 
-        <include
-            android:id="@+id/check_1"
-            layout="@layout/include_enable_api_step"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            app:itemText="@{@string/onboarding_consent_check_1}"
-            app:layout_constraintBottom_toTopOf="@id/check_2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/headline" />
+            <Button
+                android:id="@+id/skip"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/onboarding_consent_skip"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.appcompat.widget.Toolbar>
 
-        <include
-            android:id="@+id/check_2"
-            layout="@layout/include_enable_api_step"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            app:itemText="@{@string/onboarding_consent_check_2}"
-            app:layout_constraintBottom_toTopOf="@id/check_3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/check_1" />
-
-        <include
-            android:id="@+id/check_3"
-            layout="@layout/include_enable_api_step"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            app:itemText="@{@string/onboarding_consent_check_3}"
-            app:layout_constraintBottom_toTopOf="@id/explanation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/check_2" />
-
-        <Button
-            android:id="@+id/explanation"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="@string/onboarding_consent_explain"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:transitionGroup="true"
+            android:transitionName="content"
             app:layout_constraintBottom_toTopOf="@id/request"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <TextView
+                android:id="@+id/headline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/onboarding_consent_headline"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                app:layout_constraintBottom_toTopOf="@id/check_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <include
+                android:id="@+id/check_1"
+                layout="@layout/include_enable_api_step"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                app:itemText="@{@string/onboarding_consent_check_1}"
+                app:layout_constraintBottom_toTopOf="@id/check_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headline" />
+
+            <include
+                android:id="@+id/check_2"
+                layout="@layout/include_enable_api_step"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                app:itemText="@{@string/onboarding_consent_check_2}"
+                app:layout_constraintBottom_toTopOf="@id/check_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_1" />
+
+            <include
+                android:id="@+id/check_3"
+                layout="@layout/include_enable_api_step"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                app:itemText="@{@string/onboarding_consent_check_3}"
+                app:layout_constraintBottom_toTopOf="@id/explanation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_2" />
+
+            <Button
+                android:id="@+id/explanation"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/onboarding_consent_explain"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/request"
@@ -84,20 +115,9 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:text="@string/onboarding_consent_request"
-            app:layout_constraintBottom_toTopOf="@id/skip"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/skip"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="@string/onboarding_consent_skip"
+            android:transitionName="next_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
