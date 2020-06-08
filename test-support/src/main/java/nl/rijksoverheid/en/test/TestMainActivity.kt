@@ -1,9 +1,8 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
 package nl.rijksoverheid.en.test
 
@@ -20,6 +19,8 @@ import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 
@@ -78,8 +79,8 @@ class TestMainActivity : AppCompatActivity() {
             @StyleRes theme: Int? = null,
             activityViewModelFactory: ViewModelProvider.Factory? = null,
             crossinline factory: () -> T
-        ) {
-            launchWithFragment(
+        ): ActivityScenario<TestMainActivity> {
+            return launchWithFragment(
                 T::class.java,
                 args,
                 theme,
@@ -123,4 +124,24 @@ class TestMainActivity : AppCompatActivity() {
             }
         }
     }
+}
+
+fun withFragment(
+    fragment: Fragment,
+    navController: NavHostController,
+    @StyleRes theme: Int,
+    activityViewModelFactory: ViewModelProvider.Factory? = null,
+    block: () -> Unit
+) {
+    TestMainActivity.launchWithFragment(theme = theme) {
+        fragment.apply {
+            arguments = navController.currentBackStackEntry?.arguments
+        }.also { fragment ->
+            fragment.viewLifecycleOwnerLiveData.observeForever {
+                if (it != null) {
+                    Navigation.setViewNavController(fragment.requireView(), navController)
+                }
+            }
+        }
+    }.use { block() }
 }

@@ -7,8 +7,6 @@
 package nl.rijksoverheid.en.onboarding
 
 import android.content.Context
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -20,6 +18,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import nl.rijksoverheid.en.BaseInstrumentationTest
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.test.withFragment
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,76 +28,66 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
 
     @Test
     fun testExplanationStep1To2() {
-        // GIVEN
         val context = ApplicationProvider.getApplicationContext<Context>()
         val navController = TestNavHostController(context).apply {
             setGraph(R.navigation.nav_onboarding)
             setCurrentDestination(R.id.explanationStep1)
         }
-        val args = navController.currentBackStackEntry?.arguments
-        launchFragmentInContainer<ExplanationFragment>(args, R.style.AppTheme)
-            .onFragment { Navigation.setViewNavController(it.requireView(), navController) }
+        withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+            onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_1_headline)))
+            onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_1_description)))
+            onView(withId(R.id.illustration)).check(matches(withContentDescription(R.string.cd_illustration_explanation_step_1)))
 
-        // WHEN
-        onView(withId(R.id.next)).perform(click())
+            onView(withId(R.id.next)).perform(click())
 
-        // THEN
-        assertEquals(
-            "Pressing next button in first step of explanation navigates to second step",
-            R.id.explanationStep2, navController.currentDestination?.id
-        )
-        onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_1_headline)))
-        onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_1_description)))
-        onView(withId(R.id.illustration)).check(matches(withContentDescription(R.string.cd_illustration_explanation_step_1)))
+            assertEquals(
+                "Pressing next button in first step of explanation navigates to second step",
+                R.id.explanationStep2, navController.currentDestination?.id
+            )
+        }
     }
 
     @Test
     fun testExplanationStep2To3() {
-        // GIVEN
         val context = ApplicationProvider.getApplicationContext<Context>()
         val navController = TestNavHostController(context).apply {
             setGraph(R.navigation.nav_onboarding)
             setCurrentDestination(R.id.explanationStep2)
         }
-        val args = navController.currentBackStackEntry?.arguments
-        launchFragmentInContainer<ExplanationFragment>(args, R.style.AppTheme)
-            .onFragment { Navigation.setViewNavController(it.requireView(), navController) }
 
-        // WHEN
-        onView(withId(R.id.next)).perform(click())
+        withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+            onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_2_headline)))
+            onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_2_description)))
+            onView(withId(R.id.illustration)).check(matches(withContentDescription(R.string.cd_illustration_explanation_step_2)))
 
-        // THEN
-        assertEquals(
-            "Pressing next button in second step of explanation navigates to third step",
-            R.id.explanationStep3, navController.currentDestination?.id
-        )
-        onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_2_headline)))
-        onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_2_description)))
-        onView(withId(R.id.illustration)).check(matches(withContentDescription(R.string.cd_illustration_explanation_step_2)))
+            onView(withId(R.id.next)).perform(click())
+
+            assertEquals(
+                "Pressing next button in second step of explanation navigates to third step",
+                R.id.explanationStep3, navController.currentDestination?.id
+            )
+        }
     }
 
     @Test
     fun testExplanationStep3ToConsent() {
-        // GIVEN
         val context = ApplicationProvider.getApplicationContext<Context>()
         val navController = TestNavHostController(context).apply {
             setGraph(R.navigation.nav_onboarding)
             setCurrentDestination(R.id.explanationStep3)
         }
-        val args = navController.currentBackStackEntry?.arguments
-        launchFragmentInContainer<ExplanationFragment>(args, R.style.AppTheme)
-            .onFragment { Navigation.setViewNavController(it.requireView(), navController) }
 
-        // WHEN
-        onView(withId(R.id.next)).perform(click())
+        withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+            onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_3_headline)))
+            onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_3_description)))
+            onView(withId(R.id.illustration)).check(matches(withContentDescription(R.string.cd_illustration_explanation_step_3)))
 
-        // THEN
-        assertEquals(
-            "Pressing next button in third step of explanation navigates to consent screen",
-            R.id.nav_enable_api, navController.currentDestination?.id
-        )
-        onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_3_headline)))
-        onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_3_description)))
-        onView(withId(R.id.illustration)).check(matches(withContentDescription(R.string.cd_illustration_explanation_step_3)))
+            onView(withId(R.id.next)).perform(click())
+
+            assertEquals(
+                "Pressing next button in third step of explanation navigates to consent screen",
+                R.id.nav_enable_api, navController.currentDestination?.id
+            )
+        }
     }
 }
