@@ -41,6 +41,15 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url 'https://dl.bintray.com/blipinsk/maven/'
+        content {
+            includeGroup "com.bartoszlipinski"
+        }
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -52,6 +61,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     implementation "androidx.work:work-runtime-ktx:2.3.4"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -74,6 +84,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
     androidTestImplementation 'com.microsoft.appcenter:espresso-test-extension:1.4'
+    androidTestImplementation 'com.bartoszlipinski:disable-animations-rule:2.0.0'
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
     debugImplementation project(":test-support")
     androidTestDebugImplementation project(":test-support")
