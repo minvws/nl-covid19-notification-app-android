@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: "kotlin-kapt"
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
 archivesBaseName = "covid-notificatie"
@@ -34,6 +35,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 
     kotlinOptions {
@@ -79,6 +81,8 @@ dependencies {
     implementation project(":api")
 
     testImplementation 'junit:junit:4.13'
+    androidTestImplementation "org.mockito:mockito-android:2.23.4"
+    androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'

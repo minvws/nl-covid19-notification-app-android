@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+  ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+  ~
+  ~   SPDX-License-Identifier: EUPL-1.2
+  ~
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="itemText"
+            type="String" />
+    </data>
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="34dp"
+            android:contentDescription="@string/cd_illustration_explanation_step_1"
+            android:src="@drawable/ic_shield_check" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@{itemText}"
+            android:textAppearance="?attr/textAppearanceBody1"
+            tools:text="@string/onboarding_consent_check_1" />
+
+    </LinearLayout>
+</layout>
