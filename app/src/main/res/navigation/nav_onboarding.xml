@@ -101,7 +101,7 @@
         tools:layout="@layout/fragment_enable_api">
         <action
             android:id="@+id/action_explain"
-            app:destination="@id/nav_how_it_works" />
+            app:destination="@id/nav_how_it_works"/>
     </fragment>
 
     <fragment

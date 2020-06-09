@@ -1,8 +1,17 @@
 <resources>
 
-    <style name="Widget.App.Button.UnelevatedButton" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
+    <style name="Widget.App.Button.Primary" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
     </style>
 
+    <style name="Widget.App.Button.Secondary" parent="Widget.App.Button.Primary">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button.Secondary</item>
+        <item name="rippleColor">?attr/colorSecondaryVariant</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Button.Secondary" parent="">
+        <item name="colorPrimary">@color/color_secondary</item>
+        <item name="colorOnPrimary">@color/color_primary</item>
+    </style>
 </resources>

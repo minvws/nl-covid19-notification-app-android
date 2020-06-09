@@ -12,6 +12,7 @@ import android.content.IntentSender
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
@@ -25,6 +26,7 @@ import timber.log.Timber
 private const val RC_REQUEST_PERMISSION = 1
 
 class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
+    private val enableApiViewModel: EnableApiViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,10 +47,12 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
         val binding = FragmentEnableApiBinding.bind(view)
 
         binding.explanation.setOnClickListener {
+            enterTransition = null
+            exitTransition = null
             findNavController().navigate(EnableApiFragmentDirections.actionExplain())
         }
         binding.skip.setOnClickListener {
-            findNavController().popBackStack(R.id.nav_onboarding, true)
+            enableApiViewModel.finishOnboarding()
         }
         binding.request.setOnClickListener {
             viewModel.requestEnableNotifications()
@@ -78,10 +82,9 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
 
         viewModel.notificationState.observe(viewLifecycleOwner) {
             when (it) {
-                ExposureNotificationsViewModel.NotificationsState.Enabled -> findNavController().popBackStack(
-                    R.id.nav_onboarding,
-                    true
-                )
+                ExposureNotificationsViewModel.NotificationsState.Enabled -> {
+                    enableApiViewModel.finishOnboarding()
+                }
                 ExposureNotificationsViewModel.NotificationsState.Unavailable -> {
                     // TODO device is not supported
                 }
@@ -89,6 +92,12 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
                     // user needs to enable
                 }
             }
+        }
+
+        enableApiViewModel.onboardingComplete.observe(viewLifecycleOwner) {
+            enterTransition = null
+            exitTransition = null
+            findNavController().popBackStack(R.id.nav_onboarding, true)
         }
     }
 

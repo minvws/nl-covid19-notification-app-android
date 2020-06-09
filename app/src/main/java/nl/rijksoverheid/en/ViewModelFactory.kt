@@ -10,6 +10,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
+import nl.rijksoverheid.en.factory.createOnboardingRepository
+import nl.rijksoverheid.en.onboarding.EnableApiViewModel
+import nl.rijksoverheid.en.status.StatusViewModel
 
 class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val context = context.applicationContext
@@ -19,6 +22,12 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
         return when (modelClass) {
             ExposureNotificationsViewModel::class.java -> ExposureNotificationsViewModel(
                 createExposureNotificationsRepository(context)
+            ) as T
+            EnableApiViewModel::class.java -> EnableApiViewModel(
+                createOnboardingRepository(context)
+            ) as T
+            StatusViewModel::class.java -> StatusViewModel(
+                createOnboardingRepository(context)
             ) as T
             else -> throw IllegalStateException("Unknown view model class $modelClass")
         }

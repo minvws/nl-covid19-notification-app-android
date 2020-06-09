@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import nl.rijksoverheid.en.BaseFragment
@@ -27,11 +28,15 @@ import timber.log.Timber
 private const val RC_REQUEST_CONSENT = 1
 
 class StatusFragment : BaseFragment(R.layout.fragment_status) {
-
+    private val statusViewModel: StatusViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (!statusViewModel.hasCompletedOnboarding()) {
+            findNavController().navigate(StatusFragmentDirections.actionOnboarding())
+        }
 
         val binding = FragmentStatusBinding.bind(view)
 
@@ -48,9 +53,8 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
             when (it) {
                 ExposureNotificationsViewModel.NotificationsState.Enabled -> { /* all is fine */
                 }
-                ExposureNotificationsViewModel.NotificationsState.Disabled -> findNavController().navigate(
-                    StatusFragmentDirections.actionOnboarding()
-                )
+                ExposureNotificationsViewModel.NotificationsState.Disabled -> { /* TODO() */
+                }
                 ExposureNotificationsViewModel.NotificationsState.Unavailable -> showApiUnavailableError()
             }
         }
