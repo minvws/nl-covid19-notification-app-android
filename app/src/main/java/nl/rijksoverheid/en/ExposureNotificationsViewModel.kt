@@ -13,9 +13,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
-import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.lifecyle.Event
 import timber.log.Timber
 
@@ -92,20 +92,6 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
 
     private fun updateResult(result: ExportKeysResult) {
         (exportTemporaryKeysResult as MutableLiveData).value = Event(result)
-    }
-
-    fun requestUploadTemporaryKeys() {
-        viewModelScope.launch {
-            when (val result = repository.exportTemporaryExposureKeys()) {
-                is ExportTemporaryExposureKeysResult.RequireConsent -> updateResult(
-                    ExportKeysResult.RequestConsent(
-                        result.resolution
-                    )
-                )
-                is ExportTemporaryExposureKeysResult.Success -> updateResult(ExportKeysResult.Success)
-                is ExportTemporaryExposureKeysResult.Error -> updateResult(ExportKeysResult.Error)
-            }
-        }
     }
 
     fun resetExposures() {

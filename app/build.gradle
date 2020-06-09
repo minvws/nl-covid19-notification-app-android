@@ -19,7 +19,15 @@ android {
     }
 
     testOptions {
-        animationsDisabled = true
+        unitTests.includeAndroidResources = true
+        unitTests.all {
+            // https://github.com/robolectric/robolectric/issues/5115
+            systemProperty("javax.net.ssl.trustStoreType", "JKS")
+
+            // https://github.com/robolectric/robolectric/issues/5456
+            systemProperty("robolectric.dependency.repo.id", "central")
+            systemProperty("robolectric.dependency.repo.url", "https://repo1.maven.org/maven2")
+        }
     }
 
     buildTypes {
@@ -83,6 +91,8 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation "org.mockito:mockito-android:2.23.4"
     androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation 'org.robolectric:robolectric:4.3.1'
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.7.2")
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'

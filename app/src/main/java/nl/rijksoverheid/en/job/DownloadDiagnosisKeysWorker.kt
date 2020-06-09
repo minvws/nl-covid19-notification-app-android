@@ -15,8 +15,6 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.ExposureNotificationsRepository
-import nl.rijksoverheid.en.ImportTemporaryExposureKeysResult
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class DownloadDiagnosisKeysWorker(
@@ -27,16 +25,7 @@ class DownloadDiagnosisKeysWorker(
     CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        return when (repository.importTemporaryExposureKeys()) {
-            ImportTemporaryExposureKeysResult.Success -> {
-                Timber.d("Imported keys")
-                Result.success()
-            }
-            is ImportTemporaryExposureKeysResult.Error -> {
-                Timber.w("Error while importing keys")
-                Result.failure()
-            }
-        }
+        return Result.success()
     }
 
     companion object {
