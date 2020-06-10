@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.onboarding
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.core.app.SharedElementCallback
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -58,6 +59,7 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
             })
         }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentExplanationBinding.bind(view)
@@ -76,12 +78,14 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
         if (navController.currentDestination?.id == navController.currentDestination?.parent?.startDestination) {
             enterTransition = null
             binding.toolbar.navigationIcon = null
+            activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) {
+                activity?.finish()
+            }
         }
 
         binding.next.setOnClickListener {
             navController.navigate(
                 ExplanationFragmentDirections.actionNext(), FragmentNavigatorExtras(
-                    binding.next to binding.next.transitionName,
                     binding.toolbar to binding.toolbar.transitionName
                 )
             )

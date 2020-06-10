@@ -12,6 +12,7 @@ import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.ExposureNotificationService
 import nl.rijksoverheid.en.enapi.ExposureNotificationApi
+import nl.rijksoverheid.en.onboarding.OnboardingRepository
 
 fun createExposureNotificationsRepository(context: Context): ExposureNotificationsRepository {
     return ExposureNotificationsRepository(
@@ -19,5 +20,11 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
         ExposureNotificationApi(Nearby.getExposureNotificationClient(context)),
         ExposureNotificationService.instance,
         context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
+    )
+}
+
+fun createOnboardingRepository(context: Context): OnboardingRepository {
+    return OnboardingRepository(
+        context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.onboarding", 0)
     )
 }

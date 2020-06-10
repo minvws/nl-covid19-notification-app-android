@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="color_primary">#1F529B</color>
+    <color name="color_secondary">#F2F2F2</color>
+    <color name="color_secondary_variant">#DDDDDD</color>
     <color name="notification_status">#F6F6FA</color>
     <color name="notification_status_active">#34C759</color>
     <color name="notification_status_exposed">#EA7A3B</color>

@@ -35,7 +35,7 @@
             android:layout_height="0dp"
             android:transitionGroup="true"
             android:transitionName="content"
-            app:layout_constraintBottom_toTopOf="@id/request"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <TextView
@@ -96,31 +96,30 @@
 
             <Button
                 android:id="@+id/explanation"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.App.Button.Secondary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="8dp"
                 android:text="@string/onboarding_consent_explain"
+                app:layout_constraintBottom_toTopOf="@id/request"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/request"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:text="@string/onboarding_consent_request"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:id="@+id/request"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:text="@string/onboarding_consent_request"
-            android:transitionName="next_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
