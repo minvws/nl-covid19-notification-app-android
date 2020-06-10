@@ -14,4 +14,12 @@
         <item name="colorPrimary">@color/color_secondary</item>
         <item name="colorOnPrimary">@color/color_primary</item>
     </style>
+
+    <style name="Widget.App.Button.Primary.Rounded" parent="Widget.App.Button.Primary">
+        <item name="cornerRadius">24dp</item>
+    </style>
+
+    <style name="Widget.App.Button.Secondary.Rounded" parent="Widget.App.Button.Secondary">
+        <item name="cornerRadius">24dp</item>
+    </style>
 </resources>

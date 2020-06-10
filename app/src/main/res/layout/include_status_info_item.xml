@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+  ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+  ~
+  ~   SPDX-License-Identifier: EUPL-1.2
+  ~
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="nl.rijksoverheid.en.R" />
+
+        <variable
+            name="infoTitle"
+            type="String" />
+
+        <variable
+            name="infoSubtitle"
+            type="String" />
+
+        <variable
+            name="infoIcon"
+            type="android.graphics.drawable.Drawable" />
+
+        <variable
+            name="infoIconColor"
+            type="int" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/status_icon_background"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_circle"
+            app:colorFilter="@{infoIconColor}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/status_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@null"
+            app:imageDrawable="@{infoIcon}"
+            app:layout_constraintBottom_toBottomOf="@id/status_icon_background"
+            app:layout_constraintEnd_toEndOf="@id/status_icon_background"
+            app:layout_constraintStart_toStartOf="@id/status_icon_background"
+            app:layout_constraintTop_toTopOf="@id/status_icon_background"
+            tools:src="@drawable/ic_bed" />
+
+        <TextView
+            android:id="@+id/status_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:text="@{infoTitle}"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/status_icon_background"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/status_info_1_title" />
+
+        <TextView
+            android:id="@+id/status_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:text="@{infoSubtitle}"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/status_title"
+            app:layout_constraintTop_toBottomOf="@id/status_title"
+            tools:text="@string/status_info_1_subtitle" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/status_title"
+            app:layout_constraintTop_toBottomOf="@id/status_subtitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

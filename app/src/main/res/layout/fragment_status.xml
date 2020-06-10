@@ -1,59 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="16dp"
-        android:gravity="center"
-        android:paddingStart="32dp"
-        android:paddingEnd="32dp"
-        android:text="@string/status_no_exposure_detected_headline"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        app:drawableTopCompat="@drawable/ic_status_no_exposure"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <import type="nl.rijksoverheid.en.R" />
+    </data>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/notification_status"
-        android:drawablePadding="8dp"
-        android:fontFamily="sans-serif-medium"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp"
-        android:text="@string/status_notifications_active"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:drawableStartCompat="@drawable/ic_notifcations_status_active"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/reset_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/status_reset_exposure"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/status" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/clouds"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="24dp"
+                android:contentDescription="@null"
+                android:src="@drawable/illustration_clouds"
+                app:layout_constraintDimensionRatio="H,360:74"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:drawablePadding="24dp"
+                android:gravity="center_horizontal"
+                android:text="@string/status_no_exposure_detected_headline"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                app:drawableTopCompat="@drawable/ic_status_no_exposure"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clouds" />
+
+            <TextView
+                android:id="@+id/status_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:gravity="center_horizontal"
+                android:text="@string/status_no_exposure_detected_description"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/status" />
+
+            <Space
+                android:id="@+id/illustration_top"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                app:layout_constraintBottom_toBottomOf="@id/status_subtitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/no_exposure_illustration"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@null"
+                android:src="@drawable/illustration_status"
+                app:layout_constraintDimensionRatio="H,320:215"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/illustration_top" />
+
+            <LinearLayout
+                android:id="@+id/exposure_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/status_subtitle">
+
+                <Button
+                    android:id="@+id/exposure_what_next"
+                    style="@style/Widget.App.Button.Primary.Rounded"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/status_exposure_what_next" />
+
+                <Button
+                    android:id="@+id/exposure_reset"
+                    style="@style/Widget.App.Button.Secondary.Rounded"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/status_reset_exposure" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/status_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="exposure_buttons,no_exposure_illustration" />
+
+            <include
+                android:id="@+id/info_item_1"
+                layout="@layout/include_status_info_item"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:infoIcon="@{@drawable/ic_lock}"
+                app:infoIconColor="@{@color/subtle_green}"
+                app:infoSubtitle="@{@string/status_info_1_subtitle}"
+                app:infoTitle="@{@string/status_info_1_title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/status_bottom" />
+
+            <include
+                android:id="@+id/info_item_2"
+                layout="@layout/include_status_info_item"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:infoIcon="@{@drawable/ic_warning}"
+                app:infoIconColor="@{@color/dark_blue}"
+                app:infoSubtitle="@{@string/status_info_2_subtitle}"
+                app:infoTitle="@{@string/status_info_2_title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info_item_1" />
+
+            <include
+                android:id="@+id/info_item_3"
+                layout="@layout/include_status_info_item"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:infoIcon="@{@drawable/ic_syringe}"
+                app:infoIconColor="@{@color/ruby_red}"
+                app:infoSubtitle="@{@string/status_info_3_subtitle}"
+                app:infoTitle="@{@string/status_info_3_title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info_item_2" />
+
+
+            <include
+                android:id="@+id/info_item_4"
+                layout="@layout/include_status_info_item"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:infoIcon="@{@drawable/ic_bed}"
+                app:infoIconColor="@{@color/dark_yellow}"
+                app:infoSubtitle="@{@string/status_info_4_subtitle}"
+                app:infoTitle="@{@string/status_info_4_title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info_item_3" />
+
+            <Button
+                android:id="@+id/action_settings"
+                style="@style/Widget.App.Button.Secondary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="32dp"
+                android:text="@string/status_action_3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info_item_4" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

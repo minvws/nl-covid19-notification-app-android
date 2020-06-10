@@ -19,7 +19,6 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
-import nl.rijksoverheid.en.job.ProcessManifestWorker
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import timber.log.Timber
 
@@ -37,14 +36,6 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         }
 
         val binding = FragmentStatusBinding.bind(view)
-
-        binding.toolbar.inflateMenu(R.menu.status)
-        binding.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.menu_status_check -> ProcessManifestWorker.queue(requireContext())
-            }
-            true
-        }
 
         viewModel.notificationState.observe(viewLifecycleOwner) {
             when (it) {
@@ -100,10 +91,11 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
                 null
             )
             binding.status.setText(headline)
-            binding.resetStatus.visibility = if (it) View.VISIBLE else View.INVISIBLE
+            binding.noExposureIllustration.visibility = if (it) View.GONE else View.VISIBLE
+            binding.exposureButtons.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        binding.resetStatus.setOnClickListener {
+        binding.exposureReset.setOnClickListener {
             viewModel.resetExposures()
         }
     }
