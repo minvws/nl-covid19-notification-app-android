@@ -16,27 +16,22 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
-import com.google.android.gms.common.api.Api
-import com.google.android.gms.common.api.internal.ApiKey
-import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
-import com.google.android.gms.nearby.exposurenotification.ExposureInformation
-import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
-import com.google.android.gms.nearby.exposurenotification.ExposureSummary
-import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.Tasks
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.ExposureNotificationService
-import nl.rijksoverheid.en.enapi.ExposureNotificationApi
+import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.RiskCalculationParameters
+import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
+import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.File
+import retrofit2.Response
 
 @Suppress("UNCHECKED_CAST")
 @RunWith(AndroidJUnit4::class)
@@ -50,10 +45,29 @@ class EnableApiFragmentTest {
 
     private val repository = ExposureNotificationsRepository(
         ApplicationProvider.getApplicationContext(),
-        ExposureNotificationApi(object : FakeExposureNotificationsClient() {}),
-        ExposureNotificationService.instance,
+        FakeExposureNotificationApi(),
+        object : ExposureNotificationService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(): Manifest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw NotImplementedError()
+            }
+        },
         ApplicationProvider.getApplicationContext<Context>()
-            .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
+            .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0),
+        object : ProcessManifestWorkerScheduler {
+            override fun schedule(intervalHours: Int) {
+            }
+
+            override fun cancel() {
+            }
+        }
     )
     private val viewModel = ExposureNotificationsViewModel(repository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
@@ -126,30 +140,5 @@ class EnableApiFragmentTest {
                 null, navController.currentDestination?.id
             )
         }
-    }
-
-    private abstract class FakeExposureNotificationsClient : ExposureNotificationClient {
-        override fun isEnabled(): Task<Boolean> = Tasks.forResult(false)
-
-        override fun provideDiagnosisKeys(
-            files: List<File>,
-            config: ExposureConfiguration,
-            token: String
-        ): Task<Void> = Tasks.forException(IllegalStateException())
-
-        override fun getExposureSummary(token: String): Task<ExposureSummary> =
-            Tasks.forException(IllegalStateException())
-
-        override fun start(): Task<Void> = Tasks.forResult(null)
-
-        override fun stop(): Task<Void> = Tasks.forException(IllegalStateException())
-
-        override fun getExposureInformation(token: String): Task<List<ExposureInformation>> =
-            Tasks.forException(IllegalStateException())
-
-        override fun getApiKey(): ApiKey<Api.ApiOptions.NoOptions>? = null
-
-        override fun getTemporaryExposureKeyHistory(): Task<List<TemporaryExposureKey>> =
-            Tasks.forException(IllegalStateException())
     }
 }

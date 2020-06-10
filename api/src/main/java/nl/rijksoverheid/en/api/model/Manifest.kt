@@ -6,12 +6,12 @@
  */
 package nl.rijksoverheid.en.api.model
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class TemporaryExposureKey(
-    val keyData: ByteArray,
-    val rollingStartNumber: Int,
-    val rollingPeriod: Int,
-    val transmissionRiskLevel: Int
+data class Manifest(
+    @Json(name = "ExposureKeySets") val exposureKeysSetIds: List<String>,
+    @Json(name = "ResourceBundle") val resourceBundleId: String,
+    @Json(name = "RiskCalculationParameters") val riskCalculationParametersId: String
 )

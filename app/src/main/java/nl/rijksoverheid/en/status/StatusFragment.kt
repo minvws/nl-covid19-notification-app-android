@@ -6,8 +6,6 @@
  */
 package nl.rijksoverheid.en.status
 
-import android.app.Activity
-import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
 import android.view.View
@@ -21,7 +19,7 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
-import nl.rijksoverheid.en.job.DownloadDiagnosisKeysWorker
+import nl.rijksoverheid.en.job.ProcessManifestWorker
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import timber.log.Timber
 
@@ -43,8 +41,7 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         binding.toolbar.inflateMenu(R.menu.status)
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.menu_status_report -> viewModel.requestUploadTemporaryKeys()
-                R.id.menu_status_check -> DownloadDiagnosisKeysWorker.queue(requireContext())
+                R.id.menu_status_check -> ProcessManifestWorker.queue(requireContext())
             }
             true
         }
@@ -108,13 +105,6 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
 
         binding.resetStatus.setOnClickListener {
             viewModel.resetExposures()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_REQUEST_CONSENT && resultCode == Activity.RESULT_OK) {
-            viewModel.requestUploadTemporaryKeys()
         }
     }
 

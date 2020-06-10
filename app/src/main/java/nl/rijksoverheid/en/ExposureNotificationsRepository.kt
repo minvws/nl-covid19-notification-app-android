@@ -10,10 +10,15 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import androidx.core.content.edit
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -21,32 +26,43 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.ExposureNotificationService
-import nl.rijksoverheid.en.api.model.TemporaryExposureKey
-import nl.rijksoverheid.en.enapi.ExposureNotificationApi
+import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
+import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
-import nl.rijksoverheid.en.enapi.DisableNotificationsResult
-import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
+import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
+import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import okhttp3.ResponseBody
+import okio.ByteString.Companion.toByteString
+import retrofit2.Response
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.security.SecureRandom
 
-private val EQUAL_WEIGHTS = intArrayOf(1, 1, 1, 1, 1, 1, 1, 1)
 private const val KEY_TOKENS = "tokens"
+private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
 
 class ExposureNotificationsRepository(
     private val context: Context,
     private val exposureNotificationsApi: ExposureNotificationApi,
     private val api: ExposureNotificationService,
-    private val exposures: SharedPreferences
+    private val preferences: SharedPreferences,
+    private val manifestWorkerScheduler: ProcessManifestWorkerScheduler
 ) {
 
     suspend fun requestEnableNotifications(): EnableNotificationsResult {
-        return exposureNotificationsApi.requestEnableNotifications()
+        val result = exposureNotificationsApi.requestEnableNotifications()
+        if (result == EnableNotificationsResult.Enabled) {
+            // TODO interval from app config
+            manifestWorkerScheduler.schedule(4)
+        }
+        return result
     }
 
     suspend fun requestDisableNotifications(): DisableNotificationsResult {
+        manifestWorkerScheduler.cancel()
         return exposureNotificationsApi.disableNotifications()
     }
 
@@ -54,85 +70,159 @@ class ExposureNotificationsRepository(
         return exposureNotificationsApi.getStatus()
     }
 
-    suspend fun exportTemporaryExposureKeys(): ExportTemporaryExposureKeysResult {
-        val result = exposureNotificationsApi.requestTemporaryExposureKeyHistory()
-        Timber.d("Result = $result")
+    /**
+     * Downloads new exposure key sets from the server and processes them
+     */
+    @VisibleForTesting
+    internal suspend fun processExposureKeySets(manifest: Manifest): ProcessExposureKeysResult =
+        coroutineScope {
+            val processedSets = preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())!!
 
-        when (result) {
-            is TemporaryExposureKeysResult.Success -> {
-                if (result.keys.isNotEmpty()) {
-                    try {
-                        uploadKeys(result.keys)
-                    } catch (ex: Exception) {
-                        Timber.e(ex, "Error uploading keys")
-                        return ExportTemporaryExposureKeysResult.Error(ex)
+            val updates = manifest.exposureKeysSetIds.toMutableSet().apply {
+                removeAll(processedSets)
+            }
+            val files = updates.map {
+                it to
+                    async { api.getExposureKeySetFile(it) }
+            }.map { (id, responseAsync) ->
+                writeExposureKeyFile(id, responseAsync)
+            }
+
+            // files that have downloaded and saved successfully
+            val validFiles = files.filter { it.file != null }
+            val hasErrors = validFiles.size != files.size
+
+            if (validFiles.isEmpty()) {
+                // shortcut if nothing to process
+                return@coroutineScope if (!hasErrors) {
+                    updateProcessedExposureKeySets(emptySet(), manifest)
+                    ProcessExposureKeysResult.Success
+                } else {
+                    ProcessExposureKeysResult.ServerError
+                }
+            }
+
+            val configuration = try {
+                getConfigurationFromManifest(manifest)
+            } catch (ex: IOException) {
+                Timber.e(ex, "Error fetching configuration")
+                return@coroutineScope ProcessExposureKeysResult.Error(ex)
+            }
+
+            val result = exposureNotificationsApi.provideDiagnosisKeys(
+                validFiles.map { it.file!! },
+                configuration,
+                createToken()
+            )
+            when (result) {
+                is DiagnosisKeysResult.Success -> {
+                    // mark all keys processed
+                    updateProcessedExposureKeySets(
+                        validFiles.map { it.id }.toSet(),
+                        manifest
+                    )
+                    if (!hasErrors) {
+                        ProcessExposureKeysResult.Success
+                    } else {
+                        // postponed server error due to downloading files
+                        ProcessExposureKeysResult.ServerError
                     }
                 }
-                return ExportTemporaryExposureKeysResult.Success(result.keys.size)
+                else -> {
+                    ProcessExposureKeysResult.ExposureApiError(result)
+                }
             }
-            is TemporaryExposureKeysResult.RequireConsent -> return ExportTemporaryExposureKeysResult.RequireConsent(
-                result.resolution
-            )
-            is TemporaryExposureKeysResult.UnknownError -> return ExportTemporaryExposureKeysResult.Error(
-                result.exception
+        }
+
+    /**
+     * Store the ids of the processed exposure keys, considering the current keys and the manifest
+     * @param processed the keys that have been successfully processed from the given manifest
+     * @param manifest the manifest
+     */
+    @WorkerThread
+    private fun updateProcessedExposureKeySets(processed: Set<String>, manifest: Manifest) {
+        // the ids we have previously processed + the newly processed ids
+        val currentProcessedIds =
+            preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())!!.toMutableSet().apply {
+                addAll(processed)
+            }
+        // store the set of ids that are in the manifest and are processed
+        preferences.edit(commit = true) {
+            putStringSet(
+                KEY_EXPOSURE_KEY_SETS,
+                currentProcessedIds.intersect(manifest.exposureKeysSetIds)
             )
         }
     }
 
-    suspend fun importTemporaryExposureKeys(): ImportTemporaryExposureKeysResult =
-        withContext(Dispatchers.IO) {
+    private fun createToken(): String {
+        val bytes = ByteArray(32)
+        SecureRandom().nextBytes(bytes)
+        return Base64.encodeToString(bytes, 0)
+    }
+
+    private suspend fun getConfigurationFromManifest(manifest: Manifest): ExposureConfiguration {
+        val riskCalculationParameters =
+            api.getRiskCalculationParameters(manifest.riskCalculationParametersId)
+        return ExposureConfiguration.ExposureConfigurationBuilder()
+            .setDurationAtAttenuationThresholds(*riskCalculationParameters.durationAtAttenuationThresholds.toIntArray())
+            .setMinimumRiskScore(riskCalculationParameters.minimumRiskScore)
+            .setTransmissionRiskScores(*riskCalculationParameters.transmissionRiskScores.toIntArray())
+            .setDurationScores(*riskCalculationParameters.durationScores.toIntArray())
+            .setAttenuationScores(*riskCalculationParameters.attenuationScores.toIntArray())
+            .setDaysSinceLastExposureScores(*riskCalculationParameters.daysSinceLastExposureScores.toIntArray())
+            .build()
+    }
+
+    private suspend fun writeExposureKeyFile(
+        id: String,
+        responseAsync: Deferred<Response<ResponseBody>>
+    ): ExposureKeySet {
+        try {
+            val response = responseAsync.await()
+            if (response.isSuccessful) {
+                return try {
+                    val file = File(context.cacheDir, id.toByteArray().toByteString().hex())
+                    response.body()!!.byteStream().use { input ->
+                        file.outputStream().use {
+                            input.copyTo(it)
+                        }
+                    }
+                    ExposureKeySet(id, file)
+                } catch (ex: IOException) {
+                    Timber.w(ex, "Error reading exposure key set")
+                    ExposureKeySet(id, null)
+                }
+            } else {
+                return ExposureKeySet(id, null)
+            }
+        } catch (ex: Exception) {
+            Timber.e(ex, "Error while processing exposure key set")
+            return ExposureKeySet(id, null)
+        }
+    }
+
+    suspend fun processManifest(): ProcessManifestResult {
+        return withContext(Dispatchers.IO) {
             try {
-                val response = api.getExposureKeysFile()
-                if (!response.isSuccessful) {
-                    // TODO handle this in a better way
-                    return@withContext ImportTemporaryExposureKeysResult.Error(RuntimeException("error code ${response.code()}"))
+                val keysSuccessful = if (getStatus() == StatusResult.Enabled) {
+                    processExposureKeySets(api.getManifest()) == ProcessExposureKeysResult.Success
+                } else {
+                    Timber.w("Cannot process keys, exposure notifications api is disabled")
+                    true
                 }
-                val keys = response.body()!!.bytes()
-                val token = generateImportToken()
-                val importFile = File(context.cacheDir, token)
-                importFile.outputStream().use {
-                    it.write(keys)
+
+                // TODO process app config and resource bundle
+
+                if (keysSuccessful) {
+                    ProcessManifestResult.Success
+                } else {
+                    ProcessManifestResult.Error
                 }
-                exposureNotificationsApi.provideDiagnosisKeys(
-                    listOf(importFile),
-                    ExposureConfiguration.ExposureConfigurationBuilder()
-                        .setAttenuationScores(*EQUAL_WEIGHTS)
-                        .setAttenuationWeight(1)
-                        .setDaysSinceLastExposureScores(*EQUAL_WEIGHTS)
-                        .setDaysSinceLastExposureWeight(1)
-                        .setDurationScores(*EQUAL_WEIGHTS)
-                        .setDurationWeight(1)
-                        .setTransmissionRiskScores(*EQUAL_WEIGHTS)
-                        .setTransmissionRiskWeight(1)
-                        .setMinimumRiskScore(1)
-                        .build(),
-                    token
-                )
-                ImportTemporaryExposureKeysResult.Success
-            } catch (ex: IOException) {
-                Timber.e(ex, "Error downloading and processing keys")
-                ImportTemporaryExposureKeysResult.Error(ex)
+            } catch (ex: Exception) {
+                Timber.e(ex, "Error while processing manifest")
+                ProcessManifestResult.Error
             }
-        }
-
-    private fun generateImportToken(): String {
-        val tokenBytes = ByteArray(32)
-        SecureRandom().nextBytes(tokenBytes)
-        return Base64.encodeToString(tokenBytes, Base64.NO_WRAP or Base64.NO_PADDING)
-            .replace("/", "_").replace("+", "-")
-    }
-
-    private suspend fun uploadKeys(keys: List<com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey>) {
-        val request = keys.map {
-            TemporaryExposureKey(
-                it.keyData,
-                it.rollingStartIntervalNumber,
-                it.rollingPeriod,
-                1
-            )
-        }
-        withContext(Dispatchers.IO) {
-            api.postTempExposureKeys(request)
         }
     }
 
@@ -147,12 +237,12 @@ class ExposureNotificationsRepository(
                 }
             }
 
-        exposures.registerOnSharedPreferenceChangeListener(listener)
+        preferences.registerOnSharedPreferenceChangeListener(listener)
 
-        offer(exposures.getStringSet(KEY_TOKENS, emptySet<String>()) ?: emptySet<String>())
+        offer(preferences.getStringSet(KEY_TOKENS, emptySet<String>()) ?: emptySet<String>())
 
         awaitClose {
-            exposures.unregisterOnSharedPreferenceChangeListener(listener)
+            preferences.unregisterOnSharedPreferenceChangeListener(listener)
         }
     }
 
@@ -172,7 +262,7 @@ class ExposureNotificationsRepository(
 
             activeTokens
         }.onEach {
-            exposures.edit {
+            preferences.edit {
                 putStringSet(KEY_TOKENS, it)
             }
         }.map {
@@ -181,22 +271,24 @@ class ExposureNotificationsRepository(
     }
 
     fun resetExposures() {
-        exposures.edit {
+        preferences.edit {
             putStringSet(KEY_TOKENS, emptySet())
         }
     }
 
     fun addExposure(token: String) {
         Timber.d("New exposure for token $token")
-        val tokens = exposures.getStringSet(KEY_TOKENS, emptySet()) ?: emptySet()
+        val tokens = preferences.getStringSet(KEY_TOKENS, emptySet()) ?: emptySet()
         if (!tokens.contains(token)) {
             val newTokens = tokens.toMutableSet().apply {
                 add(token)
             }
-            exposures.edit { putStringSet(KEY_TOKENS, newTokens) }
+            preferences.edit { putStringSet(KEY_TOKENS, newTokens) }
         }
     }
 }
+
+private data class ExposureKeySet(val id: String, val file: File?)
 
 sealed class ExportTemporaryExposureKeysResult {
     data class Success(val numKeysExported: Int) : ExportTemporaryExposureKeysResult()
@@ -204,7 +296,35 @@ sealed class ExportTemporaryExposureKeysResult {
     data class Error(val exception: Exception) : ExportTemporaryExposureKeysResult()
 }
 
-sealed class ImportTemporaryExposureKeysResult {
-    object Success : ImportTemporaryExposureKeysResult()
-    data class Error(val exception: Exception) : ImportTemporaryExposureKeysResult()
+sealed class ProcessExposureKeysResult {
+    /**
+     * Keys processed successfully
+     */
+    object Success : ProcessExposureKeysResult()
+
+    /**
+     * The Exposure Notifications api is disabled and keys cannot be processed
+     */
+    object Disabled : ProcessExposureKeysResult()
+
+    /**
+     * A server error occurred
+     */
+    object ServerError : ProcessExposureKeysResult()
+
+    /**
+     * Error while processing through the exposure notifications API
+     */
+    data class ExposureApiError(val diagnosisKeysResult: DiagnosisKeysResult) :
+        ProcessExposureKeysResult()
+
+    /**
+     * An error occurred
+     */
+    data class Error(val exception: Exception) : ProcessExposureKeysResult()
+}
+
+sealed class ProcessManifestResult() {
+    object Success : ProcessManifestResult()
+    object Error : ProcessManifestResult()
 }

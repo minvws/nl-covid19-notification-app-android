@@ -4,7 +4,7 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.enapi
+package nl.rijksoverheid.en.enapi.nearby
 
 import android.app.PendingIntent
 import android.os.Build
@@ -22,7 +22,14 @@ import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import kotlinx.coroutines.runBlocking
+import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
+import nl.rijksoverheid.en.enapi.DisableNotificationsResult
+import nl.rijksoverheid.en.enapi.EnableNotificationsResult
+import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
+import nl.rijksoverheid.en.enapi.StatusResult
+import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
@@ -35,13 +42,15 @@ import java.io.File
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
-class ExposureNotificationApiTest {
+class NearbyExposureNotificationApiTest {
     @Test
     fun `getStatus with enabled api returns enabled status`() = runBlocking {
         // GIVEN
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun isEnabled(): Task<Boolean> = Tasks.forResult(true)
-        })
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun isEnabled(): Task<Boolean> = Tasks.forResult(true)
+            })
 
         // WHEN
         val status = api.getStatus()
@@ -53,9 +62,11 @@ class ExposureNotificationApiTest {
     @Test
     fun `getStatus with disabled api returns disabled status`() = runBlocking {
         // GIVEN
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun isEnabled(): Task<Boolean> = Tasks.forResult(false)
-        })
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun isEnabled(): Task<Boolean> = Tasks.forResult(false)
+            })
 
         // WHEN
         val status = api.getStatus()
@@ -67,10 +78,12 @@ class ExposureNotificationApiTest {
     @Test
     fun `getStatus with api not connected error returns unavailable status`() = runBlocking {
         // GIVEN
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun isEnabled(): Task<Boolean> =
-                Tasks.forException(ApiException(Status(CommonStatusCodes.API_NOT_CONNECTED)))
-        })
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun isEnabled(): Task<Boolean> =
+                    Tasks.forException(ApiException(Status(CommonStatusCodes.API_NOT_CONNECTED)))
+            })
 
         // WHEN
         val status = api.getStatus()
@@ -90,17 +103,19 @@ class ExposureNotificationApiTest {
         val message =
             "API: Nearby.EXPOSURE_NOTIFICATION_API is not available on this device. Connection failed with: ConnectionResult{statusCode=UNKNOWN_ERROR_CODE(39503), resolution=null, message=null}"
 
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun isEnabled(): Task<Boolean> =
-                Tasks.forException(
-                    ApiException(
-                        Status(
-                            CommonStatusCodes.API_NOT_CONNECTED,
-                            message
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun isEnabled(): Task<Boolean> =
+                    Tasks.forException(
+                        ApiException(
+                            Status(
+                                CommonStatusCodes.API_NOT_CONNECTED,
+                                message
+                            )
                         )
                     )
-                )
-        })
+            })
 
         // WHEN
         val status = api.getStatus()
@@ -116,10 +131,12 @@ class ExposureNotificationApiTest {
     @Test
     fun `enabled api unknown error returns the unknown error`() = runBlocking {
         // GIVEN
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun isEnabled(): Task<Boolean> =
-                Tasks.forException(ApiException(Status(CommonStatusCodes.INTERNAL_ERROR)))
-        })
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun isEnabled(): Task<Boolean> =
+                    Tasks.forException(ApiException(Status(CommonStatusCodes.INTERNAL_ERROR)))
+            })
 
         // WHEN
         val status = api.getStatus()
@@ -135,9 +152,11 @@ class ExposureNotificationApiTest {
     @Test
     fun `requestEnableNotifications without errors returns Enabled`() = runBlocking {
         // GIVEN
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun start(): Task<Void> = Tasks.forResult(null)
-        })
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun start(): Task<Void> = Tasks.forResult(null)
+            })
 
         // WHEN
         val status = api.requestEnableNotifications()
@@ -150,9 +169,11 @@ class ExposureNotificationApiTest {
     fun `requestEnableNotifications with errors returns UnknownError`() = runBlocking {
         // GIVEN
         val exception = RuntimeException("test")
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun start(): Task<Void> = Tasks.forException(exception)
-        })
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun start(): Task<Void> = Tasks.forException(exception)
+            })
 
         // WHEN
         val status = api.requestEnableNotifications()
@@ -167,17 +188,19 @@ class ExposureNotificationApiTest {
         runBlocking {
             // GIVEN
             val pendingIntent = Shadow.newInstanceOf(PendingIntent::class.java)
-            val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-                override fun start(): Task<Void> = Tasks.forException(
-                    ApiException(
-                        Status(
-                            CommonStatusCodes.RESOLUTION_REQUIRED,
-                            "Resolution required",
-                            pendingIntent
+            val api =
+                NearbyExposureNotificationApi(object :
+                    FakeExposureNotificationsClient() {
+                    override fun start(): Task<Void> = Tasks.forException(
+                        ApiException(
+                            Status(
+                                CommonStatusCodes.RESOLUTION_REQUIRED,
+                                "Resolution required",
+                                pendingIntent
+                            )
                         )
                     )
-                )
-            })
+                })
 
             // WHEN
             val status = api.requestEnableNotifications()
@@ -194,9 +217,11 @@ class ExposureNotificationApiTest {
     @Test
     fun `disableNotifications without errors returns Disabled`() = runBlocking {
         // GIVEN
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun stop(): Task<Void> = Tasks.forResult(null)
-        })
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun stop(): Task<Void> = Tasks.forResult(null)
+            })
 
         // WHEN
         val status = api.disableNotifications()
@@ -209,9 +234,11 @@ class ExposureNotificationApiTest {
     fun `disableNotifications with errors returns UnknownError`() = runBlocking {
         // GIVEN
         val exception = ApiException(Status.RESULT_INTERNAL_ERROR)
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun stop(): Task<Void> = Tasks.forException(exception)
-        })
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun stop(): Task<Void> = Tasks.forException(exception)
+            })
 
         // WHEN
         val status = api.disableNotifications()
@@ -225,18 +252,20 @@ class ExposureNotificationApiTest {
     fun `requestTemporaryExposureKeys without consent returns RequireConsent`() = runBlocking {
         // GIVEN
         val pendingIntent = Shadow.newInstanceOf(PendingIntent::class.java)
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun getTemporaryExposureKeyHistory(): Task<List<TemporaryExposureKey>> =
-                Tasks.forException(
-                    ApiException(
-                        Status(
-                            CommonStatusCodes.RESOLUTION_REQUIRED,
-                            "Resolution required",
-                            pendingIntent
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun getTemporaryExposureKeyHistory(): Task<List<TemporaryExposureKey>> =
+                    Tasks.forException(
+                        ApiException(
+                            Status(
+                                CommonStatusCodes.RESOLUTION_REQUIRED,
+                                "Resolution required",
+                                pendingIntent
+                            )
                         )
                     )
-                )
-        })
+            })
 
         // WHEN
         val status = api.requestTemporaryExposureKeyHistory()
@@ -249,11 +278,14 @@ class ExposureNotificationApiTest {
     @Test
     fun `requestTemporaryExposureKeys with consent returns Success`() = runBlocking {
         // GIVEN
-        val keys = listOf<TemporaryExposureKey>(TemporaryExposureKey.TemporaryExposureKeyBuilder().build())
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun getTemporaryExposureKeyHistory(): Task<List<TemporaryExposureKey>> =
-                Tasks.forResult(keys)
-        })
+        val keys =
+            listOf<TemporaryExposureKey>(TemporaryExposureKey.TemporaryExposureKeyBuilder().build())
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun getTemporaryExposureKeyHistory(): Task<List<TemporaryExposureKey>> =
+                    Tasks.forResult(keys)
+            })
 
         // WHEN
         val status = api.requestTemporaryExposureKeyHistory()
@@ -267,10 +299,12 @@ class ExposureNotificationApiTest {
     fun `requestTemporaryExposureKeys with error returns UnknownError`() = runBlocking {
         // GIVEN
         val exception = ApiException(Status(CommonStatusCodes.ERROR))
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun getTemporaryExposureKeyHistory(): Task<List<TemporaryExposureKey>> =
-                Tasks.forException(exception)
-        })
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun getTemporaryExposureKeyHistory(): Task<List<TemporaryExposureKey>> =
+                    Tasks.forException(exception)
+            })
 
         // WHEN
         val status = api.requestTemporaryExposureKeyHistory()
@@ -284,21 +318,27 @@ class ExposureNotificationApiTest {
     fun `provideDiagnosisKeys without error removes files and returns Success`() = runBlocking {
         // GIVEN
         val file = File.createTempFile("test", "file")
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun provideDiagnosisKeys(
-                files: List<File>,
-                config: ExposureConfiguration,
-                token: String
-            ): Task<Void> {
-                if (token != "test") {
-                    throw AssertionError("Incorrect token: $token")
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun provideDiagnosisKeys(
+                    files: List<File>,
+                    config: ExposureConfiguration,
+                    token: String
+                ): Task<Void> {
+                    if (token != "test") {
+                        throw AssertionError("Incorrect token: $token")
+                    }
+                    return Tasks.forResult(null)
                 }
-                return Tasks.forResult(null)
-            }
-        })
+            })
 
         // WHEN
-        val status = api.provideDiagnosisKeys(listOf(file), ExposureConfiguration.ExposureConfigurationBuilder().build(), "test")
+        val status = api.provideDiagnosisKeys(
+            listOf(file),
+            ExposureConfiguration.ExposureConfigurationBuilder().build(),
+            "test"
+        )
 
         // THEN
         assertTrue(status is DiagnosisKeysResult.Success)
@@ -306,49 +346,53 @@ class ExposureNotificationApiTest {
     }
 
     @Test
-    fun `provideDiagnosisKeys with generic error keeps files and returns UnknownError`() =
+    fun `provideDiagnosisKeys with generic error removes files and returns UnknownError`() =
         runBlocking {
             // GIVEN
             val file = File.createTempFile("test", "file")
             val exception = ApiException(Status.RESULT_INTERNAL_ERROR)
-            val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-                override fun provideDiagnosisKeys(
-                    files: List<File>,
-                    config: ExposureConfiguration,
-                    token: String
-                ): Task<Void> = Tasks.forException(exception)
-            })
+            val api =
+                NearbyExposureNotificationApi(object :
+                    FakeExposureNotificationsClient() {
+                    override fun provideDiagnosisKeys(
+                        files: List<File>,
+                        config: ExposureConfiguration,
+                        token: String
+                    ): Task<Void> = Tasks.forException(exception)
+                })
 
-        try {
-            // WHEN
-            val status = api.provideDiagnosisKeys(
-                listOf(file),
-                ExposureConfiguration.ExposureConfigurationBuilder().build(),
-                "test"
-            )
+            try {
+                // WHEN
+                val status = api.provideDiagnosisKeys(
+                    listOf(file),
+                    ExposureConfiguration.ExposureConfigurationBuilder().build(),
+                    "test"
+                )
 
-            // THEN
-            assertTrue(status is DiagnosisKeysResult.UnknownError)
-            assertSame((status as DiagnosisKeysResult.UnknownError).exception, exception)
-            assertTrue(file.exists())
-        } finally {
-            file.delete()
-        }
+                // THEN
+                assertTrue(status is DiagnosisKeysResult.UnknownError)
+                assertSame((status as DiagnosisKeysResult.UnknownError).exception, exception)
+                assertFalse(file.exists())
+            } finally {
+                file.delete()
+            }
         }
 
     @Test
-    fun `provideDiagnosisKeys with disk io error keeps files and returns FailedDiskIo`() =
+    fun `provideDiagnosisKeys with disk io removes files and returns FailedDiskIo`() =
         runBlocking {
             // GIVEN
             val file = File.createTempFile("test", "file")
             val exception = ApiException(Status(ExposureNotificationStatusCodes.FAILED_DISK_IO))
-            val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-                override fun provideDiagnosisKeys(
-                    files: List<File>,
-                    config: ExposureConfiguration,
-                    token: String
-                ): Task<Void> = Tasks.forException(exception)
-            })
+            val api =
+                NearbyExposureNotificationApi(object :
+                    FakeExposureNotificationsClient() {
+                    override fun provideDiagnosisKeys(
+                        files: List<File>,
+                        config: ExposureConfiguration,
+                        token: String
+                    ): Task<Void> = Tasks.forException(exception)
+                })
 
             try {
                 // WHEN
@@ -360,7 +404,7 @@ class ExposureNotificationApiTest {
 
                 // THEN
                 assertTrue(status is DiagnosisKeysResult.FailedDiskIo)
-                assertTrue(file.exists())
+                assertFalse(file.exists())
             } finally {
                 file.delete()
             }
@@ -370,14 +414,16 @@ class ExposureNotificationApiTest {
     fun `getSummary returns the ExposureSummary`() = runBlocking {
         // GIVEN
         val summary = ExposureSummary.ExposureSummaryBuilder().build()
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun getExposureSummary(token: String): Task<ExposureSummary> {
-                if (token != "test") {
-                    throw AssertionError("Incorrect token: $token")
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun getExposureSummary(token: String): Task<ExposureSummary> {
+                    if (token != "test") {
+                        throw AssertionError("Incorrect token: $token")
+                    }
+                    return Tasks.forResult(summary)
                 }
-                return Tasks.forResult(summary)
-            }
-        })
+            })
 
         // WHEN
         val result = api.getSummary("test")
@@ -388,14 +434,16 @@ class ExposureNotificationApiTest {
     @Test
     fun `getSummary with error returns null`() = runBlocking {
         // GIVEN
-        val api = ExposureNotificationApi(object : FakeExposureNotificationsClient() {
-            override fun getExposureSummary(token: String): Task<ExposureSummary> =
-                Tasks.forException(
-                    ApiException(
-                        Status.RESULT_INTERNAL_ERROR
+        val api =
+            NearbyExposureNotificationApi(object :
+                FakeExposureNotificationsClient() {
+                override fun getExposureSummary(token: String): Task<ExposureSummary> =
+                    Tasks.forException(
+                        ApiException(
+                            Status.RESULT_INTERNAL_ERROR
+                        )
                     )
-                )
-        })
+            })
 
         // WHEN
         val result = api.getSummary("test")

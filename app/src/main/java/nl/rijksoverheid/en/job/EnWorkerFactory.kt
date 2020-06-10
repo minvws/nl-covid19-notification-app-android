@@ -19,7 +19,7 @@ class EnWorkerFactory : WorkerFactory() {
         workerParameters: WorkerParameters
     ): ListenableWorker? {
         return when (workerClassName) {
-            DownloadDiagnosisKeysWorker::class.java.name -> DownloadDiagnosisKeysWorker(
+            ProcessManifestWorker::class.java.name -> ProcessManifestWorker(
                 appContext,
                 workerParameters,
                 createExposureNotificationsRepository(appContext)
