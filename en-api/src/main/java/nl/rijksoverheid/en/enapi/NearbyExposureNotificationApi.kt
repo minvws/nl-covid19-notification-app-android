@@ -114,7 +114,7 @@ class NearbyExposureNotificationApi(private val client: ExposureNotificationClie
     /**
      * Provide the diagnostics keys for exposure notifications matching
      *
-     * @param files the list of files to process. The files will be deleted when processing is successful
+     * @param files the list of files to process. The files will be deleted after processing
      * @param configuration the configuration to use for matching
      * @param token token that will be returned as [ExposureNotificationClient.EXTRA_TOKEN] when a match occurs
      * @return the result
@@ -125,7 +125,6 @@ class NearbyExposureNotificationApi(private val client: ExposureNotificationClie
         token: String
     ) = suspendCoroutine<DiagnosisKeysResult> { c ->
         client.provideDiagnosisKeys(files, configuration, token).addOnSuccessListener {
-            files.forEach { it.delete() }
             c.resume(DiagnosisKeysResult.Success)
         }.addOnFailureListener {
             Timber.e(it, "Error while providing diagnosis keys")
@@ -136,6 +135,8 @@ class NearbyExposureNotificationApi(private val client: ExposureNotificationClie
                     else -> DiagnosisKeysResult.UnknownError(it)
                 }
             )
+        }.addOnCompleteListener {
+            files.forEach { it.delete() }
         }
     }
 

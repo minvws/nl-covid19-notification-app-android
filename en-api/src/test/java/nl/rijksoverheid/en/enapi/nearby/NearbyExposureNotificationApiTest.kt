@@ -29,6 +29,7 @@ import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
@@ -345,7 +346,7 @@ class NearbyExposureNotificationApiTest {
     }
 
     @Test
-    fun `provideDiagnosisKeys with generic error keeps files and returns UnknownError`() =
+    fun `provideDiagnosisKeys with generic error removes files and returns UnknownError`() =
         runBlocking {
             // GIVEN
             val file = File.createTempFile("test", "file")
@@ -371,14 +372,14 @@ class NearbyExposureNotificationApiTest {
                 // THEN
                 assertTrue(status is DiagnosisKeysResult.UnknownError)
                 assertSame((status as DiagnosisKeysResult.UnknownError).exception, exception)
-                assertTrue(file.exists())
+                assertFalse(file.exists())
             } finally {
                 file.delete()
             }
         }
 
     @Test
-    fun `provideDiagnosisKeys with disk io error keeps files and returns FailedDiskIo`() =
+    fun `provideDiagnosisKeys with disk io removes files and returns FailedDiskIo`() =
         runBlocking {
             // GIVEN
             val file = File.createTempFile("test", "file")
@@ -403,7 +404,7 @@ class NearbyExposureNotificationApiTest {
 
                 // THEN
                 assertTrue(status is DiagnosisKeysResult.FailedDiskIo)
-                assertTrue(file.exists())
+                assertFalse(file.exists())
             } finally {
                 file.delete()
             }
