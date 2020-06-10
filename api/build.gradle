@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 ext.pocEndpoint = ext.has("pocEndpoint") ? ext.pocEndpoint : "not-set"
-ext.pocApiKey = ext.has("pocApiKey") ? ext.pocApiKey : "not-set"
 
 android {
     compileSdkVersion 29
@@ -18,7 +17,6 @@ android {
         consumerProguardFiles "consumer-rules.pro"
 
         buildConfigField "String", "API_BASE_URL", "\"${pocEndpoint}\""
-        buildConfigField "String", "API_KEY", "\"${pocApiKey}\""
     }
 
     buildTypes {
@@ -34,13 +32,13 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     api 'com.squareup.retrofit2:retrofit:2.8.1'
-    api 'com.squareup.okhttp3:okhttp:4.7.1'
+    api 'com.squareup.okhttp3:okhttp:4.7.2'
 
     implementation 'com.squareup.retrofit2:converter-moshi:2.8.1'
     implementation ('com.squareup.moshi:moshi-kotlin:1.9.2') {
         exclude group: "org.jetbrains.kotlin", module: "kotlin-reflect"
     }
 
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.7.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.2'
 }
