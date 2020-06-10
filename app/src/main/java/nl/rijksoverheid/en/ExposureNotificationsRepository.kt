@@ -32,6 +32,7 @@ import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
+import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
 import retrofit2.Response
@@ -47,14 +48,21 @@ class ExposureNotificationsRepository(
     private val context: Context,
     private val exposureNotificationsApi: ExposureNotificationApi,
     private val api: ExposureNotificationService,
-    private val preferences: SharedPreferences
+    private val preferences: SharedPreferences,
+    private val manifestWorkerScheduler: ProcessManifestWorkerScheduler
 ) {
 
     suspend fun requestEnableNotifications(): EnableNotificationsResult {
-        return exposureNotificationsApi.requestEnableNotifications()
+        val result = exposureNotificationsApi.requestEnableNotifications()
+        if (result == EnableNotificationsResult.Enabled) {
+            // TODO interval from app config
+            manifestWorkerScheduler.schedule(4)
+        }
+        return result
     }
 
     suspend fun requestDisableNotifications(): DisableNotificationsResult {
+        manifestWorkerScheduler.cancel()
         return exposureNotificationsApi.disableNotifications()
     }
 
@@ -197,13 +205,22 @@ class ExposureNotificationsRepository(
     suspend fun processManifest(): ProcessManifestResult {
         return withContext(Dispatchers.IO) {
             try {
-                val keysResult = processExposureKeySets(api.getManifest())
-                if (keysResult is ProcessExposureKeysResult.Success) {
+                val keysSuccessful = if (getStatus() == StatusResult.Enabled) {
+                    processExposureKeySets(api.getManifest()) == ProcessExposureKeysResult.Success
+                } else {
+                    Timber.w("Cannot process keys, exposure notifications api is disabled")
+                    true
+                }
+
+                // TODO process app config and resource bundle
+
+                if (keysSuccessful) {
                     ProcessManifestResult.Success
                 } else {
                     ProcessManifestResult.Error
                 }
             } catch (ex: Exception) {
+                Timber.e(ex, "Error while processing manifest")
                 ProcessManifestResult.Error
             }
         }
@@ -284,6 +301,11 @@ sealed class ProcessExposureKeysResult {
      * Keys processed successfully
      */
     object Success : ProcessExposureKeysResult()
+
+    /**
+     * The Exposure Notifications api is disabled and keys cannot be processed
+     */
+    object Disabled : ProcessExposureKeysResult()
 
     /**
      * A server error occurred

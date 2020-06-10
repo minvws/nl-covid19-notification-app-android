@@ -12,6 +12,8 @@ import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.ExposureNotificationService
 import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
+import nl.rijksoverheid.en.job.ProcessManifestWorker
+import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 
 // cached service instance
@@ -24,7 +26,16 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
         context,
         NearbyExposureNotificationApi(Nearby.getExposureNotificationClient(context)),
         service,
-        context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
+        context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0),
+        object : ProcessManifestWorkerScheduler {
+            override fun schedule(intervalHours: Int) {
+                ProcessManifestWorker.queue(context, intervalHours)
+            }
+
+            override fun cancel() {
+                ProcessManifestWorker.cancel(context)
+            }
+        }
     )
 }
 

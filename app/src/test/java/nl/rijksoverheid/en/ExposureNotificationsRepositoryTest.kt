@@ -15,6 +15,7 @@ import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.api.ExposureNotificationService
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
+import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.Dispatcher
@@ -37,6 +38,15 @@ import java.util.concurrent.atomic.AtomicReference
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
 class ExposureNotificationsRepositoryTest {
     private lateinit var mockWebServer: MockWebServer
+    private val fakeScheduler = object : ProcessManifestWorkerScheduler {
+        override fun schedule(intervalHours: Int) {
+            throw NotImplementedError()
+        }
+
+        override fun cancel() {
+            throw NotImplementedError()
+        }
+    }
 
     @Before
     fun setup() {
@@ -128,7 +138,7 @@ class ExposureNotificationsRepositoryTest {
         val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
             .getSharedPreferences("repository_test", 0)
         val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(), api, service, sharedPrefs
+            ApplicationProvider.getApplicationContext(), api, service, sharedPrefs, fakeScheduler
         )
 
         val result =
@@ -233,7 +243,7 @@ class ExposureNotificationsRepositoryTest {
         }
 
         val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(), api, service, sharedPrefs
+            ApplicationProvider.getApplicationContext(), api, service, sharedPrefs, fakeScheduler
         )
 
         val result = repository.processExposureKeySets(
@@ -286,7 +296,7 @@ class ExposureNotificationsRepositoryTest {
             putStringSet("exposure_key_sets", setOf("test"))
         }
         val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(), api, service, sharedPrefs
+            ApplicationProvider.getApplicationContext(), api, service, sharedPrefs, fakeScheduler
         )
 
         val result = repository.processExposureKeySets(Manifest(listOf("test"), "", "config-param"))
@@ -325,7 +335,11 @@ class ExposureNotificationsRepositoryTest {
             }
 
             val repository = ExposureNotificationsRepository(
-                ApplicationProvider.getApplicationContext(), api, service, sharedPrefs
+                ApplicationProvider.getApplicationContext(),
+                api,
+                service,
+                sharedPrefs,
+                fakeScheduler
             )
 
             val result = repository.processExposureKeySets(Manifest(listOf(), "", "config-params"))
@@ -364,7 +378,11 @@ class ExposureNotificationsRepositoryTest {
                 .getSharedPreferences("repository_test", 0)
 
             val repository = ExposureNotificationsRepository(
-                ApplicationProvider.getApplicationContext(), api, service, sharedPrefs
+                ApplicationProvider.getApplicationContext(),
+                api,
+                service,
+                sharedPrefs,
+                fakeScheduler
             )
 
             val result =
@@ -430,7 +448,11 @@ class ExposureNotificationsRepositoryTest {
                 .getSharedPreferences("repository_test", 0)
 
             val repository = ExposureNotificationsRepository(
-                ApplicationProvider.getApplicationContext(), api, service, sharedPrefs
+                ApplicationProvider.getApplicationContext(),
+                api,
+                service,
+                sharedPrefs,
+                fakeScheduler
             )
 
             val result = repository.processExposureKeySets(
