@@ -16,7 +16,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 
 class StatusViewModel(private val onboardingRepository: OnboardingRepository) : ViewModel() {
-    val headerViewState: LiveData<HeaderViewState> = MutableLiveData(HeaderViewState.Exposed)
+    val headerViewState: LiveData<HeaderViewState> = MutableLiveData(HeaderViewState.Disabled)
 
     fun hasCompletedOnboarding(): Boolean {
         return onboardingRepository.hasCompletedOnboarding()
@@ -29,10 +29,12 @@ class StatusViewModel(private val onboardingRepository: OnboardingRepository) : 
             R.string.status_exposure_detected_description,
             "TODO"
         )
+        HeaderViewState.Disabled -> context.getString(R.string.status_en_api_disabled_description)
+        HeaderViewState.BluetoothDisabled -> context.getString(R.string.status_bluetooth_disabled_description)
     }
 
     fun onPrimaryActionClicked(state: HeaderViewState) {
-        (headerViewState as MutableLiveData).value = HeaderViewState.Active
+        (headerViewState as MutableLiveData).value = HeaderViewState.BluetoothDisabled
     }
 
     fun onSecondaryActionClicked(state: HeaderViewState) {
@@ -56,6 +58,20 @@ class StatusViewModel(private val onboardingRepository: OnboardingRepository) : 
             R.string.status_exposure_detected_headline,
             R.string.status_exposure_what_next,
             R.string.status_reset_exposure
+        )
+
+        object Disabled : HeaderViewState(
+            R.drawable.ic_status_disabled,
+            R.string.status_disabled_headline,
+            R.string.status_en_api_disabled_enable,
+            null
+        )
+
+        object BluetoothDisabled : HeaderViewState(
+            R.drawable.ic_status_disabled,
+            R.string.status_disabled_headline,
+            R.string.status_bluetooth_disabled_enable,
+            null
         )
     }
 }
