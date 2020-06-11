@@ -40,8 +40,11 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.security.SecureRandom
+import java.time.LocalDate
+import java.time.ZoneId
 
-private const val KEY_TOKENS = "tokens"
+private const val KEY_LAST_TOKEN_ID = "last_token_id"
+private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
 
 class ExposureNotificationsRepository(
@@ -226,20 +229,17 @@ class ExposureNotificationsRepository(
         }
     }
 
-    private fun exposureTokens(): Flow<Set<String>> = callbackFlow {
+    private fun exposureToken(): Flow<String?> = callbackFlow {
         val listener =
             SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-                if (key == KEY_TOKENS) {
-                    offer(
-                        sharedPreferences.getStringSet(key, emptySet<String>())
-                            ?: emptySet<String>()
-                    )
+                if (key == KEY_LAST_TOKEN_ID) {
+                    offer(sharedPreferences.getString(key, null))
                 }
             }
 
         preferences.registerOnSharedPreferenceChangeListener(listener)
 
-        offer(preferences.getStringSet(KEY_TOKENS, emptySet<String>()) ?: emptySet<String>())
+        offer(preferences.getString(KEY_LAST_TOKEN_ID, null))
 
         awaitClose {
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
@@ -250,40 +250,44 @@ class ExposureNotificationsRepository(
      * Return the exposure status
      * @return true if exposures are reported, false otherwise
      */
-    fun isExposureDetected(): Flow<Boolean> {
-        return exposureTokens().distinctUntilChanged().map {
-            val activeTokens = mutableSetOf<String>()
-            for (token in it) {
-                val exposure = exposureNotificationsApi.getSummary(token)
-                if (exposure != null) {
-                    activeTokens.add(token)
-                }
+    fun isExposureDetected(): Flow<LocalDate?> {
+        return exposureToken().distinctUntilChanged().map { token ->
+            token?.let { exposureNotificationsApi.getSummary(it) }?.let {
+                LocalDate.ofEpochDay(preferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L))
             }
-
-            activeTokens
-        }.onEach {
-            preferences.edit {
-                putStringSet(KEY_TOKENS, it)
+        }.onEach { date ->
+            if (date == null) {
+                resetExposures()
             }
-        }.map {
-            it.isNotEmpty()
         }
     }
 
     fun resetExposures() {
         preferences.edit {
-            putStringSet(KEY_TOKENS, emptySet())
+            remove(KEY_LAST_TOKEN_ID)
+            remove(KEY_LAST_TOKEN_EXPOSURE_DATE)
         }
     }
 
-    fun addExposure(token: String) {
+    suspend fun addExposure(token: String) {
         Timber.d("New exposure for token $token")
-        val tokens = preferences.getStringSet(KEY_TOKENS, emptySet()) ?: emptySet()
-        if (!tokens.contains(token)) {
-            val newTokens = tokens.toMutableSet().apply {
-                add(token)
+
+        val currentDaysSinceLastExposure = preferences.getString(KEY_LAST_TOKEN_ID, null)
+            ?.let { exposureNotificationsApi.getSummary(it)?.daysSinceLastExposure }
+        val newDaysSinceLastExposure =
+            exposureNotificationsApi.getSummary(token)?.daysSinceLastExposure
+
+        if (newDaysSinceLastExposure != null &&
+            (currentDaysSinceLastExposure == null || newDaysSinceLastExposure < currentDaysSinceLastExposure)
+        ) {
+            // save new exposure
+            preferences.edit {
+                putString(KEY_LAST_TOKEN_ID, token)
+                putLong(
+                    KEY_LAST_TOKEN_EXPOSURE_DATE,
+                    LocalDate.now(ZoneId.systemDefault()).toEpochDay()
+                )
             }
-            preferences.edit { putStringSet(KEY_TOKENS, newTokens) }
         }
     }
 }
