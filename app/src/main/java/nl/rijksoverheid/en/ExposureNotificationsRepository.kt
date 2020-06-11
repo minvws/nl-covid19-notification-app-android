@@ -7,12 +7,15 @@
 package nl.rijksoverheid.en
 
 import android.app.PendingIntent
+import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.location.LocationManager
 import android.util.Base64
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
+import androidx.core.location.LocationManagerCompat
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -70,7 +73,26 @@ class ExposureNotificationsRepository(
     }
 
     suspend fun getStatus(): StatusResult {
-        return exposureNotificationsApi.getStatus()
+        val result = exposureNotificationsApi.getStatus()
+        return if (result == StatusResult.Enabled) {
+            if (isBluetoothEnabled() && isLocationEnabled()) {
+                StatusResult.Enabled
+            } else {
+                StatusResult.Disabled
+            }
+        } else {
+            result
+        }
+    }
+
+    private fun isBluetoothEnabled(): Boolean {
+        val manager = context.getSystemService(BluetoothManager::class.java) ?: return false
+        return manager.adapter.isEnabled
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        return context.getSystemService(LocationManager::class.java)
+            ?.let { LocationManagerCompat.isLocationEnabled(it) } ?: true
     }
 
     /**

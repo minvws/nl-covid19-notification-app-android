@@ -6,10 +6,8 @@
  */
 package nl.rijksoverheid.en.status
 
-import android.content.IntentSender
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -18,8 +16,6 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
-import nl.rijksoverheid.en.lifecyle.EventObserver
-import timber.log.Timber
 
 private const val RC_REQUEST_CONSENT = 1
 
@@ -48,35 +44,8 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
             }
         }
 
-        viewModel.exportTemporaryKeysResult.observe(viewLifecycleOwner, EventObserver {
-            when (it) {
-                is ExposureNotificationsViewModel.ExportKeysResult.RequestConsent -> {
-                    try {
-                        requireActivity().startIntentSenderFromFragment(
-                            this,
-                            it.resolution.intentSender,
-                            RC_REQUEST_CONSENT,
-                            null,
-                            0,
-                            0,
-                            0,
-                            null
-                        )
-                    } catch (ex: IntentSender.SendIntentException) {
-                        Timber.e(ex, "Error requesting consent")
-                    }
-                }
-                ExposureNotificationsViewModel.ExportKeysResult.Success -> Toast.makeText(
-                    requireContext(),
-                    R.string.status_upload_success,
-                    Toast.LENGTH_LONG
-                ).show()
-                ExposureNotificationsViewModel.ExportKeysResult.Error -> Toast.makeText(
-                    requireContext(),
-                    R.string.status_upload_failure,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+        viewLifecycleOwner.lifecycle.addObserver(PreconditionsHelper(requireContext()) {
+            viewModel.refreshStatus()
         })
     }
 

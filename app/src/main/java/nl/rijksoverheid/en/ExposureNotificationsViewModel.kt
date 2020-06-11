@@ -18,19 +18,25 @@ import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.lifecyle.Event
 import timber.log.Timber
+import java.time.LocalDate
 
 class ExposureNotificationsViewModel(private val repository: ExposureNotificationsRepository) :
     ViewModel() {
 
-    val notificationState: LiveData<NotificationsState> = MutableLiveData()
+    val notificationState: LiveData<NotificationsState> =
+        MutableLiveData(NotificationsState.Enabled)
     val notificationsResult: LiveData<Event<NotificationsStatusResult>> = MutableLiveData()
     val exportTemporaryKeysResult: LiveData<Event<ExportKeysResult>> = MutableLiveData()
 
-    val exposureDetected: LiveData<Boolean>
+    val exposureDetected: LiveData<LocalDate?>
         get() = repository.isExposureDetected()
             .asLiveData(context = viewModelScope.coroutineContext)
 
     init {
+        refreshStatus()
+    }
+
+    fun refreshStatus() {
         viewModelScope.launch {
             when (val result = repository.getStatus()) {
                 is StatusResult.Enabled -> updateState(NotificationsState.Enabled)
