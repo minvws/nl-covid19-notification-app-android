@@ -27,7 +27,8 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
                 createOnboardingRepository(context)
             ) as T
             StatusViewModel::class.java -> StatusViewModel(
-                createOnboardingRepository(context)
+                createOnboardingRepository(context),
+                createExposureNotificationsRepository(context)
             ) as T
             else -> throw IllegalStateException("Unknown view model class $modelClass")
         }

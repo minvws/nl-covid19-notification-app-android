@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+  ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+  ~
+  ~   SPDX-License-Identifier: EUPL-1.2
+  ~
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="nl.rijksoverheid.en.status.StatusViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/clouds"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
+            android:contentDescription="@null"
+            android:src="@drawable/illustration_clouds"
+            app:layout_constraintDimensionRatio="H,360:74"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:drawablePadding="24dp"
+            android:gravity="center_horizontal"
+            android:text="@{viewModel.headerViewState.headline}"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            app:drawableTopCompat="@{viewModel.headerViewState.icon}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clouds"
+            tools:drawableTopCompat="@drawable/ic_status_no_exposure"
+            tools:text="@string/status_no_exposure_detected_headline" />
+
+        <TextView
+            android:id="@+id/status_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:gravity="center_horizontal"
+            android:text="@{viewModel.getDescription(context, viewModel.headerViewState)}"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/status"
+            tools:text="@string/status_no_exposure_detected_description" />
+
+        <Space
+            android:id="@+id/illustration_top"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            app:layout_constraintBottom_toBottomOf="@id/status_subtitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/no_exposure_illustration"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@null"
+            android:src="@drawable/illustration_status"
+            app:layout_constraintDimensionRatio="H,320:215"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/illustration_top"
+            app:show="@{viewModel.headerViewState.primaryAction == null}" />
+
+        <LinearLayout
+            android:id="@+id/exposure_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/status_subtitle">
+
+            <Button
+                android:id="@+id/exposure_what_next"
+                style="@style/Widget.App.Button.Primary.Rounded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="@{() -> viewModel.onPrimaryActionClicked(viewModel.headerViewState)}"
+                app:showIfLabelSet="@{viewModel.HeaderViewState.primaryAction}"
+                tools:text="@string/status_exposure_what_next" />
+
+            <Button
+                android:id="@+id/exposure_reset"
+                style="@style/Widget.App.Button.Secondary.Rounded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:onClick="@{() -> viewModel.onSecondaryActionClicked(viewModel.headerViewState)}"
+                app:showIfLabelSet="@{viewModel.HeaderViewState.secondaryAction}"
+                tools:text="@string/status_reset_exposure" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

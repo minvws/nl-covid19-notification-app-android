@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+  ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+  ~
+  ~   SPDX-License-Identifier: EUPL-1.2
+  ~
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="nl.rijksoverheid.en.status.StatusViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/error_background"
+        android:elevation="8dp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        app:show="@{viewModel.shouldShowErrorState}">
+
+        <TextView
+            android:id="@+id/snackbar_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.getErrorText(context, viewModel.errorViewState)}"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="?attr/colorOnError"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="De app heeft blootstelling permissie nodig om te kunnen werken." />
+
+        <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton.Snackbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.onErrorActionClicked(viewModel.errorViewState)}"
+            android:textColor="?attr/colorOnError"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/snackbar_text"
+            app:showIfLabelSet="@{viewModel.errorViewState.actionLabel}"
+            tools:text="Zet blootstelling aan" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

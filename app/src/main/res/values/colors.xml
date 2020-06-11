@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#1F529B</color>
-    <color name="color_secondary">#F2F2F2</color>
-    <color name="color_secondary_variant">#DDDDDD</color>
-    <color name="notification_status">#F6F6FA</color>
-    <color name="notification_status_active">#34C759</color>
-    <color name="notification_status_exposed">#EA7A3B</color>
+    <color name="color_primary">@color/dark_blue</color>
+    <color name="color_secondary">@color/gray_lighter</color>
+    <color name="color_secondary_variant">@color/gray_light</color>
+    <color name="notification_status_active">@color/green</color>
+    <color name="notification_status_exposed">@color/red</color>
+    <color name="divider">@color/gray_lighter</color>
+    <color name="error_surface">@color/dark_red</color>
+
+    <!-- Color palette -->
+    <color name="dark_blue">#0047FF</color>
+    <color name="dark_yellow">#FFB612</color>
+    <color name="ruby_red">#B74B9F</color>
+    <color name="subtle_green">#119E7E</color>
+
+    <color name="gray_lighter">#F2F2F7</color>
+    <color name="gray_light">#DDDDDD</color>
+    <color name="dark_red">#8e0706</color>
+    <color name="red">#D00000</color>
+    <color name="green">#34C759</color>
 </resources>

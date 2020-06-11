@@ -6,11 +6,8 @@
  */
 package nl.rijksoverheid.en.status
 
-import android.content.IntentSender
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -19,11 +16,6 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
-import nl.rijksoverheid.en.job.ProcessManifestWorker
-import nl.rijksoverheid.en.lifecyle.EventObserver
-import timber.log.Timber
-
-private const val RC_REQUEST_CONSENT = 1
 
 class StatusFragment : BaseFragment(R.layout.fragment_status) {
     private val statusViewModel: StatusViewModel by viewModels()
@@ -37,14 +29,8 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         }
 
         val binding = FragmentStatusBinding.bind(view)
-
-        binding.toolbar.inflateMenu(R.menu.status)
-        binding.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.menu_status_check -> ProcessManifestWorker.queue(requireContext())
-            }
-            true
-        }
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = statusViewModel
 
         viewModel.notificationState.observe(viewLifecycleOwner) {
             when (it) {
@@ -56,56 +42,9 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
             }
         }
 
-        viewModel.exportTemporaryKeysResult.observe(viewLifecycleOwner, EventObserver {
-            when (it) {
-                is ExposureNotificationsViewModel.ExportKeysResult.RequestConsent -> {
-                    try {
-                        requireActivity().startIntentSenderFromFragment(
-                            this,
-                            it.resolution.intentSender,
-                            RC_REQUEST_CONSENT,
-                            null,
-                            0,
-                            0,
-                            0,
-                            null
-                        )
-                    } catch (ex: IntentSender.SendIntentException) {
-                        Timber.e(ex, "Error requesting consent")
-                    }
-                }
-                ExposureNotificationsViewModel.ExportKeysResult.Success -> Toast.makeText(
-                    requireContext(),
-                    R.string.status_upload_success,
-                    Toast.LENGTH_LONG
-                ).show()
-                ExposureNotificationsViewModel.ExportKeysResult.Error -> Toast.makeText(
-                    requireContext(),
-                    R.string.status_upload_failure,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+        viewLifecycleOwner.lifecycle.addObserver(PreconditionsHelper(requireContext()) {
+            statusViewModel.refreshStatus()
         })
-
-        viewModel.exposureDetected.observe(viewLifecycleOwner) {
-            Timber.d("Exposure = $it")
-            val drawableRes =
-                if (it) R.drawable.ic_status_exposure else R.drawable.ic_status_no_exposure
-            val headline =
-                if (it) R.string.status_exposure_detected_headline else R.string.status_no_exposure_detected_headline
-            binding.status.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                null,
-                AppCompatResources.getDrawable(requireContext(), drawableRes),
-                null,
-                null
-            )
-            binding.status.setText(headline)
-            binding.resetStatus.visibility = if (it) View.VISIBLE else View.INVISIBLE
-        }
-
-        binding.resetStatus.setOnClickListener {
-            viewModel.resetExposures()
-        }
     }
 
     private fun showApiUnavailableError() {
