@@ -17,7 +17,7 @@
     <string name="status_no_exposure_detected_headline">De app is actief</string>
     <string name="status_no_exposure_detected_description">Je krijgt een melding nadat je extra kans op besmetting hebt gelopen.</string>
     <string name="status_exposure_detected_headline">Je hebt extra kans op besmetting gelopen</string>
-    <string name="status_exposure_detected_description">Je bent op %s dicht bij iemand geweest die daarna positief is getest op het coronavirus.</string>
+    <string name="status_exposure_detected_description">Je bent op %1$s dicht bij iemand geweest die daarna positief is getest op het coronavirus.</string>
     <string name="status_notifications_active">Actief</string>
     <string name="status_menu_report">Positieve test</string>
     <string name="status_upload_success">Upload geslaagd</string>

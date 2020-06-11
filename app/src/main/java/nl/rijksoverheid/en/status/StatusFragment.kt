@@ -10,7 +10,6 @@ import android.content.IntentSender
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -36,6 +35,8 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         }
 
         val binding = FragmentStatusBinding.bind(view)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = statusViewModel
 
         viewModel.notificationState.observe(viewLifecycleOwner) {
             when (it) {
@@ -77,27 +78,6 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
                 ).show()
             }
         })
-
-        viewModel.exposureDetected.observe(viewLifecycleOwner) {
-            Timber.d("Exposure = $it")
-            val drawableRes =
-                if (it) R.drawable.ic_status_exposure else R.drawable.ic_status_no_exposure
-            val headline =
-                if (it) R.string.status_exposure_detected_headline else R.string.status_no_exposure_detected_headline
-            binding.status.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                null,
-                AppCompatResources.getDrawable(requireContext(), drawableRes),
-                null,
-                null
-            )
-            binding.status.setText(headline)
-            binding.noExposureIllustration.visibility = if (it) View.GONE else View.VISIBLE
-            binding.exposureButtons.visibility = if (it) View.VISIBLE else View.GONE
-        }
-
-        binding.exposureReset.setOnClickListener {
-            viewModel.resetExposures()
-        }
     }
 
     private fun showApiUnavailableError() {
