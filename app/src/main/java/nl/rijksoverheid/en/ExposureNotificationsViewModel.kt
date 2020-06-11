@@ -29,7 +29,7 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
     val exportTemporaryKeysResult: LiveData<Event<ExportKeysResult>> = MutableLiveData()
 
     val exposureDetected: LiveData<LocalDate?>
-        get() = repository.isExposureDetected()
+        get() = repository.getLastExposureDate()
             .asLiveData(context = viewModelScope.coroutineContext)
 
     init {

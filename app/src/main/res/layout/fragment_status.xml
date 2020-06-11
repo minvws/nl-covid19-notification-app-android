@@ -9,95 +9,111 @@
             type="nl.rijksoverheid.en.status.StatusViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/status_header"
-                layout="@layout/include_status_header"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:viewModel="@{viewModel}" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/info_item_1"
-                layout="@layout/include_status_info_item"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:infoIcon="@{@drawable/ic_lock}"
-                app:infoIconColor="@{@color/subtle_green}"
-                app:infoSubtitle="@{@string/status_info_1_subtitle}"
-                app:infoTitle="@{@string/status_info_1_title}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/status_header" />
+                <include
+                    android:id="@+id/status_header"
+                    layout="@layout/include_status_header"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:viewModel="@{viewModel}" />
 
-            <include
-                android:id="@+id/info_item_2"
-                layout="@layout/include_status_info_item"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:infoIcon="@{@drawable/ic_warning}"
-                app:infoIconColor="@{@color/dark_blue}"
-                app:infoSubtitle="@{@string/status_info_2_subtitle}"
-                app:infoTitle="@{@string/status_info_2_title}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/info_item_1" />
+                <include
+                    android:id="@+id/info_item_1"
+                    layout="@layout/include_status_info_item"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:infoIcon="@{@drawable/ic_lock}"
+                    app:infoIconColor="@{@color/subtle_green}"
+                    app:infoSubtitle="@{@string/status_info_1_subtitle}"
+                    app:infoTitle="@{@string/status_info_1_title}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/status_header" />
 
-            <include
-                android:id="@+id/info_item_3"
-                layout="@layout/include_status_info_item"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:infoIcon="@{@drawable/ic_syringe}"
-                app:infoIconColor="@{@color/ruby_red}"
-                app:infoSubtitle="@{@string/status_info_3_subtitle}"
-                app:infoTitle="@{@string/status_info_3_title}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/info_item_2" />
+                <include
+                    android:id="@+id/info_item_2"
+                    layout="@layout/include_status_info_item"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:infoIcon="@{@drawable/ic_warning}"
+                    app:infoIconColor="@{@color/dark_blue}"
+                    app:infoSubtitle="@{@string/status_info_2_subtitle}"
+                    app:infoTitle="@{@string/status_info_2_title}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/info_item_1" />
+
+                <include
+                    android:id="@+id/info_item_3"
+                    layout="@layout/include_status_info_item"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:infoIcon="@{@drawable/ic_syringe}"
+                    app:infoIconColor="@{@color/ruby_red}"
+                    app:infoSubtitle="@{@string/status_info_3_subtitle}"
+                    app:infoTitle="@{@string/status_info_3_title}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/info_item_2" />
 
 
-            <include
-                android:id="@+id/info_item_4"
-                layout="@layout/include_status_info_item"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:infoIcon="@{@drawable/ic_bed}"
-                app:infoIconColor="@{@color/dark_yellow}"
-                app:infoSubtitle="@{@string/status_info_4_subtitle}"
-                app:infoTitle="@{@string/status_info_4_title}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/info_item_3" />
+                <include
+                    android:id="@+id/info_item_4"
+                    layout="@layout/include_status_info_item"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:infoIcon="@{@drawable/ic_bed}"
+                    app:infoIconColor="@{@color/dark_yellow}"
+                    app:infoSubtitle="@{@string/status_info_4_subtitle}"
+                    app:infoTitle="@{@string/status_info_4_title}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/info_item_3" />
 
-            <Button
-                android:id="@+id/action_settings"
-                style="@style/Widget.App.Button.Secondary"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginBottom="32dp"
-                android:text="@string/status_action_3"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/info_item_4" />
+                <Button
+                    android:id="@+id/action_settings"
+                    style="@style/Widget.App.Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="32dp"
+                    android:text="@string/status_action_3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/info_item_4" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+
+        <include
+            layout="@layout/include_status_error"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:viewModel="@{viewModel}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

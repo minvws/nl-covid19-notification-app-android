@@ -272,7 +272,7 @@ class ExposureNotificationsRepository(
      * Return the exposure status
      * @return true if exposures are reported, false otherwise
      */
-    fun isExposureDetected(): Flow<LocalDate?> {
+    fun getLastExposureDate(): Flow<LocalDate?> {
         return exposureToken().distinctUntilChanged().map { token ->
             token?.let { exposureNotificationsApi.getSummary(it) }?.let {
                 LocalDate.ofEpochDay(preferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L))

@@ -17,8 +17,6 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 
-private const val RC_REQUEST_CONSENT = 1
-
 class StatusFragment : BaseFragment(R.layout.fragment_status) {
     private val statusViewModel: StatusViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
@@ -45,7 +43,7 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         }
 
         viewLifecycleOwner.lifecycle.addObserver(PreconditionsHelper(requireContext()) {
-            viewModel.refreshStatus()
+            statusViewModel.refreshStatus()
         })
     }
 

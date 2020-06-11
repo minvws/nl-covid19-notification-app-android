@@ -52,4 +52,6 @@
     <string name="cd_status_info_2">TODO cd_status_info_2</string>
     <string name="cd_status_info_3">TODO cd_status_info_3</string>
     <string name="status_exposure_what_next">Wat moet ik nu doen?</string>
+    <string name="status_error_consent_required">De app heeft blootstelling permissie nodig om te kunnen werken.</string>
+    <string name="status_error_action_consent">Zet blootstelling aan</string>
 </resources>
