@@ -8,19 +8,17 @@ package nl.rijksoverheid.en.job
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.NavDeepLinkBuilder
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.ExposureNotificationsRepository
-import nl.rijksoverheid.en.MainActivity
 import nl.rijksoverheid.en.R
 
 private const val KEY_TOKEN = "token"
@@ -54,10 +52,10 @@ class ExposureNotificationJob(
 
     private fun showNotification(context: Context) {
         createNotificationChannel(context)
-        val intent =
-            Intent(context, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        val pendingIntent = NavDeepLinkBuilder(context)
+            .setGraph(R.navigation.nav_main)
+            .setDestination(R.id.nav_post_notification)
+            .createPendingIntent()
         val builder =
             NotificationCompat.Builder(
                 context,

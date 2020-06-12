@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/error_background"
+        android:backgroundTint="@color/error_surface"
         android:elevation="8dp"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
