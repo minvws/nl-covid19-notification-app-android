@@ -12,7 +12,6 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -44,7 +43,6 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
         withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_1_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_1_description)))
-            onView(withId(R.id.illustration)).check(matches(withContentDescription(R.string.cd_illustration_explanation_step_1)))
 
             onView(withId(R.id.next)).perform(click())
 
@@ -67,7 +65,6 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
         withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_2_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_2_description)))
-            onView(withId(R.id.illustration)).check(matches(withContentDescription(R.string.cd_illustration_explanation_step_2)))
 
             onView(withId(R.id.next)).perform(click())
 
@@ -91,7 +88,6 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
         withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_3_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_3_description)))
-            onView(withId(R.id.illustration)).check(matches(withContentDescription(R.string.cd_illustration_explanation_step_3)))
 
             onView(withId(R.id.next)).perform(click())
 

@@ -27,8 +27,8 @@
             android:defaultValue="@drawable/illustration_explanation_step_1"
             app:argType="reference" />
         <argument
-            android:name="illustration_content_description"
-            android:defaultValue="@string/cd_illustration_explanation_step_1"
+            android:name="nextAction"
+            android:defaultValue="@id/action_next"
             app:argType="reference" />
         <action
             android:id="@+id/action_next"
@@ -57,8 +57,8 @@
             android:defaultValue="@drawable/illustration_explanation_step_2"
             app:argType="reference" />
         <argument
-            android:name="illustration_content_description"
-            android:defaultValue="@string/cd_illustration_explanation_step_2"
+            android:name="nextAction"
+            android:defaultValue="@id/action_next"
             app:argType="reference" />
         <action
             android:id="@id/action_next"
@@ -86,10 +86,7 @@
             android:name="illustration"
             android:defaultValue="@drawable/illustration_explanation_step_3"
             app:argType="reference" />
-        <argument
-            android:name="illustration_content_description"
-            android:defaultValue="@string/cd_illustration_explanation_step_3"
-            app:argType="reference" />
+
         <action
             android:id="@id/action_next"
             app:destination="@id/nav_enable_api" />

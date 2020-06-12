@@ -30,7 +30,7 @@
             android:id="@+id/illustration"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/cd_illustration_explanation_step_1"
+            android:contentDescription="@null"
             android:src="@drawable/illustration_explanation_step_1"
             app:layout_constraintBottom_toTopOf="@id/headline"
             app:layout_constraintEnd_toEndOf="parent"
