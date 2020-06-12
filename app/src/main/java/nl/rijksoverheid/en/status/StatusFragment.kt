@@ -24,7 +24,9 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (!statusViewModel.hasCompletedOnboarding()) {
+        if (!statusViewModel.isPlayServicesUpToDate()) {
+            findNavController().navigate(StatusFragmentDirections.actionUpdatePlayServices())
+        } else if (!statusViewModel.hasCompletedOnboarding()) {
             findNavController().navigate(StatusFragmentDirections.actionOnboarding())
         }
 

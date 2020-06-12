@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
     app:startDestination="@id/nav_status">
 
     <fragment
+        tools:layout="@layout/fragment_status"
         android:id="@+id/nav_status"
         android:name="nl.rijksoverheid.en.status.StatusFragment">
         <action
@@ -14,7 +16,22 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
+            android:id="@+id/action_update_play_services"
+            app:destination="@id/nav_update_google_play_services"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
     </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_update_google_play_services"
+        android:name="nl.rijksoverheid.en.onboarding.GooglePlayServicesUpdateRequiredFragment"
+        tools:layout="@layout/fragment_google_play_services_upgrade_required"></fragment>
 
     <include app:graph="@navigation/nav_onboarding" />
 
