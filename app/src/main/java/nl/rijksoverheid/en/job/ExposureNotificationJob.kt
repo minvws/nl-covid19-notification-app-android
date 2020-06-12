@@ -21,15 +21,16 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.R
+import java.time.Clock
 import java.time.LocalDate
-import java.time.ZoneId
 
 private const val KEY_TOKEN = "token"
 
 class ExposureNotificationJob(
     context: Context,
     params: WorkerParameters,
-    private val repository: ExposureNotificationsRepository
+    private val repository: ExposureNotificationsRepository,
+    private val clock: Clock = Clock.systemDefaultZone()
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
@@ -59,7 +60,7 @@ class ExposureNotificationJob(
 
     private fun showNotification(context: Context, daysSinceLastExposure: Int) {
         createNotificationChannel(context)
-        val dayOfLastExposure = LocalDate.now(ZoneId.systemDefault())
+        val dayOfLastExposure = LocalDate.now(clock)
             .minusDays(daysSinceLastExposure.toLong()).toEpochDay()
 
         val pendingIntent = NavDeepLinkBuilder(context)

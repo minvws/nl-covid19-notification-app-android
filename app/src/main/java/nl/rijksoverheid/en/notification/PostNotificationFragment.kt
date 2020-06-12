@@ -17,12 +17,14 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
+import java.time.Clock
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 
-class PostNotificationFragment : BaseFragment(R.layout.fragment_list) {
-
+class PostNotificationFragment(
+    private val clock: Clock = Clock.systemDefaultZone()
+) : BaseFragment(R.layout.fragment_list) {
     private val args: PostNotificationFragmentArgs by navArgs()
 
     private val adapter = GroupAdapter<GroupieViewHolder>()
@@ -32,7 +34,7 @@ class PostNotificationFragment : BaseFragment(R.layout.fragment_list) {
 
         val exposureDate = LocalDate.ofEpochDay(args.epochDayOfLastExposure)
 
-        val daysSince = Period.between(exposureDate, LocalDate.now()).days
+        val daysSince = Period.between(exposureDate, LocalDate.now(clock)).days
         val daysSinceString =
             requireContext().resources.getQuantityString(R.plurals.days, daysSince, daysSince)
 

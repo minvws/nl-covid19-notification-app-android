@@ -43,8 +43,8 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.security.SecureRandom
+import java.time.Clock
 import java.time.LocalDate
-import java.time.ZoneId
 
 private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
@@ -55,7 +55,8 @@ class ExposureNotificationsRepository(
     private val exposureNotificationsApi: ExposureNotificationApi,
     private val api: ExposureNotificationService,
     private val preferences: SharedPreferences,
-    private val manifestWorkerScheduler: ProcessManifestWorkerScheduler
+    private val manifestWorkerScheduler: ProcessManifestWorkerScheduler,
+    private val clock: Clock = Clock.systemDefaultZone()
 ) {
 
     suspend fun requestEnableNotifications(): EnableNotificationsResult {
@@ -311,7 +312,7 @@ class ExposureNotificationsRepository(
                 putString(KEY_LAST_TOKEN_ID, token)
                 putLong(
                     KEY_LAST_TOKEN_EXPOSURE_DATE,
-                    LocalDate.now(ZoneId.systemDefault())
+                    LocalDate.now(clock)
                         .minusDays(newDaysSinceLastExposure.toLong()).toEpochDay()
                 )
             }
