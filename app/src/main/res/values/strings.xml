@@ -33,7 +33,7 @@
     <string name="notification_message">U bent in de buurt geweest bij iemand met COVID-19</string>
     <string name="post_notification_toolbar_title">Kans op besmetting</string>
     <string name="post_notification_header_1">Je bent in de buurt geweest van iemand met het coronavirus [DIT IS EEN TEST BERICHT]</string>
-    <string name="post_notification_paragraph_2" tools:ignore="Typos">Je was 10 dagen geleden (op maandag 1 juni) dicht bij iemand die daarna positief is getest op het coronavirus. Het RIVM en de GGD zien dit als een situatie waarin je extra kans op besmetting hebt gelopen. Als je inderdaad besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
+    <string name="post_notification_paragraph_2" tools:ignore="Typos">Je was %1$s geleden (op %2$s) dicht bij iemand die daarna positief is getest op het coronavirus. Het RIVM en de GGD zien dit als een situatie waarin je extra kans op besmetting hebt gelopen. Als je inderdaad besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
     <string name="post_notification_header_3">Klachten die passen bij het coronavirus (COVID-19)</string>
     <string name="post_notification_paragraph_4">(licht) hoesten\nloopneus, niezen, keelpijn\nverlies van geur en/of smaak\nkortademigheid/benauwdheid\nkoorts boven de 38 graden</string>
     <string name="post_notification_paragraph_5">Heb je klachten? Blijf dan zoveel mogelijk thuis. Zijn het ernstige klachten? Bel meteen je huisarts.</string>
@@ -66,4 +66,9 @@
     <string name="status_exposure_what_next">Wat moet ik nu doen?</string>
     <string name="status_error_consent_required">De app heeft blootstelling permissie nodig om te kunnen werken.</string>
     <string name="status_error_action_consent">Zet blootstelling aan</string>
+    <plurals name="days">
+        <item quantity="zero">vandaag</item>
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dagen</item>
+    </plurals>
 </resources>

@@ -274,9 +274,10 @@ class ExposureNotificationsRepository(
      */
     fun getLastExposureDate(): Flow<LocalDate?> {
         return exposureToken().distinctUntilChanged().map { token ->
-            token?.let { exposureNotificationsApi.getSummary(it) }?.let {
+            val hasSummary = token?.let { exposureNotificationsApi.getSummary(it) } != null
+            if (hasSummary || (BuildConfig.DEBUG && token == "TEST-TOKEN")) {
                 LocalDate.ofEpochDay(preferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L))
-            }
+            } else null
         }.onEach { date ->
             if (date == null) {
                 resetExposures()
@@ -291,13 +292,16 @@ class ExposureNotificationsRepository(
         }
     }
 
-    suspend fun addExposure(token: String) {
+    suspend fun addExposure(token: String): Int? {
         Timber.d("New exposure for token $token")
 
         val currentDaysSinceLastExposure = preferences.getString(KEY_LAST_TOKEN_ID, null)
             ?.let { exposureNotificationsApi.getSummary(it)?.daysSinceLastExposure }
-        val newDaysSinceLastExposure =
+        val newDaysSinceLastExposure = if (BuildConfig.DEBUG && token == "TEST-TOKEN") {
+            5 // TODO make dynamic from debug screen
+        } else {
             exposureNotificationsApi.getSummary(token)?.daysSinceLastExposure
+        }
 
         if (newDaysSinceLastExposure != null &&
             (currentDaysSinceLastExposure == null || newDaysSinceLastExposure < currentDaysSinceLastExposure)
@@ -307,10 +311,12 @@ class ExposureNotificationsRepository(
                 putString(KEY_LAST_TOKEN_ID, token)
                 putLong(
                     KEY_LAST_TOKEN_EXPOSURE_DATE,
-                    LocalDate.now(ZoneId.systemDefault()).toEpochDay()
+                    LocalDate.now(ZoneId.systemDefault())
+                        .minusDays(newDaysSinceLastExposure.toLong()).toEpochDay()
                 )
             }
         }
+        return newDaysSinceLastExposure
     }
 }
 

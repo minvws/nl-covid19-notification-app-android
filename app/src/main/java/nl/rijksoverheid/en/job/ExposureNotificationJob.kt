@@ -10,6 +10,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavDeepLinkBuilder
@@ -20,6 +21,8 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.R
+import java.time.LocalDate
+import java.time.ZoneId
 
 private const val KEY_TOKEN = "token"
 
@@ -31,8 +34,12 @@ class ExposureNotificationJob(
 
     override suspend fun doWork(): Result {
         val token = inputData.getString(KEY_TOKEN)!!
-        repository.addExposure(token)
-        showNotification(applicationContext)
+        val daysSinceLastExposure = repository.addExposure(token)
+        // TODO Question: Should we always trigger a notification, or only if the exposure is newer?
+        // Only show notification when this exposure is the most recent and still valid
+        if (daysSinceLastExposure != null) {
+            showNotification(applicationContext, daysSinceLastExposure)
+        }
         return Result.success()
     }
 
@@ -50,11 +57,15 @@ class ExposureNotificationJob(
         }
     }
 
-    private fun showNotification(context: Context) {
+    private fun showNotification(context: Context, daysSinceLastExposure: Int) {
         createNotificationChannel(context)
+        val dayOfLastExposure = LocalDate.now(ZoneId.systemDefault())
+            .minusDays(daysSinceLastExposure.toLong()).toEpochDay()
+
         val pendingIntent = NavDeepLinkBuilder(context)
             .setGraph(R.navigation.nav_main)
             .setDestination(R.id.nav_post_notification)
+            .setArguments(Bundle().apply { putLong("epochDayOfLastExposure", dayOfLastExposure) })
             .createPendingIntent()
         val builder =
             NotificationCompat.Builder(

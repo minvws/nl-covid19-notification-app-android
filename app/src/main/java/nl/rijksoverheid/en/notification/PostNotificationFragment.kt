@@ -11,25 +11,43 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
+import java.time.LocalDate
+import java.time.Period
+import java.time.format.DateTimeFormatter
 
 class PostNotificationFragment : BaseFragment(R.layout.fragment_list) {
+
+    private val args: PostNotificationFragmentArgs by navArgs()
+
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter.add(PostNotificationSection(
-            onCallClicked = {
-                // TODO choose phone number
-                startActivity(Intent(Intent.ACTION_DIAL).apply {
-                    data = Uri.parse("tel:0800-1202")
-                })
-            }
-        ))
+
+        val exposureDate = LocalDate.ofEpochDay(args.epochDayOfLastExposure)
+
+        val daysSince = Period.between(exposureDate, LocalDate.now()).days
+        val daysSinceString =
+            requireContext().resources.getQuantityString(R.plurals.days, daysSince, daysSince)
+
+        adapter.add(
+            PostNotificationSection(
+                onCallClicked = {
+                    // TODO choose phone number
+                    startActivity(Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse("tel:0800-1202")
+                    })
+                },
+                daysSince = daysSinceString,
+                date = DateTimeFormatter.ofPattern("EEEE d MMMM").format(exposureDate)
+            )
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -11,11 +11,14 @@ import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemParagraphBinding
 
-class ParagraphItem(@StringRes val text: Int) : BaseBindableItem<ItemParagraphBinding>() {
+class ParagraphItem(
+    @StringRes val text: Int,
+    vararg val formatArgs: Any
+) : BaseBindableItem<ItemParagraphBinding>() {
     override fun getLayout() = R.layout.item_paragraph
 
     override fun bind(viewBinding: ItemParagraphBinding, position: Int) {
-        viewBinding.text = text
+        viewBinding.text = viewBinding.root.context.getString(text, *formatArgs)
     }
 
     override fun isSameAs(other: Item<*>): Boolean = other is ParagraphItem && other.text == text
