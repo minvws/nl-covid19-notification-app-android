@@ -19,6 +19,7 @@
     <string name="onboarding_consent_request">Inschakelen</string>
     <string name="onboarding_consent_explain">Hoe werkt de app precies?</string>
     <string name="onboarding_consent_skip">Sla over</string>
+    <string name="onboarding_how_it_works_toolbar_title">Hoe werkt de app?</string>
     <string name="status_no_exposure_detected_headline">De app is actief</string>
     <string name="status_no_exposure_detected_description">Je krijgt een melding nadat je extra kans op besmetting hebt gelopen.</string>
     <string name="status_exposure_detected_headline">Je hebt extra kans op besmetting gelopen</string>
@@ -64,6 +65,12 @@
     <string name="status_exposure_what_next">Wat moet ik nu doen?</string>
     <string name="status_error_consent_required">De app heeft blootstelling permissie nodig om te kunnen werken.</string>
     <string name="status_error_action_consent">Zet blootstelling aan</string>
+    <string name="faq_header">Veelgestelde vragen</string>
+    <string name="faq_1">Kan de app mijn locatie zien?</string>
+    <string name="faq_2">Hoe kan de app anoniem zijn?</string>
+    <string name="faq_3">Wanneer krijg ik een melding van de app?</string>
+    <string name="faq_4">Werkt Bluetooth door muren heen?</string>
+    <string name="faq_5">Hoeveel stroom gebruikt de app?</string>
     <string name="update_google_play_services">Updaten</string>
     <string name="update_google_play_services_headline">Je Google Play Services is niet bijgewerkt</string>
     <string name="update_google_play_services_description">%1$s heeft de nieuwste versie van Google Play Services nodig om goed te blijven werken op je telefoon.</string>
