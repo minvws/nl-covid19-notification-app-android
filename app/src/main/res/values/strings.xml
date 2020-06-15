@@ -44,14 +44,10 @@
     <string name="status_action_1">Coronatest aanvragen</string>
     <string name="status_action_2">App delen</string>
     <string name="status_action_3">Instellingen</string>
-    <string name="cd_illustration_explanation_step_1">TODO cd_illustration_explanation_step_1</string>
-    <string name="cd_illustration_explanation_step_2">TODO cd_illustration_explanation_step_2</string>
-    <string name="cd_illustration_explanation_step_3">TODO cd_illustration_explanation_step_3</string>
-    <string name="cd_ic_shield_check">TODO</string>
-    <string name="cd_status_info_1">TODO cd_status_info_1</string>
-    <string name="cd_status_info_2">TODO cd_status_info_2</string>
-    <string name="cd_status_info_3">TODO cd_status_info_3</string>
     <string name="status_exposure_what_next">Wat moet ik nu doen?</string>
     <string name="status_error_consent_required">De app heeft blootstelling permissie nodig om te kunnen werken.</string>
     <string name="status_error_action_consent">Zet blootstelling aan</string>
+    <string name="update_google_play_services">Bijwerken</string>
+    <string name="update_google_play_services_headline">Je Google Play Services is niet bijgewerkt</string>
+    <string name="update_google_play_services_description">%1$s heeft de nieuwste versie van Google Play Services nodig om goed te blijven werken op je telefoon.</string>
 </resources>

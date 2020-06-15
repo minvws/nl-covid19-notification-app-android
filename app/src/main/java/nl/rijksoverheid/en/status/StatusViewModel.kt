@@ -33,6 +33,8 @@ class StatusViewModel(
 
     private val refreshStatus = MutableLiveData(Unit)
 
+    fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
+
     val headerViewState = refreshStatus.switchMap {
         liveData {
             emit(notificationsRepository.getStatus())

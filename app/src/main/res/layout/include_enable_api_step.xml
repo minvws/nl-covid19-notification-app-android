@@ -5,7 +5,8 @@
   ~   SPDX-License-Identifier: EUPL-1.2
   ~
   -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -14,15 +15,16 @@
             type="String" />
     </data>
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="28dp"
             android:layout_height="34dp"
-            android:contentDescription="@string/cd_illustration_explanation_step_1"
+            android:contentDescription="@null"
             android:src="@drawable/ic_shield_check" />
 
         <TextView

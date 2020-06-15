@@ -26,7 +26,7 @@ import timber.log.Timber
 private const val RC_REQUEST_PERMISSION = 1
 
 class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
-    private val enableApiViewModel: EnableApiViewModel by viewModels()
+    private val onboardingViewModel: OnboardingViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +52,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
             findNavController().navigate(EnableApiFragmentDirections.actionExplain())
         }
         binding.skip.setOnClickListener {
-            enableApiViewModel.finishOnboarding()
+            onboardingViewModel.finishOnboarding()
         }
         binding.request.setOnClickListener {
             viewModel.requestEnableNotifications()
@@ -83,7 +83,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
         viewModel.notificationState.observe(viewLifecycleOwner) {
             when (it) {
                 ExposureNotificationsViewModel.NotificationsState.Enabled -> {
-                    enableApiViewModel.finishOnboarding()
+                    onboardingViewModel.finishOnboarding()
                 }
                 ExposureNotificationsViewModel.NotificationsState.Unavailable -> {
                     // TODO device is not supported
@@ -94,7 +94,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
             }
         }
 
-        enableApiViewModel.onboardingComplete.observe(viewLifecycleOwner) {
+        onboardingViewModel.onboardingComplete.observe(viewLifecycleOwner) {
             enterTransition = null
             exitTransition = null
             findNavController().popBackStack(R.id.nav_onboarding, true)
