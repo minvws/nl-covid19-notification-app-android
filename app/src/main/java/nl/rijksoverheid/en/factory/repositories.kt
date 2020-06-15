@@ -7,6 +7,9 @@
 package nl.rijksoverheid.en.factory
 
 import android.content.Context
+import android.content.SharedPreferences
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.nearby.Nearby
@@ -29,7 +32,7 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
         context,
         NearbyExposureNotificationApi(Nearby.getExposureNotificationClient(context)),
         service,
-        context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0),
+        createSecurePreferences(context),
         object : ProcessManifestWorkerScheduler {
             override fun schedule(intervalHours: Int) {
                 ProcessManifestWorker.queue(context, intervalHours)
@@ -55,5 +58,15 @@ fun createOnboardingRepository(
     return OnboardingRepository(
         context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.onboarding", 0),
         checker
+    )
+}
+
+private fun createSecurePreferences(context: Context): SharedPreferences {
+    return EncryptedSharedPreferences.create(
+        "${BuildConfig.APPLICATION_ID}.notifications",
+        MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
+        context,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
 }
