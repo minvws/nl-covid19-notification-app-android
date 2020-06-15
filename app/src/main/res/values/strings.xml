@@ -86,4 +86,5 @@
         <item quantity="one">%d dag</item>
         <item quantity="other">%d dagen</item>
     </plurals>
+    <string name="cd_close">close</string>
 </resources>
