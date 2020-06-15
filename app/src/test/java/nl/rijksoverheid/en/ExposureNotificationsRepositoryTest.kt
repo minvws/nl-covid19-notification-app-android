@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.api.ExposureNotificationService
+import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
@@ -29,6 +30,7 @@ import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -152,7 +154,14 @@ class ExposureNotificationsRepositoryTest {
         )
 
         val result =
-            repository.processExposureKeySets(Manifest(listOf("test"), "", "config-params"))
+            repository.processExposureKeySets(
+                Manifest(
+                    listOf("test"),
+                    "",
+                    "config-params",
+                    "appConfigId"
+                )
+            )
 
         assertEquals(
             ExposureConfiguration.ExposureConfigurationBuilder()
@@ -260,7 +269,8 @@ class ExposureNotificationsRepositoryTest {
             Manifest(
                 listOf("test", "test2"),
                 "",
-                "config-params"
+                "config-params",
+                "appConfigId"
             )
         )
 
@@ -309,7 +319,14 @@ class ExposureNotificationsRepositoryTest {
             ApplicationProvider.getApplicationContext(), api, service, sharedPrefs, fakeScheduler
         )
 
-        val result = repository.processExposureKeySets(Manifest(listOf("test"), "", "config-param"))
+        val result = repository.processExposureKeySets(
+            Manifest(
+                listOf("test"),
+                "",
+                "config-param",
+                "appConfigId"
+            )
+        )
 
         assertEquals(ProcessExposureKeysResult.Success, result)
         assertEquals(0, mockWebServer.requestCount)
@@ -352,7 +369,14 @@ class ExposureNotificationsRepositoryTest {
                 fakeScheduler
             )
 
-            val result = repository.processExposureKeySets(Manifest(listOf(), "", "config-params"))
+            val result = repository.processExposureKeySets(
+                Manifest(
+                    listOf(),
+                    "",
+                    "config-params",
+                    "appConfigId"
+                )
+            )
 
             assertEquals(ProcessExposureKeysResult.Success, result)
             assertEquals(0, mockWebServer.requestCount)
@@ -396,7 +420,14 @@ class ExposureNotificationsRepositoryTest {
             )
 
             val result =
-                repository.processExposureKeySets(Manifest(listOf("test"), "", "config-params"))
+                repository.processExposureKeySets(
+                    Manifest(
+                        listOf("test"),
+                        "",
+                        "config-params",
+                        "appConfigId"
+                    )
+                )
 
             assertEquals(ProcessExposureKeysResult.ServerError, result)
             assertEquals(1, mockWebServer.requestCount)
@@ -469,7 +500,8 @@ class ExposureNotificationsRepositoryTest {
                 Manifest(
                     listOf("test", "test2"),
                     "",
-                    "config-params"
+                    "config-params",
+                    "appConfigId"
                 )
             )
 
@@ -505,6 +537,10 @@ class ExposureNotificationsRepositoryTest {
             }
 
             override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getAppConfig(id: String): AppConfig {
                 throw NotImplementedError()
             }
         }
@@ -550,6 +586,10 @@ class ExposureNotificationsRepositoryTest {
             override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                 throw NotImplementedError()
             }
+
+            override suspend fun getAppConfig(id: String): AppConfig {
+                throw NotImplementedError()
+            }
         }
 
         val api = object : FakeExposureNotificationApi() {
@@ -582,5 +622,160 @@ class ExposureNotificationsRepositoryTest {
             LocalDate.of(2020, 6, 20).minusDays(4),
             repository.getLastExposureDate().filterNotNull().first()
         )
+    }
+
+    @Test
+    fun `processManifest marks the timestamp of last successful time the keys have been processed and returns Success`() =
+        runBlocking {
+            val dateTime = "2020-06-20T10:15:30.00Z"
+            val fakeService = object : ExposureNotificationService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(): Manifest =
+                    Manifest(emptyList(), "dummy", "riskParamId", "configId")
+
+                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
+            }
+
+            val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+                .getSharedPreferences("repository_test", 0)
+
+            val repository = ExposureNotificationsRepository(
+                ApplicationProvider.getApplicationContext(),
+                object : FakeExposureNotificationApi() {},
+                fakeService,
+                sharedPrefs,
+                fakeScheduler,
+                Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            )
+
+            val result = repository.processManifest()
+
+            assertTrue(result is ProcessManifestResult.Success)
+            assertEquals(5, (result as ProcessManifestResult.Success).nextIntervalMinutes)
+            assertEquals(
+                Instant.parse(dateTime),
+                Instant.ofEpochMilli(sharedPrefs.getLong("last_keys_processed", 0))
+            )
+        }
+
+    @Test
+    fun `processManifest does not update the timestamp of last successful time if manifest cannot be fetched and returns Error`() =
+        runBlocking {
+            val dateTime = "2020-06-20T10:15:30.00Z"
+            val dateTimeSuccess = "2020-06-20T01:15:30.00Z"
+
+            mockWebServer.enqueue(MockResponse().setResponseCode(500))
+            mockWebServer.start()
+
+            val fakeService = ExposureNotificationService.create(
+                ApplicationProvider.getApplicationContext<Application>(),
+                OkHttpClient(),
+                mockWebServer.url("/").toString()
+            )
+
+            val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+                .getSharedPreferences("repository_test", 0)
+
+            sharedPrefs.edit {
+                putLong("last_keys_processed", Instant.parse(dateTimeSuccess).toEpochMilli())
+            }
+
+            val repository = ExposureNotificationsRepository(
+                ApplicationProvider.getApplicationContext(),
+                object : FakeExposureNotificationApi() {},
+                fakeService,
+                sharedPrefs,
+                fakeScheduler,
+                Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            )
+
+            val result = repository.processManifest()
+
+            assertTrue(result is ProcessManifestResult.Error)
+            assertEquals(1, mockWebServer.requestCount)
+            assertEquals(
+                Instant.parse(dateTimeSuccess),
+                Instant.ofEpochMilli(sharedPrefs.getLong("last_keys_processed", 0))
+            )
+        }
+
+    @Test
+    fun `keyProcessingOverdue returns true if last successful time of key processing is more than 24 hours in the past`() {
+        val lastSyncDateTime = "2020-06-20T10:15:30.00Z"
+        val dateTime = "2020-06-21T10:16:30.00Z"
+        val fakeService = object : ExposureNotificationService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(): Manifest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
+        }
+
+        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+            .getSharedPreferences("repository_test", 0)
+
+        sharedPrefs.edit {
+            putLong("last_keys_processed", Instant.parse(lastSyncDateTime).toEpochMilli())
+        }
+
+        val repository = ExposureNotificationsRepository(
+            ApplicationProvider.getApplicationContext(),
+            object : FakeExposureNotificationApi() {},
+            fakeService,
+            sharedPrefs,
+            fakeScheduler,
+            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        )
+
+        assertTrue(repository.keyProcessingOverdue)
+    }
+
+    @Test
+    fun `keyProcessingOverdue returns false if no timestamp is stored`() {
+        val dateTime = "2020-06-21T10:15:30.00Z"
+        val fakeService = object : ExposureNotificationService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(): Manifest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
+        }
+
+        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+            .getSharedPreferences("repository_test", 0)
+
+        val repository = ExposureNotificationsRepository(
+            ApplicationProvider.getApplicationContext(),
+            object : FakeExposureNotificationApi() {},
+            fakeService,
+            sharedPrefs,
+            fakeScheduler,
+            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        )
+
+        assertFalse(repository.keyProcessingOverdue)
     }
 }

@@ -8,7 +8,6 @@ package nl.rijksoverheid.en
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.SharedPreferences
@@ -53,6 +52,8 @@ import java.io.File
 import java.io.IOException
 import java.security.SecureRandom
 import java.time.Clock
+import java.time.Duration
+import java.time.Instant
 import java.time.LocalDate
 
 private const val KEY_LAST_TOKEN_ID = "last_token_id"
@@ -61,6 +62,7 @@ private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
 private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
 private const val DEFAULT_MANIFEST_INTERVAL_MINUTES = 240
 private const val DEBUG_TOKEN = "TEST-TOKEN"
+private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
 
 class ExposureNotificationsRepository(
     private val context: Context,
@@ -70,6 +72,17 @@ class ExposureNotificationsRepository(
     private val manifestWorkerScheduler: ProcessManifestWorkerScheduler,
     private val clock: Clock = Clock.systemDefaultZone()
 ) {
+
+    val keyProcessingOverdue: Boolean
+        get() {
+            val timestamp = preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0)
+            return if (timestamp > 0) {
+                Duration.between(Instant.ofEpochMilli(timestamp), clock.instant())
+                    .toMinutes() > KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
+            } else {
+                false
+            }
+        }
 
     suspend fun requestEnableNotifications(): EnableNotificationsResult {
         val result = exposureNotificationsApi.requestEnableNotifications()
@@ -275,7 +288,7 @@ class ExposureNotificationsRepository(
 
                 if (keysSuccessful) {
                     preferences.edit {
-                        putLong(KEY_LAST_KEYS_PROCESSED, System.currentTimeMillis())
+                        putLong(KEY_LAST_KEYS_PROCESSED, clock.millis())
                     }
                 }
                 // if we are able to fetch the manifest, config etc, then report success
@@ -402,23 +415,11 @@ class ExposureNotificationsRepository(
 
 private data class ExposureKeySet(val id: String, val file: File?)
 
-sealed class ExportTemporaryExposureKeysResult {
-    data class Success(val numKeysExported: Int) : ExportTemporaryExposureKeysResult()
-    data class RequireConsent(val resolution: PendingIntent) : ExportTemporaryExposureKeysResult()
-    data class Error(val exception: Exception) : ExportTemporaryExposureKeysResult()
-}
-
 sealed class ProcessExposureKeysResult {
     /**
      * Keys processed successfully
      */
     object Success : ProcessExposureKeysResult()
-
-    /**
-     * The Exposure Notifications api is disabled and keys cannot be processed
-     */
-    object Disabled : ProcessExposureKeysResult()
-
     /**
      * A server error occurred
      */
