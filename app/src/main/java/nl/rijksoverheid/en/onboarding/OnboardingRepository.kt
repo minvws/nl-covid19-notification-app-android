@@ -11,7 +11,12 @@ import androidx.core.content.edit
 
 private const val KEY_COMPLETED_ONBOARDING = "completed_onboarding"
 
-class OnboardingRepository(private val sharedPreferences: SharedPreferences) {
+typealias GooglePlayServicesUpToDateChecker = () -> Boolean
+
+class OnboardingRepository(
+    private val sharedPreferences: SharedPreferences,
+    private val googlePlayServicesUpToDateChecker: GooglePlayServicesUpToDateChecker
+) {
 
     fun hasCompletedOnboarding(): Boolean {
         return sharedPreferences.getBoolean(KEY_COMPLETED_ONBOARDING, false)
@@ -20,4 +25,6 @@ class OnboardingRepository(private val sharedPreferences: SharedPreferences) {
     fun setHasCompletedOnboarding(value: Boolean) {
         sharedPreferences.edit { putBoolean(KEY_COMPLETED_ONBOARDING, value) }
     }
+
+    fun isGooglePlayServicesUpToDate(): Boolean = googlePlayServicesUpToDateChecker()
 }

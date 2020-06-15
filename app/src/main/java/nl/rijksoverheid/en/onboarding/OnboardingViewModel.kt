@@ -11,8 +11,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import nl.rijksoverheid.en.lifecyle.Event
 
-class EnableApiViewModel(private val repository: OnboardingRepository) : ViewModel() {
+class OnboardingViewModel(private val repository: OnboardingRepository) : ViewModel() {
     val onboardingComplete: LiveData<Event<Unit>> = MutableLiveData()
+
+    fun isGooglePlayServicesUpToDate() = repository.isGooglePlayServicesUpToDate()
 
     fun finishOnboarding() {
         repository.setHasCompletedOnboarding(true)

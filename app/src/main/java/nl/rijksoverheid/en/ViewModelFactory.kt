@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
 import nl.rijksoverheid.en.factory.createOnboardingRepository
-import nl.rijksoverheid.en.onboarding.EnableApiViewModel
+import nl.rijksoverheid.en.onboarding.OnboardingViewModel
 import nl.rijksoverheid.en.status.StatusViewModel
 
 class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
@@ -23,7 +23,7 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
             ExposureNotificationsViewModel::class.java -> ExposureNotificationsViewModel(
                 createExposureNotificationsRepository(context)
             ) as T
-            EnableApiViewModel::class.java -> EnableApiViewModel(
+            OnboardingViewModel::class.java -> OnboardingViewModel(
                 createOnboardingRepository(context)
             ) as T
             StatusViewModel::class.java -> StatusViewModel(
