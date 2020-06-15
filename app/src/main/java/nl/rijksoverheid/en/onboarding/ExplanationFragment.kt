@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
 import androidx.core.app.SharedElementCallback
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -67,6 +68,7 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
         binding.headline.setText(args.title)
         binding.description.setText(args.description)
         binding.illustration.setImageResource(args.illustration)
+        binding.example.isVisible = args.isExample
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressedDispatcher?.onBackPressed()
         }

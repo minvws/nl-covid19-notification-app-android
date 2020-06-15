@@ -15,6 +15,10 @@
             android:defaultValue="false"
             app:argType="boolean" />
         <argument
+            android:name="isExample"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
             android:name="title"
             android:defaultValue="@string/onboarding_explanation_1_headline"
             app:argType="reference" />
@@ -41,6 +45,10 @@
             android:defaultValue="true"
             app:argType="boolean" />
         <argument
+            android:name="isExample"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
             android:name="title"
             android:defaultValue="@string/onboarding_explanation_2_headline"
             app:argType="reference" />
@@ -54,7 +62,7 @@
             app:argType="reference" />
         <action
             android:id="@id/action_next"
-            app:destination="@id/explanationStep3"/>
+            app:destination="@id/explanationStep3" />
     </fragment>
 
     <fragment
@@ -64,6 +72,10 @@
         tools:layout="@layout/fragment_explanation">
         <argument
             android:name="fromFirstPage"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="isExample"
             android:defaultValue="false"
             app:argType="boolean" />
         <argument
@@ -80,6 +92,66 @@
             app:argType="reference" />
         <action
             android:id="@id/action_next"
+            app:destination="@id/explanationExample1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/explanationExample1"
+        android:name="nl.rijksoverheid.en.onboarding.ExplanationFragment"
+        android:label="ExplanationFragment"
+        tools:layout="@layout/fragment_explanation">
+        <argument
+            android:name="fromFirstPage"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="isExample"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <argument
+            android:name="title"
+            android:defaultValue="@string/onboarding_example_1_headline"
+            app:argType="reference" />
+        <argument
+            android:name="description"
+            android:defaultValue="@string/onboarding_example_1_description"
+            app:argType="reference" />
+        <argument
+            android:name="illustration"
+            android:defaultValue="@drawable/illustration_explanation_example_1"
+            app:argType="reference" />
+        <action
+            android:id="@id/action_next"
+            app:destination="@id/explanationExample2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/explanationExample2"
+        android:name="nl.rijksoverheid.en.onboarding.ExplanationFragment"
+        android:label="ExplanationFragment"
+        tools:layout="@layout/fragment_explanation">
+        <argument
+            android:name="fromFirstPage"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="isExample"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <argument
+            android:name="title"
+            android:defaultValue="@string/onboarding_example_2_headline"
+            app:argType="reference" />
+        <argument
+            android:name="description"
+            android:defaultValue="@string/onboarding_example_2_description"
+            app:argType="reference" />
+        <argument
+            android:name="illustration"
+            android:defaultValue="@drawable/illustration_explanation_example_2"
+            app:argType="reference" />
+        <action
+            android:id="@id/action_next"
             app:destination="@id/nav_enable_api" />
     </fragment>
 
@@ -89,7 +161,7 @@
         tools:layout="@layout/fragment_enable_api">
         <action
             android:id="@+id/action_explain"
-            app:destination="@id/nav_how_it_works"/>
+            app:destination="@id/nav_how_it_works" />
     </fragment>
 
     <fragment
