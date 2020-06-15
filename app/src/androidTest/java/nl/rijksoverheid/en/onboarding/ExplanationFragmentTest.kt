@@ -12,6 +12,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.Visibility.GONE
+import androidx.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE
+import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -43,6 +46,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
         withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_1_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_1_description)))
+            onView(withId(R.id.example)).check(matches(withEffectiveVisibility(GONE)))
 
             onView(withId(R.id.next)).perform(click())
 
@@ -65,6 +69,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
         withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_2_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_2_description)))
+            onView(withId(R.id.example)).check(matches(withEffectiveVisibility(GONE)))
 
             onView(withId(R.id.next)).perform(click())
 
@@ -78,7 +83,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
     }
 
     @Test
-    fun testExplanationStep3ToConsent() {
+    fun testExplanationStep3ToExample1() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         val navController = TestNavHostController(context).apply {
             setGraph(R.navigation.nav_onboarding)
@@ -88,15 +93,64 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
         withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_3_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_3_description)))
+            onView(withId(R.id.example)).check(matches(withEffectiveVisibility(GONE)))
 
             onView(withId(R.id.next)).perform(click())
 
             assertEquals(
-                "Pressing next button in third step of explanation navigates to consent screen",
-                R.id.nav_enable_api, navController.currentDestination?.id
+                "Pressing next button in third step of explanation navigates to first example screen",
+                R.id.explanationExample1, navController.currentDestination?.id
             )
 
             reportHelper.label("Explanation step 3")
+        }
+    }
+
+    @Test
+    fun testExample1ToExample2() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val navController = TestNavHostController(context).apply {
+            setGraph(R.navigation.nav_onboarding)
+            setCurrentDestination(R.id.explanationExample1)
+        }
+
+        withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+            onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_example_1_headline)))
+            onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_example_1_description)))
+            onView(withId(R.id.example)).check(matches(withEffectiveVisibility(VISIBLE)))
+
+            onView(withId(R.id.next)).perform(click())
+
+            assertEquals(
+                "Pressing next button in first example screen navigates to second example screen",
+                R.id.explanationExample2, navController.currentDestination?.id
+            )
+
+            reportHelper.label("Explanation example 1")
+        }
+    }
+
+    @Test
+    fun testExample2ToConsent() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val navController = TestNavHostController(context).apply {
+            setGraph(R.navigation.nav_onboarding)
+            setCurrentDestination(R.id.explanationExample2)
+        }
+
+        withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+            onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_example_2_headline)))
+            onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_example_2_description)))
+            onView(withId(R.id.example)).check(matches(withEffectiveVisibility(VISIBLE)))
+
+            onView(withId(R.id.next)).perform(click())
+
+            assertEquals(
+                "Pressing next button in second example screen navigates to consent screen",
+                R.id.nav_enable_api, navController.currentDestination?.id
+            )
+
+            reportHelper.label("Explanation example 2")
         }
     }
 }
