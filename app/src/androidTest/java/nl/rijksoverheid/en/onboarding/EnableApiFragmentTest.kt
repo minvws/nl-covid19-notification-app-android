@@ -52,17 +52,14 @@ class EnableApiFragmentTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(): Manifest {
-                throw NotImplementedError()
-            }
+            override suspend fun getManifest(): Manifest =
+                Manifest(emptyList(), "", "", "appConfig")
 
             override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                 throw NotImplementedError()
             }
 
-            override suspend fun getAppConfig(id: String): AppConfig {
-                throw NotImplementedError()
-            }
+            override suspend fun getAppConfig(id: String) = AppConfig(1, 10, 0)
         },
         ApplicationProvider.getApplicationContext<Context>()
             .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0),
