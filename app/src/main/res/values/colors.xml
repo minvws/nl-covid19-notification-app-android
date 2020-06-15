@@ -7,6 +7,7 @@
     <color name="notification_status_exposed">@color/red</color>
     <color name="divider">@color/gray_lighter</color>
     <color name="error_surface">@color/dark_red</color>
+    <color name="background_mask">#000000</color>
 
     <!-- Color palette -->
     <color name="dark_blue">#0047FF</color>

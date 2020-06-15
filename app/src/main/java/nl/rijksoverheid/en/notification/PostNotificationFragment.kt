@@ -38,16 +38,17 @@ class PostNotificationFragment(
         val daysSinceString =
             requireContext().resources.getQuantityString(R.plurals.days, daysSince, daysSince)
 
+        val phoneNumber = getString(R.string.phone_number)
         adapter.add(
             PostNotificationSection(
                 onCallClicked = {
-                    // TODO choose phone number
                     startActivity(Intent(Intent.ACTION_DIAL).apply {
-                        data = Uri.parse("tel:0800-1202")
+                        data = Uri.parse("tel:$phoneNumber")
                     })
                 },
                 daysSince = daysSinceString,
-                date = DateTimeFormatter.ofPattern("EEEE d MMMM").format(exposureDate)
+                date = DateTimeFormatter.ofPattern("EEEE d MMMM").format(exposureDate),
+                phoneNumber = phoneNumber
             )
         )
     }

@@ -17,6 +17,7 @@ import nl.rijksoverheid.en.items.ParagraphItem
 class PostNotificationSection(
     daysSince: String,
     date: String,
+    phoneNumber: String,
     onCallClicked: () -> Unit
 ) : Section(
     listOf(
@@ -29,7 +30,7 @@ class PostNotificationSection(
         HeaderItem(R.string.post_notification_header_6),
         ParagraphItem(R.string.post_notification_paragraph_7),
         ParagraphItem(R.string.post_notification_paragraph_8),
-        ParagraphItem(R.string.post_notification_paragraph_9),
+        ParagraphItem(R.string.post_notification_paragraph_9, phoneNumber),
         MessageBoxItem(R.string.post_notification_message),
         ButtonItem(R.string.post_notification_button, onCallClicked)
     )

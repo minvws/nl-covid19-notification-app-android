@@ -40,7 +40,7 @@
     <string name="post_notification_header_6">Doe een coronatest</string>
     <string name="post_notification_paragraph_7" tools:ignore="Typos">De GGD raadt aan je te laten testen op het virus, zelfs als je je nog niet ziek voelt. Want zonder je ziek te voelen kun je het virus al verspreiden en zo anderen besmetten.</string>
     <string name="post_notification_paragraph_8">Testen is gratis en kan meestal snel gebeuren. Blijf zo veel mogelijk thuis tot de uitslag bekend is.</string>
-    <string name="post_notification_paragraph_9">Bel gratis 0800–1202 om een coranatest aan te vragen.</string>
+    <string name="post_notification_paragraph_9">Bel gratis %1$s om een coranatest aan te vragen.</string>
     <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart</string>
     <string name="post_notification_button">Bel voor coronatest</string>
     <string name="status_menu_check">Check besmettingen</string>

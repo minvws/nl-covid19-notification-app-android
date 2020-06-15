@@ -24,7 +24,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/error_background"
+        android:background="@drawable/message_box_background"
         android:backgroundTint="@color/gray_lighter"
         android:padding="16dp">
 

@@ -20,7 +20,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/error_background"
+        android:background="@drawable/message_box_background"
         android:backgroundTint="@color/error_surface"
         android:elevation="8dp"
         android:paddingStart="16dp"
