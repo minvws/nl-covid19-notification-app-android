@@ -34,8 +34,8 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
         service,
         createSecurePreferences(context),
         object : ProcessManifestWorkerScheduler {
-            override fun schedule(intervalHours: Int) {
-                ProcessManifestWorker.queue(context, intervalHours)
+            override fun schedule(intervalMinutes: Int) {
+                ProcessManifestWorker.queue(context, intervalMinutes)
             }
 
             override fun cancel() {

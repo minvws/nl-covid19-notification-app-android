@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.ExposureNotificationService
+import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
@@ -45,6 +46,7 @@ import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
+import retrofit2.HttpException
 import retrofit2.Response
 import timber.log.Timber
 import java.io.File
@@ -56,6 +58,8 @@ import java.time.LocalDate
 private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
+private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
+private const val DEFAULT_MANIFEST_INTERVAL_MINUTES = 240
 private const val DEBUG_TOKEN = "TEST-TOKEN"
 
 class ExposureNotificationsRepository(
@@ -70,14 +74,22 @@ class ExposureNotificationsRepository(
     suspend fun requestEnableNotifications(): EnableNotificationsResult {
         val result = exposureNotificationsApi.requestEnableNotifications()
         if (result == EnableNotificationsResult.Enabled) {
-            // TODO interval from app config
-            manifestWorkerScheduler.schedule(4)
+            preferences.edit {
+                // reset the timer
+                putLong(KEY_LAST_KEYS_PROCESSED, System.currentTimeMillis())
+            }
+            val interval = getLatestAppConfigOrNull()?.manifestFrequencyMinutes
+                ?: DEFAULT_MANIFEST_INTERVAL_MINUTES
+            manifestWorkerScheduler.schedule(interval)
         }
         return result
     }
 
     suspend fun requestDisableNotifications(): DisableNotificationsResult {
         manifestWorkerScheduler.cancel()
+        preferences.edit {
+            remove(KEY_LAST_KEYS_PROCESSED)
+        }
         return exposureNotificationsApi.disableNotifications()
     }
 
@@ -189,6 +201,18 @@ class ExposureNotificationsRepository(
         }
     }
 
+    private suspend fun getLatestAppConfigOrNull(): AppConfig? = withContext(Dispatchers.IO) {
+        try {
+            api.getAppConfig(api.getManifest().appConfigId)
+        } catch (ex: HttpException) {
+            Timber.e(ex, "Error getting latest config")
+            null
+        } catch (ex: IOException) {
+            Timber.e(ex, "Error getting latest config")
+            null
+        }
+    }
+
     private fun createToken(): String {
         val bytes = ByteArray(32)
         SecureRandom().nextBytes(bytes)
@@ -239,20 +263,23 @@ class ExposureNotificationsRepository(
     suspend fun processManifest(): ProcessManifestResult {
         return withContext(Dispatchers.IO) {
             try {
+                val manifest = api.getManifest()
                 val keysSuccessful = if (getStatus() == StatusResult.Enabled) {
-                    processExposureKeySets(api.getManifest()) == ProcessExposureKeysResult.Success
+                    processExposureKeySets(manifest) == ProcessExposureKeysResult.Success
                 } else {
                     Timber.w("Cannot process keys, exposure notifications api is disabled")
                     true
                 }
 
-                // TODO process app config and resource bundle
+                val config = api.getAppConfig(manifest.appConfigId)
 
                 if (keysSuccessful) {
-                    ProcessManifestResult.Success
-                } else {
-                    ProcessManifestResult.Error
+                    preferences.edit {
+                        putLong(KEY_LAST_KEYS_PROCESSED, System.currentTimeMillis())
+                    }
                 }
+                // if we are able to fetch the manifest, config etc, then report success
+                ProcessManifestResult.Success(config.manifestFrequencyMinutes)
             } catch (ex: Exception) {
                 Timber.e(ex, "Error while processing manifest")
                 ProcessManifestResult.Error
@@ -409,7 +436,7 @@ sealed class ProcessExposureKeysResult {
     data class Error(val exception: Exception) : ProcessExposureKeysResult()
 }
 
-sealed class ProcessManifestResult() {
-    object Success : ProcessManifestResult()
+sealed class ProcessManifestResult {
+    data class Success(val nextIntervalMinutes: Int) : ProcessManifestResult()
     object Error : ProcessManifestResult()
 }

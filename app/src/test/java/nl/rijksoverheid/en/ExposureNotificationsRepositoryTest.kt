@@ -49,7 +49,7 @@ import java.util.concurrent.atomic.AtomicReference
 class ExposureNotificationsRepositoryTest {
     private lateinit var mockWebServer: MockWebServer
     private val fakeScheduler = object : ProcessManifestWorkerScheduler {
-        override fun schedule(intervalHours: Int) {
+        override fun schedule(intervalMinutes: Int) {
             throw NotImplementedError()
         }
 
