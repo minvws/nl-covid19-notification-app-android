@@ -14,8 +14,8 @@
     <string name="onboarding_example_2_description">Het Bluetooth-signaal was sterk genoeg en jullie waren langere tijd dicht bij elkaar in de buurt.</string>
     <string name="onboarding_consent_headline">Meldingen over mogelijke blootstelling COVID-19 inschakelen</string>
     <string name="onboarding_consent_check_1">Je Bluetooth-gegevens worden 14 dagen op je telefoon bewaard. Je kunt ze altijd zelf verwijderen.</string>
-    <string name="onboarding_consent_check_2">Je naam en andere persoonsgegevens worden <strong>niet</strong> gebruikt of bewaard.</string>
-    <string name="onboarding_consent_check_3">Je gps-locatiegegevens worden <strong>niet</strong> gebruikt of bewaard.</string>
+    <string name="onboarding_consent_check_2"><![CDATA[Je naam en andere persoonsgegevens worden <strong>niet</strong> gebruikt of bewaard.]]></string>
+    <string name="onboarding_consent_check_3"><![CDATA[Je gps-locatiegegevens worden <strong>niet</strong> gebruikt of bewaard.]]></string>
     <string name="onboarding_consent_request">Inschakelen</string>
     <string name="onboarding_consent_explain">Hoe werkt de app precies?</string>
     <string name="onboarding_consent_skip">Sla over</string>

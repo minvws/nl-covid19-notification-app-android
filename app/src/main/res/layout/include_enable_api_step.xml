@@ -6,6 +6,7 @@
   ~
   -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -31,8 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="@{itemText}"
             android:textAppearance="?attr/textAppearanceBody1"
+            app:htmlText="@{itemText}"
             tools:text="@string/onboarding_consent_check_1" />
 
     </LinearLayout>
