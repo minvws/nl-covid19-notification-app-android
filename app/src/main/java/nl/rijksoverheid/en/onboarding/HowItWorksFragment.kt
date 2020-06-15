@@ -36,7 +36,8 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list) {
         binding.toolbar.apply {
             setTitle(R.string.onboarding_how_it_works_toolbar_title)
             setNavigationIcon(R.drawable.ic_close)
-            setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
+            setNavigationContentDescription(R.string.cd_close)
+            setNavigationOnClickListener { findNavController().popBackStack() }
         }
         binding.content.adapter = adapter
 
