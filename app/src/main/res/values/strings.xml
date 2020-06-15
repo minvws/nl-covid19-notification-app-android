@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Covid-19 notificatie</string>
     <string name="onboarding_next">Volgende</string>
     <string name="onboarding_explanation_1_headline">Bescherm je vrienden, familie, en de rest van Nederland</string>
@@ -31,6 +31,18 @@
     <string name="notification_channel_description">Meldingen over mogelijke blootstellingen aan COVID-19</string>
     <string name="notification_title">Mogelijke blootstelling aan COVID-19</string>
     <string name="notification_message">U bent in de buurt geweest bij iemand met COVID-19</string>
+    <string name="post_notification_toolbar_title">Kans op besmetting</string>
+    <string name="post_notification_header_1">Je bent in de buurt geweest van iemand met het coronavirus [DIT IS EEN TEST BERICHT]</string>
+    <string name="post_notification_paragraph_2" tools:ignore="Typos">Je was %1$s geleden (op %2$s) dicht bij iemand die daarna positief is getest op het coronavirus. Het RIVM en de GGD zien dit als een situatie waarin je extra kans op besmetting hebt gelopen. Als je inderdaad besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
+    <string name="post_notification_header_3">Klachten die passen bij het coronavirus (COVID-19)</string>
+    <string name="post_notification_paragraph_4">(licht) hoesten\nloopneus, niezen, keelpijn\nverlies van geur en/of smaak\nkortademigheid/benauwdheid\nkoorts boven de 38 graden</string>
+    <string name="post_notification_paragraph_5">Heb je klachten? Blijf dan zoveel mogelijk thuis. Zijn het ernstige klachten? Bel meteen je huisarts.</string>
+    <string name="post_notification_header_6">Doe een coronatest</string>
+    <string name="post_notification_paragraph_7" tools:ignore="Typos">De GGD raadt aan je te laten testen op het virus, zelfs als je je nog niet ziek voelt. Want zonder je ziek te voelen kun je het virus al verspreiden en zo anderen besmetten.</string>
+    <string name="post_notification_paragraph_8">Testen is gratis en kan meestal snel gebeuren. Blijf zo veel mogelijk thuis tot de uitslag bekend is.</string>
+    <string name="post_notification_paragraph_9">Bel gratis %1$s om een coranatest aan te vragen.</string>
+    <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart</string>
+    <string name="post_notification_button">Bel voor coronatest</string>
     <string name="status_menu_check">Check besmettingen</string>
     <string name="status_reset_exposure">Melding verwijderen</string>
     <string name="status_info_1_title">Over de app</string>
@@ -50,4 +62,9 @@
     <string name="update_google_play_services">Bijwerken</string>
     <string name="update_google_play_services_headline">Je Google Play Services is niet bijgewerkt</string>
     <string name="update_google_play_services_description">%1$s heeft de nieuwste versie van Google Play Services nodig om goed te blijven werken op je telefoon.</string>
+    <plurals name="days">
+        <item quantity="zero">vandaag</item>
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dagen</item>
+    </plurals>
 </resources>

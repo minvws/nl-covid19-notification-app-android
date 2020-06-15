@@ -6,16 +6,23 @@
  */
 package nl.rijksoverheid.en
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.location.LocationManager
+import android.os.Build
+import android.os.Bundle
 import android.util.Base64
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import androidx.core.location.LocationManagerCompat
+import androidx.navigation.NavDeepLinkBuilder
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -43,19 +50,21 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.security.SecureRandom
+import java.time.Clock
 import java.time.LocalDate
-import java.time.ZoneId
 
 private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
+private const val DEBUG_TOKEN = "TEST-TOKEN"
 
 class ExposureNotificationsRepository(
     private val context: Context,
     private val exposureNotificationsApi: ExposureNotificationApi,
     private val api: ExposureNotificationService,
     private val preferences: SharedPreferences,
-    private val manifestWorkerScheduler: ProcessManifestWorkerScheduler
+    private val manifestWorkerScheduler: ProcessManifestWorkerScheduler,
+    private val clock: Clock = Clock.systemDefaultZone()
 ) {
 
     suspend fun requestEnableNotifications(): EnableNotificationsResult {
@@ -274,9 +283,10 @@ class ExposureNotificationsRepository(
      */
     fun getLastExposureDate(): Flow<LocalDate?> {
         return exposureToken().distinctUntilChanged().map { token ->
-            token?.let { exposureNotificationsApi.getSummary(it) }?.let {
+            val hasSummary = token?.let { exposureNotificationsApi.getSummary(it) } != null
+            if (hasSummary || (BuildConfig.DEBUG && token == DEBUG_TOKEN)) {
                 LocalDate.ofEpochDay(preferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L))
-            }
+            } else null
         }.onEach { date ->
             if (date == null) {
                 resetExposures()
@@ -296,8 +306,11 @@ class ExposureNotificationsRepository(
 
         val currentDaysSinceLastExposure = preferences.getString(KEY_LAST_TOKEN_ID, null)
             ?.let { exposureNotificationsApi.getSummary(it)?.daysSinceLastExposure }
-        val newDaysSinceLastExposure =
+        val newDaysSinceLastExposure = if (BuildConfig.DEBUG && token == DEBUG_TOKEN) {
+            5 // TODO make dynamic from debug screen
+        } else {
             exposureNotificationsApi.getSummary(token)?.daysSinceLastExposure
+        }
 
         if (newDaysSinceLastExposure != null &&
             (currentDaysSinceLastExposure == null || newDaysSinceLastExposure < currentDaysSinceLastExposure)
@@ -307,10 +320,56 @@ class ExposureNotificationsRepository(
                 putString(KEY_LAST_TOKEN_ID, token)
                 putLong(
                     KEY_LAST_TOKEN_EXPOSURE_DATE,
-                    LocalDate.now(ZoneId.systemDefault()).toEpochDay()
+                    LocalDate.now(clock)
+                        .minusDays(newDaysSinceLastExposure.toLong()).toEpochDay()
                 )
             }
+            showNotification(newDaysSinceLastExposure)
         }
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "exposure_notifications",
+                context.getString(R.string.notification_channel_name),
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            channel.description = context.getString(R.string.notification_channel_description)
+            val notificationManager: NotificationManager =
+                context.getSystemService(NotificationManager::class.java)!!
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun showNotification(daysSinceLastExposure: Int) {
+        createNotificationChannel()
+        val dayOfLastExposure = LocalDate.now(clock)
+            .minusDays(daysSinceLastExposure.toLong()).toEpochDay()
+
+        val pendingIntent = NavDeepLinkBuilder(context)
+            .setGraph(R.navigation.nav_main)
+            .setDestination(R.id.nav_post_notification)
+            .setArguments(Bundle().apply { putLong("epochDayOfLastExposure", dayOfLastExposure) })
+            .createPendingIntent()
+        val builder =
+            NotificationCompat.Builder(context, "exposure_notifications")
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(context.getString(R.string.notification_title))
+                .setContentText(context.getString(R.string.notification_message))
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .bigText(context.getString(R.string.notification_message))
+                )
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setContentIntent(pendingIntent)
+                .setOnlyAlertOnce(true)
+                .setAutoCancel(true) // Do not reveal this notification on a secure lockscreen.
+                .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+        val notificationManager =
+            NotificationManagerCompat
+                .from(context)
+        notificationManager.notify(0, builder.build())
     }
 }
 

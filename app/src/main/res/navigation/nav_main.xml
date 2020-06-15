@@ -35,4 +35,13 @@
 
     <include app:graph="@navigation/nav_onboarding" />
 
+    <fragment
+        android:id="@+id/nav_post_notification"
+        android:name="nl.rijksoverheid.en.notification.PostNotificationFragment"
+        android:label="PostNotificationFragment">
+        <argument
+            android:name="epochDayOfLastExposure"
+            app:argType="long" />
+    </fragment>
+
 </navigation>

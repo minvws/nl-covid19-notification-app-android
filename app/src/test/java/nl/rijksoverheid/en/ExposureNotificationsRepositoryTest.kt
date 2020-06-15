@@ -11,13 +11,18 @@ import android.os.Build
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
+import com.google.android.gms.nearby.exposurenotification.ExposureSummary
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.api.ExposureNotificationService
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -30,7 +35,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import retrofit2.Response
 import java.io.File
+import java.time.Clock
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicReference
 
@@ -481,4 +491,96 @@ class ExposureNotificationsRepositoryTest {
                 sharedPrefs.getStringSet("exposure_key_sets", emptySet())
             )
         }
+
+    @Test
+    fun `addExposure adds exposure`() = runBlocking {
+        val dateTime = "2020-06-20T10:15:30.00Z"
+        val service = object : ExposureNotificationService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(): Manifest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw NotImplementedError()
+            }
+        }
+
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getSummary(token: String) =
+                if (token == "sample-token") {
+                    ExposureSummary.ExposureSummaryBuilder().setDaysSinceLastExposure(4).build()
+                } else null
+        }
+
+        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+            .getSharedPreferences("repository_test", 0)
+
+        val repository = ExposureNotificationsRepository(
+            ApplicationProvider.getApplicationContext(),
+            api,
+            service,
+            sharedPrefs,
+            fakeScheduler,
+            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        )
+
+        repository.addExposure("sample-token")
+        assertEquals(
+            LocalDate.of(2020, 6, 20).minusDays(4),
+            repository.getLastExposureDate().filterNotNull().first()
+        )
+    }
+
+    @Test
+    fun `addExposure while newer exposure exists keeps newer exposure`() = runBlocking {
+        val dateTime = "2020-06-20T10:15:30.00Z"
+        val service = object : ExposureNotificationService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(): Manifest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw NotImplementedError()
+            }
+        }
+
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getSummary(token: String) =
+                when (token) {
+                    "sample-token-old" -> ExposureSummary.ExposureSummaryBuilder()
+                        .setDaysSinceLastExposure(8).build()
+                    "sample-token-new" -> ExposureSummary.ExposureSummaryBuilder()
+                        .setDaysSinceLastExposure(4).build()
+                    else -> null
+                }
+        }
+
+        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+            .getSharedPreferences("repository_test", 0)
+
+        val repository = ExposureNotificationsRepository(
+            ApplicationProvider.getApplicationContext(),
+            api,
+            service,
+            sharedPrefs,
+            fakeScheduler,
+            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        )
+
+        repository.addExposure("sample-token-new")
+        repository.addExposure("sample-token-old")
+
+        assertEquals(
+            LocalDate.of(2020, 6, 20).minusDays(4),
+            repository.getLastExposureDate().filterNotNull().first()
+        )
+    }
 }
