@@ -21,6 +21,7 @@ import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.ExposureNotificationService
+import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
@@ -51,18 +52,19 @@ class EnableApiFragmentTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(): Manifest {
-                throw NotImplementedError()
-            }
+            override suspend fun getManifest(): Manifest =
+                Manifest(emptyList(), "", "", "appConfig")
 
             override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                 throw NotImplementedError()
             }
+
+            override suspend fun getAppConfig(id: String) = AppConfig(1, 10, 0)
         },
         ApplicationProvider.getApplicationContext<Context>()
             .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0),
         object : ProcessManifestWorkerScheduler {
-            override fun schedule(intervalHours: Int) {
+            override fun schedule(intervalMinutes: Int) {
             }
 
             override fun cancel() {

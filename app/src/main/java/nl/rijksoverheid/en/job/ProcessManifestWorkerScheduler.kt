@@ -7,6 +7,6 @@
 package nl.rijksoverheid.en.job
 
 interface ProcessManifestWorkerScheduler {
-    fun schedule(intervalHours: Int)
+    fun schedule(intervalMinutes: Int)
     fun cancel()
 }

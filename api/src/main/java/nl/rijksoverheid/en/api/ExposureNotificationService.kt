@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.api
 
 import android.content.Context
+import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import okhttp3.OkHttpClient
@@ -28,6 +29,9 @@ interface ExposureNotificationService {
 
     @GET("v1/riskcalculationparameters/{id}")
     suspend fun getRiskCalculationParameters(@Path("id") id: String): RiskCalculationParameters
+
+    @GET("v1/appconfig/{id}")
+    suspend fun getAppConfig(@Path("id") id: String): AppConfig
 
     companion object {
         fun create(
