@@ -5,6 +5,7 @@
     <color name="color_secondary_variant">@color/gray_light</color>
     <color name="notification_status_active">@color/green</color>
     <color name="notification_status_exposed">@color/red</color>
+    <color name="onboarding_example_header">@color/pink</color>
     <color name="divider">@color/gray_lighter</color>
     <color name="error_surface">@color/dark_red</color>
     <color name="background_mask">#000000</color>
@@ -19,5 +20,6 @@
     <color name="gray_light">#DDDDDD</color>
     <color name="dark_red">#8e0706</color>
     <color name="red">#D00000</color>
+    <color name="pink">#B8275D</color>
     <color name="green">#34C759</color>
 </resources>
