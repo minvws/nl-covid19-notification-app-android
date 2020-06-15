@@ -10,15 +10,12 @@ import android.app.PendingIntent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.lifecyle.Event
 import timber.log.Timber
-import java.time.LocalDate
 
 class ExposureNotificationsViewModel(private val repository: ExposureNotificationsRepository) :
     ViewModel() {
@@ -26,17 +23,12 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
     val notificationState: LiveData<NotificationsState> =
         MutableLiveData(NotificationsState.Enabled)
     val notificationsResult: LiveData<Event<NotificationsStatusResult>> = MutableLiveData()
-    val exportTemporaryKeysResult: LiveData<Event<ExportKeysResult>> = MutableLiveData()
-
-    val exposureDetected: LiveData<LocalDate?>
-        get() = repository.getLastExposureDate()
-            .asLiveData(context = viewModelScope.coroutineContext)
 
     init {
         refreshStatus()
     }
 
-    fun refreshStatus() {
+    private fun refreshStatus() {
         viewModelScope.launch {
             when (val result = repository.getStatus()) {
                 is StatusResult.Enabled -> updateState(NotificationsState.Enabled)
@@ -75,33 +67,12 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
         }
     }
 
-    fun requestDisableNotifications() {
-        viewModelScope.launch {
-            when (val result = repository.requestDisableNotifications()) {
-                is DisableNotificationsResult.Disabled -> updateState(NotificationsState.Disabled)
-                is DisableNotificationsResult.UnknownError -> updateResult(
-                    NotificationsStatusResult.UnknownError(
-                        result.exception
-                    )
-                )
-            }
-        }
-    }
-
     private fun updateState(state: NotificationsState) {
         (notificationState as MutableLiveData).value = state
     }
 
     private fun updateResult(result: NotificationsStatusResult) {
         (notificationsResult as MutableLiveData).value = Event(result)
-    }
-
-    private fun updateResult(result: ExportKeysResult) {
-        (exportTemporaryKeysResult as MutableLiveData).value = Event(result)
-    }
-
-    fun resetExposures() {
-        repository.resetExposures()
     }
 
     sealed class NotificationsState {
@@ -113,11 +84,5 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
     sealed class NotificationsStatusResult {
         data class ConsentRequired(val intent: PendingIntent) : NotificationsStatusResult()
         data class UnknownError(val exception: Exception) : NotificationsStatusResult()
-    }
-
-    sealed class ExportKeysResult {
-        data class RequestConsent(val resolution: PendingIntent) : ExportKeysResult()
-        object Success : ExportKeysResult()
-        object Error : ExportKeysResult()
     }
 }

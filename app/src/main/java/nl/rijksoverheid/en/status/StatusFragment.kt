@@ -16,6 +16,7 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
+import nl.rijksoverheid.en.lifecyle.EventObserver
 
 class StatusFragment : BaseFragment(R.layout.fragment_status) {
     private val statusViewModel: StatusViewModel by viewModels()
@@ -36,13 +37,19 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
 
         viewModel.notificationState.observe(viewLifecycleOwner) {
             when (it) {
-                ExposureNotificationsViewModel.NotificationsState.Enabled -> { /* all is fine */
+                ExposureNotificationsViewModel.NotificationsState.Enabled -> {
+                    statusViewModel.refreshStatus()
                 }
-                ExposureNotificationsViewModel.NotificationsState.Disabled -> { /* TODO() */
+                ExposureNotificationsViewModel.NotificationsState.Disabled -> {
+                    statusViewModel.refreshStatus()
                 }
                 ExposureNotificationsViewModel.NotificationsState.Unavailable -> showApiUnavailableError()
             }
         }
+
+        statusViewModel.requestEnableNotifications.observe(viewLifecycleOwner, EventObserver {
+            viewModel.requestEnableNotifications()
+        })
 
         viewLifecycleOwner.lifecycle.addObserver(PreconditionsHelper(requireContext()) {
             statusViewModel.refreshStatus()

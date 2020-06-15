@@ -6,19 +6,48 @@
  */
 package nl.rijksoverheid.en
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import nl.rijksoverheid.en.lifecyle.EventObserver
+
+private const val RC_REQUEST_CONSENT = 1
 
 class MainActivity : AppCompatActivity() {
+    private val viewModel: ExposureNotificationsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        viewModel.notificationsResult.observe(this, EventObserver {
+            when (it) {
+                is ExposureNotificationsViewModel.NotificationsStatusResult.ConsentRequired -> {
+                    startIntentSenderForResult(
+                        it.intent.intentSender,
+                        RC_REQUEST_CONSENT,
+                        null,
+                        0,
+                        0,
+                        0
+                    )
+                }
+                is ExposureNotificationsViewModel.NotificationsStatusResult.UnknownError -> TODO()
+            }
+        })
     }
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {
         return ViewModelFactory(applicationContext)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_REQUEST_CONSENT && resultCode == Activity.RESULT_OK) {
+            viewModel.requestEnableNotifications()
+        }
     }
 }

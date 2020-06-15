@@ -18,9 +18,11 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.enapi.StatusResult
+import nl.rijksoverheid.en.lifecyle.Event
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -32,6 +34,8 @@ class StatusViewModel(
 ) : ViewModel() {
 
     private val refreshStatus = MutableLiveData(Unit)
+
+    val requestEnableNotifications: LiveData<Event<Unit>> = MutableLiveData()
 
     fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
 
@@ -98,7 +102,18 @@ class StatusViewModel(
         }
 
     fun onPrimaryActionClicked(state: HeaderViewState) {
-        // (headerViewState as MutableLiveData).value = HeaderViewState.BluetoothDisabled
+        when (state) {
+            HeaderViewState.Active -> { /* no action possible */
+            }
+            is HeaderViewState.Exposed -> TODO()
+            HeaderViewState.Disabled -> {
+                viewModelScope.launch {
+                    // make sure everything is disabled, then send an event to enable again
+                    notificationsRepository.requestDisableNotifications()
+                    (requestEnableNotifications as MutableLiveData).value = Event(Unit)
+                }
+            }
+        }
     }
 
     fun onSecondaryActionClicked(state: HeaderViewState) {
