@@ -6,9 +6,9 @@
     app:startDestination="@id/nav_status">
 
     <fragment
-        tools:layout="@layout/fragment_status"
         android:id="@+id/nav_status"
-        android:name="nl.rijksoverheid.en.status.StatusFragment">
+        android:name="nl.rijksoverheid.en.status.StatusFragment"
+        tools:layout="@layout/fragment_status">
         <action
             android:id="@+id/action_onboarding"
             app:destination="@id/nav_onboarding"
@@ -20,6 +20,13 @@
         <action
             android:id="@+id/action_update_play_services"
             app:destination="@id/nav_update_google_play_services"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+        <action
+            android:id="@+id/action_lab_test"
+            app:destination="@id/labTestFragment"
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
@@ -43,5 +50,11 @@
             android:name="epochDayOfLastExposure"
             app:argType="long" />
     </fragment>
+
+    <fragment
+        android:id="@+id/labTestFragment"
+        android:name="nl.rijksoverheid.en.labtest.LabTestFragment"
+        android:label="LabTestFragment"
+        tools:layout="@layout/fragment_list" />
 
 </navigation>
