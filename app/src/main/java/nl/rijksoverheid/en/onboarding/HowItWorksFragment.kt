@@ -20,6 +20,7 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItem
+import nl.rijksoverheid.en.about.FAQItemDecoration
 import nl.rijksoverheid.en.databinding.FragmentHowItWorksBinding
 
 class HowItWorksFragment : BaseFragment(R.layout.fragment_how_it_works) {
@@ -46,6 +47,12 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_how_it_works) {
             setNavigationContentDescription(R.string.cd_close)
             setNavigationOnClickListener { findNavController().popBackStack() }
         }
+        binding.content.addItemDecoration(
+            FAQItemDecoration(
+                requireContext(),
+                resources.getDimensionPixelOffset(R.dimen.activity_horizontal_margin)
+            )
+        )
         binding.content.adapter = adapter
 
         adapter.setOnItemClickListener { item, _ ->
