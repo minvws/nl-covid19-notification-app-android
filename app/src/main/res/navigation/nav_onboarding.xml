@@ -167,5 +167,18 @@
     <fragment
         android:id="@+id/nav_how_it_works"
         android:name="nl.rijksoverheid.en.onboarding.HowItWorksFragment"
-        tools:layout="@layout/fragment_how_it_works" />
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_how_it_works_detail"
+            app:destination="@id/nav_how_it_works_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_how_it_works_detail"
+        android:name="nl.rijksoverheid.en.onboarding.HowItWorksDetailFragment"
+        tools:layout="@layout/fragment_list">
+        <argument
+            android:name="faqItemId"
+            app:argType="nl.rijksoverheid.en.about.FAQItemId" />
+    </fragment>
 </navigation>

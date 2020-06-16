@@ -19,6 +19,8 @@
     <string name="onboarding_consent_request">Inschakelen</string>
     <string name="onboarding_consent_explain">Hoe werkt de app precies?</string>
     <string name="onboarding_consent_skip">Sla over</string>
+    <string name="onboarding_how_it_works_toolbar_title">Hoe werkt de app?</string>
+    <string name="onboarding_how_it_works_detail_toolbar_title">Veelgestelde vraag</string>
     <string name="status_no_exposure_detected_headline">De app is actief</string>
     <string name="status_no_exposure_detected_description">Je krijgt een melding nadat je extra kans op besmetting hebt gelopen.</string>
     <string name="status_exposure_detected_headline">Je hebt extra kans op besmetting gelopen</string>
@@ -64,6 +66,18 @@
     <string name="status_exposure_what_next">Wat moet ik nu doen?</string>
     <string name="status_error_consent_required">De app heeft blootstelling permissie nodig om te kunnen werken.</string>
     <string name="status_error_action_consent">Zet blootstelling aan</string>
+    <string name="faq_header">Veelgestelde vragen</string>
+    <string name="faq_location">Kan de app mijn locatie zien?</string>
+    <string name="faq_anonymous">Hoe kan de app anoniem zijn?</string>
+    <string name="faq_notification">Wanneer krijg ik een melding van de app?</string>
+    <string name="faq_bluetooth">Werkt Bluetooth door muren heen?</string>
+    <string name="faq_power_usage">Hoeveel stroom gebruikt de app?</string>
+    <string name="faq_location_paragraph_1">Nee, de app ziet via Bluetooth alleen of je in de buurt bent van andere mensen die de app ook op hun telefoon hebben. Bluetooth is niet gekoppeld aan je locatie, dus de app kan niet zien waar je bent. Bluetooth is puur bedoeld om een draadloze verbinding te maken tussen twee apparaten die dicht bij elkaar zijn. Zoals je telefoon en een geluidsbox of koptelefoon.</string>
+    <string name="faq_anonymous_paragraph_1">De app wisselt codes uit met andere telefoons. In deze codes staan geen persoonsgegevens of locatiegegevens van je. Ze zijn helemaal willekeurig. Het uitwisselen van codes gebeurt op het moment dat je dicht bij een persoon bent die ook de app heeft.</string>
+    <string name="faq_anonymous_paragraph_2">Als deze persoon daarna positief test kan diegene in de app zijn of haar codes naar een centrale server sturen. Daarna krijgen jij en alle andere mensen die deze codes op hun telefoon hebben een melding. In deze melding staat alleen wanneer je extra kans op besmetting hebt gelopen. Niet wie besmet is en waar je die persoon tegengekomen bent.</string>
+    <string name="faq_notification_paragraph_1">Je krijgt een melding nadat je extra kans op besmetting hebt gelopen. Dit gebeurt als je 10 minuten dicht bij een andere persoon met de app bent geweest, die daarna positief test op het coronavirus. Het RIVM en de GGD zien dat als een situatie waarin je besmet kunt raken. Of je dichtbij genoeg bent geweest hangt af van de sterkte van het Bluetooth-signaal. Fietste er iemand voorbij op straat? Dan krijg je later geen melding. Het Bluetooth-signaal was door de afstand te zwak en jullie waren maar kort bij elkaar in de buurt. Zat je dicht bij iemand in de trein of op kantoor? Dan kun je later wel een melding krijgen. Het Bluetooth-signaal was sterk genoeg en jullie waren langere tijd dicht bij elkaar in de buurt.</string>
+    <string name="faq_bluetooth_paragraph_1">Ja, maar het signaal wordt dan erg zwak. Bluetooth werkt het beste als jouw telefoon in dezelfde ruimte is als de telefoon van een andere persoon. De kans is bijvoorbeeld heel klein dat je app het Bluetooth-signaal van je buren ontvangt. En daardoor is de kans ook heel klein dat je een melding krijgt als je buurman positief test en jullie niet in dezelfde ruimte zijn geweest.</string>
+    <string name="faq_power_usage_paragraph_1">De app maakt gebruikt van Bluetooth Low Energy (Bluetooth Lage Energie). Dit is een speciale vorm van Bluetooth die heel weinig stroom gebruikt. Hoeveel procent dit precies van je telefoonbatterij vraagt verschilt per telefoon. Gemiddeld is dit ongeveer 5 tot 15 procent per dag.</string>
     <string name="update_google_play_services">Updaten</string>
     <string name="update_google_play_services_headline">Je Google Play Services is niet bijgewerkt</string>
     <string name="update_google_play_services_description">%1$s heeft de nieuwste versie van Google Play Services nodig om goed te blijven werken op je telefoon.</string>
@@ -72,4 +86,5 @@
         <item quantity="one">%d dag</item>
         <item quantity="other">%d dagen</item>
     </plurals>
+    <string name="cd_close">close</string>
 </resources>

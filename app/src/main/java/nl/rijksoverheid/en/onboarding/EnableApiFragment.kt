@@ -49,6 +49,8 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
         binding.explanation.setOnClickListener {
             enterTransition = null
             exitTransition = null
+            sharedElementEnterTransition = null
+            sharedElementReturnTransition = null
             findNavController().navigate(EnableApiFragmentDirections.actionExplain())
         }
         binding.skip.setOnClickListener {
