@@ -60,7 +60,6 @@ class PostNotificationFragment(
         binding.toolbar.apply {
             setTitle(R.string.post_notification_toolbar_title)
             setNavigationIcon(R.drawable.ic_close)
-            setNavigationContentDescription(R.string.cd_close)
             setNavigationOnClickListener { findNavController().popBackStack() }
         }
         binding.content.adapter = adapter

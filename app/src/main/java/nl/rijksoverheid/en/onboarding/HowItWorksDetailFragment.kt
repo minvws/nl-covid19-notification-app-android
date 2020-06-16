@@ -8,16 +8,23 @@ package nl.rijksoverheid.en.onboarding
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
+import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQDetailSections
-import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.databinding.FragmentHowItWorksBinding
 
-class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list) {
+class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_how_it_works) {
+    private val onboardingViewModel: OnboardingViewModel by viewModels()
+    private val viewModel: ExposureNotificationsViewModel by activityViewModels()
 
     private val args: HowItWorksDetailFragmentArgs by navArgs()
 
@@ -39,12 +46,26 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentListBinding.bind(view)
+        val binding = FragmentHowItWorksBinding.bind(view)
 
         binding.toolbar.apply {
             setTitle(R.string.onboarding_how_it_works_detail_toolbar_title)
             setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
         }
         binding.content.adapter = adapter
+
+        binding.request.setOnClickListener { viewModel.requestEnableNotifications() }
+
+        viewModel.notificationState.observe(viewLifecycleOwner) {
+            if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
+                onboardingViewModel.finishOnboarding()
+            }
+        }
+
+        onboardingViewModel.onboardingComplete.observe(viewLifecycleOwner) {
+            enterTransition = null
+            exitTransition = null
+            findNavController().popBackStack(R.id.nav_onboarding, true)
+        }
     }
 }
