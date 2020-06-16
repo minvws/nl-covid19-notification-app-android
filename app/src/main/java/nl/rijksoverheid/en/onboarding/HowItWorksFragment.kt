@@ -43,6 +43,7 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_how_it_works) {
         binding.toolbar.apply {
             setTitle(R.string.onboarding_how_it_works_toolbar_title)
             setNavigationIcon(R.drawable.ic_close)
+            setNavigationContentDescription(R.string.cd_close)
             setNavigationOnClickListener { findNavController().popBackStack() }
         }
         binding.content.adapter = adapter
@@ -51,7 +52,7 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_how_it_works) {
             if (item is FAQItem) {
                 findNavController().navigate(
                     HowItWorksFragmentDirections.actionHowItWorksDetail(item.id),
-                    FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+                    FragmentNavigatorExtras(binding.toolbar to binding.toolbar.transitionName)
                 )
             }
         }

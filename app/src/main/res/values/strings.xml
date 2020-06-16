@@ -87,4 +87,6 @@
         <item quantity="one">%d dag</item>
         <item quantity="other">%d dagen</item>
     </plurals>
+    <string name="cd_back">Terug</string>
+    <string name="cd_close">Sluit</string>
 </resources>
