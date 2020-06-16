@@ -33,6 +33,7 @@ class PreconditionsHelper(context: Context, private val onPreconditionsChanged: 
             addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
         }
         context.registerReceiver(receiver, filter)
+        onPreconditionsChanged()
     }
 
     override fun onStop(owner: LifecycleOwner) {
