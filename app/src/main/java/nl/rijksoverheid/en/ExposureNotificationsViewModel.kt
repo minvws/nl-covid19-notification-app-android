@@ -58,6 +58,11 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
                         result.resolution
                     )
                 )
+                is EnableNotificationsResult.Unavailable -> updateResult(
+                    NotificationsStatusResult.Unavailable(
+                        result.statusCode
+                    )
+                )
                 is EnableNotificationsResult.UnknownError -> updateResult(
                     NotificationsStatusResult.UnknownError(
                         result.exception
@@ -83,6 +88,7 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
 
     sealed class NotificationsStatusResult {
         data class ConsentRequired(val intent: PendingIntent) : NotificationsStatusResult()
+        data class Unavailable(val statusCode: Int) : NotificationsStatusResult()
         data class UnknownError(val exception: Exception) : NotificationsStatusResult()
     }
 }

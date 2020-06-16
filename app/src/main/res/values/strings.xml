@@ -87,4 +87,7 @@
         <item quantity="other">%d dagen</item>
     </plurals>
     <string name="cd_close">close</string>
+    <string name="dialog_error_api_not_available_title">Google Play Services zijn nog niet klaar</string>
+    <string name="dialog_error_api_not_available_message">Google Play Services zijn up-to-date maar kunnen blootstelling nog niet bijhouden. Probeer het later nog eens.</string>
+    <string name="dialog_error_confirm">Snap ik</string>
 </resources>

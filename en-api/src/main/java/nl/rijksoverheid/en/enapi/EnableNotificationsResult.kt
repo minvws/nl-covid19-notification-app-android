@@ -20,6 +20,11 @@ sealed class EnableNotificationsResult {
     data class ResolutionRequired(val resolution: PendingIntent) : EnableNotificationsResult()
 
     /**
+     * Exposure notifications API is not available
+     */
+    data class Unavailable(val statusCode: Int) : EnableNotificationsResult()
+
+    /**
      * An unexpected error occurred
      */
     data class UnknownError(val exception: Exception) : EnableNotificationsResult()
