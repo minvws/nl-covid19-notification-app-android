@@ -7,14 +7,16 @@
 package nl.rijksoverheid.en.labtest
 
 import android.app.PendingIntent
+import android.content.SharedPreferences
 import kotlinx.coroutines.delay
+import nl.rijksoverheid.en.api.ExposureNotificationService
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
-import nl.rijksoverheid.en.labtest.LabTestRepository.ScheduleUploadTeksResult.RequireConsent
-import nl.rijksoverheid.en.labtest.LabTestRepository.ScheduleUploadTeksResult.Success
 
 class LabTestRepository(
-    private val exposureNotificationApi: ExposureNotificationApi
+    private val preferences: SharedPreferences,
+    private val exposureNotificationApi: ExposureNotificationApi,
+    private val api: ExposureNotificationService,
 ) {
     suspend fun requestKey(): RequestKeyResult {
         delay(1000)
@@ -23,8 +25,8 @@ class LabTestRepository(
 
     suspend fun scheduleUploadTeks(): ScheduleUploadTeksResult {
         return when (val result = exposureNotificationApi.requestTemporaryExposureKeyHistory()) {
-            is TemporaryExposureKeysResult.RequireConsent -> RequireConsent(result.resolution)
-            else -> Success
+            is TemporaryExposureKeysResult.RequireConsent -> ScheduleUploadTeksResult.RequireConsent(result.resolution)
+            else -> ScheduleUploadTeksResult.Success
         }
     }
 

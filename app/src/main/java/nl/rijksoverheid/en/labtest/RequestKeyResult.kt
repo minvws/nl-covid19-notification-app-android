@@ -7,6 +7,13 @@
 package nl.rijksoverheid.en.labtest
 
 sealed class RequestKeyResult {
-    data class Success(val key: String) : RequestKeyResult()
+    /**
+     * Returns the code to show to the user in the UI
+     */
+    data class Success(val code: String) : RequestKeyResult()
+
+    /**
+     * The code could not be retrieved due to an error
+     */
     object UnknownError : RequestKeyResult()
 }
