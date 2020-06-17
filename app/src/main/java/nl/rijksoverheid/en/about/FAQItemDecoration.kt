@@ -15,25 +15,21 @@ import android.view.View
 import androidx.annotation.Dimension
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupieViewHolder
-import timber.log.Timber
 import kotlin.math.roundToInt
+
+private val ATTRS = intArrayOf(android.R.attr.listDivider)
 
 class FAQItemDecoration(context: Context, @Dimension val startOffset: Int) :
     RecyclerView.ItemDecoration() {
-    companion object {
-        val ATTRS = intArrayOf(android.R.attr.listDivider)
-    }
 
     private val bounds = Rect()
-    private lateinit var divider: Drawable
+    private val divider: Drawable
 
     init {
         val a: TypedArray = context.obtainStyledAttributes(ATTRS)
         val divider = a.getDrawable(0)
         if (divider == null) {
-            Timber.w(
-                "@android:attr/listDivider was not set in the theme used for this decoration"
-            )
+            throw IllegalStateException("@android:attr/listDivider was not set in the theme used for this decoration")
         } else {
             this.divider = divider
         }
