@@ -53,6 +53,10 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
             viewModel.requestEnableNotifications()
         }
 
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+
         viewModel.notificationState.observe(viewLifecycleOwner) {
             when (it) {
                 ExposureNotificationsViewModel.NotificationsState.Enabled -> {
