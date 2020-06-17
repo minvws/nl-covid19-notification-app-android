@@ -8,6 +8,8 @@ package nl.rijksoverheid.en.labtest
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.xwray.groupie.GroupAdapter
@@ -19,7 +21,9 @@ import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.onboarding.HowItWorksFragmentDirections
 
 class LabTestFragment : BaseFragment(R.layout.fragment_list) {
-    private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(LabTestSection()) }
+    private val viewModel: LabTestViewModel by viewModels()
+    private val section = LabTestSection { viewModel.retry() }
+    private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,6 +37,8 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
             setNavigationOnClickListener { findNavController().popBackStack() }
         }
         binding.content.adapter = adapter
+
+        viewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }
 
         adapter.setOnItemClickListener { item, _ ->
             if (item is FAQItem) {

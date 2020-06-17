@@ -19,6 +19,7 @@ import nl.rijksoverheid.en.api.ExposureNotificationService
 import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.onboarding.GooglePlayServicesUpToDateChecker
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 
@@ -60,6 +61,8 @@ fun createOnboardingRepository(
         checker
     )
 }
+
+fun createLabTestRepository() = LabTestRepository()
 
 private fun createSecurePreferences(context: Context): SharedPreferences {
     return EncryptedSharedPreferences.create(

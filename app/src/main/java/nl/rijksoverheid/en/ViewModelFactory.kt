@@ -10,7 +10,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
+import nl.rijksoverheid.en.factory.createLabTestRepository
 import nl.rijksoverheid.en.factory.createOnboardingRepository
+import nl.rijksoverheid.en.labtest.LabTestViewModel
 import nl.rijksoverheid.en.onboarding.OnboardingViewModel
 import nl.rijksoverheid.en.status.StatusViewModel
 
@@ -29,6 +31,9 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
             StatusViewModel::class.java -> StatusViewModel(
                 createOnboardingRepository(context),
                 createExposureNotificationsRepository(context)
+            ) as T
+            LabTestViewModel::class.java -> LabTestViewModel(
+                createLabTestRepository()
             ) as T
             else -> throw IllegalStateException("Unknown view model class $modelClass")
         }
