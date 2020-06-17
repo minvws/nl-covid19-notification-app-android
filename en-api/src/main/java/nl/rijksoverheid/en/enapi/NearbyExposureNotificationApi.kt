@@ -6,6 +6,8 @@
  */
 package nl.rijksoverheid.en.enapi
 
+import android.content.Context
+import android.content.Intent
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
@@ -21,30 +23,37 @@ import kotlin.coroutines.suspendCoroutine
 /**
  * Wrapper around [ExposureNotificationClient] implementing [ExposureNotificationApi]
  */
-class NearbyExposureNotificationApi(private val client: ExposureNotificationClient) :
+class NearbyExposureNotificationApi(
+    private val context: Context,
+    private val client: ExposureNotificationClient
+) :
     ExposureNotificationApi {
     /**
      * Get the status of the exposure notifications api
      * @return the status
      */
     override suspend fun getStatus(): StatusResult = suspendCoroutine { c ->
-        client.isEnabled.addOnSuccessListener {
-            if (it) {
-                c.resume(StatusResult.Enabled)
-            } else {
-                c.resume(StatusResult.Disabled)
-            }
-        }.addOnFailureListener {
-            Timber.e(it, "Error getting API status")
-            val apiException = it as? ApiException
-            c.resume(
-                when (apiException?.statusCode) {
-                    ExposureNotificationStatusCodes.API_NOT_CONNECTED -> StatusResult.Unavailable(
-                        apiException.getMostSpecificStatusCode()
-                    )
-                    else -> StatusResult.UnknownError(it)
+        if (isApiAvailable()) {
+            client.isEnabled.addOnSuccessListener {
+                if (it) {
+                    c.resume(StatusResult.Enabled)
+                } else {
+                    c.resume(StatusResult.Disabled)
                 }
-            )
+            }.addOnFailureListener {
+                Timber.e(it, "Error getting API status")
+                val apiException = it as? ApiException
+                c.resume(
+                    when (apiException?.statusCode) {
+                        ExposureNotificationStatusCodes.API_NOT_CONNECTED -> StatusResult.Unavailable(
+                            apiException.getMostSpecificStatusCode()
+                        )
+                        else -> StatusResult.UnknownError(it)
+                    }
+                )
+            }
+        } else {
+            c.resume(StatusResult.Unavailable(ExposureNotificationStatusCodes.FAILED_TEMPORARILY_DISABLED))
         }
     }
 
@@ -54,21 +63,30 @@ class NearbyExposureNotificationApi(private val client: ExposureNotificationClie
      */
     override suspend fun requestEnableNotifications(): EnableNotificationsResult =
         suspendCoroutine { c ->
-            client.start().addOnSuccessListener {
-                c.resume(EnableNotificationsResult.Enabled)
-            }.addOnFailureListener {
-                val apiException = it as? ApiException
-                c.resume(
-                    when (apiException?.statusCode) {
-                        CommonStatusCodes.RESOLUTION_REQUIRED -> EnableNotificationsResult.ResolutionRequired(
-                            apiException.status.resolution!!
-                        )
-                        else -> {
-                            Timber.e(it, "Error while enabling notifications")
-                            EnableNotificationsResult.UnknownError(it)
+            if (isApiAvailable()) {
+                client.start().addOnSuccessListener {
+                    c.resume(EnableNotificationsResult.Enabled)
+                }.addOnFailureListener {
+                    val apiException = it as? ApiException
+                    val status = apiException?.getMostSpecificStatusCode()
+                    c.resume(
+                        when (status) {
+                            CommonStatusCodes.RESOLUTION_REQUIRED -> EnableNotificationsResult.ResolutionRequired(
+                                apiException.status.resolution!!
+                            )
+                            null -> {
+                                Timber.e(it, "Error while enabling notifications")
+                                EnableNotificationsResult.UnknownError(it)
+                            }
+                            else -> {
+                                Timber.e(it, "Error while enabling notifications, status = $status")
+                                EnableNotificationsResult.Unavailable(status)
+                            }
                         }
-                    }
-                )
+                    )
+                }
+            } else {
+                c.resume(EnableNotificationsResult.Unavailable(ExposureNotificationStatusCodes.FAILED_TEMPORARILY_DISABLED))
             }
         }
 
@@ -157,6 +175,13 @@ class NearbyExposureNotificationApi(private val client: ExposureNotificationClie
                 c.resume(null)
             }
         }
+
+    private fun isApiAvailable(): Boolean {
+        return context.packageManager.resolveActivity(
+            Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS),
+            0
+        ) != null
+    }
 }
 
 /**

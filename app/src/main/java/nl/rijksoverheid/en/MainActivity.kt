@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import nl.rijksoverheid.en.lifecyle.EventObserver
 
 private const val RC_REQUEST_CONSENT = 1
+private const val TAG_GENERIC_ERROR = "generic_error"
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: ExposureNotificationsViewModel by viewModels()
@@ -35,7 +36,15 @@ class MainActivity : AppCompatActivity() {
                         0
                     )
                 }
-                is ExposureNotificationsViewModel.NotificationsStatusResult.UnknownError -> TODO()
+                is ExposureNotificationsViewModel.NotificationsStatusResult.Unavailable,
+                is ExposureNotificationsViewModel.NotificationsStatusResult.UnknownError -> {
+                    if (supportFragmentManager.findFragmentByTag(TAG_GENERIC_ERROR) == null) {
+                        ExposureNotificationApiNotAvailableDialogFragment().show(
+                            supportFragmentManager,
+                            TAG_GENERIC_ERROR
+                        )
+                    }
+                }
             }
         })
     }
