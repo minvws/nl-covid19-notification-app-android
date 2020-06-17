@@ -6,12 +6,12 @@
  */
 package nl.rijksoverheid.en.databinding
 
-import android.text.Html
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 
 object BindingAdapters {
@@ -48,6 +48,6 @@ object BindingAdapters {
     @JvmStatic
     @BindingAdapter("htmlText")
     fun setHtmlText(view: TextView, htmlText: String) {
-        view.text = Html.fromHtml(htmlText)
+        view.text = HtmlCompat.fromHtml(htmlText, HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 }
