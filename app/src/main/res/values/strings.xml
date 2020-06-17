@@ -87,6 +87,10 @@
     <string name="lab_test_header_5">2. Upload de codes die op je telefoon bewaard zijn</string>
     <string name="lab_test_paragraph_6">Alle mensen met de app waarbij je, in de periode dat je besmettelijk was, in de buurt bent geweest krijgen daarna een melding. Deze melding is anoniem.</string>
     <string name="lab_test_button">Codes uploaden</string>
+    <string name="lab_test_done_header_1">Bedankt en beterschap</string>
+    <string name="lab_test_done_paragraph_2">Je hebt geholpen de verspreiding van het coronavirus te stoppen. Bedankt en veel sterkte met je verdere herstel.</string>
+    <string name="lab_test_done_list_3">Blijf binnen tot 2 dagen na laatste klachten\nVoorkom contact met je huisgenoten\nWorden je klachten erger? Neem direct contact op met de GGD of je huisarts</string>
+    <string name="lab_test_done_button">Sluiten</string>
     <string name="update_google_play_services">Updaten</string>
     <string name="update_google_play_services_headline">Je Google Play Services is niet bijgewerkt</string>
     <string name="update_google_play_services_description">%1$s heeft de nieuwste versie van Google Play Services nodig om goed te blijven werken op je telefoon.</string>

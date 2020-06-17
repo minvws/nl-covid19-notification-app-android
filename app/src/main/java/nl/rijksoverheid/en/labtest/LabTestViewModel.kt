@@ -14,6 +14,7 @@ import androidx.lifecycle.switchMap
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Error
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Loading
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Success
+import nl.rijksoverheid.en.lifecyle.Event
 
 class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewModel() {
     sealed class KeyState {
@@ -22,8 +23,9 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
         object Error : KeyState()
     }
 
-    private val refresh = MutableLiveData(Unit)
+    val uploadCompleted: LiveData<Event<Unit>> = MutableLiveData()
 
+    private val refresh = MutableLiveData(Unit)
     val keyState: LiveData<KeyState> = refresh.switchMap {
         liveData {
             emit(Loading)
@@ -38,5 +40,10 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
 
     fun retry() {
         refresh.value = Unit
+    }
+
+    fun upload() {
+        labTestRepository.uploadTeks()
+        (uploadCompleted as MutableLiveData).value = Event(Unit)
     }
 }

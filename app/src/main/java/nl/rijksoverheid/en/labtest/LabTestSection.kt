@@ -14,7 +14,7 @@ import nl.rijksoverheid.en.items.IllustrationItem
 import nl.rijksoverheid.en.items.ParagraphItem
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
 
-class LabTestSection(private val retry: () -> Unit) : Section() {
+class LabTestSection(private val retry: () -> Unit, private val upload: () -> Unit) : Section() {
 
     fun update(keyState: KeyState) {
         update(
@@ -26,7 +26,7 @@ class LabTestSection(private val retry: () -> Unit) : Section() {
                 LabTestKeyItem(keyState, retry),
                 HeaderItem(R.string.lab_test_header_5),
                 ParagraphItem(R.string.lab_test_paragraph_6),
-                ButtonItem(R.string.lab_test_button) {}
+                ButtonItem(R.string.lab_test_button, upload)
             ))
     }
 }

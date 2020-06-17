@@ -8,8 +8,6 @@ package nl.rijksoverheid.en.labtest
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -17,10 +15,10 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 
-class LabTestFragment : BaseFragment(R.layout.fragment_list) {
-    private val viewModel: LabTestViewModel by viewModels()
-    private val section = LabTestSection({ viewModel.retry() }, { viewModel.upload() })
-    private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
+class LabTestDoneFragment : BaseFragment(R.layout.fragment_list) {
+    private val adapter = GroupAdapter<GroupieViewHolder>().apply {
+        add(LabTestDoneSection { findNavController().popBackStack() })
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,11 +32,5 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
             setNavigationOnClickListener { findNavController().popBackStack() }
         }
         binding.content.adapter = adapter
-
-        viewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }
-
-        viewModel.uploadCompleted.observe(viewLifecycleOwner) {
-            findNavController().navigate(R.id.action_lab_test_done)
-        }
     }
 }

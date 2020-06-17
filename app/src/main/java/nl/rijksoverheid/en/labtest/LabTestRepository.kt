@@ -14,7 +14,7 @@ class LabTestRepository {
         return RequestKeyResult.Success("A56-34F")
     }
 
-    suspend fun uploadTeks() {
-        delay(2000)
+    fun uploadTeks() {
+        // Schedule job
     }
 }
