@@ -26,7 +26,12 @@ class LabTestSection(private val retry: () -> Unit, private val upload: () -> Un
                 LabTestKeyItem(keyState, retry),
                 HeaderItem(R.string.lab_test_header_5),
                 ParagraphItem(R.string.lab_test_paragraph_6),
-                ButtonItem(R.string.lab_test_button, upload)
-            ))
+                ButtonItem(
+                    text = R.string.lab_test_button,
+                    buttonClickListener = upload,
+                    enabled = keyState is KeyState.Success
+                )
+            )
+        )
     }
 }

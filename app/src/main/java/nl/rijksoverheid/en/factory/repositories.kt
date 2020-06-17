@@ -62,7 +62,9 @@ fun createOnboardingRepository(
     )
 }
 
-fun createLabTestRepository() = LabTestRepository()
+fun createLabTestRepository(context: Context) = LabTestRepository(
+    NearbyExposureNotificationApi(Nearby.getExposureNotificationClient(context))
+)
 
 private fun createSecurePreferences(context: Context): SharedPreferences {
     return EncryptedSharedPreferences.create(

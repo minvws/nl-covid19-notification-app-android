@@ -6,6 +6,8 @@
  */
 package nl.rijksoverheid.en.labtest
 
+import android.content.Intent
+import android.content.IntentSender
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -16,6 +18,12 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.labtest.LabTestViewModel.UploadKeysResult.RequireConsent
+import nl.rijksoverheid.en.labtest.LabTestViewModel.UploadKeysResult.Success
+import nl.rijksoverheid.en.lifecyle.EventObserver
+import timber.log.Timber
+
+private const val RC_REQUEST_UPLOAD_CONSENT = 1
 
 class LabTestFragment : BaseFragment(R.layout.fragment_list) {
     private val viewModel: LabTestViewModel by viewModels()
@@ -37,7 +45,28 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
 
         viewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }
 
-        viewModel.uploadCompleted.observe(viewLifecycleOwner) {
+        viewModel.uploadKeysResult.observe(viewLifecycleOwner, EventObserver {
+            when (it) {
+                is RequireConsent -> requestConsent(it.resolution.intentSender)
+                Success -> findNavController().navigate(R.id.action_lab_test_done)
+            }
+        })
+    }
+
+    private fun requestConsent(intentSender: IntentSender) {
+        try {
+            requireActivity().startIntentSenderFromFragment(
+                this, intentSender,
+                RC_REQUEST_UPLOAD_CONSENT, null, 0, 0, 0, null
+            )
+        } catch (ex: Exception) {
+            Timber.e(ex, "Error requesting consent")
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_REQUEST_UPLOAD_CONSENT) {
             findNavController().navigate(R.id.action_lab_test_done)
         }
     }

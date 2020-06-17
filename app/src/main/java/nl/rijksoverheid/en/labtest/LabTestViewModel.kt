@@ -6,14 +6,19 @@
  */
 package nl.rijksoverheid.en.labtest
 
+import android.app.PendingIntent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import nl.rijksoverheid.en.labtest.LabTestRepository.ScheduleUploadTeksResult
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Error
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Loading
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Success
+import nl.rijksoverheid.en.labtest.LabTestViewModel.UploadKeysResult.RequireConsent
 import nl.rijksoverheid.en.lifecyle.Event
 
 class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewModel() {
@@ -23,7 +28,7 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
         object Error : KeyState()
     }
 
-    val uploadCompleted: LiveData<Event<Unit>> = MutableLiveData()
+    val uploadKeysResult: LiveData<Event<UploadKeysResult>> = MutableLiveData()
 
     private val refresh = MutableLiveData(Unit)
     val keyState: LiveData<KeyState> = refresh.switchMap {
@@ -43,7 +48,20 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
     }
 
     fun upload() {
-        labTestRepository.uploadTeks()
-        (uploadCompleted as MutableLiveData).value = Event(Unit)
+        viewModelScope.launch {
+            when (val result = labTestRepository.scheduleUploadTeks()) {
+                is ScheduleUploadTeksResult.RequireConsent -> updateResult(RequireConsent(result.resolution))
+                ScheduleUploadTeksResult.Success -> updateResult(UploadKeysResult.Success)
+            }
+        }
+    }
+
+    private fun updateResult(result: UploadKeysResult) {
+        (uploadKeysResult as MutableLiveData).value = Event(result)
+    }
+
+    sealed class UploadKeysResult {
+        data class RequireConsent(val resolution: PendingIntent) : UploadKeysResult()
+        object Success : UploadKeysResult()
     }
 }

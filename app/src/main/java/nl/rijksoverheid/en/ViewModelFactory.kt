@@ -33,7 +33,7 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
                 createExposureNotificationsRepository(context)
             ) as T
             LabTestViewModel::class.java -> LabTestViewModel(
-                createLabTestRepository()
+                createLabTestRepository(context)
             ) as T
             else -> throw IllegalStateException("Unknown view model class $modelClass")
         }
