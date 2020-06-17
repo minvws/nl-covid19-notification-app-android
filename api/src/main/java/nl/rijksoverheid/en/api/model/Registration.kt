@@ -13,5 +13,6 @@ import com.squareup.moshi.JsonClass
 data class Registration(
     @Json(name = "labConfirmationId") val labConfirmationId: String,
     @Json(name = "bucketId") val bucketId: String,
-    @Json(name = "confirmationKey") val confirmationKey: String
+    @Json(name = "confirmationKey") val confirmationKey: String,
+    @Json(name = "validity") val validitySeconds: Long
 )

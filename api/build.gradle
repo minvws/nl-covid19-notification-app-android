@@ -2,7 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
-ext.pocEndpoint = ext.has("pocEndpoint") ? ext.pocEndpoint : "not-set"
+ext.cdnEndpoint = ext.has("cdnEndpoint") ? ext.cdnEndpoint : "not-set"
+ext.apiEndpoint = ext.has("apiEndpoint") ? ext.apiEndpoint : "not-set"
 
 android {
     compileSdkVersion 29
@@ -16,7 +17,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        buildConfigField "String", "API_BASE_URL", "\"${pocEndpoint}\""
+        buildConfigField "String", "CDN_BASE_URL", "\"${cdnEndpoint}\""
+        buildConfigField "String", "API_BASE_URL", "\"${apiEndpoint}\""
     }
 
     testOptions {

@@ -23,7 +23,7 @@ import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
-class ExposureNotificationServiceTest {
+class LabTestServiceTest {
 
     private lateinit var mockWebServer: MockWebServer
 
@@ -39,7 +39,7 @@ class ExposureNotificationServiceTest {
 
     @Test
     fun `postKeys with interceptor signs request`() = runBlocking {
-        val api = ExposureNotificationService.create(
+        val api = LabTestService.create(
             ApplicationProvider.getApplicationContext(),
             baseUrl = mockWebServer.url("").toString()
         )

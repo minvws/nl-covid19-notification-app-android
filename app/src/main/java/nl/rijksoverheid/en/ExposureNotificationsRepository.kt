@@ -34,7 +34,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
-import nl.rijksoverheid.en.api.ExposureNotificationService
+import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
@@ -67,7 +67,7 @@ private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
 class ExposureNotificationsRepository(
     private val context: Context,
     private val exposureNotificationsApi: ExposureNotificationApi,
-    private val api: ExposureNotificationService,
+    private val api: CdnService,
     private val preferences: SharedPreferences,
     private val manifestWorkerScheduler: ProcessManifestWorkerScheduler,
     private val clock: Clock = Clock.systemDefaultZone()

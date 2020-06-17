@@ -18,8 +18,6 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
-import nl.rijksoverheid.en.labtest.LabTestViewModel.UploadKeysResult.RequireConsent
-import nl.rijksoverheid.en.labtest.LabTestViewModel.UploadKeysResult.Success
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import timber.log.Timber
 
@@ -45,12 +43,20 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
 
         viewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }
 
-        viewModel.uploadKeysResult.observe(viewLifecycleOwner, EventObserver {
+        viewModel.uploadDiagnosisKeysResult.observe(viewLifecycleOwner, EventObserver {
             when (it) {
-                is RequireConsent -> requestConsent(it.resolution.intentSender)
-                Success -> findNavController().navigate(R.id.action_lab_test_done)
+                is LabTestRepository.UploadDiagnosisKeysResult.RequireConsent -> requestConsent(it.resolution.intentSender)
+                is LabTestRepository.UploadDiagnosisKeysResult.Success -> findNavController().navigate(
+                    R.id.action_lab_test_done
+                )
+                is LabTestRepository.UploadDiagnosisKeysResult.UnknownError -> TODO("Implement error handling when API is not enabled")
             }
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.retry()
     }
 
     private fun requestConsent(intentSender: IntentSender) {
