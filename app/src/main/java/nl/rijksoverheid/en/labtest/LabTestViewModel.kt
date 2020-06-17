@@ -9,9 +9,11 @@ package nl.rijksoverheid.en.labtest
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
+import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Error
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Loading
+import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Success
 
 class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewModel() {
     sealed class KeyState {
@@ -20,25 +22,21 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
         object Error : KeyState()
     }
 
-    val keyState: LiveData<KeyState> = MutableLiveData(Loading)
+    private val refresh = MutableLiveData(Unit)
 
-    init {
-        retrieveKey()
+    val keyState: LiveData<KeyState> = refresh.switchMap {
+        liveData {
+            emit(Loading)
+            val result = labTestRepository.requestKey()
+            if (result is RequestKeyResult.Success) {
+                emit(Success(result.key))
+            } else {
+                emit(Error)
+            }
+        }
     }
 
     fun retry() {
-        (keyState as MutableLiveData).value = Loading
-        retrieveKey()
-    }
-
-    private fun retrieveKey() {
-        viewModelScope.launch {
-            val keyResult = labTestRepository.requestKey()
-            (keyState as MutableLiveData).value = if (keyResult is RequestKeyResult.Success) {
-                KeyState.Success(keyResult.key)
-            } else {
-                KeyState.Error
-            }
-        }
+        refresh.value = Unit
     }
 }
