@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.status
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
@@ -55,7 +56,11 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
                 ExposureNotificationsViewModel.NotificationsState.Disabled -> {
                     statusViewModel.refreshStatus()
                 }
-                ExposureNotificationsViewModel.NotificationsState.Unavailable -> showApiUnavailableError()
+                ExposureNotificationsViewModel.NotificationsState.Unavailable -> {
+                    Toast.makeText(context, R.string.error_api_not_available, Toast.LENGTH_LONG)
+                        .show()
+                    statusViewModel.refreshStatus()
+                }
             }
         }
 
