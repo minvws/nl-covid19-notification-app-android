@@ -53,17 +53,13 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
             viewModel.requestEnableNotifications()
         }
 
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+
         viewModel.notificationState.observe(viewLifecycleOwner) {
-            when (it) {
-                ExposureNotificationsViewModel.NotificationsState.Enabled -> {
-                    onboardingViewModel.finishOnboarding()
-                }
-                ExposureNotificationsViewModel.NotificationsState.Unavailable -> {
-                    // TODO device is not supported
-                }
-                ExposureNotificationsViewModel.NotificationsState.Disabled -> {
-                    // user needs to enable
-                }
+            if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
+                onboardingViewModel.finishOnboarding()
             }
         }
 

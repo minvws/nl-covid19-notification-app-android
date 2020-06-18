@@ -22,4 +22,9 @@
     <style name="Widget.App.Button.Secondary.Rounded" parent="Widget.App.Button.Secondary">
         <item name="cornerRadius">24dp</item>
     </style>
+
+    <style name="Widget.App.Toolbar.Surface" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="navigationContentDescription">@string/cd_back</item>
+        <item name="navigationIcon">?attr/homeAsUpIndicator</item>
+    </style>
 </resources>

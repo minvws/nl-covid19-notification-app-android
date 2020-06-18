@@ -20,6 +20,7 @@
     <string name="onboarding_consent_explain">Hoe werkt de app precies?</string>
     <string name="onboarding_consent_skip">Sla over</string>
     <string name="onboarding_how_it_works_toolbar_title">Hoe werkt de app?</string>
+    <string name="onboarding_how_it_works_request_consent">App inschakelen</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Veelgestelde vraag</string>
     <string name="status_no_exposure_detected_headline">De app is actief</string>
     <string name="status_no_exposure_detected_description">Je krijgt een melding nadat je extra kans op besmetting hebt gelopen.</string>
@@ -101,5 +102,9 @@
         <item quantity="one">%d dag</item>
         <item quantity="other">%d dagen</item>
     </plurals>
-    <string name="cd_close">close</string>
+    <string name="dialog_error_api_not_available_title">Google Play Services zijn nog niet klaar</string>
+    <string name="dialog_error_api_not_available_message">Google Play Services zijn up-to-date maar kunnen blootstelling nog niet bijhouden. Probeer het later nog eens.</string>
+    <string name="dialog_error_confirm">Snap ik</string>
+    <string name="cd_back">Terug</string>
+    <string name="cd_close">Sluit</string>
 </resources>

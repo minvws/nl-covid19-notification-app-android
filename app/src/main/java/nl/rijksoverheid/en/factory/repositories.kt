@@ -31,7 +31,7 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
 
     return ExposureNotificationsRepository(
         context,
-        NearbyExposureNotificationApi(Nearby.getExposureNotificationClient(context)),
+        NearbyExposureNotificationApi(context, Nearby.getExposureNotificationClient(context)),
         service,
         createSecurePreferences(context),
         object : ProcessManifestWorkerScheduler {
