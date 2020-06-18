@@ -13,7 +13,7 @@ This repository contains the Android App of the Proof of Concept for the Dutch e
 For communication with the API, the endpoint urls need to be set using a Gradle project property. This can be done by adding the `-P` option on the command line and/or Android Studio compiler
 options, or by specifying the properties in your global `gradle.properties`.
 
-Properties that need to be set are `cdnEndpoint` and `apiEndpoint` both need to be fully qualified urls and end with a `/`. For local development use `-PcdnEndpoint=http://<yourip>:5000/cdn/ -PapiEndpoint=http://<yourip>:5000/MobileAppApi/` 
+Properties that need to be set are `cdnEndpoint` and `apiEndpoint` both need to be fully qualified urls and end with a `/`. For local development use `-PcdnEndpoint=http://<yourip>:5000/cdn/ -PapiEndpoint=http://<yourip>:5000/MobileAppApi/`
 
 ## Development & Contribution process
 
