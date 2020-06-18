@@ -35,6 +35,9 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = statusViewModel
 
+        binding.infoItem2.root.setOnClickListener {
+            findNavController().navigate(R.id.action_generic_notification)
+        }
         binding.infoItem4.root.setOnClickListener {
             findNavController().navigate(R.id.action_lab_test)
         }

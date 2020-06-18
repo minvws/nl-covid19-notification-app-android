@@ -31,6 +31,13 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
+        <action
+            android:id="@+id/action_generic_notification"
+            app:destination="@id/genericNotificationFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
 
     </fragment>
 
@@ -70,6 +77,12 @@
         android:id="@+id/nav_lab_test_done"
         android:name="nl.rijksoverheid.en.labtest.LabTestDoneFragment"
         android:label="LabTestDoneFragment"
+        tools:layout="@layout/fragment_list" />
+
+    <fragment
+        android:id="@+id/genericNotificationFragment"
+        android:name="nl.rijksoverheid.en.notification.GenericNotificationFragment"
+        android:label="GenericNotificationFragment"
         tools:layout="@layout/fragment_list" />
 
 </navigation>
