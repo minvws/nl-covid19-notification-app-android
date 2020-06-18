@@ -60,6 +60,9 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
+        <action
+            android:id="@+id/action_remove_exposed_message"
+            app:destination="@id/removeExposedMessageDialogFragment" />
 
     </fragment>
 
@@ -133,5 +136,10 @@
         android:name="nl.rijksoverheid.en.requesttest.RequestTestFragment"
         android:label="RequestTestFragment"
         tools:layout="@layout/fragment_list" />
+
+    <dialog
+        android:id="@+id/removeExposedMessageDialogFragment"
+        android:name="nl.rijksoverheid.en.status.RemoveExposedMessageDialogFragment"
+        android:label="RemoveExposedMessageDialogFragment" />
 
 </navigation>
