@@ -69,8 +69,8 @@
     <string name="status_info_4_subtitle">Waarschuw anderen anoniem meteen nadat je hoort dat je besmet bent</string>
     <string name="status_app_version">Test-versie %1$s build %2$s</string>
     <string name="status_exposure_what_next">Wat kan ik nu doen?</string>
-    <string name="status_error_consent_required">De app heeft blootstelling permissie nodig om te kunnen werken.</string>
-    <string name="status_error_action_consent">Zet blootstelling aan</string>
+    <string name="status_error_consent_required">%1$s is niet actief. Schakel de app in zodat deze goed werkt.</string>
+    <string name="status_error_action_consent">Inschakelen</string>
     <string name="about_toolbar_title">Over de app</string>
     <string name="about_privacy_statement">Privacy statement</string>
     <string name="about_accessibility">Accessibility</string>

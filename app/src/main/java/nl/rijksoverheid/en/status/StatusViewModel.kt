@@ -94,7 +94,10 @@ class StatusViewModel(
     }
 
     fun getErrorText(context: Context, error: ErrorViewState): String? = when (error) {
-        is ErrorViewState.ConsentRequired -> context.getString(R.string.status_error_consent_required)
+        is ErrorViewState.ConsentRequired -> context.getString(
+            R.string.status_error_consent_required,
+            context.getString(R.string.app_name)
+        )
         else -> null
     }
 
@@ -136,6 +139,15 @@ class StatusViewModel(
     }
 
     fun onErrorActionClicked(state: ErrorViewState) {
+        when (state) {
+            is ErrorViewState.ConsentRequired -> {
+                viewModelScope.launch {
+                    // make sure everything is disabled, then send an event to enable again
+                    notificationsRepository.requestDisableNotifications()
+                    (requestEnableNotifications as MutableLiveData).value = Event(Unit)
+                }
+            }
+        }
     }
 
     sealed class HeaderViewState(
