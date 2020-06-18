@@ -64,6 +64,10 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
             viewModel.requestEnableNotifications()
         })
 
+        statusViewModel.navigateToPostNotification.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(StatusFragmentDirections.actionPostNotification(it.toEpochDay()))
+        })
+
         viewLifecycleOwner.lifecycle.addObserver(PreconditionsHelper(requireContext()) {
             statusViewModel.refreshStatus()
         })

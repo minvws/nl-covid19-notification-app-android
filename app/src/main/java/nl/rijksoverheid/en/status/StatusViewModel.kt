@@ -39,6 +39,7 @@ class StatusViewModel(
     private val refreshStatus = MutableLiveData(Unit)
 
     val requestEnableNotifications: LiveData<Event<Unit>> = MutableLiveData()
+    val navigateToPostNotification: LiveData<Event<LocalDate>> = MutableLiveData()
 
     fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
 
@@ -80,7 +81,7 @@ class StatusViewModel(
             R.string.status_no_exposure_detected_description, context.getString(R.string.app_name)
         )
         is HeaderViewState.Exposed -> {
-            val daysSince = Period.between(state.date, LocalDate.now()).days
+            val daysSince = Period.between(state.date, LocalDate.now(clock)).days
             val daysSinceString =
                 context.resources.getQuantityString(R.plurals.days, daysSince, daysSince)
             context.getString(
@@ -119,7 +120,8 @@ class StatusViewModel(
         when (state) {
             HeaderViewState.Active -> { /* no action possible */
             }
-            is HeaderViewState.Exposed -> TODO()
+            is HeaderViewState.Exposed ->
+                (navigateToPostNotification as MutableLiveData).value = Event(state.date)
             HeaderViewState.Disabled -> {
                 viewModelScope.launch {
                     // make sure everything is disabled, then send an event to enable again
