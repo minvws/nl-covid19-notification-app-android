@@ -35,8 +35,7 @@
             android:contentDescription="@null"
             android:src="@drawable/ic_info"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorPrimary" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/content"

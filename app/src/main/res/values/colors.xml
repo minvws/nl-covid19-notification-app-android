@@ -12,9 +12,6 @@
 
     <!-- Color palette -->
     <color name="dark_blue">#0047FF</color>
-    <color name="dark_yellow">#FFB612</color>
-    <color name="ruby_red">#B74B9F</color>
-    <color name="subtle_green">#119E7E</color>
 
     <color name="gray_lighter">#F2F2F7</color>
     <color name="gray_light">#DDDDDD</color>

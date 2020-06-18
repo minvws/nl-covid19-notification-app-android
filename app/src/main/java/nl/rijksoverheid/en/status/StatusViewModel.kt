@@ -19,18 +19,21 @@ import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.lifecyle.Event
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
+import java.time.Clock
 import java.time.LocalDate
+import java.time.Period
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
-    private val notificationsRepository: ExposureNotificationsRepository
+    private val notificationsRepository: ExposureNotificationsRepository,
+    private val clock: Clock = Clock.systemDefaultZone()
 ) : ViewModel() {
 
     private val refreshStatus = MutableLiveData(Unit)
@@ -61,6 +64,9 @@ class StatusViewModel(
 
     val shouldShowErrorState = errorViewState.map { it !is ErrorViewState.None }
 
+    val appVersion = BuildConfig.VERSION_NAME
+    val buildNumber = BuildConfig.VERSION_CODE
+
     fun hasCompletedOnboarding(): Boolean {
         return onboardingRepository.hasCompletedOnboarding()
     }
@@ -70,11 +76,19 @@ class StatusViewModel(
     }
 
     fun getDescription(context: Context, state: HeaderViewState): String = when (state) {
-        HeaderViewState.Active -> context.getString(R.string.status_no_exposure_detected_description)
-        is HeaderViewState.Exposed -> context.getString(
-            R.string.status_exposure_detected_description,
-            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).format(state.date)
+        HeaderViewState.Active -> context.getString(
+            R.string.status_no_exposure_detected_description, context.getString(R.string.app_name)
         )
+        is HeaderViewState.Exposed -> {
+            val daysSince = Period.between(state.date, LocalDate.now()).days
+            val daysSinceString =
+                context.resources.getQuantityString(R.plurals.days, daysSince, daysSince)
+            context.getString(
+                R.string.status_exposure_detected_description,
+                daysSinceString,
+                DateTimeFormatter.ofPattern("EEEE d MMMM").format(state.date)
+            )
+        }
         HeaderViewState.Disabled -> context.getString(R.string.status_en_api_disabled_description)
     }
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -34,8 +35,7 @@
                     layout="@layout/include_status_info_item"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:infoIcon="@{@drawable/ic_lock}"
-                    app:infoIconColor="@{@color/subtle_green}"
+                    app:infoIcon="@{@drawable/ic_info}"
                     app:infoSubtitle="@{@string/status_info_1_subtitle}"
                     app:infoTitle="@{@string/status_info_1_title}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -47,8 +47,7 @@
                     layout="@layout/include_status_info_item"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:infoIcon="@{@drawable/ic_warning}"
-                    app:infoIconColor="@{@color/dark_blue}"
+                    app:infoIcon="@{@drawable/ic_shield}"
                     app:infoSubtitle="@{@string/status_info_2_subtitle}"
                     app:infoTitle="@{@string/status_info_2_title}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -60,8 +59,7 @@
                     layout="@layout/include_status_info_item"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:infoIcon="@{@drawable/ic_syringe}"
-                    app:infoIconColor="@{@color/ruby_red}"
+                    app:infoIcon="@{@drawable/ic_test}"
                     app:infoSubtitle="@{@string/status_info_3_subtitle}"
                     app:infoTitle="@{@string/status_info_3_title}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -74,28 +72,27 @@
                     layout="@layout/include_status_info_item"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:infoIcon="@{@drawable/ic_bed}"
-                    app:infoIconColor="@{@color/dark_yellow}"
+                    app:infoIcon="@{@drawable/ic_virus}"
                     app:infoSubtitle="@{@string/status_info_4_subtitle}"
                     app:infoTitle="@{@string/status_info_4_title}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/info_item_3" />
 
-                <Button
-                    android:id="@+id/action_settings"
-                    style="@style/Widget.App.Button.Secondary"
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="32dp"
-                    android:text="@string/status_action_3"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:paddingTop="32dp"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
+                    android:paddingBottom="32dp"
+                    android:text="@{@string/status_app_version(viewModel.appVersion, viewModel.buildNumber)}"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/info_item_4" />
+                    app:layout_constraintTop_toBottomOf="@id/info_item_4"
+                    tools:text="@string/status_app_version" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -109,7 +106,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:viewModel="@{viewModel}" />
+            app:viewModel="@{viewModel}"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
