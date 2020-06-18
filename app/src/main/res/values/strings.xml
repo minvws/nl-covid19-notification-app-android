@@ -59,6 +59,10 @@
     <string name="request_test_paragraph_3">Testen is gratis en kan meestal snel gebeuren. Blijf zo veel mogelijk thuis tot de uitslag bekend is. Bel gratis %1$s om een coranatest aan te vragen.</string>
     <string name="status_menu_check">Check besmettingen</string>
     <string name="status_reset_exposure">Melding verwijderen</string>
+    <string name="status_dialog_remove_exposure_title">Weet je zeker dat je deze melding wilt verwijderen?</string>
+    <string name="status_dialog_remove_exposure_message">Je kunt de datum daarna niet meer terugvinden in de app. Onthoud deze dus goed.</string>
+    <string name="status_dialog_remove_exposure_confirm">Verwijder</string>
+    <string name="status_dialog_remove_exposure_cancel">Annuleer</string>
     <string name="status_info_1_title">Over de app</string>
     <string name="status_info_1_subtitle">Hoe de app werkt en wat dit voor je privacy betekent</string>
     <string name="status_info_2_title">Ik heb een melding gekregen</string>

@@ -39,6 +39,7 @@ class StatusViewModel(
     private val refreshStatus = MutableLiveData(Unit)
 
     val requestEnableNotifications: LiveData<Event<Unit>> = MutableLiveData()
+    val confirmRemoveExposedMessage: LiveData<Event<Unit>> = MutableLiveData()
     val navigateToPostNotification: LiveData<Event<LocalDate>> = MutableLiveData()
 
     fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
@@ -136,6 +137,10 @@ class StatusViewModel(
     }
 
     fun onSecondaryActionClicked(state: HeaderViewState) {
+        when (state) {
+            is HeaderViewState.Exposed ->
+                (confirmRemoveExposedMessage as MutableLiveData).value = Event(Unit)
+        }
     }
 
     fun onErrorActionClicked(state: ErrorViewState) {
@@ -148,6 +153,11 @@ class StatusViewModel(
                 }
             }
         }
+    }
+
+    fun removeExposure() {
+        notificationsRepository.resetExposures()
+        refreshStatus()
     }
 
     sealed class HeaderViewState(

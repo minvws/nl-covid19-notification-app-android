@@ -6,6 +6,8 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -17,6 +19,9 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
+
+val RC_CONFIRM_DELETE_EXPOSURE = 1
+private const val TAG_CONFIRM_DELETE_EXPOSURE = "confirm_delete_exposure"
 
 class StatusFragment : BaseFragment(R.layout.fragment_status) {
     private val statusViewModel: StatusViewModel by viewModels()
@@ -64,6 +69,17 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
             viewModel.requestEnableNotifications()
         })
 
+        statusViewModel.confirmRemoveExposedMessage.observe(viewLifecycleOwner, EventObserver {
+            if (parentFragmentManager.findFragmentByTag(TAG_CONFIRM_DELETE_EXPOSURE) == null) {
+                RemoveExposedMessageDialogFragment().apply {
+                    setTargetFragment(this@StatusFragment, RC_CONFIRM_DELETE_EXPOSURE)
+                }.show(
+                    parentFragmentManager,
+                    TAG_CONFIRM_DELETE_EXPOSURE
+                )
+            }
+        })
+
         statusViewModel.navigateToPostNotification.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(StatusFragmentDirections.actionPostNotification(it.toEpochDay()))
         })
@@ -71,6 +87,13 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         viewLifecycleOwner.lifecycle.addObserver(PreconditionsHelper(requireContext()) {
             statusViewModel.refreshStatus()
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_CONFIRM_DELETE_EXPOSURE && resultCode == Activity.RESULT_OK) {
+            statusViewModel.removeExposure()
+        }
     }
 
     private fun showApiUnavailableError() {
