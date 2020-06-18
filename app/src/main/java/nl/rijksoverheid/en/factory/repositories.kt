@@ -20,6 +20,7 @@ import nl.rijksoverheid.en.api.LabTestService
 import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.job.UploadDiagnosisKeysJob
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.onboarding.GooglePlayServicesUpToDateChecker
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
@@ -71,7 +72,8 @@ fun createLabTestRepository(context: Context): LabTestRepository {
             context,
             Nearby.getExposureNotificationClient(context)
         ),
-        labTestService ?: LabTestService.create(context).also { labTestService = it }
+        labTestService ?: LabTestService.create(context).also { labTestService = it },
+        { UploadDiagnosisKeysJob.schedule(context) }
     )
 }
 

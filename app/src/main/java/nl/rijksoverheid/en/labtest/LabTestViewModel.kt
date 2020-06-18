@@ -25,15 +25,15 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
         object Error : KeyState()
     }
 
-    val uploadDiagnosisKeysResult: LiveData<Event<LabTestRepository.UploadDiagnosisKeysResult>> =
+    val uploadDiagnosisKeysResult: LiveData<Event<LabTestRepository.RequestUploadDiagnosisKeysResult>> =
         MutableLiveData()
 
     private val refresh = MutableLiveData<Unit>()
     val keyState: LiveData<KeyState> = refresh.switchMap {
         liveData {
             emit(Loading)
-            val result = labTestRepository.requestKey()
-            if (result is RequestKeyResult.Success) {
+            val result = labTestRepository.registerForUpload()
+            if (result is RegistrationResult.Success) {
                 emit(Success(result.code))
             } else {
                 emit(Error)
@@ -47,11 +47,11 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
 
     fun upload() {
         viewModelScope.launch {
-            updateResult(labTestRepository.uploadDiagnosisKeys())
+            updateResult(labTestRepository.requestUploadDiagnosticKeys())
         }
     }
 
-    private fun updateResult(result: LabTestRepository.UploadDiagnosisKeysResult) {
+    private fun updateResult(result: LabTestRepository.RequestUploadDiagnosisKeysResult) {
         (uploadDiagnosisKeysResult as MutableLiveData).value = Event(result)
     }
 }

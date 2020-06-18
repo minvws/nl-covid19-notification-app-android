@@ -45,11 +45,13 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
 
         viewModel.uploadDiagnosisKeysResult.observe(viewLifecycleOwner, EventObserver {
             when (it) {
-                is LabTestRepository.UploadDiagnosisKeysResult.RequireConsent -> requestConsent(it.resolution.intentSender)
-                is LabTestRepository.UploadDiagnosisKeysResult.Success -> findNavController().navigate(
+                is LabTestRepository.RequestUploadDiagnosisKeysResult.RequireConsent -> requestConsent(
+                    it.resolution.intentSender
+                )
+                is LabTestRepository.RequestUploadDiagnosisKeysResult.Success -> findNavController().navigate(
                     R.id.action_lab_test_done
                 )
-                is LabTestRepository.UploadDiagnosisKeysResult.UnknownError -> TODO("Implement error handling when API is not enabled")
+                is LabTestRepository.RequestUploadDiagnosisKeysResult.UnknownError -> TODO("Implement error handling when API is not enabled")
             }
         })
     }

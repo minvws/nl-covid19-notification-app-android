@@ -16,7 +16,8 @@ import java.io.File
 
 private var okHttpClient: OkHttpClient? = null
 
-internal fun createMoshi() = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+internal fun createMoshi() =
+    Moshi.Builder().add(Base64Adapter()).add(KotlinJsonAdapterFactory()).build()
 
 internal fun createOkHttpClient(context: Context): OkHttpClient {
     return okHttpClient ?: OkHttpClient.Builder()

@@ -11,8 +11,6 @@ import nl.rijksoverheid.en.api.model.PostKeysRequest
 import nl.rijksoverheid.en.api.model.Registration
 import nl.rijksoverheid.en.api.model.RegistrationRequest
 import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
@@ -28,7 +26,7 @@ interface LabTestService {
     suspend fun postKeys(
         @Body request: PostKeysRequest,
         @Tag hmacSecret: HmacSecret
-    ): Response<ResponseBody>
+    )
 
     companion object {
         fun create(

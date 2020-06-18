@@ -45,14 +45,38 @@ class LabTestServiceTest {
         )
         mockWebServer.enqueue(MockResponse())
 
-        api.postKeys(PostKeysRequest(listOf()), HmacSecret("testId"))
+        api.postKeys(PostKeysRequest(listOf(), "bucketId"), HmacSecret("testId"))
 
         val request = mockWebServer.takeRequest()
         assertEquals(1, mockWebServer.requestCount)
         assertNotNull(request.requestUrl?.queryParameter("sig"))
         assertEquals(
-            "WuoWWHvx5UG4yxUm1iMBcyhSVfVrGpzJs5ssnhZLqrg=",
+            "PKQULx58ETb+RtPw/sTpegwT/lJnVW/Owe5RUlZjEkw=",
             request.requestUrl?.queryParameter("sig")
+        )
+    }
+
+    @Test
+    fun `postKeys converts padding to base64`() = runBlocking {
+        val api = LabTestService.create(
+            ApplicationProvider.getApplicationContext(),
+            baseUrl = mockWebServer.url("").toString()
+        )
+        mockWebServer.enqueue(MockResponse())
+
+        api.postKeys(
+            PostKeysRequest(
+                listOf(),
+                padding = byteArrayOf(1, 2, 3, 4),
+                bucketId = "bucketId"
+            ), HmacSecret("testId")
+        )
+
+        val request = mockWebServer.takeRequest()
+        assertEquals(1, mockWebServer.requestCount)
+        assertEquals(
+            "{\"keys\":[],\"bucketID\":\"bucketId\",\"padding\":\"AQIDBA==\"}",
+            String(request.body.readByteArray())
         )
     }
 }
