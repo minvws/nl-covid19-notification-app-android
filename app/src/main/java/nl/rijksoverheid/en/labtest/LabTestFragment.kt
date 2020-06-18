@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.labtest
 
+import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
@@ -74,7 +75,7 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_REQUEST_UPLOAD_CONSENT) {
+        if (requestCode == RC_REQUEST_UPLOAD_CONSENT && resultCode == Activity.RESULT_OK) {
             findNavController().navigate(R.id.action_lab_test_done)
         }
     }
