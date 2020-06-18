@@ -35,6 +35,10 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = statusViewModel
 
+        binding.infoItem4.root.setOnClickListener {
+            findNavController().navigate(R.id.action_lab_test)
+        }
+
         viewModel.notificationState.observe(viewLifecycleOwner) {
             when (it) {
                 ExposureNotificationsViewModel.NotificationsState.Enabled -> {

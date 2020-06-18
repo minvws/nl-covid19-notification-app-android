@@ -6,9 +6,9 @@
     app:startDestination="@id/nav_status">
 
     <fragment
-        tools:layout="@layout/fragment_status"
         android:id="@+id/nav_status"
-        android:name="nl.rijksoverheid.en.status.StatusFragment">
+        android:name="nl.rijksoverheid.en.status.StatusFragment"
+        tools:layout="@layout/fragment_status">
         <action
             android:id="@+id/action_onboarding"
             app:destination="@id/nav_onboarding"
@@ -24,14 +24,20 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
+        <action
+            android:id="@+id/action_lab_test"
+            app:destination="@id/nav_lab_test"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
 
     </fragment>
-
 
     <fragment
         android:id="@+id/nav_update_google_play_services"
         android:name="nl.rijksoverheid.en.onboarding.GooglePlayServicesUpdateRequiredFragment"
-        tools:layout="@layout/fragment_google_play_services_upgrade_required"></fragment>
+        tools:layout="@layout/fragment_google_play_services_upgrade_required" />
 
     <include app:graph="@navigation/nav_onboarding" />
 
@@ -43,5 +49,27 @@
             android:name="epochDayOfLastExposure"
             app:argType="long" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_lab_test"
+        android:name="nl.rijksoverheid.en.labtest.LabTestFragment"
+        android:label="LabTestFragment"
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_lab_test_done"
+            app:destination="@id/nav_lab_test_done"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit"
+            app:popUpTo="@id/nav_lab_test"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_lab_test_done"
+        android:name="nl.rijksoverheid.en.labtest.LabTestDoneFragment"
+        android:label="LabTestDoneFragment"
+        tools:layout="@layout/fragment_list" />
 
 </navigation>

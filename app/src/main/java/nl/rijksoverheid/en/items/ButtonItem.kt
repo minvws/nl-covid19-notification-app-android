@@ -6,7 +6,6 @@
  */
 package nl.rijksoverheid.en.items
 
-import android.view.View.OnClickListener
 import androidx.annotation.StringRes
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
@@ -14,16 +13,24 @@ import nl.rijksoverheid.en.databinding.ItemButtonBinding
 
 class ButtonItem(
     @StringRes val text: Int,
-    val buttonClickListener: () -> Unit
-) :
-    BaseBindableItem<ItemButtonBinding>() {
+    val buttonClickListener: () -> Unit,
+    val enabled: Boolean = true
+) : BaseBindableItem<ItemButtonBinding>() {
+    data class ViewState(
+        @StringRes val text: Int,
+        val enabled: Boolean,
+        val click: () -> Unit
+    )
+
+    private val viewState = ViewState(text, enabled, buttonClickListener)
+
     override fun getLayout() = R.layout.item_button
 
     override fun bind(viewBinding: ItemButtonBinding, position: Int) {
-        viewBinding.text = text
-        viewBinding.buttonClickListener = OnClickListener { buttonClickListener() }
+        viewBinding.viewState = viewState
     }
 
     override fun isSameAs(other: Item<*>): Boolean = other is ButtonItem && other.text == text
-    override fun hasSameContentAs(other: Item<*>) = other is ButtonItem && other.text == text
+    override fun hasSameContentAs(other: Item<*>) = other is ButtonItem && other.text == text &&
+        other.enabled == enabled
 }

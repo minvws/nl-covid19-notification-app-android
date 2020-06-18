@@ -11,15 +11,9 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
-            name="text"
-            type="Integer" />
-
-        <variable
-            name="buttonClickListener"
-            type="android.view.View.OnClickListener" />
+            name="viewState"
+            type="nl.rijksoverheid.en.items.ButtonItem.ViewState" />
     </data>
 
     <Button
@@ -29,7 +23,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="16dp"
-        android:onClick="@{buttonClickListener}"
-        android:text="@{text}"
+        android:enabled="@{viewState.enabled}"
+        android:onClick="@{_ -> viewState.click.invoke()}"
+        android:text="@{viewState.text}"
         tools:text="@string/post_notification_button" />
 </layout>
