@@ -23,15 +23,26 @@
 
         <ImageView
             android:id="@+id/clouds"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:src="@drawable/illustration_clouds"
-            app:layout_constraintDimensionRatio="H,360:74"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status_test_version"
+            android:textColor="?attr/colorSurface"
+            app:chipSurfaceColor="?attr/colorOnSurface"
+            app:layout_constraintBottom_toBottomOf="@id/clouds"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/clouds" />
 
         <TextView
             android:id="@+id/status"
@@ -75,11 +86,11 @@
 
         <ImageView
             android:id="@+id/no_exposure_illustration"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:src="@drawable/illustration_status"
-            app:layout_constraintDimensionRatio="H,320:215"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/illustration_top"

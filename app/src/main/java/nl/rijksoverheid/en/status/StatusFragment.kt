@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.status
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -35,8 +36,17 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = statusViewModel
 
+        binding.infoItem1.root.setOnClickListener {
+            findNavController().navigate(StatusFragmentDirections.actionAbout())
+        }
+        binding.infoItem2.root.setOnClickListener {
+            findNavController().navigate(StatusFragmentDirections.actionGenericNotification())
+        }
+        binding.infoItem3.root.setOnClickListener {
+            findNavController().navigate(StatusFragmentDirections.actionRequestTest())
+        }
         binding.infoItem4.root.setOnClickListener {
-            findNavController().navigate(R.id.action_lab_test)
+            findNavController().navigate(StatusFragmentDirections.actionLabTest())
         }
 
         viewModel.notificationState.observe(viewLifecycleOwner) {
@@ -47,12 +57,31 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
                 ExposureNotificationsViewModel.NotificationsState.Disabled -> {
                     statusViewModel.refreshStatus()
                 }
-                ExposureNotificationsViewModel.NotificationsState.Unavailable -> showApiUnavailableError()
+                ExposureNotificationsViewModel.NotificationsState.Unavailable -> {
+                    Toast.makeText(context, R.string.error_api_not_available, Toast.LENGTH_LONG)
+                        .show()
+                    statusViewModel.refreshStatus()
+                }
             }
         }
 
         statusViewModel.requestEnableNotifications.observe(viewLifecycleOwner, EventObserver {
             viewModel.requestEnableNotifications()
+        })
+
+        statusViewModel.confirmRemoveExposedMessage.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(StatusFragmentDirections.actionRemoveExposedMessage())
+            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+                RemoveExposedMessageDialogFragment.REMOVE_EXPOSED_MESSAGE_RESULT
+            )?.observe(viewLifecycleOwner) {
+                if (it) {
+                    statusViewModel.removeExposure()
+                }
+            }
+        })
+
+        statusViewModel.navigateToPostNotification.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(StatusFragmentDirections.actionPostNotification(it.toEpochDay()))
         })
 
         viewLifecycleOwner.lifecycle.addObserver(PreconditionsHelper(requireContext()) {

@@ -14,16 +14,11 @@ import nl.rijksoverheid.en.items.IllustrationItem
 import nl.rijksoverheid.en.items.MessageBoxItem
 import nl.rijksoverheid.en.items.ParagraphItem
 
-class PostNotificationSection(
-    daysSince: String,
-    date: String,
-    phoneNumber: String,
-    onCallClicked: () -> Unit
-) : Section(
+class GenericNotificationSection(phoneNumber: String, onCallClicked: () -> Unit) : Section(
     listOf(
-        IllustrationItem(R.drawable.illustration_post_notification),
-        HeaderItem(R.string.post_notification_header_1),
-        ParagraphItem(R.string.post_notification_paragraph_2, daysSince, date),
+        IllustrationItem(R.drawable.illustration_generic_notification),
+        HeaderItem(R.string.generic_notification_header_1),
+        ParagraphItem(R.string.generic_notification_paragraph_2),
         HeaderItem(R.string.treat_perspective_header_1),
         ParagraphItem(R.string.treat_perspective_list_2),
         ParagraphItem(R.string.treat_perspective_paragraph_3),

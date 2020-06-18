@@ -19,23 +19,28 @@ import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.lifecyle.Event
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
+import java.time.Clock
 import java.time.LocalDate
+import java.time.Period
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
-    private val notificationsRepository: ExposureNotificationsRepository
+    private val notificationsRepository: ExposureNotificationsRepository,
+    private val clock: Clock = Clock.systemDefaultZone()
 ) : ViewModel() {
 
     private val refreshStatus = MutableLiveData(Unit)
 
     val requestEnableNotifications: LiveData<Event<Unit>> = MutableLiveData()
+    val confirmRemoveExposedMessage: LiveData<Event<Unit>> = MutableLiveData()
+    val navigateToPostNotification: LiveData<Event<LocalDate>> = MutableLiveData()
 
     fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
 
@@ -61,6 +66,9 @@ class StatusViewModel(
 
     val shouldShowErrorState = errorViewState.map { it !is ErrorViewState.None }
 
+    val appVersion = BuildConfig.VERSION_NAME
+    val buildNumber = BuildConfig.VERSION_CODE
+
     fun hasCompletedOnboarding(): Boolean {
         return onboardingRepository.hasCompletedOnboarding()
     }
@@ -70,16 +78,27 @@ class StatusViewModel(
     }
 
     fun getDescription(context: Context, state: HeaderViewState): String = when (state) {
-        HeaderViewState.Active -> context.getString(R.string.status_no_exposure_detected_description)
-        is HeaderViewState.Exposed -> context.getString(
-            R.string.status_exposure_detected_description,
-            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).format(state.date)
+        HeaderViewState.Active -> context.getString(
+            R.string.status_no_exposure_detected_description, context.getString(R.string.app_name)
         )
+        is HeaderViewState.Exposed -> {
+            val daysSince = Period.between(state.date, LocalDate.now(clock)).days
+            val daysSinceString =
+                context.resources.getQuantityString(R.plurals.days, daysSince, daysSince)
+            context.getString(
+                R.string.status_exposure_detected_description,
+                daysSinceString,
+                DateTimeFormatter.ofPattern("EEEE d MMMM").format(state.date)
+            )
+        }
         HeaderViewState.Disabled -> context.getString(R.string.status_en_api_disabled_description)
     }
 
     fun getErrorText(context: Context, error: ErrorViewState): String? = when (error) {
-        is ErrorViewState.ConsentRequired -> context.getString(R.string.status_error_consent_required)
+        is ErrorViewState.ConsentRequired -> context.getString(
+            R.string.status_error_consent_required,
+            context.getString(R.string.app_name)
+        )
         else -> null
     }
 
@@ -105,7 +124,8 @@ class StatusViewModel(
         when (state) {
             HeaderViewState.Active -> { /* no action possible */
             }
-            is HeaderViewState.Exposed -> TODO()
+            is HeaderViewState.Exposed ->
+                (navigateToPostNotification as MutableLiveData).value = Event(state.date)
             HeaderViewState.Disabled -> {
                 viewModelScope.launch {
                     // make sure everything is disabled, then send an event to enable again
@@ -117,9 +137,27 @@ class StatusViewModel(
     }
 
     fun onSecondaryActionClicked(state: HeaderViewState) {
+        when (state) {
+            is HeaderViewState.Exposed ->
+                (confirmRemoveExposedMessage as MutableLiveData).value = Event(Unit)
+        }
     }
 
     fun onErrorActionClicked(state: ErrorViewState) {
+        when (state) {
+            is ErrorViewState.ConsentRequired -> {
+                viewModelScope.launch {
+                    // make sure everything is disabled, then send an event to enable again
+                    notificationsRepository.requestDisableNotifications()
+                    (requestEnableNotifications as MutableLiveData).value = Event(Unit)
+                }
+            }
+        }
+    }
+
+    fun removeExposure() {
+        notificationsRepository.resetExposures()
+        refreshStatus()
     }
 
     sealed class HeaderViewState(

@@ -13,10 +13,11 @@ import nl.rijksoverheid.en.about.FAQItemId.BLUETOOTH
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION
 import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION
 import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
+import nl.rijksoverheid.en.about.FAQItemId.TECHNICAL
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.ParagraphItem
 
-enum class FAQItemId { LOCATION, ANONYMOUS, NOTIFICATION, BLUETOOTH, POWER_USAGE }
+enum class FAQItemId { LOCATION, ANONYMOUS, NOTIFICATION, BLUETOOTH, POWER_USAGE, TECHNICAL }
 
 class FAQDetailSections {
     fun getSection(faqItemId: FAQItemId) = when (faqItemId) {
@@ -49,6 +50,20 @@ class FAQDetailSections {
             listOf(
                 HeaderItem(R.string.faq_power_usage),
                 ParagraphItem(R.string.faq_power_usage_paragraph_1)
+            )
+        )
+        TECHNICAL -> Section(
+            listOf(
+                HeaderItem(R.string.faq_technical_header_1),
+                ParagraphItem(R.string.faq_technical_paragraph_2),
+                HeaderItem(R.string.faq_technical_header_3),
+                ParagraphItem(R.string.faq_technical_paragraph_4),
+                HeaderItem(R.string.faq_technical_header_5),
+                ParagraphItem(R.string.faq_technical_paragraph_6),
+                HeaderItem(R.string.faq_technical_header_7),
+                ParagraphItem(R.string.faq_technical_paragraph_8),
+                HeaderItem(R.string.faq_technical_header_9),
+                ParagraphItem(R.string.faq_technical_paragraph_10)
             )
         )
     }

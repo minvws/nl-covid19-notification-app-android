@@ -1,0 +1,45 @@
+<!--
+  ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+  ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+  ~
+  ~   SPDX-License-Identifier: EUPL-1.2
+  ~
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+    <path
+        android:fillColor="#D753C9"
+        android:pathData="M16,0L16,0A16,16 0,0 1,32 16L32,16A16,16 0,0 1,16 32L16,32A16,16 0,0 1,0 16L0,16A16,16 0,0 1,16 0z" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M9.7998,9H14.1998V21.6C14.1998,22.815 13.2148,23.8 11.9998,23.8C10.7848,23.8 9.7998,22.815 9.7998,21.6V9Z"
+        android:strokeWidth="2"
+        android:strokeColor="#ffffff" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M8.8,8L15.2,8A0.8,0.8 0,0 1,16 8.8L16,8.8A0.8,0.8 0,0 1,15.2 9.6L8.8,9.6A0.8,0.8 0,0 1,8 8.8L8,8.8A0.8,0.8 0,0 1,8.8 8z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M10.0001,12L12.4001,12A0.4,0.4 0,0 1,12.8001 12.4L12.8001,12.4A0.4,0.4 0,0 1,12.4001 12.8L10.0001,12.8A0.4,0.4 0,0 1,9.6001 12.4L9.6001,12.4A0.4,0.4 0,0 1,10.0001 12z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M10.0001,15.2L11.6001,15.2A0.4,0.4 0,0 1,12.0001 15.6L12.0001,15.6A0.4,0.4 0,0 1,11.6001 16L10.0001,16A0.4,0.4 0,0 1,9.6001 15.6L9.6001,15.6A0.4,0.4 0,0 1,10.0001 15.2z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M10.0001,18.3999L10.8001,18.3999A0.4,0.4 0,0 1,11.2001 18.7999L11.2001,18.7999A0.4,0.4 0,0 1,10.8001 19.1999L10.0001,19.1999A0.4,0.4 0,0 1,9.6001 18.7999L9.6001,18.7999A0.4,0.4 0,0 1,10.0001 18.3999z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M20.4002,6.4a3.6,2.8 90,1 0,-0 7.2a3.6,2.8 90,1 0,-0 -7.2z" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M20.0001,14.8h0.8v3.2h-0.8z"
+        android:strokeWidth="0.8"
+        android:strokeColor="#ffffff" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M20.4002,19.1999a3.6,2.8 90,1 0,-0 7.2a3.6,2.8 90,1 0,-0 -7.2z" />
+</vector>
