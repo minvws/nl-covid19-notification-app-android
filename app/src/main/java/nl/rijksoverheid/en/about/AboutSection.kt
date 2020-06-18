@@ -23,6 +23,9 @@ class AboutSection : Section(
         FAQItem(NOTIFICATION, R.string.faq_notification),
         FAQItem(BLUETOOTH, R.string.faq_bluetooth),
         FAQItem(POWER_USAGE, R.string.faq_power_usage),
-        FAQItem(TECHNICAL, R.string.faq_technical)
+        FAQItem(TECHNICAL, R.string.faq_technical),
+        FAQHeaderItem(R.string.about_toolbar_title),
+        PrivacyStatementItem(),
+        AccessibilityItem()
     )
 )

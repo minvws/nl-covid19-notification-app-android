@@ -35,6 +35,9 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = statusViewModel
 
+        binding.infoItem1.root.setOnClickListener {
+            findNavController().navigate(StatusFragmentDirections.actionAbout())
+        }
         binding.infoItem2.root.setOnClickListener {
             findNavController().navigate(StatusFragmentDirections.actionGenericNotification())
         }
@@ -64,10 +67,6 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         viewLifecycleOwner.lifecycle.addObserver(PreconditionsHelper(requireContext()) {
             statusViewModel.refreshStatus()
         })
-
-        binding.infoItem1.container.setOnClickListener {
-            findNavController().navigate(R.id.action_about)
-        }
     }
 
     private fun showApiUnavailableError() {

@@ -71,6 +71,9 @@
     <string name="status_exposure_what_next">Wat kan ik nu doen?</string>
     <string name="status_error_consent_required">De app heeft blootstelling permissie nodig om te kunnen werken.</string>
     <string name="status_error_action_consent">Zet blootstelling aan</string>
+    <string name="about_toolbar_title">Over de app</string>
+    <string name="about_privacy_statement">Privacy statement</string>
+    <string name="about_accessibility">Accessibility</string>
     <string name="faq_header">Veelgestelde vragen</string>
     <string name="faq_detail_toolbar_title">Veelgestelde vraag</string>
     <string name="faq_location">Kan de app mijn locatie zien?</string>

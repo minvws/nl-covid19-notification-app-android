@@ -33,8 +33,8 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
         val binding = FragmentListBinding.bind(view)
 
         binding.toolbar.apply {
-            setTitle(R.string.onboarding_how_it_works_toolbar_title)
-            setNavigationOnClickListener { findNavController().popBackStack() }
+            setTitle(R.string.about_toolbar_title)
+            setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
         }
         binding.content.adapter = adapter
 
