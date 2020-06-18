@@ -44,15 +44,19 @@
     <string name="generic_notification_header_1">Wat betekent het als je een melding krijgt?</string>
     <string name="post_notification_paragraph_2" tools:ignore="Typos">Je was %1$s geleden (op %2$s) dicht bij iemand die daarna positief is getest op het coronavirus. Het RIVM en de GGD zien dit als een situatie waarin je extra kans op besmetting hebt gelopen. Als je inderdaad besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
     <string name="generic_notification_paragraph_2">De app stuurt een melding als je 10 minuten dicht bij iemand bent geweest die daarna positief is getest op het virus. Ook moet deze persoon de app gebruiken. Het RIVM en de GGD zien het contact als een mogelijk gevaarlijke situatie. Voor jezelf en je omgeving.</string>
-    <string name="post_notification_header_3">Klachten die passen bij het coronavirus (COVID-19)</string>
-    <string name="post_notification_paragraph_4">(licht) hoesten\nloopneus, niezen, keelpijn\nverlies van geur en/of smaak\nkortademigheid/benauwdheid\nkoorts boven de 38 graden</string>
-    <string name="post_notification_paragraph_5">Heb je klachten? Blijf dan zoveel mogelijk thuis. Zijn het ernstige klachten? Bel meteen je huisarts.</string>
+    <string name="treat_perspective_header_1">Klachten die passen bij het coronavirus (COVID-19)</string>
+    <string name="treat_perspective_list_2">(licht) hoesten\nloopneus, niezen, keelpijn\nverlies van geur en/of smaak\nkortademigheid/benauwdheid\nkoorts boven de 38 graden</string>
+    <string name="treat_perspective_paragraph_3">Heb je klachten? Blijf dan zoveel mogelijk thuis. Zijn het ernstige klachten? Bel meteen je huisarts.</string>
     <string name="post_notification_header_6">Doe een coronatest</string>
     <string name="post_notification_paragraph_7" tools:ignore="Typos">De GGD raadt aan je te laten testen op het virus, zelfs als je je nog niet ziek voelt. Want zonder je ziek te voelen kun je het virus al verspreiden en zo anderen besmetten.</string>
     <string name="post_notification_paragraph_8">Testen is gratis en kan meestal snel gebeuren. Blijf zo veel mogelijk thuis tot de uitslag bekend is.</string>
     <string name="post_notification_paragraph_9">Bel gratis %1$s om een coranatest aan te vragen.</string>
     <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart</string>
     <string name="post_notification_button">Bel voor coronatest</string>
+    <string name="request_test_toolbar_title">Coronatest aanvragen</string>
+    <string name="request_test_header_1">Heb je een melding gekregen of twijfel je of je ziek bent?  Vraag een test aan</string>
+    <string name="request_test_paragraph_2" tools:ignore="Typos">Als je een melding krijgt, raadt de GGD aan je te laten testen op het virus. Ook als je je nog niet ziek voelt. Heb je geen melding gekregen, maar wel last van klachten die bij het virus passen? Vraag ook dan een test aan.</string>
+    <string name="request_test_paragraph_3">Testen is gratis en kan meestal snel gebeuren. Blijf zo veel mogelijk thuis tot de uitslag bekend is. Bel gratis %1$s om een coranatest aan te vragen.</string>
     <string name="status_menu_check">Check besmettingen</string>
     <string name="status_reset_exposure">Melding verwijderen</string>
     <string name="status_info_1_title">Over de app</string>
@@ -64,7 +68,7 @@
     <string name="status_info_4_title">Ik ben positief getest</string>
     <string name="status_info_4_subtitle">Waarschuw anderen anoniem meteen nadat je hoort dat je besmet bent</string>
     <string name="status_app_version">Test-versie %1$s build %2$s</string>
-    <string name="status_exposure_what_next">Wat moet ik nu doen?</string>
+    <string name="status_exposure_what_next">Wat kan ik nu doen?</string>
     <string name="status_error_consent_required">De app heeft blootstelling permissie nodig om te kunnen werken.</string>
     <string name="status_error_action_consent">Zet blootstelling aan</string>
     <string name="faq_header">Veelgestelde vragen</string>
