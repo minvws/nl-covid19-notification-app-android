@@ -9,8 +9,9 @@ package nl.rijksoverheid.en.onboarding
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.core.app.SharedElementCallback
-import androidx.core.view.isVisible
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,6 +21,14 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentExplanationBinding
 
 class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
+    data class ViewState(
+        @StringRes val headline: Int,
+        @StringRes val description: Int,
+        @DrawableRes val illustration: Int,
+        val isExample: Boolean,
+        val onButtonClick: () -> Unit,
+        val onToolbarIconClick: () -> Unit
+    )
 
     private val args: ExplanationFragmentArgs by navArgs()
 
@@ -65,31 +74,29 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentExplanationBinding.bind(view)
 
-        binding.headline.setText(args.title)
-        binding.description.setText(args.description)
-        binding.illustration.setImageResource(args.illustration)
-        binding.example.isVisible = args.isExample
-        binding.toolbar.setNavigationOnClickListener {
-            activity?.onBackPressedDispatcher?.onBackPressed()
-        }
-
-        val navController = findNavController()
+        binding.viewState = ViewState(
+            headline = args.title,
+            description = args.description,
+            illustration = args.illustration,
+            isExample = args.isExample,
+            onButtonClick = {
+                findNavController().navigate(
+                    ExplanationFragmentDirections.actionNext(), FragmentNavigatorExtras(
+                        binding.toolbar to binding.toolbar.transitionName
+                    )
+                )
+            },
+            onToolbarIconClick = { activity?.onBackPressedDispatcher?.onBackPressed() }
+        )
 
         // Don't use enter transitions for the first screen in the onboarding graph
+        val navController = findNavController()
         if (navController.currentDestination?.id == navController.currentDestination?.parent?.startDestination) {
             enterTransition = null
             binding.toolbar.navigationIcon = null
             activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) {
                 activity?.finish()
             }
-        }
-
-        binding.next.setOnClickListener {
-            navController.navigate(
-                ExplanationFragmentDirections.actionNext(), FragmentNavigatorExtras(
-                    binding.toolbar to binding.toolbar.transitionName
-                )
-            )
         }
     }
 }
