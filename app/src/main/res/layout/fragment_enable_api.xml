@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="viewState"
+            type="nl.rijksoverheid.en.onboarding.EnableApiFragment.ViewState" />
+    </data>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +27,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:navigationIcon="?attr/homeAsUpIndicator">
+                app:navigationIcon="?attr/homeAsUpIndicator"
+                app:navigationOnClickListener="@{() -> viewState.onToolbarIconClick.invoke()}">
 
                 <Button
                     android:id="@+id/skip"
@@ -29,6 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:onClick="@{() -> viewState.onSkipClick.invoke()}"
                     android:text="@string/onboarding_consent_skip"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -108,6 +117,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:layout_marginBottom="8dp"
+                    android:onClick="@{() -> viewState.onExplanationClick.invoke()}"
                     android:text="@string/onboarding_consent_explain"
                     app:layout_constraintBottom_toTopOf="@id/request"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -120,6 +130,7 @@
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:onClick="@{() -> viewState.onRequestClick.invoke()}"
                     android:text="@string/onboarding_consent_request"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

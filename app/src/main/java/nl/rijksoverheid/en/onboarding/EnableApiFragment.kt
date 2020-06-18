@@ -22,6 +22,13 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
     private val onboardingViewModel: OnboardingViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
 
+    data class ViewState(
+        val onToolbarIconClick: () -> Unit,
+        val onSkipClick: () -> Unit,
+        val onRequestClick: () -> Unit,
+        val onExplanationClick: () -> Unit
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,24 +45,18 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentEnableApiBinding.bind(view)
-
-        binding.explanation.setOnClickListener {
-            enterTransition = null
-            exitTransition = null
-            sharedElementEnterTransition = null
-            sharedElementReturnTransition = null
-            findNavController().navigate(EnableApiFragmentDirections.actionExplain())
-        }
-        binding.skip.setOnClickListener {
-            onboardingViewModel.finishOnboarding()
-        }
-        binding.request.setOnClickListener {
-            viewModel.requestEnableNotifications()
-        }
-
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
+        binding.viewState = ViewState(
+            onToolbarIconClick = { activity?.onBackPressedDispatcher?.onBackPressed() },
+            onSkipClick = { onboardingViewModel.finishOnboarding() },
+            onRequestClick = { viewModel.requestEnableNotifications() },
+            onExplanationClick = {
+                enterTransition = null
+                exitTransition = null
+                sharedElementEnterTransition = null
+                sharedElementReturnTransition = null
+                findNavController().navigate(EnableApiFragmentDirections.actionExplain())
+            }
+        )
 
         viewModel.notificationState.observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
