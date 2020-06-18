@@ -46,6 +46,14 @@
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
 
+        <action
+            android:id="@+id/action_about"
+            app:destination="@id/nav_about"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
     </fragment>
 
     <fragment
@@ -64,6 +72,26 @@
             app:argType="long" />
     </fragment>
 
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="nl.rijksoverheid.en.about.AboutFragment"
+        android:label="AboutFragment"
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_about_detail"
+            app:destination="@id/nav_about_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_about_detail"
+        android:name="nl.rijksoverheid.en.about.AboutDetailFragment"
+        android:label="AboutDetailFragment"
+        tools:layout="@layout/fragment_list">
+
+        <argument
+            android:name="faqItemId"
+            app:argType="nl.rijksoverheid.en.about.FAQItemId" />
+    </fragment>
     <fragment
         android:id="@+id/nav_lab_test"
         android:name="nl.rijksoverheid.en.labtest.LabTestFragment"
