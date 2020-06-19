@@ -38,23 +38,14 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentEnableApiBinding.bind(view)
-
-        binding.explanation.setOnClickListener {
+        binding.onboardingViewModel = onboardingViewModel
+        binding.viewModel = viewModel
+        binding.explanationClickListener = View.OnClickListener {
             enterTransition = null
             exitTransition = null
             sharedElementEnterTransition = null
             sharedElementReturnTransition = null
             findNavController().navigate(EnableApiFragmentDirections.actionExplain())
-        }
-        binding.skip.setOnClickListener {
-            onboardingViewModel.finishOnboarding()
-        }
-        binding.request.setOnClickListener {
-            viewModel.requestEnableNotifications()
-        }
-
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
         }
 
         viewModel.notificationState.observe(viewLifecycleOwner) {

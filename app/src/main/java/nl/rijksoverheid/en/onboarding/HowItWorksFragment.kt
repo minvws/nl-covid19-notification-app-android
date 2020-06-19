@@ -45,7 +45,6 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_how_it_works) {
             setTitle(R.string.onboarding_how_it_works_toolbar_title)
             setNavigationIcon(R.drawable.ic_close)
             setNavigationContentDescription(R.string.cd_close)
-            setNavigationOnClickListener { findNavController().popBackStack() }
         }
         binding.content.addItemDecoration(
             FAQItemDecoration(

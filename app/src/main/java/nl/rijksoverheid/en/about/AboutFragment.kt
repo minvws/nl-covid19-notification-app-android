@@ -32,10 +32,8 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
 
         val binding = FragmentListBinding.bind(view)
 
-        binding.toolbar.apply {
-            setTitle(R.string.about_toolbar_title)
-            setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
-        }
+        binding.toolbar.setTitle(R.string.about_toolbar_title)
+
         binding.content.adapter = adapter
 
         adapter.setOnItemClickListener { item, _ ->

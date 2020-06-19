@@ -38,7 +38,6 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
             setTitle(R.string.lab_test_toolbar_title)
             setNavigationIcon(R.drawable.ic_close)
             setNavigationContentDescription(R.string.cd_close)
-            setNavigationOnClickListener { findNavController().popBackStack() }
         }
         binding.content.adapter = adapter
 
