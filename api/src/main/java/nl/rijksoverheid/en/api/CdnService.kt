@@ -19,31 +19,35 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Streaming
 
-interface ExposureNotificationService {
+interface CdnService {
     @GET("v1/exposurekeyset/{id}")
+    @Accept("application/zip")
     @Streaming
     suspend fun getExposureKeySetFile(@Path("id") id: String): Response<ResponseBody>
 
     @GET("v1/manifest")
+    @Accept(mimeType = BuildConfig.CDN_RESPONSE_MIME_TYPE)
     suspend fun getManifest(): Manifest
 
     @GET("v1/riskcalculationparameters/{id}")
+    @Accept(mimeType = BuildConfig.CDN_RESPONSE_MIME_TYPE)
     suspend fun getRiskCalculationParameters(@Path("id") id: String): RiskCalculationParameters
 
     @GET("v1/appconfig/{id}")
+    @Accept(mimeType = BuildConfig.CDN_RESPONSE_MIME_TYPE)
     suspend fun getAppConfig(@Path("id") id: String): AppConfig
 
     companion object {
         fun create(
             context: Context,
             client: OkHttpClient = createOkHttpClient(context),
-            baseUrl: String = BuildConfig.API_BASE_URL
-        ): ExposureNotificationService {
+            baseUrl: String = BuildConfig.CDN_BASE_URL
+        ): CdnService {
             return Retrofit.Builder()
                 .client(client)
                 .addConverterFactory(MoshiConverterFactory.create(createMoshi()))
                 .baseUrl(baseUrl)
-                .build().create(ExposureNotificationService::class.java)
+                .build().create(CdnService::class.java)
         }
     }
 }

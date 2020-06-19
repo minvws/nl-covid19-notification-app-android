@@ -21,7 +21,7 @@ import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION
-import nl.rijksoverheid.en.api.ExposureNotificationService
+import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
@@ -48,7 +48,7 @@ class HowItWorksDetailFragmentTest {
     private val repository = ExposureNotificationsRepository(
         ApplicationProvider.getApplicationContext(),
         FakeExposureNotificationApi(),
-        object : ExposureNotificationService {
+        object : CdnService {
             override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
                 throw NotImplementedError()
             }

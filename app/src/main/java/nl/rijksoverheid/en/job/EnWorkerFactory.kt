@@ -11,6 +11,7 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
+import nl.rijksoverheid.en.factory.createLabTestRepository
 
 class EnWorkerFactory : WorkerFactory() {
     override fun createWorker(
@@ -28,6 +29,11 @@ class EnWorkerFactory : WorkerFactory() {
                 appContext,
                 workerParameters,
                 createExposureNotificationsRepository(appContext)
+            )
+            UploadDiagnosisKeysJob::class.java.name -> UploadDiagnosisKeysJob(
+                appContext,
+                workerParameters,
+                createLabTestRepository(appContext)
             )
             else -> null
         }

@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import nl.rijksoverheid.en.BaseFragment
@@ -19,7 +20,7 @@ import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
 
 class StatusFragment : BaseFragment(R.layout.fragment_status) {
-    private val statusViewModel: StatusViewModel by activityViewModels()
+    private val statusViewModel: StatusViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,6 +71,13 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
 
         statusViewModel.confirmRemoveExposedMessage.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(StatusFragmentDirections.actionRemoveExposedMessage())
+            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+                RemoveExposedMessageDialogFragment.REMOVE_EXPOSED_MESSAGE_RESULT
+            )?.observe(viewLifecycleOwner) {
+                if (it) {
+                    statusViewModel.removeExposure()
+                }
+            }
         })
 
         statusViewModel.navigateToPostNotification.observe(viewLifecycleOwner, EventObserver {

@@ -14,17 +14,24 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.File
 
-internal fun createMoshi() = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+private var okHttpClient: OkHttpClient? = null
+
+internal fun createMoshi() =
+    Moshi.Builder().add(Base64Adapter()).add(KotlinJsonAdapterFactory()).build()
 
 internal fun createOkHttpClient(context: Context): OkHttpClient {
-    return OkHttpClient.Builder()
+    return okHttpClient ?: OkHttpClient.Builder()
         // enable cache for config and resource bundles
         .cache(Cache(File(context.cacheDir, "http"), 32 * 1024 * 1024))
         .apply {
+            if (BuildConfig.DEBUG) {
+                addInterceptor(AcceptHeaderInterceptor())
+            }
+            addInterceptor(SignedBodyInterceptor())
             if (BuildConfig.DEBUG) {
                 addInterceptor(HttpLoggingInterceptor().apply {
                     setLevel(HttpLoggingInterceptor.Level.BODY)
                 })
             }
-        }.build()
+        }.build().also { okHttpClient = it }
 }

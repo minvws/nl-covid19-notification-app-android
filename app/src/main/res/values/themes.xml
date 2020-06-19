@@ -25,7 +25,7 @@
         <item name="colorSecondary">@color/color_secondary</item>
         <item name="colorError">@color/error_surface</item>
         <item name="colorSecondaryVariant">@color/color_secondary_variant</item>
-        <item name="android:statusBarColor">?attr/colorSurface</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
