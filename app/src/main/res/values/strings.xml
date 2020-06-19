@@ -1,5 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Covid-19 notificatie</string>
+    <!-- used to determine language for this translation, independent of system settings -->
+    <string name="app_language">nl</string>
     <string name="onboarding_next">Volgende</string>
     <string name="onboarding_example">Voorbeeld</string>
     <string name="onboarding_explanation_1_headline">Bescherm je vrienden, familie, en de rest van Nederland</string>
@@ -131,4 +133,5 @@
     <string name="dialog_error_confirm">Snap ik</string>
     <string name="cd_back">Terug</string>
     <string name="cd_close">Sluit</string>
+    <string name="exposure_date_format">EEEE d MMMM</string>
 </resources>
