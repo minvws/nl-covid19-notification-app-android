@@ -13,7 +13,7 @@
             type="nl.rijksoverheid.en.ExposureNotificationsViewModel" />
 
         <variable
-            name="explinationClickListener"
+            name="explanationClickListener"
             type="android.view.View.OnClickListener" />
 
     </data>
@@ -129,7 +129,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:layout_marginBottom="8dp"
-                    android:onClick="@{explinationClickListener}"
+                    android:onClick="@{explanationClickListener}"
                     android:text="@string/onboarding_consent_explain"
                     app:layout_constraintBottom_toTopOf="@id/request"
                     app:layout_constraintEnd_toEndOf="parent"

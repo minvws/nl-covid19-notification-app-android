@@ -40,7 +40,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
         val binding = FragmentEnableApiBinding.bind(view)
         binding.onboardingViewModel = onboardingViewModel
         binding.viewModel = viewModel
-        binding.explinationClickListener = View.OnClickListener {
+        binding.explanationClickListener = View.OnClickListener {
             enterTransition = null
             exitTransition = null
             sharedElementEnterTransition = null
