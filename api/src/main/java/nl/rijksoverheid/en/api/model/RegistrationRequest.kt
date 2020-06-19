@@ -4,9 +4,9 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.labtest
+package nl.rijksoverheid.en.api.model
 
-sealed class RequestKeyResult {
-    data class Success(val key: String) : RequestKeyResult()
-    object UnknownError : RequestKeyResult()
-}
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
+data class RegistrationRequest(val padding: String = "Yg==")

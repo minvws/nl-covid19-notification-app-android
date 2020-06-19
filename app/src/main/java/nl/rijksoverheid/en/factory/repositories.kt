@@ -15,19 +15,22 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.nearby.Nearby
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
-import nl.rijksoverheid.en.api.ExposureNotificationService
+import nl.rijksoverheid.en.api.CdnService
+import nl.rijksoverheid.en.api.LabTestService
 import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.job.UploadDiagnosisKeysJob
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.onboarding.GooglePlayServicesUpToDateChecker
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 
 // cached service instance
-private var service: ExposureNotificationService? = null
+private var cdnService: CdnService? = null
+private var labTestService: LabTestService? = null
 
 fun createExposureNotificationsRepository(context: Context): ExposureNotificationsRepository {
-    val service = service ?: ExposureNotificationService.create(context).also { service = it }
+    val service = cdnService ?: CdnService.create(context).also { cdnService = it }
 
     return ExposureNotificationsRepository(
         context,
@@ -62,9 +65,17 @@ fun createOnboardingRepository(
     )
 }
 
-fun createLabTestRepository(context: Context) = LabTestRepository(
-    NearbyExposureNotificationApi(context, Nearby.getExposureNotificationClient(context))
-)
+fun createLabTestRepository(context: Context): LabTestRepository {
+    return LabTestRepository(
+        lazy(mode = LazyThreadSafetyMode.NONE) { createSecurePreferences(context) },
+        NearbyExposureNotificationApi(
+            context,
+            Nearby.getExposureNotificationClient(context)
+        ),
+        labTestService ?: LabTestService.create(context).also { labTestService = it },
+        { UploadDiagnosisKeysJob.schedule(context) }
+    )
+}
 
 private fun createSecurePreferences(context: Context): SharedPreferences {
     return EncryptedSharedPreferences.create(

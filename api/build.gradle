@@ -2,7 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
-ext.pocEndpoint = ext.has("pocEndpoint") ? ext.pocEndpoint : "not-set"
+ext.cdnEndpoint = ext.has("cdnEndpoint") ? ext.cdnEndpoint : "not-set"
+ext.apiEndpoint = ext.has("apiEndpoint") ? ext.apiEndpoint : "not-set"
 
 android {
     compileSdkVersion 29
@@ -16,7 +17,20 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        buildConfigField "String", "API_BASE_URL", "\"${pocEndpoint}\""
+        buildConfigField "String", "CDN_BASE_URL", "\"${cdnEndpoint}\""
+        buildConfigField "String", "API_BASE_URL", "\"${apiEndpoint}\""
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+        unitTests.all {
+            // https://github.com/robolectric/robolectric/issues/5115
+            systemProperty("javax.net.ssl.trustStoreType", "JKS")
+
+            // https://github.com/robolectric/robolectric/issues/5456
+            systemProperty("robolectric.dependency.repo.id", "central")
+            systemProperty("robolectric.dependency.repo.url", "https://repo1.maven.org/maven2")
+        }
     }
 
     buildTypes {
@@ -41,4 +55,9 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.2'
+
+    testImplementation 'junit:junit:4.13'
+    testImplementation 'org.robolectric:robolectric:4.3.1'
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.7.2")
+    testImplementation 'androidx.test:core:1.2.0'
 }

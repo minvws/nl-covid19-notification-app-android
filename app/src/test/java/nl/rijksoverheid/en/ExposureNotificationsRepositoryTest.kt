@@ -15,7 +15,7 @@ import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import nl.rijksoverheid.en.api.ExposureNotificationService
+import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
@@ -128,7 +128,7 @@ class ExposureNotificationsRepositoryTest {
         )
         mockWebServer.start()
         val context = ApplicationProvider.getApplicationContext<Application>()
-        val service = ExposureNotificationService.create(
+        val service = CdnService.create(
             context,
             OkHttpClient(),
             mockWebServer.url("/").toString()
@@ -237,7 +237,7 @@ class ExposureNotificationsRepositoryTest {
         )
         mockWebServer.start()
         val context = ApplicationProvider.getApplicationContext<Application>()
-        val service = ExposureNotificationService.create(
+        val service = CdnService.create(
             context,
             OkHttpClient(),
             mockWebServer.url("/").toString()
@@ -293,7 +293,7 @@ class ExposureNotificationsRepositoryTest {
     fun `processExposureKeySets already processed are not processed again`() = runBlocking {
         mockWebServer.start()
         val context = ApplicationProvider.getApplicationContext<Application>()
-        val service = ExposureNotificationService.create(
+        val service = CdnService.create(
             context,
             OkHttpClient(),
             mockWebServer.url("/").toString()
@@ -338,7 +338,7 @@ class ExposureNotificationsRepositoryTest {
         runBlocking {
             mockWebServer.start()
             val context = ApplicationProvider.getApplicationContext<Application>()
-            val service = ExposureNotificationService.create(
+            val service = CdnService.create(
                 context,
                 OkHttpClient(),
                 mockWebServer.url("/").toString()
@@ -392,7 +392,7 @@ class ExposureNotificationsRepositoryTest {
             mockWebServer.enqueue(MockResponse().setResponseCode(500))
             mockWebServer.start()
             val context = ApplicationProvider.getApplicationContext<Application>()
-            val service = ExposureNotificationService.create(
+            val service = CdnService.create(
                 context,
                 OkHttpClient(),
                 mockWebServer.url("/").toString()
@@ -466,7 +466,7 @@ class ExposureNotificationsRepositoryTest {
 
             mockWebServer.start()
             val context = ApplicationProvider.getApplicationContext<Application>()
-            val service = ExposureNotificationService.create(
+            val service = CdnService.create(
                 context,
                 OkHttpClient(),
                 mockWebServer.url("/").toString()
@@ -527,7 +527,7 @@ class ExposureNotificationsRepositoryTest {
     @Test
     fun `addExposure adds exposure`() = runBlocking {
         val dateTime = "2020-06-20T10:15:30.00Z"
-        val service = object : ExposureNotificationService {
+        val service = object : CdnService {
             override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
                 throw NotImplementedError()
             }
@@ -574,7 +574,7 @@ class ExposureNotificationsRepositoryTest {
     @Test
     fun `addExposure while newer exposure exists keeps newer exposure`() = runBlocking {
         val dateTime = "2020-06-20T10:15:30.00Z"
-        val service = object : ExposureNotificationService {
+        val service = object : CdnService {
             override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
                 throw NotImplementedError()
             }
@@ -628,7 +628,7 @@ class ExposureNotificationsRepositoryTest {
     fun `processManifest marks the timestamp of last successful time the keys have been processed and returns Success`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
-            val fakeService = object : ExposureNotificationService {
+            val fakeService = object : CdnService {
                 override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
                     throw NotImplementedError()
                 }
@@ -674,7 +674,7 @@ class ExposureNotificationsRepositoryTest {
             mockWebServer.enqueue(MockResponse().setResponseCode(500))
             mockWebServer.start()
 
-            val fakeService = ExposureNotificationService.create(
+            val fakeService = CdnService.create(
                 ApplicationProvider.getApplicationContext<Application>(),
                 OkHttpClient(),
                 mockWebServer.url("/").toString()
@@ -710,7 +710,7 @@ class ExposureNotificationsRepositoryTest {
     fun `keyProcessingOverdue returns true if last successful time of key processing is more than 24 hours in the past`() {
         val lastSyncDateTime = "2020-06-20T10:15:30.00Z"
         val dateTime = "2020-06-21T10:16:30.00Z"
-        val fakeService = object : ExposureNotificationService {
+        val fakeService = object : CdnService {
             override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
                 throw NotImplementedError()
             }
@@ -748,7 +748,7 @@ class ExposureNotificationsRepositoryTest {
     @Test
     fun `keyProcessingOverdue returns false if no timestamp is stored`() {
         val dateTime = "2020-06-21T10:15:30.00Z"
-        val fakeService = object : ExposureNotificationService {
+        val fakeService = object : CdnService {
             override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
                 throw NotImplementedError()
             }
