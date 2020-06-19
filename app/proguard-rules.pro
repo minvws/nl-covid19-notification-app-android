@@ -14,8 +14,14 @@
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-renamesourcefileattribute SourceFile
+
+-keepnames class androidx.fragment.app.FragmentContainerView
+-keepnames class androidx.navigation.fragment.NavHostFragment
+
+# Tink is used by androidx.security and its shaded protobufs needs to be kept
+-keep class * extends com.google.crypto.tink.shaded.protobuf.GeneratedMessageLite { *; }
