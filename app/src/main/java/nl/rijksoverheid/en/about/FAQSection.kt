@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.about
 
+import androidx.annotation.Keep
 import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItemId.ANONYMOUS
@@ -17,6 +18,7 @@ import nl.rijksoverheid.en.about.FAQItemId.TECHNICAL
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.ParagraphItem
 
+@Keep
 enum class FAQItemId { LOCATION, ANONYMOUS, NOTIFICATION, BLUETOOTH, POWER_USAGE, TECHNICAL }
 
 class FAQDetailSections {
