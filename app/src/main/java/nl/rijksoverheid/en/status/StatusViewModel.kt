@@ -29,6 +29,7 @@ import java.time.Clock
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
@@ -88,7 +89,7 @@ class StatusViewModel(
             context.getString(
                 R.string.status_exposure_detected_description,
                 daysSinceString,
-                DateTimeFormatter.ofPattern("EEEE d MMMM").format(state.date)
+                state.date.formatExposureDate(context)
             )
         }
         HeaderViewState.Disabled -> context.getString(R.string.status_en_api_disabled_description)
@@ -203,3 +204,8 @@ private fun <T> LiveData<T>.startWith(value: T): LiveData<T> {
     }
     return mediator
 }
+
+fun LocalDate.formatExposureDate(context: Context): String = DateTimeFormatter.ofPattern(
+    context.getString(R.string.exposure_date_format),
+    Locale(context.getString(R.string.app_language))
+).format(this)

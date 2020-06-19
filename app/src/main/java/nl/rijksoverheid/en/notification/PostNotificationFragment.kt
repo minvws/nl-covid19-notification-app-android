@@ -16,10 +16,10 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.status.formatExposureDate
 import java.time.Clock
 import java.time.LocalDate
 import java.time.Period
-import java.time.format.DateTimeFormatter
 
 class PostNotificationFragment(
     private val clock: Clock = Clock.systemDefaultZone()
@@ -46,7 +46,7 @@ class PostNotificationFragment(
                     })
                 },
                 daysSince = daysSinceString,
-                date = DateTimeFormatter.ofPattern("EEEE d MMMM").format(exposureDate),
+                date = exposureDate.formatExposureDate(requireContext()),
                 phoneNumber = phoneNumber
             )
         )

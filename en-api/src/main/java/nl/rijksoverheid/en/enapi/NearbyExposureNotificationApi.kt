@@ -164,7 +164,7 @@ class NearbyExposureNotificationApi(
      * @return the summary or null if there's no match or an error occurred
      */
     override suspend fun getSummary(token: String): ExposureSummary? =
-        suspendCoroutine<ExposureSummary?> { c ->
+        suspendCoroutine { c ->
             client.getExposureSummary(token).addOnSuccessListener {
                 c.resume(it)
             }.addOnFailureListener {
