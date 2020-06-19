@@ -41,7 +41,6 @@ class GenericNotificationFragment : BaseFragment(R.layout.fragment_list) {
 
         binding.toolbar.apply {
             setTitle(R.string.generic_notification_toolbar_title)
-            setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
         }
         binding.content.adapter = adapter
     }

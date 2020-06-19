@@ -39,10 +39,7 @@ class RequestTestFragment : BaseFragment(R.layout.fragment_list) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentListBinding.bind(view)
 
-        binding.toolbar.apply {
-            setTitle(R.string.request_test_toolbar_title)
-            setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
-        }
+        binding.toolbar.setTitle(R.string.request_test_toolbar_title)
         binding.content.adapter = adapter
     }
 }

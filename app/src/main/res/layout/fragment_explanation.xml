@@ -6,6 +6,10 @@
         <variable
             name="viewState"
             type="nl.rijksoverheid.en.onboarding.ExplanationFragment.ViewState" />
+
+        <variable
+            name="nextButtonClickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,8 +30,7 @@
                 android:transitionName="toolbar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:navigationOnClickListener="@{() -> viewState.onToolbarIconClick.invoke()}" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -104,7 +107,7 @@
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:onClick="@{_ -> viewState.onButtonClick.invoke()}"
+                    android:onClick="@{nextButtonClickListener}"
                     android:text="@string/onboarding_next"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

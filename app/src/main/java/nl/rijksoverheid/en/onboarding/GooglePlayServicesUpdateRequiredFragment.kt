@@ -48,7 +48,6 @@ class GooglePlayServicesUpdateRequiredFragment :
 
         binding.next.setOnClickListener {
             openPlayStore()
-            // findNavController().navigate(GooglePlayServicesUpdateRequiredFragmentDirections.actionNext())
         }
     }
 

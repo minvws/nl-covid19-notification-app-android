@@ -25,9 +25,7 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
         @StringRes val headline: Int,
         @StringRes val description: Int,
         @DrawableRes val illustration: Int,
-        val isExample: Boolean,
-        val onButtonClick: () -> Unit,
-        val onToolbarIconClick: () -> Unit
+        val isExample: Boolean
     )
 
     private val args: ExplanationFragmentArgs by navArgs()
@@ -78,16 +76,16 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
             headline = args.title,
             description = args.description,
             illustration = args.illustration,
-            isExample = args.isExample,
-            onButtonClick = {
-                findNavController().navigate(
-                    ExplanationFragmentDirections.actionNext(), FragmentNavigatorExtras(
-                        binding.toolbar to binding.toolbar.transitionName
-                    )
-                )
-            },
-            onToolbarIconClick = { activity?.onBackPressedDispatcher?.onBackPressed() }
+            isExample = args.isExample
         )
+
+        binding.nextButtonClickListener = View.OnClickListener {
+            findNavController().navigate(
+                ExplanationFragmentDirections.actionNext(), FragmentNavigatorExtras(
+                    binding.toolbar to binding.toolbar.transitionName
+                )
+            )
+        }
 
         // Don't use enter transitions for the first screen in the onboarding graph
         val navController = findNavController()
