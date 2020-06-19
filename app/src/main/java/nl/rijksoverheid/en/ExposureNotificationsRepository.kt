@@ -168,6 +168,8 @@ class ExposureNotificationsRepository(
                 return@coroutineScope ProcessExposureKeysResult.Error(ex)
             }
 
+            Timber.d("Processing ${validFiles.size} files")
+
             val result = exposureNotificationsApi.provideDiagnosisKeys(
                 validFiles.map { it.file!! },
                 configuration,
@@ -176,6 +178,7 @@ class ExposureNotificationsRepository(
             when (result) {
                 is DiagnosisKeysResult.Success -> {
                     // mark all keys processed
+                    Timber.d("Processing was successful")
                     updateProcessedExposureKeySets(
                         validFiles.map { it.id }.toSet(),
                         manifest
@@ -188,6 +191,7 @@ class ExposureNotificationsRepository(
                     }
                 }
                 else -> {
+                    Timber.e("Returned an error: $result")
                     ProcessExposureKeysResult.ExposureApiError(result)
                 }
             }
@@ -265,6 +269,7 @@ class ExposureNotificationsRepository(
                     ExposureKeySet(id, null)
                 }
             } else {
+                Timber.e("Error reading exposure key set, response returned ${response.code()}")
                 return ExposureKeySet(id, null)
             }
         } catch (ex: Exception) {
