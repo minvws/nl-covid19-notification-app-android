@@ -7,7 +7,7 @@
     <color name="notification_status_exposed">@color/red</color>
     <color name="onboarding_example_header">@color/pink</color>
     <color name="divider">@color/gray_lighter</color>
-    <color name="error_surface">@color/dark_red</color>
+    <color name="error_surface">@color/light_red</color>
     <color name="background_mask">#000000</color>
 
     <!-- Color palette -->
@@ -15,7 +15,7 @@
 
     <color name="gray_lighter">#F2F2F7</color>
     <color name="gray_light">#DDDDDD</color>
-    <color name="dark_red">#8e0706</color>
+    <color name="light_red">#FFECF0</color>
     <color name="red">#D00000</color>
     <color name="pink">#B8275D</color>
     <color name="green">#34C759</color>

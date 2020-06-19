@@ -31,16 +31,30 @@
                     app:viewModel="@{viewModel}" />
 
                 <include
+                    android:id="@+id/status_error"
+                    layout="@layout/include_status_error"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/status_header"
+                    app:viewModel="@{viewModel}" />
+
+                <include
                     android:id="@+id/info_item_1"
                     layout="@layout/include_status_info_item"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     app:infoIcon="@{@drawable/ic_info}"
                     app:infoSubtitle="@{@string/status_info_1_subtitle}"
                     app:infoTitle="@{@string/status_info_1_title}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/status_header" />
+                    app:layout_constraintTop_toBottomOf="@id/status_error" />
 
                 <include
                     android:id="@+id/info_item_2"
@@ -97,17 +111,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
-
-        <include
-            layout="@layout/include_status_error"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:viewModel="@{viewModel}"
-            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -35,7 +35,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:transitionGroup="true"
                 android:transitionName="content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -50,6 +50,8 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@null"
                     app:imageResource="@{viewState.illustration}"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     app:layout_constraintBottom_toTopOf="@id/example"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="4dp"
+                    app:layout_goneMarginTop="16dp"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:text="@{viewState.headline}"
                     android:textAppearance="?attr/textAppearanceHeadline5"

@@ -22,21 +22,29 @@
         android:layout_height="wrap_content"
         android:background="@drawable/message_box_background"
         android:backgroundTint="@color/error_surface"
-        android:elevation="8dp"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
         app:show="@{viewModel.shouldShowErrorState}">
 
+        <ImageView
+            android:id="@+id/error_box_image"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_error"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
-            android:id="@+id/snackbar_text"
+            android:id="@+id/error_box_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
             android:text="@{viewModel.getErrorText(context, viewModel.errorViewState)}"
             android:textAppearance="?attr/textAppearanceBody1"
-            android:textColor="?attr/colorOnError"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/error_box_image"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="De app heeft blootstelling permissie nodig om te kunnen werken." />
 
@@ -45,10 +53,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> viewModel.onErrorActionClicked(viewModel.errorViewState)}"
-            android:textColor="?attr/colorOnError"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/snackbar_text"
+            app:layout_constraintTop_toBottomOf="@id/error_box_text"
             app:showIfLabelSet="@{viewModel.errorViewState.actionLabel}"
             tools:text="Zet blootstelling aan" />
 
