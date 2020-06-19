@@ -12,6 +12,7 @@ import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
+import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -39,12 +40,17 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import retrofit2.Response
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicReference
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
+import java.util.zip.ZipOutputStream
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
@@ -777,5 +783,56 @@ class ExposureNotificationsRepositoryTest {
         )
 
         assertFalse(repository.keyProcessingOverdue)
+    }
+
+    @Test
+    fun `validateAndWrite only keeps export files from exposure set zip file`() {
+        val input = File.createTempFile("test", ".zip")
+        ZipOutputStream(FileOutputStream(input)).use {
+            it.putNextEntry(ZipEntry("export.bin"))
+            it.write(1)
+            it.closeEntry()
+
+            it.putNextEntry(ZipEntry("export.sig"))
+            it.write(1)
+            it.closeEntry()
+
+            it.putNextEntry(ZipEntry("content.sig"))
+            it.write(1)
+            it.closeEntry()
+
+            it.putNextEntry(ZipEntry("random.junk"))
+            it.write(1)
+            it.closeEntry()
+            it.finish()
+        }
+
+        val output = File.createTempFile("test", "zip")
+
+        val repository = ExposureNotificationsRepository(
+            ApplicationProvider.getApplicationContext(),
+            object : FakeExposureNotificationApi() {},
+            mock(),
+            mock(),
+            fakeScheduler,
+            Clock.systemUTC()
+        )
+
+        ZipInputStream(FileInputStream(input)).use {
+            repository.validateAndWrite(it, output)
+        }
+
+        val entries = mutableListOf<String>()
+        ZipInputStream(FileInputStream(output)).use {
+            do {
+                val entry = it.nextEntry ?: break
+                entries.add(entry.name)
+                it.closeEntry()
+            } while (true)
+        }
+
+        entries.sort()
+
+        assertEquals(listOf("export.bin", "export.sig"), entries)
     }
 }

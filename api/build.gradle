@@ -19,6 +19,7 @@ android {
 
         buildConfigField "String", "CDN_BASE_URL", "\"${cdnEndpoint}\""
         buildConfigField "String", "API_BASE_URL", "\"${apiEndpoint}\""
+        buildConfigField "String", "CDN_RESPONSE_MIME_TYPE", "\"application/zip\""
     }
 
     testOptions {
@@ -37,6 +38,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            buildConfigField "String", "CDN_RESPONSE_MIME_TYPE", "\"application/json\""
         }
     }
 }
