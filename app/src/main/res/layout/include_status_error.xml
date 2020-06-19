@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/message_box_background"
-        android:backgroundTint="#FFECF0"
+        android:backgroundTint="@color/error_surface"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
