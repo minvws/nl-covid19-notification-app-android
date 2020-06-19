@@ -48,6 +48,7 @@ import okio.ByteString.Companion.toByteString
 import retrofit2.HttpException
 import retrofit2.Response
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.security.SecureRandom
@@ -55,6 +56,9 @@ import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
+import java.util.zip.ZipOutputStream
 
 private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
@@ -168,6 +172,8 @@ class ExposureNotificationsRepository(
                 return@coroutineScope ProcessExposureKeysResult.Error(ex)
             }
 
+            Timber.d("Processing ${validFiles.size} files")
+
             val result = exposureNotificationsApi.provideDiagnosisKeys(
                 validFiles.map { it.file!! },
                 configuration,
@@ -176,6 +182,7 @@ class ExposureNotificationsRepository(
             when (result) {
                 is DiagnosisKeysResult.Success -> {
                     // mark all keys processed
+                    Timber.d("Processing was successful")
                     updateProcessedExposureKeySets(
                         validFiles.map { it.id }.toSet(),
                         manifest
@@ -188,6 +195,7 @@ class ExposureNotificationsRepository(
                     }
                 }
                 else -> {
+                    Timber.e("Returned an error: $result")
                     ProcessExposureKeysResult.ExposureApiError(result)
                 }
             }
@@ -251,13 +259,11 @@ class ExposureNotificationsRepository(
     ): ExposureKeySet {
         try {
             val response = responseAsync.await()
-            if (response.isSuccessful) {
-                return try {
+            return if (response.isSuccessful) {
+                try {
                     val file = File(context.cacheDir, id.toByteArray().toByteString().hex())
-                    response.body()!!.byteStream().use { input ->
-                        file.outputStream().use {
-                            input.copyTo(it)
-                        }
+                    ZipInputStream(response.body()!!.byteStream()).use { input ->
+                        validateAndWrite(input, file)
                     }
                     ExposureKeySet(id, file)
                 } catch (ex: IOException) {
@@ -265,12 +271,38 @@ class ExposureNotificationsRepository(
                     ExposureKeySet(id, null)
                 }
             } else {
-                return ExposureKeySet(id, null)
+                Timber.e("Error reading exposure key set, response returned ${response.code()}")
+                ExposureKeySet(id, null)
             }
         } catch (ex: Exception) {
             Timber.e(ex, "Error while processing exposure key set")
             return ExposureKeySet(id, null)
         }
+    }
+
+    @VisibleForTesting
+    fun validateAndWrite(zip: ZipInputStream, file: File) {
+        var signature: ByteArray? = null
+        ZipOutputStream(file.outputStream()).use {
+            do {
+                val entry = zip.nextEntry ?: break
+                if (entry.name == "export.bin" || entry.name == "export.sig") {
+                    // TODO if we happen to have the signature already, check it for export.bin
+                    Timber.d("Reading ${entry.name}")
+                    it.putNextEntry(ZipEntry(entry.name))
+                    zip.copyTo(it)
+                    it.closeEntry()
+                }
+                if (entry.name == "content.sig") {
+                    Timber.d("Reading signature")
+                    val bos = ByteArrayOutputStream()
+                    zip.copyTo(bos)
+                    signature = bos.toByteArray()
+                }
+                zip.closeEntry()
+            } while (true)
+        }
+        // TODO open zip file, verify signature
     }
 
     suspend fun processManifest(): ProcessManifestResult {

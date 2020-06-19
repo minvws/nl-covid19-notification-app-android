@@ -28,6 +28,7 @@ import nl.rijksoverheid.en.onboarding.OnboardingRepository
 // cached service instance
 private var cdnService: CdnService? = null
 private var labTestService: LabTestService? = null
+private var notificationPreferences: SharedPreferences? = null
 
 fun createExposureNotificationsRepository(context: Context): ExposureNotificationsRepository {
     val service = cdnService ?: CdnService.create(context).also { cdnService = it }
@@ -78,11 +79,11 @@ fun createLabTestRepository(context: Context): LabTestRepository {
 }
 
 private fun createSecurePreferences(context: Context): SharedPreferences {
-    return EncryptedSharedPreferences.create(
+    return notificationPreferences ?: EncryptedSharedPreferences.create(
         "${BuildConfig.APPLICATION_ID}.notifications",
         MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
         context,
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
+    ).also { notificationPreferences = it }
 }

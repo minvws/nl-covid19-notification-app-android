@@ -48,10 +48,7 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_how_it_works) {
 
         val binding = FragmentHowItWorksBinding.bind(view)
 
-        binding.toolbar.apply {
-            setTitle(R.string.onboarding_how_it_works_detail_toolbar_title)
-            setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
-        }
+        binding.toolbar.setTitle(R.string.onboarding_how_it_works_detail_toolbar_title)
         binding.content.adapter = adapter
 
         binding.request.setOnClickListener { viewModel.requestEnableNotifications() }
