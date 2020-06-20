@@ -36,13 +36,13 @@ class SignedBodyInterceptor : Interceptor {
         }
     }
 
-    private fun signRequest(request: Request, query: String, hmacSecret: String): Request {
+    private fun signRequest(request: Request, query: String, hmacSecret: ByteArray): Request {
         val buffer = Buffer()
         val body = request.body!!
         body.writeTo(buffer)
         val mac = Mac.getInstance("HmacSHA256")
         val secretKey =
-            SecretKeySpec(hmacSecret.toByteArray(), "HmacSHA256")
+            SecretKeySpec(hmacSecret, "HmacSHA256")
         mac.init(secretKey)
         val signature = mac.doFinal(buffer.clone().readByteArray())
 
@@ -74,4 +74,4 @@ annotation class BodyHmacSha256Key(
  * Class holding the hmac secret. Should be set as a [Tag] on the retrofit
  * method that is annotated with [BodyHmacSha256Key]
  */
-data class HmacSecret(val secret: String)
+class HmacSecret(val secret: ByteArray)
