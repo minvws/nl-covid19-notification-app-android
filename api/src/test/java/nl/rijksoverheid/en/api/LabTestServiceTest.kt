@@ -45,7 +45,7 @@ class LabTestServiceTest {
         )
         mockWebServer.enqueue(MockResponse())
 
-        api.postKeys(PostKeysRequest(listOf(), "bucketId"), HmacSecret("testId"))
+        api.postKeys(PostKeysRequest(listOf(), "bucketId"), HmacSecret("testId".toByteArray()))
 
         val request = mockWebServer.takeRequest()
         assertEquals(1, mockWebServer.requestCount)
@@ -69,7 +69,7 @@ class LabTestServiceTest {
                 listOf(),
                 padding = byteArrayOf(1, 2, 3, 4),
                 bucketId = "bucketId"
-            ), HmacSecret("testId")
+            ), HmacSecret("testId".toByteArray())
         )
 
         val request = mockWebServer.takeRequest()

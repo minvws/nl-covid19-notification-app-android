@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.labtest
 
 import android.app.PendingIntent
 import android.content.SharedPreferences
+import android.util.Base64
 import androidx.core.content.edit
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import kotlinx.coroutines.Dispatchers
@@ -67,7 +68,10 @@ class LabTestRepository(
 
     private fun storeResult(result: Registration) {
         preferences.edit {
-            putString(KEY_CONFIRMATION_KEY, result.confirmationKey)
+            putString(
+                KEY_CONFIRMATION_KEY,
+                Base64.encodeToString(result.confirmationKey, Base64.NO_WRAP)
+            )
             putString(KEY_BUCKET_ID, result.bucketId)
             putString(KEY_LAB_CONFIRMATION_ID, result.labConfirmationId)
             putLong(
@@ -116,7 +120,8 @@ class LabTestRepository(
      */
     private suspend fun uploadDiagnosticKeys(): UploadDiagnosticKeysResult {
         val confirmationKey =
-            preferences.getString(KEY_CONFIRMATION_KEY, null) ?: throw IllegalStateException()
+            preferences.getString(KEY_CONFIRMATION_KEY, null)
+                ?.let { Base64.decode(it, Base64.NO_WRAP) } ?: throw IllegalStateException()
         val bucketId = preferences.getString(KEY_BUCKET_ID, null) ?: throw IllegalStateException()
         return when (val keyResult = exposureNotificationApi.requestTemporaryExposureKeyHistory()) {
             is TemporaryExposureKeysResult.RequireConsent -> {
@@ -191,7 +196,7 @@ class LabTestRepository(
     private suspend fun uploadKeys(
         requestedKeys: List<TemporaryExposureKey>,
         bucketId: String,
-        confirmationKey: String
+        confirmationKey: ByteArray
     ) {
         val request = PostKeysRequest(requestedKeys.map {
             nl.rijksoverheid.en.api.model.TemporaryExposureKey(
