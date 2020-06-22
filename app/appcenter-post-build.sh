@@ -9,7 +9,7 @@ if [ "$PLAY_STORE_JSON" != "" ]; then
       ./gradlew app:publishBundle
       RESULT=$?
       rm google-play.json
-      exit RESULT
+      exit $RESULT
     fi
   fi
 fi
