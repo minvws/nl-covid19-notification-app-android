@@ -13,7 +13,7 @@
 
         <variable
             name="text"
-            type="String" />
+            type="CharSequence" />
     </data>
 
     <TextView
