@@ -22,6 +22,12 @@ buildscript {
             }
         }
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+            content {
+                includeGroup "com.github.triplet.gradle"
+            }
+        }
         jcenter() {
             content {
                 includeGroup "org.jetbrains.trove4j"
@@ -34,6 +40,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:3.30.0"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+        classpath "com.github.triplet.gradle:play-publisher:2.8.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
