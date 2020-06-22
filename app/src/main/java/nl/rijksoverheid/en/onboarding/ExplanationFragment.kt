@@ -49,7 +49,6 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
                     sharedElementSnapshots: MutableList<View>?
                 ) {
                     if (sharedElements.isNotEmpty()) {
-                        // val appbar = sharedElements.firstOrNull { it.id == R.id.appbar }
                         val appbar = sharedElements.firstOrNull { it.id == R.id.appbar }
                         // hide the appbar from the previous fragment to make the appbar from this fragment
                         // fade in.

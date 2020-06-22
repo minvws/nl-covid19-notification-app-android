@@ -50,114 +50,127 @@
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_container"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:overScrollMode="ifContentScrolls"
             android:transitionGroup="true"
             android:transitionName="content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbar">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll_container"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fillViewport="true"
+                android:overScrollMode="ifContentScrolls"
+                app:layout_constraintBottom_toTopOf="@id/explanation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/headline"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:accessibilityHeading="true"
-                    android:text="@string/onboarding_consent_headline"
-                    android:textAppearance="?attr/textAppearanceHeadline5"
-                    app:layout_constraintBottom_toTopOf="@id/check_1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed"
-                    tools:targetApi="p" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <include
-                    android:id="@+id/check_1"
-                    layout="@layout/include_enable_api_step"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    app:image="@{@drawable/ic_shield_bluetooth}"
-                    app:itemText="@{@string/onboarding_consent_check_1}"
-                    app:layout_constraintBottom_toTopOf="@id/check_2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/headline" />
+                    <TextView
+                        android:id="@+id/headline"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        android:accessibilityHeading="true"
+                        android:text="@string/onboarding_consent_headline"
+                        android:textAppearance="?attr/textAppearanceHeadline5"
+                        app:layout_constraintBottom_toTopOf="@id/check_1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:targetApi="p" />
 
-                <include
-                    android:id="@+id/check_2"
-                    layout="@layout/include_enable_api_step"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    app:image="@{@drawable/ic_shield_lock}"
-                    app:itemText="@{@string/onboarding_consent_check_2}"
-                    app:layout_constraintBottom_toTopOf="@id/check_3"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/check_1" />
+                    <include
+                        android:id="@+id/check_1"
+                        layout="@layout/include_enable_api_step"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        app:image="@{@drawable/ic_shield_bluetooth}"
+                        app:itemText="@{@string/onboarding_consent_check_1}"
+                        app:layout_constraintBottom_toTopOf="@id/check_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/headline" />
 
-                <include
-                    android:id="@+id/check_3"
-                    layout="@layout/include_enable_api_step"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="16dp"
-                    app:image="@{@drawable/ic_shield_lock}"
-                    app:itemText="@{@string/onboarding_consent_check_3}"
-                    app:layout_constraintBottom_toTopOf="@id/explanation"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/check_2" />
+                    <include
+                        android:id="@+id/check_2"
+                        layout="@layout/include_enable_api_step"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        app:image="@{@drawable/ic_shield_lock}"
+                        app:itemText="@{@string/onboarding_consent_check_2}"
+                        app:layout_constraintBottom_toTopOf="@id/check_3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/check_1" />
 
-                <Button
-                    android:id="@+id/explanation"
-                    style="@style/Widget.App.Button.Secondary"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="8dp"
-                    android:onClick="@{explanationClickListener}"
-                    android:text="@string/onboarding_consent_explain"
-                    app:layout_constraintBottom_toTopOf="@id/request"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    <include
+                        android:id="@+id/check_3"
+                        layout="@layout/include_enable_api_step"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="16dp"
+                        app:image="@{@drawable/ic_shield_lock}"
+                        app:itemText="@{@string/onboarding_consent_check_3}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/check_2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
 
-                <Button
-                    android:id="@+id/request"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:onClick="@{() -> viewModel.requestEnableNotifications()}"
-                    android:text="@string/onboarding_consent_request"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:background="@drawable/gradient_fade_out"
+                app:layout_constraintBottom_toTopOf="@id/explanation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/explanation"
+                style="@style/Widget.App.Button.Secondary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="8dp"
+                android:onClick="@{explanationClickListener}"
+                android:text="@string/onboarding_consent_explain"
+                app:layout_constraintBottom_toTopOf="@id/request"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/request"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:onClick="@{() -> viewModel.requestEnableNotifications()}"
+                android:text="@string/onboarding_consent_request"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
