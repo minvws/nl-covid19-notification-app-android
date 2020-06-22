@@ -7,21 +7,17 @@
 package nl.rijksoverheid.en.items
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemIllustrationBinding
 
 class IllustrationItem(
-    @DrawableRes val image: Int,
-    @StringRes val contentDescription: Int? = null
+    @DrawableRes val image: Int
 ) : BaseBindableItem<ItemIllustrationBinding>() {
     override fun getLayout() = R.layout.item_illustration
 
     override fun bind(viewBinding: ItemIllustrationBinding, position: Int) {
         viewBinding.image = image
-        viewBinding.contentDescription =
-            contentDescription?.let { viewBinding.root.context.getString(it) }
     }
 
     override fun isSameAs(other: Item<*>): Boolean =
