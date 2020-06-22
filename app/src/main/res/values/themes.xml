@@ -19,6 +19,7 @@
         <item name="textAppearanceBody2">@style/TextAppearance.App.Body2</item>
         <item name="textAppearanceButton">@style/TextAppearance.App.Button</item>
         <item name="toolbarStyle">@style/Widget.App.Toolbar.Surface</item>
+        <item name="appBarLayoutStyle">@style/Widget.MaterialComponents.AppBarLayout.Surface</item>
         <item name="materialButtonStyle">@style/Widget.App.Button.Primary</item>
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorSecondary">@color/color_secondary</item>
