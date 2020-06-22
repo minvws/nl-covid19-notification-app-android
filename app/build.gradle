@@ -72,7 +72,8 @@ android {
 }
 
 play {
-    enabled = System.getenv("ANDROID_PUBLISHER_CREDENTIALS") != null
+    enabled = rootProject.file("google-play.json").exists()
+    serviceAccountCredentials = rootProject.file("google-play.json")
     track = "internal"
     artifactDir = file("build/outputs/bundle/release")
 }
