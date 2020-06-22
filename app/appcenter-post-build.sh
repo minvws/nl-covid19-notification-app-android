@@ -7,7 +7,9 @@ if [ "$PLAY_STORE_JSON" != "" ]; then
       echo "$PLAY_STORE_JSON" >google-play.json
       sed -i -e 's/\\"/'\"'/g' google-play.json
       ./gradlew app:publishBundle
+      RESULT=$?
       rm google-play.json
+      exit RESULT
     fi
   fi
 fi
