@@ -105,7 +105,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-    implementation "androidx.work:work-runtime-ktx:2.3.4"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
     implementation "androidx.security:security-crypto:1.0.0-rc02"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -131,6 +131,7 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:4.3.1'
     testImplementation("com.squareup.okhttp3:mockwebserver:4.7.2")
     testImplementation project(":test-support")
+    testImplementation "androidx.work:work-testing:$work_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
@@ -138,6 +139,7 @@ dependencies {
     androidTestImplementation 'com.microsoft.appcenter:espresso-test-extension:1.4'
     androidTestImplementation 'com.bartoszlipinski:disable-animations-rule:2.0.0'
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
     debugImplementation project(":test-support")
     androidTestDebugImplementation project(":test-support")
