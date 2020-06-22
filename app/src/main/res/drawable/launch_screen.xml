@@ -20,9 +20,9 @@
         android:gravity="center" />
 
     <item
-        android:width="58dp"
-        android:height="129dp"
-        android:drawable="@drawable/illustration_launch_screen_label"
+        android:width="311dp"
+        android:height="109dp"
+        android:drawable="@drawable/illustration_splash_banner"
         android:gravity="center_horizontal|top" />
 
 </layer-list>
