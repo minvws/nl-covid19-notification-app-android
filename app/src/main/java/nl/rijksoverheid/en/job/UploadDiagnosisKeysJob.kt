@@ -16,18 +16,21 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import timber.log.Timber
+import java.time.Clock
+import java.time.Duration
 import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.util.concurrent.TimeUnit
 
 class UploadDiagnosisKeysJob(
     context: Context,
     params: WorkerParameters,
-    private val repository: LabTestRepository
+    private val uploadTask: suspend () -> LabTestRepository.UploadDiagnosticKeysResult,
+    private val scheduleSelf: (Long) -> Unit = { schedule(context, it) },
+    private val clock: Clock = Clock.systemDefaultZone()
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        return when (val result = repository.uploadDiagnosticKeysOrDecoy()) {
+        return when (val result = uploadTask()) {
             is LabTestRepository.UploadDiagnosticKeysResult.Completed -> Result.success()
             is LabTestRepository.UploadDiagnosticKeysResult.Retry -> Result.retry()
             is LabTestRepository.UploadDiagnosticKeysResult.Initial -> {
@@ -38,15 +41,15 @@ class UploadDiagnosisKeysJob(
     }
 
     private fun scheduleAdditionalKeyUpload(uploadAfter: LocalDateTime) {
-        val delay = (uploadAfter.toInstant(ZoneOffset.UTC)
-            .toEpochMilli() - System.currentTimeMillis()).coerceAtLeast(
-            TimeUnit.MILLISECONDS.convert(
-                1,
-                TimeUnit.HOURS
+        val delay =
+            (Duration.between(LocalDateTime.now(clock), uploadAfter).toMillis()).coerceAtLeast(
+                TimeUnit.MILLISECONDS.convert(
+                    1,
+                    TimeUnit.HOURS
+                )
             )
-        )
         Timber.d("Schedule next upload with a delay of $delay ms")
-        schedule(applicationContext, delay)
+        scheduleSelf(delay)
     }
 
     companion object {
