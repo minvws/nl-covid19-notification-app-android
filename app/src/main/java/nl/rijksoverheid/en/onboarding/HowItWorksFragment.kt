@@ -58,7 +58,7 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_how_it_works) {
             if (item is FAQItem) {
                 findNavController().navigate(
                     HowItWorksFragmentDirections.actionHowItWorksDetail(item.id),
-                    FragmentNavigatorExtras(binding.toolbar to binding.toolbar.transitionName)
+                    FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
             }
         }
