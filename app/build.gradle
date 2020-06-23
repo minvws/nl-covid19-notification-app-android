@@ -121,6 +121,7 @@ dependencies {
 
     implementation "com.xwray:groupie:$groupie_version"
     implementation "com.xwray:groupie-viewbinding:$groupie_version"
+    implementation "com.airbnb.android:lottie:$lottie_version"
 
     implementation project(":en-api")
     implementation project(":api")

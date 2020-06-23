@@ -7,7 +7,7 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
-import androidx.annotation.DrawableRes
+import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -162,27 +162,27 @@ class StatusViewModel(
     }
 
     sealed class HeaderViewState(
-        @DrawableRes val icon: Int,
+        @RawRes val icon: Int,
         @StringRes val headline: Int,
         @StringRes val primaryAction: Int?,
         @StringRes val secondaryAction: Int?
     ) {
         object Active : HeaderViewState(
-            R.drawable.ic_status_no_exposure,
+            R.raw.checkmark,
             R.string.status_no_exposure_detected_headline,
             null,
             null
         )
 
         data class Exposed(val date: LocalDate) : HeaderViewState(
-            R.drawable.ic_status_exposure,
+            R.raw.shield,
             R.string.status_exposure_detected_headline,
             R.string.status_exposure_what_next,
             R.string.status_reset_exposure
         )
 
         object Disabled : HeaderViewState(
-            R.drawable.ic_status_disabled,
+            R.raw.inactive,
             R.string.status_disabled_headline,
             R.string.status_en_api_disabled_enable,
             null
