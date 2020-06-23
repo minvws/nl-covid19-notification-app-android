@@ -6,8 +6,10 @@
  */
 package nl.rijksoverheid.en.about
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
@@ -37,11 +39,15 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
         binding.content.adapter = adapter
 
         adapter.setOnItemClickListener { item, _ ->
-            if (item is FAQItem) {
-                findNavController().navigate(
+            when (item) {
+                is FAQItem -> findNavController().navigate(
                     AboutFragmentDirections.actionAboutDetail(item.id),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
+                is PrivacyStatementItem -> {
+                    val url = Uri.parse(getString(R.string.privacy_policy_url))
+                    CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
+                }
             }
         }
     }
