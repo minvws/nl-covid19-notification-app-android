@@ -6,6 +6,7 @@ apply plugin: "com.github.triplet.play"
 
 version = "0.3"
 archivesBaseName = "covid-notificatie"
+def buildVersionCode = System.getenv("APPCENTER_BUILD_ID") != null ? System.getenv("APPCENTER_BUILD_ID").toInteger() : 1
 
 android {
     compileSdkVersion 29
@@ -14,7 +15,7 @@ android {
         applicationId "nl.rijksoverheid.en"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 1
+        versionCode buildVersionCode
         versionName version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
