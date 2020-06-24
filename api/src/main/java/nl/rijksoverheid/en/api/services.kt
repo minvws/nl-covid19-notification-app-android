@@ -12,6 +12,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import timber.log.Timber
 import java.io.File
 
 private var okHttpClient: OkHttpClient? = null
@@ -29,9 +30,11 @@ internal fun createOkHttpClient(context: Context): OkHttpClient {
             }
             addInterceptor(SignedBodyInterceptor())
             if (BuildConfig.DEBUG) {
-                addInterceptor(HttpLoggingInterceptor().apply {
-                    setLevel(HttpLoggingInterceptor.Level.BODY)
-                })
+                addInterceptor(HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+                    override fun log(message: String) {
+                        Timber.tag("OkHttpClient").d(message)
+                    }
+                }).setLevel(HttpLoggingInterceptor.Level.BODY))
             }
         }.build().also { okHttpClient = it }
 }
