@@ -554,7 +554,8 @@ class ExposureNotificationsRepositoryTest {
         val api = object : FakeExposureNotificationApi() {
             override suspend fun getSummary(token: String) =
                 if (token == "sample-token") {
-                    ExposureSummary.ExposureSummaryBuilder().setDaysSinceLastExposure(4).build()
+                    ExposureSummary.ExposureSummaryBuilder().setDaysSinceLastExposure(4)
+                        .setMatchedKeyCount(1).build()
                 } else null
         }
 
@@ -602,9 +603,9 @@ class ExposureNotificationsRepositoryTest {
             override suspend fun getSummary(token: String) =
                 when (token) {
                     "sample-token-old" -> ExposureSummary.ExposureSummaryBuilder()
-                        .setDaysSinceLastExposure(8).build()
+                        .setDaysSinceLastExposure(8).setMatchedKeyCount(1).build()
                     "sample-token-new" -> ExposureSummary.ExposureSummaryBuilder()
-                        .setDaysSinceLastExposure(4).build()
+                        .setDaysSinceLastExposure(4).setMatchedKeyCount(1).build()
                     else -> null
                 }
         }
@@ -628,6 +629,49 @@ class ExposureNotificationsRepositoryTest {
             LocalDate.of(2020, 6, 20).minusDays(4),
             repository.getLastExposureDate().filterNotNull().first()
         )
+    }
+
+    @Test
+    fun `addExposure without matching keys is ignored`() = runBlocking {
+        val dateTime = "2020-06-20T10:15:30.00Z"
+        val service = object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(): Manifest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getAppConfig(id: String): AppConfig {
+                throw NotImplementedError()
+            }
+        }
+
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getSummary(token: String) =
+                ExposureSummary.ExposureSummaryBuilder().setMatchedKeyCount(0).build()
+        }
+
+        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+            .getSharedPreferences("repository_test", 0)
+
+        val repository = ExposureNotificationsRepository(
+            ApplicationProvider.getApplicationContext(),
+            api,
+            service,
+            sharedPrefs,
+            fakeScheduler,
+            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        )
+
+        repository.addExposure("sample-token-new")
+
+        assertEquals(null, repository.getLastExposureDate().first())
     }
 
     @Test

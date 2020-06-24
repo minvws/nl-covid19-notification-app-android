@@ -374,14 +374,22 @@ class ExposureNotificationsRepository(
     }
 
     suspend fun addExposure(token: String) {
-        Timber.d("New exposure for token $token")
+        val testToken = BuildConfig.DEBUG && token == DEBUG_TOKEN
+        val summary = exposureNotificationsApi.getSummary(token)
+
+        Timber.d("New exposure for token $token with summary $summary")
 
         val currentDaysSinceLastExposure = preferences.getString(KEY_LAST_TOKEN_ID, null)
             ?.let { exposureNotificationsApi.getSummary(it)?.daysSinceLastExposure }
-        val newDaysSinceLastExposure = if (BuildConfig.DEBUG && token == DEBUG_TOKEN) {
+        val newDaysSinceLastExposure = if (testToken) {
             5 // TODO make dynamic from debug screen
         } else {
-            exposureNotificationsApi.getSummary(token)?.daysSinceLastExposure
+            summary?.daysSinceLastExposure
+        }
+
+        if (!testToken && summary?.matchedKeyCount ?: 0 == 0) {
+            Timber.d("Matched key count is 0, ignoring this exposure")
+            return
         }
 
         if (newDaysSinceLastExposure != null &&
