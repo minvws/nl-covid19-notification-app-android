@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "$PLAY_STORE_JSON" != "" ]; then
+if [ -n "$PLAY_STORE_JSON" ] && [ "$PLAY_STORE_UPLOAD" == "true" ]; then
   if [ "$AGENT_JOBSTATUS" == "Succeeded" ]; then
     if [ "$APPCENTER_BRANCH" == "master" ]; then
       cd ..
