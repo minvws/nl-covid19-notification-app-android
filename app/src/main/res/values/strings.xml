@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Covid-19 notificatie</string>
+    <string name="app_name">BETA COVID</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">nl</string>
     <string name="onboarding_next">Volgende</string>
