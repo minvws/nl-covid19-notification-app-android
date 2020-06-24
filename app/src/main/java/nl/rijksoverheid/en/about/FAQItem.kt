@@ -12,7 +12,8 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemFaqBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 
-class FAQItem(val id: FAQItemId, @StringRes val text: Int) : BaseBindableItem<ItemFaqBinding>() {
+class FAQItem(val id: FAQItemId, @StringRes private val text: Int) :
+    BaseBindableItem<ItemFaqBinding>() {
     override fun getLayout() = R.layout.item_faq
 
     override fun bind(viewBinding: ItemFaqBinding, position: Int) {

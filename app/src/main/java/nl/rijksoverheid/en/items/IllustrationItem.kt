@@ -12,7 +12,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemIllustrationBinding
 
 class IllustrationItem(
-    @DrawableRes val image: Int
+    @DrawableRes private val image: Int
 ) : BaseBindableItem<ItemIllustrationBinding>() {
     override fun getLayout() = R.layout.item_illustration
 

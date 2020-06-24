@@ -11,7 +11,7 @@ import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemHeaderBinding
 
-class HeaderItem(@StringRes val text: Int) : BaseBindableItem<ItemHeaderBinding>() {
+class HeaderItem(@StringRes private val text: Int) : BaseBindableItem<ItemHeaderBinding>() {
     override fun getLayout() = R.layout.item_header
 
     override fun bind(viewBinding: ItemHeaderBinding, position: Int) {
