@@ -38,10 +38,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // TODO remove once request signing is in place
+            buildConfigField "String", "CDN_RESPONSE_MIME_TYPE", "\"application/json\""
         }
 
         debug {
-            buildConfigField "String", "CDN_RESPONSE_MIME_TYPE", "\"application/json\""
+           buildConfigField "String", "CDN_RESPONSE_MIME_TYPE", "\"application/json\""
         }
     }
 }
@@ -50,7 +52,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    api 'com.squareup.retrofit2:retrofit:2.8.1'
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.okhttp3:okhttp:4.7.2'
 
     implementation 'com.squareup.retrofit2:converter-moshi:2.8.1'
