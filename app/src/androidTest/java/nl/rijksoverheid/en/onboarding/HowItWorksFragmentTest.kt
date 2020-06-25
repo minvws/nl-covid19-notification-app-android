@@ -17,6 +17,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import nl.rijksoverheid.en.AppLifecycleManager
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
@@ -76,7 +77,7 @@ class HowItWorksFragmentTest {
             override fun cancel() {
             }
         },
-        AppLifecycleManager(context, configPreferences)
+        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context))
     )
     private val viewModel = ExposureNotificationsViewModel(repository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
