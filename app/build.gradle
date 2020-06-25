@@ -8,6 +8,8 @@ version = "0.3.1"
 archivesBaseName = "covid-notificatie"
 def buildVersionCode = System.getenv("APPCENTER_BUILD_ID") != null ? System.getenv("APPCENTER_BUILD_ID").toInteger() : 1
 
+ext.enableLogging = ext.has("enableLogging") ? ext.enableLogging == "true" : false
+
 android {
     compileSdkVersion 29
 
@@ -19,8 +21,9 @@ android {
         versionName version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
         resConfigs "nl", "en"
+
+        buildConfigField "boolean", "FEATURE_LOGGING", "${enableLogging}"
     }
 
     testOptions {
@@ -54,6 +57,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "FEATURE_LOGGING", "true"
         }
     }
     compileOptions {
