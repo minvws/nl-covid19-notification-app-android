@@ -53,20 +53,26 @@ open class AppLifecycleManager(
      */
     suspend fun getUpdateState(): UpdateState =
         suspendCoroutine { c ->
-            val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+            val minimumVersionCode = preferences.getInt(KEY_MINIMUM_VERSION_CODE, 1)
+            val currentVersionCode = BuildConfig.VERSION_CODE
+            if (minimumVersionCode > currentVersionCode) {
+                val appUpdateInfoTask = appUpdateManager.appUpdateInfo
 
-            appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-                    appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) ||
-                    appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
-                ) {
-                    c.resume(UpdateState.NeedsUpdate(appUpdateManager, appUpdateInfo))
-                } else {
-                    c.resume(UpdateState.NeedsNoUpdate)
+                appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) ||
+                        appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
+                    ) {
+                        c.resume(UpdateState.NeedsUpdate(appUpdateManager, appUpdateInfo))
+                    } else {
+                        c.resume(UpdateState.UpToDate)
+                    }
+                }.addOnFailureListener {
+                    Timber.e("Error requesting app update state")
+                    c.resume(UpdateState.Error(it))
                 }
-            }.addOnFailureListener {
-                Timber.e("Error requesting app update state")
-                c.resume(UpdateState.Error(it))
+            } else {
+                c.resume(UpdateState.UpToDate)
             }
         }
 
@@ -116,6 +122,6 @@ open class AppLifecycleManager(
 
         data class Error(val ex: Exception) : UpdateState()
 
-        object NeedsNoUpdate : UpdateState()
+        object UpToDate : UpdateState()
     }
 }
