@@ -65,6 +65,7 @@ class SignedResponseInterceptor : Interceptor {
 
         //TODO validate signature
         return response.newBuilder()
+            .removeHeader("Content-Type")
             .body(content.readByteArray().toResponseBody("application/json".toMediaType())).build()
     }
 }
