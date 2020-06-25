@@ -51,7 +51,7 @@ class LabTestServiceTest {
         assertEquals(1, mockWebServer.requestCount)
         assertNotNull(request.requestUrl?.queryParameter("sig"))
         assertEquals(
-            "PKQULx58ETb+RtPw/sTpegwT/lJnVW/Owe5RUlZjEkw=",
+            "5WitMulibQ04TBmz2vg+Hr60mTT68F/z+jDzFpRiGck=",
             request.requestUrl?.queryParameter("sig")
         )
     }
