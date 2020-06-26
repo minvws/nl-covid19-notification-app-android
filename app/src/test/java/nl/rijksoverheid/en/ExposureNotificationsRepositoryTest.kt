@@ -52,6 +52,58 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 
+private val MOCK_RISK_PARAMS_RESPONSE = MockResponse().setBody(
+    """
+                        {
+              "minimumRiskScore": 1,
+              "attenuationScores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "daysSinceLastExposureScores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "durationScores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "transmissionRiskScores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "durationAtAttenuationThresholds": [
+                42,
+                56
+              ]
+            }
+            """.trimIndent()
+)
+
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
 class ExposureNotificationsRepositoryTest {
@@ -79,59 +131,7 @@ class ExposureNotificationsRepositoryTest {
     @Test
     fun `processExposureKeySets processes exposure key sets`() = runBlocking {
         mockWebServer.enqueue(MockResponse().setBody("dummy_key_file"))
-        mockWebServer.enqueue(
-            MockResponse().setBody(
-                """
-                        {
-              "MinimumRiskScore": 1,
-              "AttenuationScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DaysSinceLastExposureScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DurationScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "TransmissionRiskScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DurationAtAttenuationThresholds": [
-                42,
-                56
-              ]
-            }
-            """.trimIndent()
-            )
-        )
+        mockWebServer.enqueue(MOCK_RISK_PARAMS_RESPONSE)
         mockWebServer.start()
         val context = ApplicationProvider.getApplicationContext<Application>()
         val service = CdnService.create(
@@ -188,59 +188,7 @@ class ExposureNotificationsRepositoryTest {
     @Test
     fun `processExposureKeySets processes only new exposure key sets`() = runBlocking {
         mockWebServer.enqueue(MockResponse().setBody("dummy_key_file"))
-        mockWebServer.enqueue(
-            MockResponse().setBody(
-                """
-                        {
-              "MinimumRiskScore": 1,
-              "AttenuationScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DaysSinceLastExposureScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DurationScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "TransmissionRiskScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DurationAtAttenuationThresholds": [
-                42,
-                56
-              ]
-            }
-            """.trimIndent()
-            )
-        )
+        mockWebServer.enqueue(MOCK_RISK_PARAMS_RESPONSE)
         mockWebServer.start()
         val context = ApplicationProvider.getApplicationContext<Application>()
         val service = CdnService.create(
@@ -456,13 +404,8 @@ class ExposureNotificationsRepositoryTest {
                         "/v1/exposurekeyset/test2" -> {
                             MockResponse().setBody("dummy_key_file")
                         }
-                        "/v1/riskcalculationparameters/config-params" -> {
-                            MockResponse().setBody(
-                                """
-                                {"MinimumRiskScore":1,"AttenuationScores":[1,2,3,4,5,6,7,8],"DaysSinceLastExposureScores":[1,2,3,4,5,6,7,8],"DurationScores":[1,2,3,4,5,6,7,8],"TransmissionRiskScores":[1,2,3,4,5,6,7,8],"DurationAtAttenuationThresholds":[42,56]}
-                                """.trimIndent()
-                            )
-                        }
+                        "/v1/riskcalculationparameters/config-params" -> MOCK_RISK_PARAMS_RESPONSE
+
                         else -> {
                             MockResponse().setResponseCode(404)
                         }

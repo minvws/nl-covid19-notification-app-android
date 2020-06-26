@@ -11,8 +11,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Manifest(
-    @Json(name = "ExposureKeySets") val exposureKeysSetIds: List<String>,
-    @Json(name = "ResourceBundle") val resourceBundleId: String,
-    @Json(name = "RiskCalculationParameters") val riskCalculationParametersId: String,
-    @Json(name = "AppConfig") val appConfigId: String
+    @Json(name = "exposureKeySets") val exposureKeysSetIds: List<String>,
+    @Json(name = "resourceBundle") val resourceBundleId: String,
+    @Json(name = "riskCalculationParameters") val riskCalculationParametersId: String,
+    @Json(name = "appConfig") val appConfigId: String
 )

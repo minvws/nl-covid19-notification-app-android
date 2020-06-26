@@ -11,7 +11,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class AppConfig(
-    @Json(name = "Version") val version: Int,
-    @Json(name = "ManifestFrequency") val manifestFrequencyMinutes: Int,
-    @Json(name = "DecoyProbability") val decoyProbability: Int
+    @Json(name = "androidMinimumKillVersion") val requiredAppVersionCode: Int,
+    @Json(name = "manifestFrequency") val updatePeriodMinutes: Int,
+    @Json(name = "decoyProbability") val decoyProbability: Int
 )
