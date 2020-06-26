@@ -32,10 +32,6 @@
     <string name="status_disabled_headline">De app is niet actief</string>
     <string name="status_en_api_disabled_description">%1$s werkt alleen als de noodzakelijke instellingen aanstaan.</string>
     <string name="status_en_api_disabled_enable">Instellingen aanzetten</string>
-    <string name="status_notifications_active">Actief</string>
-    <string name="status_menu_report">Positieve test</string>
-    <string name="status_upload_success">Upload geslaagd</string>
-    <string name="status_upload_failure">Upload mislukt</string>
     <string name="notification_channel_name">Meldingen</string>
     <string name="notification_channel_description">Meldingen over mogelijke blootstellingen aan COVID-19</string>
     <string name="notification_title">Mogelijke blootstelling aan COVID-19</string>
@@ -59,7 +55,6 @@
     <string name="request_test_header_1">Heb je een melding gekregen of twijfel je of je ziek bent? Vraag een test aan</string>
     <string name="request_test_paragraph_2" tools:ignore="Typos">Krijg je een melding? Dan raadt de GGD aan je te laten testen op het virus. Ook als je je nog niet ziek voelt. Heb je geen melding gekregen, maar wel last van klachten die bij het virus passen? Vraag ook dan een test aan.</string>
     <string name="request_test_paragraph_3">Testen is gratis. Het duurt niet lang en kan meestal snel gebeuren. De uitslag is binnen 48 uur bekend. Blijf in die periode zo veel mogelijk thuis.</string>
-    <string name="status_menu_check">Check besmettingen</string>
     <string name="status_reset_exposure">Melding verwijderen</string>
     <string name="status_dialog_remove_exposure_title">Weet je zeker dat je deze melding wilt verwijderen?</string>
     <string name="status_dialog_remove_exposure_message">Je kunt de datum daarna niet meer terugvinden in de app. Onthoud deze dus goed.</string>
