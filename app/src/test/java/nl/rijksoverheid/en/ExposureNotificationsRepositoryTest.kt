@@ -7,6 +7,8 @@
 package nl.rijksoverheid.en
 
 import android.app.Application
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Build
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
@@ -32,11 +34,14 @@ import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import retrofit2.Response
 import java.io.File
@@ -474,7 +479,7 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
-    fun `addExposure adds exposure`() = runBlocking {
+    fun `addExposure adds exposure and shows notification`() = runBlocking {
         val dateTime = "2020-06-20T10:15:30.00Z"
         val service = object : CdnService {
             override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
@@ -514,7 +519,11 @@ class ExposureNotificationsRepositoryTest {
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
+        val notificationManager = ApplicationProvider.getApplicationContext<Context>()
+            .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         repository.addExposure("sample-token")
+        assertNotNull(shadowOf(notificationManager).getNotification(0))
         assertEquals(
             LocalDate.of(2020, 6, 20).minusDays(4),
             repository.getLastExposureDate().filterNotNull().first()
@@ -697,6 +706,44 @@ class ExposureNotificationsRepositoryTest {
                 Instant.parse(dateTimeSuccess),
                 Instant.ofEpochMilli(sharedPrefs.getLong("last_keys_processed", 0))
             )
+        }
+
+    @Test
+    fun `getLastExposureDate returns date added through addExposure and cancels notification`() =
+        runBlocking {
+            val dateTime = "2020-06-20T10:15:30.00Z"
+            val clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+
+            val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+                .getSharedPreferences("repository_test", 0)
+
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun getSummary(token: String) =
+                    if (token == "sample-token") ExposureSummary.ExposureSummaryBuilder()
+                        .setDaysSinceLastExposure(4)
+                        .setMatchedKeyCount(1).build()
+                    else null
+            }
+
+            val repository = ExposureNotificationsRepository(
+                ApplicationProvider.getApplicationContext(),
+                api,
+                mock(),
+                sharedPrefs,
+                fakeScheduler,
+                clock
+            )
+
+            val notificationManager = ApplicationProvider.getApplicationContext<Context>()
+                .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            repository.addExposure("sample-token")
+            assertNotNull(shadowOf(notificationManager).getNotification(0))
+
+            val result = repository.getLastExposureDate().first()
+
+            assertEquals(LocalDate.now(clock).minusDays(4), result)
+            assertNull(shadowOf(notificationManager).getNotification(0))
         }
 
     @Test
