@@ -438,15 +438,20 @@ class ExposureNotificationsRepository(
             .setDestination(R.id.nav_post_notification)
             .setArguments(Bundle().apply { putLong("epochDayOfLastExposure", dayOfLastExposure) })
             .createPendingIntent()
+        val message = context.getString(
+            R.string.notification_message,
+            context.resources.getQuantityString(
+                R.plurals.days,
+                daysSinceLastExposure,
+                daysSinceLastExposure
+            )
+        )
         val builder =
             NotificationCompat.Builder(context, "exposure_notifications")
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(context.getString(R.string.notification_title))
-                .setContentText(context.getString(R.string.notification_message))
-                .setStyle(
-                    NotificationCompat.BigTextStyle()
-                        .bigText(context.getString(R.string.notification_message))
-                )
+                .setContentText(message)
+                .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setContentIntent(pendingIntent)
                 .setOnlyAlertOnce(true)
