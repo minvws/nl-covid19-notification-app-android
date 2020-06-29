@@ -6,15 +6,20 @@
  */
 package nl.rijksoverheid.en.api
 
+import nl.rijksoverheid.en.signing.ResponseSignatureValidator
+import nl.rijksoverheid.en.signing.SignatureValidationException
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.Buffer
 import retrofit2.Invocation
+import java.io.ByteArrayInputStream
 import java.util.zip.ZipInputStream
 
 class SignedResponseInterceptor : Interceptor {
+    private val validator = ResponseSignatureValidator()
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val invocation = chain.request().tag(Invocation::class.java)
         val signed =
@@ -63,10 +68,18 @@ class SignedResponseInterceptor : Interceptor {
             } while (true)
         }
 
-        //TODO validate signature
-        return response.newBuilder()
-            .removeHeader("Content-Type")
-            .body(content.readByteArray().toResponseBody("application/json".toMediaType())).build()
+        return try {
+            validator.verifySignature(
+                ByteArrayInputStream(content.clone().readByteArray()),
+                signature.readByteArray()
+            )
+            response.newBuilder()
+                .removeHeader("Content-Type")
+                .body(content.readByteArray().toResponseBody("application/json".toMediaType()))
+                .build()
+        } catch (ex: SignatureValidationException) {
+            Response.Builder().code(500).message("Signature failed to validate").build()
+        }
     }
 }
 

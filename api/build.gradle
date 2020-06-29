@@ -64,6 +64,7 @@ dependencies {
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.2'
 
     implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation project(":signing")
 
     testImplementation 'junit:junit:4.13'
     testImplementation 'org.robolectric:robolectric:4.3.1'
