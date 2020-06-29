@@ -71,6 +71,7 @@ private const val DEFAULT_MANIFEST_INTERVAL_MINUTES = 240
 private const val DEBUG_TOKEN = "TEST-TOKEN"
 private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
 private const val ID_EXPOSURE_PUSH_NOTIFICATION = 0
+private const val KEY_MIN_RISK_SCORE = "min_risk_score"
 
 class ExposureNotificationsRepository(
     private val context: Context,
@@ -186,6 +187,10 @@ class ExposureNotificationsRepository(
             }
 
             Timber.d("Processing ${validFiles.size} files")
+
+            preferences.edit {
+                putInt(KEY_MIN_RISK_SCORE, configuration.minimumRiskScore)
+            }
 
             val result = exposureNotificationsApi.provideDiagnosisKeys(
                 validFiles.map { it.file!! },
@@ -431,8 +436,10 @@ class ExposureNotificationsRepository(
             summary?.daysSinceLastExposure
         }
 
-        if (!testToken && summary?.matchedKeyCount ?: 0 == 0) {
-            Timber.d("Matched key count is 0, ignoring this exposure")
+        val minRiskScore = preferences.getInt(KEY_MIN_RISK_SCORE, 0)
+
+        if (!testToken && (summary?.matchedKeyCount ?: 0 == 0 || summary?.maximumRiskScore ?: 0 < minRiskScore)) {
+            Timber.d("Exposure has no matches or does not meet required risk score")
             return
         }
 

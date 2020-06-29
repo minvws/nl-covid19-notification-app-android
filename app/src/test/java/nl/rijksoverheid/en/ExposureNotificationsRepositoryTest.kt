@@ -739,6 +739,54 @@ class ExposureNotificationsRepositoryTest {
     }
 
     @Test
+    fun `addExposure with max risk score below threshold is ignored`() = runBlocking {
+        val dateTime = "2020-06-20T10:15:30.00Z"
+        val service = object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(): Manifest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getAppConfig(id: String): AppConfig {
+                throw NotImplementedError()
+            }
+        }
+
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getSummary(token: String) =
+                ExposureSummary.ExposureSummaryBuilder().setMatchedKeyCount(1)
+                    .setMaximumRiskScore(1).build()
+        }
+
+        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+            .getSharedPreferences("repository_test", 0)
+
+        sharedPrefs.edit {
+            putInt("min_risk_score", 10)
+        }
+
+        val repository = ExposureNotificationsRepository(
+            ApplicationProvider.getApplicationContext(),
+            api,
+            service,
+            sharedPrefs,
+            fakeScheduler,
+            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        )
+
+        repository.addExposure("sample-token-new")
+
+        assertEquals(null, repository.getLastExposureDate().first())
+    }
+
+    @Test
     fun `processManifest marks the timestamp of last successful time the keys have been processed and returns Success`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
