@@ -95,7 +95,7 @@ class ExposureNotificationsRepository(
                 // reset the timer
                 putLong(KEY_LAST_KEYS_PROCESSED, System.currentTimeMillis())
             }
-            val interval = getLatestAppConfigOrNull()?.manifestFrequencyMinutes
+            val interval = getLatestAppConfigOrNull()?.updatePeriodMinutes
                 ?: DEFAULT_MANIFEST_INTERVAL_MINUTES
             manifestWorkerScheduler.schedule(interval)
         }
@@ -324,7 +324,7 @@ class ExposureNotificationsRepository(
                     }
                 }
                 // if we are able to fetch the manifest, config etc, then report success
-                ProcessManifestResult.Success(config.manifestFrequencyMinutes)
+                ProcessManifestResult.Success(config.updatePeriodMinutes)
             } catch (ex: Exception) {
                 Timber.e(ex, "Error while processing manifest")
                 ProcessManifestResult.Error
