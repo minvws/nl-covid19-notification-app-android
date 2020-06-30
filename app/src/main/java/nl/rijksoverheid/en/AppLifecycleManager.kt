@@ -39,12 +39,14 @@ open class AppLifecycleManager(
      * Sends a push notification if this app's version is outdated.
      */
     fun verifyMinimumVersion(minimumVersionCode: Int) {
-        preferences.edit {
-            putInt(KEY_MINIMUM_VERSION_CODE, minimumVersionCode)
-        }
-        val currentVersionCode = BuildConfig.VERSION_CODE
-        if (currentVersionCode < minimumVersionCode) {
-            showNotification()
+        if (minimumVersionCode != preferences.getInt(KEY_MINIMUM_VERSION_CODE, 0)) {
+            preferences.edit {
+                putInt(KEY_MINIMUM_VERSION_CODE, minimumVersionCode)
+            }
+            val currentVersionCode = BuildConfig.VERSION_CODE
+            if (currentVersionCode < minimumVersionCode) {
+                showNotification()
+            }
         }
     }
 
