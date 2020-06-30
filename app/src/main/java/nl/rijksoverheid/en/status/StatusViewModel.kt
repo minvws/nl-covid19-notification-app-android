@@ -168,21 +168,21 @@ class StatusViewModel(
         @StringRes val secondaryAction: Int?
     ) {
         object Active : HeaderViewState(
-            R.raw.checkmark,
+            R.raw.status_active,
             R.string.status_no_exposure_detected_headline,
             null,
             null
         )
 
         data class Exposed(val date: LocalDate) : HeaderViewState(
-            R.raw.shield,
+            R.raw.status_exposed,
             R.string.status_exposure_detected_headline,
             R.string.status_exposure_what_next,
             R.string.status_reset_exposure
         )
 
         object Disabled : HeaderViewState(
-            R.raw.inactive,
+            R.raw.status_inactive,
             R.string.status_disabled_headline,
             R.string.status_en_api_disabled_enable,
             null
