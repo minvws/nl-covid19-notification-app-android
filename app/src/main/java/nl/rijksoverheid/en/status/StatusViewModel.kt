@@ -164,12 +164,14 @@ class StatusViewModel(
     }
 
     sealed class HeaderViewState(
+        @DrawableRes val background: Int,
         @DrawableRes val icon: Int,
         @StringRes val headline: Int,
         @StringRes val primaryAction: Int?,
         @StringRes val secondaryAction: Int?
     ) {
         object Active : HeaderViewState(
+            R.drawable.gradient_status_no_exposure,
             R.drawable.ic_status_no_exposure,
             R.string.status_no_exposure_detected_headline,
             null,
@@ -177,6 +179,7 @@ class StatusViewModel(
         )
 
         data class Exposed(val date: LocalDate) : HeaderViewState(
+            R.drawable.gradient_status_exposure,
             R.drawable.ic_status_exposure,
             R.string.status_exposure_detected_headline,
             R.string.status_exposure_what_next,
@@ -184,6 +187,7 @@ class StatusViewModel(
         )
 
         object Disabled : HeaderViewState(
+            R.drawable.gradient_status_disabled,
             R.drawable.ic_status_disabled,
             R.string.status_disabled_headline,
             R.string.status_en_api_disabled_enable,
