@@ -17,6 +17,8 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import nl.rijksoverheid.en.AppLifecycleManager
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
@@ -45,8 +47,13 @@ class HowItWorksFragmentTest {
         val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
     }
 
+    private val context = ApplicationProvider.getApplicationContext<Context>()
+    private val notificationsPreferences = context
+        .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
+    private val configPreferences = context
+        .getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0)
     private val repository = ExposureNotificationsRepository(
-        ApplicationProvider.getApplicationContext(),
+        context,
         FakeExposureNotificationApi(),
         object : CdnService {
             override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
@@ -62,15 +69,15 @@ class HowItWorksFragmentTest {
 
             override suspend fun getAppConfig(id: String) = AppConfig(1, 10, 0)
         },
-        ApplicationProvider.getApplicationContext<Context>()
-            .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0),
+        notificationsPreferences,
         object : ProcessManifestWorkerScheduler {
             override fun schedule(intervalMinutes: Int) {
             }
 
             override fun cancel() {
             }
-        }
+        },
+        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context))
     )
     private val viewModel = ExposureNotificationsViewModel(repository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {

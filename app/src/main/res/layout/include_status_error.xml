@@ -31,7 +31,7 @@
             android:id="@+id/error_box_image"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:contentDescription="@null"
+            android:importantForAccessibility="no"
             android:src="@drawable/ic_error"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -12,9 +12,9 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemButtonBinding
 
 class ButtonItem(
-    @StringRes val text: Int,
-    val buttonClickListener: () -> Unit,
-    val enabled: Boolean = true
+    @StringRes private val text: Int,
+    buttonClickListener: () -> Unit,
+    private val enabled: Boolean = true
 ) : BaseBindableItem<ItemButtonBinding>() {
     data class ViewState(
         @StringRes val text: Int,

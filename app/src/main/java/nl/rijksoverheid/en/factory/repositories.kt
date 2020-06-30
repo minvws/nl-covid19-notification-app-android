@@ -13,6 +13,8 @@ import androidx.security.crypto.MasterKeys
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.nearby.Nearby
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import nl.rijksoverheid.en.AppLifecycleManager
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.CdnService
@@ -46,7 +48,8 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
             override fun cancel() {
                 ProcessManifestWorker.cancel(context)
             }
-        }
+        },
+        createAppLifecycleManager(context)
     )
 }
 
@@ -75,6 +78,14 @@ fun createLabTestRepository(context: Context): LabTestRepository {
         ),
         labTestService ?: LabTestService.create(context).also { labTestService = it },
         { UploadDiagnosisKeysJob.schedule(context) }
+    )
+}
+
+fun createAppLifecycleManager(context: Context): AppLifecycleManager {
+    return AppLifecycleManager(
+        context,
+        context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0),
+        AppUpdateManagerFactory.create(context)
     )
 }
 

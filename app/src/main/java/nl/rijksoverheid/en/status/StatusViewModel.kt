@@ -92,7 +92,9 @@ class StatusViewModel(
                 state.date.formatExposureDate(context)
             )
         }
-        HeaderViewState.Disabled -> context.getString(R.string.status_en_api_disabled_description)
+        HeaderViewState.Disabled -> context.getString(
+            R.string.status_en_api_disabled_description, context.getString(R.string.app_name)
+        )
     }
 
     fun getErrorText(context: Context, error: ErrorViewState): String? = when (error) {

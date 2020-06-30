@@ -7,6 +7,8 @@
 package nl.rijksoverheid.en
 
 import android.app.Application
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Build
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
@@ -32,11 +34,14 @@ import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import retrofit2.Response
 import java.io.File
@@ -51,6 +56,58 @@ import java.util.concurrent.atomic.AtomicReference
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
+
+private val MOCK_RISK_PARAMS_RESPONSE = MockResponse().setBody(
+    """
+                        {
+              "minimumRiskScore": 1,
+              "attenuationScores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "daysSinceLastExposureScores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "durationScores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "transmissionRiskScores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "durationAtAttenuationThresholds": [
+                42,
+                56
+              ]
+            }
+            """.trimIndent()
+)
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
@@ -79,59 +136,7 @@ class ExposureNotificationsRepositoryTest {
     @Test
     fun `processExposureKeySets processes exposure key sets`() = runBlocking {
         mockWebServer.enqueue(MockResponse().setBody("dummy_key_file"))
-        mockWebServer.enqueue(
-            MockResponse().setBody(
-                """
-                        {
-              "MinimumRiskScore": 1,
-              "AttenuationScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DaysSinceLastExposureScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DurationScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "TransmissionRiskScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DurationAtAttenuationThresholds": [
-                42,
-                56
-              ]
-            }
-            """.trimIndent()
-            )
-        )
+        mockWebServer.enqueue(MOCK_RISK_PARAMS_RESPONSE)
         mockWebServer.start()
         val context = ApplicationProvider.getApplicationContext<Application>()
         val service = CdnService.create(
@@ -156,7 +161,7 @@ class ExposureNotificationsRepositoryTest {
         val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
             .getSharedPreferences("repository_test", 0)
         val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(), api, service, sharedPrefs, fakeScheduler
+            context, api, service, sharedPrefs, fakeScheduler, mock()
         )
 
         val result =
@@ -188,59 +193,7 @@ class ExposureNotificationsRepositoryTest {
     @Test
     fun `processExposureKeySets processes only new exposure key sets`() = runBlocking {
         mockWebServer.enqueue(MockResponse().setBody("dummy_key_file"))
-        mockWebServer.enqueue(
-            MockResponse().setBody(
-                """
-                        {
-              "MinimumRiskScore": 1,
-              "AttenuationScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DaysSinceLastExposureScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DurationScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "TransmissionRiskScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DurationAtAttenuationThresholds": [
-                42,
-                56
-              ]
-            }
-            """.trimIndent()
-            )
-        )
+        mockWebServer.enqueue(MOCK_RISK_PARAMS_RESPONSE)
         mockWebServer.start()
         val context = ApplicationProvider.getApplicationContext<Application>()
         val service = CdnService.create(
@@ -268,7 +221,7 @@ class ExposureNotificationsRepositoryTest {
         }
 
         val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(), api, service, sharedPrefs, fakeScheduler
+            context, api, service, sharedPrefs, fakeScheduler, mock()
         )
 
         val result = repository.processExposureKeySets(
@@ -322,7 +275,7 @@ class ExposureNotificationsRepositoryTest {
             putStringSet("exposure_key_sets", setOf("test"))
         }
         val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(), api, service, sharedPrefs, fakeScheduler
+            context, api, service, sharedPrefs, fakeScheduler, mock()
         )
 
         val result = repository.processExposureKeySets(
@@ -368,11 +321,7 @@ class ExposureNotificationsRepositoryTest {
             }
 
             val repository = ExposureNotificationsRepository(
-                ApplicationProvider.getApplicationContext(),
-                api,
-                service,
-                sharedPrefs,
-                fakeScheduler
+                context, api, service, sharedPrefs, fakeScheduler, mock()
             )
 
             val result = repository.processExposureKeySets(
@@ -418,11 +367,7 @@ class ExposureNotificationsRepositoryTest {
                 .getSharedPreferences("repository_test", 0)
 
             val repository = ExposureNotificationsRepository(
-                ApplicationProvider.getApplicationContext(),
-                api,
-                service,
-                sharedPrefs,
-                fakeScheduler
+                context, api, service, sharedPrefs, fakeScheduler, mock()
             )
 
             val result =
@@ -456,13 +401,8 @@ class ExposureNotificationsRepositoryTest {
                         "/v1/exposurekeyset/test2" -> {
                             MockResponse().setBody("dummy_key_file")
                         }
-                        "/v1/riskcalculationparameters/config-params" -> {
-                            MockResponse().setBody(
-                                """
-                                {"MinimumRiskScore":1,"AttenuationScores":[1,2,3,4,5,6,7,8],"DaysSinceLastExposureScores":[1,2,3,4,5,6,7,8],"DurationScores":[1,2,3,4,5,6,7,8],"TransmissionRiskScores":[1,2,3,4,5,6,7,8],"DurationAtAttenuationThresholds":[42,56]}
-                                """.trimIndent()
-                            )
-                        }
+                        "/v1/riskcalculationparameters/config-params" -> MOCK_RISK_PARAMS_RESPONSE
+
                         else -> {
                             MockResponse().setResponseCode(404)
                         }
@@ -495,11 +435,7 @@ class ExposureNotificationsRepositoryTest {
                 .getSharedPreferences("repository_test", 0)
 
             val repository = ExposureNotificationsRepository(
-                ApplicationProvider.getApplicationContext(),
-                api,
-                service,
-                sharedPrefs,
-                fakeScheduler
+                context, api, service, sharedPrefs, fakeScheduler, mock()
             )
 
             val result = repository.processExposureKeySets(
@@ -531,7 +467,7 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
-    fun `addExposure adds exposure`() = runBlocking {
+    fun `addExposure adds exposure and shows notification`() = runBlocking {
         val dateTime = "2020-06-20T10:15:30.00Z"
         val service = object : CdnService {
             override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
@@ -554,23 +490,24 @@ class ExposureNotificationsRepositoryTest {
         val api = object : FakeExposureNotificationApi() {
             override suspend fun getSummary(token: String) =
                 if (token == "sample-token") {
-                    ExposureSummary.ExposureSummaryBuilder().setDaysSinceLastExposure(4).build()
+                    ExposureSummary.ExposureSummaryBuilder().setDaysSinceLastExposure(4)
+                        .setMatchedKeyCount(1).build()
                 } else null
         }
 
-        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
-            .getSharedPreferences("repository_test", 0)
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
         val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(),
-            api,
-            service,
-            sharedPrefs,
-            fakeScheduler,
+            context, api, service, sharedPrefs, fakeScheduler, mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
+        val notificationManager = ApplicationProvider.getApplicationContext<Context>()
+            .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         repository.addExposure("sample-token")
+        assertNotNull(shadowOf(notificationManager).getNotification(0))
         assertEquals(
             LocalDate.of(2020, 6, 20).minusDays(4),
             repository.getLastExposureDate().filterNotNull().first()
@@ -602,22 +539,17 @@ class ExposureNotificationsRepositoryTest {
             override suspend fun getSummary(token: String) =
                 when (token) {
                     "sample-token-old" -> ExposureSummary.ExposureSummaryBuilder()
-                        .setDaysSinceLastExposure(8).build()
+                        .setDaysSinceLastExposure(8).setMatchedKeyCount(1).build()
                     "sample-token-new" -> ExposureSummary.ExposureSummaryBuilder()
-                        .setDaysSinceLastExposure(4).build()
+                        .setDaysSinceLastExposure(4).setMatchedKeyCount(1).build()
                     else -> null
                 }
         }
-
-        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
-            .getSharedPreferences("repository_test", 0)
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
         val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(),
-            api,
-            service,
-            sharedPrefs,
-            fakeScheduler,
+            context, api, service, sharedPrefs, fakeScheduler, mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -628,6 +560,45 @@ class ExposureNotificationsRepositoryTest {
             LocalDate.of(2020, 6, 20).minusDays(4),
             repository.getLastExposureDate().filterNotNull().first()
         )
+    }
+
+    @Test
+    fun `addExposure without matching keys is ignored`() = runBlocking {
+        val dateTime = "2020-06-20T10:15:30.00Z"
+        val service = object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(): Manifest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getAppConfig(id: String): AppConfig {
+                throw NotImplementedError()
+            }
+        }
+
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getSummary(token: String) =
+                ExposureSummary.ExposureSummaryBuilder().setMatchedKeyCount(0).build()
+        }
+
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+
+        val repository = ExposureNotificationsRepository(
+            context, api, service, sharedPrefs, fakeScheduler, mock(),
+            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        )
+
+        repository.addExposure("sample-token-new")
+
+        assertEquals(null, repository.getLastExposureDate().first())
     }
 
     @Test
@@ -649,15 +620,17 @@ class ExposureNotificationsRepositoryTest {
                 override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
             }
 
-            val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
-                .getSharedPreferences("repository_test", 0)
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+            val appLifecycleManager = AppLifecycleManager(context, sharedPrefs, mock())
 
             val repository = ExposureNotificationsRepository(
-                ApplicationProvider.getApplicationContext(),
+                context,
                 object : FakeExposureNotificationApi() {},
                 fakeService,
                 sharedPrefs,
                 fakeScheduler,
+                appLifecycleManager,
                 Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
@@ -686,8 +659,9 @@ class ExposureNotificationsRepositoryTest {
                 mockWebServer.url("/").toString()
             )
 
-            val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
-                .getSharedPreferences("repository_test", 0)
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+            val appLifecycleManager = AppLifecycleManager(context, sharedPrefs, mock())
 
             sharedPrefs.edit {
                 putLong("last_keys_processed", Instant.parse(dateTimeSuccess).toEpochMilli())
@@ -699,6 +673,7 @@ class ExposureNotificationsRepositoryTest {
                 fakeService,
                 sharedPrefs,
                 fakeScheduler,
+                appLifecycleManager,
                 Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
@@ -710,6 +685,131 @@ class ExposureNotificationsRepositoryTest {
                 Instant.parse(dateTimeSuccess),
                 Instant.ofEpochMilli(sharedPrefs.getLong("last_keys_processed", 0))
             )
+        }
+
+    @Test
+    fun `processManifest shows a notification when the app version is outdated and returns Success`() =
+        runBlocking {
+            val dateTime = "2020-06-20T10:15:30.00Z"
+            val fakeService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(): Manifest =
+                    Manifest(emptyList(), "dummy", "riskParamId", "configId")
+
+                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(id: String): AppConfig = AppConfig(2, 5, 0)
+            }
+
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+            val appLifecycleManager = AppLifecycleManager(context, sharedPrefs, mock())
+
+            val repository = ExposureNotificationsRepository(
+                context,
+                object : FakeExposureNotificationApi() {},
+                fakeService,
+                sharedPrefs,
+                fakeScheduler,
+                appLifecycleManager,
+                Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            )
+
+            val result = repository.processManifest()
+
+            val notificationService =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val shadowNotificationManager = shadowOf(notificationService)
+
+            assertEquals(1, shadowNotificationManager.size())
+            assertTrue(result is ProcessManifestResult.Success)
+        }
+
+    @Test
+    fun `processManifest shows no notification when the app version is not outdated and returns Success`() =
+        runBlocking {
+            val dateTime = "2020-06-20T10:15:30.00Z"
+            val fakeService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(): Manifest =
+                    Manifest(emptyList(), "dummy", "riskParamId", "configId")
+
+                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(id: String): AppConfig = AppConfig(0, 5, 0)
+            }
+
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+            val appLifecycleManager = AppLifecycleManager(context, sharedPrefs, mock())
+
+            val repository = ExposureNotificationsRepository(
+                context,
+                object : FakeExposureNotificationApi() {},
+                fakeService,
+                sharedPrefs,
+                fakeScheduler,
+                appLifecycleManager,
+                Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            )
+
+            val result = repository.processManifest()
+
+            val notificationService =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val shadowNotificationManager = shadowOf(notificationService)
+
+            assertEquals(0, shadowNotificationManager.size())
+            assertTrue(result is ProcessManifestResult.Success)
+        }
+
+    @Test
+    fun `getLastExposureDate returns date added through addExposure and cancels notification`() =
+        runBlocking {
+            val dateTime = "2020-06-20T10:15:30.00Z"
+            val clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+
+            val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+                .getSharedPreferences("repository_test", 0)
+
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun getSummary(token: String) =
+                    if (token == "sample-token") ExposureSummary.ExposureSummaryBuilder()
+                        .setDaysSinceLastExposure(4)
+                        .setMatchedKeyCount(1).build()
+                    else null
+            }
+
+            val repository = ExposureNotificationsRepository(
+                ApplicationProvider.getApplicationContext(),
+                api,
+                mock(),
+                sharedPrefs,
+                fakeScheduler,
+                mock(),
+                clock
+            )
+
+            val notificationManager = ApplicationProvider.getApplicationContext<Context>()
+                .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            repository.addExposure("sample-token")
+            assertNotNull(shadowOf(notificationManager).getNotification(0))
+
+            val result = repository.getLastExposureDate().first()
+
+            assertEquals(LocalDate.now(clock).minusDays(4), result)
+            assertNull(shadowOf(notificationManager).getNotification(0))
         }
 
     @Test
@@ -732,8 +832,8 @@ class ExposureNotificationsRepositoryTest {
             override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
         }
 
-        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
-            .getSharedPreferences("repository_test", 0)
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
         sharedPrefs.edit {
             putLong("last_keys_processed", Instant.parse(lastSyncDateTime).toEpochMilli())
@@ -745,6 +845,7 @@ class ExposureNotificationsRepositoryTest {
             fakeService,
             sharedPrefs,
             fakeScheduler,
+            mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -770,8 +871,8 @@ class ExposureNotificationsRepositoryTest {
             override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
         }
 
-        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
-            .getSharedPreferences("repository_test", 0)
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
         val repository = ExposureNotificationsRepository(
             ApplicationProvider.getApplicationContext(),
@@ -779,6 +880,7 @@ class ExposureNotificationsRepositoryTest {
             fakeService,
             sharedPrefs,
             fakeScheduler,
+            mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -815,6 +917,7 @@ class ExposureNotificationsRepositoryTest {
             mock(),
             mock(),
             fakeScheduler,
+            mock(),
             Clock.systemUTC()
         )
 

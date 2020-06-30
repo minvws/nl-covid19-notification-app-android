@@ -8,4 +8,5 @@
 
 <resources>
     <string name="phone_number">0800–1202</string>
+    <string name="privacy_policy_url">http://www.rijksoverheid.nl/privacystatement-coronavirus-app</string>
 </resources>

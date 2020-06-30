@@ -19,7 +19,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemParagraphBinding
 
 class BulletedListItem(
-    @StringRes val text: Int
+    @StringRes private val text: Int
 ) : BaseBindableItem<ItemParagraphBinding>() {
     override fun getLayout() = R.layout.item_paragraph
 

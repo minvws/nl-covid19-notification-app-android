@@ -51,10 +51,10 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
                     sharedElementSnapshots: MutableList<View>?
                 ) {
                     if (sharedElements.isNotEmpty()) {
-                        val toolbar = sharedElements.firstOrNull { it.id == R.id.toolbar }
-                        // hide the toolbar from the previous fragment to make the toolbar from this fragment
+                        val appbar = sharedElements.firstOrNull { it.id == R.id.appbar }
+                        // hide the appbar from the previous fragment to make the appbar from this fragment
                         // fade in.
-                        toolbar?.visibility = View.INVISIBLE
+                        appbar?.visibility = View.INVISIBLE
                     }
                 }
 
@@ -63,8 +63,8 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
                     sharedElements: MutableList<View>,
                     sharedElementSnapshots: MutableList<View>?
                 ) {
-                    val toolbar = sharedElements.firstOrNull { it.id == R.id.toolbar }
-                    toolbar?.visibility = View.VISIBLE
+                    val appbar = sharedElements.firstOrNull { it.id == R.id.appbar }
+                    appbar?.visibility = View.VISIBLE
                 }
             })
         }
@@ -85,7 +85,7 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
         binding.nextButtonClickListener = View.OnClickListener {
             findNavController().navigate(
                 ExplanationFragmentDirections.actionNext(), FragmentNavigatorExtras(
-                    binding.toolbar to binding.toolbar.transitionName
+                    binding.appbar to binding.appbar.transitionName
                 )
             )
         }

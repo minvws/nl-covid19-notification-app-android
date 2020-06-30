@@ -12,8 +12,8 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemParagraphBinding
 
 class ParagraphItem(
-    @StringRes val text: Int,
-    vararg val formatArgs: Any
+    @StringRes private val text: Int,
+    private vararg val formatArgs: Any
 ) : BaseBindableItem<ItemParagraphBinding>() {
     override fun getLayout() = R.layout.item_paragraph
 

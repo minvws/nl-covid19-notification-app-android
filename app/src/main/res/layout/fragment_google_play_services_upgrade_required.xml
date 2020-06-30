@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:contentDescription="@null"
+                android:importantForAccessibility="no"
                 android:src="@drawable/illustration_update_google_play_services"
                 app:layout_constraintBottom_toTopOf="@id/headline"
                 app:layout_constraintEnd_toEndOf="parent"

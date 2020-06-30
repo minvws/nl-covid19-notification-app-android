@@ -11,7 +11,7 @@ import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemMessageBoxBinding
 
-class MessageBoxItem(@StringRes val text: Int) : BaseBindableItem<ItemMessageBoxBinding>() {
+class MessageBoxItem(@StringRes private val text: Int) : BaseBindableItem<ItemMessageBoxBinding>() {
     override fun getLayout() = R.layout.item_message_box
 
     override fun bind(viewBinding: ItemMessageBoxBinding, position: Int) {

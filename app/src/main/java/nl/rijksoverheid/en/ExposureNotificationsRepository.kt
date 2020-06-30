@@ -67,6 +67,7 @@ private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
 private const val DEFAULT_MANIFEST_INTERVAL_MINUTES = 240
 private const val DEBUG_TOKEN = "TEST-TOKEN"
 private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
+private const val ID_EXPOSURE_PUSH_NOTIFICATION = 0
 
 class ExposureNotificationsRepository(
     private val context: Context,
@@ -74,6 +75,7 @@ class ExposureNotificationsRepository(
     private val api: CdnService,
     private val preferences: SharedPreferences,
     private val manifestWorkerScheduler: ProcessManifestWorkerScheduler,
+    private val appLifecycleManager: AppLifecycleManager,
     private val clock: Clock = Clock.systemDefaultZone()
 ) {
 
@@ -95,7 +97,7 @@ class ExposureNotificationsRepository(
                 // reset the timer
                 putLong(KEY_LAST_KEYS_PROCESSED, System.currentTimeMillis())
             }
-            val interval = getLatestAppConfigOrNull()?.manifestFrequencyMinutes
+            val interval = getLatestAppConfigOrNull()?.updatePeriodMinutes
                 ?: DEFAULT_MANIFEST_INTERVAL_MINUTES
             manifestWorkerScheduler.schedule(interval)
         }
@@ -318,13 +320,15 @@ class ExposureNotificationsRepository(
 
                 val config = api.getAppConfig(manifest.appConfigId)
 
+                appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode)
+
                 if (keysSuccessful) {
                     preferences.edit {
                         putLong(KEY_LAST_KEYS_PROCESSED, clock.millis())
                     }
                 }
                 // if we are able to fetch the manifest, config etc, then report success
-                ProcessManifestResult.Success(config.manifestFrequencyMinutes)
+                ProcessManifestResult.Success(config.updatePeriodMinutes)
             } catch (ex: Exception) {
                 Timber.e(ex, "Error while processing manifest")
                 ProcessManifestResult.Error
@@ -363,6 +367,11 @@ class ExposureNotificationsRepository(
             if (date == null) {
                 resetExposures()
             }
+        }.onEach { date ->
+            if (date != null) {
+                (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
+                    .cancel(ID_EXPOSURE_PUSH_NOTIFICATION)
+            }
         }
     }
 
@@ -374,14 +383,22 @@ class ExposureNotificationsRepository(
     }
 
     suspend fun addExposure(token: String) {
-        Timber.d("New exposure for token $token")
+        val testToken = BuildConfig.DEBUG && token == DEBUG_TOKEN
+        val summary = exposureNotificationsApi.getSummary(token)
+
+        Timber.d("New exposure for token $token with summary $summary")
 
         val currentDaysSinceLastExposure = preferences.getString(KEY_LAST_TOKEN_ID, null)
             ?.let { exposureNotificationsApi.getSummary(it)?.daysSinceLastExposure }
-        val newDaysSinceLastExposure = if (BuildConfig.DEBUG && token == DEBUG_TOKEN) {
+        val newDaysSinceLastExposure = if (testToken) {
             5 // TODO make dynamic from debug screen
         } else {
-            exposureNotificationsApi.getSummary(token)?.daysSinceLastExposure
+            summary?.daysSinceLastExposure
+        }
+
+        if (!testToken && summary?.matchedKeyCount ?: 0 == 0) {
+            Timber.d("Matched key count is 0, ignoring this exposure")
+            return
         }
 
         if (newDaysSinceLastExposure != null &&
@@ -441,7 +458,7 @@ class ExposureNotificationsRepository(
         val notificationManager =
             NotificationManagerCompat
                 .from(context)
-        notificationManager.notify(0, builder.build())
+        notificationManager.notify(ID_EXPOSURE_PUSH_NOTIFICATION, builder.build())
     }
 }
 
@@ -452,6 +469,7 @@ sealed class ProcessExposureKeysResult {
      * Keys processed successfully
      */
     object Success : ProcessExposureKeysResult()
+
     /**
      * A server error occurred
      */

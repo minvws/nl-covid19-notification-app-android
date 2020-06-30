@@ -7,7 +7,6 @@
   -->
 
 <transitionSet>
-    <changeBounds />
     <changeTransform />
     <changeClipBounds />
     <changeImageTransform />
