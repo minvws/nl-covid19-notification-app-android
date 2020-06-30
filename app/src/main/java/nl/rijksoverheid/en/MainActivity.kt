@@ -13,13 +13,16 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.play.core.install.model.AppUpdateType
 import nl.rijksoverheid.en.lifecyle.EventObserver
 
 private const val RC_REQUEST_CONSENT = 1
+private const val RC_UPDATE_APP = 2
 private const val TAG_GENERIC_ERROR = "generic_error"
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: ExposureNotificationsViewModel by viewModels()
+    private val updateAppViewModel: UpdateAppViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -52,6 +55,20 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        updateAppViewModel.updateEvent.observe(this, EventObserver {
+            it.appUpdateManager.startUpdateFlowForResult(
+                it.appUpdateInfo,
+                AppUpdateType.IMMEDIATE,
+                this,
+                RC_UPDATE_APP
+            )
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateAppViewModel.verifyDownloadNotStalled()
     }
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {
@@ -62,6 +79,10 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_REQUEST_CONSENT && resultCode == Activity.RESULT_OK) {
             viewModel.requestEnableNotifications()
+        }
+        // If user canceled the forced update, do not allow them to use the app
+        if (requestCode == RC_UPDATE_APP && resultCode != Activity.RESULT_OK) {
+            finish()
         }
     }
 }
