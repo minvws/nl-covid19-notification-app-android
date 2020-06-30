@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
 import androidx.annotation.DrawableRes
+import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.core.app.SharedElementCallback
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -25,6 +26,7 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
         @StringRes val headline: Int,
         @StringRes val description: Int,
         @DrawableRes val illustration: Int,
+        @RawRes val animation: Int,
         val isExample: Boolean
     )
 
@@ -76,6 +78,7 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
             headline = args.title,
             description = args.description,
             illustration = args.illustration,
+            animation = args.animation,
             isExample = args.isExample
         )
 
