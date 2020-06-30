@@ -15,8 +15,8 @@ import com.xwray.groupie.viewbinding.GroupieViewHolder
 abstract class BaseBindableItem<T : ViewDataBinding> : BindableItem<T>() {
     override fun initializeViewBinding(view: View): T = DataBindingUtil.bind<T>(view)!!
 
-    override fun bind(viewHolder: GroupieViewHolder<T>, position: Int) {
-        super.bind(viewHolder, position)
+    override fun bind(viewHolder: GroupieViewHolder<T>, position: Int, payloads: MutableList<Any>) {
+        super.bind(viewHolder, position, payloads)
         viewHolder.binding.executePendingBindings()
     }
 

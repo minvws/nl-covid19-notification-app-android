@@ -34,6 +34,8 @@ import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -54,6 +56,58 @@ import java.util.concurrent.atomic.AtomicReference
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
+
+private val MOCK_RISK_PARAMS_RESPONSE = MockResponse().setBody(
+    """
+                        {
+              "minimumRiskScore": 1,
+              "attenuationScores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "daysSinceLastExposureScores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "durationScores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "transmissionRiskScores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "durationAtAttenuationThresholds": [
+                42,
+                56
+              ]
+            }
+            """.trimIndent()
+)
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
@@ -82,59 +136,7 @@ class ExposureNotificationsRepositoryTest {
     @Test
     fun `processExposureKeySets processes exposure key sets`() = runBlocking {
         mockWebServer.enqueue(MockResponse().setBody("dummy_key_file"))
-        mockWebServer.enqueue(
-            MockResponse().setBody(
-                """
-                        {
-              "MinimumRiskScore": 1,
-              "AttenuationScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DaysSinceLastExposureScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DurationScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "TransmissionRiskScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DurationAtAttenuationThresholds": [
-                42,
-                56
-              ]
-            }
-            """.trimIndent()
-            )
-        )
+        mockWebServer.enqueue(MOCK_RISK_PARAMS_RESPONSE)
         mockWebServer.start()
         val context = ApplicationProvider.getApplicationContext<Application>()
         val service = CdnService.create(
@@ -191,59 +193,7 @@ class ExposureNotificationsRepositoryTest {
     @Test
     fun `processExposureKeySets processes only new exposure key sets`() = runBlocking {
         mockWebServer.enqueue(MockResponse().setBody("dummy_key_file"))
-        mockWebServer.enqueue(
-            MockResponse().setBody(
-                """
-                        {
-              "MinimumRiskScore": 1,
-              "AttenuationScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DaysSinceLastExposureScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DurationScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "TransmissionRiskScores": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-              ],
-              "DurationAtAttenuationThresholds": [
-                42,
-                56
-              ]
-            }
-            """.trimIndent()
-            )
-        )
+        mockWebServer.enqueue(MOCK_RISK_PARAMS_RESPONSE)
         mockWebServer.start()
         val context = ApplicationProvider.getApplicationContext<Application>()
         val service = CdnService.create(
@@ -451,13 +401,8 @@ class ExposureNotificationsRepositoryTest {
                         "/v1/exposurekeyset/test2" -> {
                             MockResponse().setBody("dummy_key_file")
                         }
-                        "/v1/riskcalculationparameters/config-params" -> {
-                            MockResponse().setBody(
-                                """
-                                {"MinimumRiskScore":1,"AttenuationScores":[1,2,3,4,5,6,7,8],"DaysSinceLastExposureScores":[1,2,3,4,5,6,7,8],"DurationScores":[1,2,3,4,5,6,7,8],"TransmissionRiskScores":[1,2,3,4,5,6,7,8],"DurationAtAttenuationThresholds":[42,56]}
-                                """.trimIndent()
-                            )
-                        }
+                        "/v1/riskcalculationparameters/config-params" -> MOCK_RISK_PARAMS_RESPONSE
+
                         else -> {
                             MockResponse().setResponseCode(404)
                         }
@@ -522,7 +467,7 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
-    fun `addExposure adds exposure`() = runBlocking {
+    fun `addExposure adds exposure and shows notification`() = runBlocking {
         val dateTime = "2020-06-20T10:15:30.00Z"
         val service = object : CdnService {
             override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
@@ -558,7 +503,11 @@ class ExposureNotificationsRepositoryTest {
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
+        val notificationManager = ApplicationProvider.getApplicationContext<Context>()
+            .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         repository.addExposure("sample-token")
+        assertNotNull(shadowOf(notificationManager).getNotification(0))
         assertEquals(
             LocalDate.of(2020, 6, 20).minusDays(4),
             repository.getLastExposureDate().filterNotNull().first()
@@ -822,6 +771,45 @@ class ExposureNotificationsRepositoryTest {
 
             assertEquals(0, shadowNotificationManager.size())
             assertTrue(result is ProcessManifestResult.Success)
+        }
+
+    @Test
+    fun `getLastExposureDate returns date added through addExposure and cancels notification`() =
+        runBlocking {
+            val dateTime = "2020-06-20T10:15:30.00Z"
+            val clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+
+            val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+                .getSharedPreferences("repository_test", 0)
+
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun getSummary(token: String) =
+                    if (token == "sample-token") ExposureSummary.ExposureSummaryBuilder()
+                        .setDaysSinceLastExposure(4)
+                        .setMatchedKeyCount(1).build()
+                    else null
+            }
+
+            val repository = ExposureNotificationsRepository(
+                ApplicationProvider.getApplicationContext(),
+                api,
+                mock(),
+                sharedPrefs,
+                fakeScheduler,
+                mock(),
+                clock
+            )
+
+            val notificationManager = ApplicationProvider.getApplicationContext<Context>()
+                .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            repository.addExposure("sample-token")
+            assertNotNull(shadowOf(notificationManager).getNotification(0))
+
+            val result = repository.getLastExposureDate().first()
+
+            assertEquals(LocalDate.now(clock).minusDays(4), result)
+            assertNull(shadowOf(notificationManager).getNotification(0))
         }
 
     @Test

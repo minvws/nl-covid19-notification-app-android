@@ -12,17 +12,19 @@ import androidx.work.Configuration
 import nl.rijksoverheid.en.job.EnWorkerFactory
 import timber.log.Timber
 
+@Suppress("ConstantConditionIf")
 class EnApplication : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.FEATURE_LOGGING) {
             Timber.plant(Timber.DebugTree())
+            Timber.plant(FileTree(getExternalFilesDir(null)))
         }
     }
 
     override fun getWorkManagerConfiguration(): Configuration {
         return Configuration.Builder().apply {
-            setMinimumLoggingLevel(if (BuildConfig.DEBUG) Log.DEBUG else Log.ERROR)
+            setMinimumLoggingLevel(if (BuildConfig.FEATURE_LOGGING) Log.DEBUG else Log.ERROR)
             setWorkerFactory(EnWorkerFactory())
         }.build()
     }

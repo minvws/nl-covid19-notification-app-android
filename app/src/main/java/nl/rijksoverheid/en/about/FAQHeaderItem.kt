@@ -12,7 +12,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemFaqHeaderBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 
-class FAQHeaderItem(@StringRes val text: Int) : BaseBindableItem<ItemFaqHeaderBinding>() {
+class FAQHeaderItem(@StringRes private val text: Int) : BaseBindableItem<ItemFaqHeaderBinding>() {
     override fun getLayout() = R.layout.item_faq_header
 
     override fun bind(viewBinding: ItemFaqHeaderBinding, position: Int) {
