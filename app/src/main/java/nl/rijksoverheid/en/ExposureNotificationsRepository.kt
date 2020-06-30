@@ -75,6 +75,7 @@ class ExposureNotificationsRepository(
     private val api: CdnService,
     private val preferences: SharedPreferences,
     private val manifestWorkerScheduler: ProcessManifestWorkerScheduler,
+    private val appLifecycleManager: AppLifecycleManager,
     private val clock: Clock = Clock.systemDefaultZone()
 ) {
 
@@ -318,6 +319,8 @@ class ExposureNotificationsRepository(
                 }
 
                 val config = api.getAppConfig(manifest.appConfigId)
+
+                appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode)
 
                 if (keysSuccessful) {
                     preferences.edit {

@@ -36,6 +36,10 @@
     <string name="notification_channel_description">Meldingen over mogelijke blootstellingen aan COVID-19</string>
     <string name="notification_title">Mogelijke blootstelling aan COVID-19</string>
     <string name="notification_message">U bent in de buurt geweest bij iemand met COVID-19</string>
+    <string name="update_channel_name">App updates</string>
+    <string name="update_channel_description">Meldingen als de app versie te oud is</string>
+    <string name="update_notification_title">De notificatie app heeft een update nodig</string>
+    <string name="update_notification_message">Uw versie heeft een verminderde werking. We vragen u zo snel mogelijk te updaten om de werking te garanderen.</string>
     <string name="post_notification_toolbar_title">Kans op besmetting</string>
     <string name="generic_notification_toolbar_title">Melding gekregen</string>
     <string name="post_notification_header_1">Je bent in de buurt geweest van iemand met het coronavirus [DIT IS EEN TEST BERICHT]</string>
