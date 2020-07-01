@@ -35,7 +35,8 @@ class PostNotificationFragment(
 
         val daysSince = Period.between(exposureDate, LocalDate.now(clock)).days
         val daysSinceString =
-            requireContext().resources.getQuantityString(R.plurals.days, daysSince, daysSince)
+            if (daysSince == 0) requireContext().resources.getString(R.string.today) else
+                requireContext().resources.getQuantityString(R.plurals.days, daysSince, daysSince)
 
         val phoneNumber = getString(R.string.phone_number)
         adapter.add(

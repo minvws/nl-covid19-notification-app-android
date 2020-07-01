@@ -443,11 +443,12 @@ class ExposureNotificationsRepository(
             .createPendingIntent()
         val message = context.getString(
             R.string.notification_message,
-            context.resources.getQuantityString(
-                R.plurals.days,
-                daysSinceLastExposure,
-                daysSinceLastExposure
-            )
+            if (daysSinceLastExposure == 0) context.resources.getString(R.string.today) else
+                context.resources.getQuantityString(
+                    R.plurals.days,
+                    daysSinceLastExposure,
+                    daysSinceLastExposure
+                )
         )
         val builder =
             NotificationCompat.Builder(context, "exposure_notifications")

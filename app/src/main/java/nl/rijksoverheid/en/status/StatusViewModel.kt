@@ -85,7 +85,8 @@ class StatusViewModel(
         is HeaderViewState.Exposed -> {
             val daysSince = Period.between(state.date, LocalDate.now(clock)).days
             val daysSinceString =
-                context.resources.getQuantityString(R.plurals.days, daysSince, daysSince)
+                if (daysSince == 0) context.resources.getString(R.string.today) else
+                    context.resources.getQuantityString(R.plurals.days, daysSince, daysSince)
             context.getString(
                 R.string.status_exposure_detected_description,
                 daysSinceString,
