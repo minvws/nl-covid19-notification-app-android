@@ -19,7 +19,8 @@ android {
 
         buildConfigField "String", "CDN_BASE_URL", "\"${cdnEndpoint}\""
         buildConfigField "String", "API_BASE_URL", "\"${apiEndpoint}\""
-        buildConfigField "String", "CDN_RESPONSE_MIME_TYPE", "\"application/zip\""
+        buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "true"
+        buildConfigField "boolean", "FEATURE_ACCEPT_HEADER", "false"
     }
 
     testOptions {
@@ -38,12 +39,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            // TODO remove once request signing is in place
-            buildConfigField "String", "CDN_RESPONSE_MIME_TYPE", "\"application/json\""
         }
 
         debug {
-           buildConfigField "String", "CDN_RESPONSE_MIME_TYPE", "\"application/json\""
+            buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "true"
+            buildConfigField "boolean", "FEATURE_ACCEPT_HEADER", "true"
         }
     }
 }
@@ -64,6 +64,7 @@ dependencies {
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.2'
 
     implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation project(":signing")
 
     testImplementation 'junit:junit:4.13'
     testImplementation 'org.robolectric:robolectric:4.3.1'

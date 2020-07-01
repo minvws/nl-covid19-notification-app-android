@@ -26,15 +26,15 @@ interface CdnService {
     suspend fun getExposureKeySetFile(@Path("id") id: String): Response<ResponseBody>
 
     @GET("v1/manifest")
-    @Accept(mimeType = BuildConfig.CDN_RESPONSE_MIME_TYPE)
+    @SignedResponse
     suspend fun getManifest(): Manifest
 
     @GET("v1/riskcalculationparameters/{id}")
-    @Accept(mimeType = BuildConfig.CDN_RESPONSE_MIME_TYPE)
+    @SignedResponse
     suspend fun getRiskCalculationParameters(@Path("id") id: String): RiskCalculationParameters
 
     @GET("v1/appconfig/{id}")
-    @Accept(mimeType = BuildConfig.CDN_RESPONSE_MIME_TYPE)
+    @SignedResponse
     suspend fun getAppConfig(@Path("id") id: String): AppConfig
 
     companion object {

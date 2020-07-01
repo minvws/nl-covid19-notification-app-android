@@ -31,6 +31,7 @@ import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
+import okio.Buffer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -161,7 +162,13 @@ class ExposureNotificationsRepositoryTest {
         val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
             .getSharedPreferences("repository_test", 0)
         val repository = ExposureNotificationsRepository(
-            context, api, service, sharedPrefs, fakeScheduler, mock()
+            ApplicationProvider.getApplicationContext(),
+            api,
+            service,
+            sharedPrefs,
+            fakeScheduler,
+            mock(),
+            signatureValidation = false
         )
 
         val result =
@@ -221,7 +228,13 @@ class ExposureNotificationsRepositoryTest {
         }
 
         val repository = ExposureNotificationsRepository(
-            context, api, service, sharedPrefs, fakeScheduler, mock()
+            ApplicationProvider.getApplicationContext(),
+            api,
+            service,
+            sharedPrefs,
+            fakeScheduler,
+            mock(),
+            signatureValidation = false
         )
 
         val result = repository.processExposureKeySets(
@@ -389,6 +402,124 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
+    fun `processExposureKeySets file without signature marked as processed and skipped`() =
+        runBlocking {
+            mockWebServer.enqueue(
+                MockResponse().setBody(
+                    Buffer().readFrom(
+                        ExposureNotificationsRepositoryTest::class.java.getResourceAsStream("/export-no-sig.zip")!!
+                    )
+                )
+            )
+            mockWebServer.start()
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val service = CdnService.create(
+                context,
+                OkHttpClient(),
+                mockWebServer.url("/").toString()
+            )
+
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun provideDiagnosisKeys(
+                    files: List<File>,
+                    configuration: ExposureConfiguration,
+                    token: String
+                ): DiagnosisKeysResult {
+                    throw java.lang.AssertionError("Should not be processed")
+                }
+            }
+
+            val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+                .getSharedPreferences("repository_test", 0)
+
+            val repository = ExposureNotificationsRepository(
+                ApplicationProvider.getApplicationContext(),
+                api,
+                service,
+                sharedPrefs,
+                fakeScheduler,
+                mock(),
+                signatureValidation = true
+            )
+
+            val result =
+                repository.processExposureKeySets(
+                    Manifest(
+                        listOf("test"),
+                        "",
+                        "config-params",
+                        "appConfigId"
+                    )
+                )
+
+            assertEquals(ProcessExposureKeysResult.Success, result)
+            assertEquals(1, mockWebServer.requestCount)
+            assertEquals(
+                setOf("test"),
+                sharedPrefs.getStringSet("exposure_key_sets", emptySet())
+            )
+        }
+
+    @Test
+    fun `processExposureKeySets file with incorrect signature marked as processed and skipped`() =
+        runBlocking {
+            mockWebServer.enqueue(
+                MockResponse().setBody(
+                    Buffer().readFrom(
+                        ExposureNotificationsRepositoryTest::class.java.getResourceAsStream("/export-incorrect-sig.zip")!!
+                    )
+                )
+            )
+            mockWebServer.start()
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val service = CdnService.create(
+                context,
+                OkHttpClient(),
+                mockWebServer.url("/").toString()
+            )
+
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun provideDiagnosisKeys(
+                    files: List<File>,
+                    configuration: ExposureConfiguration,
+                    token: String
+                ): DiagnosisKeysResult {
+                    throw java.lang.AssertionError("Should not be processed")
+                }
+            }
+
+            val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+                .getSharedPreferences("repository_test", 0)
+
+            val repository = ExposureNotificationsRepository(
+                ApplicationProvider.getApplicationContext(),
+                api,
+                service,
+                sharedPrefs,
+                fakeScheduler,
+                mock(),
+                signatureValidation = true
+            )
+
+            val result =
+                repository.processExposureKeySets(
+                    Manifest(
+                        listOf("test"),
+                        "",
+                        "config-params",
+                        "appConfigId"
+                    )
+                )
+
+            assertEquals(ProcessExposureKeysResult.Success, result)
+            assertEquals(1, mockWebServer.requestCount)
+            assertEquals(
+                setOf("test"),
+                sharedPrefs.getStringSet("exposure_key_sets", emptySet())
+            )
+        }
+
+    @Test
     fun `processExposureKeySets failing to download some files processes files and returns error`() =
         runBlocking {
             // use dispatcher since the key files are fetched in parallel
@@ -435,7 +566,13 @@ class ExposureNotificationsRepositoryTest {
                 .getSharedPreferences("repository_test", 0)
 
             val repository = ExposureNotificationsRepository(
-                context, api, service, sharedPrefs, fakeScheduler, mock()
+                ApplicationProvider.getApplicationContext(),
+                api,
+                service,
+                sharedPrefs,
+                fakeScheduler,
+                mock(),
+                signatureValidation = false
             )
 
             val result = repository.processExposureKeySets(
@@ -918,11 +1055,12 @@ class ExposureNotificationsRepositoryTest {
             mock(),
             fakeScheduler,
             mock(),
-            Clock.systemUTC()
+            Clock.systemUTC(),
+            signatureValidation = false
         )
 
         ZipInputStream(FileInputStream(input)).use {
-            repository.validateAndWrite(it, output)
+            repository.validateAndWrite("id", it, output)
         }
 
         val entries = mutableListOf<String>()

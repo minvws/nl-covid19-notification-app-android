@@ -19,6 +19,7 @@ class EnApplication : Application(), Configuration.Provider {
         if (BuildConfig.FEATURE_LOGGING) {
             Timber.plant(Timber.DebugTree())
             Timber.plant(FileTree(getExternalFilesDir(null)))
+            Timber.d("onCreate")
         }
     }
 

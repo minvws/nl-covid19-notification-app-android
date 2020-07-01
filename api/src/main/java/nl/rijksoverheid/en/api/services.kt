@@ -25,6 +25,7 @@ internal fun createOkHttpClient(context: Context): OkHttpClient {
         // enable cache for config and resource bundles
         .cache(Cache(File(context.cacheDir, "http"), 32 * 1024 * 1024))
         .apply {
+            addNetworkInterceptor(SignedResponseInterceptor())
             addInterceptor(AcceptHeaderInterceptor())
             addInterceptor(SignedBodyInterceptor())
             if (Timber.forest().isNotEmpty()) {
