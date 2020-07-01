@@ -15,7 +15,7 @@
     <string name="onboarding_example_1_description">Het Bluetooth-signaal was sterk genoeg omdat jullie dicht bij elkaar waren. Dit duurde alleen zo kort dat de kans op besmetting heel laag is.</string>
     <string name="onboarding_example_2_headline">Zat je dicht bij iemand in de trein? Dan kun je later <u>wel</u> een melding krijgen</string>
     <string name="onboarding_example_2_description">Het Bluetooth-signaal was sterk genoeg en jullie waren langere tijd dicht bij elkaar in de buurt.</string>
-    <string name="onboarding_consent_headline">Melding over mogelijk contact met het coronavirus aanzetten</string>
+    <string name="onboarding_consent_headline">Meldingen over mogelijk contact met het coronavirus aanzetten</string>
     <string name="onboarding_consent_check_1">Je Bluetooth-gegevens worden 14 dagen op je telefoon bewaard. Je kunt ze altijd zelf verwijderen.</string>
     <string name="onboarding_consent_check_2"><![CDATA[Je naam en andere persoonsgegevens worden <strong>niet</strong> gebruikt of bewaard.]]></string>
     <string name="onboarding_consent_check_3"><![CDATA[Je gps-locatiegegevens worden <strong>niet</strong> gebruikt of bewaard.]]></string>
@@ -25,7 +25,7 @@
     <string name="onboarding_how_it_works_toolbar_title">Hoe werkt de app?</string>
     <string name="onboarding_how_it_works_request_consent">App aanzetten</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Veelgestelde vraag</string>
-    <string name="status_test_version">Dit is een test versie</string>
+    <string name="status_test_version">Dit is een testversie</string>
     <string name="status_no_exposure_detected_headline">De app is actief</string>
     <string name="status_no_exposure_detected_description">Ook als je de app sluit, blijft %1$s actief</string>
     <string name="status_exposure_detected_headline">Je bent in de buurt geweest van iemand met het virus</string>
@@ -51,7 +51,7 @@
     <string name="treat_perspective_list_2"><![CDATA[<ul><li>(licht) hoesten</li><li>loopneus, niezen, keelpijn</li><li>verlies van geur en/of smaak</li><li>kortademigheid/benauwdheid</li><li>koorts boven de 38 graden</li></ul>]]></string>
     <string name="treat_perspective_paragraph_3">Heb je klachten? Blijf dan zoveel mogelijk thuis. Zijn het ernstige klachten? Ga naar thuisarts.nl/corona of bel je huisarts.</string>
     <string name="post_notification_header_6">Doe een coronatest</string>
-    <string name="post_notification_paragraph_7" tools:ignore="Typos">Als je een melding krijgt, raadt de GGD aan je te laten testen op het virus. Ook als je je nog niet ziek voelt. Want zonder je ziek te voelen kun je het virus al verspreiden en zo anderen besmetten.</string>
+    <string name="post_notification_paragraph_7" tools:ignore="Typos">Heb je klachten? Doe dan een coronatest.</string>
     <string name="post_notification_paragraph_8">"Testen is gratis. Het duurt niet lang en kan meestal snel gebeuren. De uitslag is binnen 48 uur bekend. Blijf in die tijd zo veel mogelijk thuis. "</string>
     <string name="post_notification_paragraph_9">Bel gratis %1$s om een coranatest aan te vragen.</string>
     <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart</string>
@@ -112,7 +112,7 @@
     <string name="lab_test_token_4_loading">Wachtwoord aan het ophalen</string>
     <string name="lab_test_token_4_error">De app kon geen tijdelijk wachtwoord ophalen. Controleer je internetverbinding.</string>
     <string name="lab_test_token_4_retry">Probeer opnieuw</string>
-    <string name="lab_test_header_5">2. Upload je codes van de afgelopen 14 dagen</string>
+    <string name="lab_test_header_5">2. Deel je codes van de afgelopen 14 dagen</string>
     <string name="lab_test_paragraph_6">De mensen met de app waarbij je, op de dagen dat je besmettelijk was, in de buurt bent geweest krijgen een melding. Ze weten niet dat deze melding van jou komt.</string>
     <string name="lab_test_button">Codes delen</string>
     <string name="lab_test_done_toolbar_title">Bedankt</string>
