@@ -4,7 +4,7 @@ apply plugin: "kotlin-kapt"
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: "com.github.triplet.play"
 
-version = "0.3.1"
+version = "0.3.2"
 archivesBaseName = "covid-notificatie"
 def buildVersionCode = System.getenv("APPCENTER_BUILD_ID") != null ? System.getenv("APPCENTER_BUILD_ID").toInteger() : 1
 

@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
@@ -164,12 +165,14 @@ class StatusViewModel(
     }
 
     sealed class HeaderViewState(
+        @DrawableRes val background: Int,
         @RawRes val icon: Int,
         @StringRes val headline: Int,
         @StringRes val primaryAction: Int?,
         @StringRes val secondaryAction: Int?
     ) {
         object Active : HeaderViewState(
+            R.drawable.gradient_status_no_exposure,
             R.raw.status_active,
             R.string.status_no_exposure_detected_headline,
             null,
@@ -177,6 +180,7 @@ class StatusViewModel(
         )
 
         data class Exposed(val date: LocalDate) : HeaderViewState(
+            R.drawable.gradient_status_exposure,
             R.raw.status_exposed,
             R.string.status_exposure_detected_headline,
             R.string.status_exposure_what_next,
@@ -184,6 +188,7 @@ class StatusViewModel(
         )
 
         object Disabled : HeaderViewState(
+            R.drawable.gradient_status_disabled,
             R.raw.status_inactive,
             R.string.status_disabled_headline,
             R.string.status_en_api_disabled_enable,

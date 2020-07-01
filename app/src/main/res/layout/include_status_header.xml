@@ -22,6 +22,16 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:importantForAccessibility="no"
+            app:imageResource="@{viewModel.headerViewState.background}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
             android:id="@+id/clouds"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,6 +39,7 @@
             android:adjustViewBounds="true"
             android:importantForAccessibility="no"
             android:src="@drawable/illustration_clouds"
+            android:tint="?attr/colorSurface"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -139,7 +150,6 @@
                 android:onClick="@{() -> viewModel.onSecondaryActionClicked(viewModel.headerViewState)}"
                 app:showIfLabelSet="@{viewModel.HeaderViewState.secondaryAction}"
                 tools:text="@string/status_reset_exposure" />
-
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

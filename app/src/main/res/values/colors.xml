@@ -3,6 +3,7 @@
     <color name="color_primary">@color/dark_blue</color>
     <color name="color_secondary">@color/gray_lighter</color>
     <color name="color_secondary_variant">@color/gray_light</color>
+    <color name="color_control_highlight">#240047FF</color>
     <color name="notification_status_active">@color/green</color>
     <color name="notification_status_exposed">@color/red</color>
     <color name="onboarding_example_header">@color/pink</color>
