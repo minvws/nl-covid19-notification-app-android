@@ -31,8 +31,11 @@ import java.security.cert.X509Certificate
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
+// The publicly known default SubjectKeyIdentifier for the root CA, retrieved from the device trust store
 private val DEFAULT_ANCHOR_SUBJECT_KEY_IDENTIFIER =
     SubjectKeyIdentifier(Hex.decode("041454adfac79257aeca359c2e12fbe4ba5d20dc9457"))
+
+// The publicly known default AuthorityKeyIdentifier for the issuer that issued the signing certificate
 private val DEFAULT_AUTHORITY_KEY_IDENTIFIER =
     Hex.decode("30168014b7e9d0e9ff670ed99c0c072e97d47e4b7978f420")
 
@@ -66,7 +69,7 @@ class ResponseSignatureValidator(
 
     private fun ensureProviderInstalled() {
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
-            Security.insertProviderAt(BouncyCastleProvider(), 1)
+            Security.addProvider(BouncyCastleProvider())
         }
     }
 
@@ -116,7 +119,10 @@ class ResponseSignatureValidator(
         val pathBuilder: CertPathBuilder =
             CertPathBuilder.getInstance("PKIX", BouncyCastleProvider.PROVIDER_NAME)
         val targetConstraints = X509CertSelector()
-        // criteria to target the certificate to build the path to
+
+        // criteria to target the certificate to build the path to:
+        // must match the signing certificate that we pass in, and the
+        // signing certificate must have the correct authority key identifier
         targetConstraints.setIssuer(signerId.issuer.encoded)
         targetConstraints.serialNumber = signerId.serialNumber
         targetConstraints.authorityKeyIdentifier = authorityKeyIdentifier
