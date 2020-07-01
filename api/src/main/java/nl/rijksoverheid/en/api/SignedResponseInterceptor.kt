@@ -78,7 +78,8 @@ class SignedResponseInterceptor : Interceptor {
                 .body(content.readByteArray().toResponseBody("application/json".toMediaType()))
                 .build()
         } catch (ex: SignatureValidationException) {
-            Response.Builder().code(500).message("Signature failed to validate").build()
+            response.newBuilder().body("Signature failed to validate".toResponseBody()).code(500)
+                .message("Signature failed to validate").build()
         }
     }
 }
