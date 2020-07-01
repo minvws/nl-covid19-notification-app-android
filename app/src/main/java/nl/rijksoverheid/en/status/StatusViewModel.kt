@@ -26,11 +26,10 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.lifecyle.Event
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
+import nl.rijksoverheid.en.util.formatDaysSince
+import nl.rijksoverheid.en.util.formatExposureDate
 import java.time.Clock
 import java.time.LocalDate
-import java.time.Period
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
@@ -83,16 +82,11 @@ class StatusViewModel(
         HeaderViewState.Active -> context.getString(
             R.string.status_no_exposure_detected_description, context.getString(R.string.app_name)
         )
-        is HeaderViewState.Exposed -> {
-            val daysSince = Period.between(state.date, LocalDate.now(clock)).days
-            val daysSinceString =
-                context.resources.getQuantityString(R.plurals.days, daysSince, daysSince)
-            context.getString(
-                R.string.status_exposure_detected_description,
-                daysSinceString,
-                state.date.formatExposureDate(context)
-            )
-        }
+        is HeaderViewState.Exposed -> context.getString(
+            R.string.status_exposure_detected_description,
+            state.date.formatDaysSince(context, clock),
+            state.date.formatExposureDate(context)
+        )
         HeaderViewState.Disabled -> context.getString(
             R.string.status_en_api_disabled_description, context.getString(R.string.app_name)
         )
@@ -207,8 +201,3 @@ private fun <T> LiveData<T>.startWith(value: T): LiveData<T> {
     }
     return mediator
 }
-
-fun LocalDate.formatExposureDate(context: Context): String = DateTimeFormatter.ofPattern(
-    context.getString(R.string.exposure_date_format),
-    Locale(context.getString(R.string.app_language))
-).format(this)
