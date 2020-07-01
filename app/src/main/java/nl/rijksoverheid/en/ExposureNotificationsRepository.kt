@@ -43,9 +43,9 @@ import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
-import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
+import nl.rijksoverheid.en.util.formatDaysSince
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
 import retrofit2.HttpException
@@ -350,6 +350,12 @@ class ExposureNotificationsRepository(
 
     suspend fun processManifest(): ProcessManifestResult {
         return withContext(Dispatchers.IO) {
+            if (exposureNotificationsApi.getStatus() == StatusResult.Disabled) {
+                Timber.w("Exposure notifications are disabled")
+                // go through the steps as if the user disabled through the app
+                requestDisableNotifications()
+                return@withContext ProcessManifestResult.Disabled
+            }
             try {
                 val manifest = api.getManifest()
                 val keysSuccessful = if (getStatus() == StatusResult.Enabled) {
@@ -535,5 +541,6 @@ sealed class ProcessExposureKeysResult {
 
 sealed class ProcessManifestResult {
     data class Success(val nextIntervalMinutes: Int) : ProcessManifestResult()
+    object Disabled : ProcessManifestResult()
     object Error : ProcessManifestResult()
 }

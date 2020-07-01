@@ -23,6 +23,8 @@ import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
+import nl.rijksoverheid.en.enapi.DisableNotificationsResult
+import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.OkHttpClient
@@ -744,7 +746,9 @@ class ExposureNotificationsRepositoryTest {
 
             val repository = ExposureNotificationsRepository(
                 context,
-                object : FakeExposureNotificationApi() {},
+                object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                },
                 fakeService,
                 sharedPrefs,
                 fakeScheduler,
@@ -787,7 +791,9 @@ class ExposureNotificationsRepositoryTest {
 
             val repository = ExposureNotificationsRepository(
                 ApplicationProvider.getApplicationContext(),
-                object : FakeExposureNotificationApi() {},
+                object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                },
                 fakeService,
                 sharedPrefs,
                 fakeScheduler,
@@ -830,7 +836,9 @@ class ExposureNotificationsRepositoryTest {
 
             val repository = ExposureNotificationsRepository(
                 context,
-                object : FakeExposureNotificationApi() {},
+                object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                },
                 fakeService,
                 sharedPrefs,
                 fakeScheduler,
@@ -873,7 +881,9 @@ class ExposureNotificationsRepositoryTest {
 
             val repository = ExposureNotificationsRepository(
                 context,
-                object : FakeExposureNotificationApi() {},
+                object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                },
                 fakeService,
                 sharedPrefs,
                 fakeScheduler,
@@ -889,6 +899,57 @@ class ExposureNotificationsRepositoryTest {
 
             assertEquals(0, shadowNotificationManager.size())
             assertTrue(result is ProcessManifestResult.Success)
+        }
+
+    @Test
+    fun `processManifest with disabled exposure notifications cancels job`() =
+        runBlocking {
+            val dateTime = "2020-06-20T10:15:30.00Z"
+            val fakeService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(): Manifest = throw IllegalStateException()
+
+                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(id: String): AppConfig =
+                    throw NotImplementedError()
+            }
+
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+
+            val cancelled = AtomicBoolean(false)
+
+            val repository = ExposureNotificationsRepository(
+                context,
+                object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Disabled
+                    override suspend fun disableNotifications(): DisableNotificationsResult =
+                        DisableNotificationsResult.Disabled
+                },
+                fakeService,
+                sharedPrefs,
+                object : ProcessManifestWorkerScheduler {
+                    override fun schedule(intervalMinutes: Int) {
+                        throw IllegalStateException()
+                    }
+
+                    override fun cancel() {
+                        cancelled.set(true)
+                    }
+                },
+                mock(),
+                Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            )
+
+            val result = repository.processManifest()
+            assertTrue(result is ProcessManifestResult.Disabled)
+            assertTrue(cancelled.get())
         }
 
     @Test
