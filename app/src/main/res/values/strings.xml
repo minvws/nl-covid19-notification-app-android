@@ -122,6 +122,7 @@
     <string name="update_google_play_services_headline">Je Google Play Services is niet bijgewerkt</string>
     <string name="update_google_play_services_description">%1$s heeft de nieuwste versie van Google Play Services nodig om goed te blijven werken op je telefoon.</string>
     <string name="error_api_not_available">Er kan op dit moment niet gescand worden. Probeer het later nog eens.</string>
+    <string name="error_upload_not_available">Om te kunnen delen moet je de noodzakelijke instellingen aan hebben staan.</string>
     <plurals name="days">
         <item quantity="zero">vandaag</item>
         <item quantity="one">%d dag</item>

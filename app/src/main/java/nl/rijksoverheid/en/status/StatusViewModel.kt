@@ -40,7 +40,7 @@ class StatusViewModel(
 
     private val refreshStatus = MutableLiveData(Unit)
 
-    val requestEnableNotifications: LiveData<Event<Unit>> = MutableLiveData()
+    val requestReEnableNotifications: LiveData<Event<Unit>> = MutableLiveData()
     val confirmRemoveExposedMessage: LiveData<Event<Unit>> = MutableLiveData()
     val navigateToPostNotification: LiveData<Event<LocalDate>> = MutableLiveData()
 
@@ -132,9 +132,7 @@ class StatusViewModel(
                 (navigateToPostNotification as MutableLiveData).value = Event(state.date)
             HeaderViewState.Disabled -> {
                 viewModelScope.launch {
-                    // make sure everything is disabled, then send an event to enable again
-                    notificationsRepository.requestDisableNotifications()
-                    (requestEnableNotifications as MutableLiveData).value = Event(Unit)
+                    (requestReEnableNotifications as MutableLiveData).value = Event(Unit)
                 }
             }
         }
@@ -151,9 +149,7 @@ class StatusViewModel(
         when (state) {
             is ErrorViewState.ConsentRequired -> {
                 viewModelScope.launch {
-                    // make sure everything is disabled, then send an event to enable again
-                    notificationsRepository.requestDisableNotifications()
-                    (requestEnableNotifications as MutableLiveData).value = Event(Unit)
+                    (requestReEnableNotifications as MutableLiveData).value = Event(Unit)
                 }
             }
         }

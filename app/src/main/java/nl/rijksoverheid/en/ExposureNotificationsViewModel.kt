@@ -24,11 +24,7 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
         MutableLiveData(NotificationsState.Enabled)
     val notificationsResult: LiveData<Event<NotificationsStatusResult>> = MutableLiveData()
 
-    init {
-        refreshStatus()
-    }
-
-    private fun refreshStatus() {
+    fun refreshStatus() {
         viewModelScope.launch {
             when (val result = repository.getStatus()) {
                 is StatusResult.Enabled -> updateState(NotificationsState.Enabled)
@@ -69,6 +65,13 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
                     )
                 )
             }
+        }
+    }
+
+    fun requestReEnableNotifications() {
+        viewModelScope.launch {
+            repository.requestDisableNotifications()
+            requestEnableNotifications()
         }
     }
 

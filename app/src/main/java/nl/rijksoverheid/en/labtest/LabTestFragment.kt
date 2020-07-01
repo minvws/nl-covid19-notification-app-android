@@ -11,12 +11,14 @@ import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
+import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
@@ -25,8 +27,13 @@ import timber.log.Timber
 private const val RC_REQUEST_UPLOAD_CONSENT = 1
 
 class LabTestFragment : BaseFragment(R.layout.fragment_list) {
-    private val viewModel: LabTestViewModel by viewModels()
-    private val section = LabTestSection({ viewModel.retry() }, { viewModel.upload() })
+    private val labViewModel: LabTestViewModel by viewModels()
+    private val viewModel: ExposureNotificationsViewModel by activityViewModels()
+    private val section = LabTestSection(
+        retry = { labViewModel.retry() },
+        upload = { labViewModel.upload() },
+        requestConsent = { viewModel.requestReEnableNotifications() }
+    )
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,9 +48,10 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
         }
         binding.content.adapter = adapter
 
-        viewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }
+        labViewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }
+        viewModel.notificationState.observe(viewLifecycleOwner) { state -> section.update(state) }
 
-        viewModel.uploadDiagnosisKeysResult.observe(viewLifecycleOwner, EventObserver {
+        labViewModel.uploadDiagnosisKeysResult.observe(viewLifecycleOwner, EventObserver {
             when (it) {
                 is LabTestRepository.RequestUploadDiagnosisKeysResult.RequireConsent -> requestConsent(
                     it.resolution.intentSender
@@ -58,7 +66,7 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
 
     override fun onStart() {
         super.onStart()
-        viewModel.retry()
+        labViewModel.retry()
     }
 
     private fun requestConsent(intentSender: IntentSender) {
@@ -75,7 +83,7 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_REQUEST_UPLOAD_CONSENT && resultCode == Activity.RESULT_OK) {
-            viewModel.upload()
+            labViewModel.upload()
             findNavController().navigate(R.id.action_lab_test_done)
         }
     }
