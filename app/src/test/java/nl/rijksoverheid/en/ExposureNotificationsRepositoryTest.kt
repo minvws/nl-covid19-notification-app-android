@@ -438,6 +438,7 @@ class ExposureNotificationsRepositoryTest {
                 service,
                 sharedPrefs,
                 fakeScheduler,
+                mock(),
                 signatureValidation = true
             )
 
@@ -496,6 +497,7 @@ class ExposureNotificationsRepositoryTest {
                 service,
                 sharedPrefs,
                 fakeScheduler,
+                mock(),
                 signatureValidation = true
             )
 
@@ -1053,7 +1055,8 @@ class ExposureNotificationsRepositoryTest {
             mock(),
             fakeScheduler,
             mock(),
-            Clock.systemUTC()
+            Clock.systemUTC(),
+            signatureValidation = false
         )
 
         ZipInputStream(FileInputStream(input)).use {
