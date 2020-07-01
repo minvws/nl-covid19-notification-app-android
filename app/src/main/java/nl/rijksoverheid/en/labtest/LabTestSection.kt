@@ -9,6 +9,10 @@ package nl.rijksoverheid.en.labtest
 import com.xwray.groupie.Group
 import com.xwray.groupie.Section
 import nl.rijksoverheid.en.ExposureNotificationsViewModel.NotificationsState
+import nl.rijksoverheid.en.ExposureNotificationsViewModel.NotificationsState.Disabled
+import nl.rijksoverheid.en.ExposureNotificationsViewModel.NotificationsState.Enabled
+import nl.rijksoverheid.en.ExposureNotificationsViewModel.NotificationsState.InvalidPreconditions
+import nl.rijksoverheid.en.ExposureNotificationsViewModel.NotificationsState.Unavailable
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.items.ButtonItem
 import nl.rijksoverheid.en.items.ErrorBoxItem
@@ -22,9 +26,9 @@ class LabTestSection(
     private val upload: () -> Unit,
     private val requestConsent: () -> Unit
 ) : Section() {
-    var keyState: KeyState = KeyState.Loading
-    var notificationsState: NotificationsState =
-        NotificationsState.Enabled
+    private var keyState: KeyState = KeyState.Loading
+    private var notificationsState: NotificationsState =
+        Enabled
 
     fun update(keyState: KeyState) {
         this.keyState = keyState
@@ -49,10 +53,11 @@ class LabTestSection(
                 ButtonItem(
                     text = R.string.lab_test_button,
                     buttonClickListener = upload,
-                    enabled = keyState is KeyState.Success && notificationsState is NotificationsState.Enabled
+                    enabled = keyState is KeyState.Success &&
+                        (notificationsState is Enabled || notificationsState is InvalidPreconditions)
                 )
             ).apply {
-                if (notificationsState !is NotificationsState.Enabled) {
+                if (notificationsState is Disabled || notificationsState is Unavailable) {
                     add(
                         7,
                         ErrorBoxItem(

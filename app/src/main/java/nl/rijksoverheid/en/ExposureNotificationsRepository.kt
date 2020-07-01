@@ -43,9 +43,9 @@ import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
-import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
+import nl.rijksoverheid.en.util.formatDaysSince
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
 import retrofit2.HttpException
@@ -123,7 +123,7 @@ class ExposureNotificationsRepository(
             if (isBluetoothEnabled() && isLocationEnabled()) {
                 StatusResult.Enabled
             } else {
-                StatusResult.Disabled
+                StatusResult.InvalidPreconditions
             }
         } else {
             result
