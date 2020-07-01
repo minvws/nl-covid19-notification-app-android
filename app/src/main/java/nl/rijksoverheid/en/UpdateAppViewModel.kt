@@ -18,15 +18,7 @@ class UpdateAppViewModel(private val appLifecycleManager: AppLifecycleManager) :
     val updateEvent: LiveData<Event<AppLifecycleManager.UpdateState.NeedsUpdate>> =
         MutableLiveData()
 
-    init {
-        checkForForcedAppUpdate()
-    }
-
-    fun verifyDownloadNotStalled() {
-        checkForForcedAppUpdate()
-    }
-
-    private fun checkForForcedAppUpdate() {
+    fun checkForForcedAppUpdate() {
         viewModelScope.launch {
             when (val result = appLifecycleManager.getUpdateState()) {
                 is AppLifecycleManager.UpdateState.NeedsUpdate -> {

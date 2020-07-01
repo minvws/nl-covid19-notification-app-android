@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        updateAppViewModel.verifyDownloadNotStalled()
+        updateAppViewModel.checkForForcedAppUpdate()
     }
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {
