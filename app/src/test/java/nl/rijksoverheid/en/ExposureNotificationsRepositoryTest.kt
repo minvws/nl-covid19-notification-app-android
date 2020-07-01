@@ -765,7 +765,9 @@ class ExposureNotificationsRepositoryTest {
 
             val repository = ExposureNotificationsRepository(
                 context,
-                object : FakeExposureNotificationApi() {},
+                object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                },
                 fakeService,
                 sharedPrefs,
                 fakeScheduler,
@@ -808,7 +810,9 @@ class ExposureNotificationsRepositoryTest {
 
             val repository = ExposureNotificationsRepository(
                 ApplicationProvider.getApplicationContext(),
-                object : FakeExposureNotificationApi() {},
+                object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                },
                 fakeService,
                 sharedPrefs,
                 fakeScheduler,
@@ -851,7 +855,9 @@ class ExposureNotificationsRepositoryTest {
 
             val repository = ExposureNotificationsRepository(
                 context,
-                object : FakeExposureNotificationApi() {},
+                object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                },
                 fakeService,
                 sharedPrefs,
                 fakeScheduler,
@@ -894,7 +900,9 @@ class ExposureNotificationsRepositoryTest {
 
             val repository = ExposureNotificationsRepository(
                 context,
-                object : FakeExposureNotificationApi() {},
+                object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                },
                 fakeService,
                 sharedPrefs,
                 fakeScheduler,
