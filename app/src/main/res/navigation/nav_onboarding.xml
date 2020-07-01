@@ -30,6 +30,10 @@
             android:name="illustration"
             android:defaultValue="@drawable/illustration_explanation_step_1"
             app:argType="reference" />
+        <argument
+            android:name="animation"
+            android:defaultValue="0"
+            app:argType="reference" />
         <action
             android:id="@+id/action_next"
             app:destination="@id/explanationStep2" />
@@ -59,6 +63,10 @@
         <argument
             android:name="illustration"
             android:defaultValue="@drawable/illustration_explanation_step_2"
+            app:argType="reference" />
+        <argument
+            android:name="animation"
+            android:defaultValue="@raw/onboarding_explanation_2"
             app:argType="reference" />
         <action
             android:id="@id/action_next"
@@ -90,6 +98,10 @@
             android:name="illustration"
             android:defaultValue="@drawable/illustration_explanation_step_3"
             app:argType="reference" />
+        <argument
+            android:name="animation"
+            android:defaultValue="@raw/onboarding_explanation_3"
+            app:argType="reference" />
         <action
             android:id="@id/action_next"
             app:destination="@id/explanationExample1" />
@@ -120,6 +132,10 @@
             android:name="illustration"
             android:defaultValue="@drawable/illustration_explanation_example_1"
             app:argType="reference" />
+        <argument
+            android:name="animation"
+            android:defaultValue="@raw/onboarding_example_1"
+            app:argType="reference" />
         <action
             android:id="@id/action_next"
             app:destination="@id/explanationExample2" />
@@ -149,6 +165,10 @@
         <argument
             android:name="illustration"
             android:defaultValue="@drawable/illustration_explanation_example_2"
+            app:argType="reference" />
+        <argument
+            android:name="animation"
+            android:defaultValue="0"
             app:argType="reference" />
         <action
             android:id="@id/action_next"
