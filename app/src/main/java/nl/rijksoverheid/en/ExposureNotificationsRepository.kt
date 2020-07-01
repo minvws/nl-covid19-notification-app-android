@@ -43,6 +43,7 @@ import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
 import okhttp3.ResponseBody
@@ -468,23 +469,25 @@ class ExposureNotificationsRepository(
 
     private fun showNotification(daysSinceLastExposure: Int) {
         createNotificationChannel()
-        val dayOfLastExposure = LocalDate.now(clock)
-            .minusDays(daysSinceLastExposure.toLong()).toEpochDay()
+        val dateOfLastExposure = LocalDate.now(clock)
+            .minusDays(daysSinceLastExposure.toLong())
 
         val pendingIntent = NavDeepLinkBuilder(context)
             .setGraph(R.navigation.nav_main)
             .setDestination(R.id.nav_post_notification)
-            .setArguments(Bundle().apply { putLong("epochDayOfLastExposure", dayOfLastExposure) })
-            .createPendingIntent()
+            .setArguments(Bundle().apply {
+                putLong("epochDayOfLastExposure", dateOfLastExposure.toEpochDay())
+            }).createPendingIntent()
+        val message = context.getString(
+            R.string.notification_message,
+            dateOfLastExposure.formatDaysSince(context, clock)
+        )
         val builder =
             NotificationCompat.Builder(context, "exposure_notifications")
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(context.getString(R.string.notification_title))
-                .setContentText(context.getString(R.string.notification_message))
-                .setStyle(
-                    NotificationCompat.BigTextStyle()
-                        .bigText(context.getString(R.string.notification_message))
-                )
+                .setContentText(message)
+                .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setContentIntent(pendingIntent)
                 .setOnlyAlertOnce(true)
