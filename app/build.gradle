@@ -24,6 +24,7 @@ android {
         resConfigs "nl", "en"
 
         buildConfigField "boolean", "FEATURE_LOGGING", "${enableLogging}"
+        buildConfigField "boolean", "EXPOSURE_FILE_SIGNATURE_CHECK", "true"
     }
 
     testOptions {
@@ -128,9 +129,11 @@ dependencies {
 
     implementation "com.xwray:groupie:$groupie_version"
     implementation "com.xwray:groupie-viewbinding:$groupie_version"
+    implementation "com.airbnb.android:lottie:$lottie_version"
 
     implementation project(":en-api")
     implementation project(":api")
+    implementation project(":signing")
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation "org.mockito:mockito-android:2.23.4"

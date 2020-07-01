@@ -44,6 +44,8 @@ import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import nl.rijksoverheid.en.util.formatDaysSince
+import nl.rijksoverheid.en.signing.ResponseSignatureValidator
+import nl.rijksoverheid.en.signing.SignatureValidationException
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
 import retrofit2.HttpException
@@ -51,6 +53,7 @@ import retrofit2.Response
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileInputStream
 import java.io.IOException
 import java.security.SecureRandom
 import java.time.Clock
@@ -77,7 +80,8 @@ class ExposureNotificationsRepository(
     private val preferences: SharedPreferences,
     private val manifestWorkerScheduler: ProcessManifestWorkerScheduler,
     private val appLifecycleManager: AppLifecycleManager,
-    private val clock: Clock = Clock.systemDefaultZone()
+    private val clock: Clock = Clock.systemDefaultZone(),
+    private val signatureValidation: Boolean = BuildConfig.EXPOSURE_FILE_SIGNATURE_CHECK
 ) {
 
     val keyProcessingOverdue: Boolean
@@ -155,13 +159,20 @@ class ExposureNotificationsRepository(
             }
 
             // files that have downloaded and saved successfully
-            val validFiles = files.filter { it.file != null }
-            val hasErrors = validFiles.size != files.size
+            val validFiles = files.filter { it.file != null && it.signatureValid }
+            val signatureErrors = files.filter { it.file != null && !it.signatureValid }
+            val hasErrors = validFiles.size != files.size - signatureErrors.size
+
+            if (signatureErrors.isNotEmpty()) {
+                // mark as processed, but skip
+                Timber.e("Signature validation error for ${signatureErrors.size} files")
+            }
 
             if (validFiles.isEmpty()) {
                 // shortcut if nothing to process
                 return@coroutineScope if (!hasErrors) {
-                    updateProcessedExposureKeySets(emptySet(), manifest)
+                    // mark any signature failures as completed
+                    updateProcessedExposureKeySets(signatureErrors.map { it.id }.toSet(), manifest)
                     ProcessExposureKeysResult.Success
                 } else {
                     ProcessExposureKeysResult.ServerError
@@ -187,7 +198,7 @@ class ExposureNotificationsRepository(
                     // mark all keys processed
                     Timber.d("Processing was successful")
                     updateProcessedExposureKeySets(
-                        validFiles.map { it.id }.toSet(),
+                        validFiles.map { it.id }.toSet() + signatureErrors.map { it.id }.toSet(),
                         manifest
                     )
                     if (!hasErrors) {
@@ -266,37 +277,35 @@ class ExposureNotificationsRepository(
                 try {
                     val file = File(context.cacheDir, id.toByteArray().toByteString().hex())
                     ZipInputStream(response.body()!!.byteStream()).use { input ->
-                        validateAndWrite(input, file)
+                        validateAndWrite(id, input, file)
                     }
-                    ExposureKeySet(id, file)
                 } catch (ex: IOException) {
                     Timber.w(ex, "Error reading exposure key set")
-                    ExposureKeySet(id, null)
+                    ExposureKeySet(id, null, false)
                 }
             } else {
                 Timber.e("Error reading exposure key set, response returned ${response.code()}")
-                ExposureKeySet(id, null)
+                ExposureKeySet(id, null, false)
             }
         } catch (ex: Exception) {
             Timber.e(ex, "Error while processing exposure key set")
-            return ExposureKeySet(id, null)
+            return ExposureKeySet(id, null, false)
         }
     }
 
     @VisibleForTesting
-    fun validateAndWrite(zip: ZipInputStream, file: File) {
+    internal fun validateAndWrite(id: String, zip: ZipInputStream, file: File): ExposureKeySet {
         var signature: ByteArray? = null
+
         ZipOutputStream(file.outputStream()).use {
             do {
                 val entry = zip.nextEntry ?: break
                 if (entry.name == "export.bin" || entry.name == "export.sig") {
-                    // TODO if we happen to have the signature already, check it for export.bin
                     Timber.d("Reading ${entry.name}")
                     it.putNextEntry(ZipEntry(entry.name))
                     zip.copyTo(it)
                     it.closeEntry()
-                }
-                if (entry.name == "content.sig") {
+                } else if (entry.name == "content.sig") {
                     Timber.d("Reading signature")
                     val bos = ByteArrayOutputStream()
                     zip.copyTo(bos)
@@ -305,7 +314,33 @@ class ExposureNotificationsRepository(
                 zip.closeEntry()
             } while (true)
         }
-        // TODO open zip file, verify signature
+        return if (signatureValidation) {
+            val validator = ResponseSignatureValidator()
+            var valid = false
+            if (signature != null) {
+                ZipInputStream(FileInputStream(file)).use {
+                    do {
+                        val entry = it.nextEntry ?: break
+                        if (entry.name == "export.bin") {
+                            try {
+                                validator.verifySignature(it, signature!!)
+                                valid = true
+                            } catch (ex: SignatureValidationException) {
+                                Timber.e("File for $id did not pass signature validation")
+                            }
+                            break
+                        }
+                        it.closeEntry()
+                    } while (true)
+                }
+            }
+            if (!valid) {
+                file.delete()
+            }
+            ExposureKeySet(id, file, valid)
+        } else {
+            ExposureKeySet(id, file, true)
+        }
     }
 
     suspend fun processManifest(): ProcessManifestResult {
@@ -465,7 +500,8 @@ class ExposureNotificationsRepository(
     }
 }
 
-private data class ExposureKeySet(val id: String, val file: File?)
+@VisibleForTesting
+internal data class ExposureKeySet(val id: String, val file: File?, val signatureValid: Boolean)
 
 sealed class ProcessExposureKeysResult {
     /**
