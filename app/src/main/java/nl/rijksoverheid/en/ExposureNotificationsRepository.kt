@@ -43,6 +43,7 @@ import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.util.formatDaysSince
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
 import retrofit2.HttpException
@@ -433,22 +434,18 @@ class ExposureNotificationsRepository(
 
     private fun showNotification(daysSinceLastExposure: Int) {
         createNotificationChannel()
-        val dayOfLastExposure = LocalDate.now(clock)
-            .minusDays(daysSinceLastExposure.toLong()).toEpochDay()
+        val dateOfLastExposure = LocalDate.now(clock)
+            .minusDays(daysSinceLastExposure.toLong())
 
         val pendingIntent = NavDeepLinkBuilder(context)
             .setGraph(R.navigation.nav_main)
             .setDestination(R.id.nav_post_notification)
-            .setArguments(Bundle().apply { putLong("epochDayOfLastExposure", dayOfLastExposure) })
-            .createPendingIntent()
+            .setArguments(Bundle().apply {
+                putLong("epochDayOfLastExposure", dateOfLastExposure.toEpochDay())
+            }).createPendingIntent()
         val message = context.getString(
             R.string.notification_message,
-            if (daysSinceLastExposure == 0) context.resources.getString(R.string.today) else
-                context.resources.getQuantityString(
-                    R.plurals.days,
-                    daysSinceLastExposure,
-                    daysSinceLastExposure
-                )
+            dateOfLastExposure.formatDaysSince(context, clock)
         )
         val builder =
             NotificationCompat.Builder(context, "exposure_notifications")
