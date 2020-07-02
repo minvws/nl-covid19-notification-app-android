@@ -59,7 +59,7 @@ class LabTestSection(
             ).apply {
                 if (notificationsState is Disabled || notificationsState is Unavailable) {
                     add(
-                        7,
+                        size - 1, // add box as second to last element
                         ErrorBoxItem(
                             R.string.error_upload_not_available,
                             R.string.status_en_api_disabled_enable,
