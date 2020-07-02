@@ -35,7 +35,12 @@ interface LabTestService {
             // Stub API implementation
             return object : LabTestService {
                 override suspend fun register(request: RegistrationRequest): Registration {
-                    return Registration("7C3-28C", "", ByteArray(0), 2400)
+                    // Generate registration code for test purposes
+                    val allowedChars = "BCFGJLQRSTUVXYZ23456789".toCharArray()
+                    val part1 = (1..3).map { allowedChars.random() }.joinToString("")
+                    val part2 = (1..3).map { allowedChars.random() }.joinToString("")
+                    val code = "$part1-$part2"
+                    return Registration(code, "", ByteArray(0), 2400)
                 }
 
                 override suspend fun postKeys(request: PostKeysRequest, hmacSecret: HmacSecret) {
