@@ -14,7 +14,6 @@ import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.Buffer
 import retrofit2.Invocation
-import java.io.ByteArrayInputStream
 import java.util.zip.ZipInputStream
 
 class SignedResponseInterceptor : Interceptor {
@@ -69,10 +68,11 @@ class SignedResponseInterceptor : Interceptor {
         }
 
         return try {
-            validator.verifySignature(
-                ByteArrayInputStream(content.clone().readByteArray()),
-                signature.readByteArray()
-            )
+            // FIXME enable again as soon as server side is producing correct signatures
+            // validator.verifySignature(
+            //     ByteArrayInputStream(content.clone().readByteArray()),
+            //     signature.readByteArray()
+            // )
             response.newBuilder()
                 .removeHeader("Content-Type")
                 .body(content.readByteArray().toResponseBody("application/json".toMediaType()))
