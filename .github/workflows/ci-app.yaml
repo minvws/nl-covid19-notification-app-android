@@ -27,7 +27,7 @@ jobs:
         run: ./gradlew spotlessCheck
 
       - name: Build app
-        run: ./gradlew build assemAndroidTest
+        run: ./gradlew app:assemDebug app:assemAndroidTest testDebug app:lintDebug
 
       - name: Run instrumentation tests
         uses: minvws/AppCenter-Github-Action@v1.0.3
