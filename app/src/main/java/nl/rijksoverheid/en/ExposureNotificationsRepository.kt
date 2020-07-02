@@ -124,7 +124,7 @@ class ExposureNotificationsRepository(
             if (isBluetoothEnabled() && isLocationEnabled()) {
                 StatusResult.Enabled
             } else {
-                StatusResult.Disabled
+                StatusResult.InvalidPreconditions
             }
         } else {
             result

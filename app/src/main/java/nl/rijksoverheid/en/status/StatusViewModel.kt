@@ -145,8 +145,6 @@ class StatusViewModel(
         when (state) {
             is ErrorViewState.ConsentRequired -> {
                 viewModelScope.launch {
-                    // make sure everything is disabled, then send an event to enable again
-                    notificationsRepository.requestDisableNotifications()
                     (requestEnableNotifications as MutableLiveData).value = Event(Unit)
                 }
             }

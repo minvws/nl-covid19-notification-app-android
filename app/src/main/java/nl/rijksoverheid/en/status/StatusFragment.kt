@@ -50,18 +50,10 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         }
 
         viewModel.notificationState.observe(viewLifecycleOwner) {
-            when (it) {
-                ExposureNotificationsViewModel.NotificationsState.Enabled -> {
-                    statusViewModel.refreshStatus()
-                }
-                ExposureNotificationsViewModel.NotificationsState.Disabled -> {
-                    statusViewModel.refreshStatus()
-                }
-                ExposureNotificationsViewModel.NotificationsState.Unavailable -> {
-                    Toast.makeText(context, R.string.error_api_not_available, Toast.LENGTH_LONG)
-                        .show()
-                    statusViewModel.refreshStatus()
-                }
+            statusViewModel.refreshStatus()
+            if (it is ExposureNotificationsViewModel.NotificationsState.Unavailable) {
+                Toast.makeText(context, R.string.error_api_not_available, Toast.LENGTH_LONG)
+                    .show()
             }
         }
 
@@ -83,13 +75,5 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         statusViewModel.navigateToPostNotification.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(StatusFragmentDirections.actionPostNotification(it.toEpochDay()))
         })
-
-        viewLifecycleOwner.lifecycle.addObserver(PreconditionsHelper(requireContext()) {
-            statusViewModel.refreshStatus()
-        })
-    }
-
-    private fun showApiUnavailableError() {
-        // TODO
     }
 }

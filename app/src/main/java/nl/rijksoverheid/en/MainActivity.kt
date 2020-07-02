@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.play.core.install.model.AppUpdateType
 import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.status.PreconditionsHelper
 
 private const val RC_REQUEST_CONSENT = 1
 private const val RC_UPDATE_APP = 2
@@ -64,6 +65,13 @@ class MainActivity : AppCompatActivity() {
                 RC_UPDATE_APP
             )
         })
+
+        lifecycle.addObserver(PreconditionsHelper(this) { viewModel.refreshStatus() })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.refreshStatus()
     }
 
     override fun onResume() {

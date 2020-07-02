@@ -18,6 +18,11 @@ sealed class StatusResult {
     object Disabled : StatusResult()
 
     /**
+     * Exposure notifications API is enabled, but Bluetooth or Location is disabled
+     */
+    object InvalidPreconditions : StatusResult()
+
+    /**
      * Exposure notifications API is not available
      */
     data class Unavailable(val statusCode: Int) : StatusResult()

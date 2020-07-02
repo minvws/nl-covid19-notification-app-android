@@ -24,15 +24,12 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
         MutableLiveData(NotificationsState.Enabled)
     val notificationsResult: LiveData<Event<NotificationsStatusResult>> = MutableLiveData()
 
-    init {
-        refreshStatus()
-    }
-
-    private fun refreshStatus() {
+    fun refreshStatus() {
         viewModelScope.launch {
             when (val result = repository.getStatus()) {
                 is StatusResult.Enabled -> updateState(NotificationsState.Enabled)
                 is StatusResult.Disabled -> updateState(NotificationsState.Disabled)
+                is StatusResult.InvalidPreconditions -> updateState(NotificationsState.InvalidPreconditions)
                 is StatusResult.Unavailable -> updateState(NotificationsState.Unavailable)
                 is StatusResult.UnknownError -> {
                     Timber.d(
@@ -82,6 +79,7 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
 
     sealed class NotificationsState {
         object Enabled : NotificationsState()
+        object InvalidPreconditions : NotificationsState()
         object Disabled : NotificationsState()
         object Unavailable : NotificationsState()
     }
