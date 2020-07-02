@@ -24,7 +24,7 @@ android {
         resConfigs "nl", "en"
 
         buildConfigField "boolean", "FEATURE_LOGGING", "${enableLogging}"
-        buildConfigField "boolean", "EXPOSURE_FILE_SIGNATURE_CHECK", "true"
+        buildConfigField "boolean", "EXPOSURE_FILE_SIGNATURE_CHECK", "false"
     }
 
     testOptions {
