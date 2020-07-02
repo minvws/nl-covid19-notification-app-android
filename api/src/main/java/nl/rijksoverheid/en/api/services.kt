@@ -7,13 +7,19 @@
 package nl.rijksoverheid.en.api
 
 import android.content.Context
+import android.net.Uri
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Cache
+import okhttp3.CertificatePinner
+import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
 import java.io.File
+
+private const val CDN_PIN = "sha256/Y9mvm0exBk1JoQ57f9Vm28jKo5lFm/woKcVxrYxu80o="
+private const val API_PIN = "sha256/QiOJQAOogcXfa6sWPbI1wiGhjVS/dZlFgg5nDaguPzk="
 
 private var okHttpClient: OkHttpClient? = null
 
@@ -35,6 +41,19 @@ internal fun createOkHttpClient(context: Context): OkHttpClient {
                         Timber.tag("OkHttpClient").d(message)
                     }
                 }).setLevel(HttpLoggingInterceptor.Level.BODY))
+            }
+            if (BuildConfig.FEATURE_SSL_PINNING) {
+                connectionSpecs(
+                    listOf(
+                        ConnectionSpec.MODERN_TLS
+                    )
+                )
+                certificatePinner(
+                    CertificatePinner.Builder()
+                        .add(Uri.parse(BuildConfig.CDN_BASE_URL).host!!, CDN_PIN)
+                        .add(Uri.parse(BuildConfig.API_BASE_URL).host!!, API_PIN)
+                        .build()
+                )
             }
         }.build().also { okHttpClient = it }
 }

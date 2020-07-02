@@ -23,6 +23,7 @@ android {
         buildConfigField "String", "API_BASE_URL", "\"${apiEndpoint}\""
         buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "true"
         buildConfigField "boolean", "FEATURE_ACCEPT_HEADER", "false"
+        buildConfigField "boolean", "FEATURE_SSL_PINNING", "true"
     }
 
     testOptions {
@@ -46,6 +47,7 @@ android {
         debug {
             buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "true"
             buildConfigField "boolean", "FEATURE_ACCEPT_HEADER", "true"
+            buildConfigField "boolean", "FEATURE_SSL_PINNING", "false"
         }
     }
 }
