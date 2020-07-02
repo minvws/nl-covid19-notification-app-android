@@ -28,6 +28,7 @@ internal fun createOkHttpClient(context: Context): OkHttpClient {
             addNetworkInterceptor(SignedResponseInterceptor())
             addInterceptor(AcceptHeaderInterceptor())
             addInterceptor(SignedBodyInterceptor())
+            addInterceptor(EncodedQueryInterceptor())
             if (Timber.forest().isNotEmpty()) {
                 addInterceptor(HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
                     override fun log(message: String) {
