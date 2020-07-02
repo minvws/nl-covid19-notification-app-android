@@ -11,6 +11,8 @@ import nl.rijksoverheid.en.api.model.PostKeysRequest
 import nl.rijksoverheid.en.api.model.Registration
 import nl.rijksoverheid.en.api.model.RegistrationRequest
 import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Tag
@@ -32,21 +34,11 @@ interface LabTestService {
             client: OkHttpClient = createOkHttpClient(context),
             baseUrl: String = BuildConfig.API_BASE_URL
         ): LabTestService {
-            // Stub API implementation
-            return object : LabTestService {
-                override suspend fun register(request: RegistrationRequest): Registration {
-                    // Generate registration code for test purposes
-                    val allowedChars = "BCFGJLQRSTUVXYZ23456789".toCharArray()
-                    val part1 = (1..3).map { allowedChars.random() }.joinToString("")
-                    val part2 = (1..3).map { allowedChars.random() }.joinToString("")
-                    val code = "$part1-$part2"
-                    return Registration(code, "", ByteArray(0), 2400)
-                }
-
-                override suspend fun postKeys(request: PostKeysRequest, hmacSecret: HmacSecret) {
-                    // stub
-                }
-            }
+            return Retrofit.Builder()
+                .client(client)
+                .addConverterFactory(MoshiConverterFactory.create(createMoshi()))
+                .baseUrl(baseUrl)
+                .build().create(LabTestService::class.java)
         }
     }
 }
