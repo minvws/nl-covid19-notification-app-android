@@ -76,8 +76,4 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
             findNavController().navigate(StatusFragmentDirections.actionPostNotification(it.toEpochDay()))
         })
     }
-
-    private fun showApiUnavailableError() {
-        // TODO
-    }
 }
