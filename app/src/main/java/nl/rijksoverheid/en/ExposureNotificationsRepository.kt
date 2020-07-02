@@ -170,6 +170,7 @@ class ExposureNotificationsRepository(
             }
 
             if (validFiles.isEmpty()) {
+                Timber.d("No files to process")
                 // shortcut if nothing to process
                 return@coroutineScope if (!hasErrors) {
                     // mark any signature failures as completed
@@ -350,7 +351,7 @@ class ExposureNotificationsRepository(
 
     suspend fun processManifest(): ProcessManifestResult {
         return withContext(Dispatchers.IO) {
-            if (exposureNotificationsApi.getStatus() == StatusResult.Disabled) {
+            if (getStatus() == StatusResult.Disabled) {
                 Timber.w("Exposure notifications are disabled")
                 // go through the steps as if the user disabled through the app
                 requestDisableNotifications()
@@ -358,18 +359,14 @@ class ExposureNotificationsRepository(
             }
             try {
                 val manifest = api.getManifest()
-                val keysSuccessful = if (getStatus() == StatusResult.Enabled) {
-                    processExposureKeySets(manifest) == ProcessExposureKeysResult.Success
-                } else {
-                    Timber.w("Cannot process keys, exposure notifications api is disabled")
-                    true
-                }
+                val result = processExposureKeySets(manifest)
+                Timber.d("Processing keys result = $result")
 
                 val config = api.getAppConfig(manifest.appConfigId)
 
                 appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode)
 
-                if (keysSuccessful) {
+                if (result == ProcessExposureKeysResult.Success) {
                     preferences.edit {
                         putLong(KEY_LAST_KEYS_PROCESSED, clock.millis())
                     }
