@@ -47,6 +47,7 @@ android {
         debug {
             buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "true"
             buildConfigField "boolean", "FEATURE_ACCEPT_HEADER", "true"
+            buildConfigField "boolean", "FEATURE_SSL_PINNING", "false"
         }
     }
 }
