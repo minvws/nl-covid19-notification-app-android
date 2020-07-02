@@ -32,7 +32,7 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
     private val section = LabTestSection(
         retry = { labViewModel.retry() },
         upload = { labViewModel.upload() },
-        requestConsent = { viewModel.requestReEnableNotifications() }
+        requestConsent = { viewModel.requestEnableNotifications() }
     )
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
 

@@ -57,8 +57,8 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
             }
         }
 
-        statusViewModel.requestReEnableNotifications.observe(viewLifecycleOwner, EventObserver {
-            viewModel.requestReEnableNotifications()
+        statusViewModel.requestEnableNotifications.observe(viewLifecycleOwner, EventObserver {
+            viewModel.requestEnableNotifications()
         })
 
         statusViewModel.confirmRemoveExposedMessage.observe(viewLifecycleOwner, EventObserver {

@@ -69,13 +69,6 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
         }
     }
 
-    fun requestReEnableNotifications() {
-        viewModelScope.launch {
-            repository.requestDisableNotifications()
-            requestEnableNotifications()
-        }
-    }
-
     private fun updateState(state: NotificationsState) {
         (notificationState as MutableLiveData).value = state
     }
