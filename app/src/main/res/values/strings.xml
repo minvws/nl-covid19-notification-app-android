@@ -41,17 +41,21 @@
     <string name="update_channel_description">Meldingen als de app-versie te oud is</string>
     <string name="update_notification_title">De app heeft een update nodig</string>
     <string name="update_notification_message">Update de app om te zorgen dat deze goed blijft werken.</string>
+    <string name="sync_issue_channel_name">Internetverbinding</string>
+    <string name="sync_issue_channel_description">Meldingen wanneer de app geen internetverbinding kan maken</string>
+    <string name="sync_issue_notification_title">Geen internetverbinding</string>
+    <string name="sync_issue_notification_message">De app kon de afgelopen 24 uur geen internetverbinding maken. Controleer of je wifi of mobiele data aanstaan.</string>
     <string name="post_notification_toolbar_title">Kans op besmetting</string>
     <string name="generic_notification_toolbar_title">Melding gekregen</string>
     <string name="post_notification_header_1">Je bent in de buurt geweest van iemand met het coronavirus [DIT IS EEN TESTBERICHT]</string>
     <string name="generic_notification_header_1">Wat betekent het als je een melding krijgt?</string>
     <string name="post_notification_paragraph_2" tools:ignore="Typos">Je was %1$s geleden (op %2$s) dicht bij iemand die later corona bleek te hebben. Het RIVM en de GGD zien dit als een situatie waarin je extra kans op besmetting hebt gelopen. Als je inderdaad besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
-    <string name="generic_notification_paragraph_2">De app stuurt een melding als je 10 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. Het RIVM en de GGD zien dit als een situatie waarin je extra kans op besmetting hebt gelopen.  Als je besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
+    <string name="generic_notification_paragraph_2" tools:ignore="Typos">De app stuurt een melding als je 10 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. Het RIVM en de GGD zien dit als een situatie waarin je extra kans op besmetting hebt gelopen.  Als je besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
     <string name="treat_perspective_header_1">Klachten die passen bij het coronavirus (COVID-19)</string>
     <string name="treat_perspective_list_2"><![CDATA[<ul><li>(licht) hoesten</li><li>loopneus, niezen, keelpijn</li><li>verlies van geur en/of smaak</li><li>kortademigheid/benauwdheid</li><li>koorts boven de 38 graden</li></ul>]]></string>
     <string name="treat_perspective_paragraph_3">Heb je klachten? Blijf dan zoveel mogelijk thuis. Zijn het ernstige klachten? Ga naar thuisarts.nl/corona of bel je huisarts.</string>
     <string name="post_notification_header_6">Doe een coronatest</string>
-    <string name="post_notification_paragraph_7" tools:ignore="Typos">Heb je klachten? Doe dan een coronatest.</string>
+    <string name="post_notification_paragraph_7">Heb je klachten? Doe dan een coronatest.</string>
     <string name="post_notification_paragraph_8">"Testen is gratis. Het duurt niet lang en kan meestal snel gebeuren. De uitslag is binnen 48 uur bekend. Blijf in die tijd zo veel mogelijk thuis. "</string>
     <string name="post_notification_paragraph_9">Bel gratis %1$s om een coranatest aan te vragen.</string>
     <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart</string>
@@ -78,6 +82,8 @@
     <string name="status_exposure_what_next">Wat kan ik nu doen?</string>
     <string name="status_error_consent_required">%1$s werkt alleen als de noodzakelijke instellingen aanstaan.</string>
     <string name="status_error_action_consent">Instellingen aanzetten</string>
+    <string name="status_error_sync_issues">De app kon de afgelopen 24 uur geen internetverbinding maken. Controleer of je wifi of mobiele data aanstaan en probeer het opnieuw.</string>
+    <string name="status_error_action_sync_issues">Opnieuw proberen</string>
     <string name="about_toolbar_title">Over de app</string>
     <string name="about_privacy_statement">Privacyverklaring</string>
     <string name="about_accessibility">Toegankelijkheid</string>

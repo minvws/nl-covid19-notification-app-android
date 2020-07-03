@@ -97,6 +97,7 @@ class StatusViewModel(
             R.string.status_error_consent_required,
             context.getString(R.string.app_name)
         )
+        is ErrorViewState.SyncIssues -> context.getString(R.string.status_error_sync_issues)
         else -> null
     }
 
@@ -113,6 +114,8 @@ class StatusViewModel(
     private fun createErrorViewState(status: StatusResult, date: LocalDate?): ErrorViewState =
         if (status != StatusResult.Enabled && date != null) {
             ErrorViewState.ConsentRequired
+        } else if (notificationsRepository.keyProcessingOverdue) {
+            ErrorViewState.SyncIssues
         } else {
             // handled in header view state
             ErrorViewState.None
@@ -145,8 +148,13 @@ class StatusViewModel(
         when (state) {
             is ErrorViewState.ConsentRequired -> {
                 viewModelScope.launch {
+                    // make sure everything is disabled, then send an event to enable again
+                    notificationsRepository.requestDisableNotifications()
                     (requestEnableNotifications as MutableLiveData).value = Event(Unit)
                 }
+            }
+            is ErrorViewState.SyncIssues -> {
+                (errorViewState as MutableLiveData).value = ErrorViewState.None
             }
         }
     }
@@ -191,6 +199,7 @@ class StatusViewModel(
     sealed class ErrorViewState(@StringRes val actionLabel: Int?) {
         object None : ErrorViewState(null)
         object ConsentRequired : ErrorViewState(R.string.status_error_action_consent)
+        object SyncIssues : ErrorViewState(R.string.status_error_action_sync_issues)
     }
 }
 

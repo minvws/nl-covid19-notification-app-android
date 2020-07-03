@@ -25,6 +25,11 @@ class EnWorkerFactory : WorkerFactory() {
                 workerParameters,
                 createExposureNotificationsRepository(appContext)
             )
+            CheckConnectionWorker::class.java.name -> CheckConnectionWorker(
+                appContext,
+                workerParameters,
+                createExposureNotificationsRepository(appContext)
+            )
             ExposureNotificationJob::class.java.name -> ExposureNotificationJob(
                 appContext,
                 workerParameters,

@@ -24,6 +24,7 @@ import nl.rijksoverheid.en.api.model.PostKeysRequest
 import nl.rijksoverheid.en.api.model.Registration
 import nl.rijksoverheid.en.api.model.RegistrationRequest
 import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
+import nl.rijksoverheid.en.job.CheckConnectionWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import nl.rijksoverheid.en.job.UploadDiagnosisKeysJob
@@ -47,10 +48,12 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
         object : ProcessManifestWorkerScheduler {
             override fun schedule(intervalMinutes: Int) {
                 ProcessManifestWorker.queue(context, intervalMinutes)
+                CheckConnectionWorker.queue(context)
             }
 
             override fun cancel() {
                 ProcessManifestWorker.cancel(context)
+                CheckConnectionWorker.cancel(context)
             }
         },
         createAppLifecycleManager(context)
