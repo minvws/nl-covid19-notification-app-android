@@ -9,11 +9,11 @@ This repository contains the Android App of the Proof of Concept for the Dutch e
 * The designs that are used as a basis to develop the apps can be found here: https://github.com/minvws/nl-covid19-notification-app-design
 * The architecture that underpins the development can be found here: https://github.com/minvws/nl-covid19-notification-app-coordination
 
-## Development setup
-For communication with the API, the endpoint urls need to be set using a Gradle project property. This can be done by adding the `-P` option on the command line and/or Android Studio compiler
+## Local development setup
+For communication with the [standalone server][1] with the `devDebug` flavor, the endpoint urls need to be set using a Gradle project property. This can be done by adding the `-P` option on the command line and/or Android Studio compiler
 options, or by specifying the properties in your global `gradle.properties`.
 
-Properties that need to be set are `cdnEndpoint` and `apiEndpoint` both need to be fully qualified urls and end with a `/`. For local development use `-PcdnEndpoint=http://<yourip>:5000/cdn/ -PapiEndpoint=http://<yourip>:5000/MobileAppApi/`
+Properties that need to be set are `cdnEndpoint` and `apiEndpoint` both need to be fully qualified urls and end with a `/`.
 
 ## Development & Contribution process
 
@@ -24,3 +24,5 @@ This increases the chance that we might be able to use your contribution (or it 
 
 ## Disclaimer
 Keep in mind that the Google Exposure Notification API is only accessible by verified health authorities. Other devices trying to access the API using the code in this repository will fail to do so.
+
+[1]:https://github.com/minvws/nl-covid19-notification-app-backend

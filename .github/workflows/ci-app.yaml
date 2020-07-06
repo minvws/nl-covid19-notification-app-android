@@ -27,11 +27,11 @@ jobs:
         run: ./gradlew spotlessCheck
 
       - name: Build app
-        run: ./gradlew app:assemDebug app:assemAndroidTest testDebug app:lintDebug
+        run: ./gradlew app:assemDevDebug app:assemAndroidTest testDevDebug app:lintDevDebug
 
       - name: Run instrumentation tests
         uses: minvws/AppCenter-Github-Action@v1.0.3
         if: ${{ env.APP_CENTER_TOKEN }}
         with:
-          command: appcenter test run espresso --app ${{env.APP_CENTER_APP}} --devices belastingdienst/vws-covid-19-notificatie-instrumentation-test --app-path app/build/outputs/apk/debug/covid-notificatie-debug.apk --test-series master --locale en_US --test-apk-path app/build/outputs/apk/androidTest/debug/covid-notificatie-debug-androidTest.apk
+          command: appcenter test run espresso --app ${{env.APP_CENTER_APP}} --devices belastingdienst/vws-covid-19-notificatie-instrumentation-test --app-path app/build/outputs/apk/dev/debug/covid-notificatie-dev-debug.apk --test-series master --locale en_US --test-apk-path app/build/outputs/apk/androidTest/dev/debug/covid-notificatie-dev-debug-androidTest.apk
           token: ${{secrets.APP_CENTER_TOKEN}}

@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
-ext.cdnEndpoint = ext.has("cdnEndpoint") ? ext.cdnEndpoint : "not-set"
-ext.apiEndpoint = ext.has("apiEndpoint") ? ext.apiEndpoint : "not-set"
+ext.cdnEndpoint = ext.has("cdnEndpoint") ? ext.cdnEndpoint : "http://localhost/"
+ext.apiEndpoint = ext.has("apiEndpoint") ? ext.apiEndpoint : "http://localhost/"
 
 android {
     compileSdkVersion 29
@@ -19,8 +19,8 @@ android {
 
         // encoded query string for public read access on the cdn
         buildConfigField "String", "CDN_QUERY_STRING", "\"sv=2019-02-02&st=2020-06-26T14%3A13%3A35Z&se=2025-06-27T14%3A13%3A00Z&sr=c&sp=rl&sig=fCwrecfbx6JNp5RlTzw5mmnRCna6hne92Khb8Gk4%2BRw%3D\""
-        buildConfigField "String", "CDN_BASE_URL", "\"${cdnEndpoint}\""
-        buildConfigField "String", "API_BASE_URL", "\"${apiEndpoint}\""
+        buildConfigField "String", "CDN_BASE_URL", "\"https://vwspa-cdn-blob.azureedge.net/vws/\""
+        buildConfigField "String", "API_BASE_URL", "\"http://localhost/\""
         buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "true"
         buildConfigField "boolean", "FEATURE_ACCEPT_HEADER", "false"
         buildConfigField "boolean", "FEATURE_SSL_PINNING", "true"
@@ -45,9 +45,25 @@ android {
         }
 
         debug {
-            buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "true"
+        }
+    }
+
+    flavorDimensions "environment"
+
+    productFlavors {
+        dev {
+            dimension "environment"
+            buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "false"
             buildConfigField "boolean", "FEATURE_ACCEPT_HEADER", "true"
             buildConfigField "boolean", "FEATURE_SSL_PINNING", "false"
+            buildConfigField "String", "CDN_BASE_URL", "\"${cdnEndpoint}\""
+            buildConfigField "String", "API_BASE_URL", "\"${apiEndpoint}\""
+        }
+        acc {
+            dimension "environment"
+        }
+        prod {
+            dimension "environment"
         }
     }
 }
