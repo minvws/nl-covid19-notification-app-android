@@ -124,13 +124,7 @@ class StatusViewModel(
             }
             is HeaderViewState.Exposed ->
                 (navigateToPostNotification as MutableLiveData).value = Event(state.date)
-            HeaderViewState.Disabled -> {
-                viewModelScope.launch {
-                    // make sure everything is disabled, then send an event to enable again
-                    notificationsRepository.requestDisableNotifications()
-                    (requestEnableNotifications as MutableLiveData).value = Event(Unit)
-                }
-            }
+            HeaderViewState.Disabled -> resetAndRequestEnableNotifications()
         }
     }
 
@@ -143,11 +137,14 @@ class StatusViewModel(
 
     fun onErrorActionClicked(state: ErrorViewState) {
         when (state) {
-            is ErrorViewState.ConsentRequired -> {
-                viewModelScope.launch {
-                    (requestEnableNotifications as MutableLiveData).value = Event(Unit)
-                }
-            }
+            is ErrorViewState.ConsentRequired -> resetAndRequestEnableNotifications()
+        }
+    }
+
+    private fun resetAndRequestEnableNotifications() {
+        viewModelScope.launch {
+            notificationsRepository.requestDisableNotifications()
+            (requestEnableNotifications as MutableLiveData).value = Event(Unit)
         }
     }
 
