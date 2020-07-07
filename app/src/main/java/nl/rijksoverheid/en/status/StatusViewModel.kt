@@ -154,7 +154,10 @@ class StatusViewModel(
                 }
             }
             is ErrorViewState.SyncIssues -> {
-                (errorViewState as MutableLiveData).value = ErrorViewState.None
+                viewModelScope.launch {
+                    notificationsRepository.requestEnableNotifications()
+                    (errorViewState as MutableLiveData).value = ErrorViewState.None
+                }
             }
         }
     }
