@@ -48,6 +48,10 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
                     val url = Uri.parse(getString(R.string.privacy_policy_url))
                     CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
                 }
+                is AccessibilityItem -> {
+                    val url = Uri.parse(getString(R.string.accessibility_url))
+                    CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
+                }
             }
         }
     }

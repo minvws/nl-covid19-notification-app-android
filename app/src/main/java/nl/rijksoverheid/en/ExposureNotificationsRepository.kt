@@ -402,14 +402,12 @@ class ExposureNotificationsRepository(
      * @return true if exposures are reported, false otherwise
      */
     fun getLastExposureDate(): Flow<LocalDate?> {
-        return exposureToken().distinctUntilChanged().map { token ->
-            val hasSummary = token?.let { exposureNotificationsApi.getSummary(it) } != null
-            if (hasSummary || (BuildConfig.DEBUG && token == DEBUG_TOKEN)) {
-                LocalDate.ofEpochDay(preferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L))
-            } else null
-        }.onEach { date ->
-            if (date == null) {
-                resetExposures()
+        return exposureToken().distinctUntilChanged().map {
+            val timestamp = preferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L)
+            if (timestamp > 0) {
+                LocalDate.ofEpochDay(timestamp)
+            } else {
+                null
             }
         }.onEach { date ->
             if (date != null) {
