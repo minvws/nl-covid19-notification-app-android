@@ -56,7 +56,7 @@ class ProcessManifestWorker(
                 if (BuildConfig.DEBUG) {
                     setInitialDelay(10, TimeUnit.SECONDS)
                 } else {
-                    setInitialDelay(intervalMinutes.toLong(), TimeUnit.MINUTES)
+                    setInitialDelay(intervalMinutes.toLong().div(2), TimeUnit.MINUTES)
                 }
             }.setInputData(Data.Builder().putInt(KEY_UPDATE_INTERVAL, intervalMinutes).build())
                 .setConstraints(
