@@ -27,6 +27,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 private const val WORKER_ID = "check_connection"
+private const val ID_CONNECTION_PUSH_NOTIFICATION = 2
 
 class CheckConnectionWorker(
     private val context: Context,
@@ -78,7 +79,8 @@ class CheckConnectionWorker(
                 .setAutoCancel(true)
                 .build()
 
-        NotificationManagerCompat.from(context).notify(0, notification)
+        NotificationManagerCompat.from(context)
+            .notify(ID_CONNECTION_PUSH_NOTIFICATION, notification)
     }
 
     companion object {
