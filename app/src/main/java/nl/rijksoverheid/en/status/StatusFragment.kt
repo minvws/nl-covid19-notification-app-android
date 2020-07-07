@@ -13,6 +13,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
@@ -22,6 +24,9 @@ import nl.rijksoverheid.en.lifecyle.EventObserver
 class StatusFragment : BaseFragment(R.layout.fragment_status) {
     private val statusViewModel: StatusViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
+
+    private val section = StatusSection()
+    private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,21 +38,26 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         }
 
         val binding = FragmentStatusBinding.bind(view)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = statusViewModel
+        binding.content.adapter = adapter
+        adapter.setOnItemClickListener { item, _ ->
+            when (item) {
+                StatusActionItem.About -> findNavController().navigate(
+                    StatusFragmentDirections.actionAbout()
+                )
+                StatusActionItem.GenericNotification -> findNavController().navigate(
+                    StatusFragmentDirections.actionGenericNotification()
+                )
+                StatusActionItem.RequestTest -> findNavController().navigate(
+                    StatusFragmentDirections.actionRequestTest()
+                )
+                StatusActionItem.LabTest -> findNavController().navigate(
+                    StatusFragmentDirections.actionLabTest()
+                )
+            }
+        }
 
-        binding.infoItem1.root.setOnClickListener {
-            findNavController().navigate(StatusFragmentDirections.actionAbout())
-        }
-        binding.infoItem2.root.setOnClickListener {
-            findNavController().navigate(StatusFragmentDirections.actionGenericNotification())
-        }
-        binding.infoItem3.root.setOnClickListener {
-            findNavController().navigate(StatusFragmentDirections.actionRequestTest())
-        }
-        binding.infoItem4.root.setOnClickListener {
-            findNavController().navigate(StatusFragmentDirections.actionLabTest())
-        }
+        statusViewModel.headerState.observe(viewLifecycleOwner) { section.updateHeader(it) }
+        statusViewModel.errorState.observe(viewLifecycleOwner) { section.updateErrorState(it) }
 
         viewModel.notificationState.observe(viewLifecycleOwner) {
             statusViewModel.refreshStatus()

@@ -6,10 +6,6 @@
  */
 package nl.rijksoverheid.en.status
 
-import android.content.Context
-import androidx.annotation.DrawableRes
-import androidx.annotation.RawRes
-import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,14 +16,10 @@ import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
-import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.lifecyle.Event
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
-import nl.rijksoverheid.en.util.formatDaysSince
-import nl.rijksoverheid.en.util.formatExposureDate
 import java.time.Clock
 import java.time.LocalDate
 
@@ -45,30 +37,25 @@ class StatusViewModel(
 
     fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
 
-    val headerViewState = refreshStatus.switchMap {
+    val headerState = refreshStatus.switchMap {
         liveData {
             emit(notificationsRepository.getStatus())
         }.switchMap { status ->
             notificationsRepository.getLastExposureDate()
                 .asLiveData(viewModelScope.coroutineContext)
                 .map { date -> status to date }
-        }.map { (status, date) -> createHeaderViewState(status, date) }
-    }.startWith(HeaderViewState.Active)
+        }.map { (status, date) -> createHeaderState(status, date) }
+    }
 
-    val errorViewState = refreshStatus.switchMap {
+    val errorState = refreshStatus.switchMap {
         liveData {
             emit(notificationsRepository.getStatus())
         }.switchMap { status ->
             notificationsRepository.getLastExposureDate()
                 .asLiveData(viewModelScope.coroutineContext)
                 .map { date -> status to date }
-        }.map { (status, date) -> createErrorViewState(status, date) }
-    }.startWith(ErrorViewState.None)
-
-    val shouldShowErrorState = errorViewState.map { it !is ErrorViewState.None }
-
-    val appVersion = BuildConfig.VERSION_NAME
-    val buildNumber = BuildConfig.VERSION_CODE
+        }.map { (status, date) -> createErrorState(status, date) }
+    }.startWith(ErrorState.None)
 
     fun hasCompletedOnboarding(): Boolean {
         return onboardingRepository.hasCompletedOnboarding()
@@ -78,53 +65,16 @@ class StatusViewModel(
         refreshStatus.value = Unit
     }
 
-    fun getDescription(context: Context, state: HeaderViewState): String = when (state) {
-        HeaderViewState.Active -> context.getString(
-            R.string.status_no_exposure_detected_description, context.getString(R.string.app_name)
-        )
-        is HeaderViewState.Exposed -> context.getString(
-            R.string.status_exposure_detected_description,
-            state.date.formatDaysSince(context, clock),
-            state.date.formatExposureDate(context)
-        )
-        HeaderViewState.Disabled -> context.getString(
-            R.string.status_en_api_disabled_description, context.getString(R.string.app_name)
-        )
-    }
-
-    fun getErrorText(context: Context, error: ErrorViewState): String? = when (error) {
-        is ErrorViewState.ConsentRequired -> context.getString(
-            R.string.status_error_consent_required,
-            context.getString(R.string.app_name)
-        )
-        else -> null
-    }
-
-    private fun createHeaderViewState(status: StatusResult, date: LocalDate?): HeaderViewState =
-        if (date != null) {
-            HeaderViewState.Exposed(date)
-        } else {
-            when (status) {
-                is StatusResult.Enabled -> HeaderViewState.Active
-                else -> HeaderViewState.Disabled
-            }
-        }
-
-    private fun createErrorViewState(status: StatusResult, date: LocalDate?): ErrorViewState =
-        if (status != StatusResult.Enabled && date != null) {
-            ErrorViewState.ConsentRequired
-        } else {
-            // handled in header view state
-            ErrorViewState.None
-        }
-
-    fun onPrimaryActionClicked(state: HeaderViewState) {
-        when (state) {
-            HeaderViewState.Active -> { /* no action possible */
-            }
-            is HeaderViewState.Exposed ->
-                (navigateToPostNotification as MutableLiveData).value = Event(state.date)
-            HeaderViewState.Disabled -> {
+    private fun createHeaderState(status: StatusResult, date: LocalDate?): HeaderState =
+        when {
+            date != null -> HeaderState.Exposed(
+                date,
+                clock,
+                { (navigateToPostNotification as MutableLiveData).value = Event(date) },
+                { (confirmRemoveExposedMessage as MutableLiveData).value = Event(Unit) }
+            )
+            status is StatusResult.Enabled -> HeaderState.Active
+            else -> HeaderState.Disabled {
                 viewModelScope.launch {
                     // make sure everything is disabled, then send an event to enable again
                     notificationsRepository.requestDisableNotifications()
@@ -132,65 +82,46 @@ class StatusViewModel(
                 }
             }
         }
-    }
 
-    fun onSecondaryActionClicked(state: HeaderViewState) {
-        when (state) {
-            is HeaderViewState.Exposed ->
-                (confirmRemoveExposedMessage as MutableLiveData).value = Event(Unit)
-        }
-    }
-
-    fun onErrorActionClicked(state: ErrorViewState) {
-        when (state) {
-            is ErrorViewState.ConsentRequired -> {
+    private fun createErrorState(status: StatusResult, date: LocalDate?): ErrorState =
+        if (status != StatusResult.Enabled && date != null) {
+            ErrorState.ConsentRequired {
                 viewModelScope.launch {
                     (requestEnableNotifications as MutableLiveData).value = Event(Unit)
                 }
             }
+        } else {
+            ErrorState.None
         }
-    }
 
     fun removeExposure() {
         notificationsRepository.resetExposures()
         refreshStatus()
     }
 
-    sealed class HeaderViewState(
-        @DrawableRes val background: Int,
-        @RawRes val icon: Int,
-        @StringRes val headline: Int,
-        @StringRes val primaryAction: Int?,
-        @StringRes val secondaryAction: Int?
+    sealed class HeaderState(
+        open val primaryAction: () -> Unit = {},
+        open val secondaryAction: () -> Unit = {}
     ) {
-        object Active : HeaderViewState(
-            R.drawable.gradient_status_no_exposure,
-            R.raw.status_active,
-            R.string.status_no_exposure_detected_headline,
-            null,
-            null
-        )
+        object Active : HeaderState()
 
-        data class Exposed(val date: LocalDate) : HeaderViewState(
-            R.drawable.gradient_status_exposure,
-            R.raw.status_exposed,
-            R.string.status_exposure_detected_headline,
-            R.string.status_exposure_what_next,
-            R.string.status_reset_exposure
-        )
+        data class Exposed(
+            val date: LocalDate,
+            val clock: Clock,
+            override val primaryAction: () -> Unit,
+            override val secondaryAction: () -> Unit
+        ) : HeaderState(primaryAction, secondaryAction)
 
-        object Disabled : HeaderViewState(
-            R.drawable.gradient_status_disabled,
-            R.raw.status_inactive,
-            R.string.status_disabled_headline,
-            R.string.status_en_api_disabled_enable,
-            null
-        )
+        data class Disabled(
+            override val primaryAction: () -> Unit
+        ) : HeaderState(primaryAction)
     }
 
-    sealed class ErrorViewState(@StringRes val actionLabel: Int?) {
-        object None : ErrorViewState(null)
-        object ConsentRequired : ErrorViewState(R.string.status_error_action_consent)
+    sealed class ErrorState(
+        open val action: () -> Unit = {}
+    ) {
+        object None : ErrorState()
+        data class ConsentRequired(override val action: () -> Unit) : ErrorState(action)
     }
 }
 
