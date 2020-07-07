@@ -19,7 +19,6 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.MainActivity
 import nl.rijksoverheid.en.R
@@ -86,13 +85,7 @@ class CheckConnectionWorker(
     companion object {
         fun queue(context: Context) {
             val request = PeriodicWorkRequestBuilder<CheckConnectionWorker>(1, TimeUnit.DAYS)
-                .apply {
-                    if (BuildConfig.DEBUG) {
-                        setInitialDelay(10, TimeUnit.SECONDS)
-                    } else {
-                        setInitialDelay(1, TimeUnit.DAYS)
-                    }
-                }.build()
+                .setInitialDelay(1, TimeUnit.DAYS).build()
 
             WorkManager.getInstance(context)
                 .enqueueUniquePeriodicWork(
