@@ -74,13 +74,7 @@ class StatusViewModel(
                 { (confirmRemoveExposedMessage as MutableLiveData).value = Event(Unit) }
             )
             status is StatusResult.Enabled -> HeaderState.Active
-            else -> HeaderState.Disabled {
-                viewModelScope.launch {
-                    // make sure everything is disabled, then send an event to enable again
-                    notificationsRepository.requestDisableNotifications()
-                    (requestEnableNotifications as MutableLiveData).value = Event(Unit)
-                }
-            }
+            else -> HeaderState.Disabled { resetAndRequestEnableNotifications() }
         }
 
     private fun createErrorState(status: StatusResult, date: LocalDate?): ErrorState =
@@ -90,9 +84,18 @@ class StatusViewModel(
                     (requestEnableNotifications as MutableLiveData).value = Event(Unit)
                 }
             }
+        } else if (notificationsRepository.keyProcessingOverdue) {
+            ErrorState.SyncIssues
         } else {
             ErrorState.None
         }
+
+    private fun resetAndRequestEnableNotifications() {
+        viewModelScope.launch {
+            notificationsRepository.requestDisableNotifications()
+            (requestEnableNotifications as MutableLiveData).value = Event(Unit)
+        }
+    }
 
     fun removeExposure() {
         notificationsRepository.resetExposures()
@@ -122,6 +125,7 @@ class StatusViewModel(
     ) {
         object None : ErrorState()
         data class ConsentRequired(override val action: () -> Unit) : ErrorState(action)
+        object SyncIssues : ErrorState()
     }
 }
 

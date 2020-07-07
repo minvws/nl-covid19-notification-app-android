@@ -24,13 +24,20 @@ class StatusErrorItem(private val errorState: StatusViewModel.ErrorState) :
         abstract fun getMessage(context: Context): String
     }
 
-    val viewState =
-        object : ErrorViewState(R.string.status_error_action_consent, errorState.action) {
+    val viewState = when (errorState) {
+        is StatusViewModel.ErrorState.ConsentRequired -> object :
+            ErrorViewState(R.string.status_error_action_consent, errorState.action) {
             override fun getMessage(context: Context) = context.getString(
                 R.string.status_error_consent_required,
                 context.getString(R.string.app_name)
             )
         }
+        else -> object :
+            ErrorViewState(R.string.status_error_action_sync_issues, errorState.action) {
+            override fun getMessage(context: Context) =
+                context.getString(R.string.status_error_sync_issues)
+        }
+    }
 
     override fun bind(viewBinding: ItemStatusErrorBinding, position: Int) {
         viewBinding.viewState = viewState
