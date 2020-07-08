@@ -45,9 +45,8 @@ android {
         }
 
         debug {
-            // Keep this true by default so that issues with pinning can be seen during debug.
-            // Disable when inspecting traffic using a proxy of some kind
-            buildConfigField "boolean", "FEATURE_SSL_PINNING", "true"
+            // Uncomment to disable pinning for all debug variants
+            // buildConfigField "boolean", "FEATURE_SSL_PINNING", "false"
         }
     }
 
