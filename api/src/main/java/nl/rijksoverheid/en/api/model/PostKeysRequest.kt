@@ -12,7 +12,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class PostKeysRequest(
     val keys: List<TemporaryExposureKey>,
-    @Json(name = "bucketID") val bucketId: String,
+    @Json(name = "bucketId") val bucketId: String,
     val padding: ByteArray? = "default".toByteArray()
 ) {
     override fun equals(other: Any?): Boolean {
