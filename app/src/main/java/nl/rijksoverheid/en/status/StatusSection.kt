@@ -12,34 +12,58 @@ import com.xwray.groupie.Section
 
 class StatusSection : Section() {
 
+    private var headerState: StatusViewModel.HeaderState? = null
+    private var errorState: StatusViewModel.ErrorState = StatusViewModel.ErrorState.None
+
     private val headerGroup = Section()
     private val errorGroup = Section()
 
     init {
-        add(headerGroup)
-        add(errorGroup)
-        add(
-            Section(
-                listOf(
-                    StatusActionItem.About,
-                    StatusActionItem.GenericNotification,
-                    StatusActionItem.RequestTest,
-                    StatusActionItem.LabTest
+        addAll(
+            listOf(
+                headerGroup, errorGroup, Section(
+                    listOf(
+                        StatusActionItem.About,
+                        StatusActionItem.GenericNotification,
+                        StatusActionItem.RequestTest,
+                        StatusActionItem.LabTest
+                    )
                 )
             )
         )
         setFooter(StatusFooterItem())
     }
 
-    fun updateErrorState(errorState: StatusViewModel.ErrorState) {
-        if (errorState is StatusViewModel.ErrorState.None) {
-            errorGroup.clear()
-        } else {
-            errorGroup.update(listOf(StatusErrorItem(errorState)))
+    fun updateErrorState(
+        errorState: StatusViewModel.ErrorState,
+        action: () -> Unit = {}
+    ) {
+        if (this.errorState != errorState) {
+            this.errorState = errorState
+            if (errorState is StatusViewModel.ErrorState.None) {
+                errorGroup.clear()
+            } else {
+                errorGroup.update(listOf(StatusErrorItem(errorState, action)))
+            }
         }
     }
 
-    fun updateHeader(headerState: StatusViewModel.HeaderState) {
-        headerGroup.update(listOf(StatusHeaderItem(headerState)))
+    fun updateHeader(
+        headerState: StatusViewModel.HeaderState,
+        primaryAction: () -> Unit = {},
+        secondaryAction: () -> Unit = {}
+    ) {
+        if (this.headerState != headerState) {
+            this.headerState = headerState
+            headerGroup.update(
+                listOf(
+                    StatusHeaderItem(
+                        headerState,
+                        primaryAction,
+                        secondaryAction
+                    )
+                )
+            )
+        }
     }
 }

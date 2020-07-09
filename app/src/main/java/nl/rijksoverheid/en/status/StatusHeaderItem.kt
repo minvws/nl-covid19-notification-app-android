@@ -20,7 +20,9 @@ import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatExposureDate
 
 class StatusHeaderItem(
-    headerState: StatusViewModel.HeaderState
+    headerState: StatusViewModel.HeaderState,
+    primaryAction: () -> Unit,
+    secondaryAction: () -> Unit
 ) : BaseBindableItem<ItemStatusHeaderBinding>() {
 
     abstract class HeaderViewState(
@@ -42,8 +44,8 @@ class StatusHeaderItem(
             R.string.status_no_exposure_detected_headline,
             null,
             null,
-            headerState.primaryAction,
-            headerState.secondaryAction
+            primaryAction,
+            secondaryAction
         ) {
             override fun getDescription(context: Context) = context.getString(
                 R.string.status_no_exposure_detected_description,
@@ -56,8 +58,8 @@ class StatusHeaderItem(
             R.string.status_disabled_headline,
             R.string.status_en_api_disabled_enable,
             null,
-            headerState.primaryAction,
-            headerState.secondaryAction
+            primaryAction,
+            secondaryAction
         ) {
             override fun getDescription(context: Context) = context.getString(
                 R.string.status_en_api_disabled_description, context.getString(R.string.app_name)
@@ -69,8 +71,8 @@ class StatusHeaderItem(
             R.string.status_exposure_detected_headline,
             R.string.status_exposure_what_next,
             R.string.status_reset_exposure,
-            headerState.primaryAction,
-            headerState.secondaryAction
+            primaryAction,
+            secondaryAction
         ) {
             override fun getDescription(context: Context) = context.getString(
                 R.string.status_exposure_detected_description,

@@ -14,7 +14,10 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusErrorBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 
-class StatusErrorItem(private val errorState: StatusViewModel.ErrorState) :
+class StatusErrorItem(
+    errorState: StatusViewModel.ErrorState,
+    private val action: () -> Unit
+) :
     BaseBindableItem<ItemStatusErrorBinding>() {
 
     abstract class ErrorViewState(
@@ -26,14 +29,14 @@ class StatusErrorItem(private val errorState: StatusViewModel.ErrorState) :
 
     val viewState = when (errorState) {
         is StatusViewModel.ErrorState.ConsentRequired -> object :
-            ErrorViewState(R.string.status_error_action_consent, errorState.action) {
+            ErrorViewState(R.string.status_error_action_consent, action) {
             override fun getMessage(context: Context) = context.getString(
                 R.string.status_error_consent_required,
                 context.getString(R.string.app_name)
             )
         }
         else -> object :
-            ErrorViewState(R.string.status_error_action_sync_issues, errorState.action) {
+            ErrorViewState(R.string.status_error_action_sync_issues, action) {
             override fun getMessage(context: Context) =
                 context.getString(R.string.status_error_sync_issues)
         }

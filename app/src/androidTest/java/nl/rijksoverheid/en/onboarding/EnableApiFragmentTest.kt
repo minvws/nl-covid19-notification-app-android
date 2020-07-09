@@ -22,6 +22,7 @@ import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.StatusCache
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
@@ -76,7 +77,8 @@ class EnableApiFragmentTest {
             override fun cancel() {
             }
         },
-        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context))
+        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)),
+        StatusCache(notificationsPreferences)
     )
     private val viewModel = ExposureNotificationsViewModel(repository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {

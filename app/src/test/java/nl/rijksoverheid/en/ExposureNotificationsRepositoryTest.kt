@@ -170,6 +170,7 @@ class ExposureNotificationsRepositoryTest {
             sharedPrefs,
             fakeScheduler,
             mock(),
+            mock(),
             signatureValidation = false
         )
 
@@ -236,6 +237,7 @@ class ExposureNotificationsRepositoryTest {
             sharedPrefs,
             fakeScheduler,
             mock(),
+            mock(),
             signatureValidation = false
         )
 
@@ -290,7 +292,7 @@ class ExposureNotificationsRepositoryTest {
             putStringSet("exposure_key_sets", setOf("test"))
         }
         val repository = ExposureNotificationsRepository(
-            context, api, service, sharedPrefs, fakeScheduler, mock()
+            context, api, service, sharedPrefs, fakeScheduler, mock(), mock()
         )
 
         val result = repository.processExposureKeySets(
@@ -336,7 +338,7 @@ class ExposureNotificationsRepositoryTest {
             }
 
             val repository = ExposureNotificationsRepository(
-                context, api, service, sharedPrefs, fakeScheduler, mock()
+                context, api, service, sharedPrefs, fakeScheduler, mock(), mock()
             )
 
             val result = repository.processExposureKeySets(
@@ -382,7 +384,7 @@ class ExposureNotificationsRepositoryTest {
                 .getSharedPreferences("repository_test", 0)
 
             val repository = ExposureNotificationsRepository(
-                context, api, service, sharedPrefs, fakeScheduler, mock()
+                context, api, service, sharedPrefs, fakeScheduler, mock(), mock()
             )
 
             val result =
@@ -440,6 +442,7 @@ class ExposureNotificationsRepositoryTest {
                 service,
                 sharedPrefs,
                 fakeScheduler,
+                mock(),
                 mock(),
                 signatureValidation = true
             )
@@ -499,6 +502,7 @@ class ExposureNotificationsRepositoryTest {
                 service,
                 sharedPrefs,
                 fakeScheduler,
+                mock(),
                 mock(),
                 signatureValidation = true
             )
@@ -574,6 +578,7 @@ class ExposureNotificationsRepositoryTest {
                 sharedPrefs,
                 fakeScheduler,
                 mock(),
+                mock(),
                 signatureValidation = false
             )
 
@@ -621,7 +626,7 @@ class ExposureNotificationsRepositoryTest {
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
         val repository = ExposureNotificationsRepository(
-            context, api, mock(), sharedPrefs, fakeScheduler, mock(),
+            context, api, mock(), sharedPrefs, fakeScheduler, mock(), mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -654,7 +659,7 @@ class ExposureNotificationsRepositoryTest {
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
         val repository = ExposureNotificationsRepository(
-            context, api, mock(), sharedPrefs, fakeScheduler, mock(),
+            context, api, mock(), sharedPrefs, fakeScheduler, mock(), mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -680,7 +685,7 @@ class ExposureNotificationsRepositoryTest {
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
         val repository = ExposureNotificationsRepository(
-            context, api, mock(), sharedPrefs, fakeScheduler, mock(),
+            context, api, mock(), sharedPrefs, fakeScheduler, mock(), mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -712,6 +717,7 @@ class ExposureNotificationsRepositoryTest {
             mock(),
             sharedPrefs,
             fakeScheduler,
+            mock(),
             mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
@@ -753,6 +759,7 @@ class ExposureNotificationsRepositoryTest {
                 sharedPrefs,
                 fakeScheduler,
                 appLifecycleManager,
+                StatusCache(sharedPrefs),
                 Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
@@ -798,6 +805,7 @@ class ExposureNotificationsRepositoryTest {
                 sharedPrefs,
                 fakeScheduler,
                 appLifecycleManager,
+                StatusCache(sharedPrefs),
                 Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
@@ -843,6 +851,7 @@ class ExposureNotificationsRepositoryTest {
                 sharedPrefs,
                 fakeScheduler,
                 appLifecycleManager,
+                StatusCache(sharedPrefs),
                 Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
@@ -888,6 +897,7 @@ class ExposureNotificationsRepositoryTest {
                 sharedPrefs,
                 fakeScheduler,
                 appLifecycleManager,
+                StatusCache(sharedPrefs),
                 Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
@@ -944,6 +954,7 @@ class ExposureNotificationsRepositoryTest {
                     }
                 },
                 mock(),
+                StatusCache(sharedPrefs),
                 Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
@@ -975,6 +986,7 @@ class ExposureNotificationsRepositoryTest {
                 mock(),
                 sharedPrefs,
                 fakeScheduler,
+                mock(),
                 mock(),
                 clock
             )
@@ -1025,6 +1037,7 @@ class ExposureNotificationsRepositoryTest {
             sharedPrefs,
             fakeScheduler,
             mock(),
+            mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -1059,6 +1072,7 @@ class ExposureNotificationsRepositoryTest {
             fakeService,
             sharedPrefs,
             fakeScheduler,
+            mock(),
             mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
@@ -1096,6 +1110,7 @@ class ExposureNotificationsRepositoryTest {
             mock(),
             mock(),
             fakeScheduler,
+            mock(),
             mock(),
             Clock.systemUTC(),
             signatureValidation = false

@@ -56,11 +56,7 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
             }
         }
 
-        statusViewModel.headerState.observe(viewLifecycleOwner) { section.updateHeader(it) }
-        statusViewModel.errorState.observe(viewLifecycleOwner) { section.updateErrorState(it) }
-
         viewModel.notificationState.observe(viewLifecycleOwner) {
-            statusViewModel.refreshStatus()
             if (it is ExposureNotificationsViewModel.NotificationsState.Unavailable) {
                 Toast.makeText(context, R.string.error_api_not_available, Toast.LENGTH_LONG)
                     .show()
@@ -70,20 +66,52 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         statusViewModel.requestEnableNotifications.observe(viewLifecycleOwner, EventObserver {
             viewModel.requestEnableNotifications()
         })
+    }
 
-        statusViewModel.confirmRemoveExposedMessage.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(StatusFragmentDirections.actionRemoveExposedMessage())
-            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
-                RemoveExposedMessageDialogFragment.REMOVE_EXPOSED_MESSAGE_RESULT
-            )?.observe(viewLifecycleOwner) {
-                if (it) {
-                    statusViewModel.removeExposure()
-                }
+    override fun onStart() {
+        super.onStart()
+
+        statusViewModel.headerState.observe(viewLifecycleOwner) {
+            when (it) {
+                StatusViewModel.HeaderState.Active -> section.updateHeader(
+                    headerState = it
+                )
+                StatusViewModel.HeaderState.Disabled -> section.updateHeader(
+                    headerState = it,
+                    primaryAction = ::resetAndRequestEnableNotifications
+                )
+                is StatusViewModel.HeaderState.Exposed -> section.updateHeader(
+                    headerState = it,
+                    primaryAction = { navigateToPostNotification(it.date.toEpochDay()) },
+                    secondaryAction = ::showRemoveNotificationConfirmationDialog
+                )
             }
-        })
+        }
+        statusViewModel.errorState.observe(viewLifecycleOwner) {
+            when (it) {
+                StatusViewModel.ErrorState.None -> section.updateErrorState(it)
+                StatusViewModel.ErrorState.SyncIssues -> section.updateErrorState(it) { statusViewModel.resetErrorState() }
+                is StatusViewModel.ErrorState.ConsentRequired -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
+            }
+        }
+    }
 
-        statusViewModel.navigateToPostNotification.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(StatusFragmentDirections.actionPostNotification(it.toEpochDay()))
-        })
+    private fun resetAndRequestEnableNotifications() {
+        viewModel.requestDisableNotifications()
+        viewModel.requestEnableNotifications()
+    }
+
+    private fun navigateToPostNotification(epochDay: Long) =
+        findNavController().navigate(StatusFragmentDirections.actionPostNotification(epochDay))
+
+    private fun showRemoveNotificationConfirmationDialog() {
+        findNavController().navigate(StatusFragmentDirections.actionRemoveExposedMessage())
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+            RemoveExposedMessageDialogFragment.REMOVE_EXPOSED_MESSAGE_RESULT
+        )?.observe(viewLifecycleOwner) {
+            if (it) {
+                statusViewModel.removeExposure()
+            }
+        }
     }
 }

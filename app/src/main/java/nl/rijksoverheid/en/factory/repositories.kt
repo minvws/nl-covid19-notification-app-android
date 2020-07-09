@@ -17,6 +17,7 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import nl.rijksoverheid.en.AppLifecycleManager
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
+import nl.rijksoverheid.en.StatusCache
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.HmacSecret
 import nl.rijksoverheid.en.api.LabTestService
@@ -36,9 +37,13 @@ import nl.rijksoverheid.en.onboarding.OnboardingRepository
 private var cdnService: CdnService? = null
 private var labTestService: LabTestService? = null
 private var notificationPreferences: SharedPreferences? = null
+private var statusCache: StatusCache? = null
 
 fun createExposureNotificationsRepository(context: Context): ExposureNotificationsRepository {
     val service = cdnService ?: CdnService.create(context).also { cdnService = it }
+    val statusCache = statusCache ?: StatusCache(
+        context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.cache", 0)
+    ).also { statusCache = it }
 
     return ExposureNotificationsRepository(
         context,
@@ -56,7 +61,8 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
                 CheckConnectionWorker.cancel(context)
             }
         },
-        createAppLifecycleManager(context)
+        createAppLifecycleManager(context),
+        statusCache
     )
 }
 
