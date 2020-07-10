@@ -51,7 +51,7 @@ class LabTestServiceTest {
         assertEquals(1, mockWebServer.requestCount)
         assertNotNull(request.requestUrl?.queryParameter("sig"))
         assertEquals(
-            "5WitMulibQ04TBmz2vg+Hr60mTT68F/z+jDzFpRiGck=",
+            "p976MC558v8I9/v7AoikG1RglvKbNS7PWj/iWDjSPQg=",
             request.requestUrl?.queryParameter("sig")
         )
     }
@@ -75,7 +75,7 @@ class LabTestServiceTest {
         val request = mockWebServer.takeRequest()
         assertEquals(1, mockWebServer.requestCount)
         assertEquals(
-            "{\"keys\":[],\"bucketID\":\"bucketId\",\"padding\":\"AQIDBA==\"}",
+            "{\"keys\":[],\"bucketId\":\"bucketId\",\"padding\":\"AQIDBA==\"}",
             String(request.body.readByteArray())
         )
     }
