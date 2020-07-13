@@ -80,7 +80,7 @@ fun createLabTestRepository(context: Context): LabTestRepository {
             Nearby.getExposureNotificationClient(context)
         ),
         labTestService ?: LabTestService.create(context).also { labTestService = it },
-        { UploadDiagnosisKeysJob.schedule(context) }
+        { delayMinutes -> UploadDiagnosisKeysJob.schedule(context, delayMinutes.toLong()) }
     )
 }
 

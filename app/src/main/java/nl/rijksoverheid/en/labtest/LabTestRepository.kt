@@ -31,8 +31,11 @@ private const val KEY_CONFIRMATION_KEY = "confirmation_key"
 private const val KEY_REGISTRATION_EXPIRATION = "registration_expiration"
 private const val KEY_UPLOAD_DIAGNOSTIC_KEYS = "upload_diagnostic_keys"
 private const val KEY_PENDING_KEYS = "upload_pending_keys"
+private const val KEY_DID_UPLOAD = "upload_completed"
 
-typealias UploadScheduler = () -> Unit
+private const val ADDITIONAL_UPLOAD_DELAY_MINUTES = 240
+
+typealias UploadScheduler = (Int) -> Unit
 
 class LabTestRepository(
     preferences: Lazy<SharedPreferences>,
@@ -98,6 +101,7 @@ class LabTestRepository(
             remove(KEY_BUCKET_ID)
             remove(KEY_PENDING_KEYS)
             remove(KEY_UPLOAD_DIAGNOSTIC_KEYS)
+            remove(KEY_DID_UPLOAD)
         }
     }
 
@@ -123,8 +127,11 @@ class LabTestRepository(
         return try {
             if (exposureKeys.isNotEmpty()) {
                 uploadKeys(exposureKeys, bucketId, confirmationKey)
+                preferences.edit {
+                    putBoolean(KEY_DID_UPLOAD, true)
+                }
             }
-            clearKeyData()
+            keyStorage.clearKeys()
             UploadDiagnosticKeysResult.Success
         } catch (ex: HttpException) {
             Timber.e(ex, "Error while uploading keys")
@@ -168,7 +175,13 @@ class LabTestRepository(
                 preferences.edit {
                     putBoolean(KEY_UPLOAD_DIAGNOSTIC_KEYS, true)
                 }
-                uploadScheduler()
+                uploadScheduler(
+                    if (preferences.getBoolean(
+                            KEY_DID_UPLOAD,
+                            false
+                        )
+                    ) ADDITIONAL_UPLOAD_DELAY_MINUTES else 0
+                )
                 RequestUploadDiagnosisKeysResult.Success
             }
         }
