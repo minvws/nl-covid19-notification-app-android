@@ -8,7 +8,7 @@
     <string name="onboarding_explanation_1_headline">Bescherm je vrienden, familie, en de rest van Nederland</string>
     <string name="onboarding_explanation_1_description">Deze app waarschuwt nadat je in de buurt bent geweest van iemand met het coronavirus. Zo kunnen we samen de verspreiding stoppen.</string>
     <string name="onboarding_explanation_2_headline">Je krijgt een melding <u>nadat</u> je extra kans op besmetting hebt gelopen</string>
-    <string name="onboarding_explanation_2_description">Dit gebeurt als je 10 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. Deze persoon moet ook de app gebruiken.</string>
+    <string name="onboarding_explanation_2_description">De app stuurt alleen een melding als je 10 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. Deze persoon moet ook de app gebruiken.</string>
     <string name="onboarding_explanation_3_headline">De app gebruikt Bluetooth, <u>geen</u> locatiegegevens</string>
     <string name="onboarding_explanation_3_description">De app ziet via Bluetooth of je dicht bij iemand was. Hoe dichterbij, hoe sterker het Bluetooth-signaal. De app weet niet waar je was en wie je bent.</string>
     <string name="onboarding_example_1_headline">Fietste iemand voorbij? Dan krijg je later <u>geen</u> melding</string>
@@ -52,7 +52,7 @@
     <string name="post_notification_paragraph_2" tools:ignore="Typos">Je was %1$s geleden (op %2$s) dicht bij iemand die later corona bleek te hebben. Volgens het RIVM en de GGD heb je in deze situatie extra kans op besmetting gelopen. Als je inderdaad besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
     <string name="generic_notification_paragraph_2">De app stuurt een melding als je 10 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. Volgens het RIVM en de GGD heb je in deze situatie extra kans op besmetting gelopen. Als je besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
     <string name="treat_perspective_header_1">Klachten die passen bij het coronavirus (COVID-19)</string>
-    <string name="treat_perspective_list_2"><![CDATA[<ul><li>(licht) hoesten</li><li>loopneus, niezen, keelpijn</li><li>verlies van geur en/of smaak</li><li>kortademigheid/benauwdheid</li><li>koorts boven de 38 graden</li></ul>]]></string>
+    <string name="treat_perspective_list_2"><![CDATA[<ul><li>(licht) hoesten</li><li>loopneus, niezen, keelpijn</li><li>verlies van geur en/of smaak</li><li>sneller of moeilijk ademen</li><li>koorts met 38 graden of hoger</li></ul>]]></string>
     <string name="treat_perspective_paragraph_3">Heb je klachten? Blijf dan zoveel mogelijk thuis. Zijn het ernstige klachten? Ga naar thuisarts.nl/corona of bel je huisarts.</string>
     <string name="post_notification_header_6">Doe een coronatest</string>
     <string name="post_notification_paragraph_7">Heb je klachten? Doe dan een coronatest.</string>
@@ -111,20 +111,19 @@
     <string name="faq_technical_paragraph_8">De app kijkt een paar keer per dag naar de lijst met codes van besmette personen. Hij vergelijkt deze lijst met de codes die op jouw telefoon zijn bewaard. Zo ziet de app of je extra kans op besmetting hebt gelopen.</string>
     <string name="faq_technical_header_9">5. Jij krijgt een melding als de codes van een besmet persoon op je telefoon staan</string>
     <string name="faq_technical_paragraph_10">In deze melding lees je wanneer je in de buurt van de besmette persoon bent geweest. Niet wie het is en waar het was. Ook vertelt de app wat je nu zelf het beste kunt doen. Je eigen codes staan niet op de lijst van de GGD, maar worden 14 dagen op je telefoon bewaard.</string>
-    <string name="lab_test_toolbar_title">Positief getest</string>
-    <string name="lab_test_header_1">Stuur anderen een anonieme melding dat je besmet bent</string>
-    <string name="lab_test_paragraph_2">Blijkt uit de test dat je besmet bent? Dan belt de GGD je. Ga tijdens het telefoongesprek naar dit scherm. Hier kun je direct een anonieme melding naar anderen sturen. Dit zijn alleen de mensen die langer dan 10 minuten bij je in de buurt waren terwijl je besmettelijk was.</string>
-    <string name="lab_test_header_3">1. Geef deze GGD-sleutel door aan de GGD-medewerker:</string>
-    <string name="lab_test_token_4_loading">GGD-sleutel aan het ophalen</string>
-    <string name="lab_test_token_4_error">De app kon geen GGD-sleutel ophalen. Controleer je internetverbinding.</string>
-    <string name="lab_test_token_4_retry">Probeer opnieuw</string>
-    <string name="lab_test_header_5">2. Deel je codes om anderen te waarschuwen</string>
-    <string name="lab_test_paragraph_6">De mensen met de app waarbij je in de buurt bent geweest toen je besmettelijk was krijgen een melding. Ze weten niet dat deze melding van jou komt.</string>
+    <string name="lab_test_toolbar_title">GGD-Sleutel</string>
+    <string name="lab_test_paragraph_1"><![CDATA[Ben je getest en heb je corona? Dan belt een GGD-medewerker je. Je hebt hierbij je GGD-sleutel nodig. ]]><a href="">Hoe werkt dit?</a></string>
+    <string name="lab_test_step_1">Geef deze GGD-sleutel door aan de GGD-medewerker:</string>
+    <string name="lab_test_token_loading">Sleutel aan het ophalen</string>
+    <string name="lab_test_token_error">De app kon geen GGD-sleutel ophalen. Controleer je internetverbinding.</string>
+    <string name="lab_test_token_retry">Probeer opnieuw</string>
+    <string name="lab_test_step_2">Wacht op de GGD-medewerker voor de volgende stap</string>
+    <string name="lab_test_step_3">Deel je codes om een anonieme melding te versturen</string>
     <string name="lab_test_button">Codes delen</string>
     <string name="lab_test_done_toolbar_title">Bedankt</string>
-    <string name="lab_test_done_header_1">Bedankt en beterschap</string>
-    <string name="lab_test_done_paragraph_2">Je hebt geholpen de verspreiding van het coronavirus te stoppen. Beterschap en sterkte met je herstel.</string>
-    <string name="lab_test_done_list_3">Blijf binnen tot 2 dagen na laatste klachten\nVoorkom contact met je huisgenoten\nWorden je klachten erger? Neem direct contact op met de GGD of je huisarts</string>
+    <string name="lab_test_done_header_1">Bedankt, de GGD helpt je verder</string>
+    <string name="lab_test_done_paragraph_2">De GGD-medewerker vertelt wat je kunt doen om te voorkomen dat je anderen besmet. Beterschap en sterkte met je herstel.</string>
+    <string name="lab_test_done_box_4">De melding wordt alleen verstuurd als de GGD je heeft getest en je corona hebt</string>
     <string name="lab_test_done_button">Sluiten</string>
     <string name="update_google_play_services">Updaten</string>
     <string name="update_google_play_services_headline">Je Google Play Services is niet bijgewerkt</string>
