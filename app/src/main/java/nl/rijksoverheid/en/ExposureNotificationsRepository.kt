@@ -27,12 +27,12 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
@@ -145,81 +145,79 @@ class ExposureNotificationsRepository(
      * Downloads new exposure key sets from the server and processes them
      */
     @VisibleForTesting
-    internal suspend fun processExposureKeySets(manifest: Manifest): ProcessExposureKeysResult =
-        coroutineScope {
-            val processedSets = preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())!!
+    internal suspend fun processExposureKeySets(manifest: Manifest): ProcessExposureKeysResult {
+        val processedSets = preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())!!
 
-            val updates = manifest.exposureKeysSetIds.toMutableSet().apply {
-                removeAll(processedSets)
+        val updates = manifest.exposureKeysSetIds.toMutableSet().apply {
+            removeAll(processedSets)
+        }
+        val files = updates.map {
+            it to supervisorScope { async { api.getExposureKeySetFile(it) } }
+        }.map { (id, responseAsync) ->
+            writeExposureKeyFile(id, responseAsync)
+        }
+
+        // files that have downloaded and saved successfully
+        val validFiles = files.filter { it.file != null && it.signatureValid }
+        val signatureErrors = files.filter { it.file != null && !it.signatureValid }
+        val hasErrors = validFiles.size != files.size - signatureErrors.size
+
+        if (signatureErrors.isNotEmpty()) {
+            // mark as processed, but skip
+            Timber.e("Signature validation error for ${signatureErrors.size} files")
+        }
+
+        if (validFiles.isEmpty()) {
+            Timber.d("No files to process")
+            // shortcut if nothing to process
+            return if (!hasErrors) {
+                // mark any signature failures as completed
+                updateProcessedExposureKeySets(signatureErrors.map { it.id }.toSet(), manifest)
+                ProcessExposureKeysResult.Success
+            } else {
+                ProcessExposureKeysResult.ServerError
             }
-            val files = updates.map {
-                it to
-                    async { api.getExposureKeySetFile(it) }
-            }.map { (id, responseAsync) ->
-                writeExposureKeyFile(id, responseAsync)
-            }
+        }
 
-            // files that have downloaded and saved successfully
-            val validFiles = files.filter { it.file != null && it.signatureValid }
-            val signatureErrors = files.filter { it.file != null && !it.signatureValid }
-            val hasErrors = validFiles.size != files.size - signatureErrors.size
+        val configuration = try {
+            getConfigurationFromManifest(manifest)
+        } catch (ex: IOException) {
+            Timber.e(ex, "Error fetching configuration")
+            return ProcessExposureKeysResult.Error(ex)
+        }
 
-            if (signatureErrors.isNotEmpty()) {
-                // mark as processed, but skip
-                Timber.e("Signature validation error for ${signatureErrors.size} files")
-            }
+        Timber.d("Processing ${validFiles.size} files")
 
-            if (validFiles.isEmpty()) {
-                Timber.d("No files to process")
-                // shortcut if nothing to process
-                return@coroutineScope if (!hasErrors) {
-                    // mark any signature failures as completed
-                    updateProcessedExposureKeySets(signatureErrors.map { it.id }.toSet(), manifest)
+        preferences.edit {
+            putInt(KEY_MIN_RISK_SCORE, configuration.minimumRiskScore)
+        }
+
+        val result = exposureNotificationsApi.provideDiagnosisKeys(
+            validFiles.map { it.file!! },
+            configuration,
+            createToken()
+        )
+        return when (result) {
+            is DiagnosisKeysResult.Success -> {
+                // mark all keys processed
+                Timber.d("Processing was successful")
+                updateProcessedExposureKeySets(
+                    validFiles.map { it.id }.toSet() + signatureErrors.map { it.id }.toSet(),
+                    manifest
+                )
+                if (!hasErrors) {
                     ProcessExposureKeysResult.Success
                 } else {
+                    // postponed server error due to downloading files
                     ProcessExposureKeysResult.ServerError
                 }
             }
-
-            val configuration = try {
-                getConfigurationFromManifest(manifest)
-            } catch (ex: IOException) {
-                Timber.e(ex, "Error fetching configuration")
-                return@coroutineScope ProcessExposureKeysResult.Error(ex)
-            }
-
-            Timber.d("Processing ${validFiles.size} files")
-
-            preferences.edit {
-                putInt(KEY_MIN_RISK_SCORE, configuration.minimumRiskScore)
-            }
-
-            val result = exposureNotificationsApi.provideDiagnosisKeys(
-                validFiles.map { it.file!! },
-                configuration,
-                createToken()
-            )
-            when (result) {
-                is DiagnosisKeysResult.Success -> {
-                    // mark all keys processed
-                    Timber.d("Processing was successful")
-                    updateProcessedExposureKeySets(
-                        validFiles.map { it.id }.toSet() + signatureErrors.map { it.id }.toSet(),
-                        manifest
-                    )
-                    if (!hasErrors) {
-                        ProcessExposureKeysResult.Success
-                    } else {
-                        // postponed server error due to downloading files
-                        ProcessExposureKeysResult.ServerError
-                    }
-                }
-                else -> {
-                    Timber.e("Returned an error: $result")
-                    ProcessExposureKeysResult.ExposureApiError(result)
-                }
+            else -> {
+                Timber.e("Returned an error: $result")
+                ProcessExposureKeysResult.ExposureApiError(result)
             }
         }
+    }
 
     /**
      * Store the ids of the processed exposure keys, considering the current keys and the manifest
