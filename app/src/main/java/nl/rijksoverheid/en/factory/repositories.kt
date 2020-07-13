@@ -19,6 +19,7 @@ import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.LabTestService
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.job.CheckConnectionWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorker
@@ -52,7 +53,8 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
                 CheckConnectionWorker.cancel(context)
             }
         },
-        createAppLifecycleManager(context)
+        createAppLifecycleManager(context),
+        AppConfigManager(service)
     )
 }
 

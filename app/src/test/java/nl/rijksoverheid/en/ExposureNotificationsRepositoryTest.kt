@@ -170,6 +170,7 @@ class ExposureNotificationsRepositoryTest {
             sharedPrefs,
             fakeScheduler,
             mock(),
+            mock(),
             signatureValidation = false
         )
 
@@ -236,6 +237,7 @@ class ExposureNotificationsRepositoryTest {
             sharedPrefs,
             fakeScheduler,
             mock(),
+            mock(),
             signatureValidation = false
         )
 
@@ -290,7 +292,7 @@ class ExposureNotificationsRepositoryTest {
             putStringSet("exposure_key_sets", setOf("test"))
         }
         val repository = ExposureNotificationsRepository(
-            context, api, service, sharedPrefs, fakeScheduler, mock()
+            context, api, service, sharedPrefs, fakeScheduler, mock(), mock()
         )
 
         val result = repository.processExposureKeySets(
@@ -336,7 +338,7 @@ class ExposureNotificationsRepositoryTest {
             }
 
             val repository = ExposureNotificationsRepository(
-                context, api, service, sharedPrefs, fakeScheduler, mock()
+                context, api, service, sharedPrefs, fakeScheduler, mock(), mock()
             )
 
             val result = repository.processExposureKeySets(
@@ -382,7 +384,7 @@ class ExposureNotificationsRepositoryTest {
                 .getSharedPreferences("repository_test", 0)
 
             val repository = ExposureNotificationsRepository(
-                context, api, service, sharedPrefs, fakeScheduler, mock()
+                context, api, service, sharedPrefs, fakeScheduler, mock(), mock()
             )
 
             val result =
@@ -440,6 +442,7 @@ class ExposureNotificationsRepositoryTest {
                 service,
                 sharedPrefs,
                 fakeScheduler,
+                mock(),
                 mock(),
                 signatureValidation = true
             )
@@ -499,6 +502,7 @@ class ExposureNotificationsRepositoryTest {
                 service,
                 sharedPrefs,
                 fakeScheduler,
+                mock(),
                 mock(),
                 signatureValidation = true
             )
@@ -574,6 +578,7 @@ class ExposureNotificationsRepositoryTest {
                 sharedPrefs,
                 fakeScheduler,
                 mock(),
+                mock(),
                 signatureValidation = false
             )
 
@@ -621,7 +626,7 @@ class ExposureNotificationsRepositoryTest {
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
         val repository = ExposureNotificationsRepository(
-            context, api, mock(), sharedPrefs, fakeScheduler, mock(),
+            context, api, mock(), sharedPrefs, fakeScheduler, mock(), mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -654,7 +659,7 @@ class ExposureNotificationsRepositoryTest {
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
         val repository = ExposureNotificationsRepository(
-            context, api, mock(), sharedPrefs, fakeScheduler, mock(),
+            context, api, mock(), sharedPrefs, fakeScheduler, mock(), mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -680,7 +685,7 @@ class ExposureNotificationsRepositoryTest {
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
         val repository = ExposureNotificationsRepository(
-            context, api, mock(), sharedPrefs, fakeScheduler, mock(),
+            context, api, mock(), sharedPrefs, fakeScheduler, mock(), mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -713,6 +718,7 @@ class ExposureNotificationsRepositoryTest {
             sharedPrefs,
             fakeScheduler,
             mock(),
+            mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -730,14 +736,15 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(): Manifest =
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
                     Manifest(emptyList(), "dummy", "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig(1, 5, 0.0)
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -753,6 +760,7 @@ class ExposureNotificationsRepositoryTest {
                 sharedPrefs,
                 fakeScheduler,
                 appLifecycleManager,
+                mock(),
                 Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
@@ -798,6 +806,7 @@ class ExposureNotificationsRepositoryTest {
                 sharedPrefs,
                 fakeScheduler,
                 appLifecycleManager,
+                mock(),
                 Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
@@ -820,14 +829,15 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(): Manifest =
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
                     Manifest(emptyList(), "dummy", "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String): AppConfig = AppConfig(2, 5, 0)
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig(2, 5, 0.0)
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -843,6 +853,7 @@ class ExposureNotificationsRepositoryTest {
                 sharedPrefs,
                 fakeScheduler,
                 appLifecycleManager,
+                mock(),
                 Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
@@ -865,14 +876,15 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(): Manifest =
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
                     Manifest(emptyList(), "dummy", "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String): AppConfig = AppConfig(0, 5, 0)
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig(0, 5, 0.0)
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -888,6 +900,7 @@ class ExposureNotificationsRepositoryTest {
                 sharedPrefs,
                 fakeScheduler,
                 appLifecycleManager,
+                mock(),
                 Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
@@ -905,20 +918,6 @@ class ExposureNotificationsRepositoryTest {
     fun `processManifest with disabled exposure notifications cancels job`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
-            val fakeService = object : CdnService {
-                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getManifest(): Manifest = throw IllegalStateException()
-
-                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getAppConfig(id: String): AppConfig =
-                    throw NotImplementedError()
-            }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
             val sharedPrefs = context.getSharedPreferences("repository_test", 0)
@@ -932,7 +931,7 @@ class ExposureNotificationsRepositoryTest {
                     override suspend fun disableNotifications(): DisableNotificationsResult =
                         DisableNotificationsResult.Disabled
                 },
-                fakeService,
+                mock(),
                 sharedPrefs,
                 object : ProcessManifestWorkerScheduler {
                     override fun schedule(intervalMinutes: Int) {
@@ -943,6 +942,7 @@ class ExposureNotificationsRepositoryTest {
                         cancelled.set(true)
                     }
                 },
+                mock(),
                 mock(),
                 Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
@@ -976,6 +976,7 @@ class ExposureNotificationsRepositoryTest {
                 sharedPrefs,
                 fakeScheduler,
                 mock(),
+                mock(),
                 clock
             )
 
@@ -1000,7 +1001,7 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(): Manifest {
+            override suspend fun getManifest(cacheHeader: String?): Manifest {
                 throw NotImplementedError()
             }
 
@@ -1008,7 +1009,8 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
+            override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                AppConfig(1, 5, 0.0)
         }
 
         val context = ApplicationProvider.getApplicationContext<Application>()
@@ -1025,6 +1027,7 @@ class ExposureNotificationsRepositoryTest {
             sharedPrefs,
             fakeScheduler,
             mock(),
+            mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -1039,7 +1042,7 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(): Manifest {
+            override suspend fun getManifest(cacheHeader: String?): Manifest {
                 throw NotImplementedError()
             }
 
@@ -1047,7 +1050,8 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
+            override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                AppConfig(1, 5, 0.0)
         }
 
         val context = ApplicationProvider.getApplicationContext<Application>()
@@ -1059,6 +1063,7 @@ class ExposureNotificationsRepositoryTest {
             fakeService,
             sharedPrefs,
             fakeScheduler,
+            mock(),
             mock(),
             Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
@@ -1096,6 +1101,7 @@ class ExposureNotificationsRepositoryTest {
             mock(),
             mock(),
             fakeScheduler,
+            mock(),
             mock(),
             Clock.systemUTC(),
             signatureValidation = false
