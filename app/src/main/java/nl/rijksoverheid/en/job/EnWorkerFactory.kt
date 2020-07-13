@@ -37,8 +37,8 @@ class EnWorkerFactory : WorkerFactory() {
             )
             UploadDiagnosisKeysJob::class.java.name -> UploadDiagnosisKeysJob(
                 appContext,
-                workerParameters,
-                { createLabTestRepository(appContext).uploadDiagnosticKeysOrDecoy() })
+                workerParameters
+            ) { createLabTestRepository(appContext).uploadDiagnosticKeysIfPending() }
             else -> null
         }
     }

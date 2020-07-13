@@ -18,11 +18,7 @@ import nl.rijksoverheid.en.AppLifecycleManager
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.CdnService
-import nl.rijksoverheid.en.api.HmacSecret
 import nl.rijksoverheid.en.api.LabTestService
-import nl.rijksoverheid.en.api.model.PostKeysRequest
-import nl.rijksoverheid.en.api.model.Registration
-import nl.rijksoverheid.en.api.model.RegistrationRequest
 import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.job.CheckConnectionWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorker
@@ -83,21 +79,8 @@ fun createLabTestRepository(context: Context): LabTestRepository {
             context,
             Nearby.getExposureNotificationClient(context)
         ),
-        labTestService ?: (object : LabTestService {
-            override suspend fun register(request: RegistrationRequest): Registration {
-                // Generate registration code for test purposes
-                val allowedChars = "BCFGJLQRSTUVXYZ23456789".toCharArray()
-                val part1 = (1..3).map { allowedChars.random() }.joinToString("")
-                val part2 = (1..3).map { allowedChars.random() }.joinToString("")
-                val code = "$part1-$part2"
-                return Registration(code, "", ByteArray(0), 2400)
-            }
-
-            override suspend fun postKeys(request: PostKeysRequest, hmacSecret: HmacSecret) {
-                // stub
-            }
-        }).also { labTestService = it },
-        { UploadDiagnosisKeysJob.schedule(context) }
+        labTestService ?: LabTestService.create(context).also { labTestService = it },
+        { delayMinutes -> UploadDiagnosisKeysJob.schedule(context, delayMinutes.toLong()) }
     )
 }
 
