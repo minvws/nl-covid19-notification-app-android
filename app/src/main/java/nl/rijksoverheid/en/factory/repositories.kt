@@ -82,8 +82,14 @@ fun createLabTestRepository(context: Context): LabTestRepository {
             Nearby.getExposureNotificationClient(context)
         ),
         labTestService ?: LabTestService.create(context).also { labTestService = it },
-        { delayMinutes -> UploadDiagnosisKeysJob.schedule(context, delayMinutes.toLong()) }
+        { delayMinutes -> UploadDiagnosisKeysJob.schedule(context, delayMinutes.toLong()) },
+        createAppConfigManager(context)
     )
+}
+
+fun createAppConfigManager(context: Context): AppConfigManager {
+    val service = cdnService ?: CdnService.create(context).also { cdnService = it }
+    return AppConfigManager(service)
 }
 
 fun createAppLifecycleManager(context: Context): AppLifecycleManager {

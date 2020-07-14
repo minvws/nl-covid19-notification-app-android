@@ -13,12 +13,18 @@ import androidx.test.core.app.ApplicationProvider
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.runBlocking
+import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.LabTestService
+import nl.rijksoverheid.en.api.model.AppConfig
+import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.RiskCalculationParameters
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.labtest.KeysStorage
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.labtest.RegistrationResult
 import nl.rijksoverheid.en.labtest.UploadScheduler
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
+import okhttp3.ResponseBody
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -29,6 +35,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import retrofit2.Response
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
@@ -41,6 +48,25 @@ class LabTestRepositoryTest {
     private lateinit var mockWebServer: MockWebServer
     private val instant = Instant.parse("2020-06-20T10:15:30.00Z")
     private val clock = Clock.fixed(instant, ZoneId.of("UTC"))
+
+    private val cdnService = object : CdnService {
+        override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+            throw NotImplementedError()
+        }
+
+        override suspend fun getManifest(cacheHeader: String?): Manifest =
+            Manifest(listOf(), "", "", "appconfig")
+
+        override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+            throw NotImplementedError()
+        }
+
+        override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig {
+            return AppConfig(requestMinimumSize = 0, requestMaximumSize = 0)
+        }
+    }
+
+    private val appConfigManager = AppConfigManager(cdnService)
 
     @Before
     fun setup() {
@@ -69,6 +95,7 @@ class LabTestRepositoryTest {
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
+                appConfigManager,
                 clock
             )
 
@@ -102,6 +129,7 @@ class LabTestRepositoryTest {
                 baseUrl = mockWebServer.url("/").toString()
             ),
             NOOP_SCHEDULER,
+            appConfigManager,
             clock
         )
 
@@ -135,6 +163,7 @@ class LabTestRepositoryTest {
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
+                appConfigManager,
                 clock
             )
 
@@ -161,6 +190,7 @@ class LabTestRepositoryTest {
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
+                appConfigManager,
                 clock
             )
 
@@ -199,6 +229,7 @@ class LabTestRepositoryTest {
                 baseUrl = mockWebServer.url("/").toString()
             ),
             NOOP_SCHEDULER,
+            appConfigManager,
             clock
         )
 
@@ -236,6 +267,7 @@ class LabTestRepositoryTest {
                 baseUrl = mockWebServer.url("/").toString()
             ),
             NOOP_SCHEDULER,
+            appConfigManager,
             clock
         )
 

@@ -15,9 +15,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.HmacSecret
 import nl.rijksoverheid.en.api.LabTestService
+import nl.rijksoverheid.en.api.RequestSize
+import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.PostKeysRequest
 import nl.rijksoverheid.en.api.model.Registration
 import nl.rijksoverheid.en.api.model.RegistrationRequest
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import retrofit2.HttpException
@@ -42,6 +45,7 @@ class LabTestRepository(
     private val exposureNotificationApi: ExposureNotificationApi,
     private val api: LabTestService,
     private val uploadScheduler: UploadScheduler,
+    private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone()
 ) {
     private val preferences by preferences
@@ -53,7 +57,8 @@ class LabTestRepository(
                 return@withContext RegistrationResult.Success(code)
             }
             try {
-                val result = api.register(RegistrationRequest())
+                val config = appConfigManager.getCachedConfigOrDefault()
+                val result = api.register(RegistrationRequest(), config.requestSize)
                 storeResult(result)
                 RegistrationResult.Success(result.labConfirmationId)
             } catch (ex: HttpException) {
@@ -147,14 +152,15 @@ class LabTestRepository(
         bucketId: String,
         confirmationKey: ByteArray
     ) {
+        val config = appConfigManager.getCachedConfigOrDefault()
         val request = PostKeysRequest(requestedKeys.map {
             nl.rijksoverheid.en.api.model.TemporaryExposureKey(
                 it.keyData,
                 it.rollingStartIntervalNumber,
                 it.rollingPeriod
             )
-        }, bucketId).adjustPadding()
-        api.postKeys(request, HmacSecret(confirmationKey))
+        }, bucketId)
+        api.postKeys(request, HmacSecret(confirmationKey), config.requestSize)
     }
 
     suspend fun requestUploadDiagnosticKeys(): RequestUploadDiagnosisKeysResult {
@@ -214,5 +220,5 @@ class LabTestRepository(
     }
 }
 
-// TODO pad the request so that it looks like a full key upload
-private fun PostKeysRequest.adjustPadding(): PostKeysRequest = this
+private val AppConfig.requestSize
+    get() = RequestSize(requestMinimumSize, requestMaximumSize)
