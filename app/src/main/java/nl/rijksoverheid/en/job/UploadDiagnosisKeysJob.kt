@@ -16,50 +16,30 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import timber.log.Timber
-import java.time.Clock
-import java.time.Duration
-import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
 class UploadDiagnosisKeysJob(
     context: Context,
     params: WorkerParameters,
-    private val uploadTask: suspend () -> LabTestRepository.UploadDiagnosticKeysResult,
-    private val scheduleSelf: (Long) -> Unit = { schedule(context, it) },
-    private val clock: Clock = Clock.systemDefaultZone()
+    private val uploadTask: suspend () -> LabTestRepository.UploadDiagnosticKeysResult
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        return when (val result = uploadTask()) {
-            is LabTestRepository.UploadDiagnosticKeysResult.Completed -> Result.success()
+        return when (uploadTask()) {
+            is LabTestRepository.UploadDiagnosticKeysResult.Success -> Result.success()
             is LabTestRepository.UploadDiagnosticKeysResult.Retry -> Result.retry()
-            is LabTestRepository.UploadDiagnosticKeysResult.Initial -> {
-                scheduleAdditionalKeyUpload(result.dateTime)
-                Result.success()
-            }
         }
     }
 
-    private fun scheduleAdditionalKeyUpload(uploadAfter: LocalDateTime) {
-        val delay =
-            (Duration.between(LocalDateTime.now(clock), uploadAfter).toMillis()).coerceAtLeast(
-                TimeUnit.MILLISECONDS.convert(
-                    1,
-                    TimeUnit.HOURS
-                )
-            )
-        Timber.d("Schedule next upload with a delay of $delay ms")
-        scheduleSelf(delay)
-    }
-
     companion object {
-        fun schedule(context: Context, initialDelay: Long = 0) {
+        fun schedule(context: Context, delayMinutes: Long) {
+            Timber.d("Schedule with initial delay of $delayMinutes")
             val request = OneTimeWorkRequestBuilder<UploadDiagnosisKeysJob>()
                 .setConstraints(
                     Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
                 ).apply {
-                    if (initialDelay > 0) {
-                        setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
+                    if (delayMinutes > 0) {
+                        setInitialDelay(delayMinutes, TimeUnit.MINUTES)
                     }
                 }
                 .build()

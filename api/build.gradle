@@ -20,7 +20,7 @@ android {
         // encoded query string for public read access on the cdn
         buildConfigField "String", "CDN_QUERY_STRING", "\"sv=2019-02-02&st=2020-06-26T14%3A13%3A35Z&se=2025-06-27T14%3A13%3A00Z&sr=c&sp=rl&sig=fCwrecfbx6JNp5RlTzw5mmnRCna6hne92Khb8Gk4%2BRw%3D\""
         buildConfigField "String", "CDN_BASE_URL", "\"https://vwspa-cdn-blob.azureedge.net/vws/\""
-        buildConfigField "String", "API_BASE_URL", "\"http://localhost/\""
+        buildConfigField "String", "API_BASE_URL", "\"https://api-ota.alleensamenmelden.nl/mss-acc/\""
         buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "true"
         buildConfigField "boolean", "FEATURE_ACCEPT_HEADER", "false"
         buildConfigField "boolean", "FEATURE_SSL_PINNING", "true"
@@ -45,6 +45,8 @@ android {
         }
 
         debug {
+            // Uncomment to disable pinning for all debug variants
+            // buildConfigField "boolean", "FEATURE_SSL_PINNING", "false"
         }
     }
 
@@ -73,14 +75,14 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     api 'com.squareup.retrofit2:retrofit:2.9.0'
-    api 'com.squareup.okhttp3:okhttp:4.7.2'
+    api 'com.squareup.okhttp3:okhttp:4.8.0'
 
     implementation 'com.squareup.retrofit2:converter-moshi:2.8.1'
     implementation ('com.squareup.moshi:moshi-kotlin:1.9.2') {
         exclude group: "org.jetbrains.kotlin", module: "kotlin-reflect"
     }
 
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.0'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.2'
 
     implementation "com.jakewharton.timber:timber:$timber_version"
@@ -88,6 +90,6 @@ dependencies {
 
     testImplementation 'junit:junit:4.13'
     testImplementation 'org.robolectric:robolectric:4.3.1'
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.7.2")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.8.0")
     testImplementation 'androidx.test:core:1.2.0'
 }

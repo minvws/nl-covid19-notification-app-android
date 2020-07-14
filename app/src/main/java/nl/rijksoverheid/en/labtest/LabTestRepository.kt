@@ -18,24 +18,24 @@ import nl.rijksoverheid.en.api.LabTestService
 import nl.rijksoverheid.en.api.model.PostKeysRequest
 import nl.rijksoverheid.en.api.model.Registration
 import nl.rijksoverheid.en.api.model.RegistrationRequest
-import nl.rijksoverheid.en.api.model.TemporaryExposureKey.Companion.DEFAULT_ROLLING_PERIOD
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
 import java.time.Clock
-import java.time.Instant
-import java.time.LocalDateTime
 
 private const val KEY_LAB_CONFIRMATION_ID = "lab_confirmation_id"
 private const val KEY_BUCKET_ID = "bucket_id"
 private const val KEY_CONFIRMATION_KEY = "confirmation_key"
 private const val KEY_REGISTRATION_EXPIRATION = "registration_expiration"
 private const val KEY_UPLOAD_DIAGNOSTIC_KEYS = "upload_diagnostic_keys"
-private const val KEY_DIAGNOSTIC_KEY_START_INTERVAL = "upload_diagnostic_key_start_interval"
+private const val KEY_PENDING_KEYS = "upload_pending_keys"
+private const val KEY_DID_UPLOAD = "upload_completed"
 
-typealias UploadScheduler = () -> Unit
+private const val ADDITIONAL_UPLOAD_DELAY_MINUTES = 240
+
+typealias UploadScheduler = (Int) -> Unit
 
 class LabTestRepository(
     preferences: Lazy<SharedPreferences>,
@@ -99,21 +99,20 @@ class LabTestRepository(
             remove(KEY_REGISTRATION_EXPIRATION)
             remove(KEY_LAB_CONFIRMATION_ID)
             remove(KEY_BUCKET_ID)
-            remove(KEY_DIAGNOSTIC_KEY_START_INTERVAL)
+            remove(KEY_PENDING_KEYS)
             remove(KEY_UPLOAD_DIAGNOSTIC_KEYS)
+            remove(KEY_DID_UPLOAD)
         }
     }
 
-    suspend fun uploadDiagnosticKeysOrDecoy(): UploadDiagnosticKeysResult {
+    suspend fun uploadDiagnosticKeysIfPending(): UploadDiagnosticKeysResult {
         clearKeyDataIfExpired()
         return if (preferences.getBoolean(KEY_UPLOAD_DIAGNOSTIC_KEYS, false)) {
             uploadDiagnosticKeys()
         } else {
-            uploadDecoyKeys()
+            UploadDiagnosticKeysResult.Success
         }
     }
-
-    private fun uploadDecoyKeys(): UploadDiagnosticKeysResult = UploadDiagnosticKeysResult.Completed
 
     /**
      * Upload the diagnostic keys
@@ -123,73 +122,23 @@ class LabTestRepository(
             preferences.getString(KEY_CONFIRMATION_KEY, null)
                 ?.let { Base64.decode(it, Base64.NO_WRAP) } ?: throw IllegalStateException()
         val bucketId = preferences.getString(KEY_BUCKET_ID, null) ?: throw IllegalStateException()
-        return when (val keyResult = exposureNotificationApi.requestTemporaryExposureKeyHistory()) {
-            is TemporaryExposureKeysResult.RequireConsent -> {
-                Timber.d("Consent has expired")
-                clearKeyData()
-                UploadDiagnosticKeysResult.Completed
-            }
-            is TemporaryExposureKeysResult.UnknownError -> {
-                Timber.w(
-                    keyResult.exception,
-                    "Error getting keys from the exposure notification api"
-                )
-                UploadDiagnosticKeysResult.Retry
-            }
-            is TemporaryExposureKeysResult.Success -> {
-                val lastKeyStartInterval = preferences.getLong(
-                    KEY_DIAGNOSTIC_KEY_START_INTERVAL, 0L
-                )
-                val requestedKeys =
-                    keyResult.keys.filter { it.rollingStartIntervalNumber > lastKeyStartInterval }
-                if (requestedKeys.isNotEmpty()) {
-                    try {
-                        uploadKeys(requestedKeys, bucketId, confirmationKey)
-                        if (lastKeyStartInterval == 0L) {
-                            Timber.d("First key upload")
-                            // this was the first upload, mark the latest key time.
-                            val latestKey = requestedKeys.maxBy { it.rollingStartIntervalNumber }!!
-                            preferences.edit {
-                                putLong(
-                                    KEY_DIAGNOSTIC_KEY_START_INTERVAL,
-                                    latestKey.rollingStartIntervalNumber.toLong()
-                                )
-                            }
-                            UploadDiagnosticKeysResult.Initial(
-                                LocalDateTime.ofInstant(
-                                    Instant.ofEpochMilli(
-                                        (latestKey.rollingStartIntervalNumber + latestKey.rollingPeriodOrDefault) * 600 * 1000L
-                                    ), clock.zone
-                                )
-                            )
-                        } else {
-                            // this was the final upload and we're done now
-                            clearKeyData()
-                            UploadDiagnosticKeysResult.Completed
-                        }
-                    } catch (ex: HttpException) {
-                        Timber.e(ex, "Error while uploading keys")
-                        UploadDiagnosticKeysResult.Retry
-                    } catch (ex: IOException) {
-                        Timber.e(ex, "Error while uploading keys")
-                        UploadDiagnosticKeysResult.Retry
-                    }
-                } else {
-                    if (lastKeyStartInterval == 0L) {
-                        Timber.w("Did not upload keys, but no keys returned from the API!")
-                        UploadDiagnosticKeysResult.Retry
-                    } else {
-                        Timber.w("Did not return new keys")
-                        UploadDiagnosticKeysResult.Initial(
-                            LocalDateTime.ofInstant(
-                                Instant.ofEpochMilli(
-                                    (lastKeyStartInterval + DEFAULT_ROLLING_PERIOD) * 600 * 1000L
-                                ), clock.zone
-                            )
-                        )
-                    }
+        val keyStorage = KeysStorage(KEY_PENDING_KEYS, preferences)
+        val exposureKeys = keyStorage.getKeys()
+        return try {
+            if (exposureKeys.isNotEmpty()) {
+                uploadKeys(exposureKeys, bucketId, confirmationKey)
+                preferences.edit {
+                    putBoolean(KEY_DID_UPLOAD, true)
                 }
             }
+            keyStorage.clearKeys()
+            UploadDiagnosticKeysResult.Success
+        } catch (ex: HttpException) {
+            Timber.e(ex, "Error while uploading keys")
+            UploadDiagnosticKeysResult.Retry
+        } catch (ex: IOException) {
+            Timber.e(ex, "Error while uploading keys")
+            UploadDiagnosticKeysResult.Retry
         }
     }
 
@@ -202,7 +151,7 @@ class LabTestRepository(
             nl.rijksoverheid.en.api.model.TemporaryExposureKey(
                 it.keyData,
                 it.rollingStartIntervalNumber,
-                it.rollingPeriodOrDefault
+                it.rollingPeriod
             )
         }, bucketId).adjustPadding()
         api.postKeys(request, HmacSecret(confirmationKey))
@@ -221,10 +170,18 @@ class LabTestRepository(
                 ) {
                     throw IllegalStateException()
                 }
+                val keyStorage = KeysStorage(KEY_PENDING_KEYS, preferences)
+                keyStorage.storeKeys(result.keys)
                 preferences.edit {
                     putBoolean(KEY_UPLOAD_DIAGNOSTIC_KEYS, true)
                 }
-                uploadScheduler()
+                uploadScheduler(
+                    if (preferences.getBoolean(
+                            KEY_DID_UPLOAD,
+                            false
+                        )
+                    ) ADDITIONAL_UPLOAD_DELAY_MINUTES else 0
+                )
                 RequestUploadDiagnosisKeysResult.Success
             }
         }
@@ -246,19 +203,9 @@ class LabTestRepository(
 
     sealed class UploadDiagnosticKeysResult {
         /**
-         * The initial set of keys has been successfully uploaded.
-         */
-        data class Initial(
-            /**
-             * Date time when the next key will be available
-             **/
-            val dateTime: LocalDateTime
-        ) : UploadDiagnosticKeysResult()
-
-        /**
          * The key upload has completed
          */
-        object Completed : UploadDiagnosticKeysResult()
+        object Success : UploadDiagnosticKeysResult()
 
         /**
          * An error occurred and the key upload should be retried later
@@ -269,6 +216,3 @@ class LabTestRepository(
 
 // TODO pad the request so that it looks like a full key upload
 private fun PostKeysRequest.adjustPadding(): PostKeysRequest = this
-
-private val TemporaryExposureKey.rollingPeriodOrDefault
-    get() = if (rollingPeriod == 0) DEFAULT_ROLLING_PERIOD else rollingPeriod
