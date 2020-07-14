@@ -51,7 +51,10 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
         }
         binding.content.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
-                outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
+                outRect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State
             ) {
                 super.getItemOffsets(outRect, view, parent, state)
                 if (parent.getChildAdapterPosition(view) == 0) {
