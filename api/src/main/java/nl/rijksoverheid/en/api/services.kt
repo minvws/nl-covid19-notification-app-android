@@ -18,8 +18,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
 import java.io.File
 
-private const val CDN_PIN = "sha256/Y9mvm0exBk1JoQ57f9Vm28jKo5lFm/woKcVxrYxu80o="
-private const val API_PIN = "sha256/QiOJQAOogcXfa6sWPbI1wiGhjVS/dZlFgg5nDaguPzk="
+private const val SSL_PIN = "sha256/QiOJQAOogcXfa6sWPbI1wiGhjVS/dZlFgg5nDaguPzk="
 
 private var okHttpClient: OkHttpClient? = null
 
@@ -50,8 +49,8 @@ internal fun createOkHttpClient(context: Context): OkHttpClient {
                 )
                 certificatePinner(
                     CertificatePinner.Builder()
-                        .add(Uri.parse(BuildConfig.CDN_BASE_URL).host!!, CDN_PIN)
-                        .add(Uri.parse(BuildConfig.API_BASE_URL).host!!, API_PIN)
+                        .add(Uri.parse(BuildConfig.CDN_BASE_URL).host!!, SSL_PIN)
+                        .add(Uri.parse(BuildConfig.API_BASE_URL).host!!, SSL_PIN)
                         .build()
                 )
             }
