@@ -12,13 +12,24 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemLabTestStepBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 
-class LabTestStepItem(@StringRes private val text: Int, private val counter: Int) :
-    BaseBindableItem<ItemLabTestStepBinding>() {
+class LabTestStepItem(
+    @StringRes private val text: Int,
+    private val counter: Int,
+    private val isFirstElement: Boolean = false,
+    private val isLastElement: Boolean = false
+) : BaseBindableItem<ItemLabTestStepBinding>() {
+
+    data class ViewState(
+        val counter: String,
+        val text: Int,
+        val showTopLine: Boolean,
+        val showBottomLine: Boolean
+    )
+
     override fun getLayout() = R.layout.item_lab_test_step
 
     override fun bind(viewBinding: ItemLabTestStepBinding, position: Int) {
-        viewBinding.text = text
-        viewBinding.counter = counter.toString()
+        viewBinding.viewState = ViewState(counter.toString(), text, !isFirstElement, !isLastElement)
     }
 
     override fun isSameAs(other: Item<*>): Boolean = other is LabTestStepItem && other.text == text

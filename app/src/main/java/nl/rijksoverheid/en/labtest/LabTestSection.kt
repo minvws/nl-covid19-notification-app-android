@@ -46,10 +46,10 @@ class LabTestSection(
                 IllustrationItem(R.drawable.illustration_lab_test),
                 ParagraphItem(R.string.lab_test_paragraph_1),
                 TextButtonItem(openExplanation),
-                LabTestStepItem(R.string.lab_test_step_1, 1),
+                LabTestStepItem(R.string.lab_test_step_1, 1, isFirstElement = true),
                 LabTestKeyItem(keyState, retry),
                 LabTestStepItem(R.string.lab_test_step_2, 2),
-                LabTestStepItem(R.string.lab_test_step_3, 3),
+                LabTestStepItem(R.string.lab_test_step_3, 3, isLastElement = true),
                 ButtonItem(
                     text = R.string.lab_test_button,
                     buttonClickListener = upload,

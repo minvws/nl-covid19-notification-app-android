@@ -19,76 +19,108 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/message_box_background"
-        android:backgroundTint="@color/gray_lighter"
-        android:minHeight="110dp"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
-        <ProgressBar
-            android:id="@+id/spinner"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:indeterminateTint="?attr/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:show="@{viewState.showProgress}" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="@string/lab_test_token_loading"
-            android:textAppearance="?attr/textAppearanceBody2"
+        <View
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:background="@color/gray_lighter"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/spinner"
-            app:show="@{viewState.showProgress}" />
+            app:layout_constraintEnd_toEndOf="@id/circle_counter"
+            app:layout_constraintStart_toStartOf="@id/circle_counter"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/circle_counter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:gravity="center"
-            android:letterSpacing="0.3"
-            android:text="@{viewState.key}"
-            android:textAppearance="?attr/textAppearanceHeadline5"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:text="1"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:visibility="invisible"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/message_box_background"
+            android:backgroundTint="@color/gray_lighter"
+            android:minHeight="110dp"
+            android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:show="@{viewState.showCode}"
-            tools:text="A56-34F" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/error_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/lab_test_token_error"
-            android:textAppearance="?attr/textAppearanceBody1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:show="@{viewState.showError}" />
+            <ProgressBar
+                android:id="@+id/spinner"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:indeterminateTint="?attr/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:show="@{viewState.showProgress}" />
 
-        <Button
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{_ -> viewState.retry.invoke()}"
-            android:text="@string/lab_test_token_retry"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/error_text"
-            app:show="@{viewState.showError}" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/lab_test_token_loading"
+                android:textAppearance="?attr/textAppearanceBody2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner"
+                app:show="@{viewState.showProgress}" />
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:letterSpacing="0.3"
+                android:text="@{viewState.key}"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:show="@{viewState.showCode}"
+                tools:text="A56-34F" />
+
+            <TextView
+                android:id="@+id/error_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/lab_test_token_error"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:show="@{viewState.showError}" />
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{_ -> viewState.retry.invoke()}"
+                android:text="@string/lab_test_token_retry"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/error_text"
+                app:show="@{viewState.showError}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
