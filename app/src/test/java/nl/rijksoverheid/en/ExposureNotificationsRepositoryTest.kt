@@ -8,16 +8,24 @@ package nl.rijksoverheid.en
 
 import android.app.Application
 import android.app.NotificationManager
+import android.bluetooth.BluetoothManager
 import android.content.Context
+import android.content.Intent
+import android.location.LocationManager
 import android.os.Build
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.nhaarman.mockitokotlin2.mock
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.yield
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
@@ -1132,5 +1140,162 @@ class ExposureNotificationsRepositoryTest {
         entries.sort()
 
         assertEquals(listOf("export.bin", "export.sig"), entries)
+    }
+
+    @Test
+    fun `getStatus emits cached status and then up-to-date status`() = runBlocking {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus(): StatusResult {
+                return StatusResult.Enabled
+            }
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs).apply {
+            updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+        }
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+        }
+
+        val repository = ExposureNotificationsRepository(
+            context, api, mock(), sharedPrefs, mock(), mock(), statusCache
+        )
+
+        val result = mutableListOf<StatusResult>()
+        repository.getStatus().take(2).toList(result)
+
+        assertEquals(listOf(StatusResult.Disabled, StatusResult.Enabled), result)
+    }
+
+    @Test
+    fun `getStatus emits when cache changes`() = runBlockingTest {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus() = StatusResult.Enabled
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs).apply {
+            updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+        }
+
+        val repository = ExposureNotificationsRepository(
+            ApplicationProvider.getApplicationContext(), api, mock(), sharedPrefs, mock(), mock(),
+            statusCache
+        )
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+        }
+
+        val result = async { repository.getStatus().take(3).toList() }
+        yield()
+
+        statusCache.updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+
+        assertEquals(
+            listOf(
+                StatusResult.Enabled,
+                StatusResult.Disabled,
+                StatusResult.Enabled
+            ), result.await()
+        )
+    }
+
+    @Test
+    fun `getStatus re-triggers when location state changes change`() = runBlockingTest {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus() = StatusResult.Enabled
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs)
+
+        val repository = ExposureNotificationsRepository(
+            context, api, mock(), sharedPrefs, mock(), mock(),
+            statusCache
+        )
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+        }
+
+        val result = async { repository.getStatus().take(2).toList() }
+        yield()
+
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(false)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, false)
+        }
+        context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
+
+        assertEquals(
+            listOf(StatusResult.Enabled, StatusResult.InvalidPreconditions),
+            result.await()
+        )
+    }
+
+    @Test
+    fun `getStatus re-triggers when bluetooth state changes change`() = runBlockingTest {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus() = StatusResult.Enabled
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs)
+
+        val repository = ExposureNotificationsRepository(
+            context, api, mock(), sharedPrefs, mock(), mock(),
+            statusCache
+        )
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+        }
+
+        val result = async { repository.getStatus().take(2).toList() }
+        yield()
+
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.disable()
+        context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
+
+        assertEquals(
+            listOf(StatusResult.Enabled, StatusResult.InvalidPreconditions),
+            result.await()
+        )
+    }
+
+    @Test
+    fun `getStatus does not remember API errors`() = runBlockingTest {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus() = StatusResult.Unavailable(5)
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs)
+
+        val repository = ExposureNotificationsRepository(
+            context, api, mock(), sharedPrefs, mock(), mock(),
+            statusCache
+        )
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+        }
+
+        val result = async { repository.getStatus().take(2).toList() }
+        yield()
+
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.disable()
+        context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
+
+        assertEquals(listOf(StatusResult.Enabled, StatusResult.Unavailable(5)), result.await())
+        assertEquals(StatusCache.CachedStatus.ENABLED, statusCache.getCachedStatus().first())
     }
 }

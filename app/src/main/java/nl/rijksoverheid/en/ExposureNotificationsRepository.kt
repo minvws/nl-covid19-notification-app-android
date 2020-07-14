@@ -183,7 +183,9 @@ class ExposureNotificationsRepository(
                 StatusResult.InvalidPreconditions
             }
         } else {
-            statusCache.updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+            if (result == StatusResult.Disabled) {
+                statusCache.updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+            }
             result
         }
     }
