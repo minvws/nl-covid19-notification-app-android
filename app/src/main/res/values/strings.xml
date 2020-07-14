@@ -112,7 +112,8 @@
     <string name="faq_technical_header_9">5. Jij krijgt een melding als de codes van een besmet persoon op je telefoon staan</string>
     <string name="faq_technical_paragraph_10">In deze melding lees je wanneer je in de buurt van de besmette persoon bent geweest. Niet wie het is en waar het was. Ook vertelt de app wat je nu zelf het beste kunt doen. Je eigen codes staan niet op de lijst van de GGD, maar worden 14 dagen op je telefoon bewaard.</string>
     <string name="lab_test_toolbar_title">GGD-Sleutel</string>
-    <string name="lab_test_paragraph_1"><![CDATA[Ben je getest en heb je corona? Dan belt een GGD-medewerker je. Je hebt hierbij je GGD-sleutel nodig. ]]><a href="">Hoe werkt dit?</a></string>
+    <string name="lab_test_paragraph_1">Ben je getest en heb je corona? Dan belt een GGD-medewerker je. Je hebt hierbij je GGD-sleutel nodig.</string>
+    <string name="lab_test_how_does_it_work">Hoe werkt dit?</string>
     <string name="lab_test_step_1">Geef deze GGD-sleutel door aan de GGD-medewerker:</string>
     <string name="lab_test_token_loading">Sleutel aan het ophalen</string>
     <string name="lab_test_token_error">De app kon geen GGD-sleutel ophalen. Controleer je internetverbinding.</string>

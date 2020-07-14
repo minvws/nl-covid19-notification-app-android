@@ -11,7 +11,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
@@ -21,19 +20,6 @@ object BindingAdapters {
     @BindingAdapter("show")
     fun show(view: View, show: Boolean) {
         view.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    @JvmStatic
-    @BindingAdapter("drawableTopCompat")
-    fun setDrawableTopCompat(view: TextView, drawable: Int?) {
-        drawable?.let {
-            view.setCompoundDrawablesWithIntrinsicBounds(
-                null,
-                AppCompatResources.getDrawable(view.context, drawable),
-                null,
-                null
-            )
-        }
     }
 
     @JvmStatic

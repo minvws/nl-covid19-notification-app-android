@@ -34,7 +34,8 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
     private val section = LabTestSection(
         retry = { labViewModel.retry() },
         upload = { labViewModel.upload() },
-        requestConsent = { viewModel.requestEnableNotifications() }
+        requestConsent = { viewModel.requestEnableNotifications() },
+        openExplanation = { /* TODO open to-be-designed explanation page */ }
     )
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
 

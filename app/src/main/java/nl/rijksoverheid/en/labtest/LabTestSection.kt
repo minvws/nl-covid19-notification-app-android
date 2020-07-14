@@ -23,7 +23,8 @@ import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
 class LabTestSection(
     private val retry: () -> Unit,
     private val upload: () -> Unit,
-    private val requestConsent: () -> Unit
+    private val requestConsent: () -> Unit,
+    private val openExplanation: () -> Unit
 ) : Section() {
     private var keyState: KeyState = KeyState.Loading
     private var notificationsState: NotificationsState =
@@ -44,6 +45,7 @@ class LabTestSection(
             mutableListOf<Group>(
                 IllustrationItem(R.drawable.illustration_lab_test),
                 ParagraphItem(R.string.lab_test_paragraph_1),
+                TextButtonItem(openExplanation),
                 LabTestStepItem(R.string.lab_test_step_1, 1),
                 LabTestKeyItem(keyState, retry),
                 LabTestStepItem(R.string.lab_test_step_2, 2),
