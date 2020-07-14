@@ -76,8 +76,8 @@
     <string name="status_info_2_subtitle">Lees wat je kunt doen nadat iemand anders corona blijkt te hebben</string>
     <string name="status_info_3_title">Coronatest aanvragen</string>
     <string name="status_info_3_subtitle">Ontdek zo snel mogelijk of je zelf besmet bent</string>
-    <string name="status_info_4_title">Ik ben getest en heb corona</string>
-    <string name="status_info_4_subtitle">Stuur anderen een anonieme melding dat je besmet bent</string>
+    <string name="status_info_4_title">GGD-Sleutel doorgeven</string>
+    <string name="status_info_4_subtitle">Stuur met de GGD een anonieme melding naar anderen als je besmet bent</string>
     <string name="status_app_version">Test-versie %1$s build %2$s</string>
     <string name="status_exposure_what_next">Wat kan ik nu doen?</string>
     <string name="status_error_consent_required">%1$s werkt alleen als de noodzakelijke instellingen aanstaan.</string>
