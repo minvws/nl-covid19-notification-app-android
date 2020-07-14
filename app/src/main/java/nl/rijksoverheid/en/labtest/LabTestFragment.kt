@@ -9,12 +9,14 @@ package nl.rijksoverheid.en.labtest
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
@@ -32,7 +34,8 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
     private val section = LabTestSection(
         retry = { labViewModel.retry() },
         upload = { labViewModel.upload() },
-        requestConsent = { viewModel.requestEnableNotifications() }
+        requestConsent = { viewModel.requestEnableNotifications() },
+        openExplanation = { /* TODO open to-be-designed explanation page */ }
     )
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
 
@@ -46,6 +49,20 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
             setNavigationIcon(R.drawable.ic_close)
             setNavigationContentDescription(R.string.cd_close)
         }
+        binding.content.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(
+                outRect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State
+            ) {
+                super.getItemOffsets(outRect, view, parent, state)
+                if (parent.getChildAdapterPosition(view) == 0) {
+                    outRect.bottom =
+                        resources.getDimensionPixelOffset(R.dimen.space_below_illustration)
+                }
+            }
+        })
         binding.content.adapter = adapter
 
         labViewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }

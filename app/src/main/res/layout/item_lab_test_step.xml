@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+  ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+  ~
+  ~   SPDX-License-Identifier: EUPL-1.2
+  ~
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewState"
+            type="nl.rijksoverheid.en.labtest.LabTestStepItem.ViewState" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:background="@color/gray_lighter"
+            app:layout_constraintBottom_toBottomOf="@id/circle_counter"
+            app:layout_constraintEnd_toEndOf="@id/circle_counter"
+            app:layout_constraintStart_toStartOf="@id/circle_counter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:show="@{viewState.showTopLine}" />
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:background="@color/gray_lighter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/circle_counter"
+            app:layout_constraintStart_toStartOf="@id/circle_counter"
+            app:layout_constraintTop_toTopOf="@id/circle_counter"
+            app:show="@{viewState.showBottomLine}" />
+
+        <TextView
+            android:id="@+id/circle_counter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:background="@drawable/circle"
+            android:backgroundTint="?attr/colorPrimary"
+            android:gravity="center"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:text="@{viewState.counter}"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintBaseline_toBaselineOf="@id/content"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="8dp"
+            android:accessibilityHeading="true"
+            android:text="@{viewState.text}"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/circle_counter"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:targetApi="p"
+            tools:text="@string/lab_test_step_1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
