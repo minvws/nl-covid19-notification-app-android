@@ -41,6 +41,10 @@
     <string name="update_channel_description">Meldingen als de app-versie te oud is</string>
     <string name="update_notification_title">De app heeft een update nodig</string>
     <string name="update_notification_message">Update de app om te zorgen dat deze goed blijft werken.</string>
+    <string name="debug_channel_name">Debug menu</string>
+    <string name="debug_channel_description">Various debug options</string>
+    <string name="debug_notification_title">Debug options</string>
+    <string name="debug_notification_trigger_exposure_notification">Trigger notificatie</string>
     <string name="sync_issue_channel_name">Internetverbinding</string>
     <string name="sync_issue_channel_description">Meldingen wanneer de app geen internetverbinding kan maken</string>
     <string name="sync_issue_notification_title">Geen internetverbinding</string>

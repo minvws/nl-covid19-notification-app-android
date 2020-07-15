@@ -28,8 +28,8 @@ private const val DEBUG_CHANNEL_ID = "debug_menu"
 class DebugNotification(private val context: Context) {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Debug menu"
-            val descriptionText = "Various debug options"
+            val name = context.getString(R.string.debug_channel_name)
+            val descriptionText = context.getString(R.string.debug_channel_description)
             val importance = NotificationManager.IMPORTANCE_MIN
             val channel = NotificationChannel(DEBUG_CHANNEL_ID, name, importance).apply {
                 description = descriptionText
@@ -56,9 +56,13 @@ class DebugNotification(private val context: Context) {
 
         val builder = NotificationCompat.Builder(context, DEBUG_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle("Debug Options")
+            .setContentTitle(context.getString(R.string.debug_notification_title))
             .setPriority(NotificationCompat.PRIORITY_MIN)
-            .addAction(R.drawable.ic_notification, "Trigger notificatie", pendingIntent)
+            .addAction(
+                R.drawable.ic_notification,
+                context.getString(R.string.debug_notification_trigger_exposure_notification),
+                pendingIntent
+            )
 
         NotificationManagerCompat.from(context).notify(ID_DEBUG_PUSH_NOTIFICATION, builder.build())
     }
