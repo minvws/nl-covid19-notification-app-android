@@ -31,6 +31,15 @@ interface LabTestService {
         @Tag requestSize: RequestSize
     )
 
+    @POST("v1/stopkeys")
+    @BodyHmacSha256Key
+    @PaddedRequest
+    suspend fun stopKeys(
+        @Body request: PostKeysRequest,
+        @Tag hmacSecret: HmacSecret,
+        @Tag requestSize: RequestSize
+    )
+
     companion object {
         fun create(
             context: Context,
