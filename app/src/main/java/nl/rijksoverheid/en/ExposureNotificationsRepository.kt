@@ -82,7 +82,6 @@ private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
 private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
 private const val DEFAULT_MANIFEST_INTERVAL_MINUTES = 240
-private const val DEBUG_TOKEN = "TEST-TOKEN"
 private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
 private const val ID_EXPOSURE_PUSH_NOTIFICATION = 0
 private const val KEY_MIN_RISK_SCORE = "min_risk_score"
@@ -99,6 +98,9 @@ class ExposureNotificationsRepository(
     private val signatureValidation: Boolean = BuildConfig.EXPOSURE_FILE_SIGNATURE_CHECK,
     lifecycleOwner: LifecycleOwner = ProcessLifecycleOwner.get()
 ) {
+    companion object {
+        const val DEBUG_TOKEN = "TEST-TOKEN"
+    }
 
     val keyProcessingOverdue: Boolean
         get() {
