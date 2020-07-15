@@ -17,7 +17,6 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.nhaarman.mockitokotlin2.mock
 import nl.rijksoverheid.en.AppLifecycleManager
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
@@ -27,7 +26,9 @@ import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
 import okhttp3.ResponseBody
@@ -52,24 +53,27 @@ class EnableApiFragmentTest {
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
     private val configPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0)
+
+    private val service = object : CdnService {
+        override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+            throw NotImplementedError()
+        }
+
+        override suspend fun getManifest(cacheHeader: String?): Manifest =
+            Manifest(emptyList(), "", "", "appConfig")
+
+        override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+            throw NotImplementedError()
+        }
+
+        override suspend fun getAppConfig(id: String, cacheHeader: String?) =
+            AppConfig(1, 10, 0.0)
+    }
+
     private val repository = ExposureNotificationsRepository(
         context,
         FakeExposureNotificationApi(),
-        object : CdnService {
-            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getManifest(cacheHeader: String?): Manifest =
-                Manifest(emptyList(), "", "", "appConfig")
-
-            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getAppConfig(id: String, cacheHeader: String?) =
-                AppConfig(1, 10, 0.0)
-        },
+        service,
         notificationsPreferences,
         object : ProcessManifestWorkerScheduler {
             override fun schedule(intervalMinutes: Int) {
@@ -79,7 +83,8 @@ class EnableApiFragmentTest {
             }
         },
         AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)),
-        mock()
+        StatusCache(notificationsPreferences),
+        AppConfigManager(service)
     )
     private val viewModel = ExposureNotificationsViewModel(repository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {

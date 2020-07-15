@@ -10,7 +10,9 @@ import android.app.PendingIntent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
@@ -20,36 +22,33 @@ import timber.log.Timber
 class ExposureNotificationsViewModel(private val repository: ExposureNotificationsRepository) :
     ViewModel() {
 
-    val notificationState: LiveData<NotificationsState> =
-        MutableLiveData(NotificationsState.Enabled)
+    val notificationState: LiveData<NotificationsState> = repository.getStatus().map { result ->
+        when (result) {
+            is StatusResult.Enabled -> NotificationsState.Enabled
+            is StatusResult.Disabled -> NotificationsState.Disabled
+            is StatusResult.InvalidPreconditions -> NotificationsState.InvalidPreconditions
+            is StatusResult.Unavailable -> NotificationsState.Unavailable
+            is StatusResult.UnknownError -> {
+                Timber.d(result.exception, "Unknown error while getting status")
+                updateResult(NotificationsStatusResult.UnknownError(result.exception))
+                NotificationsState.Unavailable
+            }
+        }
+    }.asLiveData(viewModelScope.coroutineContext)
+
     val notificationsResult: LiveData<Event<NotificationsStatusResult>> = MutableLiveData()
 
-    fun refreshStatus() {
+    fun requestDisableNotifications() {
         viewModelScope.launch {
-            when (val result = repository.getStatus()) {
-                is StatusResult.Enabled -> updateState(NotificationsState.Enabled)
-                is StatusResult.Disabled -> updateState(NotificationsState.Disabled)
-                is StatusResult.InvalidPreconditions -> updateState(NotificationsState.InvalidPreconditions)
-                is StatusResult.Unavailable -> updateState(NotificationsState.Unavailable)
-                is StatusResult.UnknownError -> {
-                    Timber.d(
-                        result.exception,
-                        "Unknown error while getting status"
-                    )
-                    updateResult(
-                        NotificationsStatusResult.UnknownError(
-                            result.exception
-                        )
-                    )
-                }
-            }
+            repository.requestDisableNotifications()
         }
     }
 
     fun requestEnableNotifications() {
         viewModelScope.launch {
             when (val result = repository.requestEnableNotifications()) {
-                is EnableNotificationsResult.Enabled -> updateState(NotificationsState.Enabled)
+                is EnableNotificationsResult.Enabled -> {
+                }
                 is EnableNotificationsResult.ResolutionRequired -> updateResult(
                     NotificationsStatusResult.ConsentRequired(
                         result.resolution
@@ -67,10 +66,6 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
                 )
             }
         }
-    }
-
-    private fun updateState(state: NotificationsState) {
-        (notificationState as MutableLiveData).value = state
     }
 
     private fun updateResult(result: NotificationsStatusResult) {

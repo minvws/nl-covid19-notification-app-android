@@ -30,14 +30,19 @@ import nl.rijksoverheid.en.job.UploadDiagnosisKeysJob
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.onboarding.GooglePlayServicesUpToDateChecker
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
+import nl.rijksoverheid.en.status.StatusCache
 
 // cached service instance
 private var cdnService: CdnService? = null
 private var labTestService: LabTestService? = null
 private var notificationPreferences: SharedPreferences? = null
+private var statusCache: StatusCache? = null
 
 fun createExposureNotificationsRepository(context: Context): ExposureNotificationsRepository {
     val service = cdnService ?: CdnService.create(context).also { cdnService = it }
+    val statusCache = statusCache ?: StatusCache(
+        context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.cache", 0)
+    ).also { statusCache = it }
 
     return ExposureNotificationsRepository(
         context,
@@ -59,6 +64,7 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
             }
         },
         createAppLifecycleManager(context),
+        statusCache,
         AppConfigManager(service)
     )
 }

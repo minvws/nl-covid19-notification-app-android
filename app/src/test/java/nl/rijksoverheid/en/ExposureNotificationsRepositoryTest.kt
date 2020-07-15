@@ -8,24 +8,40 @@ package nl.rijksoverheid.en
 
 import android.app.Application
 import android.app.NotificationManager
+import android.bluetooth.BluetoothManager
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.location.LocationManager
 import android.os.Build
 import androidx.core.content.edit
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.test.core.app.ApplicationProvider
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.nhaarman.mockitokotlin2.mock
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.yield
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
+import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -163,16 +179,9 @@ class ExposureNotificationsRepositoryTest {
 
         val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
             .getSharedPreferences("repository_test", 0)
-        val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(),
-            api,
-            service,
-            sharedPrefs,
-            fakeScheduler,
-            mock(),
-            mock(),
-            signatureValidation = false
-        )
+
+        val repository =
+            createRepository(api = api, cdnService = service, preferences = sharedPrefs)
 
         val result =
             repository.processExposureKeySets(
@@ -230,16 +239,8 @@ class ExposureNotificationsRepositoryTest {
             putStringSet("exposure_key_sets", setOf("test"))
         }
 
-        val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(),
-            api,
-            service,
-            sharedPrefs,
-            fakeScheduler,
-            mock(),
-            mock(),
-            signatureValidation = false
-        )
+        val repository =
+            createRepository(api = api, cdnService = service, preferences = sharedPrefs)
 
         val result = repository.processExposureKeySets(
             Manifest(
@@ -291,9 +292,9 @@ class ExposureNotificationsRepositoryTest {
         sharedPrefs.edit(commit = true) {
             putStringSet("exposure_key_sets", setOf("test"))
         }
-        val repository = ExposureNotificationsRepository(
-            context, api, service, sharedPrefs, fakeScheduler, mock(), mock()
-        )
+
+        val repository =
+            createRepository(api = api, cdnService = service, preferences = sharedPrefs)
 
         val result = repository.processExposureKeySets(
             Manifest(
@@ -337,9 +338,8 @@ class ExposureNotificationsRepositoryTest {
                 putStringSet("exposure_key_sets", setOf("test"))
             }
 
-            val repository = ExposureNotificationsRepository(
-                context, api, service, sharedPrefs, fakeScheduler, mock(), mock()
-            )
+            val repository =
+                createRepository(api = api, cdnService = service, preferences = sharedPrefs)
 
             val result = repository.processExposureKeySets(
                 Manifest(
@@ -383,9 +383,8 @@ class ExposureNotificationsRepositoryTest {
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
 
-            val repository = ExposureNotificationsRepository(
-                context, api, service, sharedPrefs, fakeScheduler, mock(), mock()
-            )
+            val repository =
+                createRepository(api = api, cdnService = service, preferences = sharedPrefs)
 
             val result =
                 repository.processExposureKeySets(
@@ -436,14 +435,10 @@ class ExposureNotificationsRepositoryTest {
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
 
-            val repository = ExposureNotificationsRepository(
-                ApplicationProvider.getApplicationContext(),
-                api,
-                service,
-                sharedPrefs,
-                fakeScheduler,
-                mock(),
-                mock(),
+            val repository = createRepository(
+                api = api,
+                cdnService = service,
+                preferences = sharedPrefs,
                 signatureValidation = true
             )
 
@@ -496,16 +491,8 @@ class ExposureNotificationsRepositoryTest {
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
 
-            val repository = ExposureNotificationsRepository(
-                ApplicationProvider.getApplicationContext(),
-                api,
-                service,
-                sharedPrefs,
-                fakeScheduler,
-                mock(),
-                mock(),
-                signatureValidation = true
-            )
+            val repository =
+                createRepository(api = api, cdnService = service, signatureValidation = true)
 
             val result =
                 repository.processExposureKeySets(
@@ -571,16 +558,8 @@ class ExposureNotificationsRepositoryTest {
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
 
-            val repository = ExposureNotificationsRepository(
-                ApplicationProvider.getApplicationContext(),
-                api,
-                service,
-                sharedPrefs,
-                fakeScheduler,
-                mock(),
-                mock(),
-                signatureValidation = false
-            )
+            val repository =
+                createRepository(api = api, cdnService = service, preferences = sharedPrefs)
 
             val result = repository.processExposureKeySets(
                 Manifest(
@@ -622,12 +601,9 @@ class ExposureNotificationsRepositoryTest {
                 } else null
         }
 
-        val context = ApplicationProvider.getApplicationContext<Application>()
-        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-
-        val repository = ExposureNotificationsRepository(
-            context, api, mock(), sharedPrefs, fakeScheduler, mock(), mock(),
-            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        val repository = createRepository(
+            api = api,
+            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
         val notificationManager = ApplicationProvider.getApplicationContext<Context>()
@@ -655,12 +631,10 @@ class ExposureNotificationsRepositoryTest {
                     else -> null
                 }
         }
-        val context = ApplicationProvider.getApplicationContext<Application>()
-        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
-        val repository = ExposureNotificationsRepository(
-            context, api, mock(), sharedPrefs, fakeScheduler, mock(), mock(),
-            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        val repository = createRepository(
+            api = api,
+            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
         repository.addExposure("sample-token-new")
@@ -681,12 +655,9 @@ class ExposureNotificationsRepositoryTest {
                 ExposureSummary.ExposureSummaryBuilder().setMatchedKeyCount(0).build()
         }
 
-        val context = ApplicationProvider.getApplicationContext<Application>()
-        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-
-        val repository = ExposureNotificationsRepository(
-            context, api, mock(), sharedPrefs, fakeScheduler, mock(), mock(),
-            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        val repository = createRepository(
+            api = api,
+            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
         repository.addExposure("sample-token-new")
@@ -711,15 +682,10 @@ class ExposureNotificationsRepositoryTest {
             putInt("min_risk_score", 10)
         }
 
-        val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(),
-            api,
-            mock(),
-            sharedPrefs,
-            fakeScheduler,
-            mock(),
-            mock(),
-            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        val repository = createRepository(
+            api = api,
+            preferences = sharedPrefs,
+            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
         repository.addExposure("sample-token-new")
@@ -749,19 +715,14 @@ class ExposureNotificationsRepositoryTest {
 
             val context = ApplicationProvider.getApplicationContext<Application>()
             val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-            val appLifecycleManager = AppLifecycleManager(context, sharedPrefs, mock())
 
-            val repository = ExposureNotificationsRepository(
-                context,
-                object : FakeExposureNotificationApi() {
+            val repository = createRepository(
+                api = object : FakeExposureNotificationApi() {
                     override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 },
-                fakeService,
-                sharedPrefs,
-                fakeScheduler,
-                appLifecycleManager,
-                mock(),
-                Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+                cdnService = fakeService,
+                preferences = sharedPrefs,
+                clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
             val result = repository.processManifest()
@@ -791,23 +752,18 @@ class ExposureNotificationsRepositoryTest {
 
             val context = ApplicationProvider.getApplicationContext<Application>()
             val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-            val appLifecycleManager = AppLifecycleManager(context, sharedPrefs, mock())
 
             sharedPrefs.edit {
                 putLong("last_keys_processed", Instant.parse(dateTimeSuccess).toEpochMilli())
             }
 
-            val repository = ExposureNotificationsRepository(
-                ApplicationProvider.getApplicationContext(),
-                object : FakeExposureNotificationApi() {
+            val repository = createRepository(
+                api = object : FakeExposureNotificationApi() {
                     override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 },
-                fakeService,
-                sharedPrefs,
-                fakeScheduler,
-                appLifecycleManager,
-                mock(),
-                Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+                cdnService = fakeService,
+                preferences = sharedPrefs,
+                clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
             val result = repository.processManifest()
@@ -841,20 +797,14 @@ class ExposureNotificationsRepositoryTest {
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
-            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-            val appLifecycleManager = AppLifecycleManager(context, sharedPrefs, mock())
 
-            val repository = ExposureNotificationsRepository(
+            val repository = createRepository(
                 context,
-                object : FakeExposureNotificationApi() {
+                api = object : FakeExposureNotificationApi() {
                     override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 },
-                fakeService,
-                sharedPrefs,
-                fakeScheduler,
-                appLifecycleManager,
-                mock(),
-                Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+                cdnService = fakeService,
+                clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
             val result = repository.processManifest()
@@ -889,19 +839,15 @@ class ExposureNotificationsRepositoryTest {
 
             val context = ApplicationProvider.getApplicationContext<Application>()
             val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-            val appLifecycleManager = AppLifecycleManager(context, sharedPrefs, mock())
 
-            val repository = ExposureNotificationsRepository(
+            val repository = createRepository(
                 context,
-                object : FakeExposureNotificationApi() {
+                api = object : FakeExposureNotificationApi() {
                     override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 },
-                fakeService,
-                sharedPrefs,
-                fakeScheduler,
-                appLifecycleManager,
-                mock(),
-                Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+                cdnService = fakeService,
+                preferences = sharedPrefs,
+                clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
             val result = repository.processManifest()
@@ -924,16 +870,13 @@ class ExposureNotificationsRepositoryTest {
 
             val cancelled = AtomicBoolean(false)
 
-            val repository = ExposureNotificationsRepository(
-                context,
-                object : FakeExposureNotificationApi() {
+            val repository = createRepository(
+                api = object : FakeExposureNotificationApi() {
                     override suspend fun getStatus(): StatusResult = StatusResult.Disabled
                     override suspend fun disableNotifications(): DisableNotificationsResult =
                         DisableNotificationsResult.Disabled
                 },
-                mock(),
-                sharedPrefs,
-                object : ProcessManifestWorkerScheduler {
+                scheduler = object : ProcessManifestWorkerScheduler {
                     override fun schedule(intervalMinutes: Int) {
                         throw IllegalStateException()
                     }
@@ -942,9 +885,8 @@ class ExposureNotificationsRepositoryTest {
                         cancelled.set(true)
                     }
                 },
-                mock(),
-                mock(),
-                Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+                preferences = sharedPrefs,
+                clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
 
             val result = repository.processManifest()
@@ -969,16 +911,7 @@ class ExposureNotificationsRepositoryTest {
                     else null
             }
 
-            val repository = ExposureNotificationsRepository(
-                ApplicationProvider.getApplicationContext(),
-                api,
-                mock(),
-                sharedPrefs,
-                fakeScheduler,
-                mock(),
-                mock(),
-                clock
-            )
+            val repository = createRepository(api = api, preferences = sharedPrefs, clock = clock)
 
             val notificationManager = ApplicationProvider.getApplicationContext<Context>()
                 .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -1020,15 +953,11 @@ class ExposureNotificationsRepositoryTest {
             putLong("last_keys_processed", Instant.parse(lastSyncDateTime).toEpochMilli())
         }
 
-        val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(),
-            object : FakeExposureNotificationApi() {},
-            fakeService,
-            sharedPrefs,
-            fakeScheduler,
-            mock(),
-            mock(),
-            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        val repository = createRepository(
+            context = context,
+            preferences = sharedPrefs,
+            cdnService = fakeService,
+            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
         assertTrue(repository.keyProcessingOverdue)
@@ -1054,18 +983,9 @@ class ExposureNotificationsRepositoryTest {
                 AppConfig(1, 5, 0.0)
         }
 
-        val context = ApplicationProvider.getApplicationContext<Application>()
-        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-
-        val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(),
-            object : FakeExposureNotificationApi() {},
-            fakeService,
-            sharedPrefs,
-            fakeScheduler,
-            mock(),
-            mock(),
-            Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        val repository = createRepository(
+            cdnService = fakeService,
+            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
         assertFalse(repository.keyProcessingOverdue)
@@ -1095,17 +1015,7 @@ class ExposureNotificationsRepositoryTest {
 
         val output = File.createTempFile("test", "zip")
 
-        val repository = ExposureNotificationsRepository(
-            ApplicationProvider.getApplicationContext(),
-            object : FakeExposureNotificationApi() {},
-            mock(),
-            mock(),
-            fakeScheduler,
-            mock(),
-            mock(),
-            Clock.systemUTC(),
-            signatureValidation = false
-        )
+        val repository = createRepository(clock = Clock.systemUTC())
 
         ZipInputStream(FileInputStream(input)).use {
             repository.validateAndWrite("id", it, output)
@@ -1123,5 +1033,265 @@ class ExposureNotificationsRepositoryTest {
         entries.sort()
 
         assertEquals(listOf("export.bin", "export.sig"), entries)
+    }
+
+    @Test
+    fun `getStatus emits cached status and then up-to-date status`() = runBlocking {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus(): StatusResult {
+                return StatusResult.Enabled
+            }
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs).apply {
+            updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+        }
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+        }
+
+        val repository = createRepository(
+            context = context,
+            api = api,
+            preferences = sharedPrefs,
+            statusCache = statusCache
+        )
+
+        val result = mutableListOf<StatusResult>()
+        repository.getStatus().take(2).toList(result)
+
+        assertEquals(listOf(StatusResult.Disabled, StatusResult.Enabled), result)
+    }
+
+    @Test
+    fun `getStatus emits when cache changes`() = runBlockingTest {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus() = StatusResult.Enabled
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs).apply {
+            updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+        }
+
+        val repository = createRepository(
+            context = context,
+            api = api,
+            preferences = sharedPrefs,
+            statusCache = statusCache
+        )
+
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+        }
+
+        val result = async { repository.getStatus().take(3).toList() }
+        yield()
+
+        statusCache.updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+
+        assertEquals(
+            listOf(
+                StatusResult.Enabled,
+                StatusResult.Disabled,
+                StatusResult.Enabled
+            ), result.await()
+        )
+    }
+
+    @Test
+    fun `getStatus re-triggers when location state changes change`() = runBlockingTest {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus() = StatusResult.Enabled
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs).apply {
+            updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+        }
+
+        val repository = createRepository(
+            context = context,
+            api = api,
+            preferences = sharedPrefs,
+            statusCache = statusCache
+        )
+
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+        }
+
+        val result = async { repository.getStatus().take(2).toList() }
+        yield()
+
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(false)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, false)
+        }
+        context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
+
+        assertEquals(
+            listOf(StatusResult.Enabled, StatusResult.InvalidPreconditions),
+            result.await()
+        )
+    }
+
+    @Test
+    fun `getStatus re-triggers when bluetooth state changes change`() = runBlockingTest {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus() = StatusResult.Enabled
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs).apply {
+            updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+        }
+
+        val repository = createRepository(
+            context = context,
+            api = api,
+            preferences = sharedPrefs,
+            statusCache = statusCache
+        )
+
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+        }
+
+        val result = async { repository.getStatus().take(2).toList() }
+        yield()
+
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.disable()
+        context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
+
+        assertEquals(
+            listOf(StatusResult.Enabled, StatusResult.InvalidPreconditions),
+            result.await()
+        )
+    }
+
+    @Test
+    fun `getStatus does not remember API errors`() = runBlockingTest {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus() = StatusResult.Unavailable(5)
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs).apply {
+            updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+        }
+
+        val repository =
+            createRepository(context, api, preferences = sharedPrefs, statusCache = statusCache)
+
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+        }
+
+        val result = async { repository.getStatus().take(2).toList() }
+        yield()
+
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.disable()
+        context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
+
+        assertEquals(listOf(StatusResult.Enabled, StatusResult.Unavailable(5)), result.await())
+        assertEquals(StatusCache.CachedStatus.ENABLED, statusCache.getCachedStatus().first())
+    }
+
+    @Test
+    fun `getStatus without cached state defaults to disabled and retrieves status`() =
+        runBlockingTest {
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus() = StatusResult.Enabled
+            }
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+            val statusCache = StatusCache(sharedPrefs) // no initial value set
+
+            (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+            shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+                setLocationEnabled(true)
+                setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+            }
+
+            val repository =
+                createRepository(context, api, preferences = sharedPrefs, statusCache = statusCache)
+
+            val result = async { repository.getStatus().take(2).toList() }
+            yield()
+
+            (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.disable()
+            context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
+
+            assertEquals(listOf(StatusResult.Disabled, StatusResult.Enabled), result.await())
+        }
+
+    private fun createRepository(
+        context: Context = ApplicationProvider.getApplicationContext(),
+        api: ExposureNotificationApi = FakeExposureNotificationApi(),
+        cdnService: CdnService = mock(),
+        preferences: SharedPreferences = context.getSharedPreferences("repository_test", 0),
+        statusCache: StatusCache = StatusCache(
+            preferences
+        ),
+        appLifecycleManager: AppLifecycleManager = AppLifecycleManager(
+            context,
+            preferences,
+            mock()
+        ),
+        clock: Clock = Clock.systemDefaultZone(),
+        lifecycleOwner: LifecycleOwner = TestLifecycleOwner(Lifecycle.State.STARTED),
+        signatureValidation: Boolean = false,
+        scheduler: ProcessManifestWorkerScheduler = fakeScheduler,
+        appConfigManager: AppConfigManager = AppConfigManager(cdnService)
+    ): ExposureNotificationsRepository {
+        return ExposureNotificationsRepository(
+            context,
+            api,
+            cdnService,
+            preferences,
+            scheduler,
+            appLifecycleManager,
+            statusCache,
+            appConfigManager,
+            clock,
+            lifecycleOwner = lifecycleOwner,
+            signatureValidation = signatureValidation
+        )
+    }
+}
+
+private class TestLifecycleOwner(private val state: Lifecycle.State) : LifecycleOwner {
+    override fun getLifecycle(): Lifecycle {
+        return object : Lifecycle() {
+            override fun addObserver(observer: LifecycleObserver) {
+                if (observer is DefaultLifecycleObserver) {
+                    when (currentState) {
+                        State.DESTROYED -> observer.onDestroy(this@TestLifecycleOwner)
+                        State.INITIALIZED -> { /* nothing */
+                        }
+                        State.CREATED -> observer.onCreate(this@TestLifecycleOwner)
+                        State.STARTED -> observer.onStart(this@TestLifecycleOwner)
+                        State.RESUMED -> observer.onResume(this@TestLifecycleOwner)
+                    }
+                }
+            }
+
+            override fun removeObserver(observer: LifecycleObserver) {
+            }
+
+            override fun getCurrentState(): State = state
+        }
     }
 }

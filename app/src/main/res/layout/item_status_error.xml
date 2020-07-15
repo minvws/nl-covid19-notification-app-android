@@ -13,19 +13,22 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="nl.rijksoverheid.en.status.StatusViewModel" />
+            name="viewState"
+            type="nl.rijksoverheid.en.status.StatusErrorItem.ErrorViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/message_box_background"
         android:backgroundTint="@color/error_surface"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        app:show="@{viewModel.shouldShowErrorState}">
+        android:paddingEnd="16dp">
 
         <ImageView
             android:id="@+id/error_box_image"
@@ -41,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="@{viewModel.getErrorText(context, viewModel.errorViewState)}"
+            android:text="@{viewState.getMessage(context)}"
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/error_box_image"
@@ -52,11 +55,11 @@
             style="@style/Widget.MaterialComponents.Button.TextButton.Snackbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.onErrorActionClicked(viewModel.errorViewState)}"
+            android:onClick="@{() -> viewState.action.invoke()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/error_box_text"
-            app:showIfLabelSet="@{viewModel.errorViewState.actionLabel}"
+            app:showIfLabelSet="@{viewState.actionLabel}"
             tools:text="Zet blootstelling aan" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

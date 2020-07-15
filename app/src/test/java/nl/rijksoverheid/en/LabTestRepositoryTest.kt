@@ -19,6 +19,7 @@ import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.labtest.DecoyScheduler
 import nl.rijksoverheid.en.labtest.KeysStorage
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.labtest.RegistrationResult
@@ -41,6 +42,7 @@ import java.time.Instant
 import java.time.ZoneId
 
 private val NOOP_SCHEDULER: UploadScheduler = {}
+private val NOOP_DECOY_SCHEDULER: DecoyScheduler = {}
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
@@ -95,6 +97,7 @@ class LabTestRepositoryTest {
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
+                NOOP_DECOY_SCHEDULER,
                 appConfigManager,
                 clock
             )
@@ -129,6 +132,7 @@ class LabTestRepositoryTest {
                 baseUrl = mockWebServer.url("/").toString()
             ),
             NOOP_SCHEDULER,
+            NOOP_DECOY_SCHEDULER,
             appConfigManager,
             clock
         )
@@ -163,6 +167,7 @@ class LabTestRepositoryTest {
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
+                NOOP_DECOY_SCHEDULER,
                 appConfigManager,
                 clock
             )
@@ -190,6 +195,7 @@ class LabTestRepositoryTest {
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
+                NOOP_DECOY_SCHEDULER,
                 appConfigManager,
                 clock
             )
@@ -229,6 +235,7 @@ class LabTestRepositoryTest {
                 baseUrl = mockWebServer.url("/").toString()
             ),
             NOOP_SCHEDULER,
+            NOOP_DECOY_SCHEDULER,
             appConfigManager,
             clock
         )
@@ -267,6 +274,7 @@ class LabTestRepositoryTest {
                 baseUrl = mockWebServer.url("/").toString()
             ),
             NOOP_SCHEDULER,
+            NOOP_DECOY_SCHEDULER,
             appConfigManager,
             clock
         )

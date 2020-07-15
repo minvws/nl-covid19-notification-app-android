@@ -29,6 +29,7 @@ import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
 import okhttp3.ResponseBody
@@ -80,6 +81,7 @@ class HowItWorksDetailFragmentTest {
             }
         },
         AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)),
+        StatusCache(notificationsPreferences),
         mock()
     )
     private val viewModel = ExposureNotificationsViewModel(repository)

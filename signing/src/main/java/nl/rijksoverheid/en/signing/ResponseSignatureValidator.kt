@@ -20,7 +20,6 @@ import org.bouncycastle.util.encoders.Hex
 import java.io.BufferedInputStream
 import java.io.InputStream
 import java.security.KeyStore
-import java.security.Security
 import java.security.cert.CertPathBuilder
 import java.security.cert.CertStore
 import java.security.cert.PKIXBuilderParameters
@@ -46,6 +45,7 @@ class ResponseSignatureValidator(
 ) {
 
     private val trustAnchor: TrustAnchor?
+    private val provider = BouncyCastleProvider()
 
     init {
         trustAnchor = getCertificateForSubjectKeyIdentifier(
@@ -67,19 +67,12 @@ class ResponseSignatureValidator(
         }
     }
 
-    private fun ensureProviderInstalled() {
-        if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
-            Security.addProvider(BouncyCastleProvider())
-        }
-    }
-
     fun verifySignature(content: InputStream, signature: ByteArray) {
-        ensureProviderInstalled()
         val trustAnchor = this.trustAnchor ?: throw SignatureValidationException()
 
         try {
             val sp = CMSSignedDataParser(
-                JcaDigestCalculatorProviderBuilder().setProvider(BouncyCastleProvider.PROVIDER_NAME)
+                JcaDigestCalculatorProviderBuilder().setProvider(provider)
                     .build(), CMSTypedStream(BufferedInputStream(content)), signature
             )
 
@@ -88,7 +81,7 @@ class ResponseSignatureValidator(
             val certs = sp.certificates
 
             val store: CertStore =
-                JcaCertStoreBuilder().setProvider(BouncyCastleProvider.PROVIDER_NAME)
+                JcaCertStoreBuilder().setProvider(provider)
                     .addCertificate(JcaX509CertificateHolder(trustAnchor.trustedCert))
                     .addCertificates(certs)
                     .build()
@@ -100,7 +93,7 @@ class ResponseSignatureValidator(
             val signingCertificate = result.certPath.certificates[0] as X509Certificate
 
             if (!signer.verify(
-                    JcaSimpleSignerInfoVerifierBuilder().setProvider(BouncyCastleProvider.PROVIDER_NAME)
+                    JcaSimpleSignerInfoVerifierBuilder().setProvider(provider)
                         .build(signingCertificate)
                 )
             ) {
@@ -117,7 +110,7 @@ class ResponseSignatureValidator(
         certs: CertStore
     ): PKIXCertPathBuilderResult? {
         val pathBuilder: CertPathBuilder =
-            CertPathBuilder.getInstance("PKIX", BouncyCastleProvider.PROVIDER_NAME)
+            CertPathBuilder.getInstance("PKIX", provider)
         val targetConstraints = X509CertSelector()
 
         // criteria to target the certificate to build the path to:

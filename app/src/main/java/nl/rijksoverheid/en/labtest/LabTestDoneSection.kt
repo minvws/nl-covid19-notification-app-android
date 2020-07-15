@@ -11,6 +11,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.items.ButtonItem
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.IllustrationItem
+import nl.rijksoverheid.en.items.MessageBoxItem
 import nl.rijksoverheid.en.items.ParagraphItem
 
 class LabTestDoneSection(close: () -> Unit) : Section(
@@ -18,7 +19,7 @@ class LabTestDoneSection(close: () -> Unit) : Section(
         IllustrationItem(R.drawable.illustration_lab_test_done),
         HeaderItem(R.string.lab_test_done_header_1),
         ParagraphItem(R.string.lab_test_done_paragraph_2),
-        ParagraphItem(R.string.lab_test_done_list_3),
+        MessageBoxItem(R.string.lab_test_done_box_4),
         ButtonItem(R.string.lab_test_done_button, close)
     )
 )

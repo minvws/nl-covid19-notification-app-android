@@ -8,8 +8,12 @@ package nl.rijksoverheid.en
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.location.LocationManager
 import android.os.Build
@@ -21,6 +25,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import androidx.core.location.LocationManagerCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.navigation.NavDeepLinkBuilder
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import kotlinx.coroutines.Deferred
@@ -30,8 +37,12 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.CdnService
@@ -43,8 +54,10 @@ import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
+import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.util.formatDaysSince
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
@@ -79,9 +92,11 @@ class ExposureNotificationsRepository(
     private val preferences: SharedPreferences,
     private val manifestWorkerScheduler: ProcessManifestWorkerScheduler,
     private val appLifecycleManager: AppLifecycleManager,
+    private val statusCache: StatusCache,
     private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone(),
-    private val signatureValidation: Boolean = BuildConfig.EXPOSURE_FILE_SIGNATURE_CHECK
+    private val signatureValidation: Boolean = BuildConfig.EXPOSURE_FILE_SIGNATURE_CHECK,
+    lifecycleOwner: LifecycleOwner = ProcessLifecycleOwner.get()
 ) {
 
     val keyProcessingOverdue: Boolean
@@ -104,6 +119,7 @@ class ExposureNotificationsRepository(
             }
             val interval = appConfigManager.getConfigOrDefault().updatePeriodMinutes
             manifestWorkerScheduler.schedule(interval)
+            statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
         }
         return result
     }
@@ -113,18 +129,73 @@ class ExposureNotificationsRepository(
         preferences.edit {
             remove(KEY_LAST_KEYS_PROCESSED)
         }
-        return exposureNotificationsApi.disableNotifications()
+        val result = exposureNotificationsApi.disableNotifications()
+        if (result == DisableNotificationsResult.Disabled) {
+            statusCache.updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+        }
+        return result
     }
 
-    suspend fun getStatus(): StatusResult {
+    private val refreshOnStart = lifecycleOwner.asFlow().filter { it == Lifecycle.State.STARTED }
+        .map { Unit }.onStart { emit(Unit) }
+
+    // Triggers on subscribe and any changes to bluetooth / location permission state
+    private val preconditionsChanged = callbackFlow<Unit> {
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                offer(Unit)
+            }
+        }
+        val filter = IntentFilter().apply {
+            addAction(LocationManager.MODE_CHANGED_ACTION)
+            addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
+        }
+        context.registerReceiver(receiver, filter)
+
+        awaitClose {
+            context.unregisterReceiver(receiver)
+        }
+    }.onStart { emit(Unit) }
+
+    // Triggers on subscribe and any changes to bluetooth / location permission state or cached state
+    private val triggers = refreshOnStart.flatMapLatest { preconditionsChanged }
+        .flatMapLatest { statusCache.getCachedStatus() }
+
+    /**
+     * Directly emits a cached [StatusResult] from cache, followed up by the up to date value from
+     * the API. Any updates to the permissions and framework state will lead to new values being
+     * emitted.
+     */
+    fun getStatus(): Flow<StatusResult> = triggers.flatMapLatest {
+        flow {
+            // Synchronously emit the cached status
+            emit(
+                when (it) {
+                    StatusCache.CachedStatus.ENABLED -> StatusResult.Enabled
+                    StatusCache.CachedStatus.INVALID_PRECONDITIONS -> StatusResult.InvalidPreconditions
+                    StatusCache.CachedStatus.DISABLED -> StatusResult.Disabled
+                    StatusCache.CachedStatus.NONE -> StatusResult.Disabled
+                }
+            )
+            // Asynchronously emit the up to date status
+            emit(retrieveStatus())
+        }
+    }.distinctUntilChanged()
+
+    private suspend fun retrieveStatus(): StatusResult {
         val result = exposureNotificationsApi.getStatus()
         return if (result == StatusResult.Enabled) {
             if (isBluetoothEnabled() && isLocationEnabled()) {
+                statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
                 StatusResult.Enabled
             } else {
+                statusCache.updateCachedStatus(StatusCache.CachedStatus.INVALID_PRECONDITIONS)
                 StatusResult.InvalidPreconditions
             }
         } else {
+            if (result == StatusResult.Disabled) {
+                statusCache.updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+            }
             result
         }
     }
@@ -335,7 +406,7 @@ class ExposureNotificationsRepository(
 
     suspend fun processManifest(): ProcessManifestResult {
         return withContext(Dispatchers.IO) {
-            if (getStatus() == StatusResult.Disabled) {
+            if (retrieveStatus() == StatusResult.Disabled) {
                 Timber.w("Exposure notifications are disabled")
                 // go through the steps as if the user disabled through the app
                 requestDisableNotifications()
@@ -403,8 +474,10 @@ class ExposureNotificationsRepository(
 
     fun resetExposures() {
         preferences.edit {
-            remove(KEY_LAST_TOKEN_ID)
-            remove(KEY_LAST_TOKEN_EXPOSURE_DATE)
+            // Use putString instead of remove, otherwise encrypted shared preferences don't call
+            // an associated shared preferences listener.
+            putString(KEY_LAST_TOKEN_ID, null)
+            putString(KEY_LAST_TOKEN_EXPOSURE_DATE, null)
         }
     }
 

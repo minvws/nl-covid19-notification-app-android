@@ -12,4 +12,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="bullet_radius">4dp</dimen>
     <dimen name="bullet_gap_size">12dp</dimen>
+    <dimen name="space_below_illustration">32dp</dimen>
 </resources>

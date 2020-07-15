@@ -16,7 +16,6 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel.NotificationsState.Una
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.items.ButtonItem
 import nl.rijksoverheid.en.items.ErrorBoxItem
-import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.IllustrationItem
 import nl.rijksoverheid.en.items.ParagraphItem
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
@@ -24,7 +23,8 @@ import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
 class LabTestSection(
     private val retry: () -> Unit,
     private val upload: () -> Unit,
-    private val requestConsent: () -> Unit
+    private val requestConsent: () -> Unit,
+    private val openExplanation: () -> Unit
 ) : Section() {
     private var keyState: KeyState = KeyState.Loading
     private var notificationsState: NotificationsState =
@@ -44,12 +44,12 @@ class LabTestSection(
         update(
             mutableListOf<Group>(
                 IllustrationItem(R.drawable.illustration_lab_test),
-                HeaderItem(R.string.lab_test_header_1),
-                ParagraphItem(R.string.lab_test_paragraph_2),
-                HeaderItem(R.string.lab_test_header_3),
+                ParagraphItem(R.string.lab_test_paragraph_1),
+                TextButtonItem(openExplanation),
+                LabTestStepItem(R.string.lab_test_step_1, 1, isFirstElement = true),
                 LabTestKeyItem(keyState, retry),
-                HeaderItem(R.string.lab_test_header_5),
-                ParagraphItem(R.string.lab_test_paragraph_6),
+                LabTestStepItem(R.string.lab_test_step_2, 2),
+                LabTestStepItem(R.string.lab_test_step_3, 3, isLastElement = true),
                 ButtonItem(
                     text = R.string.lab_test_button,
                     buttonClickListener = upload,
