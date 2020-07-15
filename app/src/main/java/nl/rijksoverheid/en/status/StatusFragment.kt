@@ -66,10 +66,6 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
         statusViewModel.requestEnableNotifications.observe(viewLifecycleOwner, EventObserver {
             viewModel.requestEnableNotifications()
         })
-    }
-
-    override fun onStart() {
-        super.onStart()
 
         statusViewModel.headerState.observe(viewLifecycleOwner) {
             when (it) {

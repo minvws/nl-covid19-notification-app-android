@@ -25,6 +25,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import androidx.core.location.LocationManagerCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.navigation.NavDeepLinkBuilder
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import kotlinx.coroutines.Deferred
@@ -34,6 +37,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -50,6 +54,7 @@ import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
 import nl.rijksoverheid.en.util.formatDaysSince
@@ -90,7 +95,8 @@ class ExposureNotificationsRepository(
     private val appLifecycleManager: AppLifecycleManager,
     private val statusCache: StatusCache,
     private val clock: Clock = Clock.systemDefaultZone(),
-    private val signatureValidation: Boolean = BuildConfig.EXPOSURE_FILE_SIGNATURE_CHECK
+    private val signatureValidation: Boolean = BuildConfig.EXPOSURE_FILE_SIGNATURE_CHECK,
+    lifecycleOwner: LifecycleOwner = ProcessLifecycleOwner.get()
 ) {
 
     val keyProcessingOverdue: Boolean
@@ -131,6 +137,8 @@ class ExposureNotificationsRepository(
         return result
     }
 
+    private val refreshOnStart = lifecycleOwner.asFlow().filter { it == Lifecycle.State.STARTED }
+
     // Triggers on subscribe and any changes to bluetooth / location permission state
     private val preconditionsChanged = callbackFlow<Unit> {
         val receiver = object : BroadcastReceiver() {
@@ -150,7 +158,8 @@ class ExposureNotificationsRepository(
     }.onStart { emit(Unit) }
 
     // Triggers on subscribe and any changes to bluetooth / location permission state or cached state
-    private val triggers = preconditionsChanged.flatMapLatest { statusCache.getCachedStatus() }
+    private val triggers = refreshOnStart.flatMapLatest { preconditionsChanged }
+        .flatMapLatest { statusCache.getCachedStatus() }
 
     /**
      * Directly emits a cached [StatusResult] from cache, followed up by the up to date value from
