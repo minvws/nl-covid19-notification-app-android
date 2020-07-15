@@ -29,18 +29,22 @@
     <string name="status_no_exposure_detected_headline">De app is actief</string>
     <string name="status_no_exposure_detected_description">Ook als je de app sluit, blijft %1$s actief</string>
     <string name="status_exposure_detected_headline">Je bent in de buurt geweest van iemand met het virus</string>
-    <string name="status_exposure_detected_description">Je hebt %1$s geleden (%2$s) extra kans op besmetting gelopen</string>
+    <string name="status_exposure_detected_description">Je hebt %1$s (%2$s) extra kans op besmetting gelopen</string>
     <string name="status_disabled_headline">De app is niet actief</string>
     <string name="status_en_api_disabled_description">%1$s werkt alleen als de noodzakelijke instellingen aanstaan</string>
     <string name="status_en_api_disabled_enable">Instellingen aanzetten</string>
     <string name="notification_channel_name">Meldingen</string>
     <string name="notification_channel_description">Meldingen over mogelijk contact met het coronavirus</string>
     <string name="notification_title">Mogelijk contact met het coronavirus</string>
-    <string name="notification_message">Je bent %1$s geleden in de buurt geweest van iemand met het coronavirus. Lees meer in de app.</string>
+    <string name="notification_message">Je bent %1$s in de buurt geweest van iemand met het coronavirus. Lees meer in de app.</string>
     <string name="update_channel_name">Updates app</string>
     <string name="update_channel_description">Meldingen als de app-versie te oud is</string>
     <string name="update_notification_title">De app heeft een update nodig</string>
     <string name="update_notification_message">Update de app om te zorgen dat deze goed blijft werken.</string>
+    <string name="debug_channel_name">Debug menu</string>
+    <string name="debug_channel_description">Various debug options</string>
+    <string name="debug_notification_title">Debug options</string>
+    <string name="debug_notification_trigger_exposure_notification">Trigger notificatie</string>
     <string name="sync_issue_channel_name">Internetverbinding</string>
     <string name="sync_issue_channel_description">Meldingen wanneer de app geen internetverbinding kan maken</string>
     <string name="sync_issue_notification_title">Geen internetverbinding</string>
@@ -49,7 +53,7 @@
     <string name="generic_notification_toolbar_title">Melding gekregen</string>
     <string name="post_notification_header_1">Je bent in de buurt geweest van iemand met het coronavirus [DIT IS EEN TESTBERICHT]</string>
     <string name="generic_notification_header_1">Wat betekent het als je een melding krijgt?</string>
-    <string name="post_notification_paragraph_2" tools:ignore="Typos">Je was %1$s geleden (op %2$s) dicht bij iemand die later corona bleek te hebben. Volgens het RIVM en de GGD heb je in deze situatie extra kans op besmetting gelopen. Als je inderdaad besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
+    <string name="post_notification_paragraph_2" tools:ignore="Typos">Je was %1$s (op %2$s) dicht bij iemand die later corona bleek te hebben. Volgens het RIVM en de GGD heb je in deze situatie extra kans op besmetting gelopen. Als je inderdaad besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
     <string name="generic_notification_paragraph_2">De app stuurt een melding als je 10 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. Volgens het RIVM en de GGD heb je in deze situatie extra kans op besmetting gelopen. Als je besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
     <string name="treat_perspective_header_1">Klachten die passen bij het coronavirus (COVID-19)</string>
     <string name="treat_perspective_list_2"><![CDATA[<ul><li>(licht) hoesten</li><li>loopneus, niezen, keelpijn</li><li>verlies van geur en/of smaak</li><li>sneller of moeilijk ademen</li><li>koorts met 38 graden of hoger</li></ul>]]></string>
@@ -132,9 +136,9 @@
     <string name="error_upload_not_available">Je kunt alleen je codes delen als de noodzakelijke instellingen aanstaan.</string>
     <string name="error_api_not_available">Er gaat iets mis met de app. Probeer het later nog eens.</string>
     <string name="today">vandaag</string>
-    <plurals name="days">
-        <item quantity="one">%d dag</item>
-        <item quantity="other">%d dagen</item>
+    <plurals name="days_ago">
+        <item quantity="one">%d dag geleden</item>
+        <item quantity="other">%d dagen geleden</item>
     </plurals>
     <string name="dialog_error_api_not_available_title">Google Play Services wordt nog bijgewerkt</string>
     <string name="dialog_error_api_not_available_message">Pas als Google Play Services is bijgewerkt kan mogelijk contact met het coronavirus worden bijgehouden. Probeer het later nog eens.</string>

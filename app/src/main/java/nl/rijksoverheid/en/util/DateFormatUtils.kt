@@ -20,7 +20,7 @@ import java.util.Locale
 fun LocalDate.formatDaysSince(context: Context, clock: Clock = Clock.systemDefaultZone()): String {
     val daysSince = Period.between(this, LocalDate.now(clock)).days
     return if (daysSince == 0) context.resources.getString(R.string.today) else
-        context.resources.getQuantityString(R.plurals.days, daysSince, daysSince)
+        context.resources.getQuantityString(R.plurals.days_ago, daysSince, daysSince)
 }
 
 /**

@@ -98,6 +98,9 @@ class ExposureNotificationsRepository(
     private val signatureValidation: Boolean = BuildConfig.EXPOSURE_FILE_SIGNATURE_CHECK,
     lifecycleOwner: LifecycleOwner = ProcessLifecycleOwner.get()
 ) {
+    companion object {
+        const val DEBUG_TOKEN = "TEST-TOKEN"
+    }
 
     val keyProcessingOverdue: Boolean
         get() {

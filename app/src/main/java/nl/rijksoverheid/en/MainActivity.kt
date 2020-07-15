@@ -14,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.play.core.install.model.AppUpdateType
+import nl.rijksoverheid.en.debug.DebugNotification
 import nl.rijksoverheid.en.lifecyle.EventObserver
 
 private const val RC_REQUEST_CONSENT = 1
@@ -64,6 +65,10 @@ class MainActivity : AppCompatActivity() {
                 RC_UPDATE_APP
             )
         })
+
+        if (BuildConfig.FEATURE_DEBUG_NOTIFICATION) {
+            DebugNotification(this).show()
+        }
     }
 
     override fun onResume() {
