@@ -13,19 +13,19 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="nl.rijksoverheid.en.status.StatusViewModel" />
+            name="viewState"
+            type="nl.rijksoverheid.en.status.StatusHeaderItem.HeaderViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:importantForAccessibility="no"
-            app:imageResource="@{viewModel.headerViewState.background}"
+            app:imageResource="@{viewState.background}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +65,7 @@
             app:layout_constraintTop_toBottomOf="@id/clouds"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:optional_animation="@{viewModel.headerViewState.icon}" />
+            app:optional_animation="@{viewState.icon}" />
 
         <TextView
             android:id="@+id/status_text"
@@ -75,7 +75,7 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:drawablePadding="24dp"
             android:gravity="center_horizontal"
-            android:text="@{viewModel.headerViewState.headline}"
+            android:text="@{viewState.headline}"
             android:textAppearance="?attr/textAppearanceHeadline5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +90,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:gravity="center_horizontal"
-            android:text="@{viewModel.getDescription(context, viewModel.headerViewState)}"
+            android:text="@{viewState.getDescription(context)}"
             android:textAppearance="?attr/textAppearanceBody1"
             android:translationZ="1dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +116,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/illustration_top"
-            app:show="@{viewModel.headerViewState.primaryAction == null}" />
+            app:show="@{viewState.primaryActionLabel == null}" />
 
         <LinearLayout
             android:id="@+id/exposure_buttons"
@@ -136,8 +136,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:onClick="@{() -> viewModel.onPrimaryActionClicked(viewModel.headerViewState)}"
-                app:showIfLabelSet="@{viewModel.HeaderViewState.primaryAction}"
+                android:onClick="@{() -> viewState.primaryAction.invoke()}"
+                app:showIfLabelSet="@{viewState.primaryActionLabel}"
                 tools:text="@string/status_exposure_what_next" />
 
             <Button
@@ -147,8 +147,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:onClick="@{() -> viewModel.onSecondaryActionClicked(viewModel.headerViewState)}"
-                app:showIfLabelSet="@{viewModel.HeaderViewState.secondaryAction}"
+                android:onClick="@{() -> viewState.secondaryAction.invoke()}"
+                app:showIfLabelSet="@{viewState.secondaryActionLabel}"
                 tools:text="@string/status_reset_exposure" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

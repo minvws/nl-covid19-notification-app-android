@@ -1,116 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+  ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+  ~
+  ~   SPDX-License-Identifier: EUPL-1.2
+  ~
+  -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="nl.rijksoverheid.en.status.StatusViewModel" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <include
-                    android:id="@+id/status_header"
-                    layout="@layout/include_status_header"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:viewModel="@{viewModel}" />
-
-                <include
-                    android:id="@+id/status_error"
-                    layout="@layout/include_status_error"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/status_header"
-                    app:viewModel="@{viewModel}" />
-
-                <include
-                    android:id="@+id/info_item_1"
-                    layout="@layout/include_status_info_item"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:infoIcon="@{@drawable/ic_info}"
-                    app:infoSubtitle="@{@string/status_info_1_subtitle}"
-                    app:infoTitle="@{@string/status_info_1_title}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/status_error" />
-
-                <include
-                    android:id="@+id/info_item_2"
-                    layout="@layout/include_status_info_item"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:infoIcon="@{@drawable/ic_shield}"
-                    app:infoSubtitle="@{@string/status_info_2_subtitle}"
-                    app:infoTitle="@{@string/status_info_2_title}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/info_item_1" />
-
-                <include
-                    android:id="@+id/info_item_3"
-                    layout="@layout/include_status_info_item"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:infoIcon="@{@drawable/ic_test}"
-                    app:infoSubtitle="@{@string/status_info_3_subtitle}"
-                    app:infoTitle="@{@string/status_info_3_title}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/info_item_2" />
-
-
-                <include
-                    android:id="@+id/info_item_4"
-                    layout="@layout/include_status_info_item"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:infoIcon="@{@drawable/ic_virus}"
-                    app:infoSubtitle="@{@string/status_info_4_subtitle}"
-                    app:infoTitle="@{@string/status_info_4_title}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/info_item_3" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/activity_horizontal_margin"
-                    android:paddingTop="32dp"
-                    android:paddingEnd="@dimen/activity_horizontal_margin"
-                    android:paddingBottom="32dp"
-                    android:text="@{@string/status_app_version(viewModel.appVersion, viewModel.buildNumber)}"
-                    android:textAppearance="?attr/textAppearanceSubtitle2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/info_item_4"
-                    tools:text="@string/status_app_version" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

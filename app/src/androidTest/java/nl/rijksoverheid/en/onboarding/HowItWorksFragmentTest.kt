@@ -28,6 +28,7 @@ import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
 import okhttp3.ResponseBody
@@ -77,7 +78,8 @@ class HowItWorksFragmentTest {
             override fun cancel() {
             }
         },
-        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context))
+        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)),
+        StatusCache(notificationsPreferences)
     )
     private val viewModel = ExposureNotificationsViewModel(repository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
