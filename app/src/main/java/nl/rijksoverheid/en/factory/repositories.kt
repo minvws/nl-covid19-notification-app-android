@@ -17,7 +17,6 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import nl.rijksoverheid.en.AppLifecycleManager
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
-import nl.rijksoverheid.en.StatusCache
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.LabTestService
 import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
@@ -28,6 +27,7 @@ import nl.rijksoverheid.en.job.UploadDiagnosisKeysJob
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.onboarding.GooglePlayServicesUpToDateChecker
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
+import nl.rijksoverheid.en.status.StatusCache
 
 // cached service instance
 private var cdnService: CdnService? = null

@@ -57,6 +57,7 @@ import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
+import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.util.formatDaysSince
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
@@ -138,6 +139,7 @@ class ExposureNotificationsRepository(
     }
 
     private val refreshOnStart = lifecycleOwner.asFlow().filter { it == Lifecycle.State.STARTED }
+        .map { Unit }.onStart { emit(Unit) }
 
     // Triggers on subscribe and any changes to bluetooth / location permission state
     private val preconditionsChanged = callbackFlow<Unit> {
@@ -174,6 +176,7 @@ class ExposureNotificationsRepository(
                     StatusCache.CachedStatus.ENABLED -> StatusResult.Enabled
                     StatusCache.CachedStatus.INVALID_PRECONDITIONS -> StatusResult.InvalidPreconditions
                     StatusCache.CachedStatus.DISABLED -> StatusResult.Disabled
+                    StatusCache.CachedStatus.NONE -> StatusResult.Disabled
                 }
             )
             // Asynchronously emit the up to date status
@@ -485,7 +488,8 @@ class ExposureNotificationsRepository(
 
     fun resetExposures() {
         preferences.edit {
-            // Use putString instead of remove so the shared preferences listener is called
+            // Use putString instead of remove, otherwise encrypted shared preferences don't call
+            // an associated shared preferences listener.
             putString(KEY_LAST_TOKEN_ID, null)
             putString(KEY_LAST_TOKEN_EXPOSURE_DATE, null)
         }

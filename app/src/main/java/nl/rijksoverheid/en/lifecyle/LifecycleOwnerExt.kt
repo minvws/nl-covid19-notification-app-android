@@ -7,11 +7,12 @@
 package nl.rijksoverheid.en.lifecyle
 
 import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
-fun LifecycleOwner.asFlow() = callbackFlow {
+fun LifecycleOwner.asFlow() = callbackFlow<Lifecycle.State> {
     val observer = object : DefaultLifecycleObserver {
         override fun onCreate(owner: LifecycleOwner) {
             offer(owner.lifecycle.currentState)

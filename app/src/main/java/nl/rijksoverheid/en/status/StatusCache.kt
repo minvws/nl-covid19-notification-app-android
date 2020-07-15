@@ -4,7 +4,7 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en
+package nl.rijksoverheid.en.status
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
@@ -21,24 +21,27 @@ open class StatusCache(private val preferences: SharedPreferences) {
         putInt(KEY_CACHED_STATUS, cachedStatus.ordinal)
     }
 
-    fun getCachedStatus(): Flow<CachedStatus> = callbackFlow {
+    fun getCachedStatus(): Flow<CachedStatus> = callbackFlow<CachedStatus> {
+        // Emit the current cached value, fallback to Disabled
+        offer(getCachedStatusFromPreferences(preferences))
+        // Emit cached value whenever it changes
         val listener =
             SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-                if (key == KEY_CACHED_STATUS) offer(
-                    CachedStatus.values()[sharedPreferences.getInt(
-                        KEY_CACHED_STATUS,
-                        0
-                    )]
-                )
+                if (key == KEY_CACHED_STATUS) {
+                    offer(getCachedStatusFromPreferences(sharedPreferences))
+                }
             }
+
         preferences.registerOnSharedPreferenceChangeListener(listener)
-
-        offer(CachedStatus.values()[preferences.getInt(KEY_CACHED_STATUS, 0)])
-
         awaitClose {
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
         }
     }.distinctUntilChanged()
 
-    enum class CachedStatus { ENABLED, INVALID_PRECONDITIONS, DISABLED }
+    private fun getCachedStatusFromPreferences(preferences: SharedPreferences): CachedStatus {
+        val cachedStatus = preferences.getInt(KEY_CACHED_STATUS, CachedStatus.NONE.ordinal)
+        return CachedStatus.values()[cachedStatus]
+    }
+
+    enum class CachedStatus { ENABLED, INVALID_PRECONDITIONS, DISABLED, NONE }
 }

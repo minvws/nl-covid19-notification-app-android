@@ -40,6 +40,7 @@ import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -1104,7 +1105,9 @@ class ExposureNotificationsRepositoryTest {
         }
         val context = ApplicationProvider.getApplicationContext<Application>()
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-        val statusCache = StatusCache(sharedPrefs)
+        val statusCache = StatusCache(sharedPrefs).apply {
+            updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+        }
 
         val repository = createRepository(
             context = context,
@@ -1141,7 +1144,9 @@ class ExposureNotificationsRepositoryTest {
         }
         val context = ApplicationProvider.getApplicationContext<Application>()
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-        val statusCache = StatusCache(sharedPrefs)
+        val statusCache = StatusCache(sharedPrefs).apply {
+            updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+        }
 
         val repository = createRepository(
             context = context,
@@ -1175,7 +1180,9 @@ class ExposureNotificationsRepositoryTest {
         }
         val context = ApplicationProvider.getApplicationContext<Application>()
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-        val statusCache = StatusCache(sharedPrefs)
+        val statusCache = StatusCache(sharedPrefs).apply {
+            updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+        }
 
         val repository =
             createRepository(context, api, preferences = sharedPrefs, statusCache = statusCache)
@@ -1196,12 +1203,42 @@ class ExposureNotificationsRepositoryTest {
         assertEquals(StatusCache.CachedStatus.ENABLED, statusCache.getCachedStatus().first())
     }
 
+    @Test
+    fun `getStatus without cached state defaults to disabled and retrieves status`() =
+        runBlockingTest {
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus() = StatusResult.Enabled
+            }
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+            val statusCache = StatusCache(sharedPrefs) // no initial value set
+
+            (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+            shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+                setLocationEnabled(true)
+                setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+            }
+
+            val repository =
+                createRepository(context, api, preferences = sharedPrefs, statusCache = statusCache)
+
+            val result = async { repository.getStatus().take(2).toList() }
+            yield()
+
+            (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.disable()
+            context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
+
+            assertEquals(listOf(StatusResult.Disabled, StatusResult.Enabled), result.await())
+        }
+
     private fun createRepository(
         context: Context = ApplicationProvider.getApplicationContext(),
         api: ExposureNotificationApi = FakeExposureNotificationApi(),
         cdnService: CdnService = mock(),
         preferences: SharedPreferences = context.getSharedPreferences("repository_test", 0),
-        statusCache: StatusCache = StatusCache(preferences),
+        statusCache: StatusCache = StatusCache(
+            preferences
+        ),
         appLifecycleManager: AppLifecycleManager = AppLifecycleManager(
             context,
             preferences,
