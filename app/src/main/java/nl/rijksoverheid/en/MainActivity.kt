@@ -14,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.play.core.install.model.AppUpdateType
+import nl.rijksoverheid.en.debug.DebugNotification
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.status.PreconditionsHelper
 
@@ -67,6 +68,10 @@ class MainActivity : AppCompatActivity() {
         })
 
         lifecycle.addObserver(PreconditionsHelper(this) { viewModel.refreshStatus() })
+
+        if (BuildConfig.FEATURE_DEBUG_NOTIFICATION) {
+            DebugNotification(this).show()
+        }
     }
 
     override fun onStart() {
