@@ -63,7 +63,7 @@ class LabTestRepository(
 
     suspend fun scheduleNextDecoyScheduleSequence() {
         val r = Math.random()
-        if (r < appConfigManager.getCachedConfigOrDefault().decoyProbability) {
+        if (r <= appConfigManager.getCachedConfigOrDefault().decoyProbability) {
             val start = LocalDate.now().atTime(DECOY_START_HOUR, 0)
             val end = start.toLocalDate().atTime(DECOY_END_HOUR, 0)
             val decoyTimestamp = Random.nextLong(
@@ -227,9 +227,11 @@ class LabTestRepository(
         }
     }
 
-    suspend fun sendDecoyTraffic() {
-        registerForUpload()
-        delay(Random.nextLong(5000, 900000L))
+    suspend fun sendDecoyTraffic(registerDelay: Long = Random.nextLong(5000, 900000L)) {
+        if (getCachedRegistrationCode() == null) {
+            registerForUpload()
+            delay(registerDelay)
+        }
 
         val key = ByteArray(16)
         SecureRandom().nextBytes(key)
@@ -242,7 +244,7 @@ class LabTestRepository(
             listOf(
                 nl.rijksoverheid.en.api.model.TemporaryExposureKey(
                     key,
-                    (System.currentTimeMillis() / 600L).toInt(), 144
+                    (System.currentTimeMillis() / 600000L).toInt(), 144
                 )
             ), generateDecoyBucketId(bucketId.length)
         )
@@ -285,11 +287,6 @@ class LabTestRepository(
          * An error occurred and the key upload should be retried later
          */
         object Retry : UploadDiagnosticKeysResult()
-    }
-
-    sealed class ScheduleDecoyResult {
-        data class Scheduled(private val delayMillis: Long) : ScheduleDecoyResult()
-        object Skipped : ScheduleDecoyResult()
     }
 
     companion object {
