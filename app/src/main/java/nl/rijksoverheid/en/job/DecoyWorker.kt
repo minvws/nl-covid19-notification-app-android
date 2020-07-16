@@ -44,8 +44,9 @@ class DecoyWorker(
                 setInitialDelay(delayMills, TimeUnit.MILLISECONDS)
             }
 
+            // if already queued, keep the existing decoy
             WorkManager.getInstance(context)
-                .enqueueUniqueWork(WORKER_ID, ExistingWorkPolicy.REPLACE, request.build())
+                .enqueueUniqueWork(WORKER_ID, ExistingWorkPolicy.KEEP, request.build())
         }
 
         fun cancel(context: Context) {

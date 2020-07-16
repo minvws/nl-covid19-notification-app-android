@@ -32,8 +32,9 @@ import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.temporal.ChronoUnit
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
@@ -64,20 +65,27 @@ class LabTestRepository(
     suspend fun scheduleNextDecoyScheduleSequence() {
         val r = Math.random()
         if (r <= appConfigManager.getCachedConfigOrDefault().decoyProbability) {
-            val start = LocalDate.now().atTime(DECOY_START_HOUR, 0)
-            val end = start.toLocalDate().atTime(DECOY_END_HOUR, 0)
-            val decoyTimestamp = Random.nextLong(
-                start.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
-                end.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-            )
-            val delay = Duration.between(
-                LocalDateTime.now(),
-                LocalDateTime.ofInstant(
-                    Instant.ofEpochMilli(decoyTimestamp),
-                    ZoneId.systemDefault()
+            val start = LocalDate.now().atTime(DECOY_WINDOW_START_HOUR, 0)
+            val end = start.toLocalDate().atTime(DECOY_WINDOW_END_HOUR, 0)
+            val decoyTimestamp = Instant.ofEpochMilli(
+                Random.nextLong(
+                    start.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
+                    end.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
                 )
+            )
+
+            // if scheduled time has passed, schedule it or the next day
+            val scheduleTime = if (decoyTimestamp.isBefore(Instant.now(clock))) {
+                decoyTimestamp.plus(1, ChronoUnit.DAYS)
+            } else {
+                decoyTimestamp
+            }
+
+            val delay = Duration.between(
+                ZonedDateTime.now(clock).toInstant(),
+                scheduleTime
             ).toMillis().coerceAtLeast(TimeUnit.MILLISECONDS.convert(15, TimeUnit.MINUTES))
-            Timber.d("Schedule decoy at $decoyTimestamp")
+            Timber.d("Schedule decoy at $scheduleTime, with delay $delay")
             decoyScheduler(delay)
         } else {
             Timber.d("Decoy is skipped")
@@ -290,8 +298,8 @@ class LabTestRepository(
     }
 
     companion object {
-        const val DECOY_START_HOUR = 7
-        const val DECOY_END_HOUR = 19
+        const val DECOY_WINDOW_START_HOUR = 7
+        const val DECOY_WINDOW_END_HOUR = 19
     }
 }
 
