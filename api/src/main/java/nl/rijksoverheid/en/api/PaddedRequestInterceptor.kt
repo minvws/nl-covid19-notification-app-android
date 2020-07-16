@@ -6,18 +6,17 @@
  */
 package nl.rijksoverheid.en.api
 
-import android.util.Base64
 import okhttp3.Interceptor
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okio.Buffer
 import retrofit2.Invocation
 import timber.log.Timber
-import java.security.SecureRandom
 import kotlin.random.Random
 
 private val PADDING_REGEX = Regex("\"padding\":\".*\"")
 private const val NO_PADDING = "\"padding\":\"\""
+private const val CHARACTER_SET = "ABCDEFGHIJKLMNOPQRTSUVWXYZabcdefghijklmnopqrstuvwxyz"
 
 class PaddedRequestInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -40,19 +39,15 @@ class PaddedRequestInterceptor : Interceptor {
                     sizes.min,
                     sizes.min + ((sizes.max - sizes.min) / 100)
                 )
-            }.coerceAtLeast(size.toInt() + 4)
+            }.coerceAtLeast(0)
 
-            Timber.d("Total size = $paddedSize, added padding = ${paddedSize - size.toInt()}")
+            val paddingSize = paddedSize - size.toInt()
+            Timber.d("Total size = $paddedSize, added padding = $paddingSize")
             // If we'd deserialize the json into a generic map, number values are converted to doubles.
             // To prevent changing the original json payload we use a string replace here
-            val padding = ByteArray(getBase64Size(paddedSize - size.toInt()))
-            val paddedJson = if (padding.isNotEmpty()) {
-                Timber.d("Padding before base64 encoding: ${padding.size}")
-                SecureRandom().nextBytes(padding)
-                val base64 =
-                    Base64.encodeToString(padding, Base64.NO_WRAP)
-                Timber.d("Encoded size: ${base64.length}")
-                jsonString.replace(PADDING_REGEX, "\"padding\":\"$base64\"")
+            val paddedJson = if (paddingSize > 0) {
+                val padding = generatePadding(paddingSize)
+                jsonString.replace(PADDING_REGEX, "\"padding\":\"$padding\"")
             } else {
                 jsonString.replace(PADDING_REGEX, NO_PADDING)
             }
@@ -65,9 +60,10 @@ class PaddedRequestInterceptor : Interceptor {
         return chain.proceed(chain.request())
     }
 
-    // TODO this can go away when the server isn't validating base64
-    private fun getBase64Size(size: Int): Int {
-        return ((size / 4) * 3)
+    private fun generatePadding(size: Int): String {
+        return (0 until size)
+            .map { CHARACTER_SET.random() }
+            .joinToString("")
     }
 }
 
