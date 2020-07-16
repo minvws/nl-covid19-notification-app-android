@@ -20,9 +20,9 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQDetailSections
-import nl.rijksoverheid.en.databinding.FragmentHowItWorksBinding
+import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 
-class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_how_it_works) {
+class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val onboardingViewModel: OnboardingViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
 
@@ -46,13 +46,15 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_how_it_works) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentHowItWorksBinding.bind(view)
+        val binding = FragmentListWithButtonBinding.bind(view)
 
         binding.toolbar.setTitle(R.string.onboarding_how_it_works_detail_toolbar_title)
         binding.content.adapter = adapter
 
-        binding.request.setOnClickListener { viewModel.requestEnableNotifications() }
-
+        binding.button.apply {
+            setText(R.string.onboarding_how_it_works_request_consent)
+            setOnClickListener { viewModel.requestEnableNotifications() }
+        }
         viewModel.notificationState.observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
                 onboardingViewModel.finishOnboarding()
