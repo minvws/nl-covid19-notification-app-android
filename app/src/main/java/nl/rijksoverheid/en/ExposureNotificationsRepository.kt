@@ -498,7 +498,7 @@ class ExposureNotificationsRepository(
     }
 
     suspend fun addExposure(token: String) {
-        val testToken = BuildConfig.DEBUG && token == DEBUG_TOKEN
+        val testToken = BuildConfig.FEATURE_DEBUG_NOTIFICATION && token == DEBUG_TOKEN
         val summary = exposureNotificationsApi.getSummary(token)
 
         Timber.d("New exposure for token $token with summary $summary")
