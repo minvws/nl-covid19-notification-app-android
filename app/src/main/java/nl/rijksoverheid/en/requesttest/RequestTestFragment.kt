@@ -14,32 +14,30 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 
-class RequestTestFragment : BaseFragment(R.layout.fragment_list) {
+class RequestTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val phoneNumber = getString(R.string.phone_number)
-        adapter.add(
-            RequestTestSection(
-                onCallClicked = {
-                    startActivity(Intent(Intent.ACTION_DIAL).apply {
-                        data = Uri.parse("tel:$phoneNumber")
-                    })
-                },
-                phoneNumber = phoneNumber
-            )
-        )
+        adapter.add(RequestTestSection(phoneNumber = getString(R.string.phone_number)))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentListBinding.bind(view)
+        val binding = FragmentListWithButtonBinding.bind(view)
 
         binding.toolbar.setTitle(R.string.request_test_toolbar_title)
         binding.content.adapter = adapter
+        binding.button.apply {
+            setText(R.string.post_notification_button)
+            setOnClickListener {
+                startActivity(Intent(Intent.ACTION_DIAL).apply {
+                    val phoneNumber = getString(R.string.phone_number)
+                    data = Uri.parse("tel:$phoneNumber")
+                })
+            }
+        }
     }
 }
