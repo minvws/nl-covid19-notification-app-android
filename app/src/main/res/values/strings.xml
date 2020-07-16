@@ -25,7 +25,6 @@
     <string name="onboarding_how_it_works_toolbar_title">Hoe werkt de app?</string>
     <string name="onboarding_how_it_works_request_consent">App aanzetten</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Veelgestelde vraag</string>
-    <string name="status_test_version">Dit is een testversie</string>
     <string name="status_no_exposure_detected_headline">De app is actief</string>
     <string name="status_no_exposure_detected_description">Ook als je de app sluit, blijft %1$s actief</string>
     <string name="status_exposure_detected_headline">Je bent in de buurt geweest van iemand met het virus</string>
