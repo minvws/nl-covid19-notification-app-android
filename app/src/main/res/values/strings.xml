@@ -51,19 +51,22 @@
     <string name="sync_issue_notification_message">De app kon de afgelopen 24 uur geen internetverbinding maken. Controleer of je wifi of mobiele data aanstaan.</string>
     <string name="post_notification_toolbar_title">Kans op besmetting</string>
     <string name="generic_notification_toolbar_title">Melding gekregen</string>
-    <string name="post_notification_header_1">Je bent in de buurt geweest van iemand met het coronavirus [DIT IS EEN TESTBERICHT]</string>
+    <string name="post_notification_header_1">Je bent in de buurt geweest van iemand met het coronavirus</string>
     <string name="generic_notification_header_1">Wat betekent het als je een melding krijgt?</string>
     <string name="post_notification_paragraph_2" tools:ignore="Typos">Je was %1$s (op %2$s) dicht bij iemand die later corona bleek te hebben. Volgens het RIVM en de GGD heb je in deze situatie extra kans op besmetting gelopen. Als je inderdaad besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
-    <string name="generic_notification_paragraph_2">De app stuurt een melding als je 10 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. Volgens het RIVM en de GGD heb je in deze situatie extra kans op besmetting gelopen. Als je besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
-    <string name="treat_perspective_header_1">Klachten die passen bij het coronavirus (COVID-19)</string>
-    <string name="treat_perspective_list_2"><![CDATA[<ul><li>(licht) hoesten</li><li>loopneus, niezen, keelpijn</li><li>verlies van geur en/of smaak</li><li>sneller of moeilijk ademen</li><li>koorts met 38 graden of hoger</li></ul>]]></string>
-    <string name="treat_perspective_paragraph_3">Heb je klachten? Blijf dan zoveel mogelijk thuis. Zijn het ernstige klachten? Ga naar thuisarts.nl/corona of bel je huisarts.</string>
+    <string name="generic_notification_paragraph_2" tools:ignore="Typos">De app stuurt een melding als je 10 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. Volgens het RIVM en de GGD heb je in deze situatie extra kans op besmetting gelopen. Als je besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
+    <string name="post_notification_header_3">Wat kan ik nu doen?</string>
+    <string name="generic_notification_header_3">Wat kan ik doen?</string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>Doe een gratis coronatest. Ook als je geen klachten hebt</li><li>Heb je lichte klachten? Blijf zo veel mogelijk thuis en doe een coronatest</li><li>Heb je ernstige klachten of hulp nodig door een medische aandoening? Ga naar thuisarts.nl/corona of bel je huisarts</li></ul>]]></string>
     <string name="post_notification_header_6">Doe een coronatest</string>
-    <string name="post_notification_paragraph_7">Heb je klachten? Doe dan een coronatest.</string>
+    <string name="post_notification_paragraph_7">De GGD raadt aan je te laten testen op het virus. Zelfs als je je nog niet ziek voelt. Want zonder je ziek te voelen kun je het coronavirus al verspreiden en zo anderen besmetten.</string>
     <string name="post_notification_paragraph_8">"Testen is gratis. Het duurt niet lang en kan meestal snel gebeuren. De uitslag is binnen 48 uur bekend. Blijf in die tijd zo veel mogelijk thuis. "</string>
     <string name="post_notification_paragraph_9">Bel gratis %1$s om een coronatest aan te vragen.</string>
     <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart</string>
     <string name="post_notification_button">Bel voor coronatest</string>
+    <string name="treat_perspective_header_1">Klachten die passen bij het coronavirus (COVID-19)</string>
+    <string name="treat_perspective_list_2"><![CDATA[<ul><li>(licht) hoesten</li><li>loopneus, niezen, keelpijn</li><li>verlies van geur en/of smaak</li><li>sneller of moeilijk ademen</li><li>koorts met 38 graden of hoger</li></ul>]]></string>
+    <string name="treat_perspective_paragraph_3">Heb je klachten? Blijf dan zoveel mogelijk thuis. Zijn het ernstige klachten? Ga naar thuisarts.nl/corona of bel je huisarts.</string>
     <string name="request_test_toolbar_title">Coronatest aanvragen</string>
     <string name="request_test_header_1">Heb je een melding gekregen of twijfel je of je ziek bent? Vraag een test aan</string>
     <string name="request_test_paragraph_2" tools:ignore="Typos">Krijg je een melding? Dan raadt de GGD aan je te laten testen op het virus. Ook als je je nog niet ziek voelt. Heb je geen melding gekregen, maar wel last van klachten die bij het virus passen? Vraag ook dan een test aan.</string>
