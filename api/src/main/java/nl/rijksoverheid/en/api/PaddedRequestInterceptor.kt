@@ -23,7 +23,7 @@ class PaddedRequestInterceptor : Interceptor {
         val invocation = chain.request().tag(Invocation::class.java)
         val annotation = invocation?.method()?.getAnnotation(PaddedRequest::class.java)
         val sizes = chain.request().tag(RequestSize::class.java)
-        if (annotation != null && sizes != null && sizes.max != 0) {
+        if (annotation != null && sizes != null && sizes.max != 0L) {
             val request = chain.request()
             val size = request.body!!.contentLength()
             val buffer = Buffer()
@@ -31,13 +31,13 @@ class PaddedRequestInterceptor : Interceptor {
             val jsonString = buffer.readString(Charsets.UTF_8)
             if (!jsonString.contains("\"padding\":")) throw IllegalStateException("Padded request should contain padding in the json payload")
 
-            val r = Math.random()
-            val paddedSize = if (r == 0.0) {
-                if (sizes.min == sizes.max) sizes.min else Random.nextInt(sizes.min, sizes.max)
+            val r = Random.nextInt(0, 100)
+            val paddedSize = if (r == 0) {
+                if (sizes.min >= sizes.max) sizes.min else Random.nextLong(sizes.min, sizes.max + 1)
             } else {
-                if (sizes.min == sizes.max) sizes.min else Random.nextInt(
+                if (sizes.min >= sizes.max) sizes.min else Random.nextLong(
                     sizes.min,
-                    sizes.min + ((sizes.max - sizes.min) / 100)
+                    sizes.min + ((sizes.max - sizes.min) / 100) + 1
                 )
             }.coerceAtLeast(0)
 
@@ -60,7 +60,7 @@ class PaddedRequestInterceptor : Interceptor {
         return chain.proceed(chain.request())
     }
 
-    private fun generatePadding(size: Int): String {
+    private fun generatePadding(size: Long): String {
         return (0 until size)
             .map { CHARACTER_SET.random() }
             .joinToString("")
@@ -71,4 +71,4 @@ class PaddedRequestInterceptor : Interceptor {
 @Target(AnnotationTarget.FUNCTION)
 annotation class PaddedRequest
 
-data class RequestSize(val min: Int, val max: Int)
+data class RequestSize(val min: Long, val max: Long)
