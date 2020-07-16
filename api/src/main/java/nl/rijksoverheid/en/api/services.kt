@@ -32,6 +32,7 @@ internal fun createOkHttpClient(context: Context): OkHttpClient {
         .cache(Cache(File(context.cacheDir, "http"), 32 * 1024 * 1024))
         .apply {
             addNetworkInterceptor(SignedResponseInterceptor())
+            addInterceptor(PaddedRequestInterceptor())
             addInterceptor(AcceptHeaderInterceptor())
             addInterceptor(SignedBodyInterceptor())
             addInterceptor(EncodedQueryInterceptor())

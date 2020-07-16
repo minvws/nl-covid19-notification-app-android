@@ -19,10 +19,13 @@ import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.LabTestService
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.job.CheckConnectionWorker
+import nl.rijksoverheid.en.job.DecoyWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.job.ScheduleDecoyWorker
 import nl.rijksoverheid.en.job.UploadDiagnosisKeysJob
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.onboarding.GooglePlayServicesUpToDateChecker
@@ -50,15 +53,19 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
             override fun schedule(intervalMinutes: Int) {
                 ProcessManifestWorker.queue(context, intervalMinutes)
                 CheckConnectionWorker.queue(context)
+                ScheduleDecoyWorker.queue(context)
             }
 
             override fun cancel() {
                 ProcessManifestWorker.cancel(context)
                 CheckConnectionWorker.cancel(context)
+                ScheduleDecoyWorker.cancel(context)
+                DecoyWorker.cancel(context)
             }
         },
         createAppLifecycleManager(context),
-        statusCache
+        statusCache,
+        AppConfigManager(service)
     )
 }
 
@@ -86,8 +93,15 @@ fun createLabTestRepository(context: Context): LabTestRepository {
             Nearby.getExposureNotificationClient(context)
         ),
         labTestService ?: LabTestService.create(context).also { labTestService = it },
-        { delayMinutes -> UploadDiagnosisKeysJob.schedule(context, delayMinutes.toLong()) }
+        { delayMinutes -> UploadDiagnosisKeysJob.schedule(context, delayMinutes.toLong()) },
+        { delayMillis -> DecoyWorker.queue(context, delayMillis) },
+        createAppConfigManager(context)
     )
+}
+
+fun createAppConfigManager(context: Context): AppConfigManager {
+    val service = cdnService ?: CdnService.create(context).also { cdnService = it }
+    return AppConfigManager(service)
 }
 
 fun createAppLifecycleManager(context: Context): AppLifecycleManager {

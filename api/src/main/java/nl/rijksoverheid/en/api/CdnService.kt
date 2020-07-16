@@ -16,6 +16,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Streaming
 
@@ -29,7 +30,7 @@ interface CdnService {
     @GET("v01/manifest")
     @SignedResponse
     @EncodedQuery(BuildConfig.CDN_QUERY_STRING)
-    suspend fun getManifest(): Manifest
+    suspend fun getManifest(@Header("Cache-control") cacheHeader: String? = null): Manifest
 
     @GET("v01/riskcalculationparameters/{id}")
     @SignedResponse
@@ -39,7 +40,10 @@ interface CdnService {
     @GET("v01/appconfig/{id}")
     @SignedResponse
     @EncodedQuery(BuildConfig.CDN_QUERY_STRING)
-    suspend fun getAppConfig(@Path("id") id: String): AppConfig
+    suspend fun getAppConfig(
+        @Path("id") id: String,
+        @Header("Cache-control") cacheHeader: String? = null
+    ): AppConfig
 
     companion object {
         fun create(

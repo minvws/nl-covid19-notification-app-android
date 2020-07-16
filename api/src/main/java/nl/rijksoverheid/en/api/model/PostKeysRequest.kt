@@ -10,40 +10,15 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class PostKeysRequest(
+class PostKeysRequest(
     val keys: List<TemporaryExposureKey>,
     @Json(name = "bucketId") val bucketId: String,
-    val padding: ByteArray? = "default".toByteArray()
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as PostKeysRequest
-
-        if (keys != other.keys) return false
-        if (padding != null) {
-            if (other.padding == null) return false
-            if (!padding.contentEquals(other.padding)) return false
-        } else if (other.padding != null) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = keys.hashCode()
-        result = 31 * result + (padding?.contentHashCode() ?: 0)
-        return result
-    }
-}
+    val padding: ByteArray = ByteArray(0)
+)
 
 @JsonClass(generateAdapter = true)
 class TemporaryExposureKey(
     val keyData: ByteArray,
     val rollingStartNumber: Int,
-    val rollingPeriod: Int = DEFAULT_ROLLING_PERIOD
-) {
-    companion object {
-        const val DEFAULT_ROLLING_PERIOD = 144
-    }
-}
+    val rollingPeriod: Int
+)

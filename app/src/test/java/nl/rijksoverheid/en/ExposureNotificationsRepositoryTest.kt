@@ -35,6 +35,7 @@ import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
@@ -701,14 +702,15 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(): Manifest =
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
                     Manifest(emptyList(), "dummy", "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig(1, 5, 0.0)
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -783,14 +785,15 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(): Manifest =
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
                     Manifest(emptyList(), "dummy", "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String): AppConfig = AppConfig(2, 5, 0)
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig(2, 5, 0.0)
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -823,14 +826,15 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(): Manifest =
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
                     Manifest(emptyList(), "dummy", "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String): AppConfig = AppConfig(0, 5, 0)
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig(0, 5, 0.0)
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -930,7 +934,7 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(): Manifest {
+            override suspend fun getManifest(cacheHeader: String?): Manifest {
                 throw NotImplementedError()
             }
 
@@ -938,7 +942,8 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
+            override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                AppConfig(1, 5, 0.0)
         }
 
         val context = ApplicationProvider.getApplicationContext<Application>()
@@ -966,7 +971,7 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(): Manifest {
+            override suspend fun getManifest(cacheHeader: String?): Manifest {
                 throw NotImplementedError()
             }
 
@@ -974,7 +979,8 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
+            override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                AppConfig(1, 5, 0.0)
         }
 
         val repository = createRepository(
@@ -1247,7 +1253,8 @@ class ExposureNotificationsRepositoryTest {
         clock: Clock = Clock.systemDefaultZone(),
         lifecycleOwner: LifecycleOwner = TestLifecycleOwner(Lifecycle.State.STARTED),
         signatureValidation: Boolean = false,
-        scheduler: ProcessManifestWorkerScheduler = fakeScheduler
+        scheduler: ProcessManifestWorkerScheduler = fakeScheduler,
+        appConfigManager: AppConfigManager = AppConfigManager(cdnService)
     ): ExposureNotificationsRepository {
         return ExposureNotificationsRepository(
             context,
@@ -1257,6 +1264,7 @@ class ExposureNotificationsRepositoryTest {
             scheduler,
             appLifecycleManager,
             statusCache,
+            appConfigManager,
             clock,
             lifecycleOwner = lifecycleOwner,
             signatureValidation = signatureValidation

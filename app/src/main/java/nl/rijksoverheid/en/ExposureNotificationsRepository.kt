@@ -46,8 +46,8 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.CdnService
-import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
@@ -61,7 +61,6 @@ import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.util.formatDaysSince
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
-import retrofit2.HttpException
 import retrofit2.Response
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -81,7 +80,6 @@ private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
 private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
-private const val DEFAULT_MANIFEST_INTERVAL_MINUTES = 240
 private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
 private const val ID_EXPOSURE_PUSH_NOTIFICATION = 0
 private const val KEY_MIN_RISK_SCORE = "min_risk_score"
@@ -94,6 +92,7 @@ class ExposureNotificationsRepository(
     private val manifestWorkerScheduler: ProcessManifestWorkerScheduler,
     private val appLifecycleManager: AppLifecycleManager,
     private val statusCache: StatusCache,
+    private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone(),
     private val signatureValidation: Boolean = BuildConfig.EXPOSURE_FILE_SIGNATURE_CHECK,
     lifecycleOwner: LifecycleOwner = ProcessLifecycleOwner.get()
@@ -120,8 +119,7 @@ class ExposureNotificationsRepository(
                 // reset the timer
                 putLong(KEY_LAST_KEYS_PROCESSED, System.currentTimeMillis())
             }
-            val interval = getLatestAppConfigOrNull()?.updatePeriodMinutes
-                ?: DEFAULT_MANIFEST_INTERVAL_MINUTES
+            val interval = appConfigManager.getConfigOrDefault().updatePeriodMinutes
             manifestWorkerScheduler.schedule(interval)
             statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
         }
@@ -310,18 +308,6 @@ class ExposureNotificationsRepository(
                 KEY_EXPOSURE_KEY_SETS,
                 currentProcessedIds.intersect(manifest.exposureKeysSetIds)
             )
-        }
-    }
-
-    private suspend fun getLatestAppConfigOrNull(): AppConfig? = withContext(Dispatchers.IO) {
-        try {
-            api.getAppConfig(api.getManifest().appConfigId)
-        } catch (ex: HttpException) {
-            Timber.e(ex, "Error getting latest config")
-            null
-        } catch (ex: IOException) {
-            Timber.e(ex, "Error getting latest config")
-            null
         }
     }
 

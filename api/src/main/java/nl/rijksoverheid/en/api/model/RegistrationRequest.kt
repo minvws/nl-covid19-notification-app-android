@@ -9,4 +9,4 @@ package nl.rijksoverheid.en.api.model
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class RegistrationRequest(val padding: String = "Yg==")
+class RegistrationRequest(val padding: ByteArray = ByteArray(0))

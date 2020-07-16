@@ -19,13 +19,25 @@ import retrofit2.http.Tag
 
 interface LabTestService {
     @POST("v1/register")
-    suspend fun register(@Body request: RegistrationRequest): Registration
+    @PaddedRequest
+    suspend fun register(@Body request: RegistrationRequest, @Tag sizes: RequestSize): Registration
 
     @POST("v1/postkeys")
     @BodyHmacSha256Key
+    @PaddedRequest
     suspend fun postKeys(
         @Body request: PostKeysRequest,
-        @Tag hmacSecret: HmacSecret
+        @Tag hmacSecret: HmacSecret,
+        @Tag requestSize: RequestSize
+    )
+
+    @POST("v1/stopkeys")
+    @BodyHmacSha256Key
+    @PaddedRequest
+    suspend fun stopKeys(
+        @Body request: PostKeysRequest,
+        @Tag hmacSecret: HmacSecret,
+        @Tag requestSize: RequestSize
     )
 
     companion object {

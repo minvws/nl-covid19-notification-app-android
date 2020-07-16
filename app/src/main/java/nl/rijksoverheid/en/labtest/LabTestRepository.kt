@@ -12,18 +12,30 @@ import android.util.Base64
 import androidx.core.content.edit
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.HmacSecret
 import nl.rijksoverheid.en.api.LabTestService
+import nl.rijksoverheid.en.api.RequestSize
+import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.PostKeysRequest
 import nl.rijksoverheid.en.api.model.Registration
 import nl.rijksoverheid.en.api.model.RegistrationRequest
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
+import java.security.SecureRandom
 import java.time.Clock
+import java.time.Duration
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZonedDateTime
+import java.time.temporal.ChronoUnit
+import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 
 private const val KEY_LAB_CONFIRMATION_ID = "lab_confirmation_id"
 private const val KEY_BUCKET_ID = "bucket_id"
@@ -36,15 +48,49 @@ private const val KEY_DID_UPLOAD = "upload_completed"
 private const val ADDITIONAL_UPLOAD_DELAY_MINUTES = 240
 
 typealias UploadScheduler = (Int) -> Unit
+typealias DecoyScheduler = (Long) -> Unit
 
 class LabTestRepository(
     preferences: Lazy<SharedPreferences>,
     private val exposureNotificationApi: ExposureNotificationApi,
     private val api: LabTestService,
     private val uploadScheduler: UploadScheduler,
-    private val clock: Clock = Clock.systemDefaultZone()
+    private val decoyScheduler: DecoyScheduler,
+    private val appConfigManager: AppConfigManager,
+    private val clock: Clock = Clock.systemDefaultZone(),
+    private val random: Random = Random
 ) {
     private val preferences by preferences
+
+    suspend fun scheduleNextDecoyScheduleSequence() {
+        val r = random.nextDouble()
+        if (r <= appConfigManager.getCachedConfigOrDefault().decoyProbability) {
+            val start = LocalDate.now(clock).atTime(DECOY_WINDOW_START_HOUR, 0)
+            val end = start.toLocalDate().atTime(DECOY_WINDOW_END_HOUR, 0)
+            val decoyTimestamp = Instant.ofEpochMilli(
+                random.nextLong(
+                    start.atZone(clock.zone).toInstant().toEpochMilli(),
+                    end.atZone(clock.zone).toInstant().toEpochMilli()
+                )
+            )
+
+            // if scheduled time has passed, schedule it or the next day
+            val scheduleTime = if (decoyTimestamp.isBefore(Instant.now(clock))) {
+                decoyTimestamp.plus(1, ChronoUnit.DAYS)
+            } else {
+                decoyTimestamp
+            }
+
+            val delay = Duration.between(
+                ZonedDateTime.now(clock).toInstant(),
+                scheduleTime
+            ).toMillis().coerceAtLeast(TimeUnit.MILLISECONDS.convert(15, TimeUnit.MINUTES))
+            Timber.d("Schedule decoy at $scheduleTime, with delay $delay")
+            decoyScheduler(delay)
+        } else {
+            Timber.d("Decoy is skipped")
+        }
+    }
 
     suspend fun registerForUpload(): RegistrationResult {
         return withContext(Dispatchers.IO) {
@@ -53,7 +99,8 @@ class LabTestRepository(
                 return@withContext RegistrationResult.Success(code)
             }
             try {
-                val result = api.register(RegistrationRequest())
+                val config = appConfigManager.getCachedConfigOrDefault()
+                val result = api.register(RegistrationRequest(), config.requestSize)
                 storeResult(result)
                 RegistrationResult.Success(result.labConfirmationId)
             } catch (ex: HttpException) {
@@ -147,14 +194,15 @@ class LabTestRepository(
         bucketId: String,
         confirmationKey: ByteArray
     ) {
+        val config = appConfigManager.getCachedConfigOrDefault()
         val request = PostKeysRequest(requestedKeys.map {
             nl.rijksoverheid.en.api.model.TemporaryExposureKey(
                 it.keyData,
                 it.rollingStartIntervalNumber,
                 it.rollingPeriod
             )
-        }, bucketId).adjustPadding()
-        api.postKeys(request, HmacSecret(confirmationKey))
+        }, bucketId)
+        api.postKeys(request, HmacSecret(confirmationKey), config.requestSize)
     }
 
     suspend fun requestUploadDiagnosticKeys(): RequestUploadDiagnosisKeysResult {
@@ -187,6 +235,42 @@ class LabTestRepository(
         }
     }
 
+    suspend fun sendDecoyTraffic(registerDelay: Long = Random.nextLong(5000, 900000L)) {
+        if (getCachedRegistrationCode() == null) {
+            registerForUpload()
+            delay(registerDelay)
+        }
+
+        val key = ByteArray(16)
+        SecureRandom().nextBytes(key)
+
+        val bucketId = preferences.getString(KEY_BUCKET_ID, null) ?: throw IllegalStateException()
+        val fakeSecret = ByteArray(16)
+        SecureRandom().nextBytes(fakeSecret)
+
+        val request = PostKeysRequest(
+            listOf(
+                nl.rijksoverheid.en.api.model.TemporaryExposureKey(
+                    key,
+                    (System.currentTimeMillis() / 600000L).toInt(), 144
+                )
+            ), generateDecoyBucketId(bucketId.length)
+        )
+
+        api.stopKeys(
+            request,
+            HmacSecret(fakeSecret),
+            appConfigManager.getCachedConfigOrDefault().requestSize
+        )
+    }
+
+    private fun generateDecoyBucketId(size: Int): String {
+        val source = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+        return (1..size)
+            .map { source.random() }
+            .joinToString("")
+    }
+
     sealed class RequestUploadDiagnosisKeysResult {
         /**
          * Scheduled successfully or completed immediately
@@ -212,7 +296,12 @@ class LabTestRepository(
          */
         object Retry : UploadDiagnosticKeysResult()
     }
+
+    companion object {
+        const val DECOY_WINDOW_START_HOUR = 7
+        const val DECOY_WINDOW_END_HOUR = 19
+    }
 }
 
-// TODO pad the request so that it looks like a full key upload
-private fun PostKeysRequest.adjustPadding(): PostKeysRequest = this
+private val AppConfig.requestSize
+    get() = RequestSize(requestMinimumSize, requestMaximumSize)

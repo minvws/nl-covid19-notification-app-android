@@ -29,7 +29,7 @@ import kotlin.coroutines.suspendCoroutine
 private const val KEY_MINIMUM_VERSION_CODE = "minimum_version_code"
 private const val ID_LIFECYCLE_PUSH_NOTIFICATION = 1
 
-open class AppLifecycleManager(
+class AppLifecycleManager(
     private val context: Context,
     private val preferences: SharedPreferences,
     private val appUpdateManager: AppUpdateManager

@@ -160,7 +160,7 @@ dependencies {
     androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
     testImplementation 'org.robolectric:robolectric:4.3.1'
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.7.2")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.8.0")
     testImplementation project(":test-support")
     testImplementation "androidx.work:work-testing:$work_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"

@@ -39,6 +39,16 @@ class EnWorkerFactory : WorkerFactory() {
                 appContext,
                 workerParameters
             ) { createLabTestRepository(appContext).uploadDiagnosticKeysIfPending() }
+            ScheduleDecoyWorker::class.java.name -> ScheduleDecoyWorker(
+                appContext,
+                workerParameters,
+                createLabTestRepository(appContext)
+            )
+            DecoyWorker::class.java.name -> DecoyWorker(
+                appContext,
+                workerParameters,
+                createLabTestRepository(appContext)
+            )
             else -> null
         }
     }
