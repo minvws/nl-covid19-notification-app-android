@@ -15,7 +15,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatExposureDate
 import java.time.Clock
@@ -23,7 +23,7 @@ import java.time.LocalDate
 
 class PostNotificationFragment(
     private val clock: Clock = Clock.systemDefaultZone()
-) : BaseFragment(R.layout.fragment_list) {
+) : BaseFragment(R.layout.fragment_list_with_button) {
     private val args: PostNotificationFragmentArgs by navArgs()
 
     private val adapter = GroupAdapter<GroupieViewHolder>()
@@ -33,24 +33,18 @@ class PostNotificationFragment(
 
         val exposureDate = LocalDate.ofEpochDay(args.epochDayOfLastExposure)
 
-        val phoneNumber = getString(R.string.phone_number)
         adapter.add(
             PostNotificationSection(
-                onCallClicked = {
-                    startActivity(Intent(Intent.ACTION_DIAL).apply {
-                        data = Uri.parse("tel:$phoneNumber")
-                    })
-                },
                 daysSince = exposureDate.formatDaysSince(requireContext(), clock),
                 date = exposureDate.formatExposureDate(requireContext()),
-                phoneNumber = phoneNumber
+                phoneNumber = getString(R.string.phone_number)
             )
         )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentListBinding.bind(view)
+        val binding = FragmentListWithButtonBinding.bind(view)
 
         binding.toolbar.apply {
             setTitle(R.string.post_notification_toolbar_title)
@@ -58,5 +52,14 @@ class PostNotificationFragment(
             setNavigationContentDescription(R.string.cd_close)
         }
         binding.content.adapter = adapter
+        binding.button.apply {
+            setText(R.string.post_notification_button)
+            setOnClickListener {
+                startActivity(Intent(Intent.ACTION_DIAL).apply {
+                    val phoneNumber = getString(R.string.phone_number)
+                    data = Uri.parse("tel:$phoneNumber")
+                })
+            }
+        }
     }
 }

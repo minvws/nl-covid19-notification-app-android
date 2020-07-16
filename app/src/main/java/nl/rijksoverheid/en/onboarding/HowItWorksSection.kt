@@ -15,6 +15,7 @@ import nl.rijksoverheid.en.about.FAQItemId
 class HowItWorksSection : Section(
     listOf(
         FAQHeaderItem(R.string.faq_header),
+        FAQItem(FAQItemId.REASON, R.string.faq_reason),
         FAQItem(FAQItemId.LOCATION, R.string.faq_location),
         FAQItem(FAQItemId.ANONYMOUS, R.string.faq_anonymous),
         FAQItem(FAQItemId.NOTIFICATION, R.string.faq_notification),

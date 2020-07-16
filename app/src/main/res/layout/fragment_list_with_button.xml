@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            android:transitionName="howitworks_appbar">
+            android:transitionName="appbar">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -38,14 +38,16 @@
                 android:id="@+id/content"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:paddingBottom="32dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toTopOf="@id/request_container"
+                app:layout_constraintBottom_toTopOf="@id/button_container"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <FrameLayout
-                android:id="@+id/request_container"
+                android:id="@+id/button_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorSurface"
@@ -56,7 +58,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <Button
-                    android:id="@+id/request"
+                    android:id="@+id/button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/onboarding_how_it_works_request_consent" />
