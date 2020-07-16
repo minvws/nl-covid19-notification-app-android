@@ -32,7 +32,6 @@ import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 import java.util.concurrent.TimeUnit
@@ -58,19 +57,20 @@ class LabTestRepository(
     private val uploadScheduler: UploadScheduler,
     private val decoyScheduler: DecoyScheduler,
     private val appConfigManager: AppConfigManager,
-    private val clock: Clock = Clock.systemDefaultZone()
+    private val clock: Clock = Clock.systemDefaultZone(),
+    private val random: Random = Random
 ) {
     private val preferences by preferences
 
     suspend fun scheduleNextDecoyScheduleSequence() {
-        val r = Math.random()
+        val r = random.nextDouble()
         if (r <= appConfigManager.getCachedConfigOrDefault().decoyProbability) {
-            val start = LocalDate.now().atTime(DECOY_WINDOW_START_HOUR, 0)
+            val start = LocalDate.now(clock).atTime(DECOY_WINDOW_START_HOUR, 0)
             val end = start.toLocalDate().atTime(DECOY_WINDOW_END_HOUR, 0)
             val decoyTimestamp = Instant.ofEpochMilli(
-                Random.nextLong(
-                    start.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
-                    end.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+                random.nextLong(
+                    start.atZone(clock.zone).toInstant().toEpochMilli(),
+                    end.atZone(clock.zone).toInstant().toEpochMilli()
                 )
             )
 

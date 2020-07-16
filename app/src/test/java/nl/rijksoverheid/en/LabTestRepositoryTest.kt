@@ -11,6 +11,7 @@ import android.os.Build
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
+import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.api.CdnService
@@ -51,6 +52,7 @@ import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
+import kotlin.random.Random
 
 private val NOOP_SCHEDULER: UploadScheduler = {}
 private val NOOP_DECOY_SCHEDULER: DecoyScheduler = {}
@@ -300,6 +302,18 @@ class LabTestRepositoryTest {
     fun `scheduleNextDecoyScheduleSequence schedules between 7am and 7pm of the current day`() =
         runBlocking {
             val delay = AtomicLong(0)
+            // current time after the schedule window
+            val instant = Instant.parse("2020-06-20T05:00:30.00Z")
+            val clock = Clock.fixed(instant, ZoneId.of("UTC"))
+            val decoyStart =
+                LocalDate.now(clock).atTime(7, 0).atZone(clock.zone).toInstant().toEpochMilli()
+            val decoyEnd =
+                LocalDate.now(clock).atTime(19, 0).atZone(clock.zone).toInstant().toEpochMilli()
+
+            val random = mock<Random> {
+                on { nextDouble() }.thenReturn(1.0)
+                on { nextLong(eq(decoyStart), eq(decoyEnd)) }.thenReturn(decoyStart)
+            }
 
             val repository = LabTestRepository(
                 lazy {
@@ -311,15 +325,53 @@ class LabTestRepositoryTest {
                 NOOP_SCHEDULER,
                 { delayMillis -> delay.set(delayMillis) },
                 appConfigManager,
-                clock
+                clock,
+                random
             )
 
             repository.scheduleNextDecoyScheduleSequence()
 
             assertTrue(delay.get() > 0)
             val date = LocalDateTime.now(clock).plus(delay.get(), ChronoUnit.MILLIS)
-            assertEquals(LocalDate.now(clock), date.toLocalDate())
-            assertTrue(date.hour in 7..19)
+            assertEquals(LocalDate.now(clock).atTime(7, 0), date)
+        }
+
+    @Test
+    fun `scheduleNextDecoyScheduleSequence schedules between 7am and 7pm of the next day when scheduled time has passed`() =
+        runBlocking {
+            val delay = AtomicLong(0)
+            // current time after the schedule window
+            val instant = Instant.parse("2020-06-20T20:15:30.00Z")
+            val clock = Clock.fixed(instant, ZoneId.of("UTC"))
+            val decoyStart =
+                LocalDate.now(clock).atTime(7, 0).atZone(clock.zone).toInstant().toEpochMilli()
+            val decoyEnd =
+                LocalDate.now(clock).atTime(19, 0).atZone(clock.zone).toInstant().toEpochMilli()
+
+            val random = mock<Random> {
+                on { nextDouble() }.thenReturn(1.0)
+                on { nextLong(eq(decoyStart), eq(decoyEnd)) }.thenReturn(decoyStart)
+            }
+
+            val repository = LabTestRepository(
+                lazy {
+                    ApplicationProvider.getApplicationContext<Application>()
+                        .getSharedPreferences("test", 0)
+                },
+                mock(),
+                mock(),
+                NOOP_SCHEDULER,
+                { delayMillis -> delay.set(delayMillis) },
+                appConfigManager,
+                clock,
+                random
+            )
+
+            repository.scheduleNextDecoyScheduleSequence()
+
+            assertTrue(delay.get() > 0)
+            val date = LocalDateTime.now(clock).plus(delay.get(), ChronoUnit.MILLIS)
+            assertEquals(LocalDate.now(clock).plusDays(1).atTime(7, 0), date)
         }
 
     @Test
