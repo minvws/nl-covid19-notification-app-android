@@ -1,11 +1,9 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
-
 package nl.rijksoverheid.en.api
 
 import android.util.Base64
@@ -67,7 +65,7 @@ class PaddedRequestInterceptor : Interceptor {
         return chain.proceed(chain.request())
     }
 
-    //TODO this can go away when the server isn't validating base64
+    // TODO this can go away when the server isn't validating base64
     private fun getBase64Size(size: Int): Int {
         return ((size / 4) * 3)
     }
