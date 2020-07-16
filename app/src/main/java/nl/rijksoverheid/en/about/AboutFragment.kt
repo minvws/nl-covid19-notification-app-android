@@ -37,6 +37,12 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
         binding.toolbar.setTitle(R.string.about_toolbar_title)
 
         binding.content.adapter = adapter
+        binding.content.addItemDecoration(
+            FAQItemDecoration(
+                requireContext(),
+                resources.getDimensionPixelOffset(R.dimen.activity_horizontal_margin)
+            )
+        )
 
         adapter.setOnItemClickListener { item, _ ->
             when (item) {

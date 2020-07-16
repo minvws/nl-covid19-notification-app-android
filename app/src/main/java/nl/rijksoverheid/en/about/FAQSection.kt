@@ -11,18 +11,32 @@ import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItemId.ANONYMOUS
 import nl.rijksoverheid.en.about.FAQItemId.BLUETOOTH
+import nl.rijksoverheid.en.about.FAQItemId.DELETION
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION
+import nl.rijksoverheid.en.about.FAQItemId.LOCATION_PERMISSION
 import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION
 import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
+import nl.rijksoverheid.en.about.FAQItemId.REASON
 import nl.rijksoverheid.en.about.FAQItemId.TECHNICAL
+import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
+import nl.rijksoverheid.en.items.ButtonItem
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.ParagraphItem
 
 @Keep
-enum class FAQItemId { LOCATION, ANONYMOUS, NOTIFICATION, BLUETOOTH, POWER_USAGE, TECHNICAL }
+enum class FAQItemId { REASON, LOCATION, ANONYMOUS, NOTIFICATION, UPLOAD_KEYS, BLUETOOTH, POWER_USAGE, DELETION, LOCATION_PERMISSION, TECHNICAL }
 
-class FAQDetailSections {
+class FAQDetailSections(private val openSettings: () -> Unit = {}) {
     fun getSection(faqItemId: FAQItemId) = when (faqItemId) {
+        REASON -> Section(
+            listOf(
+                HeaderItem(R.string.faq_reason),
+                ParagraphItem(R.string.faq_reason_paragraph_1),
+                ParagraphItem(R.string.faq_reason_paragraph_2),
+                ParagraphItem(R.string.faq_reason_paragraph_3),
+                ParagraphItem(R.string.faq_reason_paragraph_4)
+            )
+        )
         LOCATION -> Section(
             listOf(
                 HeaderItem(R.string.faq_location),
@@ -42,6 +56,13 @@ class FAQDetailSections {
                 ParagraphItem(R.string.faq_notification_paragraph_1)
             )
         )
+        UPLOAD_KEYS -> Section(
+            listOf(
+                HeaderItem(R.string.faq_upload_keys),
+                ParagraphItem(R.string.faq_upload_keys_paragraph_1),
+                ParagraphItem(R.string.faq_upload_keys_paragraph_2)
+            )
+        )
         BLUETOOTH -> Section(
             listOf(
                 HeaderItem(R.string.faq_bluetooth),
@@ -52,6 +73,19 @@ class FAQDetailSections {
             listOf(
                 HeaderItem(R.string.faq_power_usage),
                 ParagraphItem(R.string.faq_power_usage_paragraph_1)
+            )
+        )
+        DELETION -> Section(
+            listOf(
+                HeaderItem(R.string.faq_deletion),
+                ParagraphItem(R.string.faq_deletion_paragraph_1),
+                ButtonItem(R.string.faq_deletion_button, openSettings)
+            )
+        )
+        LOCATION_PERMISSION -> Section(
+            listOf(
+                HeaderItem(R.string.faq_location_permission),
+                ParagraphItem(R.string.faq_location_permission_paragraph_1)
             )
         )
         TECHNICAL -> Section(

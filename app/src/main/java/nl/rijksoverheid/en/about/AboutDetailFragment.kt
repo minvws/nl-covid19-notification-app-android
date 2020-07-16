@@ -6,10 +6,12 @@
  */
 package nl.rijksoverheid.en.about
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
+import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
@@ -24,7 +26,9 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter.add(FAQDetailSections().getSection(args.faqItemId))
+        adapter.add(FAQDetailSections(openSettings = {
+            startActivity(Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS))
+        }).getSection(args.faqItemId))
 
         enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
         exitTransition =
