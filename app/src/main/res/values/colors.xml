@@ -11,13 +11,17 @@
     <color name="error_surface">@color/light_red</color>
     <color name="background_mask">#000000</color>
     <color name="lab_test_step_line">@color/gray_lighter</color>
+    <color name="helpdesk_background">@color/light_blue</color>
+    <color name="faq_onboarding_background">@color/light_blue</color>
+    <color name="technical_explanation_background">@color/light_yellow</color>
 
     <!-- Color palette -->
     <color name="dark_blue">#0047FF</color>
-
+    <color name="light_blue">#D0F0F3</color>
     <color name="gray_lighter">#F2F2F7</color>
     <color name="gray_light">#DDDDDD</color>
     <color name="light_red">#FFECF0</color>
+    <color name="light_yellow">#FADD9D</color>
     <color name="red">#ED395A</color>
     <color name="pink">#B8275D</color>
     <color name="green">#34C759</color>

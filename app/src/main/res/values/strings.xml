@@ -91,8 +91,16 @@
     <string name="status_error_sync_issues">De app kon de afgelopen 24 uur geen internetverbinding maken. Controleer of je wifi of mobiele data aanstaan en probeer het opnieuw.</string>
     <string name="status_error_action_sync_issues">Probeer opnieuw</string>
     <string name="about_toolbar_title">Over de app</string>
+    <string name="about_helpdesk_title">Andere vraag over de app?</string>
+    <string name="about_helpdesk_subtitle">Bel de helpdesk</string>
+    <string name="about_technical_explanation_title">Hoe werkt de app?</string>
+    <string name="about_technical_explanation_subtitle">Bekijk de technische uitleg</string>
+    <string name="about_onboarding_title">Wat doet CoronaMelder?</string>
+    <string name="about_onboarding_subtitle">Lees hoe je met deze app andere mensen kunt beschermen</string>
+    <string name="about_review">Beoordeel de app</string>
     <string name="about_privacy_statement">Privacyverklaring</string>
     <string name="about_accessibility">Toegankelijkheid</string>
+    <string name="about_colofon">Colofon</string>
     <string name="faq_header">Veelgestelde vragen</string>
     <string name="faq_detail_toolbar_title">Veelgestelde vraag</string>
     <string name="faq_reason">Waarom is deze app belangrijk?</string>
