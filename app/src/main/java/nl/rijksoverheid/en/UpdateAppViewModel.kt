@@ -11,15 +11,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.lifecyle.Event
 
-class UpdateAppViewModel(private val appLifecycleManager: AppLifecycleManager) : ViewModel() {
+class UpdateAppViewModel(
+    private val appLifecycleManager: AppLifecycleManager,
+    private val appConfigManager: AppConfigManager
+) : ViewModel() {
 
     val updateEvent: LiveData<Event<AppLifecycleManager.UpdateState.NeedsUpdate>> =
         MutableLiveData()
 
     fun checkForForcedAppUpdate() {
         viewModelScope.launch {
+            val config = appConfigManager.getConfigOrDefault()
+            appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode, false)
             when (val result = appLifecycleManager.getUpdateState()) {
                 is AppLifecycleManager.UpdateState.NeedsUpdate -> {
                     (updateEvent as MutableLiveData).value = Event(result)
