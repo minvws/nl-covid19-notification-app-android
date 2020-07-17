@@ -421,7 +421,7 @@ class ExposureNotificationsRepository(
 
                 val config = api.getAppConfig(manifest.appConfigId)
 
-                appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode)
+                appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode, true)
 
                 if (result == ProcessExposureKeysResult.Success) {
                     preferences.edit {
