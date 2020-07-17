@@ -27,10 +27,13 @@ class StatusHeaderItem(
         @DrawableRes val background: Int,
         @RawRes val icon: Int,
         @StringRes val headline: Int,
-        @StringRes val primaryActionLabel: Int?,
-        @StringRes val secondaryActionLabel: Int?,
-        val primaryAction: () -> Unit = {},
-        val secondaryAction: () -> Unit = {}
+        @DrawableRes val illustration: Int? = null,
+        @StringRes val enableActionLabel: Int? = null,
+        @StringRes val whatsNextActionLabel: Int? = null,
+        @StringRes val resetActionLabel: Int? = null,
+        val enableAction: () -> Unit = {},
+        val whatsNextAction: () -> Unit = {},
+        val resetAction: () -> Unit = {}
     ) {
         abstract fun getDescription(context: Context): String
     }
@@ -40,10 +43,7 @@ class StatusHeaderItem(
             R.drawable.gradient_status_no_exposure,
             R.raw.status_active,
             R.string.status_no_exposure_detected_headline,
-            null,
-            null,
-            primaryAction,
-            secondaryAction
+            illustration = R.drawable.illustration_status
         ) {
             override fun getDescription(context: Context) = context.getString(
                 R.string.status_no_exposure_detected_description,
@@ -54,10 +54,8 @@ class StatusHeaderItem(
             R.drawable.gradient_status_disabled,
             R.raw.status_inactive,
             R.string.status_disabled_headline,
-            R.string.status_en_api_disabled_enable,
-            null,
-            primaryAction,
-            secondaryAction
+            enableActionLabel = R.string.status_en_api_disabled_enable,
+            enableAction = primaryAction
         ) {
             override fun getDescription(context: Context) = context.getString(
                 R.string.status_en_api_disabled_description, context.getString(R.string.app_name)
@@ -67,10 +65,10 @@ class StatusHeaderItem(
             R.drawable.gradient_status_exposure,
             R.raw.status_exposed,
             R.string.status_exposure_detected_headline,
-            R.string.status_exposure_what_next,
-            R.string.status_reset_exposure,
-            primaryAction,
-            secondaryAction
+            whatsNextActionLabel = R.string.status_exposure_what_next,
+            resetActionLabel = R.string.status_reset_exposure,
+            whatsNextAction = primaryAction,
+            resetAction = secondaryAction
         ) {
             override fun getDescription(context: Context) = context.getString(
                 R.string.status_exposure_detected_description,
