@@ -25,6 +25,7 @@ interface CdnService {
     @Accept("application/zip")
     @EncodedQuery(BuildConfig.CDN_QUERY_STRING)
     @Streaming
+    @CacheOverride("no-store")
     suspend fun getExposureKeySetFile(@Path("id") id: String): Response<ResponseBody>
 
     @GET("v01/manifest")
