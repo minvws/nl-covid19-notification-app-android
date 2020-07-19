@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:onClick="@{() -> onboardingViewModel.finishOnboarding()}"
+                    android:onClick="@{() -> onboardingViewModel.skipConsent()}"
                     android:text="@string/onboarding_consent_skip"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

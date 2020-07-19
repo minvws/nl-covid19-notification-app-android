@@ -186,6 +186,9 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
+        <action
+            android:id="@+id/action_skip_consent_confirmation"
+            app:destination="@id/nav_skip_consent_confirmation" />
     </fragment>
 
     <fragment
@@ -205,4 +208,9 @@
             android:name="faqItemId"
             app:argType="nl.rijksoverheid.en.about.FAQItemId" />
     </fragment>
+
+    <dialog
+        android:id="@+id/nav_skip_consent_confirmation"
+        android:name="nl.rijksoverheid.en.onboarding.SkipConsentConfirmationDialogFragment"
+        android:label="SkipConsentConfirmationDialogFragment" />
 </navigation>

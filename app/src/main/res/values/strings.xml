@@ -22,6 +22,10 @@
     <string name="onboarding_consent_request">Aanzetten</string>
     <string name="onboarding_consent_explain">Hoe werkt de app precies?</string>
     <string name="onboarding_consent_skip">Sla over</string>
+    <string name="onboarding_consent_skip_dialog_title">Weet je zeker dat je deze meldingen niet wilt aanzetten?</string>
+    <string name="onboarding_consent_skip_dialog_message">Zonder toestemming kan de app je geen meldingen sturen nadat je extra kans op besmetting hebt gelopen.</string>
+    <string name="onboarding_consent_skip_dialog_skip">Overslaan</string>
+    <string name="onboarding_consent_skip_dialog_enable">Aanzetten</string>
     <string name="onboarding_how_it_works_toolbar_title">Hoe werkt de app?</string>
     <string name="onboarding_how_it_works_request_consent">App aanzetten</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Veelgestelde vraag</string>
