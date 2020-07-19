@@ -9,6 +9,7 @@ package nl.rijksoverheid.en.labtest
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
@@ -16,9 +17,8 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 
 class LabTestDoneFragment : BaseFragment(R.layout.fragment_list) {
-    private val adapter = GroupAdapter<GroupieViewHolder>().apply {
-        add(LabTestDoneSection { findNavController().popBackStack() })
-    }
+    private val args: LabTestDoneFragmentArgs by navArgs()
+    private val adapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,6 +30,9 @@ class LabTestDoneFragment : BaseFragment(R.layout.fragment_list) {
             setNavigationIcon(R.drawable.ic_close)
             setNavigationContentDescription(R.string.cd_close)
         }
+        adapter.add(
+            LabTestDoneSection(args.generatedKey) { findNavController().popBackStack() }
+        )
         binding.content.adapter = adapter
     }
 }

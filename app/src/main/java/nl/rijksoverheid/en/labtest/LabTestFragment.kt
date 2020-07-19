@@ -68,16 +68,14 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
         labViewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }
         viewModel.notificationState.observe(viewLifecycleOwner) { state -> section.update(state) }
 
-        labViewModel.uploadDiagnosisKeysResult.observe(viewLifecycleOwner, EventObserver {
-            when (it) {
-                is LabTestRepository.RequestUploadDiagnosisKeysResult.RequireConsent -> requestConsent(
-                    it.resolution.intentSender
-                )
-                is LabTestRepository.RequestUploadDiagnosisKeysResult.Success -> findNavController().navigate(
-                    R.id.action_lab_test_done
-                )
-                is LabTestRepository.RequestUploadDiagnosisKeysResult.UnknownError -> TODO("Implement error handling when API is not enabled")
-            }
+        labViewModel.requestConsent.observe(viewLifecycleOwner, EventObserver {
+            requestConsent(it.intentSender)
+        })
+        labViewModel.finish.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(LabTestFragmentDirections.actionLabTestDone(it))
+        })
+        labViewModel.unknownError.observe(viewLifecycleOwner, EventObserver {
+            TODO("Implement error handling when API is not enabled")
         })
     }
 
@@ -101,7 +99,6 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_REQUEST_UPLOAD_CONSENT && resultCode == Activity.RESULT_OK) {
             labViewModel.upload()
-            findNavController().navigate(R.id.action_lab_test_done)
         }
     }
 }

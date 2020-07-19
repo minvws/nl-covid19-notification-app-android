@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.labtest
 
+import android.app.PendingIntent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,8 +26,11 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
         object Error : KeyState()
     }
 
-    val uploadDiagnosisKeysResult: LiveData<Event<LabTestRepository.RequestUploadDiagnosisKeysResult>> =
-        MutableLiveData()
+    val requestConsent: LiveData<Event<PendingIntent>> = MutableLiveData()
+    val finish: LiveData<Event<String>> = MutableLiveData()
+    val unknownError: LiveData<Event<Unit>> = MutableLiveData()
+
+    private var usedKey: String? = null
 
     private val refresh = MutableLiveData<Unit>()
     val keyState: LiveData<KeyState> = refresh.switchMap {
@@ -34,6 +38,7 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
             emit(Loading)
             val result = labTestRepository.registerForUpload()
             if (result is RegistrationResult.Success) {
+                usedKey = result.code
                 emit(Success(result.code))
             } else {
                 emit(Error)
@@ -47,11 +52,14 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
 
     fun upload() {
         viewModelScope.launch {
-            updateResult(labTestRepository.requestUploadDiagnosticKeys())
+            when (val result = labTestRepository.requestUploadDiagnosticKeys()) {
+                LabTestRepository.RequestUploadDiagnosisKeysResult.Success ->
+                    (finish as MutableLiveData).value = Event(usedKey!!)
+                LabTestRepository.RequestUploadDiagnosisKeysResult.UnknownError ->
+                    (unknownError as MutableLiveData).value = Event(Unit)
+                is LabTestRepository.RequestUploadDiagnosisKeysResult.RequireConsent ->
+                    (requestConsent as MutableLiveData).value = Event(result.resolution)
+            }
         }
-    }
-
-    private fun updateResult(result: LabTestRepository.RequestUploadDiagnosisKeysResult) {
-        (uploadDiagnosisKeysResult as MutableLiveData).value = Event(result)
     }
 }

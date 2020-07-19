@@ -151,6 +151,7 @@
     <string name="lab_test_done_toolbar_title">Bedankt</string>
     <string name="lab_test_done_header_1">Bedankt, de GGD helpt je verder</string>
     <string name="lab_test_done_paragraph_2">De GGD-medewerker vertelt wat je kunt doen om te voorkomen dat je anderen besmet. Beterschap en sterkte met je herstel.</string>
+    <string name="lab_test_done_used_key">Gebruikte GGD-sleutel: %1$s</string>
     <string name="lab_test_done_box_4">De melding wordt alleen verstuurd als de GGD je heeft getest en je corona hebt</string>
     <string name="lab_test_done_button">Sluiten</string>
     <string name="update_google_play_services">Updaten</string>

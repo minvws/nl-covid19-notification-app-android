@@ -123,7 +123,11 @@
         android:id="@+id/nav_lab_test_done"
         android:name="nl.rijksoverheid.en.labtest.LabTestDoneFragment"
         android:label="LabTestDoneFragment"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list">
+        <argument
+            android:name="generatedKey"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/genericNotificationFragment"
