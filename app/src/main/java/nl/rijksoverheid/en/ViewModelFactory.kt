@@ -15,6 +15,7 @@ import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
 import nl.rijksoverheid.en.factory.createLabTestRepository
 import nl.rijksoverheid.en.factory.createOnboardingRepository
 import nl.rijksoverheid.en.labtest.LabTestViewModel
+import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingViewModel
 import nl.rijksoverheid.en.status.StatusViewModel
 
@@ -36,7 +37,8 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
             ) as T
             StatusViewModel::class.java -> StatusViewModel(
                 createOnboardingRepository(context),
-                createExposureNotificationsRepository(context)
+                createExposureNotificationsRepository(context),
+                NotificationsRepository(context)
             ) as T
             LabTestViewModel::class.java -> LabTestViewModel(
                 createLabTestRepository(context)

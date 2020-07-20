@@ -12,8 +12,9 @@ import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import nl.rijksoverheid.en.AddExposureResult
 import nl.rijksoverheid.en.ExposureNotificationsRepository
-import java.time.Clock
+import nl.rijksoverheid.en.notifier.NotificationsRepository
 
 private const val KEY_TOKEN = "token"
 
@@ -21,12 +22,15 @@ class ExposureNotificationJob(
     context: Context,
     params: WorkerParameters,
     private val repository: ExposureNotificationsRepository,
-    private val clock: Clock = Clock.systemDefaultZone()
+    private val notificationsRepository: NotificationsRepository
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
         val token = inputData.getString(KEY_TOKEN)!!
-        repository.addExposure(token)
+        val result = repository.addExposure(token)
+        if (result is AddExposureResult.Notify) {
+            notificationsRepository.showExposureNotification(result.daysSinceExposure)
+        }
         return Result.success()
     }
 

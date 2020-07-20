@@ -41,6 +41,7 @@ import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.OkHttpClient
@@ -53,8 +54,6 @@ import okio.Buffer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -590,7 +589,7 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
-    fun `addExposure adds exposure and shows notification`() = runBlocking {
+    fun `addExposure adds exposure and returns Notify`() = runBlocking {
         val dateTime = "2020-06-20T10:15:30.00Z"
 
         val api = object : FakeExposureNotificationApi() {
@@ -606,11 +605,9 @@ class ExposureNotificationsRepositoryTest {
             clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
-        val notificationManager = ApplicationProvider.getApplicationContext<Context>()
-            .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val result = repository.addExposure("sample-token")
 
-        repository.addExposure("sample-token")
-        assertNotNull(shadowOf(notificationManager).getNotification(0))
+        assertTrue(result is AddExposureResult.Notify)
         assertEquals(
             LocalDate.of(2020, 6, 20).minusDays(4),
             repository.getLastExposureDate().filterNotNull().first()
@@ -803,6 +800,14 @@ class ExposureNotificationsRepositoryTest {
                 api = object : FakeExposureNotificationApi() {
                     override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 },
+                appLifecycleManager = AppLifecycleManager(
+                    context.getSharedPreferences(
+                        "test_config",
+                        0
+                    ), mock()
+                ) {
+                    NotificationsRepository(context).showAppUpdateNotification()
+                },
                 cdnService = fakeService,
                 clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
             )
@@ -912,17 +917,10 @@ class ExposureNotificationsRepositoryTest {
             }
 
             val repository = createRepository(api = api, preferences = sharedPrefs, clock = clock)
-
-            val notificationManager = ApplicationProvider.getApplicationContext<Context>()
-                .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
             repository.addExposure("sample-token")
-            assertNotNull(shadowOf(notificationManager).getNotification(0))
 
             val result = repository.getLastExposureDate().first()
-
             assertEquals(LocalDate.now(clock).minusDays(4), result)
-            assertNull(shadowOf(notificationManager).getNotification(0))
         }
 
     @Test
@@ -1246,10 +1244,9 @@ class ExposureNotificationsRepositoryTest {
             preferences
         ),
         appLifecycleManager: AppLifecycleManager = AppLifecycleManager(
-            context,
             preferences,
             mock()
-        ),
+        ) {},
         clock: Clock = Clock.systemDefaultZone(),
         lifecycleOwner: LifecycleOwner = TestLifecycleOwner(Lifecycle.State.STARTED),
         signatureValidation: Boolean = false,

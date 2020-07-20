@@ -82,7 +82,7 @@ class EnableApiFragmentTest {
             override fun cancel() {
             }
         },
-        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)),
+        AppLifecycleManager(configPreferences, AppUpdateManagerFactory.create(context)) {},
         StatusCache(notificationsPreferences),
         AppConfigManager(service)
     )

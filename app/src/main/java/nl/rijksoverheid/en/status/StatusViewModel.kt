@@ -13,17 +13,20 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.lifecyle.Event
+import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import java.time.Clock
 import java.time.LocalDate
 
 class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
-    private val notificationsRepository: ExposureNotificationsRepository,
+    private val exposureNotificationsRepository: ExposureNotificationsRepository,
+    private val notificationsRepository: NotificationsRepository,
     private val clock: Clock = Clock.systemDefaultZone()
 ) : ViewModel() {
 
@@ -31,13 +34,16 @@ class StatusViewModel(
 
     fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
 
-    val headerState = notificationsRepository.getStatus().flatMapLatest { status ->
-        notificationsRepository.getLastExposureDate().map { date -> status to date }
+    val headerState = exposureNotificationsRepository.getStatus().flatMapLatest { status ->
+        exposureNotificationsRepository.getLastExposureDate().map { date -> status to date }
     }.map { (status, date) -> createHeaderState(status, date) }
+        .onEach {
+            notificationsRepository.cancelExposureNotification()
+        }
         .asLiveData(viewModelScope.coroutineContext)
 
-    val errorState = notificationsRepository.getStatus().flatMapLatest { status ->
-        notificationsRepository.getLastExposureDate().map { date -> status to date }
+    val errorState = exposureNotificationsRepository.getStatus().flatMapLatest { status ->
+        exposureNotificationsRepository.getLastExposureDate().map { date -> status to date }
     }.map { (status, date) -> createErrorState(status, date) }
         .asLiveData(viewModelScope.coroutineContext)
 
@@ -56,19 +62,19 @@ class StatusViewModel(
     private fun createErrorState(status: StatusResult, date: LocalDate?): ErrorState =
         if (status != StatusResult.Enabled && date != null) {
             ErrorState.ConsentRequired
-        } else if (notificationsRepository.keyProcessingOverdue) {
+        } else if (exposureNotificationsRepository.keyProcessingOverdue) {
             ErrorState.SyncIssues
         } else {
             ErrorState.None
         }
 
     fun removeExposure() {
-        notificationsRepository.resetExposures()
+        exposureNotificationsRepository.resetExposures()
     }
 
     fun resetErrorState() {
         viewModelScope.launch {
-            notificationsRepository.requestEnableNotifications()
+            exposureNotificationsRepository.requestEnableNotifications()
         }
     }
 
