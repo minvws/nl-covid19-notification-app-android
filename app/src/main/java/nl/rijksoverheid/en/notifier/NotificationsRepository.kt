@@ -30,6 +30,7 @@ private const val SYNC_ISSUES_NOTIFICATION_CHANNEL_ID = "sync_issue_notification
 private const val SYNC_ISSUES_NOTIFICATION_ID = 2
 private const val APP_UPDATE_NOTIFICATION_CHANNEL_ID = "update_notifications"
 private const val APP_UPDATE_NOTIFICATION_ID = 3
+private const val UPLOAD_KEYS_FAILED_ID = 4
 
 class NotificationsRepository(
     private val context: Context,
@@ -104,6 +105,17 @@ class NotificationsRepository(
                 APP_UPDATE_NOTIFICATION_CHANNEL_ID,
                 R.string.update_notification_title,
                 R.string.update_notification_message
+            ).build()
+        )
+    }
+
+    fun showUploadKeysFailedNotification() {
+        //TODO deeplink to the correct screen
+        showNotification(
+            UPLOAD_KEYS_FAILED_ID, createNotification(
+                SYNC_ISSUES_NOTIFICATION_CHANNEL_ID,
+                R.string.upload_keys_failed_title,
+                R.string.upload_keys_failed_message
             ).build()
         )
     }
