@@ -6,8 +6,13 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.view.View
+import android.widget.Button
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusActionBinding
@@ -22,6 +27,19 @@ sealed class StatusActionItem(
     override fun isClickable() = true
 
     override fun bind(viewBinding: ItemStatusActionBinding, position: Int) {
+        ViewCompat.setAccessibilityDelegate(
+            viewBinding.container,
+            object : AccessibilityDelegateCompat() {
+                override fun onInitializeAccessibilityNodeInfo(
+                    host: View,
+                    info: AccessibilityNodeInfoCompat
+                ) {
+                    super.onInitializeAccessibilityNodeInfo(host, info)
+                    info.contentDescription =
+                        "${viewBinding.statusTitle.text}\n${viewBinding.statusSubtitle.text}"
+                    info.className = Button::class.java.name
+                }
+            })
         viewBinding.infoIcon = icon
         viewBinding.infoTitle = title
         viewBinding.infoSubtitle = subtitle
