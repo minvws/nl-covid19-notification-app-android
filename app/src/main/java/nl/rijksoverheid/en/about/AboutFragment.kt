@@ -46,6 +46,10 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
 
         adapter.setOnItemClickListener { item, _ ->
             when (item) {
+                is FAQTechnicalExplanationItem -> findNavController().navigate(
+                    AboutFragmentDirections.actionAboutDetail(FAQItemId.TECHNICAL),
+                    FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+                )
                 is FAQItem -> findNavController().navigate(
                     AboutFragmentDirections.actionAboutDetail(item.id),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)

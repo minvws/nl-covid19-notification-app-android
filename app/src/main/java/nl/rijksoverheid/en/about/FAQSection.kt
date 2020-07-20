@@ -90,16 +90,22 @@ class FAQDetailSections(private val openSettings: () -> Unit = {}) {
         )
         TECHNICAL -> Section(
             listOf(
+                CenteredIllustrationItem(R.drawable.illustration_technical_1),
                 HeaderItem(R.string.faq_technical_header_1),
                 ParagraphItem(R.string.faq_technical_paragraph_2),
+                CenteredIllustrationItem(R.drawable.illustration_technical_2),
                 HeaderItem(R.string.faq_technical_header_3),
                 ParagraphItem(R.string.faq_technical_paragraph_4),
+                CenteredIllustrationItem(R.drawable.illustration_technical_3),
                 HeaderItem(R.string.faq_technical_header_5),
                 ParagraphItem(R.string.faq_technical_paragraph_6),
+                CenteredIllustrationItem(R.drawable.illustration_technical_4),
                 HeaderItem(R.string.faq_technical_header_7),
                 ParagraphItem(R.string.faq_technical_paragraph_8),
+                CenteredIllustrationItem(R.drawable.illustration_technical_5),
                 HeaderItem(R.string.faq_technical_header_9),
-                ParagraphItem(R.string.faq_technical_paragraph_10)
+                ParagraphItem(R.string.faq_technical_paragraph_10),
+                GithubItem()
             )
         )
     }

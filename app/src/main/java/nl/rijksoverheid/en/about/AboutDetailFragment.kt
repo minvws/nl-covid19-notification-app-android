@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.about
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.navArgs
@@ -46,5 +47,14 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
 
         binding.toolbar.setTitle(R.string.faq_detail_toolbar_title)
         binding.content.adapter = adapter
+
+        adapter.setOnItemClickListener { item, _ ->
+            when (item) {
+                is GithubItem -> {
+                    val uri = Uri.parse(getString(R.string.github_url))
+                    startActivity(Intent(Intent.ACTION_VIEW, uri))
+                }
+            }
+        }
     }
 }

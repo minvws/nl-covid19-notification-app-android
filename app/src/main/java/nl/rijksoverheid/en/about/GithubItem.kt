@@ -8,9 +8,9 @@ package nl.rijksoverheid.en.about
 
 import nl.rijksoverheid.en.R
 
-class FAQTechnicalExplanationItem : IllustratedBoxItem(
-    R.string.about_technical_explanation_title,
-    R.string.about_technical_explanation_subtitle,
-    R.drawable.illustration_technical_explanation,
-    R.color.technical_explanation_background
+class GithubItem : IllustratedBoxItem(
+    R.string.faq_technical_github_title,
+    R.string.faq_technical_github_subtitle,
+    R.drawable.illustration_octocat,
+    R.color.faq_github_background
 )
