@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.about
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -54,12 +55,22 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
                     AboutFragmentDirections.actionAboutDetail(item.id),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
+                is HelpdeskItem -> {
+                    startActivity(Intent(Intent.ACTION_DIAL).apply {
+                        val phoneNumber = getString(R.string.helpdesk_phone_number)
+                        data = Uri.parse("tel:$phoneNumber")
+                    })
+                }
                 is PrivacyStatementItem -> {
                     val url = Uri.parse(getString(R.string.privacy_policy_url))
                     CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
                 }
                 is AccessibilityItem -> {
                     val url = Uri.parse(getString(R.string.accessibility_url))
+                    CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
+                }
+                is ColofonItem -> {
+                    val url = Uri.parse(getString(R.string.colofon_url))
                     CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
                 }
             }
