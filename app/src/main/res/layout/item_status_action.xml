@@ -40,7 +40,7 @@
             app:imageResource="@{infoIcon}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_shield" />
+            tools:src="@drawable/ic_warning" />
 
         <TextView
             android:id="@+id/status_title"
@@ -53,7 +53,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/status_icon"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/status_info_1_title" />
+            tools:text="@string/status_info_about_title" />
 
         <TextView
             android:id="@+id/status_subtitle"
@@ -65,7 +65,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/status_title"
             app:layout_constraintTop_toBottomOf="@id/status_title"
-            tools:text="@string/status_info_1_subtitle" />
+            tools:text="@string/status_info_about_subtitle" />
 
         <View
             android:layout_width="0dp"
