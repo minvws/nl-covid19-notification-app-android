@@ -38,6 +38,7 @@ import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
+import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
@@ -166,6 +167,7 @@ class ExposureNotificationsRepositoryTest {
         val config = AtomicReference<ExposureConfiguration>()
 
         val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus(): StatusResult = StatusResult.Enabled
             override suspend fun provideDiagnosisKeys(
                 files: List<File>,
                 configuration: ExposureConfiguration,
@@ -222,6 +224,8 @@ class ExposureNotificationsRepositoryTest {
         )
 
         val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+
             override suspend fun provideDiagnosisKeys(
                 files: List<File>,
                 configuration: ExposureConfiguration,
@@ -322,6 +326,8 @@ class ExposureNotificationsRepositoryTest {
             )
 
             val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+
                 override suspend fun provideDiagnosisKeys(
                     files: List<File>,
                     configuration: ExposureConfiguration,
@@ -371,6 +377,7 @@ class ExposureNotificationsRepositoryTest {
             )
 
             val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 override suspend fun provideDiagnosisKeys(
                     files: List<File>,
                     configuration: ExposureConfiguration,
@@ -423,6 +430,8 @@ class ExposureNotificationsRepositoryTest {
             )
 
             val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+
                 override suspend fun provideDiagnosisKeys(
                     files: List<File>,
                     configuration: ExposureConfiguration,
@@ -479,6 +488,7 @@ class ExposureNotificationsRepositoryTest {
             )
 
             val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 override suspend fun provideDiagnosisKeys(
                     files: List<File>,
                     configuration: ExposureConfiguration,
@@ -544,6 +554,7 @@ class ExposureNotificationsRepositoryTest {
 
             val processed = AtomicBoolean(false)
             val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 override suspend fun provideDiagnosisKeys(
                     files: List<File>,
                     configuration: ExposureConfiguration,
@@ -861,7 +872,7 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
-    fun `processManifest with disabled exposure notifications cancels job`() =
+    fun `processManifest with disabled exposure notifications does not cancel jobs`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
 
@@ -875,6 +886,22 @@ class ExposureNotificationsRepositoryTest {
                     override suspend fun getStatus(): StatusResult = StatusResult.Disabled
                     override suspend fun disableNotifications(): DisableNotificationsResult =
                         DisableNotificationsResult.Disabled
+                },
+                cdnService = object : CdnService {
+                    override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                        throw NotImplementedError()
+                    }
+
+                    override suspend fun getManifest(cacheHeader: String?): Manifest = Manifest(
+                        listOf(), "res", "risk", "config"
+                    )
+
+                    override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                        throw NotImplementedError()
+                    }
+
+                    override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                        AppConfig()
                 },
                 scheduler = object : ProcessManifestWorkerScheduler {
                     override fun schedule(intervalMinutes: Int) {
@@ -890,8 +917,8 @@ class ExposureNotificationsRepositoryTest {
             )
 
             val result = repository.processManifest()
-            assertTrue(result is ProcessManifestResult.Disabled)
-            assertTrue(cancelled.get())
+            assertTrue(result is ProcessManifestResult.Success)
+            assertFalse(cancelled.get())
         }
 
     @Test
@@ -1235,6 +1262,53 @@ class ExposureNotificationsRepositoryTest {
             context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
 
             assertEquals(listOf(StatusResult.Disabled, StatusResult.Enabled), result.await())
+        }
+
+    @Test
+    fun `requestEnableNotificationsForcingConsent disables then enables the EN api`() =
+        runBlocking {
+            val disableCalled = AtomicBoolean(false)
+            val enableCalled = AtomicBoolean(false)
+
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus() = StatusResult.Enabled
+                override suspend fun disableNotifications(): DisableNotificationsResult {
+                    disableCalled.set(true)
+                    return DisableNotificationsResult.Disabled
+                }
+
+                override suspend fun requestEnableNotifications(): EnableNotificationsResult {
+                    enableCalled.set(true)
+                    return EnableNotificationsResult.Enabled
+                }
+            }
+
+            val repository = createRepository(api = api, cdnService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                    Manifest(listOf(), "res", "risk", "config")
+
+                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig()
+            }, scheduler = object : ProcessManifestWorkerScheduler {
+                override fun schedule(intervalMinutes: Int) {
+                }
+
+                override fun cancel() {
+                    throw AssertionError()
+                }
+            })
+
+            repository.requestEnableNotificationsForcingConsent()
+            assertTrue(disableCalled.get())
+            assertTrue(enableCalled.get())
         }
 
     private fun createRepository(
