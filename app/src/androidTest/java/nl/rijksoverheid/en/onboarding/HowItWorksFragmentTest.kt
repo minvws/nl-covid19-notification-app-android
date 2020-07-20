@@ -82,7 +82,7 @@ class HowItWorksFragmentTest {
             override fun cancel() {
             }
         },
-        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)),
+        AppLifecycleManager(configPreferences, AppUpdateManagerFactory.create(context)) {},
         StatusCache(notificationsPreferences),
         mock()
     )

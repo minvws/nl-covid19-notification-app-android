@@ -28,6 +28,7 @@ import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import nl.rijksoverheid.en.job.ScheduleDecoyWorker
 import nl.rijksoverheid.en.job.UploadDiagnosisKeysJob
 import nl.rijksoverheid.en.labtest.LabTestRepository
+import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.GooglePlayServicesUpToDateChecker
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.status.StatusCache
@@ -106,10 +107,9 @@ fun createAppConfigManager(context: Context): AppConfigManager {
 
 fun createAppLifecycleManager(context: Context): AppLifecycleManager {
     return AppLifecycleManager(
-        context,
         context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0),
         AppUpdateManagerFactory.create(context)
-    )
+    ) { NotificationsRepository(context).showAppUpdateNotification() }
 }
 
 private fun createSecurePreferences(context: Context): SharedPreferences {
