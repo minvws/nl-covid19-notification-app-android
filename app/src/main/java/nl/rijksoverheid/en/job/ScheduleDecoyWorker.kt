@@ -12,40 +12,31 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import nl.rijksoverheid.en.ExposureNotificationsRepository
-import nl.rijksoverheid.en.notifier.NotificationsRepository
+import nl.rijksoverheid.en.labtest.LabTestRepository
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
+import java.time.Duration
 
-private const val WORKER_ID = "check_connection"
-private const val ID_CONNECTION_PUSH_NOTIFICATION = 2
+private const val WORKER_ID = "decoy_scheduler"
 
-class CheckConnectionWorker(
+class ScheduleDecoyWorker(
     context: Context,
     params: WorkerParameters,
-    private val repository: ExposureNotificationsRepository,
-    private val notificationsRepository: NotificationsRepository
+    private val repository: LabTestRepository
 ) : CoroutineWorker(context, params) {
-
     override suspend fun doWork(): Result {
-        Timber.d("Check if key processing is overdue")
-        if (repository.keyProcessingOverdue) {
-            Timber.d("Key processing is overdue")
-            notificationsRepository.showSyncIssuesNotification()
-        }
+        Timber.d("Schedule next decoy sequence")
+        repository.scheduleNextDecoyScheduleSequence()
         return Result.success()
     }
 
     companion object {
         fun queue(context: Context) {
-            val request = PeriodicWorkRequestBuilder<CheckConnectionWorker>(1, TimeUnit.DAYS)
-                .setInitialDelay(1, TimeUnit.DAYS).build()
-
+            val request = PeriodicWorkRequestBuilder<ScheduleDecoyWorker>(Duration.ofDays(1))
             WorkManager.getInstance(context)
                 .enqueueUniquePeriodicWork(
                     WORKER_ID,
                     ExistingPeriodicWorkPolicy.REPLACE,
-                    request
+                    request.build()
                 )
         }
 

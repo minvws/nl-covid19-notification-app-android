@@ -19,6 +19,7 @@ import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ProcessManifestResult
+import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -28,19 +29,19 @@ private const val KEY_UPDATE_INTERVAL = "update_interval"
 class ProcessManifestWorker(
     context: Context,
     params: WorkerParameters,
-    private val repository: ExposureNotificationsRepository
+    private val repository: ExposureNotificationsRepository,
+    private val notificationsRepository: NotificationsRepository
 ) :
     CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
         val result = repository.processManifest()
         Timber.d("Processing result is $result")
-        if (result is ProcessManifestResult.Success && inputData.getInt(
-                KEY_UPDATE_INTERVAL,
-                0
-            ) != result.nextIntervalMinutes
-        ) {
-            queue(applicationContext, result.nextIntervalMinutes)
+        if (result is ProcessManifestResult.Success) {
+            notificationsRepository.cancelSyncIssuesNotification()
+            if (inputData.getInt(KEY_UPDATE_INTERVAL, 0) != result.nextIntervalMinutes) {
+                queue(applicationContext, result.nextIntervalMinutes)
+            }
         }
         // Always mark as success so that retries are only scheduled for exceptions.
         // The next update will be at the next interval.

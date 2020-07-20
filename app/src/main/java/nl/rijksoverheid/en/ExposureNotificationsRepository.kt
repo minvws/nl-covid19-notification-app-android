@@ -6,8 +6,6 @@
  */
 package nl.rijksoverheid.en
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.BroadcastReceiver
@@ -16,19 +14,14 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.location.LocationManager
-import android.os.Build
-import android.os.Bundle
 import android.util.Base64
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import androidx.core.location.LocationManagerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import androidx.navigation.NavDeepLinkBuilder
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -41,13 +34,12 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.CdnService
-import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
@@ -58,10 +50,8 @@ import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
 import nl.rijksoverheid.en.status.StatusCache
-import nl.rijksoverheid.en.util.formatDaysSince
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
-import retrofit2.HttpException
 import retrofit2.Response
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -81,9 +71,7 @@ private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
 private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
-private const val DEFAULT_MANIFEST_INTERVAL_MINUTES = 240
 private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
-private const val ID_EXPOSURE_PUSH_NOTIFICATION = 0
 private const val KEY_MIN_RISK_SCORE = "min_risk_score"
 
 class ExposureNotificationsRepository(
@@ -94,6 +82,7 @@ class ExposureNotificationsRepository(
     private val manifestWorkerScheduler: ProcessManifestWorkerScheduler,
     private val appLifecycleManager: AppLifecycleManager,
     private val statusCache: StatusCache,
+    private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone(),
     private val signatureValidation: Boolean = BuildConfig.EXPOSURE_FILE_SIGNATURE_CHECK,
     lifecycleOwner: LifecycleOwner = ProcessLifecycleOwner.get()
@@ -120,12 +109,16 @@ class ExposureNotificationsRepository(
                 // reset the timer
                 putLong(KEY_LAST_KEYS_PROCESSED, System.currentTimeMillis())
             }
-            val interval = getLatestAppConfigOrNull()?.updatePeriodMinutes
-                ?: DEFAULT_MANIFEST_INTERVAL_MINUTES
+            val interval = appConfigManager.getConfigOrDefault().updatePeriodMinutes
             manifestWorkerScheduler.schedule(interval)
             statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
         }
         return result
+    }
+
+    suspend fun requestEnableNotificationsForcingConsent(): EnableNotificationsResult {
+        exposureNotificationsApi.disableNotifications()
+        return requestEnableNotifications()
     }
 
     suspend fun requestDisableNotifications(): DisableNotificationsResult {
@@ -219,8 +212,13 @@ class ExposureNotificationsRepository(
      */
     @VisibleForTesting
     internal suspend fun processExposureKeySets(manifest: Manifest): ProcessExposureKeysResult {
-        val processedSets = preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())!!
+        if (exposureNotificationsApi.getStatus() == StatusResult.Disabled) {
+            Timber.d("Exposure notifications api is disabled")
+            // we don't consider this an error, the user might have disabled it from the system settings.
+            return ProcessExposureKeysResult.Success
+        }
 
+        val processedSets = preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())!!
         val updates = manifest.exposureKeysSetIds.toMutableSet().apply {
             removeAll(processedSets)
         }
@@ -310,18 +308,6 @@ class ExposureNotificationsRepository(
                 KEY_EXPOSURE_KEY_SETS,
                 currentProcessedIds.intersect(manifest.exposureKeysSetIds)
             )
-        }
-    }
-
-    private suspend fun getLatestAppConfigOrNull(): AppConfig? = withContext(Dispatchers.IO) {
-        try {
-            api.getAppConfig(api.getManifest().appConfigId)
-        } catch (ex: HttpException) {
-            Timber.e(ex, "Error getting latest config")
-            null
-        } catch (ex: IOException) {
-            Timber.e(ex, "Error getting latest config")
-            null
         }
     }
 
@@ -422,12 +408,6 @@ class ExposureNotificationsRepository(
 
     suspend fun processManifest(): ProcessManifestResult {
         return withContext(Dispatchers.IO) {
-            if (retrieveStatus() == StatusResult.Disabled) {
-                Timber.w("Exposure notifications are disabled")
-                // go through the steps as if the user disabled through the app
-                requestDisableNotifications()
-                return@withContext ProcessManifestResult.Disabled
-            }
             try {
                 val manifest = api.getManifest()
                 val result = processExposureKeySets(manifest)
@@ -435,7 +415,7 @@ class ExposureNotificationsRepository(
 
                 val config = api.getAppConfig(manifest.appConfigId)
 
-                appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode)
+                appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode, true)
 
                 if (result == ProcessExposureKeysResult.Success) {
                     preferences.edit {
@@ -480,11 +460,6 @@ class ExposureNotificationsRepository(
             } else {
                 null
             }
-        }.onEach { date ->
-            if (date != null) {
-                (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
-                    .cancel(ID_EXPOSURE_PUSH_NOTIFICATION)
-            }
         }
     }
 
@@ -497,7 +472,7 @@ class ExposureNotificationsRepository(
         }
     }
 
-    suspend fun addExposure(token: String) {
+    suspend fun addExposure(token: String): AddExposureResult {
         val testToken = BuildConfig.FEATURE_DEBUG_NOTIFICATION && token == DEBUG_TOKEN
         val summary = exposureNotificationsApi.getSummary(token)
 
@@ -515,10 +490,10 @@ class ExposureNotificationsRepository(
 
         if (!testToken && (summary?.matchedKeyCount ?: 0 == 0 || summary?.maximumRiskScore ?: 0 < minRiskScore)) {
             Timber.d("Exposure has no matches or does not meet required risk score")
-            return
+            return AddExposureResult.Processed
         }
 
-        if (newDaysSinceLastExposure != null &&
+        return if (newDaysSinceLastExposure != null &&
             (currentDaysSinceLastExposure == null || newDaysSinceLastExposure < currentDaysSinceLastExposure)
         ) {
             // save new exposure
@@ -530,54 +505,10 @@ class ExposureNotificationsRepository(
                         .minusDays(newDaysSinceLastExposure.toLong()).toEpochDay()
                 )
             }
-            showNotification(newDaysSinceLastExposure)
+            AddExposureResult.Notify(newDaysSinceLastExposure)
+        } else {
+            AddExposureResult.Processed
         }
-    }
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                "exposure_notifications",
-                context.getString(R.string.notification_channel_name),
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            channel.description = context.getString(R.string.notification_channel_description)
-            val notificationManager: NotificationManager =
-                context.getSystemService(NotificationManager::class.java)!!
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    private fun showNotification(daysSinceLastExposure: Int) {
-        createNotificationChannel()
-        val dateOfLastExposure = LocalDate.now(clock)
-            .minusDays(daysSinceLastExposure.toLong())
-
-        val pendingIntent = NavDeepLinkBuilder(context)
-            .setGraph(R.navigation.nav_main)
-            .setDestination(R.id.nav_post_notification)
-            .setArguments(Bundle().apply {
-                putLong("epochDayOfLastExposure", dateOfLastExposure.toEpochDay())
-            }).createPendingIntent()
-        val message = context.getString(
-            R.string.notification_message,
-            dateOfLastExposure.formatDaysSince(context, clock)
-        )
-        val builder =
-            NotificationCompat.Builder(context, "exposure_notifications")
-                .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(context.getString(R.string.notification_title))
-                .setContentText(message)
-                .setStyle(NotificationCompat.BigTextStyle().bigText(message))
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setContentIntent(pendingIntent)
-                .setOnlyAlertOnce(true)
-                .setAutoCancel(true) // Do not reveal this notification on a secure lockscreen.
-                .setVisibility(NotificationCompat.VISIBILITY_SECRET)
-        val notificationManager =
-            NotificationManagerCompat
-                .from(context)
-        notificationManager.notify(ID_EXPOSURE_PUSH_NOTIFICATION, builder.build())
     }
 }
 
@@ -609,6 +540,10 @@ sealed class ProcessExposureKeysResult {
 
 sealed class ProcessManifestResult {
     data class Success(val nextIntervalMinutes: Int) : ProcessManifestResult()
-    object Disabled : ProcessManifestResult()
     object Error : ProcessManifestResult()
+}
+
+sealed class AddExposureResult {
+    object Processed : AddExposureResult()
+    data class Notify(val daysSinceExposure: Int) : AddExposureResult()
 }

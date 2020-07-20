@@ -11,29 +11,51 @@ import android.os.Build
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
+import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.runBlocking
+import nl.rijksoverheid.en.api.CdnService
+import nl.rijksoverheid.en.api.HmacSecret
 import nl.rijksoverheid.en.api.LabTestService
+import nl.rijksoverheid.en.api.RequestSize
+import nl.rijksoverheid.en.api.model.AppConfig
+import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.PostKeysRequest
+import nl.rijksoverheid.en.api.model.Registration
+import nl.rijksoverheid.en.api.model.RegistrationRequest
+import nl.rijksoverheid.en.api.model.RiskCalculationParameters
+import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.labtest.DecoyScheduler
 import nl.rijksoverheid.en.labtest.KeysStorage
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.labtest.RegistrationResult
 import nl.rijksoverheid.en.labtest.UploadScheduler
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
+import okhttp3.ResponseBody
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import retrofit2.Response
 import java.time.Clock
 import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.temporal.ChronoUnit
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicLong
+import kotlin.random.Random
 
 private val NOOP_SCHEDULER: UploadScheduler = {}
+private val NOOP_DECOY_SCHEDULER: DecoyScheduler = {}
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
@@ -41,6 +63,25 @@ class LabTestRepositoryTest {
     private lateinit var mockWebServer: MockWebServer
     private val instant = Instant.parse("2020-06-20T10:15:30.00Z")
     private val clock = Clock.fixed(instant, ZoneId.of("UTC"))
+
+    private val cdnService = object : CdnService {
+        override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+            throw NotImplementedError()
+        }
+
+        override suspend fun getManifest(cacheHeader: String?): Manifest =
+            Manifest(listOf(), "", "", "appconfig")
+
+        override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+            throw NotImplementedError()
+        }
+
+        override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig {
+            return AppConfig(requestMinimumSize = 0, requestMaximumSize = 0, decoyProbability = 1.0)
+        }
+    }
+
+    private val appConfigManager = AppConfigManager(cdnService)
 
     @Before
     fun setup() {
@@ -69,6 +110,8 @@ class LabTestRepositoryTest {
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
+                NOOP_DECOY_SCHEDULER,
+                appConfigManager,
                 clock
             )
 
@@ -102,6 +145,8 @@ class LabTestRepositoryTest {
                 baseUrl = mockWebServer.url("/").toString()
             ),
             NOOP_SCHEDULER,
+            NOOP_DECOY_SCHEDULER,
+            appConfigManager,
             clock
         )
 
@@ -135,6 +180,8 @@ class LabTestRepositoryTest {
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
+                NOOP_DECOY_SCHEDULER,
+                appConfigManager,
                 clock
             )
 
@@ -161,6 +208,8 @@ class LabTestRepositoryTest {
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
+                NOOP_DECOY_SCHEDULER,
+                appConfigManager,
                 clock
             )
 
@@ -199,6 +248,8 @@ class LabTestRepositoryTest {
                 baseUrl = mockWebServer.url("/").toString()
             ),
             NOOP_SCHEDULER,
+            NOOP_DECOY_SCHEDULER,
+            appConfigManager,
             clock
         )
 
@@ -236,6 +287,8 @@ class LabTestRepositoryTest {
                 baseUrl = mockWebServer.url("/").toString()
             ),
             NOOP_SCHEDULER,
+            NOOP_DECOY_SCHEDULER,
+            appConfigManager,
             clock
         )
 
@@ -243,5 +296,185 @@ class LabTestRepositoryTest {
 
         assertEquals(1, mockWebServer.requestCount)
         assertEquals(LabTestRepository.UploadDiagnosticKeysResult.Retry, result)
+    }
+
+    @Test
+    fun `scheduleNextDecoyScheduleSequence schedules between 7am and 7pm of the current day`() =
+        runBlocking {
+            val delay = AtomicLong(0)
+            // current time after the schedule window
+            val instant = Instant.parse("2020-06-20T05:00:30.00Z")
+            val clock = Clock.fixed(instant, ZoneId.of("UTC"))
+            val decoyStart =
+                LocalDate.now(clock).atTime(7, 0).atZone(clock.zone).toInstant().toEpochMilli()
+            val decoyEnd =
+                LocalDate.now(clock).atTime(19, 0).atZone(clock.zone).toInstant().toEpochMilli()
+
+            val random = mock<Random> {
+                on { nextDouble() }.thenReturn(1.0)
+                on { nextLong(eq(decoyStart), eq(decoyEnd)) }.thenReturn(decoyStart)
+            }
+
+            val repository = LabTestRepository(
+                lazy {
+                    ApplicationProvider.getApplicationContext<Application>()
+                        .getSharedPreferences("test", 0)
+                },
+                mock(),
+                mock(),
+                NOOP_SCHEDULER,
+                { delayMillis -> delay.set(delayMillis) },
+                appConfigManager,
+                clock,
+                random
+            )
+
+            repository.scheduleNextDecoyScheduleSequence()
+
+            assertTrue(delay.get() > 0)
+            val date = LocalDateTime.now(clock).plus(delay.get(), ChronoUnit.MILLIS)
+            assertEquals(LocalDate.now(clock).atTime(7, 0), date)
+        }
+
+    @Test
+    fun `scheduleNextDecoyScheduleSequence schedules between 7am and 7pm of the next day when scheduled time has passed`() =
+        runBlocking {
+            val delay = AtomicLong(0)
+            // current time after the schedule window
+            val instant = Instant.parse("2020-06-20T20:15:30.00Z")
+            val clock = Clock.fixed(instant, ZoneId.of("UTC"))
+            val decoyStart =
+                LocalDate.now(clock).atTime(7, 0).atZone(clock.zone).toInstant().toEpochMilli()
+            val decoyEnd =
+                LocalDate.now(clock).atTime(19, 0).atZone(clock.zone).toInstant().toEpochMilli()
+
+            val random = mock<Random> {
+                on { nextDouble() }.thenReturn(1.0)
+                on { nextLong(eq(decoyStart), eq(decoyEnd)) }.thenReturn(decoyStart)
+            }
+
+            val repository = LabTestRepository(
+                lazy {
+                    ApplicationProvider.getApplicationContext<Application>()
+                        .getSharedPreferences("test", 0)
+                },
+                mock(),
+                mock(),
+                NOOP_SCHEDULER,
+                { delayMillis -> delay.set(delayMillis) },
+                appConfigManager,
+                clock,
+                random
+            )
+
+            repository.scheduleNextDecoyScheduleSequence()
+
+            assertTrue(delay.get() > 0)
+            val date = LocalDateTime.now(clock).plus(delay.get(), ChronoUnit.MILLIS)
+            assertEquals(LocalDate.now(clock).plusDays(1).atTime(7, 0), date)
+        }
+
+    @Test
+    fun `sendDecoyTraffic calls register if registration is not valid`() = runBlocking {
+        val registrationCalled = AtomicBoolean(false)
+        var postedRequest: PostKeysRequest? = null
+
+        val api = object : LabTestService {
+            override suspend fun register(
+                request: RegistrationRequest,
+                sizes: RequestSize
+            ): Registration {
+                registrationCalled.set(true)
+                return Registration("12345", "122345", byteArrayOf(1, 2, 3, 4, 5), 3600000)
+            }
+
+            override suspend fun postKeys(
+                request: PostKeysRequest,
+                hmacSecret: HmacSecret,
+                requestSize: RequestSize
+            ) {
+                throw IllegalStateException()
+            }
+
+            override suspend fun stopKeys(
+                request: PostKeysRequest,
+                hmacSecret: HmacSecret,
+                requestSize: RequestSize
+            ) {
+                postedRequest = request
+            }
+        }
+
+        val repository = LabTestRepository(
+            lazy {
+                ApplicationProvider.getApplicationContext<Application>()
+                    .getSharedPreferences("test", 0)
+            },
+            mock(),
+            api,
+            NOOP_SCHEDULER,
+            NOOP_DECOY_SCHEDULER,
+            appConfigManager,
+            clock
+        )
+
+        repository.sendDecoyTraffic(0L)
+
+        assertTrue(registrationCalled.get())
+        assertNotNull(postedRequest)
+    }
+
+    @Test
+    fun `sendDecoyTraffic skips register if registration is valid`() = runBlocking {
+        var postedRequest: PostKeysRequest? = null
+
+        val prefs =
+            ApplicationProvider.getApplicationContext<Application>().getSharedPreferences("test", 0)
+
+        prefs.edit {
+            putString("lab_confirmation_id", "cached-code")
+            putLong("registration_expiration", clock.millis() + 30000)
+            putString("bucket_id", "bucket-id")
+        }
+
+        val api = object : LabTestService {
+            override suspend fun register(
+                request: RegistrationRequest,
+                sizes: RequestSize
+            ): Registration {
+                throw AssertionError()
+            }
+
+            override suspend fun postKeys(
+                request: PostKeysRequest,
+                hmacSecret: HmacSecret,
+                requestSize: RequestSize
+            ) {
+                throw IllegalStateException()
+            }
+
+            override suspend fun stopKeys(
+                request: PostKeysRequest,
+                hmacSecret: HmacSecret,
+                requestSize: RequestSize
+            ) {
+                postedRequest = request
+            }
+        }
+
+        val repository = LabTestRepository(
+            lazy {
+                prefs
+            },
+            mock(),
+            api,
+            NOOP_SCHEDULER,
+            NOOP_DECOY_SCHEDULER,
+            appConfigManager,
+            clock
+        )
+
+        repository.sendDecoyTraffic(0L)
+        assertNotNull(postedRequest)
     }
 }

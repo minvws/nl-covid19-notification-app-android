@@ -17,6 +17,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.nhaarman.mockitokotlin2.mock
 import nl.rijksoverheid.en.AppLifecycleManager
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
@@ -61,14 +62,15 @@ class HowItWorksDetailFragmentTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(): Manifest =
+            override suspend fun getManifest(cacheHeader: String?): Manifest =
                 Manifest(emptyList(), "", "", "appConfig")
 
             override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                 throw NotImplementedError()
             }
 
-            override suspend fun getAppConfig(id: String) = AppConfig(1, 10, 0)
+            override suspend fun getAppConfig(id: String, cacheHeader: String?) =
+                AppConfig(1, 10, 0.0)
         },
         notificationsPreferences,
         object : ProcessManifestWorkerScheduler {
@@ -78,8 +80,9 @@ class HowItWorksDetailFragmentTest {
             override fun cancel() {
             }
         },
-        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)),
-        StatusCache(notificationsPreferences)
+        AppLifecycleManager(configPreferences, AppUpdateManagerFactory.create(context)) {},
+        StatusCache(notificationsPreferences),
+        mock()
     )
     private val viewModel = ExposureNotificationsViewModel(repository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {

@@ -9,8 +9,8 @@ package nl.rijksoverheid.en.onboarding
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
@@ -23,7 +23,6 @@ import nl.rijksoverheid.en.about.FAQDetailSections
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 
 class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button) {
-    private val onboardingViewModel: OnboardingViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
 
     private val args: HowItWorksDetailFragmentArgs by navArgs()
@@ -57,14 +56,12 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
         }
         viewModel.notificationState.observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
-                onboardingViewModel.finishOnboarding()
+                findNavController().navigate(
+                    HowItWorksDetailFragmentDirections.actionNext(), FragmentNavigatorExtras(
+                        binding.appbar to binding.appbar.transitionName
+                    )
+                )
             }
-        }
-
-        onboardingViewModel.onboardingComplete.observe(viewLifecycleOwner) {
-            enterTransition = null
-            exitTransition = null
-            findNavController().popBackStack(R.id.nav_onboarding, true)
         }
     }
 }

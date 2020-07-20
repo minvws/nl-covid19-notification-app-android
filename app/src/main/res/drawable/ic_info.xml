@@ -1,21 +1,29 @@
+<!--
+  ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+  ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+  ~
+  ~   SPDX-License-Identifier: EUPL-1.2
+  ~
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="32dp"
     android:height="32dp"
     android:viewportWidth="32"
     android:viewportHeight="32">
-    <path
-        android:fillColor="#3472F6"
-        android:pathData="M16,0L16,0A16,16 0,0 1,32 16L32,16A16,16 0,0 1,16 32L16,32A16,16 0,0 1,0 16L0,16A16,16 0,0 1,16 0z" />
-    <path
-        android:fillColor="#ffffff"
-        android:pathData="M12,14.0001C12,13.5582 12.3582,13.2001 12.8,13.2001H16V14.8001H12.8C12.3582,14.8001 12,14.4419 12,14.0001Z" />
-    <path
-        android:fillColor="#ffffff"
-        android:pathData="M12.8,23.6L19.2,23.6A0.8,0.8 0,0 1,20 24.4L20,24.4A0.8,0.8 0,0 1,19.2 25.2L12.8,25.2A0.8,0.8 0,0 1,12 24.4L12,24.4A0.8,0.8 0,0 1,12.8 23.6z" />
-    <path
-        android:fillColor="#ffffff"
-        android:pathData="M14.6001,13.2001L17.4001,13.2001A1,1 0,0 1,18.4001 14.2001L18.4001,24.2001A1,1 0,0 1,17.4001 25.2001L14.6001,25.2001A1,1 0,0 1,13.6001 24.2001L13.6001,14.2001A1,1 0,0 1,14.6001 13.2001z" />
-    <path
-        android:fillColor="#ffffff"
-        android:pathData="M13.2002,9a2.6,2.6 0,1 0,5.2 0a2.6,2.6 0,1 0,-5.2 0z" />
+  <path
+      android:fillColor="#3472F6"
+      android:pathData="M16,0L16,0A16,16 0,0 1,32 16L32,16A16,16 0,0 1,16 32L16,32A16,16 0,0 1,0 16L0,16A16,16 0,0 1,16 0z" />
+  <path
+      android:fillColor="#ffffff"
+      android:pathData="M12,14C12,13.5581 12.3582,13.2 12.8,13.2H16V14.8H12.8C12.3582,14.8 12,14.4418 12,14Z" />
+  <path
+      android:fillColor="#ffffff"
+      android:pathData="M12.8,23.5999L19.2,23.5999A0.8,0.8 0,0 1,20 24.3999L20,24.3999A0.8,0.8 0,0 1,19.2 25.1999L12.8,25.1999A0.8,0.8 0,0 1,12 24.3999L12,24.3999A0.8,0.8 0,0 1,12.8 23.5999z" />
+  <path
+      android:fillColor="#ffffff"
+      android:pathData="M14.5996,13.2L17.3996,13.2A1,1 0,0 1,18.3996 14.2L18.3996,24.2A1,1 0,0 1,17.3996 25.2L14.5996,25.2A1,1 0,0 1,13.5996 24.2L13.5996,14.2A1,1 0,0 1,14.5996 13.2z" />
+  <path
+      android:fillColor="#ffffff"
+      android:pathData="M13.2002,8.9999a2.6,2.6 0,1 0,5.2 0a2.6,2.6 0,1 0,-5.2 0z" />
 </vector>

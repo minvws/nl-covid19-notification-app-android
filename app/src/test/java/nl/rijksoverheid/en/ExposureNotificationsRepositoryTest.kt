@@ -35,11 +35,14 @@ import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
+import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.OkHttpClient
@@ -52,8 +55,6 @@ import okio.Buffer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -165,6 +166,7 @@ class ExposureNotificationsRepositoryTest {
         val config = AtomicReference<ExposureConfiguration>()
 
         val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus(): StatusResult = StatusResult.Enabled
             override suspend fun provideDiagnosisKeys(
                 files: List<File>,
                 configuration: ExposureConfiguration,
@@ -221,6 +223,8 @@ class ExposureNotificationsRepositoryTest {
         )
 
         val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+
             override suspend fun provideDiagnosisKeys(
                 files: List<File>,
                 configuration: ExposureConfiguration,
@@ -321,6 +325,8 @@ class ExposureNotificationsRepositoryTest {
             )
 
             val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+
                 override suspend fun provideDiagnosisKeys(
                     files: List<File>,
                     configuration: ExposureConfiguration,
@@ -370,6 +376,7 @@ class ExposureNotificationsRepositoryTest {
             )
 
             val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 override suspend fun provideDiagnosisKeys(
                     files: List<File>,
                     configuration: ExposureConfiguration,
@@ -422,6 +429,8 @@ class ExposureNotificationsRepositoryTest {
             )
 
             val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+
                 override suspend fun provideDiagnosisKeys(
                     files: List<File>,
                     configuration: ExposureConfiguration,
@@ -478,6 +487,7 @@ class ExposureNotificationsRepositoryTest {
             )
 
             val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 override suspend fun provideDiagnosisKeys(
                     files: List<File>,
                     configuration: ExposureConfiguration,
@@ -543,6 +553,7 @@ class ExposureNotificationsRepositoryTest {
 
             val processed = AtomicBoolean(false)
             val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 override suspend fun provideDiagnosisKeys(
                     files: List<File>,
                     configuration: ExposureConfiguration,
@@ -589,7 +600,7 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
-    fun `addExposure adds exposure and shows notification`() = runBlocking {
+    fun `addExposure adds exposure and returns Notify`() = runBlocking {
         val dateTime = "2020-06-20T10:15:30.00Z"
 
         val api = object : FakeExposureNotificationApi() {
@@ -605,11 +616,9 @@ class ExposureNotificationsRepositoryTest {
             clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
-        val notificationManager = ApplicationProvider.getApplicationContext<Context>()
-            .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val result = repository.addExposure("sample-token")
 
-        repository.addExposure("sample-token")
-        assertNotNull(shadowOf(notificationManager).getNotification(0))
+        assertTrue(result is AddExposureResult.Notify)
         assertEquals(
             LocalDate.of(2020, 6, 20).minusDays(4),
             repository.getLastExposureDate().filterNotNull().first()
@@ -701,14 +710,15 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(): Manifest =
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
                     Manifest(emptyList(), "dummy", "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig(1, 5, 0.0)
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -783,14 +793,15 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(): Manifest =
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
                     Manifest(emptyList(), "dummy", "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String): AppConfig = AppConfig(2, 5, 0)
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig(2, 5, 0.0)
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -799,6 +810,14 @@ class ExposureNotificationsRepositoryTest {
                 context,
                 api = object : FakeExposureNotificationApi() {
                     override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                },
+                appLifecycleManager = AppLifecycleManager(
+                    context.getSharedPreferences(
+                        "test_config",
+                        0
+                    ), mock()
+                ) {
+                    NotificationsRepository(context).showAppUpdateNotification()
                 },
                 cdnService = fakeService,
                 clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
@@ -823,14 +842,15 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(): Manifest =
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
                     Manifest(emptyList(), "dummy", "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String): AppConfig = AppConfig(0, 5, 0)
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig(0, 5, 0.0)
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -857,7 +877,7 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
-    fun `processManifest with disabled exposure notifications cancels job`() =
+    fun `processManifest with disabled exposure notifications does not cancel jobs`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
 
@@ -871,6 +891,22 @@ class ExposureNotificationsRepositoryTest {
                     override suspend fun getStatus(): StatusResult = StatusResult.Disabled
                     override suspend fun disableNotifications(): DisableNotificationsResult =
                         DisableNotificationsResult.Disabled
+                },
+                cdnService = object : CdnService {
+                    override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                        throw NotImplementedError()
+                    }
+
+                    override suspend fun getManifest(cacheHeader: String?): Manifest = Manifest(
+                        listOf(), "res", "risk", "config"
+                    )
+
+                    override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                        throw NotImplementedError()
+                    }
+
+                    override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                        AppConfig()
                 },
                 scheduler = object : ProcessManifestWorkerScheduler {
                     override fun schedule(intervalMinutes: Int) {
@@ -886,8 +922,8 @@ class ExposureNotificationsRepositoryTest {
             )
 
             val result = repository.processManifest()
-            assertTrue(result is ProcessManifestResult.Disabled)
-            assertTrue(cancelled.get())
+            assertTrue(result is ProcessManifestResult.Success)
+            assertFalse(cancelled.get())
         }
 
     @Test
@@ -908,17 +944,10 @@ class ExposureNotificationsRepositoryTest {
             }
 
             val repository = createRepository(api = api, preferences = sharedPrefs, clock = clock)
-
-            val notificationManager = ApplicationProvider.getApplicationContext<Context>()
-                .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
             repository.addExposure("sample-token")
-            assertNotNull(shadowOf(notificationManager).getNotification(0))
 
             val result = repository.getLastExposureDate().first()
-
             assertEquals(LocalDate.now(clock).minusDays(4), result)
-            assertNull(shadowOf(notificationManager).getNotification(0))
         }
 
     @Test
@@ -930,7 +959,7 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(): Manifest {
+            override suspend fun getManifest(cacheHeader: String?): Manifest {
                 throw NotImplementedError()
             }
 
@@ -938,7 +967,8 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
+            override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                AppConfig(1, 5, 0.0)
         }
 
         val context = ApplicationProvider.getApplicationContext<Application>()
@@ -966,7 +996,7 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(): Manifest {
+            override suspend fun getManifest(cacheHeader: String?): Manifest {
                 throw NotImplementedError()
             }
 
@@ -974,7 +1004,8 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getAppConfig(id: String): AppConfig = AppConfig(1, 5, 0)
+            override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                AppConfig(1, 5, 0.0)
         }
 
         val repository = createRepository(
@@ -1231,6 +1262,53 @@ class ExposureNotificationsRepositoryTest {
             assertEquals(listOf(StatusResult.Disabled, StatusResult.Enabled), result.await())
         }
 
+    @Test
+    fun `requestEnableNotificationsForcingConsent disables then enables the EN api`() =
+        runBlocking {
+            val disableCalled = AtomicBoolean(false)
+            val enableCalled = AtomicBoolean(false)
+
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus() = StatusResult.Enabled
+                override suspend fun disableNotifications(): DisableNotificationsResult {
+                    disableCalled.set(true)
+                    return DisableNotificationsResult.Disabled
+                }
+
+                override suspend fun requestEnableNotifications(): EnableNotificationsResult {
+                    enableCalled.set(true)
+                    return EnableNotificationsResult.Enabled
+                }
+            }
+
+            val repository = createRepository(api = api, cdnService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                    Manifest(listOf(), "res", "risk", "config")
+
+                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig()
+            }, scheduler = object : ProcessManifestWorkerScheduler {
+                override fun schedule(intervalMinutes: Int) {
+                }
+
+                override fun cancel() {
+                    throw AssertionError()
+                }
+            })
+
+            repository.requestEnableNotificationsForcingConsent()
+            assertTrue(disableCalled.get())
+            assertTrue(enableCalled.get())
+        }
+
     private fun createRepository(
         context: Context = ApplicationProvider.getApplicationContext(),
         api: ExposureNotificationApi = FakeExposureNotificationApi(),
@@ -1240,14 +1318,14 @@ class ExposureNotificationsRepositoryTest {
             preferences
         ),
         appLifecycleManager: AppLifecycleManager = AppLifecycleManager(
-            context,
             preferences,
             mock()
-        ),
+        ) {},
         clock: Clock = Clock.systemDefaultZone(),
         lifecycleOwner: LifecycleOwner = TestLifecycleOwner(Lifecycle.State.STARTED),
         signatureValidation: Boolean = false,
-        scheduler: ProcessManifestWorkerScheduler = fakeScheduler
+        scheduler: ProcessManifestWorkerScheduler = fakeScheduler,
+        appConfigManager: AppConfigManager = AppConfigManager(cdnService)
     ): ExposureNotificationsRepository {
         return ExposureNotificationsRepository(
             context,
@@ -1257,6 +1335,7 @@ class ExposureNotificationsRepositoryTest {
             scheduler,
             appLifecycleManager,
             statusCache,
+            appConfigManager,
             clock,
             lifecycleOwner = lifecycleOwner,
             signatureValidation = signatureValidation

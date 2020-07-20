@@ -6,17 +6,7 @@
  */
 package nl.rijksoverheid.en
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
-import android.os.Build
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
@@ -27,26 +17,27 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 private const val KEY_MINIMUM_VERSION_CODE = "minimum_version_code"
-private const val ID_LIFECYCLE_PUSH_NOTIFICATION = 1
 
-open class AppLifecycleManager(
-    private val context: Context,
+class AppLifecycleManager(
     private val preferences: SharedPreferences,
-    private val appUpdateManager: AppUpdateManager
+    private val appUpdateManager: AppUpdateManager,
+    private val onShowAppUpdateNotification: () -> Unit
 ) {
 
     /**
      * Saves the minimum version of the app so it can be checked on app open.
-     * Sends a push notification if this app's version is outdated.
+     * Sends a push notification if this app's version is outdated if [notify] is true
+     * @param minimumVersionCode the minimum version code required
+     * @param notify whether to show a notification to the user
      */
-    fun verifyMinimumVersion(minimumVersionCode: Int) {
+    fun verifyMinimumVersion(minimumVersionCode: Int, notify: Boolean) {
         if (minimumVersionCode != preferences.getInt(KEY_MINIMUM_VERSION_CODE, 0)) {
             preferences.edit {
                 putInt(KEY_MINIMUM_VERSION_CODE, minimumVersionCode)
             }
             val currentVersionCode = BuildConfig.VERSION_CODE
-            if (currentVersionCode < minimumVersionCode) {
-                showNotification()
+            if (notify && currentVersionCode < minimumVersionCode) {
+                onShowAppUpdateNotification()
             }
         }
     }
@@ -78,44 +69,6 @@ open class AppLifecycleManager(
                 c.resume(UpdateState.UpToDate)
             }
         }
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                "update_notifications",
-                context.getString(R.string.update_channel_name),
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            channel.description = context.getString(R.string.update_channel_description)
-            val notificationManager: NotificationManager =
-                context.getSystemService(NotificationManager::class.java)!!
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    private fun showNotification() {
-        createNotificationChannel()
-
-        val intent = Intent(context, MainActivity::class.java)
-        intent.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-        val notification =
-            NotificationCompat.Builder(context, "update_notifications")
-                .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(context.getString(R.string.update_notification_title))
-                .setContentText(context.getString(R.string.update_notification_message))
-                .setStyle(
-                    NotificationCompat.BigTextStyle()
-                        .bigText(context.getString(R.string.update_notification_message))
-                )
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setContentIntent(pendingIntent)
-                .setOnlyAlertOnce(true)
-                .setAutoCancel(true)
-                .build()
-
-        NotificationManagerCompat.from(context).notify(ID_LIFECYCLE_PUSH_NOTIFICATION, notification)
-    }
 
     sealed class UpdateState {
         data class NeedsUpdate(

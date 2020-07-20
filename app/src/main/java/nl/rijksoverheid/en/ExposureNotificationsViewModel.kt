@@ -38,12 +38,6 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
 
     val notificationsResult: LiveData<Event<NotificationsStatusResult>> = MutableLiveData()
 
-    fun requestDisableNotifications() {
-        viewModelScope.launch {
-            repository.requestDisableNotifications()
-        }
-    }
-
     fun requestEnableNotifications() {
         viewModelScope.launch {
             when (val result = repository.requestEnableNotifications()) {
@@ -70,6 +64,12 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
 
     private fun updateResult(result: NotificationsStatusResult) {
         (notificationsResult as MutableLiveData).value = Event(result)
+    }
+
+    fun requestEnableNotificationsForcingConsent() {
+        viewModelScope.launch {
+            repository.requestEnableNotificationsForcingConsent()
+        }
     }
 
     sealed class NotificationsState {
