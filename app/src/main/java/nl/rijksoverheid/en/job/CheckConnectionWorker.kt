@@ -18,7 +18,6 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 private const val WORKER_ID = "check_connection"
-private const val ID_CONNECTION_PUSH_NOTIFICATION = 2
 
 class CheckConnectionWorker(
     context: Context,

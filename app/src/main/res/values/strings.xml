@@ -175,6 +175,9 @@
     <string name="cd_back">Terug</string>
     <string name="cd_close">Sluiten</string>
     <string name="exposure_date_format">EEEE d MMMM</string>
-    <string name="upload_keys_failed_title">Het is niet gelukt anderen een melding te sturen.</string>
+    <string name="upload_keys_failed_title">Melding versturen mislukt</string>
     <string name="upload_keys_failed_message">Het is niet gelukt anderen een melding te sturen. Bel daarom de GGD. Lees meer in de app.</string>
+    <string name="upload_keys_failed_notification_header">Het is niet gelukt anderen een melding te sturen</string>
+    <string name="upload_keys_failed_notification_paragraph">We hebben geprobeerd je codes te delen met de GGD, maar dit is niet gelukt. Bel de GGD om dit opnieuw te doen. Het is heel belangrijk dat je dit snel doet. Anders kunnen er meer mensen besmet raken.</string>
+    <string name="upload_keys_failed_notification_toolbar_title">Bel de GGD</string>
 </resources>

@@ -146,4 +146,9 @@
         android:name="nl.rijksoverheid.en.status.RemoveExposedMessageDialogFragment"
         android:label="RemoveExposedMessageDialogFragment" />
 
+    <fragment
+        android:id="@+id/nav_upload_keys_failed_notification"
+        android:name="nl.rijksoverheid.en.notification.UploadKeysFailedNotificationFragment"
+        android:label="GenericNotificationFragment"
+        tools:layout="@layout/fragment_list" />
 </navigation>
