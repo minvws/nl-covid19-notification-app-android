@@ -29,6 +29,10 @@
     <string name="onboarding_how_it_works_toolbar_title">Hoe werkt de app?</string>
     <string name="onboarding_how_it_works_request_consent">App aanzetten</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Veelgestelde vraag</string>
+    <string name="onboarding_share_headline">Laat anderen weten dat jij helpt het virus te stoppen</string>
+    <string name="onboarding_share_description">Hoe meer mensen CoronaMelder gebruiken, hoe beter deze werkt. Alleen samen kunnen we de verspreiding van het virus stoppen. Deel de app dus met zo veel mogelijk anderen.</string>
+    <string name="onboarding_share_continue">Ga door</string>
+    <string name="onboarding_share_share">App delen</string>
     <string name="status_no_exposure_detected_headline">De app is actief</string>
     <string name="status_no_exposure_detected_description">Ook als je de app sluit, blijft %1$s actief</string>
     <string name="status_exposure_detected_headline">Je bent in de buurt geweest van iemand met het virus</string>
