@@ -45,7 +45,13 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
 
         val binding = FragmentListBinding.bind(view)
 
-        binding.toolbar.setTitle(R.string.faq_detail_toolbar_title)
+        binding.toolbar.setTitle(
+            when (args.faqItemId) {
+                FAQItemId.ONBOARDING -> R.string.about_onboarding_title
+                FAQItemId.TECHNICAL -> R.string.faq_technical_toolbar_title
+                else -> R.string.faq_detail_toolbar_title
+            }
+        )
         binding.content.adapter = adapter
 
         adapter.setOnItemClickListener { item, _ ->

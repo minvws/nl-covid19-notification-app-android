@@ -132,6 +132,7 @@
     <string name="faq_deletion_paragraph_1">Je kan de door CoronaMelder opgeslagen contact codes zo wissen. Ga op je telefoon naar Instellingen -> Privacy -> Gezondheid > Blootstelling aan COVID-19 > Verwijder blootstellingslogbestand. Als je wilt dat de app geen nieuwe contact codes meer opslaat kan je de app verwijderen.</string>
     <string name="faq_deletion_button">Open instellingen</string>
     <string name="faq_location_permission_paragraph_1">Sommige apps gebruiken Bluetooth om je locatie te bepalen. Daarom is dit onderdeel van je locatie-instellingen. CoronaMelder heeft Bluetooth nodig om te werken, maar alleen om te zien of je in de buurt bent van een ander persoon die de app hebben. De app heeft nooit toegang tot je locatie.</string>
+    <string name="faq_technical_toolbar_title">Technische uitleg</string>
     <string name="faq_technical_header_1">1. De app maakt voor elke telefoon een eigen code</string>
     <string name="faq_technical_paragraph_2">In deze code staat geen informatie over jou of je telefoon. De code is helemaal anoniem en verandert elk kwartier.</string>
     <string name="faq_technical_header_3">2. Telefoons delen hun codes als ze bij elkaar in de buurt zijn</string>
