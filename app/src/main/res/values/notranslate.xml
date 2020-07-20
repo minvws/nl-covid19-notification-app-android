@@ -10,4 +10,5 @@
     <string name="phone_number">0800–1202</string>
     <string name="privacy_policy_url">https://www.rijksoverheid.nl/privacystatement-coronavirus-app</string>
     <string name="accessibility_url">https://www.rijksoverheid.nl/documenten/publicaties/2020/06/24/toegankelijkheidsverklaring-corona-app</string>
+    <string name="share_url">https://coronamelder.nl/app</string>
 </resources>

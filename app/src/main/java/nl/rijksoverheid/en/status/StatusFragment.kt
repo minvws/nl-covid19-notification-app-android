@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -44,6 +45,7 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
                 StatusActionItem.About -> findNavController().navigate(
                     StatusFragmentDirections.actionAbout()
                 )
+                StatusActionItem.Share -> share()
                 StatusActionItem.GenericNotification -> findNavController().navigate(
                     StatusFragmentDirections.actionGenericNotification()
                 )
@@ -108,5 +110,19 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
                 statusViewModel.removeExposure()
             }
         }
+    }
+
+    private fun share() {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(
+                Intent.EXTRA_TEXT,
+                getString(R.string.share_content, getString(R.string.share_url))
+            )
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, getString(R.string.share_title))
+        startActivity(shareIntent)
     }
 }

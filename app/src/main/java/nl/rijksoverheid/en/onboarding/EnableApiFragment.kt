@@ -11,6 +11,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import nl.rijksoverheid.en.BaseFragment
@@ -49,14 +50,12 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
 
         viewModel.notificationState.observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
-                onboardingViewModel.finishOnboarding()
+                findNavController().navigate(
+                    EnableApiFragmentDirections.actionNext(), FragmentNavigatorExtras(
+                        binding.appbar to binding.appbar.transitionName
+                    )
+                )
             }
-        }
-
-        onboardingViewModel.onboardingComplete.observe(viewLifecycleOwner) {
-            enterTransition = null
-            exitTransition = null
-            findNavController().popBackStack(R.id.nav_onboarding, true)
         }
 
         onboardingViewModel.skipConsentConfirmation.observe(viewLifecycleOwner, EventObserver {
@@ -65,7 +64,12 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
                 SkipConsentConfirmationDialogFragment.SKIP_CONSENT_RESULT
             )?.observe(viewLifecycleOwner) { skip ->
                 if (skip) {
-                    onboardingViewModel.finishOnboarding()
+                    findNavController().navigate(
+                        EnableApiFragmentDirections.actionNext(),
+                        FragmentNavigatorExtras(
+                            binding.appbar to binding.appbar.transitionName
+                        )
+                    )
                 } else {
                     viewModel.requestEnableNotifications()
                 }

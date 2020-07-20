@@ -29,32 +29,40 @@ sealed class StatusActionItem(
 
     object About : StatusActionItem(
         R.drawable.ic_info,
-        R.string.status_info_1_title,
-        R.string.status_info_1_subtitle
+        R.string.status_info_about_title,
+        R.string.status_info_about_subtitle
     ) {
         override fun isSameAs(other: Item<*>) = other is About
     }
 
+    object Share : StatusActionItem(
+        R.drawable.ic_share,
+        R.string.status_info_share_title,
+        R.string.status_info_share_subtitle
+    ) {
+        override fun isSameAs(other: Item<*>) = other is Share
+    }
+
     object GenericNotification : StatusActionItem(
-        R.drawable.ic_shield,
-        R.string.status_info_2_title,
-        R.string.status_info_2_subtitle
+        R.drawable.ic_warning,
+        R.string.status_info_notification_title,
+        R.string.status_info_notification_subtitle
     ) {
         override fun isSameAs(other: Item<*>) = other is GenericNotification
     }
 
     object RequestTest : StatusActionItem(
         R.drawable.ic_test,
-        R.string.status_info_3_title,
-        R.string.status_info_3_subtitle
+        R.string.status_info_test_title,
+        R.string.status_info_test_subtitle
     ) {
         override fun isSameAs(other: Item<*>) = other is RequestTest
     }
 
     object LabTest : StatusActionItem(
         R.drawable.ic_virus,
-        R.string.status_info_4_title,
-        R.string.status_info_4_subtitle
+        R.string.status_info_lab_title,
+        R.string.status_info_lab_subtitle
     ) {
         override fun isSameAs(other: Item<*>) = other is LabTest
     }

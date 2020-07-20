@@ -22,6 +22,7 @@ class StatusSection : Section() {
                 headerGroup, errorGroup, Section(
                     listOf(
                         StatusActionItem.About,
+                        StatusActionItem.Share,
                         StatusActionItem.GenericNotification,
                         StatusActionItem.RequestTest,
                         StatusActionItem.LabTest
