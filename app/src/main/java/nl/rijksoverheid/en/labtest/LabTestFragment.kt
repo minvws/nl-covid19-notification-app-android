@@ -12,6 +12,7 @@ import android.content.IntentSender
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -68,14 +69,17 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
         labViewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }
         viewModel.notificationState.observe(viewLifecycleOwner) { state -> section.update(state) }
 
-        labViewModel.requestConsent.observe(viewLifecycleOwner, EventObserver {
-            requestConsent(it.intentSender)
-        })
-        labViewModel.finish.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(LabTestFragmentDirections.actionLabTestDone(it))
-        })
-        labViewModel.unknownError.observe(viewLifecycleOwner, EventObserver {
-            TODO("Implement error handling when API is not enabled")
+        labViewModel.uploadResult.observe(viewLifecycleOwner, EventObserver {
+            when (it) {
+                is LabTestViewModel.UploadResult.Success -> findNavController().navigate(
+                    LabTestFragmentDirections.actionLabTestDone(it.usedKey)
+                )
+                is LabTestViewModel.UploadResult.RequestConsent -> requestConsent(it.resolution.intentSender)
+                LabTestViewModel.UploadResult.Error -> {
+                    Toast.makeText(context, R.string.lab_test_upload_error, Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
         })
     }
 

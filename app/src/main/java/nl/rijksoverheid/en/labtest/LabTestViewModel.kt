@@ -26,9 +26,7 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
         object Error : KeyState()
     }
 
-    val requestConsent: LiveData<Event<PendingIntent>> = MutableLiveData()
-    val finish: LiveData<Event<String>> = MutableLiveData()
-    val unknownError: LiveData<Event<Unit>> = MutableLiveData()
+    val uploadResult: LiveData<Event<UploadResult>> = MutableLiveData()
 
     private var usedKey: String? = null
 
@@ -52,14 +50,26 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
 
     fun upload() {
         viewModelScope.launch {
-            when (val result = labTestRepository.requestUploadDiagnosticKeys()) {
-                LabTestRepository.RequestUploadDiagnosisKeysResult.Success ->
-                    (finish as MutableLiveData).value = Event(usedKey!!)
-                LabTestRepository.RequestUploadDiagnosisKeysResult.UnknownError ->
-                    (unknownError as MutableLiveData).value = Event(Unit)
-                is LabTestRepository.RequestUploadDiagnosisKeysResult.RequireConsent ->
-                    (requestConsent as MutableLiveData).value = Event(result.resolution)
-            }
+            updateResult(
+                when (val result = labTestRepository.requestUploadDiagnosticKeys()) {
+                    LabTestRepository.RequestUploadDiagnosisKeysResult.Success ->
+                        UploadResult.Success(usedKey!!)
+                    LabTestRepository.RequestUploadDiagnosisKeysResult.UnknownError ->
+                        UploadResult.Error
+                    is LabTestRepository.RequestUploadDiagnosisKeysResult.RequireConsent ->
+                        UploadResult.RequestConsent(result.resolution)
+                }
+            )
         }
+    }
+
+    private fun updateResult(result: UploadResult) {
+        (uploadResult as MutableLiveData).value = Event(result)
+    }
+
+    sealed class UploadResult {
+        data class RequestConsent(val resolution: PendingIntent) : UploadResult()
+        data class Success(val usedKey: String) : UploadResult()
+        object Error : UploadResult()
     }
 }

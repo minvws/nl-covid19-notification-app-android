@@ -152,6 +152,7 @@
     <string name="lab_test_step_2">Wacht op de GGD-medewerker voor de volgende stap</string>
     <string name="lab_test_step_3">Deel je codes om een anonieme melding te versturen</string>
     <string name="lab_test_button">Codes delen</string>
+    <string name="lab_test_upload_error">Het lukte niet om je codes te delen. Probeer het later nog eens.</string>
     <string name="lab_test_done_toolbar_title">Bedankt</string>
     <string name="lab_test_done_header_1">Bedankt, de GGD helpt je verder</string>
     <string name="lab_test_done_paragraph_2">De GGD-medewerker vertelt wat je kunt doen om te voorkomen dat je anderen besmet. Beterschap en sterkte met je herstel.</string>
