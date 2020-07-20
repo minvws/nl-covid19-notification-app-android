@@ -40,36 +40,40 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
 
     fun requestEnableNotifications() {
         viewModelScope.launch {
-            when (val result = repository.requestEnableNotifications()) {
-                is EnableNotificationsResult.Enabled -> {
-                }
-                is EnableNotificationsResult.ResolutionRequired -> updateResult(
-                    NotificationsStatusResult.ConsentRequired(
-                        result.resolution
-                    )
-                )
-                is EnableNotificationsResult.Unavailable -> updateResult(
-                    NotificationsStatusResult.Unavailable(
-                        result.statusCode
-                    )
-                )
-                is EnableNotificationsResult.UnknownError -> updateResult(
-                    NotificationsStatusResult.UnknownError(
-                        result.exception
-                    )
-                )
+            updateResult(repository.requestEnableNotifications())
+        }
+    }
+
+    fun requestEnableNotificationsForcingConsent() {
+        viewModelScope.launch {
+            updateResult(repository.requestEnableNotificationsForcingConsent())
+        }
+    }
+
+    private fun updateResult(result: EnableNotificationsResult) {
+        when (result) {
+            is EnableNotificationsResult.Enabled -> {
             }
+            is EnableNotificationsResult.ResolutionRequired -> updateResult(
+                NotificationsStatusResult.ConsentRequired(
+                    result.resolution
+                )
+            )
+            is EnableNotificationsResult.Unavailable -> updateResult(
+                NotificationsStatusResult.Unavailable(
+                    result.statusCode
+                )
+            )
+            is EnableNotificationsResult.UnknownError -> updateResult(
+                NotificationsStatusResult.UnknownError(
+                    result.exception
+                )
+            )
         }
     }
 
     private fun updateResult(result: NotificationsStatusResult) {
         (notificationsResult as MutableLiveData).value = Event(result)
-    }
-
-    fun requestEnableNotificationsForcingConsent() {
-        viewModelScope.launch {
-            repository.requestEnableNotificationsForcingConsent()
-        }
     }
 
     sealed class NotificationsState {
