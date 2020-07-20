@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.labtest
 
+import android.app.PendingIntent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,8 +26,9 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
         object Error : KeyState()
     }
 
-    val uploadDiagnosisKeysResult: LiveData<Event<LabTestRepository.RequestUploadDiagnosisKeysResult>> =
-        MutableLiveData()
+    val uploadResult: LiveData<Event<UploadResult>> = MutableLiveData()
+
+    private var usedKey: String? = null
 
     private val refresh = MutableLiveData<Unit>()
     val keyState: LiveData<KeyState> = refresh.switchMap {
@@ -34,6 +36,7 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
             emit(Loading)
             val result = labTestRepository.registerForUpload()
             if (result is RegistrationResult.Success) {
+                usedKey = result.code
                 emit(Success(result.code))
             } else {
                 emit(Error)
@@ -47,11 +50,26 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
 
     fun upload() {
         viewModelScope.launch {
-            updateResult(labTestRepository.requestUploadDiagnosticKeys())
+            updateResult(
+                when (val result = labTestRepository.requestUploadDiagnosticKeys()) {
+                    LabTestRepository.RequestUploadDiagnosisKeysResult.Success ->
+                        UploadResult.Success(usedKey!!)
+                    LabTestRepository.RequestUploadDiagnosisKeysResult.UnknownError ->
+                        UploadResult.Error
+                    is LabTestRepository.RequestUploadDiagnosisKeysResult.RequireConsent ->
+                        UploadResult.RequestConsent(result.resolution)
+                }
+            )
         }
     }
 
-    private fun updateResult(result: LabTestRepository.RequestUploadDiagnosisKeysResult) {
-        (uploadDiagnosisKeysResult as MutableLiveData).value = Event(result)
+    private fun updateResult(result: UploadResult) {
+        (uploadResult as MutableLiveData).value = Event(result)
+    }
+
+    sealed class UploadResult {
+        data class RequestConsent(val resolution: PendingIntent) : UploadResult()
+        data class Success(val usedKey: String) : UploadResult()
+        object Error : UploadResult()
     }
 }

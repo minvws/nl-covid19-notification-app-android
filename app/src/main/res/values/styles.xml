@@ -15,8 +15,18 @@
         <item name="colorOnPrimary">@color/color_primary</item>
     </style>
 
-    <style name="Widget.App.Button.Primary.Rounded" parent="Widget.App.Button.Primary">
+    <style name="Widget.App.Button.Rounded" parent="Widget.App.Button.Primary">
         <item name="cornerRadius">24dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+    </style>
+
+    <style name="Widget.App.Button.Error.Rounded" parent="Widget.App.Button.Rounded">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button.Error</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Button.Error" parent="">
+        <item name="colorPrimary">@color/color_error</item>
     </style>
 
     <style name="Widget.App.Button.Secondary.Rounded" parent="Widget.App.Button.Secondary">

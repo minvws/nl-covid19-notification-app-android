@@ -16,11 +16,12 @@ import nl.rijksoverheid.en.about.FAQItemId.LOCATION_PERMISSION
 import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION
 import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
 import nl.rijksoverheid.en.about.FAQItemId.REASON
-import nl.rijksoverheid.en.about.FAQItemId.TECHNICAL
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
 
 class AboutSection : Section(
     listOf(
+        FAQOnboardingItem(),
+        FAQTechnicalExplanationItem(),
         FAQHeaderItem(R.string.faq_header),
         FAQItem(REASON, R.string.faq_reason),
         FAQItem(LOCATION, R.string.faq_location),
@@ -31,9 +32,11 @@ class AboutSection : Section(
         FAQItem(LOCATION_PERMISSION, R.string.faq_location_permission),
         FAQItem(POWER_USAGE, R.string.faq_power_usage),
         FAQItem(DELETION, R.string.faq_deletion),
-        FAQItem(TECHNICAL, R.string.faq_technical),
+        HelpdeskItem(),
         FAQHeaderItem(R.string.about_toolbar_title),
+        ReviewItem(),
         PrivacyStatementItem(),
-        AccessibilityItem()
+        AccessibilityItem(),
+        ColofonItem()
     )
 )

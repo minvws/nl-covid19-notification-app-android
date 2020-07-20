@@ -44,18 +44,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.chip.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:importantForAccessibility="no"
-            android:text="@string/status_test_version"
-            android:textColor="?attr/colorSurface"
-            app:chipSurfaceColor="?attr/colorOnSurface"
-            app:layout_constraintBottom_toBottomOf="@id/clouds"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/clouds" />
-
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/status_image"
             android:layout_width="wrap_content"
@@ -112,11 +100,11 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:importantForAccessibility="no"
-            android:src="@drawable/illustration_status"
+            app:imageResource="@{viewState.illustration}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/illustration_top"
-            app:show="@{viewState.primaryActionLabel == null}" />
+            app:show="@{viewState.illustration != null}" />
 
         <LinearLayout
             android:id="@+id/exposure_buttons"
@@ -131,13 +119,23 @@
             app:layout_constraintTop_toBottomOf="@id/status_subtitle">
 
             <Button
-                android:id="@+id/exposure_what_next"
-                style="@style/Widget.App.Button.Primary.Rounded"
+                android:id="@+id/disabled_enable"
+                style="@style/Widget.App.Button.Rounded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:onClick="@{() -> viewState.primaryAction.invoke()}"
-                app:showIfLabelSet="@{viewState.primaryActionLabel}"
+                android:onClick="@{() -> viewState.enableAction.invoke()}"
+                app:showIfLabelSet="@{viewState.enableActionLabel}"
+                tools:text="@string/status_en_api_disabled_enable" />
+
+            <Button
+                android:id="@+id/exposure_what_next"
+                style="@style/Widget.App.Button.Error.Rounded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="@{() -> viewState.whatsNextAction.invoke()}"
+                app:showIfLabelSet="@{viewState.whatsNextActionLabel}"
                 tools:text="@string/status_exposure_what_next" />
 
             <Button
@@ -145,10 +143,10 @@
                 style="@style/Widget.App.Button.Secondary.Rounded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:gravity="center"
-                android:onClick="@{() -> viewState.secondaryAction.invoke()}"
-                app:showIfLabelSet="@{viewState.secondaryActionLabel}"
+                android:onClick="@{() -> viewState.resetAction.invoke()}"
+                app:showIfLabelSet="@{viewState.resetActionLabel}"
                 tools:text="@string/status_reset_exposure" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

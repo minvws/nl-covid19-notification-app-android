@@ -17,6 +17,7 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentEnableApiBinding
+import nl.rijksoverheid.en.lifecyle.EventObserver
 
 class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
     private val onboardingViewModel: OnboardingViewModel by viewModels()
@@ -57,5 +58,18 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
             exitTransition = null
             findNavController().popBackStack(R.id.nav_onboarding, true)
         }
+
+        onboardingViewModel.skipConsentConfirmation.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(EnableApiFragmentDirections.actionSkipConsentConfirmation())
+            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+                SkipConsentConfirmationDialogFragment.SKIP_CONSENT_RESULT
+            )?.observe(viewLifecycleOwner) { skip ->
+                if (skip) {
+                    onboardingViewModel.finishOnboarding()
+                } else {
+                    viewModel.requestEnableNotifications()
+                }
+            }
+        })
     }
 }
