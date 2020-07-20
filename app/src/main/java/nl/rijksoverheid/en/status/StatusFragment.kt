@@ -93,8 +93,7 @@ class StatusFragment : BaseFragment(R.layout.fragment_status) {
     }
 
     private fun resetAndRequestEnableNotifications() {
-        viewModel.requestDisableNotifications()
-        viewModel.requestEnableNotifications()
+        viewModel.requestEnableNotificationsForcingConsent()
     }
 
     private fun navigateToPostNotification(epochDay: Long) =

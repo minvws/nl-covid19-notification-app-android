@@ -126,6 +126,11 @@ class ExposureNotificationsRepository(
         return result
     }
 
+    suspend fun requestEnableNotificationsForcingConsent(): EnableNotificationsResult {
+        exposureNotificationsApi.disableNotifications()
+        return requestEnableNotifications()
+    }
+
     suspend fun requestDisableNotifications(): DisableNotificationsResult {
         manifestWorkerScheduler.cancel()
         preferences.edit {
@@ -217,8 +222,13 @@ class ExposureNotificationsRepository(
      */
     @VisibleForTesting
     internal suspend fun processExposureKeySets(manifest: Manifest): ProcessExposureKeysResult {
-        val processedSets = preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())!!
+        if (exposureNotificationsApi.getStatus() == StatusResult.Disabled) {
+            Timber.d("Exposure notifications api is disabled")
+            // we don't consider this an error, the user might have disabled it from the system settings.
+            return ProcessExposureKeysResult.Success
+        }
 
+        val processedSets = preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())!!
         val updates = manifest.exposureKeysSetIds.toMutableSet().apply {
             removeAll(processedSets)
         }
@@ -408,12 +418,6 @@ class ExposureNotificationsRepository(
 
     suspend fun processManifest(): ProcessManifestResult {
         return withContext(Dispatchers.IO) {
-            if (retrieveStatus() == StatusResult.Disabled) {
-                Timber.w("Exposure notifications are disabled")
-                // go through the steps as if the user disabled through the app
-                requestDisableNotifications()
-                return@withContext ProcessManifestResult.Disabled
-            }
             try {
                 val manifest = api.getManifest()
                 val result = processExposureKeySets(manifest)
@@ -595,6 +599,5 @@ sealed class ProcessExposureKeysResult {
 
 sealed class ProcessManifestResult {
     data class Success(val nextIntervalMinutes: Int) : ProcessManifestResult()
-    object Disabled : ProcessManifestResult()
     object Error : ProcessManifestResult()
 }
