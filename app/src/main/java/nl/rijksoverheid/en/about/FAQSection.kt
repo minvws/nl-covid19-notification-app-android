@@ -15,16 +15,18 @@ import nl.rijksoverheid.en.about.FAQItemId.DELETION
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION_PERMISSION
 import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION
+import nl.rijksoverheid.en.about.FAQItemId.ONBOARDING
 import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
 import nl.rijksoverheid.en.about.FAQItemId.REASON
 import nl.rijksoverheid.en.about.FAQItemId.TECHNICAL
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
 import nl.rijksoverheid.en.items.ButtonItem
+import nl.rijksoverheid.en.items.FAQOnboardingExplanationItem
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.ParagraphItem
 
 @Keep
-enum class FAQItemId { REASON, LOCATION, ANONYMOUS, NOTIFICATION, UPLOAD_KEYS, BLUETOOTH, POWER_USAGE, DELETION, LOCATION_PERMISSION, TECHNICAL }
+enum class FAQItemId { REASON, LOCATION, ANONYMOUS, NOTIFICATION, UPLOAD_KEYS, BLUETOOTH, POWER_USAGE, DELETION, LOCATION_PERMISSION, TECHNICAL, ONBOARDING }
 
 class FAQDetailSections(private val openSettings: () -> Unit = {}) {
     fun getSection(faqItemId: FAQItemId) = when (faqItemId) {
@@ -106,6 +108,37 @@ class FAQDetailSections(private val openSettings: () -> Unit = {}) {
                 HeaderItem(R.string.faq_technical_header_9),
                 ParagraphItem(R.string.faq_technical_paragraph_10),
                 GithubItem()
+            )
+        )
+        ONBOARDING -> Section(
+            listOf(
+                FAQOnboardingExplanationItem(
+                    R.string.onboarding_explanation_1_headline,
+                    R.string.onboarding_explanation_1_description,
+                    R.drawable.illustration_explanation_step_1
+                ),
+                FAQOnboardingExplanationItem(
+                    R.string.onboarding_explanation_2_headline,
+                    R.string.onboarding_explanation_2_description,
+                    R.drawable.illustration_explanation_step_2
+                ),
+                FAQOnboardingExplanationItem(
+                    R.string.onboarding_explanation_3_headline,
+                    R.string.onboarding_explanation_3_description,
+                    R.drawable.illustration_explanation_step_3
+                ),
+                FAQOnboardingExplanationItem(
+                    R.string.onboarding_example_1_headline,
+                    R.string.onboarding_example_1_description,
+                    R.drawable.illustration_explanation_example_1,
+                    isExample = true
+                ),
+                FAQOnboardingExplanationItem(
+                    R.string.onboarding_example_2_headline,
+                    R.string.onboarding_example_2_description,
+                    R.drawable.illustration_explanation_example_2,
+                    isExample = true
+                )
             )
         )
     }
