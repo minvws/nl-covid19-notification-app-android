@@ -65,6 +65,13 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
                         data = Uri.parse("tel:$phoneNumber")
                     })
                 }
+                is ReviewItem -> {
+                    val intent = Intent(Intent.ACTION_VIEW).apply {
+                        data = Uri.parse(getString(R.string.play_store_url))
+                        setPackage("com.android.vending")
+                    }
+                    startActivity(intent)
+                }
                 is PrivacyStatementItem -> {
                     val url = Uri.parse(getString(R.string.privacy_policy_url))
                     CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)

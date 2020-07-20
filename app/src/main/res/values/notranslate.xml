@@ -10,6 +10,7 @@
     <string name="phone_number">0800–1202</string>
     <string name="helpdesk_phone_number">0800–1202</string>
     <string name="github_url">https://github.com/minvws/nl-covid19-notification-app-android</string>
+    <string name="play_store_url">https://play.google.com/store/apps/details?id=nl.rijksoverheid.en</string>
     <string name="privacy_policy_url">https://www.rijksoverheid.nl/privacystatement-coronavirus-app</string>
     <string name="accessibility_url">https://www.rijksoverheid.nl/documenten/publicaties/2020/06/24/toegankelijkheidsverklaring-corona-app</string>
     <string name="colofon_url">https://minvws.github.io/nl-covid19-notification-app-community-website/</string>
