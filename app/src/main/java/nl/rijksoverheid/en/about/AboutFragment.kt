@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.about
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -46,16 +47,41 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
 
         adapter.setOnItemClickListener { item, _ ->
             when (item) {
+                is FAQOnboardingItem -> findNavController().navigate(
+                    AboutFragmentDirections.actionAboutDetail(FAQItemId.ONBOARDING),
+                    FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+                )
+                is FAQTechnicalExplanationItem -> findNavController().navigate(
+                    AboutFragmentDirections.actionAboutDetail(FAQItemId.TECHNICAL),
+                    FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+                )
                 is FAQItem -> findNavController().navigate(
                     AboutFragmentDirections.actionAboutDetail(item.id),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
+                is HelpdeskItem -> {
+                    startActivity(Intent(Intent.ACTION_DIAL).apply {
+                        val phoneNumber = getString(R.string.helpdesk_phone_number)
+                        data = Uri.parse("tel:$phoneNumber")
+                    })
+                }
+                is ReviewItem -> {
+                    val intent = Intent(Intent.ACTION_VIEW).apply {
+                        data = Uri.parse(getString(R.string.play_store_url))
+                        setPackage("com.android.vending")
+                    }
+                    startActivity(intent)
+                }
                 is PrivacyStatementItem -> {
                     val url = Uri.parse(getString(R.string.privacy_policy_url))
                     CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
                 }
                 is AccessibilityItem -> {
                     val url = Uri.parse(getString(R.string.accessibility_url))
+                    CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
+                }
+                is ColofonItem -> {
+                    val url = Uri.parse(getString(R.string.colofon_url))
                     CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
                 }
             }

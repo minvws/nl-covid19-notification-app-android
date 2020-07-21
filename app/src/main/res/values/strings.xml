@@ -138,6 +138,7 @@
     <string name="faq_deletion_paragraph_1">Je kan de door CoronaMelder opgeslagen contact codes zo wissen. Ga op je telefoon naar Instellingen -> Privacy -> Gezondheid > Blootstelling aan COVID-19 > Verwijder blootstellingslogbestand. Als je wilt dat de app geen nieuwe contact codes meer opslaat kan je de app verwijderen.</string>
     <string name="faq_deletion_button">Open instellingen</string>
     <string name="faq_location_permission_paragraph_1">Sommige apps gebruiken Bluetooth om je locatie te bepalen. Daarom is dit onderdeel van je locatie-instellingen. CoronaMelder heeft Bluetooth nodig om te werken, maar alleen om te zien of je in de buurt bent van een ander persoon die de app hebben. De app heeft nooit toegang tot je locatie.</string>
+    <string name="faq_technical_toolbar_title">Technische uitleg</string>
     <string name="faq_technical_header_1">1. De app maakt voor elke telefoon een eigen code</string>
     <string name="faq_technical_paragraph_2">In deze code staat geen informatie over jou of je telefoon. De code is helemaal anoniem en verandert elk kwartier.</string>
     <string name="faq_technical_header_3">2. Telefoons delen hun codes als ze bij elkaar in de buurt zijn</string>
@@ -148,6 +149,8 @@
     <string name="faq_technical_paragraph_8">De app kijkt een paar keer per dag naar de lijst met codes van besmette personen. Hij vergelijkt deze lijst met de codes die op jouw telefoon zijn bewaard. Zo ziet de app of je extra kans op besmetting hebt gelopen.</string>
     <string name="faq_technical_header_9">5. Jij krijgt een melding als de codes van een besmet persoon op je telefoon staan</string>
     <string name="faq_technical_paragraph_10">In deze melding lees je wanneer je in de buurt van de besmette persoon bent geweest. Niet wie het is en waar het was. Ook vertelt de app wat je nu zelf het beste kunt doen. Je eigen codes staan niet op de lijst van de GGD, maar worden 14 dagen op je telefoon bewaard.</string>
+    <string name="faq_technical_github_title">Bekijk broncode</string>
+    <string name="faq_technical_github_subtitle">Ga naar GitHub</string>
     <string name="share_content">Ik help corona onder controle te houden met CoronaMelder. Doe je ook mee? %1$s</string>
     <string name="share_title">Deel de app met anderen</string>
     <string name="lab_test_toolbar_title">GGD-Sleutel</string>

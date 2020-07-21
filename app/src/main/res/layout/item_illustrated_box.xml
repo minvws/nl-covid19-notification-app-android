@@ -7,7 +7,15 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewState"
+            type="nl.rijksoverheid.en.about.IllustratedBoxItem.ViewState" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,7 +24,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:background="@drawable/message_box_background"
-        android:backgroundTint="@color/technical_explanation_background">
+        android:backgroundTint="@{viewState.backgroundTint}"
+        tools:backgroundTint="@color/gray_lighter">
 
         <TextView
             android:id="@+id/title"
@@ -24,11 +33,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="@string/about_technical_explanation_title"
+            android:text="@{viewState.title}"
             android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintEnd_toStartOf="@id/image"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/about_helpdesk_title" />
 
         <TextView
             android:id="@+id/subtitle"
@@ -37,12 +47,13 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"
-            android:text="@string/about_technical_explanation_subtitle"
+            android:text="@{viewState.subtitle}"
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/image"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="@string/about_helpdesk_subtitle" />
 
         <ImageView
             android:id="@+id/image"
@@ -50,11 +61,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:importantForAccessibility="no"
-            android:src="@drawable/illustration_technical_explanation"
+            app:imageResource="@{viewState.illustration}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1" />
+            app:layout_constraintVertical_bias="1"
+            tools:src="@drawable/illustration_helpdesk" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
