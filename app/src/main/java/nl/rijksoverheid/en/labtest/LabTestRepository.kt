@@ -135,7 +135,7 @@ class LabTestRepository(
 
     private fun clearKeyDataIfExpired() {
         val expiration = preferences.getLong(KEY_REGISTRATION_EXPIRATION, 0)
-        if (expiration > 0 && expiration < clock.millis()) {
+        if (expiration == 0L || expiration < clock.millis()) {
             clearKeyData()
         }
     }
@@ -153,11 +153,17 @@ class LabTestRepository(
     }
 
     suspend fun uploadDiagnosticKeysIfPending(): UploadDiagnosticKeysResult {
+        val pending = preferences.getBoolean(KEY_UPLOAD_DIAGNOSTIC_KEYS, false) &&
+            !preferences.getBoolean(KEY_DID_UPLOAD, false)
         clearKeyDataIfExpired()
         return if (preferences.getBoolean(KEY_UPLOAD_DIAGNOSTIC_KEYS, false)) {
             uploadDiagnosticKeys()
         } else {
-            UploadDiagnosticKeysResult.Success
+            if (pending) {
+                UploadDiagnosticKeysResult.Expired
+            } else {
+                UploadDiagnosticKeysResult.Success
+            }
         }
     }
 
@@ -290,6 +296,11 @@ class LabTestRepository(
          * The key upload has completed
          */
         object Success : UploadDiagnosticKeysResult()
+
+        /**
+         * The key upload could not be completed before the registration expired
+         */
+        object Expired : UploadDiagnosticKeysResult()
 
         /**
          * An error occurred and the key upload should be retried later

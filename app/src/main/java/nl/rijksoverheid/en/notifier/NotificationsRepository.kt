@@ -9,16 +9,13 @@ package nl.rijksoverheid.en.notifier
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavDeepLinkBuilder
-import nl.rijksoverheid.en.MainActivity
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.util.formatDaysSince
 import java.time.Clock
@@ -30,6 +27,7 @@ private const val SYNC_ISSUES_NOTIFICATION_CHANNEL_ID = "sync_issue_notification
 private const val SYNC_ISSUES_NOTIFICATION_ID = 2
 private const val APP_UPDATE_NOTIFICATION_CHANNEL_ID = "update_notifications"
 private const val APP_UPDATE_NOTIFICATION_ID = 3
+private const val UPLOAD_KEYS_FAILED_ID = 4
 
 class NotificationsRepository(
     private val context: Context,
@@ -69,7 +67,6 @@ class NotificationsRepository(
     }
 
     fun showExposureNotification(daysSinceLastExposure: Int) {
-
         val dateOfLastExposure = LocalDate.now(clock)
             .minusDays(daysSinceLastExposure.toLong())
 
@@ -108,6 +105,21 @@ class NotificationsRepository(
         )
     }
 
+    fun showUploadKeysFailedNotification() {
+        val pendingIntent = NavDeepLinkBuilder(context)
+            .setGraph(R.navigation.nav_main)
+            .setDestination(R.id.nav_upload_keys_failed_notification)
+            .createPendingIntent()
+
+        showNotification(
+            UPLOAD_KEYS_FAILED_ID, createNotification(
+                SYNC_ISSUES_NOTIFICATION_CHANNEL_ID,
+                R.string.upload_keys_failed_title,
+                R.string.upload_keys_failed_message
+            ).setContentIntent(pendingIntent).build()
+        )
+    }
+
     private fun showNotification(id: Int, notification: Notification) {
         NotificationManagerCompat.from(context).notify(id, notification)
     }
@@ -141,9 +153,8 @@ class NotificationsRepository(
         @StringRes title: Int,
         message: String
     ): NotificationCompat.Builder {
-        val intent = Intent(context, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        val pendingIntent = NavDeepLinkBuilder(context).setGraph(R.navigation.nav_main)
+            .setDestination(R.id.main_nav).createPendingIntent()
         return NotificationCompat.Builder(context, channel)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(title))

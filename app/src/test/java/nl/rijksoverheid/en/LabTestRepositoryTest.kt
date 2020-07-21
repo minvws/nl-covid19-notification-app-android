@@ -220,6 +220,75 @@ class LabTestRepositoryTest {
         }
 
     @Test
+    fun `uploadDiagnosticKeysIfPending with expired upload returns Expired`() =
+        runBlocking {
+            mockWebServer.start()
+            val prefs =
+                ApplicationProvider.getApplicationContext<Application>()
+                    .getSharedPreferences("test", 0)
+
+            prefs.edit {
+                putBoolean("upload_diagnostic_keys", true)
+                putString("bucket_id", "bucket-id")
+                putString("confirmation_key", "confirmation-key")
+                putLong("registration_expiration", clock.millis() - 30000L)
+            }
+
+            val repository = LabTestRepository(
+                lazy { prefs },
+                FakeExposureNotificationApi(),
+                LabTestService.create(
+                    ApplicationProvider.getApplicationContext(),
+                    baseUrl = mockWebServer.url("/").toString()
+                ),
+                NOOP_SCHEDULER,
+                NOOP_DECOY_SCHEDULER,
+                appConfigManager,
+                clock
+            )
+
+            val result = repository.uploadDiagnosticKeysIfPending()
+
+            assertEquals(0, mockWebServer.requestCount)
+            assertEquals(LabTestRepository.UploadDiagnosticKeysResult.Expired, result)
+        }
+
+    @Test
+    fun `uploadDiagnosticKeysIfPending with a previous upload and expired registration returns Success`() =
+        runBlocking {
+            mockWebServer.start()
+            val prefs =
+                ApplicationProvider.getApplicationContext<Application>()
+                    .getSharedPreferences("test", 0)
+
+            prefs.edit {
+                putBoolean("upload_diagnostic_keys", true)
+                putBoolean("upload_completed", true)
+                putString("bucket_id", "bucket-id")
+                putString("confirmation_key", "confirmation-key")
+                putLong("registration_expiration", clock.millis() - 30000L)
+            }
+
+            val repository = LabTestRepository(
+                lazy { prefs },
+                FakeExposureNotificationApi(),
+                LabTestService.create(
+                    ApplicationProvider.getApplicationContext(),
+                    baseUrl = mockWebServer.url("/").toString()
+                ),
+                NOOP_SCHEDULER,
+                NOOP_DECOY_SCHEDULER,
+                appConfigManager,
+                clock
+            )
+
+            val result = repository.uploadDiagnosticKeysIfPending()
+
+            assertEquals(0, mockWebServer.requestCount)
+            assertEquals(LabTestRepository.UploadDiagnosticKeysResult.Success, result)
+        }
+
+    @Test
     fun `uploadDiagnosticKeysIfPending uploads keys and resets state`() = runBlocking {
         mockWebServer.enqueue(MockResponse())
         mockWebServer.start()
@@ -238,6 +307,7 @@ class LabTestRepositoryTest {
             putBoolean("upload_diagnostic_keys", true)
             putString("bucket_id", "bucket-id")
             putString("confirmation_key", "confirmation-key")
+            putLong("registration_expiration", clock.millis() + 60000L)
         }
 
         val repository = LabTestRepository(
@@ -256,6 +326,7 @@ class LabTestRepositoryTest {
         val result = repository.uploadDiagnosticKeysIfPending()
 
         assertEquals(1, mockWebServer.requestCount)
+        assertTrue(keyStorage.getKeys().isEmpty())
         assertEquals(LabTestRepository.UploadDiagnosticKeysResult.Success, result)
     }
 
@@ -277,6 +348,7 @@ class LabTestRepositoryTest {
             putBoolean("upload_diagnostic_keys", true)
             putString("bucket_id", "bucket-id")
             putString("confirmation_key", "confirmation-key")
+            putLong("registration_expiration", clock.millis() + 60000L)
         }
 
         val repository = LabTestRepository(

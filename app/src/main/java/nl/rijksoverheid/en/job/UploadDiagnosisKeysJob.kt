@@ -15,18 +15,24 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.labtest.LabTestRepository
+import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class UploadDiagnosisKeysJob(
     context: Context,
     params: WorkerParameters,
+    private val notificationsRepository: NotificationsRepository,
     private val uploadTask: suspend () -> LabTestRepository.UploadDiagnosticKeysResult
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
         return when (uploadTask()) {
             is LabTestRepository.UploadDiagnosticKeysResult.Success -> Result.success()
+            is LabTestRepository.UploadDiagnosticKeysResult.Expired -> {
+                notificationsRepository.showUploadKeysFailedNotification()
+                Result.success()
+            }
             is LabTestRepository.UploadDiagnosticKeysResult.Retry -> Result.retry()
         }
     }

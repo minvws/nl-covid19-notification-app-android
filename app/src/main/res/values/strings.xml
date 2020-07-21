@@ -40,7 +40,7 @@
     <string name="status_disabled_headline">De app is niet actief</string>
     <string name="status_en_api_disabled_description">%1$s werkt alleen als de noodzakelijke instellingen aanstaan</string>
     <string name="status_en_api_disabled_enable">Instellingen aanzetten</string>
-    <string name="notification_channel_name">Meldingen</string>
+    <string name="notification_channel_name">Contactmeldingen</string>
     <string name="notification_channel_description">Meldingen over mogelijk contact met het coronavirus</string>
     <string name="notification_title">Mogelijk contact met het coronavirus</string>
     <string name="notification_message">Je bent %1$s in de buurt geweest van iemand met het coronavirus. Lees meer in de app.</string>
@@ -52,8 +52,8 @@
     <string name="debug_channel_description">Various debug options</string>
     <string name="debug_notification_title">Debug options</string>
     <string name="debug_notification_trigger_exposure_notification">Trigger notificatie</string>
-    <string name="sync_issue_channel_name">Internetverbinding</string>
-    <string name="sync_issue_channel_description">Meldingen wanneer de app geen internetverbinding kan maken</string>
+    <string name="sync_issue_channel_name">Foutmeldingen</string>
+    <string name="sync_issue_channel_description">Meldingen wanneer de app niet goed werkt</string>
     <string name="sync_issue_notification_title">Geen internetverbinding</string>
     <string name="sync_issue_notification_message">De app kon de afgelopen 24 uur geen internetverbinding maken. Controleer of je wifi of mobiele data aanstaan.</string>
     <string name="post_notification_toolbar_title">Kans op besmetting</string>
@@ -186,4 +186,9 @@
     <string name="cd_back">Terug</string>
     <string name="cd_close">Sluiten</string>
     <string name="exposure_date_format">EEEE d MMMM</string>
+    <string name="upload_keys_failed_title">Melding versturen mislukt</string>
+    <string name="upload_keys_failed_message">Het is niet gelukt anderen een melding te sturen. Bel daarom de GGD. Lees meer in de app.</string>
+    <string name="upload_keys_failed_notification_header">Het is niet gelukt anderen een melding te sturen</string>
+    <string name="upload_keys_failed_notification_paragraph">We hebben geprobeerd je codes te delen met de GGD, maar dit is niet gelukt. Bel de GGD om dit opnieuw te doen. Het is heel belangrijk dat je dit snel doet. Anders kunnen er meer mensen besmet raken.</string>
+    <string name="upload_keys_failed_notification_toolbar_title">Bel de GGD</string>
 </resources>
