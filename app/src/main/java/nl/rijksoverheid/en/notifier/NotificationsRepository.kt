@@ -28,6 +28,7 @@ private const val SYNC_ISSUES_NOTIFICATION_ID = 2
 private const val APP_UPDATE_NOTIFICATION_CHANNEL_ID = "update_notifications"
 private const val APP_UPDATE_NOTIFICATION_ID = 3
 private const val UPLOAD_KEYS_FAILED_ID = 4
+private const val APP_INACTIVE_NOTIFICATION_ID = 5
 
 class NotificationsRepository(
     private val context: Context,
@@ -118,6 +119,20 @@ class NotificationsRepository(
                 R.string.upload_keys_failed_message
             ).setContentIntent(pendingIntent).build()
         )
+    }
+
+    fun showAppInactiveNotification() {
+        showNotification(
+            APP_INACTIVE_NOTIFICATION_ID, createNotification(
+                SYNC_ISSUES_NOTIFICATION_CHANNEL_ID,
+                R.string.app_inactive_title,
+                R.string.app_inactive_message
+            ).setPriority(NotificationCompat.PRIORITY_DEFAULT).setOngoing(true).build()
+        )
+    }
+
+    fun clearAppInactiveNotification() {
+        NotificationManagerCompat.from(context).cancel(APP_INACTIVE_NOTIFICATION_ID)
     }
 
     private fun showNotification(id: Int, notification: Notification) {

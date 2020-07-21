@@ -191,4 +191,6 @@
     <string name="upload_keys_failed_notification_header">Het is niet gelukt anderen een melding te sturen</string>
     <string name="upload_keys_failed_notification_paragraph">We hebben geprobeerd je codes te delen met de GGD, maar dit is niet gelukt. Bel de GGD om dit opnieuw te doen. Het is heel belangrijk dat je dit snel doet. Anders kunnen er meer mensen besmet raken.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Bel de GGD</string>
+    <string name="app_inactive_title">CoronaMelder is op dit moment niet actief</string>
+    <string name="app_inactive_message">Controleer je instellingen.</string>
 </resources>
