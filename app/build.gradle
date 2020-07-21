@@ -102,7 +102,7 @@ play {
     enabled = rootProject.file("google-play.json").exists()
     serviceAccountCredentials = rootProject.file("google-play.json")
     track = "internal"
-    artifactDir = file("build/outputs/bundle/release")
+    artifactDir = file("build/outputs/bundle/prodRelease")
 }
 
 repositories {
