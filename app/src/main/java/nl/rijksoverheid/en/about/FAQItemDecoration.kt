@@ -37,7 +37,8 @@ class FAQItemDecoration(context: Context, @Dimension val startOffset: Int) :
     }
 
     private fun isFAQItem(view: View, parent: RecyclerView): Boolean {
-        return (parent.getChildViewHolder(view) as? GroupieViewHolder)?.item is FAQItem
+        val item = (parent.getChildViewHolder(view) as? GroupieViewHolder)?.item
+        return item is FAQItem || item is AboutFAQItem
     }
 
     override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
