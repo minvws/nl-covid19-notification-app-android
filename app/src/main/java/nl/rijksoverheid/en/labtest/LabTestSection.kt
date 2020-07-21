@@ -17,14 +17,13 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.items.ButtonItem
 import nl.rijksoverheid.en.items.ErrorBoxItem
 import nl.rijksoverheid.en.items.IllustrationItem
-import nl.rijksoverheid.en.items.ParagraphItem
+import nl.rijksoverheid.en.items.LabTestExplanationItem
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
 
 class LabTestSection(
     private val retry: () -> Unit,
     private val upload: () -> Unit,
-    private val requestConsent: () -> Unit,
-    private val openExplanation: () -> Unit
+    private val requestConsent: () -> Unit
 ) : Section() {
     private var keyState: KeyState = KeyState.Loading
     private var notificationsState: NotificationsState =
@@ -44,8 +43,7 @@ class LabTestSection(
         update(
             mutableListOf<Group>(
                 IllustrationItem(R.drawable.illustration_lab_test),
-                ParagraphItem(R.string.lab_test_paragraph_1),
-                TextButtonItem(openExplanation),
+                LabTestExplanationItem(R.string.lab_test_paragraph_1),
                 LabTestStepItem(R.string.lab_test_step_1, 1, isFirstElement = true),
                 LabTestKeyItem(keyState, retry),
                 LabTestStepItem(R.string.lab_test_step_2, 2),

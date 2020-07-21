@@ -16,14 +16,18 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.about.FAQItemId
 import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.items.LabTestExplanationItem
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import timber.log.Timber
 
@@ -35,10 +39,16 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
     private val section = LabTestSection(
         retry = { labViewModel.retry() },
         upload = { labViewModel.upload() },
-        requestConsent = { viewModel.requestEnableNotifications() },
-        openExplanation = { /* TODO open to-be-designed explanation page */ }
+        requestConsent = { viewModel.requestEnableNotifications() }
     )
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        exitTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,8 +57,6 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
 
         binding.toolbar.apply {
             setTitle(R.string.lab_test_toolbar_title)
-            setNavigationIcon(R.drawable.ic_close)
-            setNavigationContentDescription(R.string.cd_close)
         }
         binding.content.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
@@ -65,6 +73,15 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
             }
         })
         binding.content.adapter = adapter
+
+        adapter.setOnItemClickListener { item, _ ->
+            when (item) {
+                is LabTestExplanationItem -> findNavController().navigate(
+                    LabTestFragmentDirections.actionHowItWorks(FAQItemId.UPLOAD_KEYS),
+                    FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+                )
+            }
+        }
 
         labViewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }
         viewModel.notificationState.observe(viewLifecycleOwner) { state -> section.update(state) }

@@ -71,7 +71,7 @@
     <string name="post_notification_header_6">Doe een coronatest</string>
     <string name="post_notification_paragraph_7" tools:ignore="Typos">De GGD raadt aan je te laten testen op het virus. Zelfs als je je nog niet ziek voelt. Want zonder je ziek te voelen kun je het coronavirus al verspreiden en zo anderen besmetten.</string>
     <string name="post_notification_paragraph_8">"Testen is gratis. Het duurt niet lang en kan meestal snel gebeuren. De uitslag is binnen 48 uur bekend. Blijf in die tijd zo veel mogelijk thuis. "</string>
-    <string name="post_notification_paragraph_9">Bel gratis <b>%1$s</b> om een coronatest aan te vragen.</string>
+    <string name="post_notification_paragraph_9"><![CDATA[Bel gratis <b>%1$s</b> om een coronatest aan te vragen.]]></string>
     <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart</string>
     <string name="post_notification_button">Bel voor coronatest</string>
     <string name="treat_perspective_header_1">Klachten die passen bij het coronavirus (COVID-19)</string>
@@ -156,8 +156,7 @@
     <string name="share_content">Ik help corona onder controle te houden met CoronaMelder. Doe je ook mee? %1$s</string>
     <string name="share_title">Deel de app met anderen</string>
     <string name="lab_test_toolbar_title">GGD-Sleutel</string>
-    <string name="lab_test_paragraph_1">Ben je getest en heb je corona? Dan belt een GGD-medewerker je. Je hebt hierbij je GGD-sleutel nodig.</string>
-    <string name="lab_test_how_does_it_work">Hoe werkt dit?</string>
+    <string name="lab_test_paragraph_1"><![CDATA[Ben je getest en heb je corona? Dan belt een GGD-medewerker je. Je hebt hierbij je GGD-sleutel nodig. <a href="">Hoe werkt dit?</a>]]></string>
     <string name="lab_test_step_1">Geef deze GGD-sleutel door aan de GGD-medewerker:</string>
     <string name="lab_test_token_loading">Sleutel aan het ophalen</string>
     <string name="lab_test_token_error">De app kon geen GGD-sleutel ophalen. Controleer je internetverbinding.</string>

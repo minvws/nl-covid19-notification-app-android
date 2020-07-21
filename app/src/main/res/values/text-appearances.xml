@@ -43,4 +43,9 @@
         <item name="fontFamily">sans-serif-medium</item>
         <item name="lineHeight">20sp</item>
     </style>
+
+    <style name="TextAppearance.App.Link" parent="TextAppearance.App.Body1">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
 </resources>
