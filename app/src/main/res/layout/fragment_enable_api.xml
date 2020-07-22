@@ -166,7 +166,7 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:onClick="@{() -> viewModel.requestEnableNotifications()}"
+                android:onClick="@{() -> viewModel.requestEnableNotificationsForcingConsent()}"
                 android:text="@string/onboarding_consent_request"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
