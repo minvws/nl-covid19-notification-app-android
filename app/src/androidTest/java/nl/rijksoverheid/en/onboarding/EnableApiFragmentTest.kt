@@ -9,6 +9,7 @@ package nl.rijksoverheid.en.onboarding
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -131,8 +132,8 @@ class EnableApiFragmentTest {
             onView(ViewMatchers.withId(R.id.request)).perform(click())
 
             assertEquals(
-                "Request permission with success closes the onboarding",
-                null, navController.currentDestination?.id
+                "Request permission with success navigates to share screen",
+                R.id.nav_share, navController.currentDestination?.id
             )
         }
     }
@@ -141,6 +142,7 @@ class EnableApiFragmentTest {
     fun testSkip() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         val navController = TestNavHostController(context).apply {
+            setViewModelStore(ViewModelStore())
             setGraph(R.navigation.nav_onboarding)
             setCurrentDestination(R.id.nav_enable_api)
         }
@@ -153,8 +155,8 @@ class EnableApiFragmentTest {
             onView(ViewMatchers.withId(R.id.skip)).perform(click())
 
             assertEquals(
-                "Skip button closes the onboarding",
-                null, navController.currentDestination?.id
+                "Skip button opens skip dialog",
+                R.id.nav_skip_consent_confirmation, navController.currentDestination?.id
             )
         }
     }
