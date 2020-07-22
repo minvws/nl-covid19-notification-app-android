@@ -27,7 +27,6 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItemId
 import nl.rijksoverheid.en.databinding.FragmentListBinding
-import nl.rijksoverheid.en.items.LabTestExplanationItem
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import timber.log.Timber
 
@@ -74,13 +73,11 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
         })
         binding.content.adapter = adapter
 
-        adapter.setOnItemClickListener { item, _ ->
-            when (item) {
-                is LabTestExplanationItem -> findNavController().navigate(
-                    LabTestFragmentDirections.actionHowItWorks(FAQItemId.UPLOAD_KEYS),
-                    FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
-                )
-            }
+        adapter.setOnItemClickListener { _, _ ->
+            findNavController().navigate(
+                LabTestFragmentDirections.actionHowItWorks(FAQItemId.UPLOAD_KEYS),
+                FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+            )
         }
 
         labViewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }

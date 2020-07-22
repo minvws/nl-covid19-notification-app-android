@@ -17,9 +17,10 @@ import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemParagraphBinding
 
-open class ParagraphItem(
+class ParagraphItem(
     @StringRes private val text: Int,
-    private vararg val formatArgs: Any
+    private vararg val formatArgs: Any,
+    private val clickable: Boolean = false
 ) : BaseBindableItem<ItemParagraphBinding>() {
     override fun getLayout() = R.layout.item_paragraph
 
@@ -44,6 +45,7 @@ open class ParagraphItem(
         }
     }
 
+    override fun isClickable() = clickable
     override fun isSameAs(other: Item<*>): Boolean = other is ParagraphItem && other.text == text
     override fun hasSameContentAs(other: Item<*>) = other is ParagraphItem && other.text == text
 }
