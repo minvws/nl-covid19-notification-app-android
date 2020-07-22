@@ -13,6 +13,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.ExposureNotificationsRepository
+import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -27,8 +28,11 @@ class CheckConnectionWorker(
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        Timber.d("Check if key processing is overdue")
-        if (repository.keyProcessingOverdue) {
+        Timber.d("Check if key processing is overdue or EN is disabled")
+        if (repository.getCurrentStatus() == StatusResult.Disabled) {
+            Timber.d("EN is disabled")
+            notificationsRepository.showAppInactiveNotification()
+        } else if (repository.keyProcessingOverdue) {
             Timber.d("Key processing is overdue")
             notificationsRepository.showSyncIssuesNotification()
         }

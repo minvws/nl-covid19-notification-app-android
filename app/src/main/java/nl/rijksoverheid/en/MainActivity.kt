@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.play.core.install.model.AppUpdateType
 import nl.rijksoverheid.en.debug.DebugNotification
 import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.notifier.NotificationsRepository
 
 private const val RC_REQUEST_CONSENT = 1
 private const val RC_UPDATE_APP = 2
@@ -69,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         if (BuildConfig.FEATURE_DEBUG_NOTIFICATION) {
             DebugNotification(this).show()
         }
+        NotificationsRepository(this).clearAppInactiveNotification()
     }
 
     override fun onResume() {

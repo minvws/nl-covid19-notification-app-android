@@ -175,11 +175,11 @@ class ExposureNotificationsRepository(
                 }
             )
             // Asynchronously emit the up to date status
-            emit(retrieveStatus())
+            emit(getCurrentStatus())
         }
     }.distinctUntilChanged()
 
-    private suspend fun retrieveStatus(): StatusResult {
+    suspend fun getCurrentStatus(): StatusResult {
         val result = exposureNotificationsApi.getStatus()
         return if (result == StatusResult.Enabled) {
             if (isBluetoothEnabled() && isLocationEnabled()) {
