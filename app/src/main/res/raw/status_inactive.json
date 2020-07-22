@@ -53,83 +53,14 @@
           "ix": 1
         },
         "s": {
-          "a": 1,
+          "a": 0,
           "k": [
-            {
-              "i": {
-                "x": [
-                  0.833,
-                  0.833,
-                  0.833
-                ],
-                "y": [
-                  0.833,
-                  0.833,
-                  0.833
-                ]
-              },
-              "o": {
-                "x": [
-                  0.167,
-                  0.167,
-                  0.167
-                ],
-                "y": [
-                  0.167,
-                  0.167,
-                  0.167
-                ]
-              },
-              "t": 0,
-              "s": [
-                100,
-                100,
-                100
-              ]
-            },
-            {
-              "i": {
-                "x": [
-                  0.833,
-                  0.833,
-                  0.833
-                ],
-                "y": [
-                  0.833,
-                  0.833,
-                  0.833
-                ]
-              },
-              "o": {
-                "x": [
-                  0.167,
-                  0.167,
-                  0.167
-                ],
-                "y": [
-                  0.167,
-                  0.167,
-                  0.167
-                ]
-              },
-              "t": 3,
-              "s": [
-                70,
-                70,
-                100
-              ]
-            },
-            {
-              "t": 6.00000024438501,
-              "s": [
-                100,
-                100,
-                100
-              ]
-            }
+            100,
+            100,
+            100
           ],
           "ix": 6,
-          "x": "var $bm_rt;\\nvar n, n, t, t, v, amp, freq, decay;\\n$bm_rt = n = 0;\\nif (numKeys > 0) {\\n    $bm_rt = n = nearestKey(time).index;\\n    if (key(n).time > time) {\\n        n--;\\n    }\\n}\\nif (n == 0) {\\n    $bm_rt = t = 0;\\n} else {\\n    $bm_rt = t = $bm_sub(time, key(n).time);\\n}\\nif (n > 0 && t < 1) {\\n    v = velocityAtTime($bm_sub(key(n).time, $bm_div(thisComp.frameDuration, 10)));\\n    amp = 0.06;\\n    freq = 3;\\n    decay = 5;\\n    $bm_rt = $bm_sum(value, $bm_div($bm_mul($bm_mul(v, amp), Math.sin($bm_mul($bm_mul($bm_mul(freq, t), 2), Math.PI))), Math.exp($bm_mul(decay, t))));\\n} else {\\n    $bm_rt = value;\\n}"
+          "x": "var $bm_rt;\n$bm_rt = thisComp.layer('Shape Layer 1').content('Rectangle 1').transform.scale;"
         }
       },
       "ao": 0,
@@ -490,7 +421,7 @@
         }
       ],
       "ip": 0,
-      "op": 900.000036657751,
+      "op": 892.000036331905,
       "st": 0,
       "bm": 0
     },
@@ -619,22 +550,22 @@
                   {
                     "i": {
                       "x": [
-                        0.426,
-                        0.426
+                        0.598,
+                        0.598
                       ],
                       "y": [
-                        0.995,
-                        0.995
+                        1.008,
+                        1.008
                       ]
                     },
                     "o": {
                       "x": [
-                        0.68,
-                        0.68
+                        0.663,
+                        0.663
                       ],
                       "y": [
-                        0.011,
-                        0.011
+                        0.01,
+                        0.01
                       ]
                     },
                     "t": 0,
@@ -646,8 +577,8 @@
                   {
                     "i": {
                       "x": [
-                        0.833,
-                        0.833
+                        0.492,
+                        0.492
                       ],
                       "y": [
                         1,
@@ -656,30 +587,110 @@
                     },
                     "o": {
                       "x": [
-                        0.167,
-                        0.167
+                        0.533,
+                        0.533
                       ],
                       "y": [
-                        -0.001,
-                        -0.001
+                        0.006,
+                        0.006
                       ]
                     },
-                    "t": 3,
+                    "t": 7,
                     "s": [
-                      70,
-                      70
+                      80.198,
+                      80.198
                     ]
                   },
                   {
-                    "t": 6.00000024438501,
+                    "i": {
+                      "x": [
+                        0.667,
+                        0.667
+                      ],
+                      "y": [
+                        1,
+                        1
+                      ]
+                    },
+                    "o": {
+                      "x": [
+                        0.707,
+                        0.707
+                      ],
+                      "y": [
+                        -0.007,
+                        -0.007
+                      ]
+                    },
+                    "t": 11,
+                    "s": [
+                      120,
+                      120
+                    ]
+                  },
+                  {
+                    "i": {
+                      "x": [
+                        0.667,
+                        0.667
+                      ],
+                      "y": [
+                        1,
+                        1
+                      ]
+                    },
+                    "o": {
+                      "x": [
+                        0.333,
+                        0.333
+                      ],
+                      "y": [
+                        0,
+                        0
+                      ]
+                    },
+                    "t": 14,
+                    "s": [
+                      93.323,
+                      93.323
+                    ]
+                  },
+                  {
+                    "i": {
+                      "x": [
+                        0.262,
+                        0.262
+                      ],
+                      "y": [
+                        1,
+                        1
+                      ]
+                    },
+                    "o": {
+                      "x": [
+                        0.333,
+                        0.333
+                      ],
+                      "y": [
+                        0,
+                        0
+                      ]
+                    },
+                    "t": 17,
+                    "s": [
+                      104,
+                      104
+                    ]
+                  },
+                  {
+                    "t": 19.0000007738859,
                     "s": [
                       100,
                       100
                     ]
                   }
                 ],
-                "ix": 3,
-                "x": "var $bm_rt;\\nvar n, n, t, t, v, amp, freq, decay;\\n$bm_rt = n = 0;\\nif (numKeys > 0) {\\n    $bm_rt = n = nearestKey(time).index;\\n    if (key(n).time > time) {\\n        n--;\\n    }\\n}\\nif (n == 0) {\\n    $bm_rt = t = 0;\\n} else {\\n    $bm_rt = t = $bm_sub(time, key(n).time);\\n}\\nif (n > 0 && t < 1) {\\n    v = velocityAtTime($bm_sub(key(n).time, $bm_div(thisComp.frameDuration, 10)));\\n    amp = 0.06;\\n    freq = 3;\\n    decay = 5;\\n    $bm_rt = $bm_sum(value, $bm_div($bm_mul($bm_mul(v, amp), Math.sin($bm_mul($bm_mul($bm_mul(freq, t), 2), Math.PI))), Math.exp($bm_mul(decay, t))));\\n} else {\\n    $bm_rt = value;\\n}"
+                "ix": 3
               },
               "r": {
                 "a": 0,
