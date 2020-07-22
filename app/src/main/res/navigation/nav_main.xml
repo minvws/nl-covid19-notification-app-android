@@ -117,6 +117,9 @@
             app:popExitAnim="@anim/fragment_close_exit"
             app:popUpTo="@id/nav_lab_test"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_how_it_works"
+            app:destination="@id/nav_about_detail" />
     </fragment>
 
     <fragment

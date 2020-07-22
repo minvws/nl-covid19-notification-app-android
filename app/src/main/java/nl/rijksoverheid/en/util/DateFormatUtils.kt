@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.util
 
 import android.content.Context
+import android.text.format.DateFormat
 import nl.rijksoverheid.en.R
 import java.time.Clock
 import java.time.LocalDate
@@ -26,7 +27,11 @@ fun LocalDate.formatDaysSince(context: Context, clock: Clock = Clock.systemDefau
 /**
  * Formats the exposure date using the correct locale.
  */
-fun LocalDate.formatExposureDate(context: Context): String = DateTimeFormatter.ofPattern(
-    context.getString(R.string.exposure_date_format),
-    Locale(context.getString(R.string.app_language))
-).format(this)
+fun LocalDate.formatExposureDate(context: Context): String =
+    DateTimeFormatter.ofPattern(
+        DateFormat.getBestDateTimePattern(
+            Locale(context.getString(R.string.app_language)),
+            context.getString(R.string.exposure_date_format)
+        ),
+        Locale(context.getString(R.string.app_language))
+    ).format(this)
