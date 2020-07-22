@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -63,6 +64,7 @@ import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
+import java.time.Period
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
@@ -469,6 +471,13 @@ class ExposureNotificationsRepository(
             // an associated shared preferences listener.
             putString(KEY_LAST_TOKEN_ID, null)
             putString(KEY_LAST_TOKEN_EXPOSURE_DATE, null)
+        }
+    }
+
+    suspend fun getDaysSinceLastExposure(): Int? {
+        val date = getLastExposureDate().first()
+        return date?.let {
+            Period.between(date, LocalDate.now(clock)).days
         }
     }
 

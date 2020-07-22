@@ -30,6 +30,7 @@ class ExposureNotificationJob(
         val result = repository.addExposure(token)
         if (result is AddExposureResult.Notify) {
             notificationsRepository.showExposureNotification(result.daysSinceExposure)
+            RemindExposureNotificationWorker.schedule(applicationContext)
         }
         return Result.success()
     }
