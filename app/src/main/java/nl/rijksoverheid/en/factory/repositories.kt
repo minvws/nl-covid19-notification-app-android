@@ -99,7 +99,7 @@ fun createLabTestRepository(context: Context): LabTestRepository {
             Nearby.getExposureNotificationClient(context)
         ),
         createLabTestService(context),
-        { delayMinutes -> UploadDiagnosisKeysJob.schedule(context, delayMinutes.toLong()) },
+        { UploadDiagnosisKeysJob.schedule(context) },
         { delayMillis -> DecoyWorker.queue(context, delayMillis) },
         createAppConfigManager(context)
     )

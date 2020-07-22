@@ -17,7 +17,6 @@ import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 
 class UploadDiagnosisKeysJob(
     context: Context,
@@ -38,17 +37,12 @@ class UploadDiagnosisKeysJob(
     }
 
     companion object {
-        fun schedule(context: Context, delayMinutes: Long) {
-            Timber.d("Schedule with initial delay of $delayMinutes")
+        fun schedule(context: Context) {
+            Timber.d("Schedule uploading of keys")
             val request = OneTimeWorkRequestBuilder<UploadDiagnosisKeysJob>()
                 .setConstraints(
                     Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-                ).apply {
-                    if (delayMinutes > 0) {
-                        setInitialDelay(delayMinutes, TimeUnit.MINUTES)
-                    }
-                }
-                .build()
+                ).build()
 
             WorkManager.getInstance(context)
                 .enqueueUniqueWork("diagnosis_keys", ExistingWorkPolicy.REPLACE, request)

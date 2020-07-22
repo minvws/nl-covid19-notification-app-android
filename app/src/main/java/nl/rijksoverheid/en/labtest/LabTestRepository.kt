@@ -45,9 +45,7 @@ private const val KEY_UPLOAD_DIAGNOSTIC_KEYS = "upload_diagnostic_keys"
 private const val KEY_PENDING_KEYS = "upload_pending_keys"
 private const val KEY_DID_UPLOAD = "upload_completed"
 
-private const val ADDITIONAL_UPLOAD_DELAY_MINUTES = 240
-
-typealias UploadScheduler = (Int) -> Unit
+typealias UploadScheduler = () -> Unit
 typealias DecoyScheduler = (Long) -> Unit
 
 class LabTestRepository(
@@ -229,13 +227,7 @@ class LabTestRepository(
                 preferences.edit {
                     putBoolean(KEY_UPLOAD_DIAGNOSTIC_KEYS, true)
                 }
-                uploadScheduler(
-                    if (preferences.getBoolean(
-                            KEY_DID_UPLOAD,
-                            false
-                        )
-                    ) ADDITIONAL_UPLOAD_DELAY_MINUTES else 0
-                )
+                uploadScheduler()
                 RequestUploadDiagnosisKeysResult.Success
             }
         }
