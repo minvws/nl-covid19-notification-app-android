@@ -18,6 +18,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import nl.rijksoverheid.en.AppLifecycleManager
+import nl.rijksoverheid.en.BaseInstrumentationTest
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
@@ -41,7 +42,7 @@ import retrofit2.Response
 
 @Suppress("UNCHECKED_CAST")
 @RunWith(AndroidJUnit4::class)
-class HowItWorksDetailFragmentTest {
+class HowItWorksDetailFragmentTest : BaseInstrumentationTest() {
 
     companion object {
         @ClassRule
