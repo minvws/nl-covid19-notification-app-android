@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: "kotlin-kapt"
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: "com.github.triplet.play"
+apply plugin: "com.osacky.fladle"
 
 version = "0.4.0"
 archivesBaseName = "covid-notificatie"
@@ -103,6 +104,12 @@ play {
     serviceAccountCredentials = rootProject.file("google-play.json")
     track = "internal"
     artifactDir = file("build/outputs/bundle/prodRelease")
+}
+
+fladle {
+    projectId = "vws-coronamelder"
+    variant = "devDebug"
+    testShards = 1
 }
 
 repositories {

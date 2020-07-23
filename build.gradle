@@ -38,7 +38,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath "com.osacky.flank.gradle:fladle:0.10.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:3.30.0"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
