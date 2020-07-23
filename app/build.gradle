@@ -50,10 +50,20 @@ android {
         exclude 'play-**.properties'
     }
 
+    signingConfigs {
+        release {
+            storeFile new File(System.getenv("KEYSTORE_FILE") != null ? System.getenv("KEYSTORE_FILE") : "dummy-keystore.jks")
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEYSTORE_ALIAS")
+            keyPassword System.getenv("KEYSTORE_KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
 
         debug {
@@ -96,6 +106,13 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        if(variant.buildType.name == 'debug' && names.contains("prod")) {
+            setIgnore(true)
+        }
     }
 }
 
