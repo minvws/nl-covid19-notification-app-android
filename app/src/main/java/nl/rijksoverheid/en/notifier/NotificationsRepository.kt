@@ -38,7 +38,9 @@ class NotificationsRepository(
         createNotificationChannel(
             EXPOSURE_NOTIFICATION_CHANNEL_ID,
             R.string.notification_channel_name,
-            R.string.notification_channel_description
+            R.string.notification_channel_description,
+            true,
+            NotificationCompat.VISIBILITY_SECRET
         )
         createNotificationChannel(
             SYNC_ISSUES_NOTIFICATION_CHANNEL_ID,
@@ -67,7 +69,7 @@ class NotificationsRepository(
         NotificationManagerCompat.from(context).cancel(SYNC_ISSUES_NOTIFICATION_ID)
     }
 
-    fun showExposureNotification(daysSinceLastExposure: Int) {
+    fun showExposureNotification(daysSinceLastExposure: Int, reminder: Boolean = false) {
         val dateOfLastExposure = LocalDate.now(clock)
             .minusDays(daysSinceLastExposure.toLong())
 
@@ -84,10 +86,22 @@ class NotificationsRepository(
         val builder = createNotification(
             EXPOSURE_NOTIFICATION_CHANNEL_ID,
             R.string.notification_title,
-            message
-        )
-            .setVisibility(NotificationCompat.VISIBILITY_SECRET)
-            .setContentIntent(pendingIntent)
+            if (reminder) context.getString(
+                R.string.notification_message_reminder_prefix,
+                message
+            ) else message
+        ).setVisibility(NotificationCompat.VISIBILITY_SECRET)
+            .setContentIntent(pendingIntent).apply {
+                if (reminder) {
+                    addAction(
+                        NotificationCompat.Action.Builder(
+                            R.drawable.ic_close,
+                            context.getString(R.string.notification_message_reminder_dismiss),
+                            DismissReminderReceiver.getPendingIntent(context)
+                        ).build()
+                    )
+                }
+            }
 
         showNotification(EXPOSURE_NOTIFICATION_ID, builder.build())
     }
@@ -142,7 +156,9 @@ class NotificationsRepository(
     private fun createNotificationChannel(
         id: String,
         @StringRes name: Int,
-        @StringRes description: Int
+        @StringRes description: Int,
+        enableVibration: Boolean = false,
+        lockscreenVisibility: Int = NotificationCompat.VISIBILITY_PUBLIC
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
@@ -151,6 +167,8 @@ class NotificationsRepository(
                 NotificationManager.IMPORTANCE_HIGH
             )
             channel.description = context.getString(description)
+            channel.enableVibration(enableVibration)
+            channel.lockscreenVisibility = lockscreenVisibility
             val notificationManager: NotificationManager =
                 context.getSystemService(NotificationManager::class.java)!!
             notificationManager.createNotificationChannel(channel)
