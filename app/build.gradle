@@ -7,7 +7,7 @@ apply plugin: "com.osacky.fladle"
 
 version = "0.4.0"
 archivesBaseName = "covid-notificatie"
-def buildVersionCode = System.getenv("APPCENTER_BUILD_ID") != null ? System.getenv("APPCENTER_BUILD_ID").toInteger() : 1
+def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 1
 
 android {
     compileSdkVersion 29
@@ -54,7 +54,7 @@ android {
         release {
             storeFile new File(System.getenv("KEYSTORE_FILE") != null ? System.getenv("KEYSTORE_FILE") : "dummy-keystore.jks")
             storePassword System.getenv("KEYSTORE_PASSWORD")
-            keyAlias System.getenv("KEYSTORE_ALIAS")
+            keyAlias System.getenv("KEYSTORE_KEY_ALIAS")
             keyPassword System.getenv("KEYSTORE_KEY_PASSWORD")
         }
     }
