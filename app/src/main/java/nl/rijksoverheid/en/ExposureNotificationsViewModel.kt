@@ -8,6 +8,7 @@ package nl.rijksoverheid.en
 
 import android.app.PendingIntent
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -89,3 +90,17 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
         data class UnknownError(val exception: Exception) : NotificationsStatusResult()
     }
 }
+
+fun LiveData<ExposureNotificationsViewModel.NotificationsState>.ignoreInitiallyEnabled(): LiveData<ExposureNotificationsViewModel.NotificationsState> =
+    object : MediatorLiveData<ExposureNotificationsViewModel.NotificationsState>() {
+        private var didEmitFirstValue = false
+
+        init {
+            addSource(this@ignoreInitiallyEnabled) {
+                if (didEmitFirstValue || it != ExposureNotificationsViewModel.NotificationsState.Enabled) {
+                    value = it
+                }
+                didEmitFirstValue = true
+            }
+        }
+    }

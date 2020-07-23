@@ -18,6 +18,7 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentEnableApiBinding
+import nl.rijksoverheid.en.ignoreInitiallyEnabled
 import nl.rijksoverheid.en.lifecyle.EventObserver
 
 class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
@@ -48,7 +49,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
             findNavController().navigate(EnableApiFragmentDirections.actionExplain())
         }
 
-        viewModel.notificationState.observe(viewLifecycleOwner) {
+        viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
                 findNavController().navigate(
                     EnableApiFragmentDirections.actionNext(), FragmentNavigatorExtras(
@@ -71,7 +72,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
                         )
                     )
                 } else {
-                    viewModel.requestEnableNotifications()
+                    viewModel.requestEnableNotificationsForcingConsent()
                 }
             }
         })
