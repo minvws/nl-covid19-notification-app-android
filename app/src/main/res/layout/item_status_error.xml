@@ -52,6 +52,7 @@
             tools:text="De app heeft blootstelling permissie nodig om te kunnen werken." />
 
         <Button
+            android:id="@+id/error_box_button"
             style="@style/Widget.MaterialComponents.Button.TextButton.Snackbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

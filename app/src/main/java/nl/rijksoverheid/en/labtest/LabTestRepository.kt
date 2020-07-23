@@ -258,7 +258,7 @@ class LabTestRepository(
             listOf(
                 nl.rijksoverheid.en.api.model.TemporaryExposureKey(
                     key,
-                    (System.currentTimeMillis() / 600000L).toInt(), 144
+                    (clock.millis() / 600000L).toInt(), 144
                 )
             ), generateDecoyBucketId(bucketId.length)
         )
