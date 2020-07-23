@@ -28,6 +28,7 @@ class StatusHeaderItem(
         @RawRes val icon: Int,
         @StringRes val headline: Int,
         @DrawableRes val illustration: Int? = null,
+        val showIllustration: Boolean = false,
         @StringRes val enableActionLabel: Int? = null,
         @StringRes val whatsNextActionLabel: Int? = null,
         @StringRes val resetActionLabel: Int? = null,
@@ -43,7 +44,7 @@ class StatusHeaderItem(
             R.drawable.gradient_status_no_exposure,
             R.raw.status_active,
             R.string.status_no_exposure_detected_headline,
-            illustration = R.drawable.illustration_status
+            showIllustration = true
         ) {
             override fun getDescription(context: Context) = context.getString(
                 R.string.status_no_exposure_detected_description,

@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/clouds"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +42,10 @@
             android:tint="?attr/colorSurface"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/clouds" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/status_image"
@@ -94,17 +97,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/no_exposure_illustration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:importantForAccessibility="no"
-            app:imageResource="@{viewState.illustration}"
+            android:src="@drawable/illustration_status"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/illustration_top"
-            app:show="@{viewState.illustration != null}" />
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/status_active_illustration"
+            app:show="@{viewState.showIllustration}" />
 
         <LinearLayout
             android:id="@+id/exposure_buttons"
