@@ -805,7 +805,7 @@ class ExposureNotificationsRepositoryTest {
                 }
 
                 override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
-                    AppConfig(2, 5, 0.0)
+                    AppConfig(BuildConfig.VERSION_CODE + 1, 5, 0.0)
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()

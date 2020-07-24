@@ -176,11 +176,9 @@ class LabTestRepository(
         val keyStorage = KeysStorage(KEY_PENDING_KEYS, preferences)
         val exposureKeys = keyStorage.getKeys()
         return try {
-            if (exposureKeys.isNotEmpty()) {
-                uploadKeys(exposureKeys, bucketId, confirmationKey)
-                preferences.edit {
-                    putBoolean(KEY_DID_UPLOAD, true)
-                }
+            uploadKeys(exposureKeys, bucketId, confirmationKey)
+            preferences.edit {
+                putBoolean(KEY_DID_UPLOAD, true)
             }
             keyStorage.clearKeys()
             UploadDiagnosticKeysResult.Success
