@@ -5,9 +5,9 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: "com.github.triplet.play"
 apply plugin: "com.osacky.fladle"
 
-version = "0.4.0"
-archivesBaseName = "covid-notificatie"
+version = "0.4.1"
 def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 1
+archivesBaseName = "covid-notificatie-v${version}-${buildVersionCode}"
 
 android {
     compileSdkVersion 29
