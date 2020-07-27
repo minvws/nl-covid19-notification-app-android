@@ -1,102 +1,73 @@
-name: $(Date:yyyyMMdd)$(Rev:.r)-$(BuildID)
+name: '$(Date:yyyyMMdd)$(Rev:.r)-$(BuildID)'
 trigger:
   - master
 
 variables:
-- name: GRADLE_USER_HOME
-  value: $(Pipeline.Workspace)/.gradle
-- name: BUILD_ID
-  value: $(Build.BuildId)
-- name: GRADLE_JVM_OPTIONS
-  value: "-Xmx4000m"
-- name: GRADLE_OPTIONS
-  value: "--build-cache"
+  - name: GRADLE_USER_HOME
+    value: $(Pipeline.Workspace)/.gradle
+  - name: BUILD_ID
+    value: $(Build.BuildId)
+  - name: GRADLE_JVM_OPTIONS
+    value: '-Xmx4000m'
+  - name: GRADLE_OPTIONS
+    value: '--build-cache'
 
 pool:
-  vmImage: 'macos-latest'
+  vmImage: ubuntu-latest
 
 stages:
   - stage: build
     displayName: Build
     jobs:
-      - job:
+      - job: Build
         steps:
           - checkout: self
             clean: true
           - task: Cache@2
             displayName: Cache
             inputs:
-              key: 'gradle | "$(Agent.OS)"'
+              key: gradle | "$(Agent.OS)"
               path: $(GRADLE_USER_HOME)
               cacheHitVar: gradle
           - task: Gradle@2
             displayName: Enforce formatting
             inputs:
-              gradleOptions: '$(GRADLE_JVM_OPTIONS)'
-              options: '$(GRADLE_OPTIONS)'
+              gradleOptions: $(GRADLE_JVM_OPTIONS)
+              options: $(GRADLE_OPTIONS)
               publishJUnitResults: false
-              tasks: 'spotlessCheck'
+              tasks: spotlessCheck
           - task: Gradle@2
             displayName: Build and test
             inputs:
-              gradleWrapperFile: 'gradlew'
-              options: '$(GRADLE_OPTIONS)'
+              gradleWrapperFile: gradlew
+              options: $(GRADLE_OPTIONS)
               tasks: 'app:assemDevDebug app:assemDevDebugAndroidTest testDevDebug app:lintDevDebug'
               publishJUnitResults: true
               testResultsFiles: '**/TEST-*.xml'
-              testRunTitle: 'Unit tests'
+              testRunTitle: Unit tests
               jdkVersionOption: '1.11'
-              gradleOptions: '$(GRADLE_JVM_OPTIONS)'
+              gradleOptions: $(GRADLE_JVM_OPTIONS)
               sonarQubeRunAnalysis: false
           - task: DownloadSecureFile@1
             displayName: Download Firebase credentials
             name: firebaseCredentials
             inputs:
-              secureFile: 'firebase-credentials.json'
+              secureFile: firebase-credentials.json
           - bash: |
               echo "##vso[task.setvariable variable=GOOGLE_APPLICATION_CREDENTIALS]$(firebaseCredentials.secureFilePath)"
             displayName: Set Firebase credentials
           - task: Gradle@2
             displayName: Run instrumentation tests
-            enabled: false
             inputs:
-              gradleWrapperFile: 'gradlew'
-              options: '$(GRADLE_OPTIONS)'
+              gradleWrapperFile: gradlew
+              options: $(GRADLE_OPTIONS)
               tasks: 'app:runFlank'
               publishJUnitResults: true
               testResultsFiles: '**/fladle/results/**/JUnitReport.xml'
-              testRunTitle: 'Instrumentation tests'
+              testRunTitle: Instrumentation tests
               jdkVersionOption: '1.11'
-              gradleOptions: '$(GRADLE_JVM_OPTIONS)'
+              gradleOptions: $(GRADLE_JVM_OPTIONS)
               sonarQubeRunAnalysis: false
-          - task: DownloadSecureFile@1
-            name: keystoreFile
-            inputs:
-              secureFile: 'coronamelder-keystore.jks'
-            displayName: Download keystore
-          - bash: |
-              echo "##vso[task.setvariable variable=KEYSTORE_FILE]$(keystoreFile.secureFilePath)"
-            displayName: Set key store path
-          - script: |
-              git log -1 --format=%B> app/src/main/play/release-notes/nl-NL/internal.txt
-            displayName: Set release notes
-          - task: Gradle@2
-            displayName: Sign and distribute to testers
-            inputs:
-              gradleOptions: '$(GRADLE_JVM_OPTIONS)'
-              options: '$(GRADLE_OPTIONS)'
-              publishJUnitResults: false
-              tasks: 'app:bundleProdRelease app:assemAccRelease app:assemProdRelease app:appDistributionUploadProdRelease app:appDistributionUploadAccRelease'
-            env:
-              KEYSTORE_PASSWORD: $(KeystorePassword)
-              KEYSTORE_KEY_PASSWORD: $(KeystoreKeyPassword)
-              KEYSTORE_KEY_ALIAS: $(KeystoreKeyAlias)
-            #condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), succeeded())
-          - publish: app/build/outputs/apk
-            displayName: Publish APKs artifacts
-            artifact: apk
-            #condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), succeeded())
-          - publish: app/build/outputs/bundle/prodRelease
-            displayName: Publish bundle artifact
-            artifact: bundle
-            #condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), succeeded())
+          # Run this step only on master
+          - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/master') }}:
+            - template: distribute.yml

@@ -124,10 +124,9 @@ android {
 }
 
 play {
-    enabled = rootProject.file("google-play.json").exists()
-    serviceAccountCredentials = rootProject.file("google-play.json")
+    enabled = System.getenv("PLAY_STORE_CREDENTIALS") != null
+    serviceAccountCredentials = System.getenv("PLAY_STORE_CREDENTIALS") != null ? new File(System.getenv("PLAY_STORE_CREDENTIALS")) : null
     track = "internal"
-    artifactDir = file("build/outputs/bundle/prodRelease")
 }
 
 fladle {
