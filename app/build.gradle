@@ -3,10 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: "kotlin-kapt"
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: "com.github.triplet.play"
+apply plugin: "com.osacky.fladle"
+apply plugin: 'com.google.firebase.appdistribution'
 
-version = "0.4.0"
-archivesBaseName = "covid-notificatie"
-def buildVersionCode = System.getenv("APPCENTER_BUILD_ID") != null ? System.getenv("APPCENTER_BUILD_ID").toInteger() : 1
+version = "0.4.1"
+def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 1
+archivesBaseName = "covid-notificatie-v${version}-${buildVersionCode}"
 
 android {
     compileSdkVersion 29
@@ -49,10 +51,20 @@ android {
         exclude 'play-**.properties'
     }
 
+    signingConfigs {
+        release {
+            storeFile new File(System.getenv("KEYSTORE_FILE") != null ? System.getenv("KEYSTORE_FILE") : "dummy-keystore.jks")
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEYSTORE_KEY_ALIAS")
+            keyPassword System.getenv("KEYSTORE_KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
 
         debug {
@@ -96,13 +108,31 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        if(variant.buildType.name == 'debug' && names.contains("prod")) {
+            setIgnore(true)
+        }
+    }
+
+    firebaseAppDistribution {
+        appId="1:937920499570:android:9ac7b5cf66523282f957eb"
+        releaseNotesFile=rootProject.file("app/src/main/play/release-notes/nl-NL/internal.txt")
+        groups="android-latest"
+    }
 }
 
 play {
-    enabled = rootProject.file("google-play.json").exists()
-    serviceAccountCredentials = rootProject.file("google-play.json")
+    enabled = System.getenv("PLAY_STORE_CREDENTIALS") != null
+    serviceAccountCredentials = System.getenv("PLAY_STORE_CREDENTIALS") != null ? new File(System.getenv("PLAY_STORE_CREDENTIALS")) : null
     track = "internal"
-    artifactDir = file("build/outputs/bundle/prodRelease")
+}
+
+fladle {
+    projectId = "vws-coronamelder"
+    variant = "devDebug"
+    testShards = 1
 }
 
 repositories {
