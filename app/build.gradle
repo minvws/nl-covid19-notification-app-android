@@ -4,6 +4,7 @@ apply plugin: "kotlin-kapt"
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: "com.github.triplet.play"
 apply plugin: "com.osacky.fladle"
+apply plugin: 'com.google.firebase.appdistribution'
 
 version = "0.4.1"
 def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 1
@@ -113,6 +114,12 @@ android {
         if(variant.buildType.name == 'debug' && names.contains("prod")) {
             setIgnore(true)
         }
+    }
+
+    firebaseAppDistribution {
+        appId="1:937920499570:android:9ac7b5cf66523282f957eb"
+        releaseNotesFile=rootProject.file("app/src/main/play/release-notes/nl-NL/internal.txt")
+        groups="android-latest"
     }
 }
 

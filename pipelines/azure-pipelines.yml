@@ -58,7 +58,7 @@ stages:
             displayName: Set Firebase credentials
           - task: Gradle@2
             displayName: Run instrumentation tests
-            enabled: true
+            enabled: false
             inputs:
               gradleWrapperFile: 'gradlew'
               options: '$(GRADLE_OPTIONS)'
@@ -77,23 +77,26 @@ stages:
           - bash: |
               echo "##vso[task.setvariable variable=KEYSTORE_FILE]$(keystoreFile.secureFilePath)"
             displayName: Set key store path
+          - script: |
+              git log -1 --format=%B> app/src/main/play/release-notes/nl-NL/internal.txt
+            displayName: Set release notes
           - task: Gradle@2
-            displayName: Build signed apk & bundle
+            displayName: Sign and distribute to testers
             inputs:
               gradleOptions: '$(GRADLE_JVM_OPTIONS)'
               options: '$(GRADLE_OPTIONS)'
               publishJUnitResults: false
-              tasks: 'app:bundleProdRelease app:assemAccRelease app:assemProdRelease'
+              tasks: 'app:bundleProdRelease app:assemAccRelease app:assemProdRelease app:appDistributionUploadProdRelease app:appDistributionUploadAccRelease'
             env:
               KEYSTORE_PASSWORD: $(KeystorePassword)
               KEYSTORE_KEY_PASSWORD: $(KeystoreKeyPassword)
               KEYSTORE_KEY_ALIAS: $(KeystoreKeyAlias)
-            condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), succeeded())
+            #condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), succeeded())
           - publish: app/build/outputs/apk
             displayName: Publish APKs artifacts
             artifact: apk
-            condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), succeeded())
+            #condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), succeeded())
           - publish: app/build/outputs/bundle/prodRelease
             displayName: Publish bundle artifact
             artifact: bundle
-            condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), succeeded())
+            #condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), succeeded())
