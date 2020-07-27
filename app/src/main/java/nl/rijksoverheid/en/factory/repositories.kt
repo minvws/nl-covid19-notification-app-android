@@ -44,6 +44,8 @@ private var labTestService: LabTestService? = null
 private var notificationPreferences: SharedPreferences? = null
 private var statusCache: StatusCache? = null
 
+private const val MINIMUM_PLAY_SERVICES_VERSION = 201813000
+
 fun createExposureNotificationsRepository(context: Context): ExposureNotificationsRepository {
     val service = cdnService ?: CdnService.create(context).also { cdnService = it }
     val statusCache = statusCache ?: StatusCache(
@@ -77,7 +79,8 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
 
 private fun createGooglePlayServicesChecker(context: Context): GooglePlayServicesUpToDateChecker =
     {
-        val result = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context)
+        val result = GoogleApiAvailability.getInstance()
+            .isGooglePlayServicesAvailable(context, MINIMUM_PLAY_SERVICES_VERSION)
         result == ConnectionResult.SUCCESS || result == ConnectionResult.SERVICE_UPDATING
     }
 
