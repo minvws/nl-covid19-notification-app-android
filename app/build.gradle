@@ -21,7 +21,7 @@ android {
         versionName version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resConfigs "nl", "en"
+        resConfigs "nl", "en", "de", "pl", "ro", "tr", "fr", "es", "bg", "ar"
 
         buildConfigField "boolean", "FEATURE_LOGGING", "false"
         buildConfigField "boolean", "EXPOSURE_FILE_SIGNATURE_CHECK", "true"
