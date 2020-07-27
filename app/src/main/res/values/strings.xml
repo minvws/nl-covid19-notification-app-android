@@ -45,6 +45,7 @@
     <string name="notification_title">Mogelijk contact met het coronavirus</string>
     <string name="notification_message">Je bent %1$s in de buurt geweest van iemand met het coronavirus. Lees meer in de app.</string>
     <string name="notification_message_reminder_prefix">Herhaling: %1$s</string>
+    <string name="notification_message_reminder_dismiss">Stop met herinneren</string>
     <string name="app_inactive_title">CoronaMelder is op dit moment niet actief</string>
     <string name="app_inactive_message">Controleer je instellingen.</string>
     <string name="update_channel_name">Updates app</string>

@@ -55,6 +55,7 @@ import okio.Buffer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -132,6 +133,8 @@ private val MOCK_RISK_PARAMS_RESPONSE = MockResponse().setBody(
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
 class ExposureNotificationsRepositoryTest {
     private lateinit var mockWebServer: MockWebServer
+    private lateinit var context: Context
+
     private val fakeScheduler = object : ProcessManifestWorkerScheduler {
         override fun schedule(intervalMinutes: Int) {
             throw NotImplementedError()
@@ -144,6 +147,7 @@ class ExposureNotificationsRepositoryTest {
 
     @Before
     fun setup() {
+        context = ApplicationProvider.getApplicationContext()
         mockWebServer = MockWebServer()
     }
 
@@ -801,7 +805,7 @@ class ExposureNotificationsRepositoryTest {
                 }
 
                 override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
-                    AppConfig(2, 5, 0.0)
+                    AppConfig(BuildConfig.VERSION_CODE + 1, 5, 0.0)
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -1308,6 +1312,31 @@ class ExposureNotificationsRepositoryTest {
             assertTrue(disableCalled.get())
             assertTrue(enableCalled.get())
         }
+
+    @Test
+    fun `getDaysSinceLastExposure returns days when an exposure is reported`() = runBlocking {
+        val preferences = context.getSharedPreferences("repository_test", 0)
+        val clock =
+            Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("Europe/Amsterdam"))
+
+        val exposureDate = LocalDate.now(clock).minusDays(2)
+        preferences.edit {
+            putLong("last_token_exposure_date", exposureDate.toEpochDay())
+            putString("last_token_id", "dummy")
+        }
+
+        val repository = createRepository(preferences = preferences, clock = clock)
+
+        val daysSinceLastExposure = repository.getDaysSinceLastExposure()
+
+        assertEquals(2, daysSinceLastExposure)
+    }
+
+    @Test
+    fun `getDaysSinceLastExposure returns null when no exposure is reported`() = runBlocking {
+        val repository = createRepository()
+        assertNull(repository.getDaysSinceLastExposure())
+    }
 
     private fun createRepository(
         context: Context = ApplicationProvider.getApplicationContext(),

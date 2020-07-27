@@ -26,6 +26,8 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".notifier.DismissReminderReceiver" />
+
         <receiver
             android:name=".notification.ExposureNotificationReceiver"
             android:permission="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK">

@@ -54,6 +54,12 @@ class EnWorkerFactory : WorkerFactory() {
                 workerParameters,
                 createLabTestRepository(appContext)
             )
+            RemindExposureNotificationWorker::class.java.name -> RemindExposureNotificationWorker(
+                appContext,
+                workerParameters,
+                createExposureNotificationsRepository(appContext),
+                NotificationsRepository(appContext)
+            )
             else -> null
         }
     }

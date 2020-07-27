@@ -9,6 +9,7 @@ package nl.rijksoverheid.en.onboarding
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
@@ -35,6 +36,18 @@ class ShareFragment : BaseFragment(R.layout.fragment_share) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentShareBinding.bind(view)
+
+        binding.toolbar.apply {
+            setNavigationOnClickListener {
+                onboardingViewModel.finishOnboarding()
+            }
+            setNavigationIcon(R.drawable.ic_close)
+            setNavigationContentDescription(R.string.cd_close)
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            onboardingViewModel.finishOnboarding()
+        }
 
         binding.nextButtonClickListener =
             View.OnClickListener { onboardingViewModel.finishOnboarding() }

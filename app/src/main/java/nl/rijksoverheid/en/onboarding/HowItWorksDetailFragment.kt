@@ -21,6 +21,7 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQDetailSections
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
+import nl.rijksoverheid.en.ignoreInitiallyEnabled
 
 class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
@@ -52,9 +53,9 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
 
         binding.button.apply {
             setText(R.string.onboarding_how_it_works_request_consent)
-            setOnClickListener { viewModel.requestEnableNotifications() }
+            setOnClickListener { viewModel.requestEnableNotificationsForcingConsent() }
         }
-        viewModel.notificationState.observe(viewLifecycleOwner) {
+        viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
                 findNavController().navigate(
                     HowItWorksDetailFragmentDirections.actionNext(), FragmentNavigatorExtras(
