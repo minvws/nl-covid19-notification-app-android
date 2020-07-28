@@ -34,7 +34,6 @@ import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
-import nl.rijksoverheid.en.onboarding.GooglePlayServicesUpToDateChecker
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
@@ -108,9 +107,9 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         clock = clock
     )
     private val statusViewModel = StatusViewModel(
-        OnboardingRepository(configPreferences, object : GooglePlayServicesUpToDateChecker {
-            override fun invoke() = true
-        }),
+        OnboardingRepository(
+            sharedPreferences = configPreferences,
+            googlePlayServicesUpToDateChecker = { true }),
         repository,
         NotificationsRepository(context, clock),
         clock
