@@ -134,7 +134,7 @@
             app:argType="reference" />
         <argument
             android:name="animation"
-            android:defaultValue="@raw/onboarding_example_1"
+            android:defaultValue="0"
             app:argType="reference" />
         <action
             android:id="@id/action_next"

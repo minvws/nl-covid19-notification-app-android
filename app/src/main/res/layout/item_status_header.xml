@@ -97,7 +97,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <com.airbnb.lottie.LottieAnimationView
+        <ImageView
             android:id="@+id/no_exposure_illustration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,9 +107,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/illustration_top"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/status_active_illustration"
             app:show="@{viewState.showIllustration}" />
 
         <LinearLayout
