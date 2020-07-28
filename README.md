@@ -24,7 +24,7 @@ This increases the chance that we might be able to use your contribution (or it 
 
 ## Supported devices
 
-The Android app is supported on devices with API level 23 and above, that is, Android 6.0 and above.
+The Android app is supported on devices with API level 23 and above, that is Android 6.0 and above, that include support for Bluetooth Low Energy.
 
 ## Disclaimer
 Keep in mind that the Google Exposure Notification API is only accessible by verified health authorities. Other devices trying to access the API using the code in this repository will fail to do so.
