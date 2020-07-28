@@ -17,9 +17,10 @@ import com.airbnb.lottie.LottieAnimationView
 
 object BindingAdapters {
     @JvmStatic
-    @BindingAdapter("show")
-    fun show(view: View, show: Boolean) {
-        view.visibility = if (show) View.VISIBLE else View.GONE
+    @BindingAdapter("show", "keepInLayout", requireAll = false)
+    fun show(view: View, show: Boolean, keepInLayout: Boolean = false) {
+        view.visibility =
+            if (show) View.VISIBLE else if (keepInLayout) View.INVISIBLE else View.GONE
     }
 
     @JvmStatic
