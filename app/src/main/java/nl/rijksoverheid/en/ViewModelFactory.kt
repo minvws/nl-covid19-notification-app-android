@@ -9,6 +9,7 @@ package nl.rijksoverheid.en
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import nl.rijksoverheid.en.applifecycle.AppLifecycleViewModel
 import nl.rijksoverheid.en.factory.createAppConfigManager
 import nl.rijksoverheid.en.factory.createAppLifecycleManager
 import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
@@ -28,7 +29,7 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
             ExposureNotificationsViewModel::class.java -> ExposureNotificationsViewModel(
                 createExposureNotificationsRepository(context)
             ) as T
-            UpdateAppViewModel::class.java -> UpdateAppViewModel(
+            AppLifecycleViewModel::class.java -> AppLifecycleViewModel(
                 createAppLifecycleManager(context),
                 createAppConfigManager(context)
             ) as T

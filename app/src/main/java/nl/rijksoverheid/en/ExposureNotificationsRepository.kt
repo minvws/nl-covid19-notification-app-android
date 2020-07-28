@@ -41,6 +41,7 @@ import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
@@ -440,7 +441,6 @@ class ExposureNotificationsRepository(
 
                 val result = processExposureKeySets(manifest)
                 Timber.d("Processing keys result = $result")
-
 
                 appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode, true)
 
