@@ -20,5 +20,6 @@ data class AppConfig(
     @Json(name = "manifestFrequency") val updatePeriodMinutes: Int = DEFAULT_UPDATE_INTERVAL_MINUTES,
     @Json(name = "decoyProbability") val decoyProbability: Double = DEFAULT_DECOY_PROBABILITY,
     @Json(name = "requestMinimumSize") val requestMinimumSize: Long = DEFAULT_MIN_REQUEST_SIZE_BYTES,
-    @Json(name = "requestMaximumSize") val requestMaximumSize: Long = DEFAULT_MAX_REQUEST_SIZE_BYTES
+    @Json(name = "requestMaximumSize") val requestMaximumSize: Long = DEFAULT_MAX_REQUEST_SIZE_BYTES,
+    @Json(name = "coronaMelderDeactivated") val deactivated: Boolean = false
 )

@@ -37,15 +37,22 @@ class ProcessManifestWorker(
     override suspend fun doWork(): Result {
         val result = repository.processManifest()
         Timber.d("Processing result is $result")
-        if (result is ProcessManifestResult.Success) {
-            notificationsRepository.cancelSyncIssuesNotification()
-            if (inputData.getInt(KEY_UPDATE_INTERVAL, 0) != result.nextIntervalMinutes) {
-                queue(applicationContext, result.nextIntervalMinutes)
+        return when (result) {
+            is ProcessManifestResult.Success -> {
+                notificationsRepository.cancelSyncIssuesNotification()
+                if (inputData.getInt(KEY_UPDATE_INTERVAL, 0) != result.nextIntervalMinutes) {
+                    queue(applicationContext, result.nextIntervalMinutes)
+                }
+                Result.success()
+            }
+            is ProcessManifestResult.Error -> {
+                Result.retry()
+            }
+            is ProcessManifestResult.Disabled -> {
+                Timber.d("Processing is disabled")
+                Result.success()
             }
         }
-        // Always mark as success so that retries are only scheduled for exceptions.
-        // The next update will be at the next interval.
-        return Result.success()
     }
 
     companion object {

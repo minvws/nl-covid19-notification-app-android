@@ -748,6 +748,59 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
+    fun `processManifest stops processing when the app is disabled`() =
+        runBlocking {
+            val dateTime = "2020-06-20T10:15:30.00Z"
+            val fakeService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                    Manifest(emptyList(), "dummy", "riskParamId", "configId")
+
+                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig(1, 5, 0.0, deactivated = true)
+            }
+
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+            val enDisabled = AtomicBoolean(false)
+            val jobsCancelled = AtomicBoolean(false)
+
+            val repository = createRepository(
+                api = object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                    override suspend fun disableNotifications(): DisableNotificationsResult {
+                        enDisabled.set(true)
+                        return DisableNotificationsResult.Disabled
+                    }
+                },
+                scheduler = object : ProcessManifestWorkerScheduler {
+                    override fun schedule(intervalMinutes: Int) {
+                    }
+
+                    override fun cancel() {
+                        jobsCancelled.set(true)
+                    }
+                },
+                cdnService = fakeService,
+                preferences = sharedPrefs,
+                clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            )
+
+            val result = repository.processManifest()
+
+            assertTrue(result is ProcessManifestResult.Disabled)
+            assertTrue(jobsCancelled.get())
+            assertTrue(enDisabled.get())
+        }
+
+    @Test
     fun `processManifest does not update the timestamp of last successful time if manifest cannot be fetched and returns Error`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
