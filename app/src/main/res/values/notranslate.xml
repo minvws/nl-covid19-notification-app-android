@@ -13,7 +13,7 @@
     <string name="github_url" translatable="false">https://github.com/minvws/nl-covid19-notification-app-android</string>
     <string name="play_store_url" translatable="false">https://play.google.com/store/apps/details?id=nl.rijksoverheid.en</string>
     <string name="privacy_policy_url" translatable="false">https://coronamelder.nl/privacy</string>
-    <string name="accessibility_url" translatable="false">https://http://coronamelder.nl/toegankelijkheid</string>
+    <string name="accessibility_url" translatable="false">https://coronamelder.nl/toegankelijkheid</string>
     <string name="share_url" translatable="false">https://coronamelder.nl/app</string>
     <string name="colofon_url" translatable="false">https://coronamelder.nl/colofon</string>
     <string name="debug_channel_name" translatable="false">Debug menu</string>
