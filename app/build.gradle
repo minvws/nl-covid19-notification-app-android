@@ -133,6 +133,9 @@ fladle {
     projectId = "vws-coronamelder"
     variant = "devDebug"
     testShards = 1
+    devices = [
+            [ "model" : "Pixel2", "version" : "28"]
+    ]
 }
 
 repositories {

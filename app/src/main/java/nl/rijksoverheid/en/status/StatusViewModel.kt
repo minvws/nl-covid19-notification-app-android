@@ -42,9 +42,11 @@ class StatusViewModel(
         }
         .asLiveData(viewModelScope.coroutineContext)
 
-    val errorState = exposureNotificationsRepository.getStatus().flatMapLatest { status ->
-        exposureNotificationsRepository.getLastExposureDate().map { date -> status to date }
-    }.map { (status, date) -> createErrorState(status, date) }
+    val errorState = exposureNotificationsRepository.lastKeyProcessed()
+        .flatMapLatest { exposureNotificationsRepository.getStatus() }
+        .flatMapLatest { status ->
+            exposureNotificationsRepository.getLastExposureDate().map { date -> status to date }
+        }.map { (status, date) -> createErrorState(status, date) }
         .asLiveData(viewModelScope.coroutineContext)
 
     fun hasCompletedOnboarding(): Boolean {
@@ -74,7 +76,7 @@ class StatusViewModel(
 
     fun resetErrorState() {
         viewModelScope.launch {
-            exposureNotificationsRepository.requestEnableNotifications()
+            exposureNotificationsRepository.resetLastKeysProcessed()
         }
     }
 

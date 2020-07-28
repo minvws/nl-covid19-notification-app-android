@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.xwray.groupie.GroupAdapter
@@ -22,7 +23,9 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
 
-class StatusFragment : BaseFragment(R.layout.fragment_status) {
+class StatusFragment @JvmOverloads constructor(
+    factoryProducer: (() -> ViewModelProvider.Factory)? = null
+) : BaseFragment(R.layout.fragment_status, factoryProducer) {
     private val statusViewModel: StatusViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
 

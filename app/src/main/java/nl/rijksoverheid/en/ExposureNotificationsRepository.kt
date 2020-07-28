@@ -109,13 +109,20 @@ class ExposureNotificationsRepository(
         if (result == EnableNotificationsResult.Enabled) {
             preferences.edit {
                 // reset the timer
-                putLong(KEY_LAST_KEYS_PROCESSED, System.currentTimeMillis())
+                putLong(KEY_LAST_KEYS_PROCESSED, clock.millis())
             }
             val interval = appConfigManager.getConfigOrDefault().updatePeriodMinutes
             manifestWorkerScheduler.schedule(interval)
             statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
         }
         return result
+    }
+
+    fun resetLastKeysProcessed() {
+        preferences.edit {
+            // reset the timer
+            putLong(KEY_LAST_KEYS_PROCESSED, clock.millis())
+        }
     }
 
     suspend fun requestEnableNotificationsForcingConsent(): EnableNotificationsResult {
@@ -444,6 +451,23 @@ class ExposureNotificationsRepository(
         preferences.registerOnSharedPreferenceChangeListener(listener)
 
         offer(preferences.getString(KEY_LAST_TOKEN_ID, null))
+
+        awaitClose {
+            preferences.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
+
+    fun lastKeyProcessed(): Flow<Long?> = callbackFlow {
+        val listener =
+            SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+                if (key == KEY_LAST_KEYS_PROCESSED) {
+                    offer(sharedPreferences.getLong(key, 0))
+                }
+            }
+
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+
+        offer(preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0))
 
         awaitClose {
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
