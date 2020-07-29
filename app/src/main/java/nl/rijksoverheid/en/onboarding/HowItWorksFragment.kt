@@ -22,6 +22,7 @@ import nl.rijksoverheid.en.about.FAQItem
 import nl.rijksoverheid.en.about.FAQItemDecoration
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
 class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
@@ -55,7 +56,7 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
 
         adapter.setOnItemClickListener { item, _ ->
             if (item is FAQItem) {
-                findNavController().navigate(
+                findNavController().navigateCatchingErrors(
                     HowItWorksFragmentDirections.actionHowItWorksDetail(item.id),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )

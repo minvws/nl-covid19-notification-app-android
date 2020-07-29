@@ -19,6 +19,7 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
 class AboutFragment : BaseFragment(R.layout.fragment_list) {
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(AboutSection()) }
@@ -47,15 +48,15 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
 
         adapter.setOnItemClickListener { item, _ ->
             when (item) {
-                is FAQOnboardingItem -> findNavController().navigate(
+                is FAQOnboardingItem -> findNavController().navigateCatchingErrors(
                     AboutFragmentDirections.actionAboutDetail(FAQItemId.ONBOARDING),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
-                is FAQTechnicalExplanationItem -> findNavController().navigate(
+                is FAQTechnicalExplanationItem -> findNavController().navigateCatchingErrors(
                     AboutFragmentDirections.actionAboutDetail(FAQItemId.TECHNICAL),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
-                is FAQItem -> findNavController().navigate(
+                is FAQItem -> findNavController().navigateCatchingErrors(
                     AboutFragmentDirections.actionAboutDetail(item.id),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )

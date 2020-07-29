@@ -22,6 +22,7 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
 class StatusFragment @JvmOverloads constructor(
     factoryProducer: (() -> ViewModelProvider.Factory)? = null
@@ -45,17 +46,17 @@ class StatusFragment @JvmOverloads constructor(
         binding.content.adapter = adapter
         adapter.setOnItemClickListener { item, _ ->
             when (item) {
-                StatusActionItem.About -> findNavController().navigate(
+                StatusActionItem.About -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionAbout()
                 )
                 StatusActionItem.Share -> share()
-                StatusActionItem.GenericNotification -> findNavController().navigate(
+                StatusActionItem.GenericNotification -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionGenericNotification()
                 )
-                StatusActionItem.RequestTest -> findNavController().navigate(
+                StatusActionItem.RequestTest -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionRequestTest()
                 )
-                StatusActionItem.LabTest -> findNavController().navigate(
+                StatusActionItem.LabTest -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionLabTest()
                 )
             }
