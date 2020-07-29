@@ -15,8 +15,16 @@ import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.navigation.NavDeepLinkBuilder
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.util.formatDaysSince
 import java.time.Clock
 import java.time.LocalDate
@@ -32,8 +40,27 @@ private const val APP_INACTIVE_NOTIFICATION_ID = 5
 
 class NotificationsRepository(
     private val context: Context,
-    private val clock: Clock = Clock.systemDefaultZone()
+    private val clock: Clock = Clock.systemDefaultZone(),
+    lifecycleOwner: LifecycleOwner = ProcessLifecycleOwner.get()
 ) {
+
+    private val refreshOnStart = lifecycleOwner.asFlow().filter { it == Lifecycle.State.STARTED }
+        .map { Unit }.onStart { emit(Unit) }
+
+    fun exposureNotificationsEnabled(): Flow<Boolean> = refreshOnStart.map {
+        val allNotificationsEnabled =
+            NotificationManagerCompat.from(context).areNotificationsEnabled()
+        val exposureNotificationsEnabled = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManagerCompat.from(context)
+                .getNotificationChannel(EXPOSURE_NOTIFICATION_CHANNEL_ID)?.importance !=
+                NotificationManager.IMPORTANCE_NONE
+        } else {
+            true
+        }
+
+        allNotificationsEnabled && exposureNotificationsEnabled
+    }
+
     fun createOrUpdateNotificationChannels() {
         createNotificationChannel(
             EXPOSURE_NOTIFICATION_CHANNEL_ID,

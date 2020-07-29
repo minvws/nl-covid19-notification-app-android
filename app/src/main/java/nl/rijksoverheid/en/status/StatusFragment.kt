@@ -6,8 +6,11 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -22,6 +25,7 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
+import timber.log.Timber
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
 class StatusFragment @JvmOverloads constructor(
@@ -93,6 +97,7 @@ class StatusFragment @JvmOverloads constructor(
             when (it) {
                 StatusViewModel.ErrorState.None -> section.updateErrorState(it)
                 StatusViewModel.ErrorState.SyncIssues -> section.updateErrorState(it) { statusViewModel.resetErrorState() }
+                StatusViewModel.ErrorState.NotificationsDisabled -> section.updateErrorState(it) { navigateToNotificationSettings() }
                 is StatusViewModel.ErrorState.ConsentRequired -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
             }
         }
@@ -104,6 +109,26 @@ class StatusFragment @JvmOverloads constructor(
 
     private fun navigateToPostNotification(epochDay: Long) =
         findNavController().navigate(StatusFragmentDirections.actionPostNotification(epochDay))
+
+    private fun navigateToNotificationSettings() {
+        try {
+            val intent = Intent()
+            intent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
+            intent.putExtra("app_package", requireContext().packageName)
+            intent.putExtra("app_uid", requireContext().applicationInfo.uid)
+            intent.putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
+            startActivity(intent)
+        } catch (ex: Exception) {
+            try {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.addCategory(Intent.CATEGORY_DEFAULT)
+                intent.data = Uri.parse("package:${requireContext().packageName}")
+                startActivity(intent)
+            } catch (ex: ActivityNotFoundException) {
+                Timber.e("Could not open app settings")
+            }
+        }
+    }
 
     private fun showRemoveNotificationConfirmationDialog() {
         findNavController().navigate(StatusFragmentDirections.actionRemoveExposedMessage())
