@@ -92,7 +92,7 @@
     <string name="status_info_test_subtitle">Aflați repede dacă sunteți contaminat</string>
     <string name="status_info_lab_title">Transmiteți cheia GGD</string>
     <string name="status_info_lab_subtitle">Dacă sunteți contaminat, trimiteți prin GGD o notificare anonimă altor persoane</string>
-    <string name="status_app_version">Versiunea test %1$s build %2$s</string>
+    <string name="status_app_version">Versiunea %1$s build %2$s</string>
     <string name="status_exposure_what_next">Ce pot face acum?</string>
     <string name="status_error_consent_required">%1$s funcționează doar dacă setările necesare sunt activate</string>
     <string name="status_error_action_consent">Activare aplicație</string>
@@ -121,7 +121,7 @@
     <string name="faq_deletion">Cum șterg datele Bluetooth din telefonul meu?</string>
     <string name="faq_location_permission">De ce trebuie să fie configurările locației activate?</string>
     <string name="faq_technical">Cum funcționează aplicația din punct de vedere tehnic?</string>
-    <string name="faq_reason_paragraph_1">"Cu această aplicație ajuți la oprirea răspândirii virusului corona. Aplicația ajută mai ales la investigarea contactelor la GGD (Serviciul Municipal de Sănătate). Dacă faceți un test și se dovedește că sunteți contaminat cu corona, GGD vă va suna. În timpul acestei conversații, GGD vă va întreba cu cine ați fost în contact în timp ce erați contaminat. De asemenea, GGD va suna aceste persoane pentru a le avertiza că ar putea avea corona. "</string>
+    <string name="faq_reason_paragraph_1">"Cu această aplicație ajuți la oprirea răspândirii virusului corona. Aplicația ajută mai ales la investigarea contactelor la GGD (Serviciul Municipal de Sănătate). Dacă faceți un test și se dovedește că sunteți contaminat cu corona, GGD vă va suna. În timpul acestei conversații, GGD vă va întreba cu cine ați fost în contact în timp ce erați contaminat. De asemenea, GGD va suna aceste persoane pentru a le avertiza că ar putea avea corona."</string>
     <string name="faq_reason_paragraph_2">Doar că, probabil, ați fost și în preajma unor persoane pe care nu le cunoașteți. În tren, cinematograf sau restaurant. În acest moment aplicația vă ajută. Puteți utiliza aplicația pentru a avertiza toate persoanele care au fost în jurul dvs. De asemenea, oamenii pe care nu îi cunoașteți. Bineînțeles, atâta timp cât și ei folosesc aplicația.</string>
     <string name="faq_reason_paragraph_3">"GGD abordează persoanele ale căror nume sau date de contact le aveți. În același timp, aplicația avertizează persoanele pe care le-ați întâlnit, dar ale căror nume sau date de contact nu le cunoașteți. În  acest fel, sunt informați rapid, pot lua măsuri și, astfel, nu îi contaminează pe ceilalți. Investigația de contact de la GGD continuă, deoarece, probabil, persoanele cu care ați fost mai des în contact au fost expuși unui risc mai mare. "</string>
     <string name="faq_reason_paragraph_4">Bineînțeles, puteți primi și avertismente prin intermediul aplicației. Dacă se întâmplă acest lucru, înseamnă că în ultimele zile ați fost în jurul cuiva contaminat cu corona. Când aflați acest lucru, puteți, la rândul dvs., preveni contaminarea altora.</string>
@@ -189,9 +189,9 @@
     <string name="upload_keys_failed_notification_header">Nu a fost posibil să trimiteți altora o notificație.</string>
     <string name="upload_keys_failed_notification_paragraph">Am încercat să partajăm codurile dvs. cu GGD, dar acest lucru nu a fost posibil. Sunați GGD pentru a face acest lucru din nou. Este foarte important să faceți acest lucru repede. În caz contrar, mai multe persoane pot fi contaminate.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Sunați la GGD</string>
+    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
+    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
     <string name="end_of_life_action">Lees meer</string>
     <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
     <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
-    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
-    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
 </resources>
