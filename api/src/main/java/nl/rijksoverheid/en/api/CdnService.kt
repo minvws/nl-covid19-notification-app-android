@@ -22,7 +22,6 @@ import retrofit2.http.Streaming
 
 interface CdnService {
     @GET("v1/exposurekeyset/{id}")
-    @Accept("application/zip")
     @Streaming
     @CacheOverride("no-store")
     suspend fun getExposureKeySetFile(@Path("id") id: String): Response<ResponseBody>

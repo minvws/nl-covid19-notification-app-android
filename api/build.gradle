@@ -21,7 +21,6 @@ android {
         buildConfigField "String", "CDN_BASE_URL", "\"https://vwspa-cdn-blob.azureedge.net/vws/\""
         buildConfigField "String", "API_BASE_URL", "\"https://api-ota.alleensamenmelden.nl/mss-acc/\""
         buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "true"
-        buildConfigField "boolean", "FEATURE_ACCEPT_HEADER", "false"
         buildConfigField "boolean", "FEATURE_SSL_PINNING", "true"
     }
 
@@ -55,7 +54,6 @@ android {
         dev {
             dimension "environment"
             buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "false"
-            buildConfigField "boolean", "FEATURE_ACCEPT_HEADER", "true"
             buildConfigField "boolean", "FEATURE_SSL_PINNING", "false"
             buildConfigField "String", "CDN_BASE_URL", "\"${cdnEndpoint}\""
             buildConfigField "String", "API_BASE_URL", "\"${apiEndpoint}\""

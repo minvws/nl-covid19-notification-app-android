@@ -26,16 +26,8 @@ class SignedResponseInterceptor : Interceptor {
             invocation?.method()?.annotations?.filterIsInstance<SignedResponse>()?.firstOrNull()
 
         if (signed != null) {
-            val enabled = BuildConfig.FEATURE_RESPONSE_SIGNATURES
-            val request = if (BuildConfig.FEATURE_ACCEPT_HEADER) {
-                chain.request().newBuilder()
-                    .addHeader("Accept", if (enabled) "application/zip" else "application/json")
-                    .build()
-            } else {
-                chain.request()
-            }
-            val response = chain.proceed(request)
-            return if (response.isSuccessful && enabled) {
+            val response = chain.proceed(chain.request())
+            return if (response.isSuccessful) {
                 validateAndRewriteResponse(response)
             } else {
                 response
@@ -69,10 +61,12 @@ class SignedResponseInterceptor : Interceptor {
         }
 
         return try {
-            validator.verifySignature(
-                ByteArrayInputStream(content.clone().readByteArray()),
-                signature.readByteArray()
-            )
+            if (BuildConfig.FEATURE_RESPONSE_SIGNATURES) {
+                validator.verifySignature(
+                    ByteArrayInputStream(content.clone().readByteArray()),
+                    signature.readByteArray()
+                )
+            }
             response.newBuilder()
                 .removeHeader("Content-Type")
                 .body(content.readByteArray().toResponseBody("application/json".toMediaType()))
