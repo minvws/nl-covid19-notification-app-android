@@ -62,7 +62,7 @@ class HowItWorksFragmentTest : BaseInstrumentationTest() {
         }
 
         override suspend fun getManifest(cacheHeader: String?): Manifest =
-            Manifest(emptyList(), "", "", "appConfig")
+            Manifest(emptyList(), "", "appConfig")
 
         override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
             throw NotImplementedError()

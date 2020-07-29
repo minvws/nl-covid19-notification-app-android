@@ -56,7 +56,7 @@ class ProcessManifestWorkerTest {
                 }
 
                 override suspend fun getManifest(cacheHeader: String?): Manifest =
-                    Manifest(listOf(), "resource", "risk", "config")
+                    Manifest(listOf(), "risk", "config")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters =
                     throw NotImplementedError()

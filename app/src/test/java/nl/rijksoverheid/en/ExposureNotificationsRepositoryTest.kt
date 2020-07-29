@@ -193,7 +193,6 @@ class ExposureNotificationsRepositoryTest {
             repository.processExposureKeySets(
                 Manifest(
                     listOf("test"),
-                    "",
                     "config-params",
                     "appConfigId"
                 )
@@ -253,7 +252,6 @@ class ExposureNotificationsRepositoryTest {
         val result = repository.processExposureKeySets(
             Manifest(
                 listOf("test", "test2"),
-                "",
                 "config-params",
                 "appConfigId"
             )
@@ -307,7 +305,6 @@ class ExposureNotificationsRepositoryTest {
         val result = repository.processExposureKeySets(
             Manifest(
                 listOf("test"),
-                "",
                 "config-param",
                 "appConfigId"
             )
@@ -354,7 +351,6 @@ class ExposureNotificationsRepositoryTest {
             val result = repository.processExposureKeySets(
                 Manifest(
                     listOf(),
-                    "",
                     "config-params",
                     "appConfigId"
                 )
@@ -401,7 +397,6 @@ class ExposureNotificationsRepositoryTest {
                 repository.processExposureKeySets(
                     Manifest(
                         listOf("test"),
-                        "",
                         "config-params",
                         "appConfigId"
                     )
@@ -459,7 +454,6 @@ class ExposureNotificationsRepositoryTest {
                 repository.processExposureKeySets(
                     Manifest(
                         listOf("test"),
-                        "",
                         "config-params",
                         "appConfigId"
                     )
@@ -512,7 +506,6 @@ class ExposureNotificationsRepositoryTest {
                 repository.processExposureKeySets(
                     Manifest(
                         listOf("test"),
-                        "",
                         "config-params",
                         "appConfigId"
                     )
@@ -579,7 +572,6 @@ class ExposureNotificationsRepositoryTest {
             val result = repository.processExposureKeySets(
                 Manifest(
                     listOf("test", "test2"),
-                    "",
                     "config-params",
                     "appConfigId"
                 )
@@ -716,7 +708,7 @@ class ExposureNotificationsRepositoryTest {
                 }
 
                 override suspend fun getManifest(cacheHeader: String?): Manifest =
-                    Manifest(emptyList(), "dummy", "riskParamId", "configId")
+                    Manifest(emptyList(), "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
@@ -758,7 +750,7 @@ class ExposureNotificationsRepositoryTest {
                 }
 
                 override suspend fun getManifest(cacheHeader: String?): Manifest =
-                    Manifest(emptyList(), "dummy", "riskParamId", "configId")
+                    Manifest(emptyList(), "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
@@ -852,7 +844,7 @@ class ExposureNotificationsRepositoryTest {
                 }
 
                 override suspend fun getManifest(cacheHeader: String?): Manifest =
-                    Manifest(emptyList(), "dummy", "riskParamId", "configId")
+                    Manifest(emptyList(), "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
@@ -901,7 +893,7 @@ class ExposureNotificationsRepositoryTest {
                 }
 
                 override suspend fun getManifest(cacheHeader: String?): Manifest =
-                    Manifest(emptyList(), "dummy", "riskParamId", "configId")
+                    Manifest(emptyList(), "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
@@ -956,7 +948,7 @@ class ExposureNotificationsRepositoryTest {
                     }
 
                     override suspend fun getManifest(cacheHeader: String?): Manifest = Manifest(
-                        listOf(), "res", "risk", "config"
+                        listOf(), "risk", "config"
                     )
 
                     override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
@@ -1345,7 +1337,7 @@ class ExposureNotificationsRepositoryTest {
                 }
 
                 override suspend fun getManifest(cacheHeader: String?): Manifest =
-                    Manifest(listOf(), "res", "risk", "config")
+                    Manifest(listOf(), "risk", "config")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
