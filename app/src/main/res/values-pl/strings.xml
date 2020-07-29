@@ -190,4 +190,7 @@
     <string name="upload_keys_failed_notification_header">Nie udało się wysłać powiadomienia innym</string>
     <string name="upload_keys_failed_notification_paragraph">Próbowaliśmy udostępnić Twoje kody GG, ale nie udało się. Zadzwoń do GGD, aby spróbować ponownie. Istotne jest, abyś zrobił to szybko. W przeciwnym razie, więcej osób może się zarazić.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Zadzwoń do GGD</string>
+    <string name="end_of_life_action">Lees meer</string>
+    <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
+    <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
 </resources>

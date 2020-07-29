@@ -13,7 +13,10 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.google.android.play.core.install.model.AppUpdateType
+import nl.rijksoverheid.en.applifecycle.AppLifecycleViewModel
+import nl.rijksoverheid.en.applifecycle.EndOfLifeFragmentDirections
 import nl.rijksoverheid.en.debug.DebugNotification
 import nl.rijksoverheid.en.job.RemindExposureNotificationWorker
 import nl.rijksoverheid.en.lifecyle.EventObserver
@@ -25,7 +28,7 @@ private const val TAG_GENERIC_ERROR = "generic_error"
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: ExposureNotificationsViewModel by viewModels()
-    private val updateAppViewModel: UpdateAppViewModel by viewModels()
+    private val appLifecycleViewModel: AppLifecycleViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -59,13 +62,20 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        updateAppViewModel.updateEvent.observe(this, EventObserver {
-            it.appUpdateManager.startUpdateFlowForResult(
-                it.appUpdateInfo,
-                AppUpdateType.IMMEDIATE,
-                this,
-                RC_UPDATE_APP
-            )
+        appLifecycleViewModel.updateEvent.observe(this, EventObserver {
+            when (it) {
+                is AppLifecycleViewModel.AppLifecyleStatus.Update -> {
+                    it.update.appUpdateManager.startUpdateFlowForResult(
+                        it.update.appUpdateInfo,
+                        AppUpdateType.IMMEDIATE,
+                        this,
+                        RC_UPDATE_APP
+                    )
+                }
+                AppLifecycleViewModel.AppLifecyleStatus.EndOfLife -> findNavController(R.id.nav_host_fragment).navigate(
+                    EndOfLifeFragmentDirections.actionEndOfLife()
+                )
+            }
         })
 
         if (BuildConfig.FEATURE_DEBUG_NOTIFICATION) {
@@ -81,7 +91,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        updateAppViewModel.checkForForcedAppUpdate()
+        appLifecycleViewModel.checkForForcedAppUpdate()
     }
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {

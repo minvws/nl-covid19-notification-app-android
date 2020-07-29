@@ -4,7 +4,7 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en
+package nl.rijksoverheid.en.applifecycle
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
@@ -12,6 +12,7 @@ import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
+import nl.rijksoverheid.en.BuildConfig
 import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
