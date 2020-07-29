@@ -18,7 +18,6 @@ android {
         consumerProguardFiles "consumer-rules.pro"
 
         // encoded query string for public read access on the cdn
-        buildConfigField "String", "CDN_QUERY_STRING", "\"sv=2019-02-02&st=2020-06-26T14%3A13%3A35Z&se=2025-06-27T14%3A13%3A00Z&sr=c&sp=rl&sig=fCwrecfbx6JNp5RlTzw5mmnRCna6hne92Khb8Gk4%2BRw%3D\""
         buildConfigField "String", "CDN_BASE_URL", "\"https://vwspa-cdn-blob.azureedge.net/vws/\""
         buildConfigField "String", "API_BASE_URL", "\"https://api-ota.alleensamenmelden.nl/mss-acc/\""
         buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "true"
@@ -60,6 +59,11 @@ android {
             buildConfigField "boolean", "FEATURE_SSL_PINNING", "false"
             buildConfigField "String", "CDN_BASE_URL", "\"${cdnEndpoint}\""
             buildConfigField "String", "API_BASE_URL", "\"${apiEndpoint}\""
+        }
+        tst {
+            dimension "environment"
+            buildConfigField "String", "CDN_BASE_URL", "\"https://test.coronamelder-dist.nl/\""
+            buildConfigField "String", "API_BASE_URL", "\"https://test.coronamelder-api.nl/\""
         }
         acc {
             dimension "environment"

@@ -82,10 +82,15 @@ android {
             buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "true"
             versionNameSuffix "-dev"
         }
-        acc {
+        tst {
             dimension "environment"
             buildConfigField "boolean", "FEATURE_LOGGING", "true"
             buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "true"
+            versionNameSuffix "-tst"
+        }
+        acc {
+            dimension "environment"
+            buildConfigField "boolean", "FEATURE_LOGGING", "true"
             versionNameSuffix "-acc"
         }
         prod {
