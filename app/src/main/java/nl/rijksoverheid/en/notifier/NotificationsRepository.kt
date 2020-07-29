@@ -54,7 +54,9 @@ class NotificationsRepository(
             NotificationManagerCompat.from(context)
                 .getNotificationChannel(EXPOSURE_NOTIFICATION_CHANNEL_ID)?.importance !=
                 NotificationManager.IMPORTANCE_NONE
-        } else true
+        } else {
+            true
+        }
 
         allNotificationsEnabled && exposureNotificationsEnabled
     }

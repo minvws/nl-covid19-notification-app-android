@@ -6,8 +6,11 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -22,6 +25,7 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
+import timber.log.Timber
 
 class StatusFragment @JvmOverloads constructor(
     factoryProducer: (() -> ViewModelProvider.Factory)? = null
@@ -106,12 +110,23 @@ class StatusFragment @JvmOverloads constructor(
         findNavController().navigate(StatusFragmentDirections.actionPostNotification(epochDay))
 
     private fun navigateToNotificationSettings() {
-        val intent = Intent()
-        intent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
-        intent.putExtra("app_package", requireContext().packageName)
-        intent.putExtra("app_uid", requireContext().applicationInfo.uid)
-        intent.putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
-        startActivity(intent)
+        try {
+            val intent = Intent()
+            intent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
+            intent.putExtra("app_package", requireContext().packageName)
+            intent.putExtra("app_uid", requireContext().applicationInfo.uid)
+            intent.putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
+            startActivity(intent)
+        } catch (ex: Exception) {
+            try {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.addCategory(Intent.CATEGORY_DEFAULT)
+                intent.data = Uri.parse("package:${requireContext().packageName}")
+                startActivity(intent)
+            } catch (ex: ActivityNotFoundException) {
+                Timber.e("Could not open app settings")
+            }
+        }
     }
 
     private fun showRemoveNotificationConfirmationDialog() {
