@@ -39,20 +39,23 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.CdnService
+import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
-import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
 import nl.rijksoverheid.en.status.StatusCache
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
+import retrofit2.HttpException
 import retrofit2.Response
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -81,7 +84,7 @@ class ExposureNotificationsRepository(
     private val exposureNotificationsApi: ExposureNotificationApi,
     private val api: CdnService,
     private val preferences: SharedPreferences,
-    private val manifestWorkerScheduler: ProcessManifestWorkerScheduler,
+    private val manifestWorkerScheduler: BackgroundWorkScheduler,
     private val appLifecycleManager: AppLifecycleManager,
     private val statusCache: StatusCache,
     private val appConfigManager: AppConfigManager,
@@ -419,10 +422,25 @@ class ExposureNotificationsRepository(
         return withContext(Dispatchers.IO) {
             try {
                 val manifest = api.getManifest()
+
+                val config = try {
+                    api.getAppConfig(manifest.appConfigId)
+                } catch (ex: HttpException) {
+                    Timber.w(ex, "Could not fetch config, returning default")
+                    AppConfig()
+                } catch (ex: IOException) {
+                    Timber.w(ex, "Could not fetch config, returning default")
+                    AppConfig()
+                }
+
+                if (config.deactivated) {
+                    Timber.d("App is deactivated")
+                    requestDisableNotifications()
+                    return@withContext ProcessManifestResult.Disabled
+                }
+
                 val result = processExposureKeySets(manifest)
                 Timber.d("Processing keys result = $result")
-
-                val config = api.getAppConfig(manifest.appConfigId)
 
                 appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode, true)
 
@@ -573,6 +591,7 @@ sealed class ProcessExposureKeysResult {
 
 sealed class ProcessManifestResult {
     data class Success(val nextIntervalMinutes: Int) : ProcessManifestResult()
+    object Disabled : ProcessManifestResult()
     object Error : ProcessManifestResult()
 }
 

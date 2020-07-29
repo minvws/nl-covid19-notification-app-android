@@ -188,6 +188,9 @@
     <string name="upload_keys_failed_notification_header">Impossible d\'envoyer une notification aux autres</string>
     <string name="upload_keys_failed_notification_paragraph">Nous avons essayé de partager vos codes avec le GGD, mais cela n\'a pas fonctionné. Veuillez appeler le GGD pour réessayer. Il est très important que vous le fassiez rapidement sous peine de contaminer d\'autres personnes.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Appelez le GGD</string>
+    <string name="end_of_life_action">Lees meer</string>
+    <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
+    <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
     <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
     <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
 </resources>

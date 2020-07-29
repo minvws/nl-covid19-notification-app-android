@@ -5,6 +5,12 @@
     android:id="@+id/main_nav"
     app:startDestination="@id/nav_status">
 
+    <action
+        android:id="@+id/action_end_of_life"
+        app:destination="@id/nav_end_of_life"
+        app:popUpTo="@id/main_nav"
+        app:popUpToInclusive="true" />
+
     <fragment
         android:id="@+id/nav_status"
         android:name="nl.rijksoverheid.en.status.StatusFragment"
@@ -154,4 +160,9 @@
         android:name="nl.rijksoverheid.en.notification.UploadKeysFailedNotificationFragment"
         android:label="GenericNotificationFragment"
         tools:layout="@layout/fragment_list" />
+
+    <fragment
+        tools:layout="@layout/fragment_end_of_life"
+        android:id="@+id/nav_end_of_life"
+        android:name="nl.rijksoverheid.en.applifecycle.EndOfLifeFragment" />
 </navigation>

@@ -14,7 +14,6 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.nearby.Nearby
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import nl.rijksoverheid.en.AppLifecycleManager
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.CdnService
@@ -24,12 +23,13 @@ import nl.rijksoverheid.en.api.RequestSize
 import nl.rijksoverheid.en.api.model.PostKeysRequest
 import nl.rijksoverheid.en.api.model.Registration
 import nl.rijksoverheid.en.api.model.RegistrationRequest
+import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
+import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.job.CheckConnectionWorker
 import nl.rijksoverheid.en.job.DecoyWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorker
-import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import nl.rijksoverheid.en.job.ScheduleDecoyWorker
 import nl.rijksoverheid.en.job.UploadDiagnosisKeysJob
 import nl.rijksoverheid.en.labtest.LabTestRepository
@@ -57,7 +57,7 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
         NearbyExposureNotificationApi(context, Nearby.getExposureNotificationClient(context)),
         service,
         createSecurePreferences(context),
-        object : ProcessManifestWorkerScheduler {
+        object : BackgroundWorkScheduler {
             override fun schedule(intervalMinutes: Int) {
                 ProcessManifestWorker.queue(context, intervalMinutes)
                 CheckConnectionWorker.queue(context)

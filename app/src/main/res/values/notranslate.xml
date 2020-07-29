@@ -15,6 +15,7 @@
     <string name="privacy_policy_url" translatable="false">https://coronamelder.nl/privacy</string>
     <string name="accessibility_url" translatable="false">https://coronamelder.nl/toegankelijkheid</string>
     <string name="share_url" translatable="false">https://coronamelder.nl/app</string>
+    <string name="end_of_life_url" translatable="false">https://coronamelder.nl/</string>
     <string name="colofon_url" translatable="false">https://coronamelder.nl/colofon</string>
     <string name="debug_channel_name" translatable="false">Debug menu</string>
     <string name="debug_channel_description" translatable="false">Various debug options</string>

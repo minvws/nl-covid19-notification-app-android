@@ -35,13 +35,14 @@ import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
+import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
-import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
@@ -135,7 +136,7 @@ class ExposureNotificationsRepositoryTest {
     private lateinit var mockWebServer: MockWebServer
     private lateinit var context: Context
 
-    private val fakeScheduler = object : ProcessManifestWorkerScheduler {
+    private val fakeScheduler = object : BackgroundWorkScheduler {
         override fun schedule(intervalMinutes: Int) {
             throw NotImplementedError()
         }
@@ -748,6 +749,59 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
+    fun `processManifest stops processing when the app is disabled`() =
+        runBlocking {
+            val dateTime = "2020-06-20T10:15:30.00Z"
+            val fakeService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                    Manifest(emptyList(), "dummy", "riskParamId", "configId")
+
+                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig(1, 5, 0.0, deactivated = true)
+            }
+
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+            val enDisabled = AtomicBoolean(false)
+            val jobsCancelled = AtomicBoolean(false)
+
+            val repository = createRepository(
+                api = object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                    override suspend fun disableNotifications(): DisableNotificationsResult {
+                        enDisabled.set(true)
+                        return DisableNotificationsResult.Disabled
+                    }
+                },
+                scheduler = object : BackgroundWorkScheduler {
+                    override fun schedule(intervalMinutes: Int) {
+                    }
+
+                    override fun cancel() {
+                        jobsCancelled.set(true)
+                    }
+                },
+                cdnService = fakeService,
+                preferences = sharedPrefs,
+                clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            )
+
+            val result = repository.processManifest()
+
+            assertTrue(result is ProcessManifestResult.Disabled)
+            assertTrue(jobsCancelled.get())
+            assertTrue(enDisabled.get())
+        }
+
+    @Test
     fun `processManifest does not update the timestamp of last successful time if manifest cannot be fetched and returns Error`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
@@ -912,7 +966,7 @@ class ExposureNotificationsRepositoryTest {
                     override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
                         AppConfig()
                 },
-                scheduler = object : ProcessManifestWorkerScheduler {
+                scheduler = object : BackgroundWorkScheduler {
                     override fun schedule(intervalMinutes: Int) {
                         throw IllegalStateException()
                     }
@@ -1299,7 +1353,7 @@ class ExposureNotificationsRepositoryTest {
 
                 override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
                     AppConfig()
-            }, scheduler = object : ProcessManifestWorkerScheduler {
+            }, scheduler = object : BackgroundWorkScheduler {
                 override fun schedule(intervalMinutes: Int) {
                 }
 
@@ -1353,7 +1407,7 @@ class ExposureNotificationsRepositoryTest {
         clock: Clock = Clock.systemDefaultZone(),
         lifecycleOwner: LifecycleOwner = TestLifecycleOwner(Lifecycle.State.STARTED),
         signatureValidation: Boolean = false,
-        scheduler: ProcessManifestWorkerScheduler = fakeScheduler,
+        scheduler: BackgroundWorkScheduler = fakeScheduler,
         appConfigManager: AppConfigManager = AppConfigManager(cdnService)
     ): ExposureNotificationsRepository {
         return ExposureNotificationsRepository(
