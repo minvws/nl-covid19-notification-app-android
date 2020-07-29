@@ -65,7 +65,7 @@ class ProcessManifestWorkerTest {
                     AppConfig()
             },
             context.getSharedPreferences("test_repository", 0),
-            object : ProcessManifestWorkerScheduler {
+            object : BackgroundWorkScheduler {
                 override fun schedule(intervalMinutes: Int) {
                 }
 

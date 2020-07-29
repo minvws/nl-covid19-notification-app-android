@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.google.android.play.core.install.model.AppUpdateType
 import nl.rijksoverheid.en.applifecycle.AppLifecycleViewModel
+import nl.rijksoverheid.en.applifecycle.EndOfLifeFragmentDirections
 import nl.rijksoverheid.en.debug.DebugNotification
 import nl.rijksoverheid.en.job.RemindExposureNotificationWorker
 import nl.rijksoverheid.en.lifecyle.EventObserver
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
                 AppLifecycleViewModel.AppLifecyleStatus.EndOfLife -> findNavController(R.id.nav_host_fragment).navigate(
-                    R.id.nav_end_of_life
+                    EndOfLifeFragmentDirections.actionEndOfLife()
                 )
             }
         })

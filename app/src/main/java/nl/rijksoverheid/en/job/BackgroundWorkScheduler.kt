@@ -6,7 +6,15 @@
  */
 package nl.rijksoverheid.en.job
 
-interface ProcessManifestWorkerScheduler {
+interface BackgroundWorkScheduler {
+    /**
+     * Schedule background work. Invoked when the app is activated the first time.
+     * @param intervalMinutes interval for checking the manifest as part of background work
+     */
     fun schedule(intervalMinutes: Int)
+
+    /**
+     * Cancel all scheduled background work
+     */
     fun cancel()
 }

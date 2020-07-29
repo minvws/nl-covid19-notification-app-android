@@ -48,7 +48,7 @@ import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
-import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
@@ -84,7 +84,7 @@ class ExposureNotificationsRepository(
     private val exposureNotificationsApi: ExposureNotificationApi,
     private val api: CdnService,
     private val preferences: SharedPreferences,
-    private val manifestWorkerScheduler: ProcessManifestWorkerScheduler,
+    private val manifestWorkerScheduler: BackgroundWorkScheduler,
     private val appLifecycleManager: AppLifecycleManager,
     private val statusCache: StatusCache,
     private val appConfigManager: AppConfigManager,

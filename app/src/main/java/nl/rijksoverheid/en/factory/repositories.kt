@@ -26,10 +26,10 @@ import nl.rijksoverheid.en.api.model.RegistrationRequest
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
+import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.job.CheckConnectionWorker
 import nl.rijksoverheid.en.job.DecoyWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorker
-import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
 import nl.rijksoverheid.en.job.ScheduleDecoyWorker
 import nl.rijksoverheid.en.job.UploadDiagnosisKeysJob
 import nl.rijksoverheid.en.labtest.LabTestRepository
@@ -57,7 +57,7 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
         NearbyExposureNotificationApi(context, Nearby.getExposureNotificationClient(context)),
         service,
         createSecurePreferences(context),
-        object : ProcessManifestWorkerScheduler {
+        object : BackgroundWorkScheduler {
             override fun schedule(intervalMinutes: Int) {
                 ProcessManifestWorker.queue(context, intervalMinutes)
                 CheckConnectionWorker.queue(context)

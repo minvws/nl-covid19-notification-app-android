@@ -29,7 +29,7 @@ import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
-import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
@@ -75,7 +75,7 @@ class HowItWorksDetailFragmentTest : BaseInstrumentationTest() {
         FakeExposureNotificationApi(),
         service,
         notificationsPreferences,
-        object : ProcessManifestWorkerScheduler {
+        object : BackgroundWorkScheduler {
             override fun schedule(intervalMinutes: Int) {
             }
 

@@ -42,7 +42,7 @@ import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
-import nl.rijksoverheid.en.job.ProcessManifestWorkerScheduler
+import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
@@ -136,7 +136,7 @@ class ExposureNotificationsRepositoryTest {
     private lateinit var mockWebServer: MockWebServer
     private lateinit var context: Context
 
-    private val fakeScheduler = object : ProcessManifestWorkerScheduler {
+    private val fakeScheduler = object : BackgroundWorkScheduler {
         override fun schedule(intervalMinutes: Int) {
             throw NotImplementedError()
         }
@@ -781,7 +781,7 @@ class ExposureNotificationsRepositoryTest {
                         return DisableNotificationsResult.Disabled
                     }
                 },
-                scheduler = object : ProcessManifestWorkerScheduler {
+                scheduler = object : BackgroundWorkScheduler {
                     override fun schedule(intervalMinutes: Int) {
                     }
 
@@ -966,7 +966,7 @@ class ExposureNotificationsRepositoryTest {
                     override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
                         AppConfig()
                 },
-                scheduler = object : ProcessManifestWorkerScheduler {
+                scheduler = object : BackgroundWorkScheduler {
                     override fun schedule(intervalMinutes: Int) {
                         throw IllegalStateException()
                     }
@@ -1353,7 +1353,7 @@ class ExposureNotificationsRepositoryTest {
 
                 override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
                     AppConfig()
-            }, scheduler = object : ProcessManifestWorkerScheduler {
+            }, scheduler = object : BackgroundWorkScheduler {
                 override fun schedule(intervalMinutes: Int) {
                 }
 
@@ -1407,7 +1407,7 @@ class ExposureNotificationsRepositoryTest {
         clock: Clock = Clock.systemDefaultZone(),
         lifecycleOwner: LifecycleOwner = TestLifecycleOwner(Lifecycle.State.STARTED),
         signatureValidation: Boolean = false,
-        scheduler: ProcessManifestWorkerScheduler = fakeScheduler,
+        scheduler: BackgroundWorkScheduler = fakeScheduler,
         appConfigManager: AppConfigManager = AppConfigManager(cdnService)
     ): ExposureNotificationsRepository {
         return ExposureNotificationsRepository(
