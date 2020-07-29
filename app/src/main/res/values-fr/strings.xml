@@ -92,7 +92,7 @@
     <string name="status_info_test_subtitle">Découvrez le plus vite possible si vous êtes contaminé(e)</string>
     <string name="status_info_lab_title">Partager la clé GGD</string>
     <string name="status_info_lab_subtitle">Envoyer avec le GGD une notification anonyme aux autres si vous êtes contaminé(e)</string>
-    <string name="status_app_version">Version test %1$s créée %2$s</string>
+    <string name="status_app_version">Version %1$s créée %2$s</string>
     <string name="status_exposure_what_next">Que puis-je faire maintenant ?</string>
     <string name="status_error_consent_required">%1$s ne fonctionne que si les paramètres nécessaires sont activés</string>
     <string name="status_error_action_consent">Ouvrir l\'application</string>
@@ -121,7 +121,7 @@
     <string name="faq_deletion">Comment supprimer les données Bluetooth de mon téléphone ?</string>
     <string name="faq_location_permission">Pourquoi mes paramètres de géolocalisation doivent-ils être activés ?</string>
     <string name="faq_technical">Comment fonctionne l\'application au niveau technique ?</string>
-    <string name="faq_reason_paragraph_1">"Avec l'application, vous contribuez à arrêter la diffusion du coronavirus. L'application aide en effet à l'analyse sur les contacts du GGD. Si vous faites un test et que vous avez le coronavirus, le GGD vous appellera. Lors de cet entretien, le GGD vous demande avec qui vous avez été en contact lorsque vous étiez contagieux. Le GGD téléphone également à ces personnes pour les avertir qu'elles ont peut-être le coronavirus. "</string>
+    <string name="faq_reason_paragraph_1">"Avec l'application, vous contribuez à arrêter la diffusion du coronavirus. L'application aide en effet à l'analyse sur les contacts du GGD. Si vous faites un test et que vous avez le coronavirus, le GGD vous appellera. Lors de cet entretien, le GGD vous demande avec qui vous avez été en contact lorsque vous étiez contagieux. Le GGD téléphone également à ces personnes pour les avertir qu'elles ont peut-être le coronavirus."</string>
     <string name="faq_reason_paragraph_2">Vous avez peut-être aussi été en contact avec des gens que vous ne connaissez pas. Dans le train, au cinéma ou au restaurant. C\'est là que l\'application intervient. Avec celle-ci, vous pouvez en effet avertir toutes les personnes qui ont été en contact avec vous. Même celles que vous ne connaissez pas. Il suffit qu\'elles aussi utilisent l\'application.</string>
     <string name="faq_reason_paragraph_3">"Le GGD contacte les personnes dont vous connaissez le nom ou les coordonnées. L'application prévient simultanément les personnes que vous avez rencontrées, mais dont vous ne connaissez ni le nom ni les coordonnées. Ainsi, celles-ci sont également vite au courant, peuvent prendre des mesures et prévenir la contagion d'autres personnes. L'analyse sur les contacts du GGD se poursuit, car les gens avec qui vous avez souvent été en contact ont peut-être couru un risque plus important."</string>
     <string name="faq_reason_paragraph_4">Vous pouvez évidemment vous-même recevoir des avertissements via l\'application. Si c\'est le cas, cela veut dire que vous avez été proche de quelqu\'un ayant le coronavirus les jours qui ont précédé. En sachant cela, vous pouvez à votre tour éviter de contaminer les autres.</string>
@@ -133,7 +133,7 @@
     <string name="faq_upload_keys_paragraph_2">"Après vérification de votre clé GGD, les personnes qui ont été en contact avec vous lorsque vous étiez contagieux reçoivent une notification anonyme. Uniquement si ces personnes utilisent également l'application."</string>
     <string name="faq_bluetooth_paragraph_1">Oui, mais le signal est alors très faible. Le Bluetooth fonctionne mieux si votre téléphone se trouve dans la même pièce que le téléphone d\'une autre personne. Par exemple, il y a très peu de risques que votre application réceptionne le signal Bluetooth de vos voisins. Et le risque est également minime que vous receviez une notification si votre voisin a le coronavirus et que vous n\'avez pas été dans la même pièce que lui.</string>
     <string name="faq_power_usage_paragraph_1">L\'application utilise le Bluetooth Low Energy. Il s\'agit d\'une forme spéciale de Bluetooth qui consomme très peu de courant. Le pourcentage que cela exige de votre batterie de téléphone diffère selon les téléphones.</string>
-    <string name="faq_deletion_paragraph_1">Vous pouvez supprimer vous-même les données Bluetooth que l\'application conserve. Cela fonctionne comme suit. Allez aux paramètres de votre téléphone -&gt; Google -&gt; Notifications sur l\'exposition possible à la COVID-19. Cliquez sur supprimer les ID arbitraires -&gt; Supprimer. Vous voulez que l\'application ne conserve plus de nouvelles données Bluetooth ? Supprimez alors l\'application.</string>
+    <string name="faq_deletion_paragraph_1">"Vous pouvez supprimer vous-même les données Bluetooth que l'application conserve. Cela fonctionne comme suit. Allez aux paramètres de votre téléphone -&gt; Google -&gt; Notifications sur l'exposition possible à la COVID-19. Cliquez sur supprimer les ID arbitraires -&gt; Supprimer. Vous voulez que l'application ne conserve plus de nouvelles données Bluetooth ? Supprimez alors l'application."</string>
     <string name="faq_deletion_button">Ouvrir les paramètres</string>
     <string name="faq_location_permission_paragraph_1">Certaines applications utilisent le Bluetooth pour déterminer votre localisation. C\'est pour cela qu\'il fait partie de vos paramètres de localisation. CoronaMelder a besoin du Bluetooth pour fonctionner, mais uniquement pour voir si vous êtes près d\'autres personnes qui ont l\'application. L\'application n\'a jamais accès à votre localisation.</string>
     <string name="faq_technical_toolbar_title">Explication technique</string>
@@ -191,6 +191,8 @@
     <string name="end_of_life_action">Lees meer</string>
     <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
     <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
+    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
+    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
     <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
     <string name="cd_status_disabled">Geel rondje met uitroepteken als waarschuwing</string>
     <string name="cd_status_exposed">Rood rondje met alarmbel dat aangeeft dat er nu actie nodig is</string>

@@ -92,7 +92,7 @@
     <string name="status_info_test_subtitle">Dowiedz się możliwie jak najszybciej czy sam jesteś zarażony</string>
     <string name="status_info_lab_title">Przekaż klucz GGD</string>
     <string name="status_info_lab_subtitle">Wyślij razem z GDD anonimowe powiadomienie do innych osób, jeśli jesteś zarażony</string>
-    <string name="status_app_version">Wersja testowa %1$s utworzona %2$s</string>
+    <string name="status_app_version">Wersja %1$s utworzona %2$s</string>
     <string name="status_exposure_what_next">Co mogę teraz zrobić?</string>
     <string name="status_error_consent_required">%1$s działa wyłącznie, gdy włączone są niezbędne ustawienia</string>
     <string name="status_error_action_consent">Włącz aplikację</string>
@@ -121,7 +121,7 @@
     <string name="faq_deletion">Jak mogę usunąć dane Bluetooth z telefonu?</string>
     <string name="faq_location_permission">Dlaczego moje ustawienia lokalizacji muszą być włączone?</string>
     <string name="faq_technical">Jak działa aplikacja pod względem technicznym?</string>
-    <string name="faq_reason_paragraph_1">"Dzięki aplikacji pomagasz powstrzymać rozprzestrzenianie się koronawirusa. Aplikacja pomaga GGD w ich działaniach. Jeśli zrobisz test i okaże się, że masz koronawirusa, GGD zadzwoni do Ciebie. Podczas tej rozmowy GGD pyta, z kim miałeś styczność od kiedy jesteś zarażony. GGD dzwoni też do tych ludzi z ostrzeżeniem, że mogli zostać zarażeni koronawirusem. "</string>
+    <string name="faq_reason_paragraph_1">"Dzięki aplikacji pomagasz powstrzymać rozprzestrzenianie się koronawirusa. Aplikacja pomaga GGD w ich działaniach. Jeśli zrobisz test i okaże się, że masz koronawirusa, GGD zadzwoni do Ciebie. Podczas tej rozmowy GGD pyta, z kim miałeś styczność od kiedy jesteś zarażony. GGD dzwoni też do tych ludzi z ostrzeżeniem, że mogli zostać zarażeni koronawirusem."</string>
     <string name="faq_reason_paragraph_2">Prawdopodobnie miałeś jednak również kontakt z osobami, których nie znasz. W pociągu, kinie czy restauracji. Tutaj pomaga aplikacja. Dzięki niej możesz ostrzec wszystkich ludzi, z którymi miałeś styczność. Także tych, których nie znasz. Oczywiście, jeśli korzystają z aplikacji.</string>
     <string name="faq_reason_paragraph_3">"GGD zwraca się do osób, których nazwisko lub dane kontaktowe posiadasz. Jednocześnie aplikacja ostrzega spotkane osoby, których nazwiska lub dane kontaktowe nie są Ci znane. W ten sposób również oni zostają szybko poinformowani, mogą podjąć działania i zapobiec zarażeniu innych. Działania GGD przebiegają normalnie, bo osoby, z którymi częściej miałeś kontakt, są prawdopodobnie bardziej narażeni na ryzyko zarażenia. "</string>
     <string name="faq_reason_paragraph_4">Sam również możesz otrzymać ostrzeżenia od aplikacji. Gdy ma to miejsce, oznacza to, że w przeciągu ostatnich dni miałeś kontakt z osobą z koronawirusem. W tym przypadku, to Ty z kolei możesz zapobiec zarażeniu innych.</string>
@@ -193,6 +193,8 @@
     <string name="end_of_life_action">Lees meer</string>
     <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
     <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
+    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
+    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
     <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
     <string name="cd_status_disabled">Geel rondje met uitroepteken als waarschuwing</string>
     <string name="cd_status_exposed">Rood rondje met alarmbel dat aangeeft dat er nu actie nodig is</string>

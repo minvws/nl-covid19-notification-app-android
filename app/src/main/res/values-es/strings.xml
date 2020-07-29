@@ -92,7 +92,7 @@
     <string name="status_info_test_subtitle">Descubre si tú mismo estás contagiado lo antes posible</string>
     <string name="status_info_lab_title">Enviar clave GGD</string>
     <string name="status_info_lab_subtitle">Envía a través del GGD (servicio de salud municipal) una notificación anónima a otras personas si estás contagiado</string>
-    <string name="status_app_version">Versión de prueba %1$s build %2$s</string>
+    <string name="status_app_version">Versión %1$s build %2$s</string>
     <string name="status_exposure_what_next">¿Qué puedo hacer ahora?</string>
     <string name="status_error_consent_required">%1$s solo funciona si están activados los ajustes necesarios</string>
     <string name="status_error_action_consent">Activar la app</string>
@@ -133,7 +133,7 @@
     <string name="faq_upload_keys_paragraph_2">"Una vez controlada tu clave GGD, todas las personas que se encontraron cerca de ti mientras eras contagioso recibirán una notificación anónima, pero solo si también utilizan la app."</string>
     <string name="faq_bluetooth_paragraph_1">Sí, pero la señal se vuelve muy débil. Bluetooth funciona mejor si tu teléfono se encuentra en el mismo espacio que el teléfono de otra persona. Por ejemplo, la probabilidad de que recibas la señal Bluetooth de tus vecinos es mínima y, por tanto, la probabilidad de que recibas una notificación si tu vecino resulta tener el coronavirus y no habéis estado en el mismo espacio es también mínima.</string>
     <string name="faq_power_usage_paragraph_1">La app utiliza Bluetooth Low Energy (Bluetooth de bajo consumo). Esta es una versión especial de Bluetooth que consume muy poca batería. El porcentaje exacto del consumo de la batería depende del teléfono.</string>
-    <string name="faq_deletion_paragraph_1">Puedes eliminar por tu cuenta los datos Bluetooth que la app ha guardado siguiendo los siguientes pasos. En tu teléfono, ve a Ajustes-&gt; Google -&gt; Notificación de exposiciones al COVID-19. Pulsa Eliminar ID aleatorios -&gt; Eliminar. Si no quieres que la app cree nuevos datos Bluetooth, elimina la app.</string>
+    <string name="faq_deletion_paragraph_1">"Puedes eliminar por tu cuenta los datos Bluetooth que la app ha guardado siguiendo los siguientes pasos. En tu teléfono, ve a Ajustes-&gt; Google -&gt; Notificación de exposiciones al COVID-19. Pulsa Eliminar ID aleatorios -&gt; Eliminar. Si no quieres que la app cree nuevos datos Bluetooth, elimina la app."</string>
     <string name="faq_deletion_button">Abrir ajustes</string>
     <string name="faq_location_permission_paragraph_1">Algunas apps utilizan Bluetooth para determinar tu localización. Por eso, forma parte de tus ajustes de localización. CoronaMelder necesita Bluetooth para funcionar, pero solo para ver si estás cerca de otra persona que tiene la app. La app no tienen nunca acceso a tu localización.</string>
     <string name="faq_technical_toolbar_title">Explicación técnica</string>
@@ -191,6 +191,8 @@
     <string name="end_of_life_action">Lees meer</string>
     <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
     <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
+    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
+    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
     <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
     <string name="cd_status_disabled">Geel rondje met uitroepteken als waarschuwing</string>
     <string name="cd_status_exposed">Rood rondje met alarmbel dat aangeeft dat er nu actie nodig is</string>

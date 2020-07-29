@@ -92,7 +92,7 @@
     <string name="status_info_test_subtitle">Find out as soon as possible if you\'re infected</string>
     <string name="status_info_lab_title">Share the GGD key</string>
     <string name="status_info_lab_subtitle">Send an anonymous notification with the GGD to others if you\'re infected</string>
-    <string name="status_app_version">Test version %1$s build %2$s</string>
+    <string name="status_app_version">Version %1$s build %2$s</string>
     <string name="status_exposure_what_next">What can I do now?</string>
     <string name="status_error_consent_required">%1$s only works when the necessary settings are turned on.</string>
     <string name="status_error_action_consent">Turn on app</string>
@@ -121,7 +121,7 @@
     <string name="faq_deletion">How do I delete the Bluetooth data from my phone?</string>
     <string name="faq_location_permission">Why do my location services need to be turned on?</string>
     <string name="faq_technical">How does the app work technically?</string>
-    <string name="faq_reason_paragraph_1">This app helps the GGD with their research. So, by using the app you help stop the spread of the coronavirus. If you were tested and have corona you\'ll get a call from the GGD. During this call the GGD asks you who you\'ve been close to while contagious. The GGD also calls these people to warn them that they might have corona.</string>
+    <string name="faq_reason_paragraph_1">"This app helps the GGD with their research. So, by using the app you help stop the spread of the coronavirus. If you were tested and have corona you'll get a call from the GGD. During this call the GGD asks you who you've been close to while contagious. The GGD also calls these people to warn them that they might have corona."</string>
     <string name="faq_reason_paragraph_2">However, you\'ve probably also been close to people you don\'t know. In the train, cinema, or restaurant for example. This is where the app helps you. Because it allows you to warn all the people who have been close to you. Including people you don\'t know. As long as they use the app, of course.</string>
     <string name="faq_reason_paragraph_3">"The GGD contacts the people whose contact details you have. The app also warns people who you've met, but whose name or contact details you don't know. So these people are quickly informed and able to take measures to prevent infecting others. The research of the GGD continues. Because the people you've been close to more often might be at a higher risk. "</string>
     <string name="faq_reason_paragraph_4">You can also receive warnings through the app. If this happens it means you\'ve been close to someone with corona in last few days. In this case, you can do your part to prevent spreading the virus to others.</string>
@@ -191,6 +191,8 @@
     <string name="end_of_life_action">Lees meer</string>
     <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
     <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
+    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
+    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
     <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
     <string name="cd_status_disabled">Geel rondje met uitroepteken als waarschuwing</string>
     <string name="cd_status_exposed">Rood rondje met alarmbel dat aangeeft dat er nu actie nodig is</string>

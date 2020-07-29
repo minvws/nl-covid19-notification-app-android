@@ -92,7 +92,7 @@
     <string name="status_info_test_subtitle">Разбери възможно най-бързо дали самият ти си заразен</string>
     <string name="status_info_lab_title">Предаване на GGD-ключ</string>
     <string name="status_info_lab_subtitle">Заедно със Общинската здравна инспекция (GGD) изпрати анонимно известие на други хора, ако си заразен</string>
-    <string name="status_app_version">Тестова версия %1$s build %2$s</string>
+    <string name="status_app_version">Версия %1$s build %2$s</string>
     <string name="status_exposure_what_next">Какво мога да направя сега?</string>
     <string name="status_error_consent_required">%1$s работи само ако са включени необходимите настройки</string>
     <string name="status_error_action_consent">Включване на приложението</string>
@@ -121,7 +121,7 @@
     <string name="faq_deletion">Как да премахна Bluetooth данните от  телефона си?</string>
     <string name="faq_location_permission">Защо трябва да са включени моите настройки за местоположение?</string>
     <string name="faq_technical">Как технически функционира приложението?</string>
-    <string name="faq_reason_paragraph_1">"С приложението съдействаш да се спре разпространението на коронавируса. Приложението помага на Общинската здравна инспекция (GGD) при проучването на контактите на вирусоносителите. Ако направиш тест и се установи, че имаш коронавирус, от GGD ще ти се обадят. По време на този разговор от GGD ще те питат с кои хора си бил в контакт, откакто си се заразил. GGD ще се обади и на тези лица, за да ги предупреди, че може би имат коронавирус. "</string>
+    <string name="faq_reason_paragraph_1">"С приложението съдействаш да се спре разпространението на коронавируса. Приложението помага на Общинската здравна инспекция (GGD) при проучването на контактите на вирусоносителите. Ако направиш тест и се установи, че имаш коронавирус, от GGD ще ти се обадят. По време на този разговор от GGD ще те питат с кои хора си бил в контакт, откакто си се заразил. GGD ще се обади и на тези лица, за да ги предупреди, че може би имат коронавирус."</string>
     <string name="faq_reason_paragraph_2">Твърде вероятно е обаче да си бил близо до хора, които не познаваш, например във влака, киното или ресторанта. Именно тук помага приложението. С него на практика можеш да предупредиш всички , които са били близо до теб. В това число хората, които не познаваш. Стига те също да използват приложението, разбира се.</string>
     <string name="faq_reason_paragraph_3">"Общинската здравна инспекция (GGD) ще се свърже с хората, чиито имена или данни за контакт имаш. Едновременно с това приложението ще предупреди хората, които си срещнал, но чиито имена и данни за контакт не са ти известни. Така и те бързо ще бъдат уведомени, ще могат да вземат мерки и по този начин ще се предотврати заразяване на други лица. GGD продължава да проучва контактите, тъй като хората, в чиято близост си се намирал по-често, вероятно са изложени на повишен риск. "</string>
     <string name="faq_reason_paragraph_4">Самият ти, естествено, също може да получаваш предупреждения през приложението. Ако това се случи, значи през изминалите дни си бил близо до човек с коронавирус. Когато научиш за това, на свой ред ти можеш да предотвратиш заразяването на други хора.</string>
@@ -191,6 +191,8 @@
     <string name="end_of_life_action">Lees meer</string>
     <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
     <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
+    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
+    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
     <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
     <string name="cd_status_disabled">Geel rondje met uitroepteken als waarschuwing</string>
     <string name="cd_status_exposed">Rood rondje met alarmbel dat aangeeft dat er nu actie nodig is</string>

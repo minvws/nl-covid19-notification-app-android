@@ -92,7 +92,7 @@
     <string name="status_info_test_subtitle">Erfahren Sie schnellstmöglich, ob Sie selbst infiziert sind.</string>
     <string name="status_info_lab_title">GGD-Schlüssel weiterleiten</string>
     <string name="status_info_lab_subtitle">Schicken Sie mit dem GGD eine anonyme Nachricht an andere, wenn Sie infiziert sind.</string>
-    <string name="status_app_version">Testversion %1$s Build %2$s</string>
+    <string name="status_app_version">Version %1$s Build %2$s</string>
     <string name="status_exposure_what_next">Was kann ich jetzt machen?</string>
     <string name="status_error_consent_required">%1$s funktioniert nur, wenn die erforderlichen Einstellungen aktiviert sind.</string>
     <string name="status_error_action_consent">App aktivieren</string>
@@ -121,7 +121,7 @@
     <string name="faq_deletion">Wie lösche ich die Bluetooth-Daten auf meinem Telefon?</string>
     <string name="faq_location_permission">Warum müssen meine Standorteinstellungen aktiviert sein?</string>
     <string name="faq_technical">Wie funktioniert die App technisch?</string>
-    <string name="faq_reason_paragraph_1">"Mit der App helfen Sie dabei, die Verbreitung des Coronavirus zu stoppen. Die App unterstützt nämlich die Kontaktuntersuchung des GGD. Wenn Sie sich testen lassen und sich herausstellt, dass Sie Corona haben, ruft Sie der GGD an. Bei diesem Gespräch fragt der GGD, bei wem Sie in der Nähe waren, als Sie ansteckend waren. Der GGD ruft auch diese Personen an und warnt sie. Denn auch sie haben vielleicht Corona. "</string>
+    <string name="faq_reason_paragraph_1">"Mit der App helfen Sie dabei, die Verbreitung des Coronavirus zu stoppen. Die App unterstützt nämlich die Kontaktuntersuchung des GGD. Wenn Sie sich testen lassen und sich herausstellt, dass Sie Corona haben, ruft Sie der GGD an. Bei diesem Gespräch fragt der GGD, bei wem Sie in der Nähe waren, als Sie ansteckend waren. Der GGD ruft auch diese Personen an und warnt sie. Denn auch sie haben vielleicht Corona."</string>
     <string name="faq_reason_paragraph_2">Allerdings waren Sie wahrscheinlich auch in der Nähe von Personen, die Sie nicht kennen. Im Zug, im Kino oder im Restaurant. Jetzt kommt die App zu Hilfe. Mit der App können Sie nämlich alle Personen warnen, die bei Ihnen in der Nähe waren. Auch die Personen, die Sie nicht kennen. Solange sie natürlich die App verwenden.</string>
     <string name="faq_reason_paragraph_3">"Der GGD kontaktiert die Personen, deren Name oder Kontaktdaten Sie haben. Die App warnt gleichzeitig die Personen, die Sie getroffen haben, deren Namen oder Kontaktdaten Sie nicht haben. So sind auch diese Personen schnell auf dem Laufenden, können sie Maßnahmen ergreifen und somit verhindern, dass sie andere anstecken. Die Kontaktuntersuchung des GGD geht einfach weiter, denn für die Personen, bei denen Sie öfter in der Nähe waren, bestand vielleicht ein größeres Risiko. "</string>
     <string name="faq_reason_paragraph_4">Sie können selbst natürlich auch Warnungen über die App erhalten. Wenn das passiert, waren Sie in den vergangenen Tagen in der Nähe einer mit Corona infizierten Person. Sobald Sie das erfahren haben, können Sie Ihrerseits verhindern, dass Sie andere anstecken.</string>
@@ -191,6 +191,8 @@
     <string name="end_of_life_action">Lees meer</string>
     <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
     <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
+    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
+    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
     <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
     <string name="cd_status_disabled">Geel rondje met uitroepteken als waarschuwing</string>
     <string name="cd_status_exposed">Rood rondje met alarmbel dat aangeeft dat er nu actie nodig is</string>

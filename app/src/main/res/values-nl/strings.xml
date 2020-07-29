@@ -92,7 +92,7 @@
     <string name="status_info_test_subtitle">Ontdek zo snel mogelijk of je zelf besmet bent</string>
     <string name="status_info_lab_title">GGD-sleutel doorgeven</string>
     <string name="status_info_lab_subtitle">Stuur met de GGD een anonieme melding naar anderen als je besmet bent</string>
-    <string name="status_app_version">Test-versie %1$s build %2$s</string>
+    <string name="status_app_version">Versie %1$s build %2$s</string>
     <string name="status_exposure_what_next">Wat kan ik nu doen?</string>
     <string name="status_error_consent_required">%1$s werkt alleen als de noodzakelijke instellingen aanstaan</string>
     <string name="status_error_action_consent">App aanzetten</string>
@@ -191,6 +191,8 @@
     <string name="end_of_life_action">Lees meer</string>
     <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
     <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
+    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
+    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
     <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
     <string name="cd_status_disabled">Geel rondje met uitroepteken als waarschuwing</string>
     <string name="cd_status_exposed">Rood rondje met alarmbel dat aangeeft dat er nu actie nodig is</string>
