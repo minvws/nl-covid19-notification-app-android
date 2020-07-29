@@ -49,4 +49,10 @@ object BindingAdapters {
             lottieView.playAnimation()
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("contentDescriptionRes")
+    fun setContentDescriptionRes(view: View, @StringRes stringRes: Int) {
+        view.contentDescription = view.context.getString(stringRes)
+    }
 }

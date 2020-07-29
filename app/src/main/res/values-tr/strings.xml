@@ -192,4 +192,9 @@
     <string name="end_of_life_action">Lees meer</string>
     <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
     <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
+    <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
+    <string name="cd_status_disabled">Geel rondje met uitroepteken als waarschuwing</string>
+    <string name="cd_status_exposed">Rood rondje met alarmbel dat aangeeft dat er nu actie nodig is</string>
+    <string name="cd_error_box">Waarschuwing</string>
+    <string name="cd_info_box">Belangrijk</string>
 </resources>

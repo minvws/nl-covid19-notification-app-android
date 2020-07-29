@@ -26,6 +26,7 @@ class StatusHeaderItem(
     abstract class HeaderViewState(
         @DrawableRes val background: Int,
         @RawRes val icon: Int,
+        @StringRes val iconContentDescription: Int,
         @StringRes val headline: Int,
         @DrawableRes val illustration: Int? = null,
         val showIllustration: Boolean = false,
@@ -43,6 +44,7 @@ class StatusHeaderItem(
         StatusViewModel.HeaderState.Active -> object : HeaderViewState(
             R.drawable.gradient_status_no_exposure,
             R.raw.status_active,
+            R.string.cd_status_active,
             R.string.status_no_exposure_detected_headline,
             showIllustration = true
         ) {
@@ -54,6 +56,7 @@ class StatusHeaderItem(
         is StatusViewModel.HeaderState.Disabled -> object : HeaderViewState(
             R.drawable.gradient_status_disabled,
             R.raw.status_inactive,
+            R.string.cd_status_disabled,
             R.string.status_disabled_headline,
             enableActionLabel = R.string.status_en_api_disabled_enable,
             enableAction = primaryAction
@@ -65,6 +68,7 @@ class StatusHeaderItem(
         is StatusViewModel.HeaderState.Exposed -> object : HeaderViewState(
             R.drawable.gradient_status_exposure,
             R.raw.status_exposed,
+            R.string.cd_status_exposed,
             R.string.status_exposure_detected_headline,
             whatsNextActionLabel = R.string.status_exposure_what_next,
             resetActionLabel = R.string.status_reset_exposure,
