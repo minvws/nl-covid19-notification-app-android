@@ -92,6 +92,7 @@ class StatusFragment @JvmOverloads constructor(
             when (it) {
                 StatusViewModel.ErrorState.None -> section.updateErrorState(it)
                 StatusViewModel.ErrorState.SyncIssues -> section.updateErrorState(it) { statusViewModel.resetErrorState() }
+                StatusViewModel.ErrorState.NotificationsDisabled -> section.updateErrorState(it) { navigateToNotificationSettings() }
                 is StatusViewModel.ErrorState.ConsentRequired -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
             }
         }
@@ -103,6 +104,15 @@ class StatusFragment @JvmOverloads constructor(
 
     private fun navigateToPostNotification(epochDay: Long) =
         findNavController().navigate(StatusFragmentDirections.actionPostNotification(epochDay))
+
+    private fun navigateToNotificationSettings() {
+        val intent = Intent()
+        intent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
+        intent.putExtra("app_package", requireContext().packageName)
+        intent.putExtra("app_uid", requireContext().applicationInfo.uid)
+        intent.putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
+        startActivity(intent)
+    }
 
     private fun showRemoveNotificationConfirmationDialog() {
         findNavController().navigate(StatusFragmentDirections.actionRemoveExposedMessage())

@@ -189,4 +189,6 @@
     <string name="upload_keys_failed_notification_header">Nu a fost posibil să trimiteți altora o notificație.</string>
     <string name="upload_keys_failed_notification_paragraph">Am încercat să partajăm codurile dvs. cu GGD, dar acest lucru nu a fost posibil. Sunați GGD pentru a face acest lucru din nou. Este foarte important să faceți acest lucru repede. În caz contrar, mai multe persoane pot fi contaminate.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Sunați la GGD</string>
+    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
+    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
 </resources>

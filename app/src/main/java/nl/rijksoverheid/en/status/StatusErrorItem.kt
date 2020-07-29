@@ -33,6 +33,11 @@ class StatusErrorItem(
                 context.getString(R.string.app_name)
             )
         }
+        is StatusViewModel.ErrorState.NotificationsDisabled -> object :
+            ErrorViewState(R.string.status_error_action_notifications_disabled, action) {
+            override fun getMessage(context: Context) =
+                context.getString(R.string.status_error_notifications_disabled)
+        }
         else -> object :
             ErrorViewState(R.string.status_error_action_sync_issues, action) {
             override fun getMessage(context: Context) =
