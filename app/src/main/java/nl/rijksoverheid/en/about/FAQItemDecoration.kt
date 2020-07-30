@@ -13,6 +13,7 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.annotation.Dimension
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupieViewHolder
 import kotlin.math.roundToInt
@@ -57,6 +58,10 @@ class FAQItemDecoration(context: Context, @Dimension val startOffset: Int) :
             right = parent.width
         }
 
+        val rtlLayout = ViewCompat.getLayoutDirection(parent) == ViewCompat.LAYOUT_DIRECTION_RTL
+        val adaptedLeft = if (rtlLayout) left else left + startOffset
+        val adaptedRight = if (rtlLayout) right - startOffset else right
+
         val childCount: Int = parent.childCount
         if (childCount > 1) {
             for (i in 0 until (childCount - 1)) {
@@ -66,7 +71,7 @@ class FAQItemDecoration(context: Context, @Dimension val startOffset: Int) :
                     parent.getDecoratedBoundsWithMargins(child1, bounds)
                     val bottom: Int = bounds.bottom + child1.translationY.roundToInt()
                     val top: Int = bottom - divider.intrinsicHeight
-                    divider.setBounds(left + startOffset, top, right, bottom)
+                    divider.setBounds(adaptedLeft, top, adaptedRight, bottom)
                     divider.draw(canvas)
                 }
             }
