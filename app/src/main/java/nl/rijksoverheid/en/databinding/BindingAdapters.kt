@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.databinding
 
+import android.content.res.Configuration
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -20,22 +21,33 @@ object BindingAdapters {
     @BindingAdapter("show", "keepInLayout", "hideOnSmallScreenHeight", requireAll = false)
     fun show(
         view: View,
-        show: Boolean = true,
-        keepInLayout: Boolean = false,
-        hideOnSmallScreenHeight: Boolean = false
+        show: Boolean?,
+        keepInLayout: Boolean,
+        hideOnSmallScreenHeight: Boolean?
     ) {
-        if (hideOnSmallScreenHeight) {
-            val configuration = view.context.resources.configuration
-            val isSmallScreen =
-                configuration.screenHeightDp <= 480 || configuration.fontScale >= 1.3
-            if (isSmallScreen) {
-                view.visibility = View.GONE
-                return
+        val hideSmallScreen = (hideOnSmallScreenHeight
+            ?: false) && isSmallScreen(view.context.resources.configuration)
+
+        val visibility = when {
+            hideSmallScreen -> {
+                View.GONE
+            }
+            show == true -> {
+                View.VISIBLE
+            }
+            show == false -> {
+                if (keepInLayout) View.INVISIBLE else View.GONE
+            }
+            else -> {
+                null
             }
         }
 
-        view.visibility =
-            if (show) View.VISIBLE else if (keepInLayout) View.INVISIBLE else View.GONE
+        visibility?.let { view.visibility = it }
+    }
+
+    private fun isSmallScreen(configuration: Configuration): Boolean {
+        return configuration.screenHeightDp <= 480 || configuration.fontScale >= 1.3
     }
 
     @JvmStatic
