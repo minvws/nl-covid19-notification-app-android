@@ -84,7 +84,7 @@ class HowItWorksDetailFragmentTest : BaseInstrumentationTest() {
         },
         AppLifecycleManager(configPreferences, AppUpdateManagerFactory.create(context)) {},
         StatusCache(notificationsPreferences),
-        AppConfigManager(context, service)
+        AppConfigManager(service)
     )
     private val viewModel = ExposureNotificationsViewModel(repository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {

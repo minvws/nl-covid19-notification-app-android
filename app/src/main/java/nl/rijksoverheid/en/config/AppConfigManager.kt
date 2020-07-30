@@ -6,7 +6,6 @@
  */
 package nl.rijksoverheid.en.config
 
-import android.content.Context
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import retrofit2.HttpException
@@ -15,10 +14,7 @@ import java.io.IOException
 
 private val DEFAULT_CONFIG = AppConfig()
 
-class AppConfigManager(
-    private val context: Context,
-    private val cdnService: CdnService
-) {
+class AppConfigManager(private val cdnService: CdnService) {
 
     private suspend fun getConfigOrDefault(block: suspend () -> AppConfig?): AppConfig {
         return try {
@@ -38,7 +34,6 @@ class AppConfigManager(
      */
     suspend fun getConfigOrDefault(): AppConfig = getConfigOrDefault {
         cdnService.getAppConfig(cdnService.getManifest().appConfigId)
-            .also { context.saveIsTestPhaseVersion(it.testPhase) }
     }
 
     /**

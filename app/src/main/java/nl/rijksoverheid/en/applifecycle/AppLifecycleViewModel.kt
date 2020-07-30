@@ -6,17 +6,20 @@
  */
 package nl.rijksoverheid.en.applifecycle
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.config.saveIsTestPhaseVersion
 import nl.rijksoverheid.en.lifecyle.Event
 
 class AppLifecycleViewModel(
     private val appLifecycleManager: AppLifecycleManager,
-    private val appConfigManager: AppConfigManager
+    private val appConfigManager: AppConfigManager,
+    private val context: Context
 ) : ViewModel() {
 
     val updateEvent: LiveData<Event<AppLifecyleStatus>> =
@@ -25,6 +28,7 @@ class AppLifecycleViewModel(
     fun checkForForcedAppUpdate() {
         viewModelScope.launch {
             val config = appConfigManager.getConfigOrDefault()
+            context.saveIsTestPhaseVersion(config.testPhase)
             if (config.deactivated) {
                 (updateEvent as MutableLiveData).value = Event(AppLifecyleStatus.EndOfLife)
             } else {
