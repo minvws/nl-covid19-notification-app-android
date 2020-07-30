@@ -202,4 +202,7 @@
     <string name="cd_status_exposed">Rood rondje met alarmbel dat aangeeft dat er nu actie nodig is</string>
     <string name="cd_error_box">Waarschuwing</string>
     <string name="cd_info_box">Belangrijk</string>
+    <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
+    <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
+    <string name="footer_test_phase_read_more">Lees meer</string>
 </resources>

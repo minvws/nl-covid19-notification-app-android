@@ -8,7 +8,7 @@ package nl.rijksoverheid.en.status
 
 import com.xwray.groupie.Section
 
-class StatusSection : Section() {
+class StatusSection(isInTestPhase: Boolean) : Section() {
 
     private var headerState: StatusViewModel.HeaderState? = null
     private var errorState: StatusViewModel.ErrorState = StatusViewModel.ErrorState.None
@@ -30,7 +30,7 @@ class StatusSection : Section() {
                 )
             )
         )
-        setFooter(StatusFooterItem())
+        setFooter(if (isInTestPhase) TestStatusFooterItem() else StatusFooterItem())
     }
 
     fun updateErrorState(

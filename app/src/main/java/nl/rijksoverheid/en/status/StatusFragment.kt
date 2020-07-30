@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -23,10 +24,11 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.config.isTestPhaseVersion
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
-import timber.log.Timber
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import timber.log.Timber
 
 class StatusFragment @JvmOverloads constructor(
     factoryProducer: (() -> ViewModelProvider.Factory)? = null
@@ -34,8 +36,14 @@ class StatusFragment @JvmOverloads constructor(
     private val statusViewModel: StatusViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
 
-    private val section = StatusSection()
-    private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
+    private lateinit var section: StatusSection
+    private val adapter = GroupAdapter<GroupieViewHolder>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        section = StatusSection(isTestPhaseVersion())
+        adapter.add(section)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,6 +71,10 @@ class StatusFragment @JvmOverloads constructor(
                 StatusActionItem.LabTest -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionLabTest()
                 )
+                is TestStatusFooterItem -> {
+                    val url = Uri.parse(getString(R.string.test_phase_url))
+                    CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
+                }
             }
         }
 
