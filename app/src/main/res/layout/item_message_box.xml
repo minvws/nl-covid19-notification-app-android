@@ -32,7 +32,7 @@
             android:id="@+id/image"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:importantForAccessibility="no"
+            android:contentDescription="@string/cd_info_box"
             android:src="@drawable/ic_info"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -26,6 +26,7 @@
                 android:adjustViewBounds="true"
                 android:importantForAccessibility="no"
                 android:src="@drawable/illustration_update_google_play_services"
+                app:hideOnSmallScreenHeight="@{true}"
                 app:layout_constraintBottom_toTopOf="@id/headline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

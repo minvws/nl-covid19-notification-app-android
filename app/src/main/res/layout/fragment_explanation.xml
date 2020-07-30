@@ -60,6 +60,7 @@
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:importantForAccessibility="no"
+                        app:hideOnSmallScreenHeight="@{true}"
                         app:imageResource="@{viewState.illustration}"
                         app:layout_constraintBottom_toTopOf="@id/example"
                         app:layout_constraintEnd_toEndOf="parent"

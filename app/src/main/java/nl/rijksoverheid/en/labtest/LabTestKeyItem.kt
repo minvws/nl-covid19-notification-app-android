@@ -11,6 +11,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemLabTestKeyBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
+import java.util.Locale
 
 class LabTestKeyItem(private val keyState: KeyState, retry: () -> Unit) :
     BaseBindableItem<ItemLabTestKeyBinding>() {
@@ -20,7 +21,9 @@ class LabTestKeyItem(private val keyState: KeyState, retry: () -> Unit) :
         val showError: Boolean,
         val key: String? = null,
         val retry: () -> Unit
-    )
+    ) {
+        val keyContentDescription = key?.toLowerCase(Locale.ROOT)?.replace("-", "")
+    }
 
     private val viewState = ViewState(
         showProgress = keyState == KeyState.Loading,
