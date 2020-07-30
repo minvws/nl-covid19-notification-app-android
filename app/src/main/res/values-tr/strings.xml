@@ -9,11 +9,11 @@
     <string name="onboarding_explanation_1_description">Bu uygulama Korona olan birinin yakınında bulunduğunuzdan sonra sizi uyarır. Bu şekilde etrafınızdaki insanlara Korona bulaştırmaktan kaçınabilirsiniz.</string>
     <string name="onboarding_explanation_2_headline">Fazladan enfeksiyon riskiyle karşılaştıktan <u>sonra</u> bir bildirim alacaksınız</string>
     <string name="onboarding_explanation_2_description">Sonradan Korona olduğu ortaya çıkan birinin yakınında en az 15 dakika boyunca kaldıysanız, uygulama bir bildirim gönderir. Bu kişi de uygulamayı kullanmalıdır.</string>
-    <string name="onboarding_explanation_3_headline">Uygulama Bluetooth ile çalışır, konum verileri <u> kullanmaz </u></string>
+    <string name="onboarding_explanation_3_headline">Uygulama Bluetooth ile çalışır, konum verileri <u>kullanmaz</u></string>
     <string name="onboarding_explanation_3_description">Uygulama, Bluetooth aracılığıyla birisine yakın olup olmadığınızı görür. Ne kadar yakın olunursa, Bluetooth sinyali o kadar güçlüdür. Uygulama nerede olduğunuzu ve kim olduğunuzu bilmez.</string>
-    <string name="onboarding_example_1_headline">Birisi bisikletle yanınızdan mı geçti? Bunun sonrasında bildirim <u> almazsınız </u></string>
+    <string name="onboarding_example_1_headline">Birisi bisikletle yanınızdan mı geçti? Bunun sonrasında bildirim <u>almazsınız</u></string>
     <string name="onboarding_example_1_description">Bluetooth sinyali, birbirinize yakın olduğunuz için yeterince güçlüydü. Bu sadece o kadar kısa sürdü ki, bulaşma riski çok az idi.</string>
-    <string name="onboarding_example_2_headline">Trende birinin yakınında mı oturuyordunuz? O zaman bir bildirim <u> alabilirsiniz </u></string>
+    <string name="onboarding_example_2_headline">Trende birinin yakınında mı oturuyordunuz? O zaman bir bildirim <u>alabilirsiniz</u></string>
     <string name="onboarding_example_2_description">Bluetooth sinyali yeterince güçlüydü ve uzun süre birbirinizin yakınındaydınız.</string>
     <string name="onboarding_consent_headline">Korona virüsü ile olası temas hakkında bildirimleri açın</string>
     <string name="onboarding_consent_check_1">Bluetooth verileriniz 14 gün boyunca telefonunuzda saklanır. Onları her zaman kendiniz silebilirsiniz.</string>
