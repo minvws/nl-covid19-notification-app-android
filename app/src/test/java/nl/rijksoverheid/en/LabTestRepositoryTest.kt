@@ -81,7 +81,8 @@ class LabTestRepositoryTest {
         }
     }
 
-    private val appConfigManager = AppConfigManager(cdnService)
+    private val appConfigManager =
+        AppConfigManager(ApplicationProvider.getApplicationContext(), cdnService)
 
     @Before
     fun setup() {

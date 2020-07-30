@@ -18,7 +18,7 @@ import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
 import nl.rijksoverheid.en.about.FAQItemId.REASON
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
 
-class AboutSection : Section(
+class AboutSection(showTestPhaseFAQItem: Boolean) : Section(
     listOf(
         FAQOnboardingItem(),
         FAQTechnicalExplanationItem(),
@@ -31,12 +31,15 @@ class AboutSection : Section(
         FAQItem(BLUETOOTH, R.string.faq_bluetooth),
         FAQItem(LOCATION_PERMISSION, R.string.faq_location_permission),
         FAQItem(POWER_USAGE, R.string.faq_power_usage),
-        FAQItem(DELETION, R.string.faq_deletion),
-        HelpdeskItem(),
-        FAQHeaderItem(R.string.about_toolbar_title),
-        ReviewItem(),
-        PrivacyStatementItem(),
-        AccessibilityItem(),
-        ColofonItem()
-    )
+        FAQItem(DELETION, R.string.faq_deletion)
+    ) +
+        (if (showTestPhaseFAQItem) listOf(TestPhaseItem()) else emptyList<FAQItem>()) +
+        listOf(
+            HelpdeskItem(),
+            FAQHeaderItem(R.string.about_toolbar_title),
+            ReviewItem(),
+            PrivacyStatementItem(),
+            AccessibilityItem(),
+            ColofonItem()
+        )
 )

@@ -193,4 +193,6 @@
     <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
     <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
     <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
+    <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
+    <string name="footer_test_phase">Test- en onderzoeksversie %1$s\u00A0(%2$s)</string>
 </resources>

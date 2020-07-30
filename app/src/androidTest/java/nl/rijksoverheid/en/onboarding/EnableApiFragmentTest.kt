@@ -86,7 +86,7 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
         },
         AppLifecycleManager(configPreferences, AppUpdateManagerFactory.create(context)) {},
         StatusCache(notificationsPreferences),
-        AppConfigManager(service)
+        AppConfigManager(context, service)
     )
     private val viewModel = ExposureNotificationsViewModel(repository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {

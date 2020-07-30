@@ -1408,7 +1408,7 @@ class ExposureNotificationsRepositoryTest {
         lifecycleOwner: LifecycleOwner = TestLifecycleOwner(Lifecycle.State.STARTED),
         signatureValidation: Boolean = false,
         scheduler: BackgroundWorkScheduler = fakeScheduler,
-        appConfigManager: AppConfigManager = AppConfigManager(cdnService)
+        appConfigManager: AppConfigManager = AppConfigManager(context, cdnService)
     ): ExposureNotificationsRepository {
         return ExposureNotificationsRepository(
             context,

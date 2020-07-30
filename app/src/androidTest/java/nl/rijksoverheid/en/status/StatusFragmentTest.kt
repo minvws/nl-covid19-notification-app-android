@@ -103,7 +103,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         },
         AppLifecycleManager(configPreferences, AppUpdateManagerFactory.create(context)) {},
         StatusCache(notificationsPreferences),
-        AppConfigManager(service),
+        AppConfigManager(context, service),
         clock = clock
     )
     private val statusViewModel = StatusViewModel(

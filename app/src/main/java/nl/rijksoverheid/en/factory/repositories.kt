@@ -73,7 +73,7 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
         },
         createAppLifecycleManager(context),
         statusCache,
-        AppConfigManager(service)
+        AppConfigManager(context, service)
     )
 }
 
@@ -145,7 +145,7 @@ private fun createLabTestService(context: Context): LabTestService {
 
 fun createAppConfigManager(context: Context): AppConfigManager {
     val service = cdnService ?: CdnService.create(context).also { cdnService = it }
-    return AppConfigManager(service)
+    return AppConfigManager(context, service)
 }
 
 fun createAppLifecycleManager(context: Context): AppLifecycleManager {
