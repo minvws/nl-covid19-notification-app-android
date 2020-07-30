@@ -31,7 +31,7 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
         exitTransition =
             TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
 
-        adapter.add(AboutSection(requireContext().isTestPhaseVersion()))
+        adapter.add(AboutSection(isTestPhaseVersion()))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -41,7 +41,7 @@ class StatusFragment @JvmOverloads constructor(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        section = StatusSection(requireContext().isTestPhaseVersion())
+        section = StatusSection(isTestPhaseVersion())
         adapter.add(section)
     }
 
