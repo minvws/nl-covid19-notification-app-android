@@ -71,6 +71,7 @@ import java.time.Period
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
+import nl.rijksoverheid.en.api.BuildConfig as ApiBuildConfig
 
 private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
@@ -89,7 +90,7 @@ class ExposureNotificationsRepository(
     private val statusCache: StatusCache,
     private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone(),
-    private val signatureValidation: Boolean = BuildConfig.EXPOSURE_FILE_SIGNATURE_CHECK,
+    private val signatureValidation: Boolean = ApiBuildConfig.FEATURE_RESPONSE_SIGNATURES,
     lifecycleOwner: LifecycleOwner = ProcessLifecycleOwner.get()
 ) {
     companion object {

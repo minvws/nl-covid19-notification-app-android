@@ -36,7 +36,7 @@ private val DEFAULT_ANCHOR_SUBJECT_KEY_IDENTIFIER =
 
 // The publicly known default AuthorityKeyIdentifier for the issuer that issued the signing certificate
 private val DEFAULT_AUTHORITY_KEY_IDENTIFIER =
-    Hex.decode("30168014b7e9d0e9ff670ed99c0c072e97d47e4b7978f420")
+    Hex.decode("30168014c39aa67b5e742b82b6c672fd744e85d297cdfd18")
 
 class ResponseSignatureValidator(
     trustManager: X509TrustManager = getDefaultTrustManager(),
