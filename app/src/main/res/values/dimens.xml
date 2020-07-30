@@ -13,4 +13,5 @@
     <dimen name="bullet_radius">4dp</dimen>
     <dimen name="bullet_gap_size">12dp</dimen>
     <dimen name="space_below_illustration">32dp</dimen>
+    <dimen name="minimum_touch_area_size">48dp</dimen>
 </resources>

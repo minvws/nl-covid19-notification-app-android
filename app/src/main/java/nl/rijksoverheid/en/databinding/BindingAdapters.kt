@@ -17,8 +17,23 @@ import com.airbnb.lottie.LottieAnimationView
 
 object BindingAdapters {
     @JvmStatic
-    @BindingAdapter("show", "keepInLayout", requireAll = false)
-    fun show(view: View, show: Boolean, keepInLayout: Boolean = false) {
+    @BindingAdapter("show", "keepInLayout", "hideOnSmallScreenHeight", requireAll = false)
+    fun show(
+        view: View,
+        show: Boolean = true,
+        keepInLayout: Boolean = false,
+        hideOnSmallScreenHeight: Boolean = false
+    ) {
+        if (hideOnSmallScreenHeight) {
+            val configuration = view.context.resources.configuration
+            val isSmallScreen =
+                configuration.screenHeightDp <= 480 || configuration.fontScale >= 1.3
+            if (isSmallScreen) {
+                view.visibility = View.GONE
+                return
+            }
+        }
+
         view.visibility =
             if (show) View.VISIBLE else if (keepInLayout) View.INVISIBLE else View.GONE
     }
@@ -48,5 +63,11 @@ object BindingAdapters {
             // We need to explicitly start the animation when using data binding
             lottieView.playAnimation()
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("contentDescriptionRes")
+    fun setContentDescriptionRes(view: View, @StringRes stringRes: Int) {
+        view.contentDescription = view.context.getString(stringRes)
     }
 }

@@ -89,6 +89,7 @@
                 android:gravity="center"
                 android:letterSpacing="0.3"
                 android:text="@{viewState.key}"
+                android:contentDescription="@{viewState.keyContentDescription}"
                 android:textAppearance="?attr/textAppearanceHeadline5"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

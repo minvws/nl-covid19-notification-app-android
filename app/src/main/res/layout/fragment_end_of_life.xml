@@ -25,6 +25,7 @@
                 android:adjustViewBounds="true"
                 android:importantForAccessibility="no"
                 android:src="@drawable/illustration_explanation_step_2"
+                app:hideOnSmallScreenHeight="@{true}"
                 app:layout_constraintBottom_toTopOf="@id/headline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
