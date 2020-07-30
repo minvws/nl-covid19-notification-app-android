@@ -28,4 +28,4 @@ fun Context.saveIsTestPhaseVersion(isTestPhaseVersion: Boolean) =
  */
 fun BaseFragment.isTestPhaseVersion() =
     requireContext().getSharedPreferences("${BuildConfig.APPLICATION_ID}.testphase", 0)
-        .getBoolean(KEY_TEST_PHASE, true)
+        .getBoolean(KEY_TEST_PHASE, false)
