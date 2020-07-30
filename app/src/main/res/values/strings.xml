@@ -17,8 +17,8 @@
     <string name="onboarding_example_2_description">The Bluetooth signal was strong enough and you were near each other for a longer period of time.</string>
     <string name="onboarding_consent_headline">Turn on notifications about possible coronavirus exposure</string>
     <string name="onboarding_consent_check_1">Your Bluetooth data is saved on your phone for 14 days. You can always delete it yourself.</string>
-    <string name="onboarding_consent_check_2"><![CDATA[Your name and other personal data will <u>not</u> be used or saved.]]></string>
-    <string name="onboarding_consent_check_3"><![CDATA[Your GPS location data will <u>not</u> be used or saved.]]></string>
+    <string name="onboarding_consent_check_2"><![CDATA[Your name and other personal data will <strong>not</strong> be used or saved.]]></string>
+    <string name="onboarding_consent_check_3"><![CDATA[Your GPS location data will <strong>not</strong> be used or saved.]]></string>
     <string name="onboarding_consent_request">Turn on</string>
     <string name="onboarding_consent_explain">How does the app work?</string>
     <string name="onboarding_consent_skip">Skip</string>
