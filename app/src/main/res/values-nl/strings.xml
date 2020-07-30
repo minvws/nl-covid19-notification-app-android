@@ -152,7 +152,7 @@
     <string name="share_content">Ik help corona onder controle te houden met CoronaMelder. Doe je ook mee? %1$s</string>
     <string name="share_title">Deel de app met anderen</string>
     <string name="lab_test_toolbar_title">GGD-sleutel</string>
-    <string name="lab_test_paragraph_1">Ben je getest en heb je corona? Dan belt een GGD-medewerker je. Je hebt hierbij je GGD-sleutel nodig.</string>
+    <string name="lab_test_paragraph_1"><![CDATA[Ben je getest en heb je corona? Dan belt een GGD-medewerker je. Je hebt hierbij je GGD-sleutel nodig. <a href="">Hoe werkt dit?</a>]]></string>
     <string name="lab_test_how_does_it_work">Hoe werkt dit?</string>
     <string name="lab_test_step_1">Geef deze GGD-sleutel door aan de GGD-medewerker:</string>
     <string name="lab_test_token_loading">Sleutel aan het ophalen</string>
