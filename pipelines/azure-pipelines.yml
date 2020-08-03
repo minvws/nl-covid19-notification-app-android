@@ -41,7 +41,7 @@ stages:
             inputs:
               gradleWrapperFile: gradlew
               options: $(GRADLE_OPTIONS)
-              tasks: 'app:assemDevDebug app:assemDevDebugAndroidTest testDevDebug app:lintDevDebug'
+              tasks: 'app:assemDevDebug app:assemDevDebugAndroidTest testDevDebug testDebug app:lintDevDebug'
               publishJUnitResults: true
               testResultsFiles: '**/TEST-*.xml'
               testRunTitle: Unit tests
