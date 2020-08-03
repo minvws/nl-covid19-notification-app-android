@@ -9,10 +9,7 @@ package nl.rijksoverheid.en.enapi.nearby
 import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider
 import com.google.android.gms.common.api.Api
@@ -25,6 +22,7 @@ import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
+import com.google.android.gms.nearby.exposurenotification.ExposureWindow
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -46,9 +44,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
-import org.robolectric.annotation.Implements
 import org.robolectric.shadow.api.Shadow
-import org.robolectric.shadows.ShadowApplicationPackageManager
 import org.robolectric.shadows.ShadowPackageManager
 import java.io.File
 
@@ -550,10 +546,8 @@ class NearbyExposureNotificationApiTest {
 
         override fun getTemporaryExposureKeyHistory(): Task<List<TemporaryExposureKey>> =
             Tasks.forException(IllegalStateException())
-    }
 
-    @Implements(PackageManager::class)
-    class TestPackageManager : ShadowApplicationPackageManager() {
-        override fun resolveActivity(intent: Intent?, flags: Int): ResolveInfo? = ResolveInfo()
+        override fun getExposureWindows(token: String?): Task<MutableList<ExposureWindow>> =
+            Tasks.forException(IllegalStateException())
     }
 }
