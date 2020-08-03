@@ -34,7 +34,6 @@ class ParagraphItem(
             getSpans<URLSpan>().forEach {
                 val start = getSpanStart(it)
                 val end = getSpanEnd(it)
-                removeSpan(it)
                 setSpan(
                     TextAppearanceSpan(viewBinding.root.context, R.style.TextAppearance_App_Link),
                     start,
