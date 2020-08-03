@@ -15,13 +15,14 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
+import nl.rijksoverheid.en.util.forceLtr
 
 class GenericNotificationFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter.add(GenericNotificationSection(phoneNumber = getString(R.string.phone_number)))
+        adapter.add(GenericNotificationSection(phoneNumber = getString(R.string.phone_number).forceLtr()))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

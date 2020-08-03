@@ -29,7 +29,10 @@ class PostNotificationSection(
         HeaderItem(R.string.post_notification_header_6),
         ParagraphItem(R.string.post_notification_paragraph_7),
         ParagraphItem(R.string.post_notification_paragraph_8),
-        ParagraphItem(R.string.post_notification_paragraph_9, phoneNumber),
+        ParagraphItem(
+            R.string.post_notification_paragraph_9,
+            phoneNumber
+        ),
         MessageBoxItem(R.string.post_notification_message),
         HeaderItem(R.string.treat_perspective_header_1),
         BulletedListItem(R.string.treat_perspective_list_2)
