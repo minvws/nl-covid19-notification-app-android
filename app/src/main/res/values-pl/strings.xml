@@ -76,7 +76,6 @@
     <string name="request_test_toolbar_title">Poproś o test na koronawirusa</string>
     <string name="request_test_header_1">Masz dolegliwości typowe dla koronawirusa? Poproś o test</string>
     <string name="request_test_paragraph_2" tools:ignore="Typos">Masz łagodne dolegliwości? Zrób test na obecność koronawirusa i pozostań w domu do momentu otrzymania wyników. Masz poważne dolegliwości, znajdujesz się w grupie wysokiego ryzyka lub wymagasz stałej opieki? Zadzwoń do swojego lekarza rodzinnego.</string>
-    <string name="request_test_paragraph_3">Zrób darmowy test. To nie zajmuje dużo czasu i zazwyczaj można się szybko umówić. Wyniki są znane w ciągu 48 godzin. Pozostań w domu do momentu poznania wyników.</string>
     <string name="status_reset_exposure">Usuń powiadomienie</string>
     <string name="status_dialog_remove_exposure_title">Jesteś pewien, że chcesz usunąć to powiadomienie?</string>
     <string name="status_dialog_remove_exposure_message">Później nie będziesz mógł znaleźć tej daty w aplikacji. Dlatego zapamiętaj ją dobrze.</string>
@@ -153,7 +152,6 @@
     <string name="share_title">Udostępnij aplikację innym</string>
     <string name="lab_test_toolbar_title">Klucz GGD</string>
     <string name="lab_test_paragraph_1">Zrobiłeś test i masz koronawirusa? W takim przypadku zadzwoni do Ciebie pracownik GGD. Będziesz potrzebować klucza GGD.</string>
-    <string name="lab_test_how_does_it_work">Jak to działa?</string>
     <string name="lab_test_step_1">Przekaż ten klucz GGD pracownikowi GGD.</string>
     <string name="lab_test_token_loading">Uzyskiwanie klucza</string>
     <string name="lab_test_token_error">Aplikacja nie mogła uzyskać klucza GGD. Sprawdź swoje połączenie internetowe.</string>
@@ -203,4 +201,5 @@
     <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
     <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">Lees meer</string>
+    <string name="post_notification_list_5"><![CDATA[<b>Blijf je goed aan de maatregelen houden:</b><ul><li>Was je handen regelmatig</li><li>Hoest/nies in je elleboog</li><li>Houd 1,5 meter afstand van mensen buiten je huishouden</li></ul>]]></string>
 </resources>

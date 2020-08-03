@@ -76,7 +76,6 @@
     <string name="request_test_toolbar_title">Solicitați test pentru corona</string>
     <string name="request_test_header_1">Aveți simptome care ar putea indica contaminarea cu corona? Solicitați un test</string>
     <string name="request_test_paragraph_2" tools:ignore="Typos">Aveți simptome ușoare? Faceți un test pentru corona și stați acasă până primiți rezultatul. Aveți simptome grave, faceți parte dintr-un grup de risc sau aveți nevoie permanentă de ajutor? Sunați medicul de familie.</string>
-    <string name="request_test_paragraph_3">Testați-vă gratuit.  Nu durează mult și, de obicei, puteți face o programare rapidă. Rezultatele vor fi cunoscute în 48 de ore. Rămâneți acasă până la aflarea rezultatului.</string>
     <string name="status_reset_exposure">Ștergere notificare</string>
     <string name="status_dialog_remove_exposure_title">Sunteți sigur că doriți să ștergeți această notificare?</string>
     <string name="status_dialog_remove_exposure_message">Nu mai puteți găsi înapoi data în aplicație. Deci rețineți-o bine.</string>
@@ -153,7 +152,6 @@
     <string name="share_title">Partajați aplicația cu alții</string>
     <string name="lab_test_toolbar_title">Cheia GGD</string>
     <string name="lab_test_paragraph_1">Ați fost testat și sunteți infectat/ă cu corona? Atunci vă va suna un angajat GGD. Pentru aceasta, veți avea nevoie de cheia GGD personală.</string>
-    <string name="lab_test_how_does_it_work">Cum funcționează?</string>
     <string name="lab_test_step_1">Dați această cheia GGD angajatului GGD:</string>
     <string name="lab_test_token_loading">Colectare cheie</string>
     <string name="lab_test_token_error">Aplicația nu a putut colecta cheia GGD. Controlați conectarea la internet.</string>
@@ -202,4 +200,5 @@
     <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
     <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">Lees meer</string>
+    <string name="post_notification_list_5"><![CDATA[<b>Blijf je goed aan de maatregelen houden:</b><ul><li>Was je handen regelmatig</li><li>Hoest/nies in je elleboog</li><li>Houd 1,5 meter afstand van mensen buiten je huishouden</li></ul>]]></string>
 </resources>

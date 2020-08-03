@@ -76,7 +76,6 @@
     <string name="request_test_toolbar_title">Solicitar test de coronavirus</string>
     <string name="request_test_header_1">¿Muestras síntomas relacionados con el coronavirus? Solicita un test</string>
     <string name="request_test_paragraph_2" tools:ignore="Typos">¿Muestras síntomas leves? Hazte un test de coronavirus y quédate en casa hasta recibir los resultados. ¿Muestras síntomas graves, formas parte de un grupo de riesgo o eres una persona necesitada? Llama a tu médico de cabecera.</string>
-    <string name="request_test_paragraph_3">Hazte un test gratis. No dura mucho tiempo y normalmente puedes hacer la cita rápidamente. Recibirás los resultados en 48 horas. Quédate en casa hasta que sepas los resultados.</string>
     <string name="status_reset_exposure">Eliminar notificación</string>
     <string name="status_dialog_remove_exposure_title">¿Estás seguro de que quieres eliminar esta notificación?</string>
     <string name="status_dialog_remove_exposure_message">Después no podrás consultar la fecha en tu teléfono, así que recuérdala bien.</string>
@@ -153,7 +152,6 @@
     <string name="share_title">Comparte la app con más gente</string>
     <string name="lab_test_toolbar_title">Clave GGD</string>
     <string name="lab_test_paragraph_1">¿Te has hecho el test y tienes el coronavirus? Un asistente del GGD (servicio de salud municipal) te llamará. Necesitarás tu calve GGD.</string>
-    <string name="lab_test_how_does_it_work">¿Cómo funciona todo esto?</string>
     <string name="lab_test_step_1">Dale la clave GGD al asistente del GGD.</string>
     <string name="lab_test_token_loading">Descargando clave</string>
     <string name="lab_test_token_error">La app no ha podido descargar una clave GGD. Comprueba tu conexión a internet.</string>
@@ -201,4 +199,5 @@
     <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
     <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">Lees meer</string>
+    <string name="post_notification_list_5"><![CDATA[<b>Blijf je goed aan de maatregelen houden:</b><ul><li>Was je handen regelmatig</li><li>Hoest/nies in je elleboog</li><li>Houd 1,5 meter afstand van mensen buiten je huishouden</li></ul>]]></string>
 </resources>

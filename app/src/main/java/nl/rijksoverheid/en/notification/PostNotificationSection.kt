@@ -25,6 +25,7 @@ class PostNotificationSection(
         ParagraphItem(R.string.post_notification_paragraph_2, daysSince, date),
         HeaderItem(R.string.post_notification_header_3),
         BulletedListItem(R.string.post_notification_list_4),
+        BulletedListItem(R.string.post_notification_list_5),
         HeaderItem(R.string.post_notification_header_6),
         ParagraphItem(R.string.post_notification_paragraph_7),
         ParagraphItem(R.string.post_notification_paragraph_8),

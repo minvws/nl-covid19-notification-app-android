@@ -76,7 +76,6 @@
     <string name="request_test_toolbar_title">Coronatest aanvragen</string>
     <string name="request_test_header_1">Heb je klachten die passen bij corona? Vraag een test aan</string>
     <string name="request_test_paragraph_2" tools:ignore="Typos">Heb je (lichte) klachten die passen bij het coronavirus? Laat je gratis testen. Het duurt niet lang en je kan meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet. Heb je ernstige klachten of zit je in een risicogroep? Bel dan je huisarts.</string>
-    <string name="request_test_paragraph_3">Laat je gratis testen. Het duurt niet lang en je kan meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
     <string name="status_reset_exposure">Melding verwijderen</string>
     <string name="status_dialog_remove_exposure_title">Weet je zeker dat je deze melding wilt verwijderen?</string>
     <string name="status_dialog_remove_exposure_message">Je kunt de datum daarna niet meer terugvinden in de app. Onthoud deze dus goed.</string>
@@ -153,7 +152,6 @@
     <string name="share_title">Deel de app met anderen</string>
     <string name="lab_test_toolbar_title">GGD-sleutel</string>
     <string name="lab_test_paragraph_1"><![CDATA[Ben je getest en heb je corona? Dan belt een GGD-medewerker je. Je hebt hierbij je GGD-sleutel nodig. <a href="">Hoe werkt dit?</a>]]></string>
-    <string name="lab_test_how_does_it_work">Hoe werkt dit?</string>
     <string name="lab_test_step_1">Geef deze GGD-sleutel door aan de GGD-medewerker:</string>
     <string name="lab_test_token_loading">Sleutel aan het ophalen</string>
     <string name="lab_test_token_error">De app kon geen GGD-sleutel ophalen. Controleer je internetverbinding.</string>
@@ -201,4 +199,5 @@
     <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
     <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">Lees meer</string>
+    <string name="post_notification_list_5"><![CDATA[<b>Blijf je goed aan de maatregelen houden:</b><ul><li>Was je handen regelmatig</li><li>Hoest/nies in je elleboog</li><li>Houd 1,5 meter afstand van mensen buiten je huishouden</li></ul>]]></string>
 </resources>

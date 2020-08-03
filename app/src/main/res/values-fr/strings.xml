@@ -76,7 +76,6 @@
     <string name="request_test_toolbar_title">Demander un test corona</string>
     <string name="request_test_header_1">Vous avez des symptômes qui correspondent à ceux du coronavirus ? Demandez un test</string>
     <string name="request_test_paragraph_2" tools:ignore="Typos">Vous avez de légers symptômes ? Faites un test corona et restez chez vous jusqu\'à ce que l\'on vous communique le résultat. Vous avez des symptômes graves, vous êtes dans un groupe à risque ou vous avez besoin d\'assistance ? Appelez votre médecin traitant.</string>
-    <string name="request_test_paragraph_3">Faites-vous tester gratuitement. Le test ne dure pas longtemps et vous pouvez souvent fixer un rendez-vous rapidement. Le résultat est connu dans les 48 heures. Restez chez vous jusqu\'à la communication du résultat.</string>
     <string name="status_reset_exposure">Supprimer la notification</string>
     <string name="status_dialog_remove_exposure_title">Êtes-vous sûr(e) de vouloir supprimer cette notification ?</string>
     <string name="status_dialog_remove_exposure_message">Vous ne retrouverez plus la date dans l\'application. Pensez alors à la noter.</string>
@@ -153,7 +152,6 @@
     <string name="share_title">Partagez l\'application</string>
     <string name="lab_test_toolbar_title">Clé GGD</string>
     <string name="lab_test_paragraph_1">Vous avez fait le test et vous avez le coronavirus ? Dans ce cas, un employé du GGD va vous contacter et vous aurez besoin de votre clé GGD.</string>
-    <string name="lab_test_how_does_it_work">Comment ça fonctionne ?</string>
     <string name="lab_test_step_1">Communiquez la clé GGD à l\'employé du GGD :</string>
     <string name="lab_test_token_loading">Récupération de la clé</string>
     <string name="lab_test_token_error">L\'application n\'a pas pu récupérer la clé GGD. Veuillez contrôler votre connexion internet.</string>
@@ -201,4 +199,5 @@
     <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
     <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">Lees meer</string>
+    <string name="post_notification_list_5"><![CDATA[<b>Blijf je goed aan de maatregelen houden:</b><ul><li>Was je handen regelmatig</li><li>Hoest/nies in je elleboog</li><li>Houd 1,5 meter afstand van mensen buiten je huishouden</li></ul>]]></string>
 </resources>
