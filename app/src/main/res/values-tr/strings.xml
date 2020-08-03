@@ -77,7 +77,6 @@
     <string name="request_test_toolbar_title">Korona testi talep etmek</string>
     <string name="request_test_header_1">Korona ile uyumlu şikayetleriniz mi var ? Test talep edin</string>
     <string name="request_test_paragraph_2" tools:ignore="Typos">Hafif şikayetleriniz mi var? Bir korona testi yaptırın ve sonuç belli olana kadar evde kalın. Ciddi şikayetleriniz mi var, risk grubuna dahil misiniz veya yardıma ihtiyacınız mı  var? Doktorunuzu arayın.</string>
-    <string name="request_test_paragraph_3">Kendinizi ücretsiz test ettirin. Test uzun sürmez ve genellikle çok çabuk randevu alabilirsiniz. Sonuçlar 48 saat içinde belli olur. Sonucu öğrenene kadar evde kalın.</string>
     <string name="status_reset_exposure">Bildirimi silin</string>
     <string name="status_dialog_remove_exposure_title">Bu bildirimi silmek istediğinizden emin misiniz?</string>
     <string name="status_dialog_remove_exposure_message">Tarihi daha sonra uygulama içinde bulamazsınız. Bu yüzden bunu iyi hatırlayın.</string>
@@ -154,7 +153,6 @@
     <string name="share_title">Uygulamayı başkalarıyla paylaş</string>
     <string name="lab_test_toolbar_title">GGD anahtarı</string>
     <string name="lab_test_paragraph_1">Test edildiniz ve sizde Korona var mı? O zaman bir GGD çalışanı sizi arayacaktır. Bunun için GGD anahtarınıza ihtiyacınız olacak.</string>
-    <string name="lab_test_how_does_it_work">Bu nasıl çalışıyor?</string>
     <string name="lab_test_step_1">Bu GGD anahtarını GGD çalışanına gönderin:</string>
     <string name="lab_test_token_loading">Anahtar alınıyor</string>
     <string name="lab_test_token_error">Uygulama GGD anahtarını yükleyemedi. İnternet bağlantınızı kontrol edin.</string>
@@ -202,4 +200,5 @@
     <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
     <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">Lees meer</string>
+    <string name="post_notification_list_5"><![CDATA[<b>Blijf je goed aan de maatregelen houden:</b><ul><li>Was je handen regelmatig</li><li>Hoest/nies in je elleboog</li><li>Houd 1,5 meter afstand van mensen buiten je huishouden</li></ul>]]></string>
 </resources>

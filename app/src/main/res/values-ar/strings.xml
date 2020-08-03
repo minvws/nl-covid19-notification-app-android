@@ -76,7 +76,6 @@
     <string name="request_test_toolbar_title">طلب إجراء فحص كورونا</string>
     <string name="request_test_header_1">هل تشكو من الأعراض التي تتوافق مع أعراض كورونا؟ قم بطلب إجراء فحص</string>
     <string name="request_test_paragraph_2" tools:ignore="Typos">هل لديك أعراض خفيفة؟ اخضع لفحص كورونا ولازم المنزل حتى تعرف النتيجة. هل عندك أعراض خطيرة أو هل أنت من ضمن مجموعة معرضة للخطر أو عاجز؟ اتصل بطبيب العائلة الخاص بك.</string>
-    <string name="request_test_paragraph_3">قم بإجراء فحص مجانًا. لا يستغرق ذلك الكثير من الوقت وتستطيع غالبًا تحديد موعد بسرعة. تصبح النتيجة معروفة خلال 48 ساعة. لازم المنزل حتى تعرف النتيجة.</string>
     <string name="status_reset_exposure">حذف الإشعار</string>
     <string name="status_dialog_remove_exposure_title">هل أنت متأكد من أنك تريد حذف هذا الإشعار؟</string>
     <string name="status_dialog_remove_exposure_message">لن تستطيع إيجاد التاريخ في التطبيق فيما بعد. إحفظه جيدًا إذن.</string>
@@ -153,7 +152,6 @@
     <string name="share_title">شارك التطبيق مع الآخرين</string>
     <string name="lab_test_toolbar_title">كود المصلحة الصحية للبلدية (GGD-sleutel)</string>
     <string name="lab_test_paragraph_1">هل خضعت للفحص وأنت مصاب بكورونا؟ سيتصل بك موظف المصلحة الصحية للبلدية. تحتاج إلى كود المصلحة الصحية البلدية عندئذ.</string>
-    <string name="lab_test_how_does_it_work">كيف يعمل هذا؟</string>
     <string name="lab_test_step_1">اعط هذا الكود إلى موظف المصلحة الصحية للبلدية:</string>
     <string name="lab_test_token_loading">الكود قيد التحميل</string>
     <string name="lab_test_token_error">لم ينجح التطبيق في تحميل كود المصلحة الصحية للبلدية. تأكد من اتصالك بالإنترنت.</string>
@@ -205,4 +203,5 @@
     <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
     <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">Lees meer</string>
+    <string name="post_notification_list_5"><![CDATA[<b>Blijf je goed aan de maatregelen houden:</b><ul><li>Was je handen regelmatig</li><li>Hoest/nies in je elleboog</li><li>Houd 1,5 meter afstand van mensen buiten je huishouden</li></ul>]]></string>
 </resources>

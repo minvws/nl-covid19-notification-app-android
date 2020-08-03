@@ -19,7 +19,6 @@ class RequestTestSection(phoneNumber: String) : Section(
         IllustrationItem(R.drawable.illustration_request_test),
         HeaderItem(R.string.request_test_header_1),
         ParagraphItem(R.string.request_test_paragraph_2),
-        ParagraphItem(R.string.request_test_paragraph_3),
         ParagraphItem(R.string.post_notification_paragraph_9, phoneNumber),
         MessageBoxItem(R.string.post_notification_message),
         HeaderItem(R.string.treat_perspective_header_1),
