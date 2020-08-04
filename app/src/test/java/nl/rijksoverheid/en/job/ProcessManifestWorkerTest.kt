@@ -16,7 +16,6 @@ import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import androidx.work.testing.TestListenableWorkerBuilder
 import com.nhaarman.mockitokotlin2.mock
-import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.CdnService
@@ -27,6 +26,7 @@ import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.ResponseBody
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
