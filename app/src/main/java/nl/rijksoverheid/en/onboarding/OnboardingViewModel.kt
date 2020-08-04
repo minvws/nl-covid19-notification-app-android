@@ -28,7 +28,6 @@ class OnboardingViewModel(private val repository: OnboardingRepository) : ViewMo
     }
 
     fun togglePrivacyPolicyConsent() {
-        (privacyPolicyConsentGiven as MutableLiveData).value =
-            privacyPolicyConsentGiven.value!!.not()
+        (privacyPolicyConsentGiven as MutableLiveData).value = !privacyPolicyConsentGiven.value!!
     }
 }

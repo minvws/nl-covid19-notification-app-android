@@ -13,6 +13,7 @@ import android.text.style.URLSpan
 import androidx.annotation.StringRes
 import androidx.core.text.HtmlCompat
 import androidx.core.text.getSpans
+import androidx.core.view.ViewCompat
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemParagraphBinding
@@ -25,6 +26,7 @@ class ParagraphItem(
     override fun getLayout() = R.layout.item_paragraph
 
     override fun bind(viewBinding: ItemParagraphBinding, position: Int) {
+        ViewCompat.enableAccessibleClickableSpanSupport(viewBinding.content)
         viewBinding.text = SpannableString(
             HtmlCompat.fromHtml(
                 viewBinding.root.context.getString(text, *formatArgs),
