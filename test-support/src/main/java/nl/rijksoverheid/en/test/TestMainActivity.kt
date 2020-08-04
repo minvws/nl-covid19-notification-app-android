@@ -64,6 +64,8 @@ class TestMainActivity : AppCompatActivity() {
         }
         viewModel.fragmentFactory?.let { supportFragmentManager.fragmentFactory = it }
         super.onCreate(savedInstanceState)
+        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         setContentView(FragmentContainerView(this).apply {
             this.id = viewModel.viewId
         })
