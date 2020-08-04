@@ -16,6 +16,7 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
+import nl.rijksoverheid.en.util.forceLtr
 import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatExposureDate
 import java.time.Clock
@@ -37,7 +38,7 @@ class PostNotificationFragment(
             PostNotificationSection(
                 daysSince = exposureDate.formatDaysSince(requireContext(), clock),
                 date = exposureDate.formatExposureDate(requireContext()),
-                phoneNumber = getString(R.string.phone_number)
+                phoneNumber = getString(R.string.phone_number).forceLtr()
             )
         )
     }
