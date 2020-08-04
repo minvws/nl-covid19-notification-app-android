@@ -7,7 +7,7 @@
     <string name="onboarding_example">Example</string>
     <string name="onboarding_explanation_1_headline">Help stop the spread of the coronavirus</string>
     <string name="onboarding_explanation_1_description">This app warns you if you\'ve been near someone with coronavirus. So you can prevent infecting people in your environment.</string>
-    <string name="onboarding_explanation_2_headline">You get a notification <u>after</u> you’ve been exposed to a higher risk of infection</string>
+    <string name="onboarding_explanation_2_headline">You get a notification <u>after</u> you\'ve been exposed to a higher risk of infection</string>
     <string name="onboarding_explanation_2_description">"The app notifies you when you've been near someone for at least 15 minutes who was later found to have coronavirus. This person must also use the app. "</string>
     <string name="onboarding_explanation_3_headline">The app uses Bluetooth, <u>no</u> location data</string>
     <string name="onboarding_explanation_3_description">Using Bluetooth, the app sees whether you\'ve been near someone. The closer you\'ve been, the stronger the Bluetooth signal. The app doesn\'t know who you are or where you\'ve been.</string>
