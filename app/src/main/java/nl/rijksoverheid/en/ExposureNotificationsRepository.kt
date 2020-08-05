@@ -14,6 +14,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.location.LocationManager
+import android.os.Build
 import android.util.Base64
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
@@ -134,7 +135,7 @@ class ExposureNotificationsRepository(
         return requestEnableNotifications()
     }
 
-    suspend fun requestDisableNotifications(): DisableNotificationsResult {
+    private suspend fun requestDisableNotifications(): DisableNotificationsResult {
         manifestWorkerScheduler.cancel()
         preferences.edit {
             remove(KEY_LAST_KEYS_PROCESSED)
@@ -157,7 +158,9 @@ class ExposureNotificationsRepository(
             }
         }
         val filter = IntentFilter().apply {
-            addAction(LocationManager.MODE_CHANGED_ACTION)
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+                addAction(LocationManager.MODE_CHANGED_ACTION)
+            }
             addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
         }
         context.registerReceiver(receiver, filter)
@@ -195,7 +198,7 @@ class ExposureNotificationsRepository(
     suspend fun getCurrentStatus(): StatusResult {
         val result = exposureNotificationsApi.getStatus()
         return if (result == StatusResult.Enabled) {
-            if (isBluetoothEnabled() && isLocationEnabled()) {
+            if (isBluetoothEnabled() && isLocationPreconditionSatisfied()) {
                 statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
                 StatusResult.Enabled
             } else {
@@ -215,9 +218,14 @@ class ExposureNotificationsRepository(
         return manager.adapter.isEnabled
     }
 
-    private fun isLocationEnabled(): Boolean {
+    /**
+     * Check the location manager to see if location is enabled.
+     * @return false if location is not enabled, true if the [LocationManager] service is null or if running on Android R and up
+     */
+    private fun isLocationPreconditionSatisfied(): Boolean {
         return context.getSystemService(LocationManager::class.java)
-            ?.let { LocationManagerCompat.isLocationEnabled(it) } ?: true
+            ?.let { LocationManagerCompat.isLocationEnabled(it) || Build.VERSION.SDK_INT > Build.VERSION_CODES.Q }
+            ?: true
     }
 
     /**
