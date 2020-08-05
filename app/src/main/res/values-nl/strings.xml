@@ -200,4 +200,11 @@
     <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">Lees meer</string>
     <string name="post_notification_list_5"><![CDATA[<b>Blijf je goed aan de maatregelen houden:</b><ul><li>Was je handen regelmatig</li><li>Hoest/nies in je elleboog</li><li>Houd 1,5 meter afstand van mensen buiten je huishouden</li></ul>]]></string>
+    <string name="onboarding_privacy_policy_headline">Toestemming gegevensgebruik</string>
+    <string name="onboarding_privacy_policy_paragraph"><![CDATA[Om CoronaMelder te gebruiken moet je akkoord gaan met de <a href="">privacyverklaring</a>. Belangrijk om te weten:]]></string>
+    <string name="onboarding_privacy_policy_check_1">Je app zendt versleutelde Bluetooth-gegevens uit.</string>
+    <string name="onboarding_privacy_policy_check_2">Andere gebruikers die met jou in contact zijn geweest bewaren deze gegevens maximaal 14 dagen.</string>
+    <string name="onboarding_privacy_policy_check_3">Als uit een coronatest blijkt dat je corona hebt kun je dit in de app melden om andere gebruikers te waarschuwen.</string>
+    <string name="onboarding_privacy_policy_check_4">Je kunt op ieder moment de gegevens van je telefoon  verwijderen.</string>
+    <string name="onboarding_privacy_policy_consent_label">Ik heb de privacyverklaring gelezen en ga hiermee akkoord</string>
 </resources>

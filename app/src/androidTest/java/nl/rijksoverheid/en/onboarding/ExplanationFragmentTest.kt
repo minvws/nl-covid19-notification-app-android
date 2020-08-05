@@ -147,7 +147,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
 
             assertEquals(
                 "Pressing next button in second example screen navigates to consent screen",
-                R.id.nav_enable_api, navController.currentDestination?.id
+                R.id.nav_privacy_policy_consent, navController.currentDestination?.id
             )
 
             reportHelper.label("Explanation example 2")

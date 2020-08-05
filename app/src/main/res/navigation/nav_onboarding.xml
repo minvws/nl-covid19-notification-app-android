@@ -172,6 +172,17 @@
             app:argType="reference" />
         <action
             android:id="@id/action_next"
+            app:destination="@id/nav_privacy_policy_consent" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_privacy_policy_consent"
+        android:name="nl.rijksoverheid.en.onboarding.PrivacyPolicyConsentFragment"
+        android:label="PrivacyPolicyConsentFragment"
+        tools:layout="@layout/fragment_privacy_policy_consent">
+
+        <action
+            android:id="@id/action_next"
             app:destination="@id/nav_enable_api" />
     </fragment>
 
