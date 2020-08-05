@@ -83,6 +83,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener(
+            SecureScreenNavigationListener(window, R.id.nav_status, R.id.nav_post_notification)
+        )
+    }
+
     override fun onStart() {
         super.onStart()
         NotificationsRepository(this).clearAppInactiveNotification()
