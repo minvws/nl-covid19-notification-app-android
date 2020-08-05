@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">تطبيق التحذير من كورونا (CoronaMelder)</string>
+    <string name="app_name">تطبيق التحذير من كورونا</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">ar</string>
     <string name="onboarding_next">إلى الصفحة التالية</string>
@@ -16,8 +16,8 @@
     <string name="onboarding_example_2_headline">هل كنت جالساً بالقرب من شخص ما في القطار؟ في هذه الحالة <u>من الممكن </u> أن يصلك إشعار في وقت لاحق.</string>
     <string name="onboarding_example_2_description">إشارة البلوتوث كانت قوية بما يكفي وكنتم متواجدون بالقرب من بعضكم لفترة طويلة.</string>
     <string name="onboarding_consent_headline">تشغيل إشعارات الإصابة المحتملة بفيروس كورونا</string>
-    <string name="onboarding_consent_check_1">يتم تخزين بيانات بلوتوث لمدة 14 يومًا على هاتفك. تستطيع أن تقوم بحذفها بنفسك دائمًا.</string>
-    <string name="onboarding_consent_check_2"><![CDATA[<strong>لا </strong>يتم استخدام أو تخزين اسمك أو بياناتك الأخرى.]]></string>
+    <string name="onboarding_consent_check_1">يتم تخزين بيانات البلوتوث على هاتفك لمدة 14 يومًا. تستطيع أن تقوم بحذفها بنفسك دائمًا.</string>
+    <string name="onboarding_consent_check_2"><![CDATA[<strong>لا </strong>يتم استخدام أو حفظ اسمك.]]></string>
     <string name="onboarding_consent_check_3"><![CDATA[<strong>لا</strong> يتم استخدام أو تخزين بيانات موقع (GPS) الخاصة بك.]]></string>
     <string name="onboarding_consent_request">تشغيل</string>
     <string name="onboarding_consent_explain">كيف يعمل التطبيق بالضبط؟</string>
@@ -25,7 +25,7 @@
     <string name="onboarding_consent_skip_dialog_title">هل أنت متأكد من أنك لا تريد تشغيل هذه الإشعارات؟</string>
     <string name="onboarding_consent_skip_dialog_message">بدون الموافقة لا يستطيع التطبيق إرسال الإشعارات بعد تعرضك إلى خطر الإصابة.</string>
     <string name="onboarding_consent_skip_dialog_skip">تخطى</string>
-    <string name="onboarding_consent_skip_dialog_enable">تشغيل</string>
+    <string name="onboarding_consent_skip_dialog_enable">شغل</string>
     <string name="onboarding_how_it_works_toolbar_title">كيف يعمل التطبيق؟</string>
     <string name="onboarding_how_it_works_request_consent">تشغيل التطبيق</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">السؤال المتكرر</string>
@@ -35,7 +35,7 @@
     <string name="onboarding_share_share">مشاركة التطبيق</string>
     <string name="status_no_exposure_detected_headline">التطبيق نشط</string>
     <string name="status_no_exposure_detected_description">حتى إذا قمت بإغلاق التطبيق، يظل %1$s نشط</string>
-    <string name="status_exposure_detected_headline">لقد تواجدت بالقرب من شخص مصاب بالفيروس</string>
+    <string name="status_exposure_detected_headline">لقد تواجدت بالقرب من شخص مصاب بكورونا</string>
     <string name="status_exposure_detected_description">لقد%1$s%2$s تعرضت إلى خطر الإصابة بصورة أكبر</string>
     <string name="status_disabled_headline">التطبيق غير نشط</string>
     <string name="status_en_api_disabled_description">%1$s لا يعمل إلا إذا قمت بضبط الإعدادات اللازمة.</string>
@@ -44,7 +44,7 @@
     <string name="notification_channel_description">إشعارات حول تعرض محتمل لفيروس كورونا</string>
     <string name="notification_title">تعرض محتمل لفيروس كورونا</string>
     <string name="notification_message">تواجدت %1$s بالقرب من شخص مصاب بفيروس كورونا.</string>
-    <string name="notification_message_reminder_prefix">تكرار: %1$s</string>
+    <string name="notification_message_reminder_prefix">تذكير: %1$s</string>
     <string name="notification_message_reminder_dismiss">وقف التذكير</string>
     <string name="app_inactive_title">تطبيق التحذير من كورونا غير نشط الآن</string>
     <string name="app_inactive_message">راجع إعداداتك</string>
@@ -53,29 +53,29 @@
     <string name="update_notification_title">التطبيق بحاجة إلى التحديث</string>
     <string name="update_notification_message">حدّث التطبيق للتاكد من انه يستمر في العمل بشكل صحيح.</string>
     <string name="sync_issue_channel_name">رسائل الإشعار بالأخطاء</string>
-    <string name="sync_issue_channel_description">رسائل تفيد أن التطبيق لا يعمل بصورة صحيحة</string>
+    <string name="sync_issue_channel_description">إشعارات عندما لا يعمل التطبيق بصورة صحيحة</string>
     <string name="sync_issue_notification_title">لا يوجد اتصال بالإنترنت</string>
     <string name="sync_issue_notification_message">لم يتمكن التطبيق من الاتصال بالإنترنت خلال الأربع والعشرين ساعة الماضية. تأكد فيما إذا كان الوي فاي أو البيانات المحمولة مشغّلة.</string>
     <string name="post_notification_toolbar_title">احتمال الإصابة بالعدوى</string>
-    <string name="generic_notification_toolbar_title">ورِد إشعار</string>
+    <string name="generic_notification_toolbar_title">استلام إشعار</string>
     <string name="post_notification_header_1">لقد تواجدت قريبًا من شخص مصاب بالفيروس</string>
     <string name="generic_notification_header_1">ماذا يعني إذا استلمت إشعارًا؟</string>
-    <string name="post_notification_paragraph_2" tools:ignore="Typos">كنت %1$s (في %2$s) بالقرب من شخص تبين لاحقًا أنه مصاب بكورونا. من المحتمل بأنك كنت معرض إلى خطر الإصابة في هذه الحالة. إذا أصبت بالعدوى بالفعل، من الممكن أن تنقل الفيروس إلى الآخرين. حتى أذا لم تكن تشعر بالمرض الآن.</string>
-    <string name="generic_notification_paragraph_2" tools:ignore="Typos">يرسل التطبيق تحذيرًا بعد تواجدك لمدة 15 دقائق على الأقل بالقرب من شخص تبين لاحقاً أنه مصاب بكورونا. من الممكن أنك كنت معرضًا إلى زيادة خطر الإصابة في هذا الموقف. إذا أصبت بالعدوى بالفعل، من الممكن أن تنقل الفيروس إلى الآخرين. حتى أذا لم تكن تشعر بالمرض الآن.</string>
+    <string name="post_notification_paragraph_2" tools:ignore="Typos">"كنت %1$s (في %2$s) بالقرب من شخص تبين لاحقًا أنه مصاب بكورونا. من المحتمل بأنك كنت معرضًا إلى خطر الإصابة في هذه الحالة. إذا أصبت بالعدوى بالفعل، من الممكن أن تنقل الفيروس إلى الآخرين. حتى أذا لم تكن تشعر بالمرض الآن. "</string>
+    <string name="generic_notification_paragraph_2" tools:ignore="Typos">يرسل التطبيق تحذيرًا عند تواجدك لمدة 15 دقائق على الأقل بالقرب من شخص تبين لاحقاً أنه مصاب بكورونا. تستطيع من خلال هذا الإشعار فقط معرفة اليوم الذي تعرضت به لذلك. من الممكن أن تكون معرضًا إلى زيادة خطر الإصابة في هذا الموقف. إذا أصبت بالعدوى بالفعل، من الممكن أن تنقل الفيروس إلى الآخرين. حتى أذا لم تكن تشعر بالمرض الآن.</string>
     <string name="post_notification_header_3">ما الذي يمكنك فعله الآن؟</string>
     <string name="generic_notification_header_3">ما الذي يمكنك فعله في هذه الحالة؟</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>ألا تشكو من الأعراض؟ قم بإجراء فحص كورونا مجانًا. هل عندك أعراض خفيفة؟ </li><li>قم بإجراء فحص كورونا ولازم المنزل حتى تستلم النتيجة. </li><li>هل عندك أعراض خطيرة وأنت من ضمن مجموعة معرضة للخطر أو عاجز؟ اتصل بطبيب العائلة الخاص بك.</li></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>أليست لديك أي أعراض؟ قم بإجراء فحص كورونا مجانًا</li><li>هل لديك أعراض (خفيفة) تتناسب مع كورونا؟ قم بإجراء فحص كورونا والزم المنزل حتى تستلم النتيجة</li><li>هل لديك أعراض خطيرة وأنت من ضمن مجموعة معرضة للخطر؟ اتصل بطبيب العائلة الخاص بك</li></ul>]]></string>
     <string name="post_notification_header_6">قم بإجراء فحص كورونا</string>
-    <string name="post_notification_paragraph_7" tools:ignore="Typos">تنصحك مصلحة الصحة البلدية (GGD) بإجراء فحص الفيروس. حتى لو لم تكن تشعر بالمرض. حيث أنه من الممكن أن تنقل الفيروس بدون الشعور بالمرض، وبذلك تستطيع أن تنقل العدوى إلى الآخرين.</string>
+    <string name="post_notification_paragraph_7" tools:ignore="Typos">تنصحك مصلحة الصحة البلدية (GGD) بإجراء فحص كورونا. حتى لو لم تكن تشعر بالمرض. حيث أنه من الممكن أن تنقل فيروس كورونا بدون الشعور بالمرض، وبذلك تستطيع أن تنقل العدوى إلى الآخرين.</string>
     <string name="post_notification_paragraph_8">"اطلب إجراء الفحص مجانًا. لا يستغرق ذلك وقتًا طويلاً، وفي معظم الحالات تستطيع تحديد موعد بسرعة. النتيجة معروفة خلال 48 ساعة. لازم المنزل حتى تعرف النتيجة."</string>
-    <string name="post_notification_paragraph_9">اتصل مجانًا ب%1$s لطلب إجراء فحص كورونا.</string>
+    <string name="post_notification_paragraph_9">اتصل مجانًا ب <b>%1$s</b>  لطلب إجراء فحص كورونا.</string>
     <string name="post_notification_message">تأكد من وجود رقم خدمات المواطن (BSN) في متناول اليد. تجد هذا الرقم في جواز سفرك أو بطاقة هويتك.</string>
     <string name="post_notification_button">اتصل من أجل إجراء فحص كورونا</string>
     <string name="treat_perspective_header_1">الأعراض التي تتوافق مع فيروس كورونا (كوفيد 19)</string>
-    <string name="treat_perspective_list_2"><![CDATA[<ul><li>السعال (الخفيف)،</li><li>حساسية الأنف وسيلان الأنف والعطس والألم في الحلق،</li><li>وفقدان مفاجئ لحاسة الشم و/أو التذوق</li><li>والتنفس بسرعة أو بصعوبة،</li><li>وارتفاع في درجة حرارة الجسم تصل إلى 38 درجة مئوية أو أكثر</li></ul>]]></string>
+    <string name="treat_perspective_list_2"><![CDATA[<ul><li>أعراص الزكام</li><li>حساسية الأنف وسيلان الأنف والعطس وألم في الحلق،</li><li>والسعال</li><li> وارتفاع في درجة حرارة الجسم </li><li>وفقدان مفاجئ لحاسة الشم و/أو التذوق</li></ul>]]></string>
     <string name="request_test_toolbar_title">طلب إجراء فحص كورونا</string>
     <string name="request_test_header_1">هل تشكو من الأعراض التي تتوافق مع أعراض كورونا؟ قم بطلب إجراء فحص</string>
-    <string name="request_test_paragraph_2" tools:ignore="Typos">هل لديك أعراض خفيفة؟ اخضع لفحص كورونا ولازم المنزل حتى تعرف النتيجة. هل عندك أعراض خطيرة أو هل أنت من ضمن مجموعة معرضة للخطر أو عاجز؟ اتصل بطبيب العائلة الخاص بك.</string>
+    <string name="request_test_paragraph_2" tools:ignore="Typos">هل لديك أعراض (خفيفة) تناسب مع أعراض فيروس كورونا. إخضع لاختبار كورونا مجانًا. لا يستغرق الأمر وقتًا طويلاً ويمكنك عادةً تحديد موعد بسرعة. ستعرف النتيجة في غضون 48 ساعة. لازم المنزل حتى تعرف النتيجة. هل لديك أعراض خطيرة أم أنت من ضمن مجموعة معرضة للخطر؟ اتصل بطبيب العائلة الخاص بك.</string>
     <string name="status_reset_exposure">حذف الإشعار</string>
     <string name="status_dialog_remove_exposure_title">هل أنت متأكد من أنك تريد حذف هذا الإشعار؟</string>
     <string name="status_dialog_remove_exposure_message">لن تستطيع إيجاد التاريخ في التطبيق فيما بعد. إحفظه جيدًا إذن.</string>
@@ -85,8 +85,8 @@
     <string name="status_info_about_subtitle">شاهد كيف يعمل التطبيق وما معنى ذلك بالنسبة لخصوصيتك.</string>
     <string name="status_info_share_title">دعوة الناس إلى استخدام للتطبيق</string>
     <string name="status_info_share_subtitle">شارك التطبيق مع الآخرين حتى نتمكن من إيقاف انتشار كورونا سويًا</string>
-    <string name="status_info_notification_title">وصلني إشعار</string>
-    <string name="status_info_notification_subtitle">اقرأ ما يمكنك فعله بعد أن تبين أن شخص آخر مصاب بكورونا</string>
+    <string name="status_info_notification_title">ماذا ورد في الإشعار؟</string>
+    <string name="status_info_notification_subtitle">اقرأ ما يمكنك القيام به بعد أن تبين أنك تواجدت بالقرب من شخص مصاب بكورونا</string>
     <string name="status_info_test_title">طلب إجراء فحص كورونا</string>
     <string name="status_info_test_subtitle">اكتشف ما إذا كنت قد أصبت بالفيروس بأسرع وقت ممكن</string>
     <string name="status_info_lab_title">إعطاء كود مصلحة الصحة البلدية</string>
@@ -119,22 +119,23 @@
     <string name="faq_power_usage">ما كمية الطاقة التي يستهلكها التطبيق؟</string>
     <string name="faq_deletion">كيف أحذف بيانات بلوتوث من هاتفي المحمول؟</string>
     <string name="faq_location_permission">لماذا يجب عليّ أن أشغل إعدادات موقعي؟</string>
-    <string name="faq_technical">كيف يعمل التطبيق من الناحية التقنية؟</string>
-    <string name="faq_reason_paragraph_1">"باستخدامك التطبيق فإنك تساهم في وقف انتشار فيروس كورونا. إذ يعمل التطبيق على تسهيل بحث التعرض إلى الفيروس الذي تقوم المصلحة الصحية للبلدية بإجرائه. إذا خضعت للفحص وتبين أنك مصاب بكورونا، ستتصل بك المصلحة الصحية للبلدية. تسألك المصلحة الصحية أثناء هذه المكالمة حول الأشخاص الذين تواجدت بالقرب منهم عندما كنت ناقلاً للعدوى. تتصل المصلحة الصحية للبلدية بهؤلاء الأشخاص لتحذّرهم من إمكانية إصابتهم بكورونا."</string>
-    <string name="faq_reason_paragraph_2">ولكن من المحتمل أنك كنت متواجدًا أيضًا قريبًا من أشخاص لا تعرفهم. في القطار أو السينما أو المطعم. يساعدك التطبيق في هذا الأمر. يمكنك من خلال التطبيق تحذير كل الأشخاص الذين تواجدوا بالقرب منك. هذا ينطبق أيضًا على الأشخاص الذين لا تعرفهم، شريطة قيامهم باستخدام التطبيق بطبيعة الحال.</string>
+    <string name="faq_technical">كيف يعمل التطبيق بالضبط؟</string>
+    <string name="faq_reason_paragraph_1">"تساهم من خلال استخدامك التطبيق في وقف انتشار فيروس كورونا. إذ أن التطبيق عنصر إضافي لبحث التعرض للفيروس الذي تقوم المصلحة الصحية للبلدية بإجرائه. إذا خضعتَ للفحص وتبين أنك مصاب بكورونا، ستتصل بك المصلحة الصحية للبلدية. تسألك المصلحة الصحية أثناء هذه المكالمة حول الأشخاص الذين تواجدت بالقرب منهم عندما كنت حاملاً للعدوى. تتصل المصلحة الصحية للبلدية بهؤلاء الأشخاص كذلك لتحذّرهم من إمكانية إصابتهم بكورونا."</string>
+    <string name="faq_reason_paragraph_2">ولكن من المحتمل أنك كنت متواجدًا أيضًا قريبًا من أشخاص لا تعرفهم. في القطار أو السينما أو المطعم. يساعدك التطبيق في هذا الأمر. يمكنك من خلال التطبيق تحذير كل الأشخاص الذين تواجدوا بالقرب منك. هذا ينطبق أيضًا على الأشخاص الذين لا تعرفهم، طالما أنهم يستخدمون التطبيق بطبيعة الحال.</string>
     <string name="faq_reason_paragraph_3">"تتواصل المصلحة الصحية للبلدية بالأشخاص الذين تملك أنت أسمائهم وبياناتهم.  يحذر التطبيق في نفس الوقت الأشخاص الذين صادفت بهم والذين لا تعرف أسمائهم أو بياناتهم. هكذا يصل الخبر إلى علمهم بسرعة ويستطيعون اتخاذ الإجراءات وتجنب نقل العدوى إلى الآخرين. يستمر بحث التعرض للفيروس للمصلحة الصحية للبلدية، حيث أنه من الممكن للأشخاص الذين كنت متواجدًا بالقرب منهم لفترة أطول أن يكونوا أكثرعرضة للإصابة. "</string>
-    <string name="faq_reason_paragraph_4">وبطيعية الحال من الممكن أن تصلك إشعارات عبرالتطبيق. إذا حدث ذلك، فهذا يعني أنك كنت متواجدًا بالقرب من شخص مصاب بكورونا خلال الأيام الماضية. بعد معرفتك بذلك، تستطيع بدورك تجنب نقل العدوى إلى الآخرين.</string>
+    <string name="faq_reason_paragraph_4">وبطيعية الحال من الممكن أن تصلك إشعارات عبرالتطبيق. إذا حدث ذلك، فهذا يعني أنك كنت متواجدًا بالقرب من شخص مصاب بكورونا خلال الأيام الماضية. بعد معرفتك بذلك، تستطيع بدورك تجنب نقل العدوى إلى الآخرين. يمكنك القيام بذلك عن طريق إيلاء اهتمام إضافي للأعراض (الخفيفة) التي تتناسب مع كورونا وإجراء اختبار إذا كانت لديك هذه الأعراض.</string>
     <string name="faq_location_paragraph_1">كلا. باستخدام البلوتوث يستطيع التطبيق فقط معرفة فيما إذا كنت متواجدًا بالقرب من أشخاص يقومون باستخدام التطبيق أيضًا. البلوتوث ليس مقترنًا بموقعك الجغرافي، إذ لا يمكن للتطبيق معرفة مكان تواجدك. يقوم البلوتوث فقط بإجراء اتصال لاسلكي بين جهازين قريبين من بعضهما. مثل هاتفك ومكبّر صوت أو سماعة.</string>
     <string name="faq_anonymous_paragraph_1">يتبادل التطبيق الرموز مع هواتف أخرى. لا تحتوي هذه الرموز على بياناتك الشخصية أو بيانات موقعك الجغرافي، فهي عملية عشوائية تمامًا. يحدث تبادل الرموز في لحظة تواجدك بالقرب من شخص آخر لديه التطبيق أيضًا.</string>
-    <string name="faq_anonymous_paragraph_2">هل تبين لاحقًا أن هذا الشخص مصاب بكورونا؟ يستطيع هذا الشخص إضافة رمزه أو رمزها إلى قائمة رموز الأشخاص المصابين بالفيروس. لا يمكن إضافة الرموز إلا بعد إرسال الكود إلى المصلحة الصحية للبلدية. بعد ذلك تستلم أنت وكل الأشخاص الذين عندهم هذا الرمز على هاتفهم إشعارًا. يذكر هذا الإشعار فقط الوقت الذي كنت فيه متواجدًا بالقرب من شخص مصاب بالعدوى. لا يذكر الإشعار من يكون هذا الشخص وأين صادفت به.</string>
+    <string name="faq_anonymous_paragraph_2">هل تبين لاحقًا أن هذا الشخص مصاب بكورونا؟ يستطيع هذا الشخص إضافة رمزه أو رمزها إلى قائمة رموز الأشخاص المصابين بالفيروس. لا يمكن إضافة الرموز إلا بعد إرسال الشخص مفتاح مصلحة الصحية للبلدية الخاص به إلى المصلحة الصحية للبلدية. يمكن بهذه الطريقة تأكيد الإصابة. بعد هذا التأكيد، من الممكن إرسال إشعار إلى جميع الأشخاص الآخرين الذين لديهم هذه الرموز على هواتفهم. يمكن من خلال هذا الإشعار فقط معرفة الوقت الذي كنت فيه متواجدًا بالقرب من شخص مصاب. لا يذكر الإشعار من يكون هذا الشخص وأين التقيت به.</string>
     <string name="faq_notification_paragraph_1">"تستلم إشعارًا بعدما كنت معرضًا لزيادة خطر الإصابة بالعدوى. يحدث ذلك إذا تواجدت على الأقل لمدة 15 دقيقة من شخص تبين لاحقاً أنه مصاب بكورونا. بطبيعة الحال يحدث هذا الأمر فقط إن كان ذلك الشخص من مستخدمي التطبيق أيضًا. تتوقف عملية استلامك للإشعار على مدى قوة إشارة بلوتوث ومدة احتكاككم. هل مر بجوارك شخص  بدراجة هوائية؟ لن يصلك إشعار في وقت لاحق. كنتما قريبين من بعضكما ووصلت إشارة بلوتوث إلى الآخر. إلا أن الاحتكاك استمر لفترة قصيرة بحيث أنك لم تتعرض إلى زيادة خطر الإصابة. هل كنت جالسًا بالقرب من شخص ما في القطار أو المكتب؟ يصلك إشعار في وقت لاحق في هذه الحالة. كانت قوة البلوتوث كافية لتغطي المسافة وكنتم قريبين من بعض لفترة طويلة. "</string>
     <string name="faq_upload_keys_paragraph_1">تستطيع إرسال إشعار إلى الآخرين فقط إذا قمت بإجراء فحص وتبين أنك مصاب بكورونا. في هذه الحالة ستتصل المصلحة الصحية للبلدية بك. أثناء هذه المكالمة سيقوم موظف المصلحة بالتحقق من كود المصلحة الصحية للبلدية لك. تجده في التطبيق. بهذه الطريقة نتأكد من أن الأشخاص المصابين فقط هم من يمكنهم إرسال الإشعارات.</string>
-    <string name="faq_upload_keys_paragraph_2">"بعد ما تم تحقق كود المصلحة الصحية للبلدية يستلم الأشخاص الذين تواجدت بالقرب منهم إشعار مجهول المصدر. فقط إذا كانوا من مستخدمي التطبيق."</string>
+    <string name="faq_upload_keys_paragraph_2">"بعد التحقق من مفتاح المصلحة الصحية للبلدية، من المحتمل أن يستلم الأشخاص الذين كنت بالقرب منهم عندما كنت معديًا استلام إشعار مجهول. فقط إذا كان هؤلاء الأشخاص يستخدمون التطبيق أيضًا.
+"</string>
     <string name="faq_bluetooth_paragraph_1">نعم، إلا أن الإشارة تصبح ضعيفة جدًا في هذا الحالة. يعمل بلوتوث على أكمل وجه عندما يتواجد هاتفك في نفس الغرفة التي يتواجد فيها هاتف الشخص الآخر. فعلى سبيل المثال، احتمالية استلامك لإشارة بلوتوث من الجيران ضئيلة جداً. لذلك فإن احتمالية استلامك لإشعار ضئيلة أيضًا بعد أن تبين أن جارك مصاب بكورونا ولم تكونا متواجدين في نفس الغرفة.</string>
     <string name="faq_power_usage_paragraph_1">"يستخدم التطبيق البلوتوث منخفض الطاقة (Bluetooth Low Energy). هذا نوع خاص من البلوتوث يستهلك كمية قليلة جدًا من الطاقة. أن كمية الطاقة التي يتطلبها من بطارية التليفون تختلف من هاتف لآخر. "</string>
     <string name="faq_deletion_paragraph_1">"يمكنك حذف بيانات البلوتوث التي حفظها التطبيق بنفسك. تقوم بذلك كالتالي. انتقل في هاتفك إلى الأعدادات &gt; غوغل &gt; إشعارات حول الاحتكاك المحتمل بفيروس كورونا. انقر على حذف الهويات العشوائية &gt; حذف. هل ترغب في عدم قيام التطبيق بتخزين بيانات البلوتوث بعد الآن. قم في هذه الحالة بحذف التطبيق. "</string>
     <string name="faq_deletion_button">فتح الإعدادات</string>
-    <string name="faq_location_permission_paragraph_1">تستخدم بعض التطبيقات تقنية البلوتوث من أجل تحديد موقعك الجغرافي. لذلك يمكنك ضبط هذا الجزء في خدمات الموقع في الإعدادات. يحتاج تطبيق التحذير من كورونا (CoronaMelder) البلوتوث فقط لرؤية ما إذا كنت قريبًا من شخص آخر لديه التطبيق. التطبيق ليس لديه حق الاطلاع على موقعك الجغرافي أبداً.</string>
+    <string name="faq_location_permission_paragraph_1">تستخدم بعض التطبيقات تقنية البلوتوث من أجل تحديد موقعك الجغرافي. لذلك يعتبر هذا جزءًا من إعدادات الموقع. يحتاج تطبيق التحذير من كورونا (CoronaMelder) إلى البلوتوث فقط لمعرفة ما إذا كنت قريبًا من شخص آخر لديه التطبيق. لا يمكن للتطبيق الوصول إلى موقعك الجغرافي إطلاقًا.</string>
     <string name="faq_technical_toolbar_title">الشرح التقني</string>
     <string name="faq_technical_header_1">1. يقوم التطبيق بإنشاء رمز خاص لكل هاتف</string>
     <string name="faq_technical_paragraph_2">لا يتضمن هذا الرمز معلومات عنك أو عن هاتفك. الرمز مجهول تمامًا ويتغير كل ربع ساعة.</string>
@@ -150,8 +151,8 @@
     <string name="faq_technical_github_subtitle">انتقل إلى GitHub</string>
     <string name="share_content">أنا أساهم في إبقاء كورونا تحت السيطرة باستخدام تطبيق التحذير من كورونا (CoronaMelder). هل تشارك أنت أيضًا؟ %1$s</string>
     <string name="share_title">شارك التطبيق مع الآخرين</string>
-    <string name="lab_test_toolbar_title">كود المصلحة الصحية للبلدية (GGD-sleutel)</string>
-    <string name="lab_test_paragraph_1">هل خضعت للفحص وأنت مصاب بكورونا؟ سيتصل بك موظف المصلحة الصحية للبلدية. تحتاج إلى كود المصلحة الصحية البلدية عندئذ.</string>
+    <string name="lab_test_toolbar_title">كود المصلحة الصحية للبلدية</string>
+    <string name="lab_test_paragraph_1"><![CDATA[هل خضعت للفحص وأنت مصاب بكورونا؟ سيتصل بك موظف المصلحة الصحية للبلدية. تحتاج إلى مفتاح المصلحة الصحية البلدية عندئذ. <a href="">كيف يعمل ذلك؟</a>]]></string>
     <string name="lab_test_step_1">اعط هذا الكود إلى موظف المصلحة الصحية للبلدية:</string>
     <string name="lab_test_token_loading">الكود قيد التحميل</string>
     <string name="lab_test_token_error">لم ينجح التطبيق في تحميل كود المصلحة الصحية للبلدية. تأكد من اتصالك بالإنترنت.</string>
@@ -169,7 +170,7 @@
     <string name="update_google_play_services">تحديث</string>
     <string name="update_google_play_services_headline">لم يتم تحديث تطبيق غوغل بلاي (Google Play Services) الخاص بك.</string>
     <string name="update_google_play_services_description">%1$s يحتاج إلى أحدث إصدار من خدمات غوغل بلاي لكي يستمر في العمل بشكل صحيح في هاتفك.</string>
-    <string name="error_upload_not_available">تستطيع مشاركة الرموز فقط إذا قمت بتشغيل الإعدادات اللازمة.</string>
+    <string name="error_upload_not_available">تستطيع إرسال الإشعار فقط إذا قمت بتشغيل الإعدادات اللازمة.</string>
     <string name="error_api_not_available">حدثت خطأ ما في التطبيق. حاول مرة أخرى في وقت لاحق.</string>
     <string name="today">اليوم</string>
     <plurals name="days_ago">
@@ -188,27 +189,29 @@
     <string name="upload_keys_failed_title">لم تنجح في إرسال الإشعار</string>
     <string name="upload_keys_failed_message">لم تنجح في إرسال الإشعار إلى الآخرين. لذلك اتصل بالمصلحة الصحية للبلدية. اقرأ المزيد في التطبيق.</string>
     <string name="upload_keys_failed_notification_header">لم ننجح في إرسال إشعار إلى الآخرين.</string>
-    <string name="upload_keys_failed_notification_paragraph">حاولنا مشاركة رموزك بالمصلحة الصحية للبلدية، لكننا اخفقنا في ذلك. اتصل بالمصلحة الصحية للبلدية لتعاود المحاولة. من المهم جدًا أن تقوم بذلك بسرعة وإلا من الممكن أن يصاب عدد أكبر من الأشخاص بالعدوى.</string>
+    <string name="upload_keys_failed_notification_paragraph">حاولنا إرسالك أشعارً إلا أننا لم ننجح في ذلك. اتصل بالمصلحة الصحية للبلدية للمحاولة من جديد. من المهم جدًا أن تقوم بذلك بسرعة وإلا من الممكن أن يصاب عدد أكبر من الأشخاص بالعدوى.</string>
     <string name="upload_keys_failed_notification_toolbar_title">اتصل بالمصلحة الصحية للبلدية</string>
-    <string name="end_of_life_action">Lees meer</string>
-    <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
-    <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
-    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
-    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
-    <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
-    <string name="cd_status_disabled">Geel rondje met uitroepteken als waarschuwing</string>
-    <string name="cd_status_exposed">Rood rondje met alarmbel dat aangeeft dat er nu actie nodig is</string>
-    <string name="cd_error_box">Waarschuwing</string>
-    <string name="cd_info_box">Belangrijk</string>
-    <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
-    <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">Lees meer</string>
-    <string name="post_notification_list_5"><![CDATA[<b>Blijf je goed aan de maatregelen houden:</b><ul><li>Was je handen regelmatig</li><li>Hoest/nies in je elleboog</li><li>Houd 1,5 meter afstand van mensen buiten je huishouden</li></ul>]]></string>
-    <string name="onboarding_privacy_policy_headline">Toestemming gegevensgebruik</string>
-    <string name="onboarding_privacy_policy_paragraph"><![CDATA[Om CoronaMelder te gebruiken moet je akkoord gaan met de <a href="">privacyverklaring</a>. Belangrijk om te weten:]]></string>
-    <string name="onboarding_privacy_policy_check_1">Je kunt op ieder moment de gegevens van je telefoon  verwijderen.</string>
-    <string name="onboarding_privacy_policy_check_2">Andere gebruikers die met jou in contact zijn geweest bewaren deze gegevens maximaal 14 dagen.</string>
-    <string name="onboarding_privacy_policy_check_3">Als uit een coronatest blijkt dat je corona hebt kun je dit in de app melden om andere gebruikers te waarschuwen.</string>
-    <string name="onboarding_privacy_policy_consent_label">Ik heb de privacyverklaring gelezen en ga hiermee akkoord</string>
-    <string name="onboarding_privacy_policy_check_4">Je kunt op ieder moment de gegevens van je telefoon  verwijderen.</string>
+    <string name="end_of_life_action">إقرأ المزيد</string>
+    <string name="end_of_life_description">قررت وزارة الصحة والرعاية والرياضة بأن التطبيق لم يعد ضروريًا. لذلك لن تتلقى إشعارات بعد تواجدك بالقرب من شخص مصاب بكورونا.</string>
+    <string name="end_of_life_headline">توقف تطبيق التحذير من كورونا عن العمل</string>
+    <string name="status_error_notifications_disabled">لقد قمت بإيقاف استلام الإشعارات. لن تستلم إشعارات إذن عند تواجدك بالقرب من شخص مصاب بكورونا.</string>
+    <string name="status_error_action_notifications_disabled">تشغيل الإشعارات</string>
+    <string name="cd_status_active">دائرة خضراء مع علامة الصح تشير إلى أنه قد تم إعداد التطبيق بشكل صحيح</string>
+    <string name="cd_status_disabled">دائرة صفراء مع علامة تعجب تشير إلى تنبيه</string>
+    <string name="cd_status_exposed">دائرة حمراء مع جرس الإنذار تشير إلى أنه يتوجب عليك التصرف الآن</string>
+    <string name="cd_error_box">تحذير</string>
+    <string name="cd_info_box">هام</string>
+    <string name="faq_test_phase">ماذا يعني إصدار الفحص والبحث؟</string>
+    <string name="footer_test_phase">إصدار الفحص والبحث %1$s (%2$s)</string>
+    <string name="footer_test_phase_read_more">إقرأ المزيد</string>
+    <string name="post_notification_list_5"><![CDATA[<b> الالتزام بالإجراءات: </b><ul><li>اغسل يديك بانتظام </li><li>إسعل / إعطس في كوعك</li><li> حافظ على مسافة  1.5 متر عن الأشخاص خارج أفراد أسرتك </li></ul>]]></string>
+    <string name="onboarding_privacy_policy_headline">إعطاء الموافقة لاستخدام البيانات</string>
+    <string name="onboarding_privacy_policy_paragraph"><![CDATA[لاستخدام تطبيق التحذير من كورونا، يجب أن توافق على<a href=""> بيان حماية الخصوصية </a>. من المهم معرفة:]]></string>
+    <string name="onboarding_privacy_policy_check_1">يرسل تطبيقك بيانات البلوتوث المشفرة.</string>
+    <string name="onboarding_privacy_policy_check_2">يحتفظ المستخدمون الآخرون الذين كانوا بالقرب منك بهذه البيانات لمدة أقصاها 14 يومًا.</string>
+    <string name="onboarding_privacy_policy_check_3">إذا تبين من اختبار كورونا أنك مصاب بكورونا، يمكنك الإبلاغ عن ذلك من خلال التطبيق لتحذير المستخدمين الآخرين.</string>
+    <string name="onboarding_privacy_policy_check_4">يمكنك حذف البيانات من هاتفك في أي وقت.</string>
+    <string name="onboarding_privacy_policy_consent_label">لقد قرأت بيان حماية الخصوصية وأوافق عليه</string>
+    <string name="request_test_paragraph_3">قم بإجراء فحص مجانًا. لا يستغرق ذلك الكثير من الوقت وتستطيع غالبًا تحديد موعد بسرعة. تصبح النتيجة معروفة خلال 48 ساعة. لازم المنزل حتى تعرف النتيجة.</string>
+    <string name="lab_test_how_does_it_work">كيف يعمل هذا؟</string>
 </resources>

@@ -8,23 +8,16 @@
     <string name="onboarding_explanation_1_headline">Help stop the spread of the coronavirus</string>
     <string name="onboarding_explanation_1_description">This app warns you if you\'ve been near someone with coronavirus. So you can prevent infecting people in your environment.</string>
     <string name="onboarding_explanation_2_headline">You get a notification <u>after</u> you’ve been exposed to a higher risk of infection</string>
-    <string name="onboarding_explanation_2_description">The app notifies you when you\'ve been close to someone for at least 15 minutes who later turns out to have corona. This person must also use the app.</string>
+    <string name="onboarding_explanation_2_description">"The app notifies you when you've been near someone for at least 15 minutes who was later found to have coronavirus. This person must also use the app. "</string>
     <string name="onboarding_explanation_3_headline">The app uses Bluetooth, <u>no</u> location data</string>
     <string name="onboarding_explanation_3_description">Using Bluetooth, the app sees whether you\'ve been near someone. The closer you\'ve been, the stronger the Bluetooth signal. The app doesn\'t know who you are or where you\'ve been.</string>
     <string name="onboarding_example_1_headline">Did someone cycle past you? Then you will <u>not</u> get a notification later</string>
     <string name="onboarding_example_1_description">The Bluetooth signal was strong because you were near each other. But only for a very short time. This means your risk of infection is very low.</string>
     <string name="onboarding_example_2_headline">Did you sit near someone on the train? You could <u>possibly</u> get a notification later</string>
     <string name="onboarding_example_2_description">The Bluetooth signal was strong enough and you were near each other for a longer period of time.</string>
-    <string name="onboarding_privacy_policy_headline">Toestemming gegevensgebruik</string>
-    <string name="onboarding_privacy_policy_paragraph"><![CDATA[Om CoronaMelder te gebruiken moet je akkoord gaan met de <a href="">privacyverklaring</a>. Belangrijk om te weten:]]></string>
-    <string name="onboarding_privacy_policy_check_1">Je kunt op ieder moment de gegevens van je telefoon  verwijderen.</string>
-    <string name="onboarding_privacy_policy_check_2">Andere gebruikers die met jou in contact zijn geweest bewaren deze gegevens maximaal 14 dagen.</string>
-    <string name="onboarding_privacy_policy_check_3">Als uit een coronatest blijkt dat je corona hebt kun je dit in de app melden om andere gebruikers te waarschuwen.</string>
-    <string name="onboarding_privacy_policy_check_4">Je kunt op ieder moment de gegevens van je telefoon  verwijderen.</string>
-    <string name="onboarding_privacy_policy_consent_label">Ik heb de privacyverklaring gelezen en ga hiermee akkoord</string>
     <string name="onboarding_consent_headline">Turn on notifications about possible coronavirus exposure</string>
-    <string name="onboarding_consent_check_1">Your Bluetooth data is saved on your phone for 14 days. You can always delete it yourself.</string>
-    <string name="onboarding_consent_check_2"><![CDATA[Your name and other personal data will <strong>not</strong> be used or saved.]]></string>
+    <string name="onboarding_consent_check_1">Bluetooth data is saved on your phone for 14 days. You can always delete it yourself.</string>
+    <string name="onboarding_consent_check_2"><![CDATA[Your name will <strong>not</strong> be used or saved.]]></string>
     <string name="onboarding_consent_check_3"><![CDATA[Your GPS location data will <strong>not</strong> be used or saved.]]></string>
     <string name="onboarding_consent_request">Turn on</string>
     <string name="onboarding_consent_explain">How does the app work?</string>
@@ -37,7 +30,7 @@
     <string name="onboarding_how_it_works_request_consent">Turn on app</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Frequently asked question</string>
     <string name="onboarding_share_headline">Let others know you\'re helping to stop the spread of the virus</string>
-    <string name="onboarding_share_description">The more people use CoronaMelder, the better it works. So, share the app with as many people as you can. We can only stop the spread of the virus together.</string>
+    <string name="onboarding_share_description">The more people use CoronaMelder, the better it works. So share the app with as many people as you can. We can only stop the spread of the virus together.</string>
     <string name="onboarding_share_continue">Continue</string>
     <string name="onboarding_share_share">Share app</string>
     <string name="status_no_exposure_detected_headline">The app is active</string>
@@ -64,26 +57,25 @@
     <string name="sync_issue_notification_title">No internet connection</string>
     <string name="sync_issue_notification_message">The app couldn\'t connect to the internet for the past 24 hours. Check if your Wi-Fi or mobile data is turned on.</string>
     <string name="post_notification_toolbar_title">Risk of infection</string>
-    <string name="generic_notification_toolbar_title">Got a notification</string>
-    <string name="post_notification_header_1">You\'ve been near someone who has coronavirus</string>
+    <string name="generic_notification_toolbar_title">Getting a notification</string>
+    <string name="post_notification_header_1">You\'ve been near someone with coronavirus</string>
     <string name="generic_notification_header_1">What does it mean when you get a notification?</string>
-    <string name="post_notification_paragraph_2" tools:ignore="Typos">You were near someone %1$s (on %2$s) who later turned out to have coronavirus. You were exposed to a higher risk of infection in this situation. If you are indeed infected, you can infect other people with coronavirus. Even if you don\'t feel sick right now.</string>
-    <string name="generic_notification_paragraph_2" tools:ignore="Typos">The app sends you a notification if you\'ve spent 15 minutes near someone who later turned out to have coronavirus. You\'ve been exposed to a higher risk of infection in this situation. If you are indeed infected, you can infect other people with coronavirus. Even if you don\'t feel sick right now.</string>
+    <string name="post_notification_paragraph_2" tools:ignore="Typos">You were near someone %1$s (on %2$s) who was later found to have coronavirus. You were exposed to a higher risk of infection in this situation. If you are indeed infected, you can infect other people with coronavirus. Even if you don\'t feel sick right now.</string>
+    <string name="generic_notification_paragraph_2" tools:ignore="Typos">The app sends you a notification if you\'ve spent 15 minutes near someone who was later found to have coronavirus. You\'ve been exposed to a higher risk of infection in this situation. If you are indeed infected, you can infect other people with coronavirus. Even if you don\'t feel sick right now.</string>
     <string name="post_notification_header_3">What can you do now?</string>
     <string name="generic_notification_header_3">What can you do in this situation?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>No symptoms? Get a free coronavirus test</li><li>Mild symptoms? Get tested for coronavirus and stay home until you get the results</li><li>Serious symptoms, part of a high-risk group, or need help? Call your doctor</li></ul>]]></string>
-    <string name="post_notification_list_5"><![CDATA[<b>Blijf je goed aan de maatregelen houden:</b><ul><li>Was je handen regelmatig</li><li>Hoest/nies in je elleboog</li><li>Houd 1,5 meter afstand van mensen buiten je huishouden</li></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>No symptoms? Get a free coronavirus test</li><li>Do you have (mild) symptoms related to the coronavirus? Get tested for coronavirus and stay home until you get the results</li><li>Serious symptoms or part of a high-risk group? Call your doctor</li></ul>]]></string>
     <string name="post_notification_header_6">Get tested for coronavirus</string>
     <string name="post_notification_paragraph_7" tools:ignore="Typos">The GGD recommends you get tested for coronavirus. Even if you don\'t feel sick. Because you can still infect others and spread the virus without feeling sick.</string>
     <string name="post_notification_paragraph_8">"Get a free test. It doesn't take long to get tested and waiting times are mostly short. You get the results within 48 hours. In the meantime, stay home."</string>
-    <string name="post_notification_paragraph_9">Make a free call to %1$s to request a coronavirus test.</string>
+    <string name="post_notification_paragraph_9">Call %1$s for free to request a coronavirus test.</string>
     <string name="post_notification_message">Have your citizen service number (BSN) ready. You\'ll find it on your passport, identity card or nationality certificate.</string>
     <string name="post_notification_button">Call for coronavirus test</string>
     <string name="treat_perspective_header_1">Possible coronavirus (COVID-19) symptoms</string>
-    <string name="treat_perspective_list_2"><![CDATA[<ul><li>(light) cough</li><li>nasal cold, runny nose, sneezing, sore throat</li><li>sudden loss of taste/smell</li><li>quicker breathing or difficulty breathing</li><li>fever above 38 degrees Celsius</li></ul>]]></string>
+    <string name="treat_perspective_list_2"><![CDATA[<ul><li>cold symptoms</li><li>nasal cold, runny nose, sneezing, sore throat</li><li>cough</li><li>elevated temperature</li><li>sudden loss of taste/smell</li></ul>]]></string>
     <string name="request_test_toolbar_title">Request coronavirus test</string>
     <string name="request_test_header_1">Do you have symptoms related to the coronavirus? Get tested</string>
-    <string name="request_test_paragraph_2" tools:ignore="Typos">Do you have mild symptoms? Get tested for coronavirus and stay home until you get the results. Serious symptoms, part of a high-risk group, or need help? Call your doctor.</string>
+    <string name="request_test_paragraph_2" tools:ignore="Typos">Do you have (mild) symptoms related to the coronavirus? Get a free test. It doesn\'t take long to get tested and waiting times are usually short. You get the results within 48 hours. In the meantime, stay home. Serious symptoms or part of a high-risk group? Call your doctor.</string>
     <string name="status_reset_exposure">Delete notification</string>
     <string name="status_dialog_remove_exposure_title">Are you sure you want to delete this notification?</string>
     <string name="status_dialog_remove_exposure_message">You won\'t be able to find the date in the app afterwards. So remember it well.</string>
@@ -93,9 +85,9 @@
     <string name="status_info_about_subtitle">See how the app works and what it means for your privacy</string>
     <string name="status_info_share_title">Invite others to the app</string>
     <string name="status_info_share_subtitle">Share the app with others to stop corona together</string>
-    <string name="status_info_notification_title">I got a notification</string>
-    <string name="status_info_notification_subtitle">Read about what you can do when someone else turns out to have corona</string>
-    <string name="status_info_test_title">Get tested for corona</string>
+    <string name="status_info_notification_title">What does a notification say?</string>
+    <string name="status_info_notification_subtitle">Read about what you can do when you\'ve been near someone with coronavirus</string>
+    <string name="status_info_test_title">Get tested for coronavirus</string>
     <string name="status_info_test_subtitle">Find out as soon as possible if you\'re infected</string>
     <string name="status_info_lab_title">Share the GGD key</string>
     <string name="status_info_lab_subtitle">Send an anonymous notification with the GGD to others if you\'re infected</string>
@@ -109,9 +101,9 @@
     <string name="about_helpdesk_title">Other questions about the app?</string>
     <string name="about_helpdesk_subtitle">Call the help desk</string>
     <string name="about_technical_explanation_title">How does the app work?</string>
-    <string name="about_technical_explanation_subtitle">Check the detailed explanation</string>
+    <string name="about_technical_explanation_subtitle">Check the technical explanation</string>
     <string name="about_onboarding_title">Wat does CoronaMelder do?</string>
-    <string name="about_onboarding_subtitle">Read how you can help stop the spread of corona with this app</string>
+    <string name="about_onboarding_subtitle">Read how you can help stop the spread of the coronavirus with this app</string>
     <string name="about_review">Rate the app</string>
     <string name="about_privacy_statement">Privacy statement</string>
     <string name="about_accessibility">Accessibility</string>
@@ -127,28 +119,28 @@
     <string name="faq_power_usage">How much power does the app use?</string>
     <string name="faq_deletion">How do I delete the Bluetooth data from my phone?</string>
     <string name="faq_location_permission">Why do my location services need to be turned on?</string>
-    <string name="faq_technical">How does the app work technically?</string>
-    <string name="faq_reason_paragraph_1">"This app helps the GGD with their research. So, by using the app you help stop the spread of the coronavirus. If you were tested and have corona you'll get a call from the GGD. During this call the GGD asks you who you've been close to while contagious. The GGD also calls these people to warn them that they might have corona."</string>
-    <string name="faq_reason_paragraph_2">However, you\'ve probably also been close to people you don\'t know. In the train, cinema, or restaurant for example. This is where the app helps you. Because it allows you to warn all the people who have been close to you. Including people you don\'t know. As long as they use the app, of course.</string>
-    <string name="faq_reason_paragraph_3">"The GGD contacts the people whose contact details you have. The app also warns people who you've met, but whose name or contact details you don't know. So these people are quickly informed and able to take measures to prevent infecting others. The research of the GGD continues. Because the people you've been close to more often might be at a higher risk. "</string>
-    <string name="faq_reason_paragraph_4">You can also receive warnings through the app. If this happens it means you\'ve been close to someone with corona in last few days. In this case, you can do your part to prevent spreading the virus to others.</string>
+    <string name="faq_technical">How exactly does the app work?</string>
+    <string name="faq_reason_paragraph_1">"This app helps the GGD with their research. So by using the app you help stop the spread of the coronavirus. If you've been tested and have coronavirus, you get a call from the GGD. During this call, the GGD asks you who you've been close to while contagious. The GGD also calls these people to warn them that they might have coronavirus."</string>
+    <string name="faq_reason_paragraph_2">However, you\'ve probably also been near people you don\'t know. In the train, cinema, or restaurant for example. This is where the app helps you. Because it allows you to warn all people who\'ve been near you. Including people you don\'t know. As long as they use the app, of course.</string>
+    <string name="faq_reason_paragraph_3">"The GGD contacts the people whose contact details you have. The app also warns people you've met, but whose name or contact details you don't know. So these people are quickly informed and able to take measures to prevent infecting others. The GGD's research continues. Because the people you've been close to more often might be at a higher risk. "</string>
+    <string name="faq_reason_paragraph_4">You can also receive warnings through the app. If this happens, it means you\'ve been near someone with coronavirus in last few days. In this case, you can do your part to prevent spreading the virus to others. Do so by paying extra attention to (mild) symptoms related to coronavirus. And by getting tested should you experience any of these symptoms.</string>
     <string name="faq_location_paragraph_1">No. Using Bluetooth, the app only sees whether you\'re near other people who also have the app. Bluetooth isn\'t linked to your location, so the app can\'t see where you are. Bluetooth only wirelessly connects 2 devices that are near each other. Like your phone and a speaker, or a pair of headphones.</string>
     <string name="faq_anonymous_paragraph_1">The app exchanges codes with other phones. These codes don\'t include any of your personal or location data. They\'re completely random. The code exchange happens when you\'re near a person who also has the app.</string>
-    <string name="faq_anonymous_paragraph_2">Does this person later turn out to have coronavirus? They can use the app to add their codes to a list of infected people. Adding codes is only possible after the infected person gives a GGD key to the GGD. Then, you and others who have these codes on their phones get a notification. This notification only says when you\'ve been close to an infected person. Not who this person is and where you\'ve encountered them.</string>
-    <string name="faq_notification_paragraph_1">You get a notification after you\'ve been exposed to a higher risk of infection. This happens if you\'ve spent 15 minutes near someone who later turns out to have coronavirus. That person must be using the app too. Whether or not you get a notification depends on the strength of the Bluetooth signal and the duration of your encounter. Did someone cycle past you on the street? Then you won\'t get a notification later. Yes, the Bluetooth signal was strong because you were near each other. But you were near each other for such a short time that your risk of infection is very low. Were you near someone on the train or in the office? Then you could get a notification later. The Bluetooth signal was strong and you were near each other for a longer period of time.</string>
-    <string name="faq_upload_keys_paragraph_1">You can only send a notification to others if you have corona. In this case, you\'ll get a call from the GGD. During this call a GGD employee checks your GGD key. You can find this key in the app. Using this method we make sure only people who are really infected can send notifications to others.</string>
-    <string name="faq_upload_keys_paragraph_2">"After your GGD key is checked the people who were near you when you were contagious get an anonymous notification. Only if these people also use the app."</string>
+    <string name="faq_anonymous_paragraph_2">Was this person later found to have coronavirus? They can use the app to add their codes to a list of infected people. Adding codes is only possible after the infected person gives a GGD key to the GGD. Then, you and others who have these codes on their phones get a notification. This notification only says when you\'ve been close to an infected person. Not who this person is and where you\'ve encountered them.</string>
+    <string name="faq_notification_paragraph_1">You get a notification after you\'ve been exposed to a higher risk of infection. This happens if you\'ve spent 15 minutes near someone who was later found to have coronavirus. That person must be using the app too. Whether or not you get a notification depends on the strength of the Bluetooth signal and the duration of your encounter. Did someone cycle past you on the street? Then you won\'t get a notification later. Yes, the Bluetooth signal was strong because you were near each other. But you were near each other for such a short time that your risk of infection is very low. Were you near someone on the train or in the office? Then you could get a notification later. The Bluetooth signal was strong and you were near each other for a longer period of time.</string>
+    <string name="faq_upload_keys_paragraph_1">You can only send a notification to others if you have coronavirus. In this case, you\'ll get a call from the GGD. During this call a GGD employee checks your GGD key. You can find this key in the app. Using this method we make sure only people who are really infected can send notifications to others.</string>
+    <string name="faq_upload_keys_paragraph_2">"After your GGD key is checked, the people who were near you when you were contagious could get an anonymous notification. Only if these people also use the app."</string>
     <string name="faq_bluetooth_paragraph_1">Yes, but the signal would be very weak. Bluetooth works best when your phone is in the same room as another person\'s phone. So the chance of you getting your neighbours\' Bluetooth signal is very low. That also means you probably won\'t get a notification if your neighbour has corona and you haven\'t been in the same room.</string>
     <string name="faq_power_usage_paragraph_1">The app uses Bluetooth Low Energy — a special kind of Bluetooth that only uses a tiny bit of power. How fast this drains your battery depends on your phone.</string>
     <string name="faq_deletion_paragraph_1">"You can delete the Bluetooth files saved by the app yourself. Here's how that's done. Go to the settings menu on your phone -&gt; Google -&gt; COVID-19 Exposure Notification. Tap on Delete random IDs -&gt; Delete. Don't want the app to save new Bluetooth data? Delete the app. "</string>
     <string name="faq_deletion_button">Open Settings</string>
-    <string name="faq_location_permission_paragraph_1">Some apps use Bluetooth to determine your location. That\'s why it\'s part of your location settings. CoronaMelder needs Bluetooth to work, but only to see if you\'ve been near someone else who uses the app. The app never knows your location.</string>
+    <string name="faq_location_permission_paragraph_1">Some apps use Bluetooth to determine your location. That\'s why it\'s part of your location settings. CoronaMelder needs Bluetooth to work, but it only uses Bluetooth to see if you\'ve been near someone else who uses the app. The app never knows your location.</string>
     <string name="faq_technical_toolbar_title">Technical explanation</string>
     <string name="faq_technical_header_1">1. The app makes a unique code for each phone</string>
     <string name="faq_technical_paragraph_2">This code doesn\'t include any information about you or your phone. The code is completely anonymous and changes every 15 minutes.</string>
     <string name="faq_technical_header_3">2. Phones only exchange codes when they\'re near each other</string>
     <string name="faq_technical_paragraph_4">Does the person you run into also have the app? Then your phones use Bluetooth Low Energy to exchange codes. This way, the app knows which phones were near you. The app doesn\'t know who the phones belong to. And it doesn\'t know where you were.</string>
-    <string name="faq_technical_header_5">3. If someone has corona they can put their codes on a list</string>
+    <string name="faq_technical_header_5">3. If someone has coronavirus they can put their codes on a list</string>
     <string name="faq_technical_paragraph_6">This list only contains the codes of infected peoples. All codes older than 14 days are automatically deleted. An infected person can add their codes to this list. To do so, they need to give a so-called GGD key to the GGD. This guarantees the added codes actually belong to someone with coronavirus.</string>
     <string name="faq_technical_header_7">4. Each phone checks whether it has seen the codes on the list before</string>
     <string name="faq_technical_paragraph_8">A few times a day, the app checks the list which has codes of infected people. And it compares these codes with the codes saved on your phone. This is how the app sees whether you\'ve been exposed to a higher risk of infection.</string>
@@ -156,10 +148,10 @@
     <string name="faq_technical_paragraph_10">This notification tells you when you\'ve been near an infected person. Not who this person is, or where you\'ve run into them. The app lets you know what you can do next. Your own codes aren\'t on the list of infected codes. They\'re saved on your phone for 14 days.</string>
     <string name="faq_technical_github_title">Check the source code</string>
     <string name="faq_technical_github_subtitle">Go to Github</string>
-    <string name="share_content">I\'m helping to keep corona under control with CoronaMelder. Are you with me? %1$s</string>
+    <string name="share_content">I\'m helping to keep the coronavirus under control with CoronaMelder. Are you with me? %1$s</string>
     <string name="share_title">Share the app with others</string>
     <string name="lab_test_toolbar_title">GGD key</string>
-    <string name="lab_test_paragraph_1">Were you tested and do you have corona? You\'ll get a call from the GGD. You\'ll need your GGD key for this call.</string>
+    <string name="lab_test_paragraph_1"><![CDATA[Were you tested and do you have coronavirus? You\'ll get a call from the GGD. You\'ll need your GGD key for this call.</a>How does this work?<a href=\"">]]></string>
     <string name="lab_test_step_1">Give this GGD key to the GGD employee.</string>
     <string name="lab_test_token_loading">Retrieving key</string>
     <string name="lab_test_token_error">The app couldn\'t retrieve the GGD key. Please check your internet connection.</string>
@@ -172,12 +164,12 @@
     <string name="lab_test_done_header_1">Thanks, the GGD will help you along</string>
     <string name="lab_test_done_paragraph_2">The GGD employee will tell you what you can do to prevent spreading the virus. Take care, and get well soon.</string>
     <string name="lab_test_done_used_key">Used GGD key %1$s</string>
-    <string name="lab_test_done_box_4">The notification will only be sent if you\'ve been tested by the GGD and have corona</string>
+    <string name="lab_test_done_box_4">The notification will only be sent if you\'ve been tested by the GGD and have coronavirus</string>
     <string name="lab_test_done_button">Close</string>
     <string name="update_google_play_services">Update</string>
     <string name="update_google_play_services_headline">Your Google Play Services is out of date</string>
     <string name="update_google_play_services_description">%1$s needs the latest version of Google Play Services to work well on your phone.</string>
-    <string name="error_upload_not_available">You can only share your codes if the necessary settings are turned on.</string>
+    <string name="error_upload_not_available">You can only send a notification if the necessary settings are turned on.</string>
     <string name="error_api_not_available">Something\'s wrong with the app. Please try again later.</string>
     <string name="today">today</string>
     <plurals name="days_ago">
@@ -192,19 +184,29 @@
     <string name="upload_keys_failed_title">The notification failed to send</string>
     <string name="upload_keys_failed_message">The notification failed to send to others. Call the GGD. Read more in the app.</string>
     <string name="upload_keys_failed_notification_header">The notification failed to send to others</string>
-    <string name="upload_keys_failed_notification_paragraph">We tried sharing your codes with the GGD, but it failed. Call the GGD to share your codes. Please do this as quickly as possible so no one else gets infected.</string>
+    <string name="upload_keys_failed_notification_paragraph">We tried sending the notification, but it failed. Call the GGD to try again. Please do this as quickly as possible so no one else gets infected.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Call the GGD</string>
-    <string name="end_of_life_action">Lees meer</string>
-    <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
-    <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
-    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
-    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
-    <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
-    <string name="cd_status_disabled">Geel rondje met uitroepteken als waarschuwing</string>
-    <string name="cd_status_exposed">Rood rondje met alarmbel dat aangeeft dat er nu actie nodig is</string>
-    <string name="cd_error_box">Waarschuwing</string>
-    <string name="cd_info_box">Belangrijk</string>
-    <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
-    <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">Lees meer</string>
+    <string name="end_of_life_action">Read more</string>
+    <string name="end_of_life_description">The Ministry of Health, Welfare and Sports has decided that the app is no longer necessary. From now on, you won\'t get a notification after you\'ve been near someone with coronavirus.</string>
+    <string name="end_of_life_headline">CoronaMelder is closed</string>
+    <string name="status_error_notifications_disabled">You\'ve turned off notifications. So you won\'t get a notification when you\'ve been near someone with coronavirus.</string>
+    <string name="status_error_action_notifications_disabled">Turn on notifications</string>
+    <string name="cd_status_active">Green circle with checkmark that shows the app has been set up properly</string>
+    <string name="cd_status_disabled">"Yellow circle with exclamation mark as warning "</string>
+    <string name="cd_status_exposed">Red circle with alarm bell that shows you need to take action immediately</string>
+    <string name="cd_error_box">Warning</string>
+    <string name="cd_info_box">Important</string>
+    <string name="faq_test_phase">What does test and research version mean?</string>
+    <string name="footer_test_phase">Test and research version %1$s (%2$s)</string>
+    <string name="footer_test_phase_read_more">Read more</string>
+    <string name="post_notification_list_5"><![CDATA[<b>Keep following the rules:</b><ul><li>Regularly wash your hands</li><li>Cough/sneeze into your elbow</li><li>Keep a 1.5 metre distance from people outside of your household</li></ul>]]></string>
+    <string name="onboarding_privacy_policy_headline">Permission to use data</string>
+    <string name="onboarding_privacy_policy_paragraph"><![CDATA[To use CoronaMelder, you have to accept the <a href="">privacy statement</a>. Important to know:]]></string>
+    <string name="onboarding_privacy_policy_check_1">Your app sends out encrypted Bluetooth data.</string>
+    <string name="onboarding_privacy_policy_check_2">Other users who\'ve been in contact with you save this data for a maximum of 14 days.</string>
+    <string name="onboarding_privacy_policy_check_3">If you\'ve been tested and have coronavirus, you can report it in the app to warn other users.</string>
+    <string name="onboarding_privacy_policy_check_4">You can delete the data off your phone whenever you want.</string>
+    <string name="onboarding_privacy_policy_consent_label">I\'ve read and accepted the privacy statement</string>
+    <string name="request_test_paragraph_3">Get a free test. It doesn\'t take long to get tested and waiting times are mostly short. You get the results within 48 hours. In the meantime stay home.</string>
+    <string name="lab_test_how_does_it_work">How does this work?</string>
 </resources>
