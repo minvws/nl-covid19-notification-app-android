@@ -17,12 +17,7 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.CdnService
-import nl.rijksoverheid.en.api.HmacSecret
 import nl.rijksoverheid.en.api.LabTestService
-import nl.rijksoverheid.en.api.RequestSize
-import nl.rijksoverheid.en.api.model.PostKeysRequest
-import nl.rijksoverheid.en.api.model.Registration
-import nl.rijksoverheid.en.api.model.RegistrationRequest
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
@@ -109,38 +104,7 @@ fun createLabTestRepository(context: Context): LabTestRepository {
 }
 
 private fun createLabTestService(context: Context): LabTestService {
-    return labTestService ?: if (BuildConfig.FEATURE_DISABLE_UPLOAD) {
-        object : LabTestService {
-            override suspend fun register(
-                request: RegistrationRequest,
-                sizes: RequestSize
-            ): Registration {
-                // Generate registration code for test purposes
-                val allowedChars = "BCFGJLQRSTUVXYZ23456789".toCharArray()
-                val part1 = (1..3).map { allowedChars.random() }.joinToString("")
-                val part2 = (1..3).map { allowedChars.random() }.joinToString("")
-                val code = "$part1-$part2"
-                return Registration(code, "", ByteArray(0), 2400)
-            }
-
-            override suspend fun postKeys(
-                request: PostKeysRequest,
-                hmacSecret: HmacSecret,
-                requestSize: RequestSize
-            ) {
-                // stub
-            }
-
-            override suspend fun stopKeys(
-                request: PostKeysRequest,
-                hmacSecret: HmacSecret,
-                requestSize: RequestSize
-            ) {
-            }
-        }
-    } else {
-        LabTestService.create(context)
-    }.also { labTestService = it }
+    return labTestService ?: LabTestService.create(context).also { labTestService = it }
 }
 
 fun createAppConfigManager(context: Context): AppConfigManager {
