@@ -76,7 +76,7 @@ class BulletPointSpan(
         lineBaseline - bulletRadius * 1.1f // tiny bit above the baseline, otherwise it looks off
 
     private fun getCircleXLocation(currentMarginLocation: Int, paragraphDirection: Int) =
-        bulletRadius / 2 + currentMarginLocation + paragraphDirection * bulletRadius
+        (bulletRadius * paragraphDirection) / 2 + currentMarginLocation + (paragraphDirection * bulletRadius)
 
     private inline fun Paint.withCustomColor(block: () -> Unit) {
         val oldStyle = style
