@@ -115,7 +115,7 @@ class ExposureNotificationsRepository(
                 // reset the timer
                 putLong(KEY_LAST_KEYS_PROCESSED, clock.millis())
             }
-            val interval = appConfigManager.getConfigOrDefault().updatePeriodMinutes
+            val interval = appConfigManager.getCachedConfigOrDefault().updatePeriodMinutes
             manifestWorkerScheduler.schedule(interval)
             statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
         }
