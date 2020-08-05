@@ -16,8 +16,8 @@
     <string name="onboarding_example_2_headline">Siedziałeś blisko kogoś innego w pociągu? W takim przypadku <u>możesz</u> otrzymać powiadomienie</string>
     <string name="onboarding_example_2_description">Sygnał Bluetooth był wystarczająco silny i znajdowaliście się blisko siebie przez dłuższy czas.</string>
     <string name="onboarding_consent_headline">Włącz powiadomienia o możliwym kontakcie z koronawirusem</string>
-    <string name="onboarding_consent_check_1">Twoje dane Bluetooth są przechowywane w telefonie przez 14 dni. Zawsze możesz samodzielnie je usunąć.</string>
-    <string name="onboarding_consent_check_2"><![CDATA[Twoje imię i nazwisko oraz inne dane osobowe <strong>nie</strong> są używane ani przechowywane.]]></string>
+    <string name="onboarding_consent_check_1">Dane Bluetooth są przechowywane w telefonie przez 14 dni. Zawsze możesz samodzielnie je usunąć.</string>
+    <string name="onboarding_consent_check_2"><![CDATA[Twoje imię i nazwisko <strong>nie</strong> są używane ani przechowywane.]]></string>
     <string name="onboarding_consent_check_3"><![CDATA[Twoje dane dotyczące lokalizacji GPS <strong>nie</strong> są używane ani przechowywane.]]></string>
     <string name="onboarding_consent_request">Włącz</string>
     <string name="onboarding_consent_explain">Jak dokładnie działa ta aplikacja?</string>
@@ -44,7 +44,7 @@
     <string name="notification_channel_description">Powiadomienia o możliwym kontakcie z koronawirusem</string>
     <string name="notification_title">Możliwy kontakt z koronawirusem</string>
     <string name="notification_message">%1$s znajdowałeś się w pobliżu osoby z koronawirusem. Przeczytaj więcej w aplikacji.</string>
-    <string name="notification_message_reminder_prefix">Powtórzenie: %1$s</string>
+    <string name="notification_message_reminder_prefix">Przypomnienie: %1$s</string>
     <string name="notification_message_reminder_dismiss">Zrezygnuj z przypominania</string>
     <string name="app_inactive_title">Aplikacja CoronaMelder nie jest obecnie aktywna</string>
     <string name="app_inactive_message">Sprawdź swoje ustawienia.</string>
@@ -61,21 +61,21 @@
     <string name="post_notification_header_1">Znajdowałeś się w pobliżu osoby z koronawirusem</string>
     <string name="generic_notification_header_1">Otrzymałeś powiadomienie, co to oznacza?</string>
     <string name="post_notification_paragraph_2" tools:ignore="Typos">%1$s (%2$s) znajdowałeś się w pobliżu osoby, zarażonej koronawirusem. W tej sytuacji byłeś szczególnie narażony na ryzyko zarażenia. Jeśli rzeczywiście jesteś zarażony, możesz przekazywać wirusa innym. Nawet jeśli teraz nie czujesz się chory.</string>
-    <string name="generic_notification_paragraph_2" tools:ignore="Typos">Aplikacja wysyła powiadomienie, jeśli znajdowałeś się przez co najmniej 15 minut w pobliżu osoby, u której potem wykryto koronawirusa. W tej sytuacji byłeś szczególnie narażony na ryzyko zarażenia. Jeśli rzeczywiście jesteś zarażony, możesz przekazywać wirusa innym. Nawet jeśli teraz nie czujesz się chory.</string>
+    <string name="generic_notification_paragraph_2" tools:ignore="Typos">Aplikacja wysyła powiadomienie, jeśli znajdowałeś się przez co najmniej 15 minut w pobliżu osoby, u której potem wykryto koronawirusa. W powiadomieniu znajduje się wyłącznie informacja, kiedy to miało miejsce. W tej sytuacji byłeś szczególnie narażony na ryzyko zarażenia. Jeśli rzeczywiście jesteś zarażony, możesz przekazywać wirusa innym. Nawet jeśli teraz nie czujesz się chory.</string>
     <string name="post_notification_header_3">Co możesz teraz zrobić?</string>
     <string name="generic_notification_header_3">Co możesz zrobić w tej sytuacji?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>Nie masz żadnych dolegliwości? Zrób darmowy test na obecność koronawirusa</li><li>Masz łagodne dolegliwości? Zrób test na obecność koronawirusa i pozostań w domu do momentu otrzymania wyników</li><li>Masz poważne dolegliwości, znajdujesz się w grupie wysokiego ryzyka lub wymagasz stałej opieki? Zadzwoń do swojego lekarza rodzinnego</li></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>Nie masz żadnych dolegliwości? Zrób darmowy test na obecność koronawirusa</li><li>Masz łagodne dolegliwości, które są typowe dla koronawirusa? Zrób test na obecność koronawirusa i pozostań w domu do momentu otrzymania wyników</li><li>Masz poważne dolegliwości lub znajdujesz się w grupie wysokiego ryzyka? Zadzwoń do swojego lekarza rodzinnego</li></ul>]]></string>
     <string name="post_notification_header_6">Zrób test na obecność koronawirusa</string>
     <string name="post_notification_paragraph_7" tools:ignore="Typos">GGD zaleca przeprowadzenie testu na obecność wirusa. Nawet jeśli nie czujesz się chory. Ponieważ i bez tego możesz już rozprzestrzeniać koronawirusa i zarażać innych.</string>
     <string name="post_notification_paragraph_8">"Zrób darmowy test. To nie zajmuje dużo czasu i zazwyczaj można się szybko umówić. Wyniki są znane w ciągu 48 godzin. Pozostań w domu do momentu poznania wyników."</string>
-    <string name="post_notification_paragraph_9">Zadzwoń bezpłatnie pod numer %1$s, aby zapytać o test na obecność koronawirusa.</string>
+    <string name="post_notification_paragraph_9">Zadzwoń bezpłatnie pod numer <b>%1$s</b>, aby zapytać o test na obecność koronawirusa.</string>
     <string name="post_notification_message">Miej pod ręką swój numer obsługi mieszkańca (BSN). Znajdziesz go w paszporcie lub na dowodzie osobistym</string>
     <string name="post_notification_button">Zadzwoń po test na koronawirusa</string>
     <string name="treat_perspective_header_1">Dolegliwości typowe dla koronawirusa (COVID-19)</string>
-    <string name="treat_perspective_list_2"><![CDATA[<ul><li>(lekki) kaszel</li><li>nieżyt nosa, katar, kichanie, ból gardła</li><li>nagła utrata zmysłu zapachu lub smaku</li><li>szybsze oddychanie lub trudności z oddychaniem</li><li>podwyższona temperatura ciała wynosząca 38 stopni lub więcej</li></ul>]]></string>
+    <string name="treat_perspective_list_2"><![CDATA[<ul><li>objawy przeziębienia</li><li>nieżyt nosa, katar, kichanie, ból gardła</li><li>kaszel</li><li>podwyższona temperatura ciała</li><li>nagła utrata zmysłu zapachu lub smaku</li></ul>]]></string>
     <string name="request_test_toolbar_title">Poproś o test na koronawirusa</string>
     <string name="request_test_header_1">Masz dolegliwości typowe dla koronawirusa? Poproś o test</string>
-    <string name="request_test_paragraph_2" tools:ignore="Typos">Masz łagodne dolegliwości? Zrób test na obecność koronawirusa i pozostań w domu do momentu otrzymania wyników. Masz poważne dolegliwości, znajdujesz się w grupie wysokiego ryzyka lub wymagasz stałej opieki? Zadzwoń do swojego lekarza rodzinnego.</string>
+    <string name="request_test_paragraph_2" tools:ignore="Typos">Masz (łagodne) dolegliwości, które są typowe dla koronawirusa? Zrób darmowy test. To nie zajmuje dużo czasu i zazwyczaj można się szybko umówić. Wyniki są znane w ciągu 48 godzin. Pozostań w domu do momentu otrzymania wyników. Masz poważne dolegliwości lub znajdujesz się w grupie wysokiego ryzyka? Zadzwoń do swojego lekarza rodzinnego.</string>
     <string name="status_reset_exposure">Usuń powiadomienie</string>
     <string name="status_dialog_remove_exposure_title">Jesteś pewien, że chcesz usunąć to powiadomienie?</string>
     <string name="status_dialog_remove_exposure_message">Później nie będziesz mógł znaleźć tej daty w aplikacji. Dlatego zapamiętaj ją dobrze.</string>
@@ -85,8 +85,8 @@
     <string name="status_info_about_subtitle">Zobacz jak działa aplikacja i co to oznacza dla Twojej prywatności</string>
     <string name="status_info_share_title">Zaproś znajomych do aplikacji</string>
     <string name="status_info_share_subtitle">Udostępnij aplikację innym, aby razem zwalczać koronawirusa</string>
-    <string name="status_info_notification_title">Otrzymałem powiadomienie</string>
-    <string name="status_info_notification_subtitle">Przeczytaj, co możesz zrobić, gdy okaże się, że ktoś inny jest zarażony koronawirusem</string>
+    <string name="status_info_notification_title">Jakie informacje zawiera powiadomienie?</string>
+    <string name="status_info_notification_subtitle">Przeczytaj, co możesz zrobić, gdy okaże się, że znajdowałeś się w pobliżu osoby z koronawirusem</string>
     <string name="status_info_test_title">Poproś o test na koronawirusa</string>
     <string name="status_info_test_subtitle">Dowiedz się możliwie jak najszybciej czy sam jesteś zarażony</string>
     <string name="status_info_lab_title">Przekaż klucz GGD</string>
@@ -119,17 +119,17 @@
     <string name="faq_power_usage">Ile energii zużywa aplikacja?</string>
     <string name="faq_deletion">Jak mogę usunąć dane Bluetooth z telefonu?</string>
     <string name="faq_location_permission">Dlaczego moje ustawienia lokalizacji muszą być włączone?</string>
-    <string name="faq_technical">Jak działa aplikacja pod względem technicznym?</string>
-    <string name="faq_reason_paragraph_1">"Dzięki aplikacji pomagasz powstrzymać rozprzestrzenianie się koronawirusa. Aplikacja pomaga GGD w ich działaniach. Jeśli zrobisz test i okaże się, że masz koronawirusa, GGD zadzwoni do Ciebie. Podczas tej rozmowy GGD pyta, z kim miałeś styczność od kiedy jesteś zarażony. GGD dzwoni też do tych ludzi z ostrzeżeniem, że mogli zostać zarażeni koronawirusem."</string>
+    <string name="faq_technical">Jak dokładnie działa aplikacja?</string>
+    <string name="faq_reason_paragraph_1">"Dzięki aplikacji pomagasz powstrzymać rozprzestrzenianie się koronawirusa. Aplikacja stanowi uzupełnienie działań GGD. Jeśli zrobisz test i okaże się, że masz koronawirusa, GGD zadzwoni do Ciebie. Podczas tej rozmowy GGD pyta, z kim miałeś styczność od kiedy jesteś zarażony. GGD dzwoni też do tych ludzi z ostrzeżeniem, że mogli zostać zarażeni koronawirusem."</string>
     <string name="faq_reason_paragraph_2">Prawdopodobnie miałeś jednak również kontakt z osobami, których nie znasz. W pociągu, kinie czy restauracji. Tutaj pomaga aplikacja. Dzięki niej możesz ostrzec wszystkich ludzi, z którymi miałeś styczność. Także tych, których nie znasz. Oczywiście, jeśli korzystają z aplikacji.</string>
     <string name="faq_reason_paragraph_3">"GGD zwraca się do osób, których nazwisko lub dane kontaktowe posiadasz. Jednocześnie aplikacja ostrzega spotkane osoby, których nazwiska lub dane kontaktowe nie są Ci znane. W ten sposób również oni zostają szybko poinformowani, mogą podjąć działania i zapobiec zarażeniu innych. Działania GGD przebiegają normalnie, bo osoby, z którymi częściej miałeś kontakt, są prawdopodobnie bardziej narażeni na ryzyko zarażenia. "</string>
-    <string name="faq_reason_paragraph_4">Sam również możesz otrzymać ostrzeżenia od aplikacji. Gdy ma to miejsce, oznacza to, że w przeciągu ostatnich dni miałeś kontakt z osobą z koronawirusem. W tym przypadku, to Ty z kolei możesz zapobiec zarażeniu innych.</string>
+    <string name="faq_reason_paragraph_4">Sam możesz również otrzymać ostrzeżenia za pośrednictwem aplikacji. Gdy ma to miejsce, oznacza to, że w przeciągu ostatnich dni miałeś kontakt z osobą z koronawirusem. W tym przypadku, to Ty z kolei możesz zapobiec zarażeniu innych. Robisz to, zwracając szczególną uwagę na (łagodne) dolegliwości, które są typowe dla koronawirusa, jak również wykonując test na obecność koronawirusa, w przypadku pojawienia się tych dolegliwości.</string>
     <string name="faq_location_paragraph_1">Nie. Za pomocą Bluetooth aplikacja widzi wyłącznie, czy w pobliżu znajdują się osoby, które również korzystają z aplikacji. Bluetooth nie łączy się z Twoją lokalizacją, więc aplikacja nie może zobaczyć gdzie jesteś. Bluetooth jest przeznaczony wyłącznie do nawiązywania bezprzewodowego połączenia pomiędzy dwoma urządzeniami, znajdującymi się blisko siebie. Jak twój telefon i głośnik lub słuchawki.</string>
     <string name="faq_anonymous_paragraph_1">Aplikacja wymienia kody z innymi telefonami. Kody te nie zawierają żadnych Twoich danych osobowych ani lokalizacyjnych. Są zupełnie losowe. Wymiana kodów ma miejsce, gdy jesteś blisko osoby, która również posiada aplikację.</string>
-    <string name="faq_anonymous_paragraph_2">Okazuje się później, że dana osoba miała koronawirusa? W takim przypadku może ona dodać w aplikacji swoje kody do listy kodów osób zarażonych. Przekazanie kodów może mieć miejsce wyłącznie po przekazaniu GGD klucza GGD przez osobę zarażoną. Następnie ty, jak również wszystkie inne osoby, mające te kody w swoich telefonach, otrzymujecie powiadomienie. Powiadomienie zawiera wyłącznie informację o tym, kiedy miałeś kontakt z osobą zarażoną. Nie o tym, kto to jest i gdzie się spotkaliście.</string>
+    <string name="faq_anonymous_paragraph_2">Okazuje się później, że dana osoba miała koronawirusa? W takim przypadku może ona dodać w aplikacji swoje kody do listy kodów osób zarażonych. Przekazanie kodów może mieć miejsce wyłącznie po przekazaniu GGD klucza GGD przez osobę zarażoną. W ten sposób można potwierdzić zakażenie. Po takiej weryfikacji możliwe jest wysłanie powiadomienia wszystkim osobom, mającym te kody w swoich telefonach. Powiadomienie zawiera wyłącznie informację o tym, kiedy miały one kontakt z osobą zarażoną. Nie o tym, kto to jest i gdzie spotkały tę osobę.</string>
     <string name="faq_notification_paragraph_1">Otrzymasz powiadomienie, jeśli byłeś narażony na szczególne ryzyko zarażenia. Ma to miejsce, jeśli znajdowałeś się przez co najmniej 15 minut w pobliżu osoby, u której wykryto koronawirusa. I oczywiście wyłącznie, gdy ta osoba również używa tej aplikacji. To czy otrzymasz powiadomienie zależy od siły sygnału Bluetooth oraz od czasu trwania kontaktu. Na ulicy przejeżdżał ktoś na rowerze? Nie otrzymasz później powiadomienia. Znajdowaliście się blisko siebie, więc sygnał Bluetooth był silny. Jednak kontakt był na tyle krótki, że nie pojawiło się szczególne ryzyko zarażenia. Siedziałeś obok kogoś w pociągu lub biurze? Zatem możesz otrzymać później powiadomienie. Sygnał Bluetooth był wystarczająco silny i znajdowaliście się przez dłuższy czas blisko siebie.</string>
     <string name="faq_upload_keys_paragraph_1">Możesz wysłać innym powiadomienie tylko wtedy, gdy zrobiłeś test i okazało się, że masz koronawirusa. W tym przypadku GGD zadzwoni do Ciebie. Podczas rozmowy telefonicznej pracownik GGD sprawdzi Twój klucz GGD. Możesz go znaleźć w aplikacji. Dzięki temu powiadomienia są wysyłane wyłącznie przez osoby rzeczywiście zarażone.</string>
-    <string name="faq_upload_keys_paragraph_2">"Po sprawdzeniu Twojego klucza GGD, osoby, z którymi miałeś kontakt, gdy byłeś zarażony, otrzymają anonimowe powiadomienie. Tylko, jeśli oni również używają aplikacji. "</string>
+    <string name="faq_upload_keys_paragraph_2">"Po sprawdzeniu Twojego klucza GGD, osoby, z którymi miałeś kontakt, gdy byłeś zarażony, mogą otrzymać anonimowe powiadomienie. Tylko, jeśli oni również używają aplikacji."</string>
     <string name="faq_bluetooth_paragraph_1">Tak, jednak sygnał jest wtedy naprawdę słaby. Bluetooth działa najlepiej, gdy Twój telefon znajduje się w tym samym pomieszczeniu, co telefon innej osoby. Na przykład jest bardzo mało prawdopodobne, aby Twoja aplikacja odbierała sygnał Bluetooth od Twoich sąsiadów. Przez co istnieje również bardzo mała szansa, że otrzymasz powiadomienie, jeśli okaże się, że Twój sąsiad ma koronawirusa, a nie przebywaliście w tym samym pomieszczeniu.</string>
     <string name="faq_power_usage_paragraph_1">Aplikacja korzysta z technologii Bluetooth Low Energy. Jest to specjalna forma Bluetooth, która wykorzystuje bardzo małą ilość energii. Dokładna ilość zużywanej energii różni się w zależności od telefonu.</string>
     <string name="faq_deletion_paragraph_1">"Dane Bluetooth przechowywane przez aplikację możesz usunąć samodzielnie. Możesz to zrobić w następujący sposób. W swoim telefonie przejdź do opcji Ustawienia -&gt; Google -&gt; Powiadomienia o ewentualnej ekspozycji na COVID-19. Kliknij przycisk Usuń losowe identyfikatory -&gt; Usuń. Czy chcesz, aby aplikacja przestała przechowywać nowe dane Bluetooth? W takim przypadku usuń aplikację. "</string>
@@ -151,7 +151,7 @@
     <string name="share_content">Pomagam utrzymać koronawirusa pod kontrolą dzięki CoronaMelder. Przyłączysz się? %1$s</string>
     <string name="share_title">Udostępnij aplikację innym</string>
     <string name="lab_test_toolbar_title">Klucz GGD</string>
-    <string name="lab_test_paragraph_1">Zrobiłeś test i masz koronawirusa? W takim przypadku zadzwoni do Ciebie pracownik GGD. Będziesz potrzebować klucza GGD.</string>
+    <string name="lab_test_paragraph_1"><![CDATA[Zrobiłeś test i masz koronawirusa? W takim przypadku zadzwoni do Ciebie pracownik GGD. Będziesz potrzebować klucza GGD. <a href="">Jak to działa?</a>]]></string>
     <string name="lab_test_step_1">Przekaż ten klucz GGD pracownikowi GGD.</string>
     <string name="lab_test_token_loading">Uzyskiwanie klucza</string>
     <string name="lab_test_token_error">Aplikacja nie mogła uzyskać klucza GGD. Sprawdź swoje połączenie internetowe.</string>
@@ -169,7 +169,7 @@
     <string name="update_google_play_services">Zaktualizuj</string>
     <string name="update_google_play_services_headline">Twoje usługi Google Play nie są zaktualizowane.</string>
     <string name="update_google_play_services_description">%1$s wymaga najnowszej wersji usług Google Play, aby móc w dalszym ciągu pracować poprawnie na Twoim telefonie.</string>
-    <string name="error_upload_not_available">Możesz udostępniać swoje kody tylko wtedy, gdy włączone są niezbędne ustawienia</string>
+    <string name="error_upload_not_available">Możesz wysłać powiadomienie tylko wtedy, gdy włączone są niezbędne ustawienia.</string>
     <string name="error_api_not_available">Coś poszło nie tak z aplikacją. Spróbuj ponownie później.</string>
     <string name="today">dzisiaj</string>
     <plurals name="days_ago">
@@ -186,27 +186,29 @@
     <string name="upload_keys_failed_title">Nie udało się wysłać powiadomienia</string>
     <string name="upload_keys_failed_message">Nie udało się wysłać powiadomienia innym. Dlatego zadzwoń do GGD. Przeczytaj więcej w aplikacji.</string>
     <string name="upload_keys_failed_notification_header">Nie udało się wysłać powiadomienia innym</string>
-    <string name="upload_keys_failed_notification_paragraph">Próbowaliśmy udostępnić Twoje kody GG, ale nie udało się. Zadzwoń do GGD, aby spróbować ponownie. Istotne jest, abyś zrobił to szybko. W przeciwnym razie, więcej osób może się zarazić.</string>
+    <string name="upload_keys_failed_notification_paragraph">Próbowaliśmy wysłać powiadomienie, ale nie udało się. Zadzwoń do GGD, aby spróbować ponownie. Istotne jest, abyś zrobił to szybko. W przeciwnym razie, więcej osób może się zarazić.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Zadzwoń do GGD</string>
-    <string name="end_of_life_action">Lees meer</string>
-    <string name="end_of_life_description">CoronaMelder werkt niet meer omdat deze is afgesloten door het Ministerie van Volksgezondheid, Welzijn en Sport.</string>
-    <string name="end_of_life_headline">De CoronaMelder app werkt niet meer</string>
-    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met het coronavirus.</string>
-    <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
-    <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
-    <string name="cd_status_disabled">Geel rondje met uitroepteken als waarschuwing</string>
-    <string name="cd_status_exposed">Rood rondje met alarmbel dat aangeeft dat er nu actie nodig is</string>
-    <string name="cd_error_box">Waarschuwing</string>
-    <string name="cd_info_box">Belangrijk</string>
-    <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
-    <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">Lees meer</string>
-    <string name="post_notification_list_5"><![CDATA[<b>Blijf je goed aan de maatregelen houden:</b><ul><li>Was je handen regelmatig</li><li>Hoest/nies in je elleboog</li><li>Houd 1,5 meter afstand van mensen buiten je huishouden</li></ul>]]></string>
-    <string name="onboarding_privacy_policy_headline">Toestemming gegevensgebruik</string>
-    <string name="onboarding_privacy_policy_paragraph"><![CDATA[Om CoronaMelder te gebruiken moet je akkoord gaan met de <a href="">privacyverklaring</a>. Belangrijk om te weten:]]></string>
-    <string name="onboarding_privacy_policy_check_1">Je app zendt versleutelde Bluetooth-gegevens uit.</string>
-    <string name="onboarding_privacy_policy_check_2">Andere gebruikers die met jou in contact zijn geweest bewaren deze gegevens maximaal 14 dagen.</string>
-    <string name="onboarding_privacy_policy_check_3">Als uit een coronatest blijkt dat je corona hebt kun je dit in de app melden om andere gebruikers te waarschuwen.</string>
-    <string name="onboarding_privacy_policy_check_4">Je kunt op ieder moment de gegevens van je telefoon  verwijderen.</string>
-    <string name="onboarding_privacy_policy_consent_label">Ik heb de privacyverklaring gelezen en ga hiermee akkoord</string>
+    <string name="end_of_life_action">Czytaj więcej</string>
+    <string name="end_of_life_description">Holenderskie Ministerstwo Zdrowia, Opieki Społecznej i Sportu uznało, że aplikacja nie jest już potrzebna. Nie otrzymasz więc już powiadomienia, gdy okaże się, że znajdowałeś się w pobliżu osoby z koronawirusem.</string>
+    <string name="end_of_life_headline">Aplikacja CoronaMelder została zatrzymana</string>
+    <string name="status_error_notifications_disabled">Wyłączyłeś powiadomienia. Nie otrzymasz więc powiadomienia, gdy okaże się, że znajdowałeś się w pobliżu osoby z koronawirusem.</string>
+    <string name="status_error_action_notifications_disabled">Włącz powiadomienia</string>
+    <string name="cd_status_active">Zielone kółko z ptaszkiem oznacza, że ustawienia aplikacji są prawidłowe</string>
+    <string name="cd_status_disabled">Żółte kółko z wykrzyknikiem to ostrzeżenie</string>
+    <string name="cd_status_exposed">Czerwone kółko z dzwonkiem alarmowym oznacza, że konieczne jest podjęcie działań</string>
+    <string name="cd_error_box">Ostrzeżenie</string>
+    <string name="cd_info_box">Ważne</string>
+    <string name="faq_test_phase">Co oznacza wersja testowa i badawcza?</string>
+    <string name="footer_test_phase">Wersja testowa i badawcza %1$s (%2$s)</string>
+    <string name="footer_test_phase_read_more">Czytaj więcej</string>
+    <string name="post_notification_list_5"><![CDATA[<b>Przestrzegaj środków ostrożności:</b><ul><li>Regularnie myj ręce</li><li>Kaszl/kichaj w zgięcie łokcia</li><li>Zachowuj odległość 1,5 metra od osób spoza Twojego gospodarstwa domowego</li></ul>]]></string>
+    <string name="onboarding_privacy_policy_headline">Zgoda na użycie danych</string>
+    <string name="onboarding_privacy_policy_paragraph"><![CDATA[Aby korzystać z CoronaMelder musisz zaakceptować <a href="">oświadczenie o ochronie prywatności</a>. Warto wiedzieć:]]></string>
+    <string name="onboarding_privacy_policy_check_1">Twoja aplikacja przesyła zaszyfrowane dane Bluetooth.</string>
+    <string name="onboarding_privacy_policy_check_2">Dane te są przechowywane maksymalnie 14 dni przez innych użytkowników, z którymi miałeś kontakt.</string>
+    <string name="onboarding_privacy_policy_check_3">Jeśli po przeprowadzeniu testu na obecność koronawirusa okaże się, że jesteś zarażony, możesz zgłosić to w aplikacji, aby ostrzec innych użytkowników.</string>
+    <string name="onboarding_privacy_policy_check_4">W każdym momencie możesz usunąć dane z telefonu.</string>
+    <string name="onboarding_privacy_policy_consent_label">Przeczytałem i zgadzam się z oświadczeniem o ochronie prywatności</string>
+    <string name="request_test_paragraph_3">Zrób darmowy test. To nie zajmuje dużo czasu i zazwyczaj można się szybko umówić. Wyniki są znane w ciągu 48 godzin. Pozostań w domu do momentu poznania wyników.</string>
+    <string name="lab_test_how_does_it_work">Jak to działa?</string>
 </resources>
