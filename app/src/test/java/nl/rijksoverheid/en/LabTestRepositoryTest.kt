@@ -7,7 +7,6 @@
 package nl.rijksoverheid.en
 
 import android.app.Application
-import android.os.Build
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
@@ -42,7 +41,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 import retrofit2.Response
 import java.time.Clock
 import java.time.Instant
@@ -58,7 +56,6 @@ private val NOOP_SCHEDULER: UploadScheduler = {}
 private val NOOP_DECOY_SCHEDULER: DecoyScheduler = {}
 
 @RunWith(RobolectricTestRunner::class)
-@Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
 class LabTestRepositoryTest {
     private lateinit var mockWebServer: MockWebServer
     private val instant = Instant.parse("2020-06-20T10:15:30.00Z")
