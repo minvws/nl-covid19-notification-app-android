@@ -24,7 +24,7 @@ steps:
       gradleOptions: $(GRADLE_JVM_OPTIONS)
       options: $(GRADLE_OPTIONS)
       publishJUnitResults: false
-      tasks: 'app:bundleProdRelease app:assemAccRelease app:assemProdRelease app:appDistributionUploadProdRelease app:appDistributionUploadAccRelease'
+      tasks: 'app:bundleProdRelease app:assemAccRelease app:assemTstRelease app:assemProdRelease app:appDistributionUploadTstRelease app:appDistributionUploadAccRelease app:appDistributionUploadProdRelease'
     env:
       KEYSTORE_PASSWORD: $(KeystorePassword)
       KEYSTORE_KEY_PASSWORD: $(KeystoreKeyPassword)

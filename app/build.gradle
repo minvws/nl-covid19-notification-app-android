@@ -25,7 +25,6 @@ android {
 
         buildConfigField "boolean", "FEATURE_LOGGING", "false"
         buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "false"
-        buildConfigField "boolean", "FEATURE_DISABLE_UPLOAD", "false"
     }
 
     testOptions {
@@ -94,7 +93,6 @@ android {
         }
         prod {
             dimension "environment"
-            buildConfigField "boolean", "FEATURE_DISABLE_UPLOAD", "true"
         }
     }
 
