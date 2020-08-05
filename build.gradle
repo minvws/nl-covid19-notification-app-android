@@ -68,6 +68,8 @@ allprojects {
             content {
                 includeGroup "org.jetbrains.trove4j"
                 includeGroup "com.microsoft.appcenter"
+                includeGroup "com.jraska"
+                includeGroup "tools.fastlane"
             }
         }
     }
