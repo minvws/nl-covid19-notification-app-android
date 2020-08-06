@@ -10,6 +10,16 @@ version = "0.4.1"
 def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 1
 archivesBaseName = "covid-notificatie-v${version}-${buildVersionCode}"
 
+
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
 android {
     compileSdkVersion 29
 
@@ -63,12 +73,14 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            buildConfigField "String", "GIT_VERSION", "\"${getGitHash()}\""
         }
 
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "boolean", "FEATURE_LOGGING", "true"
+            buildConfigField "String", "GIT_VERSION", "\"dev\""
         }
     }
 
