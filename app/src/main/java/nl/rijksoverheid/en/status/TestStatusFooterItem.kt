@@ -19,7 +19,7 @@ class TestStatusFooterItem : BaseBindableItem<ItemStatusFooterTestBinding>() {
         viewBinding.footer.text = viewBinding.root.context.getString(
             R.string.footer_test_phase,
             BuildConfig.VERSION_NAME,
-            BuildConfig.VERSION_CODE.toString()
+            "${BuildConfig.VERSION_CODE}-${BuildConfig.GIT_VERSION}"
         )
     }
 
