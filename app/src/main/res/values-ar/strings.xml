@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">تطبيق التحذير من كورونا</string>
+    <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">ar</string>
     <string name="onboarding_next">إلى الصفحة التالية</string>
@@ -64,7 +64,7 @@
     <string name="generic_notification_paragraph_2" tools:ignore="Typos">يرسل التطبيق تحذيرًا عند تواجدك لمدة 15 دقائق على الأقل بالقرب من شخص تبين لاحقاً أنه مصاب بكورونا. تستطيع من خلال هذا الإشعار فقط معرفة اليوم الذي تعرضت به لذلك. من الممكن أن تكون معرضًا إلى زيادة خطر الإصابة في هذا الموقف. إذا أصبت بالعدوى بالفعل، من الممكن أن تنقل الفيروس إلى الآخرين. حتى أذا لم تكن تشعر بالمرض الآن.</string>
     <string name="post_notification_header_3">ما الذي يمكنك فعله الآن؟</string>
     <string name="generic_notification_header_3">ما الذي يمكنك فعله في هذه الحالة؟</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>أليست لديك أي أعراض؟ قم بإجراء فحص كورونا مجانًا</li><li>هل لديك أعراض (خفيفة) تتناسب مع كورونا؟ قم بإجراء فحص كورونا والزم المنزل حتى تستلم النتيجة</li><li>هل لديك أعراض خطيرة وأنت من ضمن مجموعة معرضة للخطر؟ اتصل بطبيب العائلة الخاص بك</li></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>أليست لديك أي أعراض؟ قم بإجراء فحص كورونا والزم المنزل حتى تستلم النتيجة</li><li>هل لديك أعراض (خفيفة) تتناسب مع كورونا؟ قم بإجراء فحص كورونا والزم المنزل حتى تستلم النتيجة</li><li>هل لديك أعراض خطيرة وأنت من ضمن مجموعة معرضة للخطر؟ اتصل بطبيب العائلة الخاص بك</li></ul>]]></string>
     <string name="post_notification_header_6">قم بإجراء فحص كورونا</string>
     <string name="post_notification_paragraph_7" tools:ignore="Typos">تنصحك مصلحة الصحة البلدية (GGD) بإجراء فحص كورونا. حتى لو لم تكن تشعر بالمرض. حيث أنه من الممكن أن تنقل فيروس كورونا بدون الشعور بالمرض، وبذلك تستطيع أن تنقل العدوى إلى الآخرين.</string>
     <string name="post_notification_paragraph_8">"اطلب إجراء الفحص مجانًا. لا يستغرق ذلك وقتًا طويلاً، وفي معظم الحالات تستطيع تحديد موعد بسرعة. النتيجة معروفة خلال 48 ساعة. لازم المنزل حتى تعرف النتيجة."</string>
