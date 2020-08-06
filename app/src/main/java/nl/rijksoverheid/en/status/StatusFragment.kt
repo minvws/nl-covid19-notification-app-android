@@ -72,7 +72,12 @@ class StatusFragment @JvmOverloads constructor(
                     StatusFragmentDirections.actionLabTest()
                 )
                 is TestStatusFooterItem -> {
-                    val url = Uri.parse(getString(R.string.test_phase_url))
+                    val url = Uri.parse(
+                        getString(
+                            R.string.test_phase_url,
+                            getString(R.string.app_language)
+                        )
+                    )
                     CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
                 }
             }
