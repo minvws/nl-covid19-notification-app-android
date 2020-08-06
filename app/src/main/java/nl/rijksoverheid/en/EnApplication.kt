@@ -9,6 +9,7 @@ package nl.rijksoverheid.en
 import android.app.Application
 import android.util.Log
 import androidx.work.Configuration
+import androidx.work.WorkManager
 import nl.rijksoverheid.en.job.EnWorkerFactory
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
@@ -24,6 +25,8 @@ class EnApplication : Application(), Configuration.Provider {
             Timber.plant(FileTree(getExternalFilesDir(null)))
             Timber.d("onCreate")
         }
+        // init work manager immediately per recommendation
+        WorkManager.initialize(this, workManagerConfiguration)
         notificationsRepository.createOrUpdateNotificationChannels()
     }
 

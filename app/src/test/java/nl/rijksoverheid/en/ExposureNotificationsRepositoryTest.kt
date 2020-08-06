@@ -13,7 +13,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.location.LocationManager
-import android.os.Build
 import androidx.core.content.edit
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
@@ -63,7 +62,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
-import org.robolectric.annotation.Config
 import retrofit2.Response
 import java.io.File
 import java.io.FileInputStream
@@ -131,7 +129,6 @@ private val MOCK_RISK_PARAMS_RESPONSE = MockResponse().setBody(
 )
 
 @RunWith(RobolectricTestRunner::class)
-@Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
 class ExposureNotificationsRepositoryTest {
     private lateinit var mockWebServer: MockWebServer
     private lateinit var context: Context

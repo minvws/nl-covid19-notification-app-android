@@ -9,7 +9,6 @@ package nl.rijksoverheid.en.notifier
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.os.Build
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -26,10 +25,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
 class NotificationsRepositoryTest {
 
     @Test
@@ -71,6 +68,7 @@ class NotificationsRepositoryTest {
                 context,
                 lifecycleOwner = lifecycleOwner
             )
+            repository.createOrUpdateNotificationChannels()
             shadowOf(notificationManager).apply {
                 setNotificationsEnabled(true)
                 notificationChannels.map { it as NotificationChannel }
@@ -90,6 +88,7 @@ class NotificationsRepositoryTest {
             context,
             lifecycleOwner = lifecycleOwner
         )
+        repository.createOrUpdateNotificationChannels()
         shadowOf(notificationManager).setNotificationsEnabled(false)
 
         val result = async { repository.exposureNotificationsEnabled().take(2).toList() }
