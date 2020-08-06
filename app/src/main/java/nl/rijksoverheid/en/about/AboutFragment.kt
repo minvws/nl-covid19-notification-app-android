@@ -77,19 +77,35 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
                     startActivity(intent)
                 }
                 is PrivacyStatementItem -> {
-                    val url = Uri.parse(getString(R.string.privacy_policy_url))
+                    val url = Uri.parse(
+                        getString(
+                            R.string.privacy_policy_url,
+                            getString(R.string.app_language)
+                        )
+                    )
                     CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
                 }
                 is AccessibilityItem -> {
-                    val url = Uri.parse(getString(R.string.accessibility_url))
+                    val url = Uri.parse(
+                        getString(
+                            R.string.accessibility_url,
+                            getString(R.string.app_language)
+                        )
+                    )
                     CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
                 }
                 is ColofonItem -> {
-                    val url = Uri.parse(getString(R.string.colofon_url))
+                    val url =
+                        Uri.parse(getString(R.string.colofon_url, getString(R.string.app_language)))
                     CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
                 }
                 is TestPhaseItem -> {
-                    val url = Uri.parse(getString(R.string.test_phase_url))
+                    val url = Uri.parse(
+                        getString(
+                            R.string.test_phase_url,
+                            getString(R.string.app_language)
+                        )
+                    )
                     CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
                 }
             }
