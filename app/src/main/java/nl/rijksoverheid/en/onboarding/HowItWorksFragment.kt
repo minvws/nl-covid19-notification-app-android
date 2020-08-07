@@ -71,7 +71,8 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
         viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
                 findNavController().navigate(
-                    HowItWorksFragmentDirections.actionNext(), FragmentNavigatorExtras(
+                    HowItWorksFragmentDirections.actionNext(),
+                    FragmentNavigatorExtras(
                         binding.appbar to binding.appbar.transitionName
                     )
                 )

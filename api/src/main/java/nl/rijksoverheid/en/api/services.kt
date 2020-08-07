@@ -35,11 +35,13 @@ internal fun createOkHttpClient(context: Context): OkHttpClient {
             addInterceptor(PaddedRequestInterceptor())
             addInterceptor(SignedBodyInterceptor())
             if (Timber.forest().isNotEmpty()) {
-                addInterceptor(HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-                    override fun log(message: String) {
-                        Timber.tag("OkHttpClient").d(message)
-                    }
-                }).setLevel(HttpLoggingInterceptor.Level.BODY))
+                addInterceptor(
+                    HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+                        override fun log(message: String) {
+                            Timber.tag("OkHttpClient").d(message)
+                        }
+                    }).setLevel(HttpLoggingInterceptor.Level.BODY)
+                )
             }
             if (BuildConfig.FEATURE_SSL_PINNING) {
                 connectionSpecs(

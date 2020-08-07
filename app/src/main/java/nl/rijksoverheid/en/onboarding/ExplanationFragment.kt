@@ -84,7 +84,8 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
 
         binding.nextButtonClickListener = View.OnClickListener {
             findNavController().navigate(
-                ExplanationFragmentDirections.actionNext(), FragmentNavigatorExtras(
+                ExplanationFragmentDirections.actionNext(),
+                FragmentNavigatorExtras(
                     binding.appbar to binding.appbar.transitionName
                 )
             )

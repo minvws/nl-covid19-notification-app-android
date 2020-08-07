@@ -83,18 +83,21 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
         labViewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }
         viewModel.notificationState.observe(viewLifecycleOwner) { state -> section.update(state) }
 
-        labViewModel.uploadResult.observe(viewLifecycleOwner, EventObserver {
-            when (it) {
-                is LabTestViewModel.UploadResult.Success -> findNavController().navigate(
-                    LabTestFragmentDirections.actionLabTestDone(it.usedKey)
-                )
-                is LabTestViewModel.UploadResult.RequestConsent -> requestConsent(it.resolution.intentSender)
-                LabTestViewModel.UploadResult.Error -> {
-                    Toast.makeText(context, R.string.lab_test_upload_error, Toast.LENGTH_LONG)
-                        .show()
+        labViewModel.uploadResult.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                when (it) {
+                    is LabTestViewModel.UploadResult.Success ->
+                        findNavController().navigate(LabTestFragmentDirections.actionLabTestDone(it.usedKey))
+                    is LabTestViewModel.UploadResult.RequestConsent ->
+                        requestConsent(it.resolution.intentSender)
+                    LabTestViewModel.UploadResult.Error -> {
+                        Toast.makeText(context, R.string.lab_test_upload_error, Toast.LENGTH_LONG)
+                            .show()
+                    }
                 }
             }
-        })
+        )
     }
 
     override fun onStart() {

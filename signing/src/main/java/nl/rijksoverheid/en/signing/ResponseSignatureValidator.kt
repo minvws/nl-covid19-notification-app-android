@@ -73,7 +73,9 @@ class ResponseSignatureValidator(
         try {
             val sp = CMSSignedDataParser(
                 JcaDigestCalculatorProviderBuilder().setProvider(provider)
-                    .build(), CMSTypedStream(BufferedInputStream(content)), signature
+                    .build(),
+                CMSTypedStream(BufferedInputStream(content)),
+                signature
             )
 
             sp.signedContent.drain()
@@ -93,9 +95,10 @@ class ResponseSignatureValidator(
             val signingCertificate = result.certPath.certificates[0] as X509Certificate
 
             if (!signer.verify(
-                    JcaSimpleSignerInfoVerifierBuilder().setProvider(provider)
-                        .build(signingCertificate)
-                )
+                JcaSimpleSignerInfoVerifierBuilder()
+                    .setProvider(provider)
+                    .build(signingCertificate)
+            )
             ) {
                 throw SignatureValidationException()
             }

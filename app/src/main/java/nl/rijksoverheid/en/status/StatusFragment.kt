@@ -90,9 +90,12 @@ class StatusFragment @JvmOverloads constructor(
             }
         }
 
-        statusViewModel.requestEnableNotifications.observe(viewLifecycleOwner, EventObserver {
-            viewModel.requestEnableNotifications()
-        })
+        statusViewModel.requestEnableNotifications.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                viewModel.requestEnableNotifications()
+            }
+        )
 
         statusViewModel.headerState.observe(viewLifecycleOwner) {
             when (it) {

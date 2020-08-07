@@ -92,7 +92,8 @@ class BulletedListItem(
                         }
                     }
                 }
-            })
+            }
+        )
 
         val spannableBuilder = SpannableStringBuilder(htmlSpannable)
         // replace the marker with BulletSpan if the markers have been added

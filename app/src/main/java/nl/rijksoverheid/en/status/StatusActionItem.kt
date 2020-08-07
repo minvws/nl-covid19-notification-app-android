@@ -39,7 +39,8 @@ sealed class StatusActionItem(
                         "${viewBinding.statusTitle.text}\n${viewBinding.statusSubtitle.text}"
                     info.className = Button::class.java.name
                 }
-            })
+            }
+        )
         viewBinding.infoIcon = icon
         viewBinding.infoTitle = title
         viewBinding.infoSubtitle = subtitle

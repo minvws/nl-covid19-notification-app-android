@@ -48,7 +48,8 @@ class PrivacyPolicyConsentFragment : BaseFragment(R.layout.fragment_privacy_poli
         binding.lifecycleOwner = viewLifecycleOwner
         binding.nextButtonClickListener = View.OnClickListener {
             findNavController().navigate(
-                PrivacyPolicyConsentFragmentDirections.actionNext(), FragmentNavigatorExtras(
+                PrivacyPolicyConsentFragmentDirections.actionNext(),
+                FragmentNavigatorExtras(
                     binding.appbar to binding.appbar.transitionName
                 )
             )

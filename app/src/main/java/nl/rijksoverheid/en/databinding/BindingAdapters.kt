@@ -25,22 +25,18 @@ object BindingAdapters {
         keepInLayout: Boolean,
         hideOnSmallScreenHeight: Boolean?
     ) {
-        val hideSmallScreen = (hideOnSmallScreenHeight
-            ?: false) && isSmallScreen(view.context.resources.configuration)
+        val hideSmallScreen =
+            (hideOnSmallScreenHeight ?: false) &&
+                isSmallScreen(view.context.resources.configuration)
 
         val visibility = when {
-            hideSmallScreen -> {
-                View.GONE
-            }
-            show == true -> {
-                View.VISIBLE
-            }
+            hideSmallScreen -> View.GONE
+            show == true -> View.VISIBLE
             show == false -> {
-                if (keepInLayout) View.INVISIBLE else View.GONE
+                if (keepInLayout) View.INVISIBLE
+                else View.GONE
             }
-            else -> {
-                null
-            }
+            else -> null
         }
 
         visibility?.let { view.visibility = it }

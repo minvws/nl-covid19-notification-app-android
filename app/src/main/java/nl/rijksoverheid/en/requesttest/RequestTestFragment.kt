@@ -34,10 +34,12 @@ class RequestTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
         binding.button.apply {
             setText(R.string.post_notification_button)
             setOnClickListener {
-                startActivity(Intent(Intent.ACTION_DIAL).apply {
-                    val phoneNumber = getString(R.string.phone_number)
-                    data = Uri.parse("tel:$phoneNumber")
-                })
+                startActivity(
+                    Intent(Intent.ACTION_DIAL).apply {
+                        val phoneNumber = getString(R.string.phone_number)
+                        data = Uri.parse("tel:$phoneNumber")
+                    }
+                )
             }
         }
     }

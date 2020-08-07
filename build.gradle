@@ -17,7 +17,7 @@ buildscript {
     ext.play_services_base_version = "17.3.0"
     ext.play_services_tasks_version = "17.1.0"
     //3rd-party dependency versions
-    ext.groupie_version = "2.8.0"
+    ext.groupie_version = "2.8.1"
     ext.jdk15to18_version = "1.66"
     ext.junit_version = "4.13"
     ext.moshi_version = "1.9.3"
@@ -38,12 +38,6 @@ buildscript {
             }
         }
         mavenCentral()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-            content {
-                includeGroup "com.github.triplet.gradle"
-            }
-        }
         jcenter() {
             content {
                 includeGroup "org.jetbrains.trove4j"
@@ -55,13 +49,16 @@ buildscript {
         classpath 'com.android.tools.build:gradle:4.0.1'
         classpath "com.osacky.flank.gradle:fladle:0.11.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.diffplug.spotless:spotless-plugin-gradle:3.30.0"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$androidx_nav_version"
         classpath "com.github.triplet.gradle:play-publisher:2.8.0"
         classpath 'com.google.firebase:firebase-appdistribution-gradle:2.0.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+}
+
+plugins {
+    id "com.diffplug.spotless" version "5.1.1"
 }
 
 apply from: 'gradle/spotless.gradle'

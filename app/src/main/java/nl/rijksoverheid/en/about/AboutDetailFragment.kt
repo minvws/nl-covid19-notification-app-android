@@ -27,9 +27,13 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter.add(FAQDetailSections(openSettings = {
-            startActivity(Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS))
-        }).getSection(args.faqItemId))
+        adapter.add(
+            FAQDetailSections(
+                openSettings = {
+                    startActivity(Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS))
+                }
+            ).getSection(args.faqItemId)
+        )
 
         enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
         exitTransition =
