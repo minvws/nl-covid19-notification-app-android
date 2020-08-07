@@ -8,7 +8,7 @@ variables:
   - name: BUILD_ID
     value: $(Build.BuildId)
   - name: GRADLE_JVM_OPTIONS
-    value: '-Xmx4000m'
+    value: '-Xmx4000m -Dsonar.projectKey=MSS_Android -Dsonar.projectName="CoronaMelder.Android"'
   - name: GRADLE_OPTIONS
     value: '--build-cache'
 
@@ -36,6 +36,13 @@ stages:
               options: $(GRADLE_OPTIONS)
               publishJUnitResults: false
               tasks: spotlessCheck
+              steps:
+          - task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+            displayName: 'Prepare analysis on SonarCloud'
+            inputs:
+              SonarCloud: 'CIBG SonarCloud'
+              organization: cibg
+              scannerMode: 'Other'
           - task: Gradle@2
             displayName: Build and test
             inputs:
@@ -47,7 +54,7 @@ stages:
               testRunTitle: Unit tests
               jdkVersionOption: '1.11'
               gradleOptions: $(GRADLE_JVM_OPTIONS)
-              sonarQubeRunAnalysis: false
+              sonarQubeRunAnalysis: true
           - task: DownloadSecureFile@1
             displayName: Download Firebase credentials
             name: firebaseCredentials
@@ -68,6 +75,10 @@ stages:
               jdkVersionOption: '1.11'
               gradleOptions: $(GRADLE_JVM_OPTIONS)
               sonarQubeRunAnalysis: false
+          - task: SonarCloudPublish@1
+            displayName: 'Publish results on build summary'
+            inputs:
+              pollingTimeoutSec: '300'
           # Run this step only on master
           - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/master') }}:
             - template: distribute.yml
