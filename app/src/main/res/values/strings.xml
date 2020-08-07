@@ -66,7 +66,7 @@
     <string name="generic_notification_header_3">What can you do in this situation?</string>
     <string name="post_notification_list_4"><![CDATA[<ul><li>No symptoms? Get tested for coronavirus and stay home until you get the results</li><li>Do you have (mild) symptoms related to the coronavirus? Get tested for coronavirus and stay home until you get the results</li><li>Serious symptoms or part of a high-risk group? Call your doctor</li></ul>]]></string>
     <string name="post_notification_header_6">Get tested for coronavirus</string>
-    <string name="post_notification_paragraph_7" tools:ignore="Typos">The GGD recommends you get tested for coronavirus. Even if you don\'t feel sick. Because you can still infect others and spread the virus without feeling sick.</string>
+    <string name="post_notification_paragraph_7" tools:ignore="Typos">Even if you don\'t feel sick. Because you can still infect others and spread the virus without feeling sick.</string>
     <string name="post_notification_paragraph_8">"Get a free test. It doesn't take long to get tested and waiting times are mostly short. You get the results within 48 hours. In the meantime, stay home."</string>
     <string name="post_notification_paragraph_9">Call %1$s for free to request a coronavirus test.</string>
     <string name="post_notification_message">Have your citizen service number (BSN) ready. You\'ll find it on your passport, identity card or nationality certificate.</string>
