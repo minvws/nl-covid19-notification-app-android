@@ -10,11 +10,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion sdk_compile_version
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 29
+        minSdkVersion sdk_min_version
+        targetSdkVersion sdk_target_version
         versionCode 1
         versionName "1.0"
 
@@ -33,9 +33,9 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.0'
-    implementation 'org.bouncycastle:bcprov-jdk15to18:1.65'
-    api 'org.bouncycastle:bcpkix-jdk15to18:1.65'
+    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation "org.bouncycastle:bcprov-jdk15to18:$jdk15to18_version"
+    api "org.bouncycastle:bcpkix-jdk15to18:$jdk15to18_version"
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

@@ -6,11 +6,11 @@ ext.cdnEndpoint = ext.has("cdnEndpoint") ? ext.cdnEndpoint : "http://localhost/"
 ext.apiEndpoint = ext.has("apiEndpoint") ? ext.apiEndpoint : "http://localhost/"
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion sdk_compile_version
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 29
+        minSdkVersion sdk_min_version
+        targetSdkVersion sdk_target_version
         versionCode 1
         versionName "1.0"
 
@@ -79,21 +79,20 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     api 'com.squareup.retrofit2:retrofit:2.9.0'
-    api 'com.squareup.okhttp3:okhttp:4.8.0'
+    api "com.squareup.okhttp3:okhttp:$okhttp3_version"
 
-    implementation 'com.squareup.retrofit2:converter-moshi:2.8.1'
-    implementation ('com.squareup.moshi:moshi-kotlin:1.9.2') {
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
+    implementation ("com.squareup.moshi:moshi-kotlin:$moshi_version") {
         exclude group: "org.jetbrains.kotlin", module: "kotlin-reflect"
     }
-
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.0'
-    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.2'
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation project(":signing")
 
     testImplementation 'junit:junit:4.13'
     testImplementation 'org.robolectric:robolectric:4.3.1'
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.8.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:$okhttp3_version")
     testImplementation 'androidx.test:core:1.2.0'
 }

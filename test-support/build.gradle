@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion sdk_compile_version
 
     defaultConfig {
         versionCode 1
@@ -23,8 +23,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    api "androidx.test:core-ktx:${android_test_version}"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    api "androidx.test:core-ktx:$android_test_version"
     api "androidx.fragment:fragment-ktx:$fragment_version"
     implementation project(":en-api")
     implementation "androidx.activity:activity-ktx:$activity_version"
