@@ -20,7 +20,7 @@ class SkipConsentConfirmationDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = MaterialAlertDialogBuilder(context)
+        val builder = MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.onboarding_consent_skip_dialog_title)
             .setMessage(R.string.onboarding_consent_skip_dialog_message)
             .setPositiveButton(R.string.onboarding_consent_skip_dialog_enable) { _, _ ->

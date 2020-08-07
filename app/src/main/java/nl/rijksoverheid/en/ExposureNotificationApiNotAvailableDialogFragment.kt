@@ -14,7 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class ExposureNotificationApiNotAvailableDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = MaterialAlertDialogBuilder(context)
+        val builder = MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.dialog_error_api_not_available_title)
             .setMessage(R.string.dialog_error_api_not_available_message)
             .setPositiveButton(R.string.dialog_error_confirm, null)
