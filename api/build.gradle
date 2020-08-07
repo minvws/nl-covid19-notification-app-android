@@ -77,11 +77,14 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
     api "com.squareup.okhttp3:okhttp:$okhttp3_version"
 
-    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation project(":signing")
+
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
     implementation ("com.squareup.moshi:moshi-kotlin:$moshi_version") {
         exclude group: "org.jetbrains.kotlin", module: "kotlin-reflect"
@@ -89,10 +92,9 @@ dependencies {
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
     implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation project(":signing")
 
-    testImplementation 'junit:junit:4.13'
-    testImplementation 'org.robolectric:robolectric:4.3.1'
-    testImplementation("com.squareup.okhttp3:mockwebserver:$okhttp3_version")
-    testImplementation 'androidx.test:core:1.2.0'
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "androidx.test:core:$androidx_test_core_version"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
 }
