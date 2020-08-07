@@ -6,14 +6,8 @@ ext.cdnEndpoint = ext.has("cdnEndpoint") ? ext.cdnEndpoint : "http://localhost/"
 ext.apiEndpoint = ext.has("apiEndpoint") ? ext.apiEndpoint : "http://localhost/"
 
 android {
-    compileSdkVersion sdk_compile_version
 
     defaultConfig {
-        minSdkVersion sdk_min_version
-        targetSdkVersion sdk_target_version
-        versionCode 1
-        versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
@@ -86,7 +80,7 @@ dependencies {
 
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
-    implementation ("com.squareup.moshi:moshi-kotlin:$moshi_version") {
+    implementation("com.squareup.moshi:moshi-kotlin:$moshi_version") {
         exclude group: "org.jetbrains.kotlin", module: "kotlin-reflect"
     }
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"

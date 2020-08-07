@@ -21,12 +21,9 @@ def getGitHash = { ->
 }
 
 android {
-    compileSdkVersion sdk_compile_version
 
     defaultConfig {
         applicationId "nl.rijksoverheid.en"
-        minSdkVersion sdk_min_version
-        targetSdkVersion sdk_target_version
         versionCode buildVersionCode
         versionName version
 
@@ -108,32 +105,24 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-        coreLibraryDesugaringEnabled true
-    }
+    compileOptions.coreLibraryDesugaringEnabled true
 
     buildFeatures {
         viewBinding = true
         dataBinding = true
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
     variantFilter { variant ->
         def names = variant.flavors*.name
-        if(variant.buildType.name == 'debug' && names.contains("prod")) {
+        if (variant.buildType.name == 'debug' && names.contains("prod")) {
             setIgnore(true)
         }
     }
 
     firebaseAppDistribution {
-        appId="1:937920499570:android:9ac7b5cf66523282f957eb"
-        releaseNotesFile=rootProject.file("app/src/main/play/release-notes/nl-NL/internal.txt")
-        groups="android-latest"
+        appId = "1:937920499570:android:9ac7b5cf66523282f957eb"
+        releaseNotesFile = rootProject.file("app/src/main/play/release-notes/nl-NL/internal.txt")
+        groups = "android-latest"
     }
 }
 
@@ -148,7 +137,7 @@ fladle {
     variant = "devDebug"
     testShards = 1
     devices = [
-            [ "model" : "Pixel2", "version" : "28"]
+            ["model": "Pixel2", "version": "28"]
     ]
     testTargets = ["notAnnotation nl.rijksoverheid.en.screenshots.StoreScreenshots"]
 }

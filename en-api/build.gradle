@@ -2,14 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion sdk_compile_version
 
     defaultConfig {
-        minSdkVersion sdk_min_version
-        targetSdkVersion sdk_target_version
-        versionCode 1
-        versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -31,15 +25,6 @@ android {
             systemProperty("robolectric.dependency.repo.id", "central")
             systemProperty("robolectric.dependency.repo.url", "https://repo1.maven.org/maven2")
         }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 
     buildFeatures {
@@ -64,5 +49,4 @@ dependencies {
     testImplementation "org.robolectric:robolectric:$robolectric_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidx_espresso_version"
-
 }

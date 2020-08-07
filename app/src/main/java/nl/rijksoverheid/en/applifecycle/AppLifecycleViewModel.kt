@@ -21,24 +21,24 @@ import nl.rijksoverheid.en.lifecyle.Event
 class AppLifecycleViewModel(
     private val appLifecycleManager: AppLifecycleManager,
     private val appConfigManager: AppConfigManager,
-    private val applicationContext: Context
+    private val context: Context
 ) : ViewModel() {
 
-    val updateEvent: LiveData<Event<AppLifecyleStatus>> =
+    val updateEvent: LiveData<Event<AppLifecycleStatus>> =
         MutableLiveData()
 
     fun checkForForcedAppUpdate() {
         viewModelScope.launch {
             val config = appConfigManager.getConfigOrDefault()
-            applicationContext.saveIsTestPhaseVersion(config.testPhase)
+            context.saveIsTestPhaseVersion(config.testPhase)
             if (config.deactivated) {
-                (updateEvent as MutableLiveData).value = Event(AppLifecyleStatus.EndOfLife)
+                (updateEvent as MutableLiveData).value = Event(AppLifecycleStatus.EndOfLife)
             } else {
                 appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode, false)
                 when (val result = appLifecycleManager.getUpdateState()) {
                     is AppLifecycleManager.UpdateState.NeedsUpdate -> {
                         (updateEvent as MutableLiveData).value =
-                            Event(AppLifecyleStatus.Update(result))
+                            Event(AppLifecycleStatus.Update(result))
                     }
                     else -> {
                     } // ignore
@@ -47,10 +47,10 @@ class AppLifecycleViewModel(
         }
     }
 
-    sealed class AppLifecyleStatus {
+    sealed class AppLifecycleStatus {
         data class Update(val update: AppLifecycleManager.UpdateState.NeedsUpdate) :
-            AppLifecyleStatus()
+            AppLifecycleStatus()
 
-        object EndOfLife : AppLifecyleStatus()
+        object EndOfLife : AppLifecycleStatus()
     }
 }
