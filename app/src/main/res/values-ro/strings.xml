@@ -17,7 +17,7 @@
     <string name="onboarding_example_2_description">Semnalul Bluetooth a fost suficient de puternic și ați fost aproape unul de celălalt mai mult timp.</string>
     <string name="onboarding_consent_headline">Activare notificări despre posibilul contact cu virusul corona.</string>
     <string name="onboarding_consent_check_1">Datele Bluetooth sunt stocate pe telefonul dvs. timp de 14 zile. Le puteți șterge întotdeauna.</string>
-    <string name="onboarding_consent_check_2"><![CDATA[Numele dvs. și alte date personale <strong>nu</strong>sunt folosite sau stocate.]]></string>
+    <string name="onboarding_consent_check_2"><![CDATA[Numele dvs. <strong>nu</strong>neste folosit sau stocat.]]></string>
     <string name="onboarding_consent_check_3"><![CDATA[Datele despre locația dvs. GPS <strong>nu</strong> sunt folosite sau stocate.]]></string>
     <string name="onboarding_consent_request">Activare</string>
     <string name="onboarding_consent_explain">Cum funcționează aplicația?</string>
@@ -66,7 +66,7 @@
     <string name="generic_notification_header_3">Ce puteți face în această situație?</string>
     <string name="post_notification_list_4"><![CDATA[<ul><li>Nu aveți nici un simptom? Faceți un test pentru corona și rămâneți acasă până aflați rezultatele</li><li> Aveți simptome ușoare care ar putea fi asociate cu corona? Faceți un test pentru corona și rămâneți acasă până aflați rezultatele </li><li> Aveți simptome grave sau faceți parte dintr-o categorie de risc? Sunați medicul de familie</li></ul>]]></string>
     <string name="post_notification_header_6">Faceți un test pentru corona</string>
-    <string name="post_notification_paragraph_7" tools:ignore="Typos">GGD (Serviciul de Sănătate Municipal) vă recomandă să vă testați pentru virus. Chiar dacă încă nu vă simțiți rău. Deoarece chiar fără a vă simțiți rău, puteți răspândi deja coronavirusul contaminându-i astfel pe alții.</string>
+    <string name="post_notification_paragraph_7" tools:ignore="Typos">Chiar dacă încă nu vă simțiți rău. Deoarece chiar fără a vă simțiți rău, puteți răspândi deja coronavirusul contaminându-i astfel pe alții.</string>
     <string name="post_notification_paragraph_8">"Testați-vă gratuit. Nu durează mult și, de obicei, puteți face repede o programare. Rezultatele vor fi cunoscute în 48 de ore. Rămâneți acasă până la aflarea rezultatului."</string>
     <string name="post_notification_paragraph_9">Sunați gratuit la <b>%1$s</b> pentru a solicita un test pentru corona.</string>
     <string name="post_notification_message">Țineți numărul de securitate socială (BSN) la îndemână. Acest număr îl găsiți pe pașaport sau pe cartea de identitate.</string>

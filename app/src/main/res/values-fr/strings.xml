@@ -66,7 +66,7 @@
     <string name="generic_notification_header_3">Que pouvez-vous faire dans une telle situation ?</string>
     <string name="post_notification_list_4"><![CDATA[<ul><li>Vous n\'avez aucun symptôme ? Faites un test corona et restez chez vous jusqu\'à ce que vous receviez le résultat</li><li>Vous avez de (légers) symptômes qui correspondent à ceux du coronavirus ? Faites un test corona et restez chez vous jusqu\'à ce que vous receviez le résultat</li><li>Vous avez de graves symptômes ou vous êtes dans une catégorie à risque ? Appelez votre médecin traitant</li></ul>]]></string>
     <string name="post_notification_header_6">Faites un test corona</string>
-    <string name="post_notification_paragraph_7" tools:ignore="Typos">Le GGD recommande un test de dépistage du coronavirus. Même si vous n\'avez aucun symptôme, car sans symptôme, vous pouvez quand même transmettre le coronavirus et contaminer les autres.</string>
+    <string name="post_notification_paragraph_7" tools:ignore="Typos">Même si vous n\'avez aucun symptôme, car sans symptôme, vous pouvez quand même transmettre le coronavirus et contaminer les autres.</string>
     <string name="post_notification_paragraph_8">"Faites le test gratuitement. Il ne dure pas longtemps et vous pouvez généralement fixer un rendez-vous rapidement. Le résultat est connu dans les 48 heures. Restez chez vous jusqu'à la communication du résultat."</string>
     <string name="post_notification_paragraph_9">Appelez gratuitement le <b>%1$s</b> pour demander à passer le test corona.</string>
     <string name="post_notification_message">Gardez votre numéro national (BSN) à portée de main. Celui-ci figure sur votre passeport ou carte d\'identité.</string>

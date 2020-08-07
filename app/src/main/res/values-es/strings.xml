@@ -66,7 +66,7 @@
     <string name="generic_notification_header_3">Qué hacer en este caso</string>
     <string name="post_notification_list_4"><![CDATA[<ul><li>¿No muestras síntomas? Hazte un test de corona y quédate en casa hasta que sepas los resultados</li><li>¿Muestras síntomas leves relacionados con el coronavirus? Hazte un test de corona y quédate en casa hasta que sepas los resultados</li><li>¿Muestras síntomas graves o formas parte de un grupo de riesgo? Llama a tu médico de cabecera</li></ul>]]></string>
     <string name="post_notification_header_6">Hazte un test de coronavirus</string>
-    <string name="post_notification_paragraph_7" tools:ignore="Typos">El GGD (servicio de salud municipal) recomienda que te hagas un test de coronavirus, incluso aunque aún no te sientas mal, ya que podrías propagar el coronavirus a otras personas sin sentirte mal.</string>
+    <string name="post_notification_paragraph_7" tools:ignore="Typos">Incluso aunque aún no te sientas mal, ya que podrías propagar el coronavirus a otras personas sin sentirte mal.</string>
     <string name="post_notification_paragraph_8">"Hazte un test gratis. No dura mucho tiempo y normalmente puedes hacer la cita rápidamente. Recibirás los resultados en 48 horas. Quédate en casa hasta que sepas los resultados."</string>
     <string name="post_notification_paragraph_9">Llama gratis al <b>%1$s</b> para solicitar un test de coronavirus.</string>
     <string name="post_notification_message">Ten a mano tu número de seguridad social (<i>burgerservicenummer</i>). Este número lo puedes encontrar en tu pasaporte o tarjeta de identidad.</string>
