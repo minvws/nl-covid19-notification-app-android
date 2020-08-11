@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
         appLifecycleViewModel.updateEvent.observe(this, EventObserver {
             when (it) {
-                is AppLifecycleViewModel.AppLifecyleStatus.Update -> {
+                is AppLifecycleViewModel.AppLifecycleStatus.Update -> {
                     it.update.appUpdateManager.startUpdateFlowForResult(
                         it.update.appUpdateInfo,
                         AppUpdateType.IMMEDIATE,
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                         RC_UPDATE_APP
                     )
                 }
-                AppLifecycleViewModel.AppLifecyleStatus.EndOfLife -> findNavController(R.id.nav_host_fragment).navigate(
+                AppLifecycleViewModel.AppLifecycleStatus.EndOfLife -> findNavController(R.id.nav_host_fragment).navigate(
                     EndOfLifeFragmentDirections.actionEndOfLife()
                 )
             }

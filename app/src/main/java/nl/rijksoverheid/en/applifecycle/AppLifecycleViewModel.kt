@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.applifecycle
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,13 +17,14 @@ import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.config.saveIsTestPhaseVersion
 import nl.rijksoverheid.en.lifecyle.Event
 
+@SuppressLint("StaticFieldLeak")
 class AppLifecycleViewModel(
     private val appLifecycleManager: AppLifecycleManager,
     private val appConfigManager: AppConfigManager,
     private val context: Context
 ) : ViewModel() {
 
-    val updateEvent: LiveData<Event<AppLifecyleStatus>> =
+    val updateEvent: LiveData<Event<AppLifecycleStatus>> =
         MutableLiveData()
 
     fun checkForForcedAppUpdate() {
@@ -30,13 +32,13 @@ class AppLifecycleViewModel(
             val config = appConfigManager.getConfigOrDefault()
             context.saveIsTestPhaseVersion(config.testPhase)
             if (config.deactivated) {
-                (updateEvent as MutableLiveData).value = Event(AppLifecyleStatus.EndOfLife)
+                (updateEvent as MutableLiveData).value = Event(AppLifecycleStatus.EndOfLife)
             } else {
                 appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode, false)
                 when (val result = appLifecycleManager.getUpdateState()) {
                     is AppLifecycleManager.UpdateState.NeedsUpdate -> {
                         (updateEvent as MutableLiveData).value =
-                            Event(AppLifecyleStatus.Update(result))
+                            Event(AppLifecycleStatus.Update(result))
                     }
                     else -> {
                     } // ignore
@@ -45,10 +47,10 @@ class AppLifecycleViewModel(
         }
     }
 
-    sealed class AppLifecyleStatus {
+    sealed class AppLifecycleStatus {
         data class Update(val update: AppLifecycleManager.UpdateState.NeedsUpdate) :
-            AppLifecyleStatus()
+            AppLifecycleStatus()
 
-        object EndOfLife : AppLifecyleStatus()
+        object EndOfLife : AppLifecycleStatus()
     }
 }

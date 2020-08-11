@@ -20,7 +20,7 @@ class RemoveExposedMessageDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = MaterialAlertDialogBuilder(context)
+        val builder = MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.status_dialog_remove_exposure_title)
             .setMessage(R.string.status_dialog_remove_exposure_message)
             .setPositiveButton(R.string.status_dialog_remove_exposure_confirm) { _, _ ->
