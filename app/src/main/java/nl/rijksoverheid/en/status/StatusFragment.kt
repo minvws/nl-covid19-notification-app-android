@@ -41,7 +41,7 @@ class StatusFragment @JvmOverloads constructor(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        section = StatusSection(isTestPhaseVersion())
+        section = StatusSection()
         adapter.add(section)
     }
 
@@ -53,6 +53,8 @@ class StatusFragment @JvmOverloads constructor(
         } else if (!statusViewModel.hasCompletedOnboarding()) {
             findNavController().navigate(StatusFragmentDirections.actionOnboarding())
         }
+
+        section.setTestVersion(isTestPhaseVersion())
 
         val binding = FragmentStatusBinding.bind(view)
         binding.content.adapter = adapter
