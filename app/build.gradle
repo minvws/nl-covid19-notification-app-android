@@ -6,7 +6,7 @@ apply plugin: "com.github.triplet.play"
 apply plugin: "com.osacky.fladle"
 apply plugin: 'com.google.firebase.appdistribution'
 
-version = "1.0.0"
+version = "1.0.1"
 def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 1
 archivesBaseName = "covid-notificatie-v${version}-${buildVersionCode}"
 
