@@ -66,7 +66,7 @@
     <string name="generic_notification_header_3">Was können Sie in dieser Situation tun?</string>
     <string name="post_notification_list_4"><![CDATA[<ul><li>Haben Sie keine Beschwerden? Machen Sie einen Coronatest und bleiben Sie zu Hause, bis Sie das Ergebnis haben</li><li>Haben Sie (leichte) Beschwerden, die zu Corona passen? Machen Sie einen Coronatest und bleiben Sie zu Hause, bis Sie das Ergebnis haben.</li><li>Haben Sie ernste Beschwerden oder gehören Sie zu einer Risikogruppe? Rufen Sie Ihren Hausarzt an.</li></ul>]]></string>
     <string name="post_notification_header_6">Machen Sie einen Coronatest</string>
-    <string name="post_notification_paragraph_7" tools:ignore="Typos">Der GGD empfiehlt einen Coronatest, auch wenn Sie sich nicht krank fühlen. Denn auch dann können Sie das Coronavirus schon übertragen und andere anstecken.</string>
+    <string name="post_notification_paragraph_7" tools:ignore="Typos">Auch wenn Sie sich nicht krank fühlen. Denn auch dann können Sie das Coronavirus schon übertragen und andere anstecken.</string>
     <string name="post_notification_paragraph_8">"Lassen Sie sich kostenlos testen. Es dauert nicht lange und Sie können meistens schnell einen Termin vereinbaren. Das Ergebnis ist innerhalb von 48 Stunden bekannt. Bleiben Sie zu Hause, bis Sie das Ergebnis haben."</string>
     <string name="post_notification_paragraph_9">Rufen Sie kostenlos <b>%1$s</b> an, um einen Coronatest anzufordern.</string>
     <string name="post_notification_message">Sie brauchen dazu Ihre Bürgerservicenummer. Diese steht auf Ihrem Pass oder Ausweis.</string>
