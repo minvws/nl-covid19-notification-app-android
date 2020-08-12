@@ -32,6 +32,7 @@ android {
 
         buildConfigField "boolean", "FEATURE_LOGGING", "false"
         buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "false"
+        buildConfigField "boolean", "FEATURE_SECURE_SCREEN", "true"
     }
 
     testOptions {
@@ -86,11 +87,13 @@ android {
     productFlavors {
         dev {
             dimension "environment"
+            buildConfigField "boolean", "FEATURE_SECURE_SCREEN", "false"
             buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "true"
             versionNameSuffix "-dev"
         }
         tst {
             dimension "environment"
+            buildConfigField "boolean", "FEATURE_SECURE_SCREEN", "false"
             buildConfigField "boolean", "FEATURE_LOGGING", "true"
             buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "true"
             versionNameSuffix "-tst"
