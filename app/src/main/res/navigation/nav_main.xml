@@ -68,7 +68,7 @@
             app:popExitAnim="@anim/fragment_close_exit" />
         <action
             android:id="@+id/action_remove_exposed_message"
-            app:destination="@id/removeExposedMessageDialogFragment" />
+            app:destination="@id/nav_remove_exposed_message_dialog" />
 
     </fragment>
 
@@ -151,7 +151,7 @@
         tools:layout="@layout/fragment_list" />
 
     <dialog
-        android:id="@+id/removeExposedMessageDialogFragment"
+        android:id="@+id/nav_remove_exposed_message_dialog"
         android:name="nl.rijksoverheid.en.status.RemoveExposedMessageDialogFragment"
         android:label="RemoveExposedMessageDialogFragment" />
 
