@@ -27,7 +27,11 @@ class DecoyWorker(
 ) : CoroutineWorker(context, workerParameters) {
     override suspend fun doWork(): Result {
         try {
-            repository.sendDecoyTraffic()
+            val result = repository.sendDecoyTraffic()
+            if (result is LabTestRepository.SendDecoyResult.Registered) {
+                Timber.d("Registered, delaying post keys for ${result.delayMillis}")
+                queue(applicationContext, result.delayMillis)
+            }
         } catch (ex: Exception) {
             Timber.d(ex, "Error sending decoy traffic")
         }

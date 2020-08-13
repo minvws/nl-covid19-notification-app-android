@@ -10,7 +10,7 @@ import android.app.Application
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
-import com.nhaarman.mockitokotlin2.eq
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.api.CdnService
@@ -36,6 +36,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -375,14 +376,12 @@ class LabTestRepositoryTest {
             // current time after the schedule window
             val instant = Instant.parse("2020-06-20T05:00:30.00Z")
             val clock = Clock.fixed(instant, ZoneId.of("UTC"))
-            val decoyStart =
-                LocalDate.now(clock).atTime(7, 0).atZone(clock.zone).toInstant().toEpochMilli()
-            val decoyEnd =
-                LocalDate.now(clock).atTime(19, 0).atZone(clock.zone).toInstant().toEpochMilli()
+            val decoyTime =
+                LocalDate.now(clock).atTime(7, 30).atZone(clock.zone).toInstant().toEpochMilli()
 
             val random = mock<Random> {
                 on { nextDouble() }.thenReturn(1.0)
-                on { nextLong(eq(decoyStart), eq(decoyEnd)) }.thenReturn(decoyStart)
+                on { nextLong(any(), any()) }.thenReturn(decoyTime)
             }
 
             val repository = LabTestRepository(
@@ -403,24 +402,22 @@ class LabTestRepositoryTest {
 
             assertTrue(delay.get() > 0)
             val date = LocalDateTime.now(clock).plus(delay.get(), ChronoUnit.MILLIS)
-            assertEquals(LocalDate.now(clock).atTime(7, 0), date)
+            assertEquals(LocalDate.now(clock).atTime(7, 30), date)
         }
 
     @Test
-    fun `scheduleNextDecoyScheduleSequence schedules between 7am and 7pm of the next day when scheduled time has passed`() =
+    fun `scheduleNextDecoyScheduleSequence schedules the next day when scheduled time has passed`() =
         runBlocking {
             val delay = AtomicLong(0)
             // current time after the schedule window
             val instant = Instant.parse("2020-06-20T20:15:30.00Z")
             val clock = Clock.fixed(instant, ZoneId.of("UTC"))
-            val decoyStart =
+            val decoyTime =
                 LocalDate.now(clock).atTime(7, 0).atZone(clock.zone).toInstant().toEpochMilli()
-            val decoyEnd =
-                LocalDate.now(clock).atTime(19, 0).atZone(clock.zone).toInstant().toEpochMilli()
 
             val random = mock<Random> {
                 on { nextDouble() }.thenReturn(1.0)
-                on { nextLong(eq(decoyStart), eq(decoyEnd)) }.thenReturn(decoyStart)
+                on { nextLong(any(), any()) }.thenReturn(decoyTime)
             }
 
             val repository = LabTestRepository(
@@ -475,6 +472,11 @@ class LabTestRepositoryTest {
             }
         }
 
+        val random = mock<Random> {
+            on { nextInt(any(), any()) }.thenReturn(0)
+            on { nextLong(any(), any()) }.thenReturn(1000)
+        }
+
         val repository = LabTestRepository(
             lazy {
                 ApplicationProvider.getApplicationContext<Application>()
@@ -485,13 +487,14 @@ class LabTestRepositoryTest {
             NOOP_SCHEDULER,
             NOOP_DECOY_SCHEDULER,
             appConfigManager,
-            clock
+            clock,
+            random = random
         )
 
-        repository.sendDecoyTraffic(0L)
-
+        val result = repository.sendDecoyTraffic()
+        assertEquals(LabTestRepository.SendDecoyResult.Registered(1000), result)
         assertTrue(registrationCalled.get())
-        assertNotNull(postedRequest)
+        assertNull(postedRequest)
     }
 
     @Test
@@ -544,7 +547,8 @@ class LabTestRepositoryTest {
             clock
         )
 
-        repository.sendDecoyTraffic(0L)
+        val result = repository.sendDecoyTraffic()
+        assertEquals(LabTestRepository.SendDecoyResult.Success, result)
         assertNotNull(postedRequest)
     }
 }
