@@ -12,7 +12,6 @@ import android.util.Base64
 import androidx.core.content.edit
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.HmacSecret
 import nl.rijksoverheid.en.api.LabTestService
@@ -63,8 +62,8 @@ class LabTestRepository(
     suspend fun scheduleNextDecoyScheduleSequence() {
         val r = random.nextDouble()
         if (r <= appConfigManager.getCachedConfigOrDefault().decoyProbability) {
-            val start = LocalDate.now(clock).atTime(DECOY_WINDOW_START_HOUR, 0)
-            val end = start.toLocalDate().atTime(DECOY_WINDOW_END_HOUR, 0)
+            val start = LocalDate.now(clock).atStartOfDay()
+            val end = start.plusDays(1)
             val decoyTimestamp = Instant.ofEpochMilli(
                 random.nextLong(
                     start.atZone(clock.zone).toInstant().toEpochMilli(),
@@ -231,10 +230,10 @@ class LabTestRepository(
         }
     }
 
-    suspend fun sendDecoyTraffic(registerDelay: Long = Random.nextLong(5000, 900000L)) {
+    suspend fun sendDecoyTraffic(): SendDecoyResult {
         if (getCachedRegistrationCode() == null) {
             registerForUpload()
-            delay(registerDelay)
+            return SendDecoyResult.Registered(getDecoyRegistrationDelay())
         }
 
         val key = ByteArray(16)
@@ -258,6 +257,14 @@ class LabTestRepository(
             HmacSecret(fakeSecret),
             appConfigManager.getCachedConfigOrDefault().requestSize
         )
+
+        return SendDecoyResult.Success
+    }
+
+    private fun getDecoyRegistrationDelay() = if (random.nextInt(1, 10) == 1) {
+        random.nextLong(1000, 20 * 60 * 60 * 1000L)
+    } else {
+        random.nextLong(1000, 900 * 1000L)
     }
 
     private fun generateDecoyBucketId(size: Int): String {
@@ -298,9 +305,9 @@ class LabTestRepository(
         object Retry : UploadDiagnosticKeysResult()
     }
 
-    companion object {
-        const val DECOY_WINDOW_START_HOUR = 7
-        const val DECOY_WINDOW_END_HOUR = 19
+    sealed class SendDecoyResult {
+        object Success : SendDecoyResult()
+        data class Registered(val delayMillis: Long) : SendDecoyResult()
     }
 }
 
