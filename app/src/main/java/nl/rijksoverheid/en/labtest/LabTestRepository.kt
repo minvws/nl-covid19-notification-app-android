@@ -261,7 +261,7 @@ class LabTestRepository(
         return SendDecoyResult.Success
     }
 
-    private fun getDecoyRegistrationDelay() = if (random.nextInt(0, 10) == 0) {
+    private fun getDecoyRegistrationDelay() = if (random.nextInt(1, 10) == 1) {
         random.nextLong(1000, 20 * 60 * 60 * 1000L)
     } else {
         random.nextLong(1000, 900 * 1000L)
