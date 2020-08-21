@@ -42,7 +42,7 @@ class CheckConnectionWorker(
     companion object {
         fun queue(context: Context) {
             val request = PeriodicWorkRequestBuilder<CheckConnectionWorker>(1, TimeUnit.DAYS)
-                .setInitialDelay(1, TimeUnit.DAYS).build()
+                .setInitialDelay(1, TimeUnit.MINUTES).build()
 
             WorkManager.getInstance(context)
                 .enqueueUniquePeriodicWork(

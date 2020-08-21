@@ -37,6 +37,7 @@
         </activity>
 
         <receiver android:name=".notifier.DismissReminderReceiver" />
+        <receiver android:name=".job.PeriodicWakeUpReceiver" />
 
         <receiver
             android:name=".notification.ExposureNotificationReceiver"
