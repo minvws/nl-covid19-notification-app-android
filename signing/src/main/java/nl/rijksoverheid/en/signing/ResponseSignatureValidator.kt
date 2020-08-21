@@ -137,6 +137,7 @@ class ResponseSignatureValidator(
 private fun getDefaultTrustManager(): X509TrustManager {
     val algorithm = TrustManagerFactory.getDefaultAlgorithm()
     val tm = TrustManagerFactory.getInstance(algorithm)
+    @Suppress("CAST_NEVER_SUCCEEDS")
     tm.init(null as? KeyStore)
     return tm.trustManagers[0] as X509TrustManager
 }

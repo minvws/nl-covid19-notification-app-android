@@ -89,9 +89,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener(
-            SecureScreenNavigationListener(window, R.id.nav_status, R.id.nav_post_notification)
-        )
+        if (BuildConfig.FEATURE_SECURE_SCREEN) {
+            findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener(
+                SecureScreenNavigationListener(
+                    window,
+                    R.id.nav_status,
+                    R.id.nav_post_notification,
+                    R.id.nav_remove_exposed_message_dialog
+                )
+            )
+        }
     }
 
     override fun onStart() {

@@ -66,7 +66,7 @@
     <string name="generic_notification_header_3">Co możesz zrobić w tej sytuacji?</string>
     <string name="post_notification_list_4"><![CDATA[<ul><li>Nie masz żadnych dolegliwości? Zrób test na obecność koronawirusa i pozostań w domu do momentu otrzymania wyników</li><li>Masz łagodne dolegliwości, które są typowe dla koronawirusa? Zrób test na obecność koronawirusa i pozostań w domu do momentu otrzymania wyników</li><li>Masz poważne dolegliwości lub znajdujesz się w grupie wysokiego ryzyka? Zadzwoń do swojego lekarza rodzinnego</li></ul>]]></string>
     <string name="post_notification_header_6">Zrób test na obecność koronawirusa</string>
-    <string name="post_notification_paragraph_7" tools:ignore="Typos">GGD zaleca przeprowadzenie testu na obecność wirusa. Nawet jeśli nie czujesz się chory. Ponieważ i bez tego możesz już rozprzestrzeniać koronawirusa i zarażać innych.</string>
+    <string name="post_notification_paragraph_7" tools:ignore="Typos">Nawet jeśli nie czujesz się chory. Ponieważ i bez tego możesz już rozprzestrzeniać koronawirusa i zarażać innych.</string>
     <string name="post_notification_paragraph_8">"Zrób darmowy test. To nie zajmuje dużo czasu i zazwyczaj można się szybko umówić. Wyniki są znane w ciągu 48 godzin. Pozostań w domu do momentu poznania wyników."</string>
     <string name="post_notification_paragraph_9">Zadzwoń bezpłatnie pod numer <b>%1$s</b>, aby zapytać o test na obecność koronawirusa.</string>
     <string name="post_notification_message">Miej pod ręką swój numer obsługi mieszkańca (BSN). Znajdziesz go w paszporcie lub na dowodzie osobistym</string>

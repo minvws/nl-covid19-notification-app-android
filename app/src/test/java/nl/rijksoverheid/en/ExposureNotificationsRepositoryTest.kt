@@ -756,7 +756,7 @@ class ExposureNotificationsRepositoryTest {
                 }
 
                 override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
-                    AppConfig(1, 5, 0.0, deactivated = true)
+                    AppConfig(1, 5, 0.0, coronaMelderDeactivated = "deactivated")
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()

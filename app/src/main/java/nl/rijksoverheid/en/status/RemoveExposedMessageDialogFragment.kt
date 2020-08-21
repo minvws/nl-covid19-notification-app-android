@@ -8,9 +8,11 @@ package nl.rijksoverheid.en.status
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.R
 
 class RemoveExposedMessageDialogFragment : DialogFragment() {
@@ -29,6 +31,12 @@ class RemoveExposedMessageDialogFragment : DialogFragment() {
                 )
             }
             .setNegativeButton(R.string.status_dialog_remove_exposure_cancel, null)
-        return builder.create()
+        return builder.create().also { dialog ->
+            dialog.setOnShowListener {
+                if (BuildConfig.FEATURE_SECURE_SCREEN) {
+                    dialog.window?.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                }
+            }
+        }
     }
 }

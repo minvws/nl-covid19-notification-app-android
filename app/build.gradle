@@ -6,7 +6,7 @@ apply plugin: "com.github.triplet.play"
 apply plugin: "com.osacky.fladle"
 apply plugin: 'com.google.firebase.appdistribution'
 
-version = "0.4.1"
+version = "1.0.1"
 def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 1
 archivesBaseName = "covid-notificatie-v${version}-${buildVersionCode}"
 
@@ -32,6 +32,7 @@ android {
 
         buildConfigField "boolean", "FEATURE_LOGGING", "false"
         buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "false"
+        buildConfigField "boolean", "FEATURE_SECURE_SCREEN", "true"
     }
 
     testOptions {
@@ -86,11 +87,13 @@ android {
     productFlavors {
         dev {
             dimension "environment"
+            buildConfigField "boolean", "FEATURE_SECURE_SCREEN", "false"
             buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "true"
             versionNameSuffix "-dev"
         }
         tst {
             dimension "environment"
+            buildConfigField "boolean", "FEATURE_SECURE_SCREEN", "false"
             buildConfigField "boolean", "FEATURE_LOGGING", "true"
             buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "true"
             versionNameSuffix "-tst"

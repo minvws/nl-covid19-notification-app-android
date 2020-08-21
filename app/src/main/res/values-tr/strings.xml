@@ -67,7 +67,7 @@
     <string name="generic_notification_header_3">Bu durumda ne yapabilirsiniz?</string>
     <string name="post_notification_list_4"><![CDATA[<ul><li>Şikayetiniz yok mu? Korona testi yaptırın ve sonucu öğrenene kadar evde kalın.</li><li> Korona\'ya uyan (hafif) şikayetleriniz mi var? Korona testi yaptırın ve sonucu öğrenene kadar evde kalın.</li><li> Ciddi şikayetleriniz mi var veya bir risk grubuna dahil misiniz? Doktorunuzu arayın </li> </ul>]]></string>
     <string name="post_notification_header_6">Korona testi yaptırın</string>
-    <string name="post_notification_paragraph_7" tools:ignore="Typos">GGD, Korona için test edilmenizi önerir. Kendinizi hasta hissetmeseniz bile. Çünkü hasta hissetmeden Korona virüsü yayabilir ve böylece başkalarına bulaştırabilirsiniz.</string>
+    <string name="post_notification_paragraph_7" tools:ignore="Typos">Kendinizi hasta hissetmeseniz bile. Çünkü hasta hissetmeden Korona virüsü yayabilir ve böylece başkalarına bulaştırabilirsiniz.</string>
     <string name="post_notification_paragraph_8">"Kendinizi ücretsiz test ettirin. Test uzun sürmez ve genellikle çok çabuk randevu alabilirsiniz. Sonuçlar 48 saat içinde belli olur. Sonucu öğrenene kadar evde kalın."</string>
     <string name="post_notification_paragraph_9">Korona testi talep etmek için <b>%1$s</b>yi ücretsiz arayın.</string>
     <string name="post_notification_message">Sosyal güvenlik numaranızı hazır bulundurun. Bunu pasaportunuzda veya kimlik kartınızda bulabilirsiniz</string>
