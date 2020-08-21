@@ -214,7 +214,7 @@ dependencies {
     androidTestImplementation 'com.microsoft.appcenter:espresso-test-extension:1.4'
     androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitokotlin_version"
     androidTestImplementation 'com.vanniktech:junit4-android-integration-rules:0.3.0'
-    androidTestImplementation "org.mockito:mockito-android:3.4.6"
+    androidTestImplementation "org.mockito:mockito-android:3.5.2"
     androidTestImplementation 'tools.fastlane:screengrab:2.0.0'
 
     debugImplementation project(":test-support")

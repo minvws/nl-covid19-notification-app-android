@@ -26,9 +26,9 @@
 
 # Bouncy Castle
 -keep class * extends java.security.Provider
--keep class org.bouncycastle.jce.provider.** {*;}
--keep class org.bouncycastle.jcajce.provider.** {*;}
--keep class org.bouncycastle.pqc.jcajce.provider.** {*;}
+-keep class org.bouncycastle.jce.provider.* {*;}
+-keep class org.bouncycastle.jcajce.provider.* {*;}
+-keep class org.bouncycastle.pqc.jcajce.provider.* {*;}
 
 # Tink is used by androidx.security and its shaded protobufs needs to be kept
 -keep class * extends com.google.crypto.tink.shaded.protobuf.GeneratedMessageLite { *; }

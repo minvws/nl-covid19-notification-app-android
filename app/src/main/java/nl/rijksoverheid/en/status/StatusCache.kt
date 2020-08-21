@@ -21,7 +21,7 @@ open class StatusCache(private val preferences: SharedPreferences) {
         putInt(KEY_CACHED_STATUS, cachedStatus.ordinal)
     }
 
-    fun getCachedStatus(): Flow<CachedStatus> = callbackFlow<CachedStatus> {
+    fun getCachedStatus(): Flow<CachedStatus> = callbackFlow {
         // Emit the current cached value, fallback to Disabled
         offer(getCachedStatusFromPreferences(preferences))
         // Emit cached value whenever it changes

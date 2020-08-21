@@ -6,7 +6,6 @@
  */
 package nl.rijksoverheid.en.items
 
-import android.text.Html
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -60,7 +59,7 @@ class BulletedListItem(
             html,
             HtmlCompat.FROM_HTML_MODE_COMPACT,
             null,
-            Html.TagHandler { opening, tag, output, _ ->
+            { opening, tag, output, _ ->
                 if (tag == "li" && opening) {
                     output.setSpan(
                         Bullet(),
