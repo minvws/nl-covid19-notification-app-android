@@ -16,7 +16,6 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ProcessManifestResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
@@ -60,13 +59,8 @@ class ProcessManifestWorker(
             val request = PeriodicWorkRequestBuilder<ProcessManifestWorker>(
                 intervalMinutes.toLong(),
                 TimeUnit.MINUTES
-            ).apply {
-                if (BuildConfig.DEBUG) {
-                    setInitialDelay(10, TimeUnit.SECONDS)
-                } else {
-                    setInitialDelay(intervalMinutes.toLong().div(2), TimeUnit.MINUTES)
-                }
-            }.setInputData(Data.Builder().putInt(KEY_UPDATE_INTERVAL, intervalMinutes).build())
+            ).setInputData(Data.Builder().putInt(KEY_UPDATE_INTERVAL, intervalMinutes).build())
+                .setInitialDelay(30, TimeUnit.SECONDS)
                 .setConstraints(
                     Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
                 ).setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS).build()
