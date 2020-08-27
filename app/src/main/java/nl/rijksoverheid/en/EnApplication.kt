@@ -36,6 +36,7 @@ class EnApplication : Application(), Configuration.Provider {
         // when it thinks the app has been forced stopped.
         emulateWorkManagerForceStopped()
 
+        WorkManager.initialize(this, workManagerConfiguration)
         if (BuildConfig.FEATURE_LOGGING) {
             // force init for debug logging
             Logger.setLogger(object : Logger(Log.DEBUG) {
@@ -64,7 +65,6 @@ class EnApplication : Application(), Configuration.Provider {
                 }
             })
         }
-        WorkManager.initialize(this, workManagerConfiguration)
         PeriodicWakeUpReceiver.schedule(this)
         notificationsRepository.createOrUpdateNotificationChannels()
     }
