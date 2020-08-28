@@ -6,31 +6,31 @@
     <string name="onboarding_next">Volgende</string>
     <string name="onboarding_example">Voorbeeld</string>
     <string name="onboarding_explanation_1_headline">Help de verspreiding van het coronavirus te stoppen</string>
-    <string name="onboarding_explanation_1_description">Deze app waarschuwt je nadat je in de buurt bent geweest van iemand met corona. Zo kun jij voorkomen dat je de mensen in je omgeving besmet.</string>
+    <string name="onboarding_explanation_1_description">Deze app waarschuwt je nadat je in de buurt bent geweest van iemand met corona. Zo kun jij voorkomen dat je onbewust mensen in je omgeving besmet.</string>
     <string name="onboarding_explanation_2_headline">Je krijgt een melding <u>nadat</u> je extra kans op besmetting hebt gelopen</string>
     <string name="onboarding_explanation_2_description">De app stuurt een melding als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. Deze persoon moet ook de app gebruiken.</string>
     <string name="onboarding_explanation_3_headline">De app gebruikt bluetooth, <u>geen</u> locatiegegevens</string>
     <string name="onboarding_explanation_3_description">De app ziet via bluetooth of je dicht bij iemand was. Hoe dichterbij, hoe sterker het bluetoothsignaal. De app weet niet waar je was en wie je bent.</string>
     <string name="onboarding_example_1_headline">Fietste iemand voorbij? Dan krijg je later <u>geen</u> melding</string>
     <string name="onboarding_example_1_description">Het bluetoothsignaal was sterk genoeg omdat jullie dicht bij elkaar waren. Dit duurde alleen zo kort dat de kans op besmetting heel klein is.</string>
-    <string name="onboarding_example_2_headline">Zat je dicht bij iemand in de trein? Dan kun je later <u>wel</u> een melding krijgen</string>
+    <string name="onboarding_example_2_headline">Zat je dicht bij iemand in de trein? Dan kun je <u>later</u> wel een melding krijgen</string>
     <string name="onboarding_example_2_description">Het bluetoothsignaal was sterk genoeg en jullie waren langere tijd dicht bij elkaar in de buurt.</string>
     <string name="onboarding_consent_headline">Meldingen over mogelijk contact met het coronavirus aanzetten</string>
     <string name="onboarding_consent_check_1">Bluetoothgegevens worden 14 dagen op je telefoon bewaard. Je kunt ze altijd zelf verwijderen.</string>
     <string name="onboarding_consent_check_2"><![CDATA[Je naam wordt <strong>niet</strong> gebruikt of bewaard.]]></string>
-    <string name="onboarding_consent_check_3"><![CDATA[Je gps-locatiegegevens worden <strong>niet</strong> gebruikt of bewaard.]]></string>
+    <string name="onboarding_consent_check_3"><![CDATA[Je gps- of locatiegegevens worden <strong>niet</strong> gebruikt of bewaard.]]></string>
     <string name="onboarding_consent_request">Aanzetten</string>
     <string name="onboarding_consent_explain">Hoe werkt de app precies?</string>
     <string name="onboarding_consent_skip">Sla over</string>
     <string name="onboarding_consent_skip_dialog_title">Weet je zeker dat je deze meldingen niet wilt aanzetten?</string>
-    <string name="onboarding_consent_skip_dialog_message">Zonder toestemming kan de app geen meldingen sturen nadat je extra kans op besmetting hebt gelopen.</string>
+    <string name="onboarding_consent_skip_dialog_message">Zonder toestemming kan de app je geen meldingen sturen nadat je extra kans op besmetting hebt gelopen.</string>
     <string name="onboarding_consent_skip_dialog_skip">Sla over</string>
     <string name="onboarding_consent_skip_dialog_enable">Zet aan</string>
     <string name="onboarding_how_it_works_toolbar_title">Hoe werkt de app?</string>
     <string name="onboarding_how_it_works_request_consent">App aanzetten</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Veelgestelde vraag</string>
     <string name="onboarding_share_headline">Laat anderen weten dat jij helpt het virus te stoppen</string>
-    <string name="onboarding_share_description">Hoe meer mensen CoronaMelder gebruiken, hoe beter deze werkt. Alleen samen kunnen we de verspreiding van het virus stoppen. Deel de app dus met zo veel mogelijk anderen.</string>
+    <string name="onboarding_share_description">Hoe meer mensen CoronaMelder gebruiken, hoe beter deze werkt. Alleen samen kunnen we corona onder controle krijgen. Deel de app dus met zo veel mogelijk anderen.</string>
     <string name="onboarding_share_continue">Ga door</string>
     <string name="onboarding_share_share">App delen</string>
     <string name="status_no_exposure_detected_headline">De app is actief</string>
@@ -38,7 +38,7 @@
     <string name="status_exposure_detected_headline">Je bent in de buurt geweest van iemand met corona</string>
     <string name="status_exposure_detected_description">Je hebt %1$s (%2$s) extra kans op besmetting gelopen</string>
     <string name="status_disabled_headline">De app is niet actief</string>
-    <string name="status_en_api_disabled_description">%1$s werkt alleen als de noodzakelijke instellingen aanstaan</string>
+    <string name="status_en_api_disabled_description">%1$s werkt alleen als de noodzakelijke instellingen aanstaan.</string>
     <string name="status_en_api_disabled_enable">App aanzetten</string>
     <string name="notification_channel_name">Contactmeldingen</string>
     <string name="notification_channel_description">Meldingen over mogelijk contact met het coronavirus</string>
@@ -60,22 +60,22 @@
     <string name="generic_notification_toolbar_title">Melding krijgen</string>
     <string name="post_notification_header_1">Je bent in de buurt geweest van iemand met het coronavirus</string>
     <string name="generic_notification_header_1">Wat betekent het als je een melding krijgt?</string>
-    <string name="post_notification_paragraph_2" tools:ignore="Typos">Je was %1$s (op %2$s) dicht bij iemand die later corona bleek te hebben. Je hebt in deze situatie mogelijk extra kans op besmetting gelopen. Als je inderdaad besmet bent, kan je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
-    <string name="generic_notification_paragraph_2" tools:ignore="Typos">De app stuurt een melding als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. In de melding staat alleen op welke dag dit was. Je hebt in deze situatie extra kans op besmetting gelopen. Als je besmet bent, kan je het virus aan anderen doorgeven. Ook als je je niet ziek voelt.</string>
+    <string name="post_notification_paragraph_2" tools:ignore="Typos">Je was %1$s (op %2$s) dicht bij iemand die later corona bleek te hebben. Je hebt in deze situatie mogelijk extra kans op besmetting gelopen. Als je inderdaad besmet bent, kun je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
+    <string name="generic_notification_paragraph_2" tools:ignore="Typos">De app stuurt een melding als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. In de melding staat alleen op welke dag dit was. Je hebt in deze situatie extra kans op besmetting gelopen. Als je besmet bent, kun je het virus aan anderen doorgeven. Ook als je je niet ziek voelt.</string>
     <string name="post_notification_header_3">Wat kun je nu doen?</string>
     <string name="generic_notification_header_3">Wat kun je doen in deze situatie?</string>
     <string name="post_notification_list_4"><![CDATA[<ul><li>Heb je geen klachten? Doe een coronatest en blijf thuis tot je de uitslag weet</li><li>Heb je (lichte) klachten die passen bij corona? Doe een coronatest en blijf thuis tot je de uitslag weet</li><li>Heb je ernstige klachten of zit je in een risicogroep? Bel je huisarts</li></ul>]]></string>
     <string name="post_notification_header_6">Doe een coronatest</string>
     <string name="post_notification_paragraph_7" tools:ignore="Typos">Zelfs als je je niet ziek voelt. Want zonder je ziek te voelen kun je het coronavirus al verspreiden en zo anderen besmetten.</string>
-    <string name="post_notification_paragraph_8">"Laat je gratis testen. Het duurt niet lang en je kan meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet."</string>
+    <string name="post_notification_paragraph_8">"Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet."</string>
     <string name="post_notification_paragraph_9">Bel gratis <b>%1$s</b> om een coronatest aan te vragen.</string>
     <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart</string>
-    <string name="post_notification_button">Bel voor coronatest</string>
+    <string name="post_notification_button">Coronatest aanvragen</string>
     <string name="treat_perspective_header_1">Klachten die passen bij het coronavirus (COVID-19)</string>
     <string name="treat_perspective_list_2"><![CDATA[<ul><li>verkoudheidsklachten</li><li>neusverkoudheid, loopneus, niezen, keelpijn</li><li>hoesten</li><li>verhoging</li><li>plotseling verlies van reuk en/of smaak</li></ul>]]></string>
     <string name="request_test_toolbar_title">Coronatest aanvragen</string>
     <string name="request_test_header_1">Heb je klachten die passen bij corona? Vraag een test aan</string>
-    <string name="request_test_paragraph_2" tools:ignore="Typos">Heb je (lichte) klachten die passen bij het coronavirus? Laat je gratis testen. Het duurt niet lang en je kan meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet. Heb je ernstige klachten of zit je in een risicogroep? Bel dan je huisarts.</string>
+    <string name="request_test_paragraph_2" tools:ignore="Typos">Heb je (lichte) klachten die passen bij het coronavirus? Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet. Heb je ernstige klachten of zit je in een risicogroep? Bel dan je huisarts.</string>
     <string name="status_reset_exposure">Melding verwijderen</string>
     <string name="status_dialog_remove_exposure_title">Weet je zeker dat je deze melding wilt verwijderen?</string>
     <string name="status_dialog_remove_exposure_message">Je kunt de datum daarna niet meer terugvinden in de app. Onthoud deze dus goed.</string>
@@ -84,7 +84,7 @@
     <string name="status_info_about_title">Over de app</string>
     <string name="status_info_about_subtitle">Bekijk hoe de app werkt en wat dit voor je privacy betekent</string>
     <string name="status_info_share_title">Mensen uitnodigen voor de app</string>
-    <string name="status_info_share_subtitle">Deel de app met anderen om samen corona te stoppen</string>
+    <string name="status_info_share_subtitle">Deel de app met anderen om samen corona onder controle te krijgen</string>
     <string name="status_info_notification_title">Wat staat er in een melding?</string>
     <string name="status_info_notification_subtitle">Lees wat je kunt doen nadat je in de buurt bent geweest van iemand met corona</string>
     <string name="status_info_test_title">Coronatest aanvragen</string>
@@ -93,7 +93,7 @@
     <string name="status_info_lab_subtitle">Stuur met de GGD een anonieme melding naar anderen als je besmet bent</string>
     <string name="status_app_version">Versie %1$s build %2$s</string>
     <string name="status_exposure_what_next">Wat kan ik nu doen?</string>
-    <string name="status_error_consent_required">%1$s werkt alleen als de noodzakelijke instellingen aanstaan</string>
+    <string name="status_error_consent_required">%1$s werkt alleen als de noodzakelijke instellingen aanstaan.</string>
     <string name="status_error_action_consent">App aanzetten</string>
     <string name="status_error_sync_issues">De app kon de afgelopen 24 uur geen internetverbinding maken. Controleer of je wifi of mobiele data aanstaan en probeer het opnieuw.</string>
     <string name="status_error_action_sync_issues">Probeer opnieuw</string>
@@ -114,27 +114,52 @@
     <string name="faq_location">Kan de app mijn locatie zien?</string>
     <string name="faq_anonymous">Hoe kan de app anoniem zijn?</string>
     <string name="faq_notification">Wanneer krijg ik een melding van de app?</string>
-    <string name="faq_upload_keys">Hoe verstuur ik een melding?</string>
+    <string name="faq_upload_keys">Kan ik anderen een melding sturen als ik corona heb?</string>
     <string name="faq_bluetooth">Werkt bluetooth door muren heen?</string>
     <string name="faq_power_usage">Hoeveel stroom gebruikt de app?</string>
     <string name="faq_deletion">Hoe verwijder ik de bluetoothgegevens van mijn telefoon?</string>
     <string name="faq_location_permission">Waarom moeten mijn locatie-instellingen aanstaan?</string>
     <string name="faq_technical">Hoe werkt de app precies?</string>
-    <string name="faq_reason_paragraph_1">"Met de app help je de verspreiding van het coronavirus te stoppen. De app is een aanvulling op het contactonderzoek van de GGD. Als je een test doet en corona blijkt te hebben belt de GGD je. Tijdens dit gesprek vraagt de GGD bij wie je in de buurt bent geweest terwijl je besmettelijk was. De GGD belt ook deze mensen om te waarschuwen dat ze misschien corona hebben."</string>
-    <string name="faq_reason_paragraph_2">Alleen ben je waarschijnlijk ook in de buurt geweest van mensen die je niet kent. In de trein, bioscoop of restaurant. Dit is waar de app bij helpt. Met de app kun je alle mensen waarschuwen die bij jou in de buurt zijn geweest. Ook de mensen die je niet kent. Zo lang ze natuurlijk de app gebruiken.</string>
-    <string name="faq_reason_paragraph_3">"De GGD benadert de mensen waarvan jij de naam of contactgegevens hebt. De app waarschuwt tegelijkertijd de mensen die je wel hebt ontmoet, maar waarvan je de naam of contactgegevens niet weet. Zo zijn ook zij snel op de hoogte, kunnen ze maatregelen nemen en daarmee voorkomen dat ze anderen besmetten. Het contactonderzoek van de GGD gaat gewoon door, want de mensen bij wie je vaker in de buurt bent geweest hebben misschien een groter risico gelopen."</string>
-    <string name="faq_reason_paragraph_4">Zelf kun je natuurlijk ook waarschuwingen krijgen via de app. Als dit gebeurt ben je in de afgelopen dagen in de buurt geweest van iemand met corona. Wanneer je dit hoort kun je op jouw beurt voorkomen dat je anderen besmet. Dit doe je door extra goed te letten op (lichte) klachten die passen bij corona en door je te laten testen als je deze klachten hebt.</string>
-    <string name="faq_location_paragraph_1">Nee, de app ziet via bluetooth alleen of je in de buurt bent van andere mensen die de app ook hebben. Bluetooth is niet gekoppeld aan je locatie, dus de app kan niet zien waar je bent. Bluetooth is puur bedoeld om een draadloze verbinding te maken tussen 2 apparaten die dicht bij elkaar zijn. Zoals je telefoon en een geluidsbox of koptelefoon.</string>
-    <string name="faq_anonymous_paragraph_1">De app wisselt codes uit met andere telefoons. In deze codes staan geen persoonsgegevens of locatiegegevens van je. Ze zijn helemaal willekeurig. Het uitwisselen van codes gebeurt op het moment dat je dicht bij een persoon bent die ook de app heeft.</string>
-    <string name="faq_anonymous_paragraph_2">Blijkt deze persoon later corona te hebben? Dan kan diegene in de app zijn of haar codes aan een lijst met codes van besmette personen toevoegen. Het toevoegen van codes kan alleen nadat de besmette persoon zijn of haar GGD-sleutel aan de GGD heeft doorgegeven. Zo kan de besmetting bevestigd worden. Na deze controle is het mogelijk om een melding te versturen naar alle andere mensen die deze codes op hun telefoon hebben. In deze melding staat alleen wanneer ze in de buurt zijn geweest van een besmet persoon. Niet wie dit is en waar ze die persoon zijn tegengekomen.</string>
-    <string name="faq_notification_paragraph_1">Je krijgt een melding nadat je extra kans op besmetting hebt gelopen. Dit gebeurt als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. En natuurlijk alleen als die persoon ook de app gebruikt. Of je een melding krijgt hangt af van de sterkte van het bluetoothsignaal. En van de duur van jullie contact. Fietste er iemand voorbij op straat? Dan krijg je later geen melding. Jullie waren dicht bij elkaar, dus het bluetoothsignaal was sterk. Maar het contact duurde zo kort dat je geen extra kans op besmetting hebt. Zat je dicht bij iemand in de trein of op kantoor? Dan kun je later wel een melding krijgen. Het bluetoothsignaal was sterk genoeg en jullie waren langere tijd dicht bij elkaar in de buurt.</string>
-    <string name="faq_upload_keys_paragraph_1">Je kunt alleen een melding naar anderen versturen als je getest bent en corona blijkt te hebben. De GGD belt je in dat geval. Tijdens dit telefoongesprek controleert een GGD-medewerker jouw GGD-sleutel. Deze vind je in de app. Zo is altijd zeker dat alleen mensen die echt besmet zijn meldingen kunnen versturen.</string>
-    <string name="faq_upload_keys_paragraph_2">"Nadat je GGD-sleutel is gecontroleerd kunnen de mensen bij wie je in de buurt bent geweest toen je besmettelijk was een anonieme melding krijgen. Alleen als deze mensen ook de app gebruiken."</string>
-    <string name="faq_bluetooth_paragraph_1">Ja, maar het signaal wordt dan erg zwak. Bluetooth werkt het beste als jouw telefoon in dezelfde ruimte is als de telefoon van een andere persoon. De kans is bijvoorbeeld heel klein dat je app het bluetoothsignaal van je buren ontvangt. En daardoor is de kans ook heel klein dat je een melding krijgt als je buurman corona blijkt te hebben en jullie niet in dezelfde ruimte zijn geweest.</string>
+    <string name="faq_reason_paragraph_1">"De app kan je snel waarschuwen nadat je in de buurt bent geweest van iemand die corona heeft. Al voordat je klachten krijgt. Je kunt namelijk corona hebben en besmettelijk zijn zonder dat je het zelf doorhebt. "</string>
+    <string name="faq_reason_paragraph_2">Als je via de app een waarschuwing krijgt, kun je je laten testen. Verder is het advies om thuis te blijven. Zo voorkom je dat je onbewust mensen in je omgeving besmet.</string>
+    <string name="faq_reason_paragraph_3">"Ben je getest en heb je corona? Dan kun je samen met de GGD de mensen waarschuwen die lang bij jou in de buurt zijn geweest. Ook onbekenden. In een restaurant, bioscoop of wachtkamer. Zolang deze mensen ook de app gebruiken."</string>
+    <string name="faq_reason_paragraph_4">Dankzij CoronaMelder kunnen we sneller ingrijpen en nieuwe besmettingen voorkomen. Alleen samen krijgen we corona onder controle.</string>
+    <string name="faq_location_paragraph_1">Nee, de app ziet via bluetooth alleen of je in de buurt bent van andere mensen die de app ook op hun telefoon hebben. De app ziet nooit waar je bent.
+
+Bluetooth is bedoeld om een draadloze verbinding te maken tussen 2 apparaten die bij elkaar in de buurt zijn. Zoals je telefoon en een geluidsbox of koptelefoon.
+
+De app kan de afstand tussen 2 telefoons schatten door de sterkte van het bluetoothsignaal.</string>
+    <string name="faq_anonymous_paragraph_1">De app wisselt willekeurige codes uit met andere telefoons. In deze codes staan geen persoonsgegevens of locatiegegevens. Het uitwisselen van codes gebeurt op het moment dat je dicht bij een persoon bent die ook de app heeft.</string>
+    <string name="faq_anonymous_paragraph_2">Blijkt deze persoon later corona te hebben? Dan kan diegene samen met de GGD zijn of haar codes aan een lijst met codes van besmette personen toevoegen. Zo kan de besmetting bevestigd worden.
+
+Daarna wordt er een melding verstuurd naar alle andere mensen die deze codes op hun telefoon hebben. In deze melding staat alleen wanneer ze in de buurt zijn geweest van een besmet persoon. Niet wie dit is en waar ze die persoon zijn tegengekomen.</string>
+    <string name="faq_notification_paragraph_1">"Je krijgt een melding nadat je extra kans op besmetting hebt gelopen. Dit gebeurt als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. En natuurlijk alleen als die persoon ook de app gebruikt. 
+
+Of je een melding krijgt hangt af van de sterkte van het bluetoothsignaal. En van de duur van jullie contact. Fietste er iemand voorbij op straat? Dan krijg je later geen melding. Jullie waren dicht bij elkaar, dus het bluetooth-signaal was sterk. Maar het contact duurde zo kort dat de kans op besmetting heel erg klein is. 
+
+Zat je dicht bij iemand in de trein of op kantoor? Dan kun je later wel een melding krijgen. Het bluetoothsignaal was sterk genoeg en jullie waren langere tijd dicht bij elkaar in de buurt.
+"</string>
+    <string name="faq_upload_keys_paragraph_1">Je kunt alleen een melding naar anderen sturen als je getest bent en corona blijkt te hebben. De GGD belt je in dat geval met de uitslag van de test. 
+
+Tijdens dit telefoongesprek controleert een GGD-medewerker jouw GGD-sleutel. Deze vind je in de app. Zo is altijd zeker dat alleen mensen die echt besmet zijn meldingen kunnen versturen.</string>
+    <string name="faq_upload_keys_paragraph_2">"Nadat je GGD-sleutel is gecontroleerd kun je de codes delen die jouw telefoon de afgelopen 14 dagen naar andere telefoons heeft verzonden.
+
+Zo kunnen de mensen bij wie je in de buurt bent geweest toen je besmettelijk was een anonieme melding krijgen. Alleen als deze mensen ook de app gebruiken."</string>
+    <string name="faq_bluetooth_paragraph_1">Ja, maar het signaal wordt dan erg zwak. Bluetooth werkt het beste als jouw telefoon in dezelfde ruimte is als de telefoon van een andere persoon. 
+
+De kans is bijvoorbeeld heel klein dat je app het bluetoothsignaal van je buren ontvangt. 
+
+En daardoor is de kans ook heel klein dat je een melding krijgt als je buurman corona blijkt te hebben en jullie niet in dezelfde ruimte zijn geweest.</string>
     <string name="faq_power_usage_paragraph_1">De app maakt gebruikt van Bluetooth Low Energy (lage-energiebluetooth). Dit is een speciale vorm van bluetooth die heel weinig stroom gebruikt. Hoeveel procent dit precies van je telefoonbatterij vraagt verschilt per telefoon.</string>
     <string name="faq_deletion_paragraph_1">"Je kunt de bluetoothgegevens die de app heeft bewaard zelf verwijderen. Dat gaat als volgt. Ga op je telefoon naar Instellingen -&gt; Google -&gt; Meldingen over mogelijke blootstelling aan COVID-19. Klik op Willekeurige ID’s verwijderen -&gt; Verwijderen. Wil je dat de app geen nieuwe bluetoothgegevens meer bewaart? Verwijder dan de app."</string>
     <string name="faq_deletion_button">Open Instellingen</string>
-    <string name="faq_location_permission_paragraph_1">Sommige apps gebruiken bluetooth om je locatie te bepalen. Daarom is dit onderdeel van je locatie-instellingen. CoronaMelder heeft bluetooth nodig om te werken, maar alleen om te zien of je in de buurt bent van een ander persoon die de app heeft. De app heeft nooit toegang tot je locatie.</string>
+    <string name="faq_location_permission_paragraph_1">CoronaMelder weet niet waar je bent, maar je locatie-instellingen moeten wel aanstaan. Anders werkt de app niet. Dat klinkt misschien een beetje gek. Het zit zo:
+
+CoronaMelder gebruikt ‘bluetooth scanning’. Dat is een andere bluetoothtechniek dan waarmee je bijvoorbeeld verbinding maakt met een draadloze koptelefoon. Het is een techniek die weinig energie kost. Via bluetooth scanning wisselt de app willekeurige codes uit met telefoons in de buurt. 
+
+Sommige apps (niet CoronaMelder) gebruiken bluetooth scanning om je locatie te bepalen. Daarom heeft Google ooit bepaald dat locatie-instellingen altijd aan moeten staan om bluetooth scanning te gebruiken. Maar voor landelijke corona-apps zoals CoronaMelder gaat Google in een toekomstige versie van Android een uitzondering maken.
+
+Belangrijk om te onthouden: CoronaMelder heeft nooit toegang tot je locatie.</string>
     <string name="faq_technical_toolbar_title">Technische uitleg</string>
     <string name="faq_technical_header_1">1. De app maakt voor elke telefoon een eigen code</string>
     <string name="faq_technical_paragraph_2">In deze code staat geen informatie over jou of je telefoon. De code is helemaal anoniem en verandert elk kwartier.</string>
@@ -148,7 +173,7 @@
     <string name="faq_technical_paragraph_10">In deze melding lees je wanneer je in de buurt van de besmette persoon bent geweest. Niet wie het is en waar het was. Ook vertelt de app wat je nu zelf het beste kunt doen. Je eigen codes staan niet op de lijst met besmette codes, maar worden 14 dagen op je telefoon bewaard.</string>
     <string name="faq_technical_github_title">Bekijk broncode</string>
     <string name="faq_technical_github_subtitle">Ga naar GitHub</string>
-    <string name="share_content">Ik help corona onder controle te houden met CoronaMelder. Doe je ook mee? %1$s</string>
+    <string name="share_content">Ik help corona onder controle te krijgen met CoronaMelder. Doe je ook mee? %1$s</string>
     <string name="share_title">Deel de app met anderen</string>
     <string name="lab_test_toolbar_title">GGD-sleutel</string>
     <string name="lab_test_paragraph_1"><![CDATA[Ben je getest en heb je corona? Dan belt een GGD-medewerker je. Je hebt hierbij je GGD-sleutel nodig. <a href="">Hoe werkt dit?</a>]]></string>
@@ -189,7 +214,7 @@
     <string name="end_of_life_action">Lees meer</string>
     <string name="end_of_life_description">Het Ministerie van Volksgezondheid, Welzijn en Sport heeft besloten dat de app niet meer nodig is. Je krijgt dus geen melding meer nadat je in de buurt bent geweest van iemand met corona.</string>
     <string name="end_of_life_headline">CoronaMelder is gestopt</string>
-    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met corona</string>
+    <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met corona.</string>
     <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
     <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
     <string name="cd_status_disabled">Geel rondje met uitroepteken als waarschuwing</string>
@@ -204,9 +229,9 @@
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[Om CoronaMelder te gebruiken moet je akkoord gaan met de <a href="">privacyverklaring</a>. Belangrijk om te weten:]]></string>
     <string name="onboarding_privacy_policy_check_1">Je app zendt versleutelde bluetoothgegevens uit.</string>
     <string name="onboarding_privacy_policy_check_2">Andere gebruikers die met jou in contact zijn geweest bewaren deze gegevens maximaal 14 dagen.</string>
-    <string name="onboarding_privacy_policy_check_3">Als uit een coronatest blijkt dat je corona hebt kun je dit in de app melden om andere gebruikers te waarschuwen.</string>
+    <string name="onboarding_privacy_policy_check_3">Als uit een coronatest blijkt dat je corona hebt, kun je dit in de app melden om andere gebruikers te waarschuwen.</string>
     <string name="onboarding_privacy_policy_check_4">Je kunt op ieder moment de gegevens van je telefoon verwijderen.</string>
     <string name="onboarding_privacy_policy_consent_label">Ik heb de privacyverklaring gelezen en ga hiermee akkoord</string>
-    <string name="request_test_paragraph_3">Laat je gratis testen. Het duurt niet lang en je kan meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
+    <string name="request_test_paragraph_3">Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
     <string name="lab_test_how_does_it_work">Hoe werkt dit?</string>
 </resources>
