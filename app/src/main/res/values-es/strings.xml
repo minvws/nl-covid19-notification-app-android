@@ -78,8 +78,8 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="request_test_header_1">¿Muestras síntomas relacionados con el coronavirus? Solicita un test</string>
     <string name="request_test_paragraph_2" tools:ignore="Typos">¿Muestras síntomas, aunque sean leves, relacionados con el coronavirus? Hazte un test gratis. No tarda mucho en hacerse  y normalmente puedes concertar la cita rápidamente. Recibirás los resultados en 48 horas. Quédate en casa hasta recibir los resultados. ¿Muestras síntomas graves o formas parte de un grupo de riesgo? Llama a tu médico de cabecera.</string>
     <string name="status_reset_exposure">Eliminar notificación</string>
-    <string name="status_dialog_remove_exposure_title">¿Estás seguro/a de que quieres eliminar esta notificación?</string>
-    <string name="status_dialog_remove_exposure_message">Después no podrás consultar la fecha en tu teléfono, así que recuérdala bien.</string>
+    <string name="status_dialog_remove_exposure_title">Mogelijke besmetting op %1$s</string>
+    <string name="status_dialog_remove_exposure_message">Weet je zeker dat je deze melding wilt verwijderen? Je kunt de datum daarna niet meer terugvinden in de app. Onthoud deze dus goed.</string>
     <string name="status_dialog_remove_exposure_confirm">Eliminar</string>
     <string name="status_dialog_remove_exposure_cancel">Cancelar</string>
     <string name="status_info_about_title">Sobre la app</string>
@@ -233,4 +233,28 @@ Importante: CoronaMelder no tiene nunca acceso a tu localización.</string>
     <string name="onboarding_privacy_policy_consent_label">He leído y acepto la declaración de privacidad</string>
     <string name="request_test_paragraph_3">Hazte un test gratis. No tarda mucho en hacerse y normalmente puedes concertar la cita rápidamente. Recibirás los resultados en 48 horas. Quédate en casa hasta que sepas los resultados.</string>
     <string name="lab_test_how_does_it_work">¿Cómo funciona?</string>
+    <string name="faq_notification_message">Wat staat er in een melding?</string>
+    <string name="faq_pause">Kan ik de app pauzeren?</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Ja, dat kan door je bluetooth uit te zetten. Dit doe je via <strong>Instellingen > Verbindingen > Bluetooth</strong>. Als je bluetooth uitzet, wisselt de app geen codes meer uit. Je krijgt hierna elke 24 uur automatisch een herinnering om de app weer aan te zetten.]]></string>
+    <string name="faq_pause_paragraph_2">Als je bluetooth aan wilt laten staan, kun je de app ook pauzeren door ‘Blootstellingsmeldingen gebruiken’ tijdelijk uit te zetten. Dit doe je via de knop hieronder. Ook dan krijg je elke 24 uur automatisch een herinnering om de app weer aan te zetten.</string>
+    <string name="faq_pause_paragraph_3">Toch is het meestal niet aan te raden om de app te pauzeren, omdat je misschien vergeet hem weer aan te zetten. Je kunt de app wel pauzeren in bijzondere situaties. Bijvoorbeeld als je in de buurt komt van (mogelijke) coronapatiënten, maar zeker weet dat je medische beschermingsmiddelen draagt.</string>
+    <string name="faq_interoperability">Werkt de app samen met andere landen?</string>
+    <string name="faq_interoperability_paragraph_1">Helaas nu nog niet, maar de verwachting is dat het eind september wel kan. Dan zal CoronaMelder ook codes kunnen uitwisselen met sommige apps uit andere landen. Bijvoorbeeld de Duitse app.</string>
+    <string name="faq_interoperability_paragraph_2">Als je naast CoronaMelder de Duitse Corona-Warn-App installeert, zegt je telefoon dat er maar 1 app tegelijk actief kan zijn. De app die je kiest is de enige app die op dat moment jouw ontmoetingen controleert. Wil je dat in meerdere landen doen, dan moet je dus zelf wisselen van app. Van die app kun je dan meldingen ontvangen. Als je 1 keer per dag wisselt van app, controleren beide apps je ontmoetingen. Zo mis je niks.</string>
+    <string name="faq_interoperability_paragraph_3">Vanaf eind september kun je waarschijnlijk de app van je eigen land blijven gebruiken, en hoef je niet meer dagelijks te wisselen.</string>
+    <string name="cross_links_header">Lees ook</string>
+    <string name="generic_notification_paragraph_4">De melding lijkt op wat je ziet als je een sms-bericht ontvangt. In de melding staat op welke dag je in de buurt was van iemand met het coronavirus.</string>
+    <string name="generic_notification_paragraph_5">Klik op de melding om CoronaMelder te openen. Daar lees je wat je verder kunt doen.</string>
+    <string name="generic_notification_alt_text_6">Rood scherm met alarmbel dat aangeeft dat er nu actie nodig is</string>
+    <string name="generic_notification_caption_7">Voorbeeld: Zo ziet de app eruit als je een melding hebt ontvangen.</string>
+    <string name="generic_notification_header_8">Wat kun je doen als je een melding krijgt?</string>
+    <string name="generic_notification_paragraph_9">Laat je testen op corona. Wanneer precies hangt af van of je klachten hebt die bij corona passen. En op welke dag je in de buurt was van de persoon met corona. Blijf  in ieder geval thuis tot je de uitslag weet. Zo voorkom je dat je onbewust anderen besmet.</string>
+    <string name="generic_notification_paragraph_10">Was je in de buurt van iemand die jou kende, en word je gebeld door de GGD? Volg dan het advies van de GGD, niet dat van de app.</string>
+    <string name="generic_notification_header_11">Andere meldingen</string>
+    <string name="generic_notification_paragraph_12">De app kan je ook een melding sturen als er een technisch probleem is. Bijvoorbeeld als je Bluetooth uitstaat. Of als er langer dan een dag geen internetverbindig was. De app helpt je dit op te lossen.</string>
+    <string name="generic_notification_paragraph_13">Heb je zo’n melding ontvangen, en is de app wel gewoon actief? Dan is het probleem in de tussentijd al opgelost.</string>
+    <string name="request_test_paragraph_4">Heb je ernstige klachten of zit je in een risicogroep? Bel dan je huisarts.</string>
+    <string name="request_test_header_5">Coronatest aanvragen</string>
+    <string name="request_test_button_call">Bel %1$s</string>
+    <string name="request_test_button_website">Ga naar coronatest.nl</string>
 </resources>

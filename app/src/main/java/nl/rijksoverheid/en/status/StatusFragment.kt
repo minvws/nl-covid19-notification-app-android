@@ -28,6 +28,7 @@ import nl.rijksoverheid.en.config.isTestPhaseVersion
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.formatExposureDate
 import timber.log.Timber
 
 class StatusFragment @JvmOverloads constructor(
@@ -108,7 +109,11 @@ class StatusFragment @JvmOverloads constructor(
                 is StatusViewModel.HeaderState.Exposed -> section.updateHeader(
                     headerState = it,
                     primaryAction = { navigateToPostNotification(it.date.toEpochDay()) },
-                    secondaryAction = ::showRemoveNotificationConfirmationDialog
+                    secondaryAction = {
+                        showRemoveNotificationConfirmationDialog(
+                            it.date.formatExposureDate(requireContext())
+                        )
+                    }
                 )
             }
         }
@@ -149,8 +154,10 @@ class StatusFragment @JvmOverloads constructor(
         }
     }
 
-    private fun showRemoveNotificationConfirmationDialog() {
-        findNavController().navigate(StatusFragmentDirections.actionRemoveExposedMessage())
+    private fun showRemoveNotificationConfirmationDialog(formattedDate: String) {
+        findNavController().navigate(
+            StatusFragmentDirections.actionRemoveExposedMessage(formattedDate)
+        )
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
             RemoveExposedMessageDialogFragment.REMOVE_EXPOSED_MESSAGE_RESULT
         )?.observe(viewLifecycleOwner) {

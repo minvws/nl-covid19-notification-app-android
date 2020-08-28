@@ -10,16 +10,23 @@ import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQHeaderItem
 import nl.rijksoverheid.en.about.FAQItem
-import nl.rijksoverheid.en.about.FAQItemId
+import nl.rijksoverheid.en.about.FAQItemId.ANONYMOUS
+import nl.rijksoverheid.en.about.FAQItemId.BLUETOOTH
+import nl.rijksoverheid.en.about.FAQItemId.LOCATION
+import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION
+import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION_MESSAGE
+import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
+import nl.rijksoverheid.en.about.FAQItemId.REASON
 
 class HowItWorksSection : Section(
     listOf(
         FAQHeaderItem(R.string.faq_header),
-        FAQItem(FAQItemId.REASON, R.string.faq_reason),
-        FAQItem(FAQItemId.LOCATION, R.string.faq_location),
-        FAQItem(FAQItemId.ANONYMOUS, R.string.faq_anonymous),
-        FAQItem(FAQItemId.NOTIFICATION, R.string.faq_notification),
-        FAQItem(FAQItemId.BLUETOOTH, R.string.faq_bluetooth),
-        FAQItem(FAQItemId.POWER_USAGE, R.string.faq_power_usage)
+        FAQItem(REASON),
+        FAQItem(ANONYMOUS),
+        FAQItem(LOCATION),
+        FAQItem(NOTIFICATION),
+        FAQItem(NOTIFICATION_MESSAGE),
+        FAQItem(BLUETOOTH),
+        FAQItem(POWER_USAGE)
     )
 )
