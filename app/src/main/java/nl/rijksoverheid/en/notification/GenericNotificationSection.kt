@@ -10,6 +10,7 @@ import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.IllustrationItem
+import nl.rijksoverheid.en.items.InlineIllustrationItem
 import nl.rijksoverheid.en.items.ParagraphItem
 
 class GenericNotificationSection : Section(
@@ -20,6 +21,11 @@ class GenericNotificationSection : Section(
         HeaderItem(R.string.generic_notification_header_3),
         ParagraphItem(R.string.generic_notification_paragraph_4),
         ParagraphItem(R.string.generic_notification_paragraph_5),
+        InlineIllustrationItem(
+            R.drawable.illustration_sample_exposed_state,
+            R.string.generic_notification_alt_text_6,
+            R.string.generic_notification_caption_7
+        ),
         HeaderItem(R.string.generic_notification_header_8),
         ParagraphItem(R.string.generic_notification_paragraph_9),
         ParagraphItem(R.string.generic_notification_paragraph_10),

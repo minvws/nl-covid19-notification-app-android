@@ -31,6 +31,8 @@
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
+    <style name="TextAppearance.App.Caption" parent="TextAppearance.App.Subtitle2" />
+
     <style name="TextAppearance.App.Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="lineHeight">24sp</item>
     </style>
