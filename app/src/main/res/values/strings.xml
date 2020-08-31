@@ -151,7 +151,7 @@
     <string name="share_content">I\'m helping to keep the coronavirus under control with CoronaMelder. Are you with me? %1$s</string>
     <string name="share_title">Share the app with others</string>
     <string name="lab_test_toolbar_title">GGD key</string>
-    <string name="lab_test_paragraph_1"><![CDATA[Were you tested and do you have coronavirus? You\'ll get a call from the GGD. You\'ll need your GGD key for this call.<a href="">How does this work?</a>]]></string>
+    <string name="lab_test_paragraph_1"><![CDATA[Were you tested and do you have coronavirus? You\'ll get a call from the GGD. You\'ll need your GGD key for this call. <a href="">How does this work?</a>]]></string>
     <string name="lab_test_step_1">Give this GGD key to the GGD employee.</string>
     <string name="lab_test_token_loading">Retrieving key</string>
     <string name="lab_test_token_error">The app couldn\'t retrieve the GGD key. Please check your internet connection.</string>
