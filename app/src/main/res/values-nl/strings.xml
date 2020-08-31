@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">nl</string>
@@ -58,25 +58,25 @@
     <string name="sync_issue_notification_message">De app kon de afgelopen 24 uur geen internetverbinding maken. Controleer of je wifi of mobiele data aanstaan.</string>
     <string name="post_notification_toolbar_title">Kans op besmetting</string>
     <string name="post_notification_header_1">Je bent in de buurt geweest van iemand met het coronavirus</string>
-    <string name="post_notification_paragraph_2" tools:ignore="Typos">Je was %1$s (op %2$s) dicht bij iemand die later corona bleek te hebben. Je hebt in deze situatie mogelijk extra kans op besmetting gelopen. Als je inderdaad besmet bent, kun je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
+    <string name="post_notification_paragraph_2">Je was %1$s (op %2$s) dicht bij iemand die later corona bleek te hebben. Je hebt in deze situatie mogelijk extra kans op besmetting gelopen. Als je inderdaad besmet bent, kun je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
     <string name="post_notification_header_3">Wat kun je nu doen?</string>
     <string name="post_notification_list_4"><![CDATA[<ul><li>Heb je geen klachten? Doe een coronatest en blijf thuis tot je de uitslag weet</li><li>Heb je (lichte) klachten die passen bij corona? Doe een coronatest en blijf thuis tot je de uitslag weet</li><li>Heb je ernstige klachten of zit je in een risicogroep? Bel je huisarts</li></ul>]]></string>
     <string name="post_notification_header_6">Doe een coronatest</string>
-    <string name="post_notification_paragraph_7" tools:ignore="Typos">Zelfs als je je niet ziek voelt. Want zonder je ziek te voelen kun je het coronavirus al verspreiden en zo anderen besmetten.</string>
+    <string name="post_notification_paragraph_7">Zelfs als je je niet ziek voelt. Want zonder je ziek te voelen kun je het coronavirus al verspreiden en zo anderen besmetten.</string>
     <string name="post_notification_paragraph_8">"Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet."</string>
     <string name="post_notification_paragraph_9">Bel gratis <b>%1$s</b> om een coronatest aan te vragen.</string>
     <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart</string>
     <string name="post_notification_button">Coronatest aanvragen</string>
     <string name="generic_notification_toolbar_title">Melding krijgen</string>
     <string name="generic_notification_header_1">Wat betekent het als je een melding krijgt?</string>
-    <string name="generic_notification_paragraph_2" tools:ignore="Typos">De app stuurt een melding als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. In de melding staat alleen op welke dag dit was. Je hebt in deze situatie extra kans op besmetting gelopen. Als je besmet bent, kun je het virus aan anderen doorgeven. Ook als je je niet ziek voelt.</string>
+    <string name="generic_notification_paragraph_2">De app stuurt een melding als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. In de melding staat alleen op welke dag dit was. Je hebt in deze situatie extra kans op besmetting gelopen. Als je besmet bent, kun je het virus aan anderen doorgeven. Ook als je je niet ziek voelt.</string>
     <string name="generic_notification_header_3">Hoe ziet een melding eruit?</string>
     <string name="generic_notification_paragraph_4">De melding lijkt op wat je ziet als je een sms-bericht ontvangt. In de melding staat op welke dag je in de buurt was van iemand met het coronavirus.</string>
     <string name="generic_notification_paragraph_5">Klik op de melding om CoronaMelder te openen. Daar lees je wat je verder kunt doen.</string>
     <string name="generic_notification_alt_text_6">Rood scherm met alarmbel dat aangeeft dat er nu actie nodig is</string>
     <string name="generic_notification_caption_7">Voorbeeld: Zo ziet de app eruit als je een melding hebt ontvangen.</string>
     <string name="generic_notification_header_8">Wat kun je doen als je een melding krijgt?</string>
-    <string name="generic_notification_paragraph_9">Laat je testen op corona. Wanneer precies hangt af van of je klachten hebt die bij corona passen. En op welke dag je in de buurt was van de persoon met corona. Blijf  in ieder geval thuis tot je de uitslag weet. Zo voorkom je dat je onbewust anderen besmet.</string>
+    <string name="generic_notification_paragraph_9">Laat je testen op corona. Wanneer precies hangt af van of je klachten hebt die bij corona passen. En op welke dag je in de buurt was van de persoon met corona. Blijf in ieder geval thuis tot je de uitslag weet. Zo voorkom je dat je onbewust anderen besmet.</string>
     <string name="generic_notification_paragraph_10">Was je in de buurt van iemand die jou kende, en word je gebeld door de GGD? Volg dan het advies van de GGD, niet dat van de app.</string>
     <string name="generic_notification_header_11">Andere meldingen</string>
     <string name="generic_notification_paragraph_12">De app kan je ook een melding sturen als er een technisch probleem is. Bijvoorbeeld als je Bluetooth uitstaat. Of als er langer dan een dag geen internetverbindig was. De app helpt je dit op te lossen.</string>
@@ -85,14 +85,14 @@
     <string name="treat_perspective_list_2"><![CDATA[<ul><li>verkoudheidsklachten</li><li>neusverkoudheid, loopneus, niezen, keelpijn</li><li>hoesten</li><li>verhoging</li><li>plotseling verlies van reuk en/of smaak</li></ul>]]></string>
     <string name="request_test_toolbar_title">Coronatest aanvragen</string>
     <string name="request_test_header_1">Heb je klachten die passen bij corona? Vraag een test aan</string>
-    <string name="request_test_paragraph_2" tools:ignore="Typos">Heb je (lichte) klachten die passen bij het coronavirus? Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken.</string>
-    <string name="request_test_paragraph_3">De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
-    <string name="request_test_paragraph_4">Heb je ernstige klachten of zit je in een risicogroep? Bel dan je huisarts.</string>
+    <string name="request_test_paragraph_2">Heb je (lichte) klachten die passen bij het coronavirus? Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet. Heb je ernstige klachten of zit je in een risicogroep? Bel dan je huisarts.</string>
+    <string name="request_test_paragraph_3">Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
+    <string name="request_test_paragraph_4">Heb je ernstige klachten zoals hoge koorts of moeite met ademhalen? Of zit je een risicogroep? Bel je huisarts.</string>
     <string name="request_test_button_call">Bel %1$s</string>
     <string name="request_test_button_website">Ga naar coronatest.nl</string>
     <string name="status_reset_exposure">Melding verwijderen</string>
-    <string name="status_dialog_remove_exposure_title">Mogelijke besmetting op %1$s</string>
-    <string name="status_dialog_remove_exposure_message">Weet je zeker dat je deze melding wilt verwijderen? Je kunt de datum daarna niet meer terugvinden in de app. Onthoud deze dus goed.</string>
+    <string name="status_dialog_remove_exposure_title">Weet je zeker dat je deze melding wilt verwijderen?</string>
+    <string name="status_dialog_remove_exposure_message">Je kunt de datum daarna niet meer terugvinden in de app. Onthoud deze dus goed.</string>
     <string name="status_dialog_remove_exposure_confirm">Verwijder</string>
     <string name="status_dialog_remove_exposure_cancel">Annuleer</string>
     <string name="status_info_about_title">Over de app</string>
@@ -135,45 +135,20 @@
     <string name="faq_location_permission">Waarom moeten mijn locatie-instellingen aanstaan?</string>
     <string name="faq_technical">Hoe werkt de app precies?</string>
     <string name="faq_reason_paragraph_1">"De app kan je snel waarschuwen nadat je in de buurt bent geweest van iemand die corona heeft. Al voordat je klachten krijgt. Je kunt namelijk corona hebben en besmettelijk zijn zonder dat je het zelf doorhebt. "</string>
-    <string name="faq_reason_paragraph_2">Als je via de app een waarschuwing krijgt, kun je je laten testen. Verder is het advies om thuis te blijven. Zo voorkom je dat je onbewust mensen in je omgeving besmet.</string>
+    <string name="faq_reason_paragraph_2">Als je via de app een waarschuwing krijgt, lees je in de app wat je kunt doen. En of je je moet laten testen. Zo voorkom je dat je onbewust mensen in je omgeving besmet.</string>
     <string name="faq_reason_paragraph_3">"Ben je getest en heb je corona? Dan kun je samen met de GGD de mensen waarschuwen die lang bij jou in de buurt zijn geweest. Ook onbekenden. In een restaurant, bioscoop of wachtkamer. Zolang deze mensen ook de app gebruiken."</string>
     <string name="faq_reason_paragraph_4">Dankzij CoronaMelder kunnen we sneller ingrijpen en nieuwe besmettingen voorkomen. Alleen samen krijgen we corona onder controle.</string>
-    <string name="faq_location_paragraph_1">Nee, de app ziet via bluetooth alleen of je in de buurt bent van andere mensen die de app ook op hun telefoon hebben. De app ziet nooit waar je bent.
-
-Bluetooth is bedoeld om een draadloze verbinding te maken tussen 2 apparaten die bij elkaar in de buurt zijn. Zoals je telefoon en een geluidsbox of koptelefoon.
-
-De app kan de afstand tussen 2 telefoons schatten door de sterkte van het bluetoothsignaal.</string>
+    <string name="faq_location_paragraph_1">Nee, de app ziet via bluetooth alleen of je in de buurt bent van andere mensen die de app ook op hun telefoon hebben. De app ziet nooit waar je bent.\n\nBluetooth is bedoeld om een draadloze verbinding te maken tussen 2 apparaten die bij elkaar in de buurt zijn. Zoals je telefoon en een geluidsbox of koptelefoon.\n\nDe app kan de afstand tussen 2 telefoons schatten door de sterkte van het bluetoothsignaal.</string>
     <string name="faq_anonymous_paragraph_1">De app wisselt willekeurige codes uit met andere telefoons. In deze codes staan geen persoonsgegevens of locatiegegevens. Het uitwisselen van codes gebeurt op het moment dat je dicht bij een persoon bent die ook de app heeft.</string>
-    <string name="faq_anonymous_paragraph_2">Blijkt deze persoon later corona te hebben? Dan kan diegene samen met de GGD zijn of haar codes aan een lijst met codes van besmette personen toevoegen. Zo kan de besmetting bevestigd worden.
-
-Daarna wordt er een melding verstuurd naar alle andere mensen die deze codes op hun telefoon hebben. In deze melding staat alleen wanneer ze in de buurt zijn geweest van een besmet persoon. Niet wie dit is en waar ze die persoon zijn tegengekomen.</string>
-    <string name="faq_notification_paragraph_1">"Je krijgt een melding nadat je extra kans op besmetting hebt gelopen. Dit gebeurt als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. En natuurlijk alleen als die persoon ook de app gebruikt. 
-
-Of je een melding krijgt hangt af van de sterkte van het bluetoothsignaal. En van de duur van jullie contact. Fietste er iemand voorbij op straat? Dan krijg je later geen melding. Jullie waren dicht bij elkaar, dus het bluetooth-signaal was sterk. Maar het contact duurde zo kort dat de kans op besmetting heel erg klein is. 
-
-Zat je dicht bij iemand in de trein of op kantoor? Dan kun je later wel een melding krijgen. Het bluetoothsignaal was sterk genoeg en jullie waren langere tijd dicht bij elkaar in de buurt.
-"</string>
-    <string name="faq_upload_keys_paragraph_1">Je kunt alleen een melding naar anderen sturen als je getest bent en corona blijkt te hebben. De GGD belt je in dat geval met de uitslag van de test. 
-
-Tijdens dit telefoongesprek controleert een GGD-medewerker jouw GGD-sleutel. Deze vind je in de app. Zo is altijd zeker dat alleen mensen die echt besmet zijn meldingen kunnen versturen.</string>
-    <string name="faq_upload_keys_paragraph_2">"Nadat je GGD-sleutel is gecontroleerd kun je de codes delen die jouw telefoon de afgelopen 14 dagen naar andere telefoons heeft verzonden.
-
-Zo kunnen de mensen bij wie je in de buurt bent geweest toen je besmettelijk was een anonieme melding krijgen. Alleen als deze mensen ook de app gebruiken."</string>
-    <string name="faq_bluetooth_paragraph_1">Ja, maar het signaal wordt dan erg zwak. Bluetooth werkt het beste als jouw telefoon in dezelfde ruimte is als de telefoon van een andere persoon. 
-
-De kans is bijvoorbeeld heel klein dat je app het bluetoothsignaal van je buren ontvangt. 
-
-En daardoor is de kans ook heel klein dat je een melding krijgt als je buurman corona blijkt te hebben en jullie niet in dezelfde ruimte zijn geweest.</string>
+    <string name="faq_anonymous_paragraph_2">Blijkt deze persoon later corona te hebben? Dan kan diegene samen met de GGD zijn of haar codes aan een lijst met codes van besmette personen toevoegen. Zo kan de besmetting bevestigd worden.\n\nDaarna wordt er een melding verstuurd naar alle andere mensen die deze codes op hun telefoon hebben. In deze melding staat alleen wanneer ze in de buurt zijn geweest van een besmet persoon. Niet wie dit is en waar ze die persoon zijn tegengekomen.</string>
+    <string name="faq_notification_paragraph_1">"Je krijgt een melding nadat je extra kans op besmetting hebt gelopen. Dit gebeurt als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. En natuurlijk alleen als die persoon ook de app gebruikt.\n\nOf je een melding krijgt hangt af van de sterkte van het bluetoothsignaal. En van de duur van jullie contact. Fietste er iemand voorbij op straat? Dan krijg je later geen melding. Jullie waren dicht bij elkaar, dus het bluetooth-signaal was sterk. Maar het contact duurde zo kort dat de kans op besmetting heel erg klein is.\n\nZat je dicht bij iemand in de trein of op kantoor? Dan kun je later wel een melding krijgen. Het bluetoothsignaal was sterk genoeg en jullie waren langere tijd dicht bij elkaar in de buurt."</string>
+    <string name="faq_upload_keys_paragraph_1">Je kunt alleen een melding naar anderen sturen als je getest bent en corona blijkt te hebben. De GGD belt je in dat geval met de uitslag van de test.\n\nTijdens dit telefoongesprek controleert een GGD-medewerker jouw GGD-sleutel. Deze vind je in de app. Zo is altijd zeker dat alleen mensen die echt besmet zijn meldingen kunnen versturen.</string>
+    <string name="faq_upload_keys_paragraph_2">"Nadat je GGD-sleutel is gecontroleerd kun je de codes delen die jouw telefoon de afgelopen 14 dagen naar andere telefoons heeft verzonden.\n\nZo kunnen de mensen bij wie je in de buurt bent geweest toen je besmettelijk was een anonieme melding krijgen. Alleen als deze mensen ook de app gebruiken."</string>
+    <string name="faq_bluetooth_paragraph_1">"Ja, maar het signaal wordt dan erg zwak. Bluetooth werkt het beste als jouw telefoon in dezelfde ruimte is als de telefoon van een andere persoon.\n\nDe kans is bijvoorbeeld heel klein dat je app het bluetoothsignaal van je buren ontvangt.\n\nEn daardoor is de kans ook heel klein dat je een melding krijgt als je buurman corona blijkt te hebben en jullie niet in dezelfde ruimte zijn geweest."</string>
     <string name="faq_power_usage_paragraph_1">De app maakt gebruikt van Bluetooth Low Energy (lage-energiebluetooth). Dit is een speciale vorm van bluetooth die heel weinig stroom gebruikt. Hoeveel procent dit precies van je telefoonbatterij vraagt verschilt per telefoon.</string>
-    <string name="faq_deletion_paragraph_1">"Je kunt de bluetoothgegevens die de app heeft bewaard zelf verwijderen. Dat gaat als volgt. Ga op je telefoon naar Instellingen -&gt; Google -&gt; Meldingen over mogelijke blootstelling aan COVID-19. Klik op Willekeurige ID’s verwijderen -&gt; Verwijderen. Wil je dat de app geen nieuwe bluetoothgegevens meer bewaart? Verwijder dan de app."</string>
+    <string name="faq_deletion_paragraph_1">"Je kunt de bluetoothgegevens die CoronaMelder heeft bewaard zelf verwijderen. Druk op de knop hieronder en daarna op &lt;strong&gt;Willekeurige ID’s verwijderen&lt;/strong&gt;. Wil je dat de app geen nieuwe bluetoothgegevens meer bewaart? Verwijder dan de app."</string>
     <string name="faq_deletion_button">Open Instellingen</string>
-    <string name="faq_location_permission_paragraph_1">CoronaMelder weet niet waar je bent, maar je locatie-instellingen moeten wel aanstaan. Anders werkt de app niet. Dat klinkt misschien een beetje gek. Het zit zo:
-
-CoronaMelder gebruikt ‘bluetooth scanning’. Dat is een andere bluetoothtechniek dan waarmee je bijvoorbeeld verbinding maakt met een draadloze koptelefoon. Het is een techniek die weinig energie kost. Via bluetooth scanning wisselt de app willekeurige codes uit met telefoons in de buurt. 
-
-Sommige apps (niet CoronaMelder) gebruiken bluetooth scanning om je locatie te bepalen. Daarom heeft Google ooit bepaald dat locatie-instellingen altijd aan moeten staan om bluetooth scanning te gebruiken. Maar voor landelijke corona-apps zoals CoronaMelder gaat Google in een toekomstige versie van Android een uitzondering maken.
-
-Belangrijk om te onthouden: CoronaMelder heeft nooit toegang tot je locatie.</string>
+    <string name="faq_location_permission_paragraph_1">CoronaMelder weet niet waar je bent, maar je locatie-instellingen moeten wel aanstaan. Anders werkt de app niet. Dat klinkt misschien een beetje gek. Het zit zo:\n\nCoronaMelder gebruikt ‘bluetooth scanning’. Dat is een andere bluetoothtechniek dan waarmee je bijvoorbeeld verbinding maakt met een draadloze koptelefoon. Het is een techniek die weinig energie kost. Via bluetooth scanning wisselt de app willekeurige codes uit met telefoons in de buurt.\n\nSommige apps (niet CoronaMelder) gebruiken bluetooth scanning om je locatie te bepalen. Daarom moeten je locatie-instellingen altijd aanstaan om bluetooth scanning te gebruiken. Ook als een app je locatie niet gebruikt.\n\nBelangrijk om te onthouden: CoronaMelder heeft nooit toegang tot je locatie.</string>
     <string name="faq_technical_toolbar_title">Technische uitleg</string>
     <string name="faq_technical_header_1">1. De app maakt voor elke telefoon een eigen code</string>
     <string name="faq_technical_paragraph_2">In deze code staat geen informatie over jou of je telefoon. De code is helemaal anoniem en verandert elk kwartier.</string>
@@ -250,9 +225,9 @@ Belangrijk om te onthouden: CoronaMelder heeft nooit toegang tot je locatie.</st
     <string name="faq_notification_message">Wat staat er in een melding?</string>
     <string name="faq_pause">Kan ik de app pauzeren?</string>
     <string name="faq_pause_paragraph_1"><![CDATA[Ja, dat kan door je bluetooth uit te zetten. Dit doe je via <strong>Instellingen > Verbindingen > Bluetooth</strong>. Als je bluetooth uitzet, wisselt de app geen codes meer uit. Je krijgt hierna elke 24 uur automatisch een herinnering om de app weer aan te zetten.]]></string>
-    <string name="faq_pause_paragraph_2">Als je bluetooth aan wilt laten staan, kun je de app ook pauzeren door ‘Blootstellingsmeldingen gebruiken’ tijdelijk uit te zetten. Dit doe je via de knop hieronder. Ook dan krijg je elke 24 uur automatisch een herinnering om de app weer aan te zetten.</string>
+    <string name="faq_pause_paragraph_2">Als je bluetooth aan wilt laten staan, kun je de app ook pauzeren door &lt;strong&gt;Blootstellingsmeldingen gebruiken&lt;/strong&gt; tijdelijk uit te zetten. Dit doe je via de knop hieronder. Ook dan krijg je elke 24 uur automatisch een herinnering om de app weer aan te zetten.</string>
     <string name="faq_pause_paragraph_3">Toch is het meestal niet aan te raden om de app te pauzeren, omdat je misschien vergeet hem weer aan te zetten. Je kunt de app wel pauzeren in bijzondere situaties. Bijvoorbeeld als je in de buurt komt van (mogelijke) coronapatiënten, maar zeker weet dat je medische beschermingsmiddelen draagt.</string>
-    <string name="faq_interoperability">Werkt de app samen met andere landen?</string>
+    <string name="faq_interoperability">Werkt CoronaMelder ook samen met apps uit andere landen?</string>
     <string name="faq_interoperability_paragraph_1">Helaas nu nog niet, maar de verwachting is dat het eind september wel kan. Dan zal CoronaMelder ook codes kunnen uitwisselen met sommige apps uit andere landen. Bijvoorbeeld de Duitse app.</string>
     <string name="faq_interoperability_paragraph_2">Als je naast CoronaMelder de Duitse Corona-Warn-App installeert, zegt je telefoon dat er maar 1 app tegelijk actief kan zijn. De app die je kiest is de enige app die op dat moment jouw ontmoetingen controleert. Wil je dat in meerdere landen doen, dan moet je dus zelf wisselen van app. Van die app kun je dan meldingen ontvangen. Als je 1 keer per dag wisselt van app, controleren beide apps je ontmoetingen. Zo mis je niks.</string>
     <string name="faq_interoperability_paragraph_3">Vanaf eind september kun je waarschijnlijk de app van je eigen land blijven gebruiken, en hoef je niet meer dagelijks te wisselen.</string>

@@ -29,7 +29,7 @@ class ParagraphItem(
         ViewCompat.enableAccessibleClickableSpanSupport(viewBinding.content)
         viewBinding.text = SpannableString(
             HtmlCompat.fromHtml(
-                viewBinding.root.context.getString(text, *formatArgs),
+                viewBinding.root.context.getString(text, *formatArgs).replace("\n", "<br/>"),
                 HtmlCompat.FROM_HTML_MODE_COMPACT
             )
         ).apply {
