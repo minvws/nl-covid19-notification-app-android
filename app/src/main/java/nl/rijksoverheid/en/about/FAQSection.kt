@@ -176,7 +176,8 @@ class FAQDetailSections(private val openSettings: () -> Unit = {}) {
                     R.string.onboarding_example_2_description,
                     R.drawable.illustration_explanation_example_2,
                     isExample = true
-                )
+                ),
+                FAQTechnicalExplanationItem()
             )
         )
     }

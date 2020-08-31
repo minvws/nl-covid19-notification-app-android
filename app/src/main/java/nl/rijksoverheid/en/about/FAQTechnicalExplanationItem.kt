@@ -8,9 +8,7 @@ package nl.rijksoverheid.en.about
 
 import nl.rijksoverheid.en.R
 
-class FAQTechnicalExplanationItem(
-    val crossLinks: List<FAQItemId> = emptyList()
-) : IllustratedBoxItem(
+class FAQTechnicalExplanationItem : IllustratedBoxItem(
     R.string.about_technical_explanation_title,
     R.string.about_technical_explanation_subtitle,
     R.drawable.illustration_technical_explanation,

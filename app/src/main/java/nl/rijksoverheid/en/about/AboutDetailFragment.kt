@@ -96,6 +96,16 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
                         FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                     )
                 }
+                is FAQTechnicalExplanationItem -> {
+                    enterTransition = exitTransition
+                    findNavController().navigateCatchingErrors(
+                        AboutDetailFragmentDirections.actionAboutDetail(
+                            TECHNICAL,
+                            args.inOnboarding
+                        ),
+                        FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+                    )
+                }
             }
         }
     }

@@ -11,9 +11,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemFaqOnboardingBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 
-class FAQOnboardingItem(
-    val crossLinks: List<FAQItemId> = emptyList()
-) : BaseBindableItem<ItemFaqOnboardingBinding>() {
+class FAQOnboardingItem : BaseBindableItem<ItemFaqOnboardingBinding>() {
     override fun getLayout() = R.layout.item_faq_onboarding
     override fun bind(viewBinding: ItemFaqOnboardingBinding, position: Int) {}
     override fun isClickable() = true
