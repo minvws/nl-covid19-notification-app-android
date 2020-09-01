@@ -6,31 +6,31 @@
     <string name="onboarding_next">Sonraki</string>
     <string name="onboarding_example">Örnek</string>
     <string name="onboarding_explanation_1_headline">Korona virüsünün yayılmasını durdurmaya yardımcı olun</string>
-    <string name="onboarding_explanation_1_description">Bu uygulama Korona olan birinin yakınında bulunduğunuzdan sonra sizi uyarır. Bu şekilde çevrenizdeki insanları bilinçsizce enfekte etmeyi önleyebilirsiniz.</string>
-    <string name="onboarding_explanation_2_headline">Esktra enfeksiyon riskiyle karşılaştıktan <u>sonra</u> bir bildirim alacaksınız</string>
+    <string name="onboarding_explanation_1_description">Bu uygulama Korona olan birinin yakınında bulunduğunuzdan sonra sizi uyarır. Bu şekilde etrafınızdaki insanlara Korona bulaştırmaktan kaçınabilirsiniz.</string>
+    <string name="onboarding_explanation_2_headline">Fazladan enfeksiyon riskiyle karşılaştıktan <u>sonra</u> bir bildirim alacaksınız</string>
     <string name="onboarding_explanation_2_description">Sonradan Korona olduğu ortaya çıkan birinin yakınında en az 15 dakika boyunca kaldıysanız, uygulama bir bildirim gönderir. Bu kişi de uygulamayı kullanmalıdır.</string>
     <string name="onboarding_explanation_3_headline">Uygulama Bluetooth ile çalışır, konum verileri <u>kullanmaz</u></string>
     <string name="onboarding_explanation_3_description">Uygulama, Bluetooth aracılığıyla birisine yakın olup olmadığınızı görür. Ne kadar yakın olunursa, Bluetooth sinyali o kadar güçlüdür. Uygulama nerede olduğunuzu ve kim olduğunuzu bilmez.</string>
     <string name="onboarding_example_1_headline">Birisi bisikletle yanınızdan mı geçti? Bunun sonrasında bildirim <u>almazsınız</u></string>
     <string name="onboarding_example_1_description">Bluetooth sinyali, birbirinize yakın olduğunuz için yeterince güçlüydü. Bu sadece o kadar kısa sürdü ki, bulaşma riski çok az idi.</string>
-    <string name="onboarding_example_2_headline">Trende birinin yakınında mı oturuyordunuz? O zaman <u>sonrasında</u>bir bildirim alabilirsiniz</string>
+    <string name="onboarding_example_2_headline">Trende birinin yakınında mı oturuyordunuz? O zaman bir bildirim <u>alabilirsiniz</u></string>
     <string name="onboarding_example_2_description">Bluetooth sinyali yeterince güçlüydü ve uzun süre birbirinizin yakınındaydınız.</string>
     <string name="onboarding_consent_headline">Korona virüsü ile olası temas hakkında bildirimleri açın</string>
     <string name="onboarding_consent_check_1">Bluetooth verileri 14 gün boyunca telefonunuzda saklanır. Bunları her zaman kendiniz silebilirsiniz.</string>
     <string name="onboarding_consent_check_2"><![CDATA[Adınız <strong>kullanılmaz</strong> veya saklanmaz.]]></string>
-    <string name="onboarding_consent_check_3"><![CDATA[GPS veya konum verileriniz <strong>kullanılmaz</strong> veya saklanmaz.]]></string>
+    <string name="onboarding_consent_check_3"><![CDATA[GPS konum verileriniz <strong> kullanılmaz </strong> veya saklanmaz.]]></string>
     <string name="onboarding_consent_request">Açmak</string>
     <string name="onboarding_consent_explain">Uygulama tam olarak nasıl çalışır?</string>
     <string name="onboarding_consent_skip">Atla</string>
     <string name="onboarding_consent_skip_dialog_title">Bu bildirimleri açmak istemediğinizden emin misiniz?</string>
-    <string name="onboarding_consent_skip_dialog_message">Ekstra bir enfeksiyon riski ile karşılaştığınızdan sonra uygulama izniniz olmadan size bildirim gönderemez.</string>
+    <string name="onboarding_consent_skip_dialog_message">Ekstra bir enfeksiyon riski ile karşılaştığınızdan sonra uygulama müsaade olmadan bildirim gönderemez.</string>
     <string name="onboarding_consent_skip_dialog_skip">Atla</string>
     <string name="onboarding_consent_skip_dialog_enable">Aç</string>
     <string name="onboarding_how_it_works_toolbar_title">Uygulama nasıl çalışır?</string>
     <string name="onboarding_how_it_works_request_consent">Uygulamayı açmak</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Sıkça sorulan soru</string>
     <string name="onboarding_share_headline">Virüsün durdurulmasına yardımcı olduğunuzu başkalarına bildirin</string>
-    <string name="onboarding_share_description">CoronaMelder\'i ne kadar çok kişi kullanırsa, uygulama o kadar iyi çalışır. Korona\'nın yayılmasını ancak birlikte durdurabiliriz. Bu yüzden uygulamayı olabildiğince çok kişiyle paylaşın.</string>
+    <string name="onboarding_share_description">CoronaMelder\'i ne kadar çok kişi kullanırsa, o kadar iyi çalışır. Virüsün yayılmasını ancak birlikte durdurabiliriz. Bu yüzden uygulamayı mümkün olduğu kadar başkalarıyla paylaşın.</string>
     <string name="onboarding_share_continue">Devam edin</string>
     <string name="onboarding_share_share">Uygulamayı Paylaşın</string>
     <string name="status_no_exposure_detected_headline">Uygulama etkindir</string>
@@ -38,7 +38,7 @@
     <string name="status_exposure_detected_headline">Korona olan bir kişinin yakınında bulundunuz</string>
     <string name="status_exposure_detected_description">Fazladan %1$s (%2$s) bulaşma riskine uğradınız</string>
     <string name="status_disabled_headline">Uygulama etkin değil</string>
-    <string name="status_en_api_disabled_description">%1$s sadece gerekli ayarlar açıksa çalışır.</string>
+    <string name="status_en_api_disabled_description">%1$s yalnızca gerekli ayarlar etkinleştirilirse çalışır</string>
     <string name="status_en_api_disabled_enable">Uygulamayı açmak</string>
     <string name="notification_channel_name">Temas bildirimleri</string>
     <string name="notification_channel_description">Korona virüsü ile olası temas bildirimleri</string>
@@ -61,8 +61,8 @@
     <string name="post_notification_header_1">Koronavirüs olan birisinin yakınında bulundunuz</string>
     <string name="generic_notification_header_1">Bildirim almanız ne anlama gelir?</string>
     <string name="post_notification_paragraph_2" tools:ignore="Typos">Daha sonra Korona olduğu ortaya çıkan birinin yakınında %1$s 
-(%2$s tarihinde) bulundunuz. Bu durumda ekstra bir enfekte olma riskine maruz kalmış olabilirsiniz. Gerçekten enfekte olursanız, virüsü başkalarına bulaştırabilirsiniz. Şimdilik kendinizi hasta hissetmeseniz bile.</string>
-    <string name="generic_notification_paragraph_2" tools:ignore="Typos">Sonradan Korona olduğu ortaya çıkan birinin yakınında en az 15 dakika boyunca bulunduysanız, uygulama bir bildirim gönderir. Bildirim sadece bunun hangi gün olduğunu belirtir. Bu durumda ekstra bir enfeksiyon riskine maruz kalmış olursunuz. Enfekte olursanız, virüsü başkalarına aktarabilirsiniz. Kendinizi hasta hissetmeseniz bile.</string>
+(%2$s tarihinde) bulundunuz. Bu durumda ekstra bir enfeksiyon riski altında bulunmuş olabilirsiniz. Gerçekten enfekte olursanız, virüsü başkalarına aktarabilirsiniz. Şimdilik kendinizi hasta hissetmeseniz bile.</string>
+    <string name="generic_notification_paragraph_2" tools:ignore="Typos">Sonradan Korona olduğu ortaya çıkan birinin yakınında en az 15 dakika boyunca bulunduysanız, uygulama bir bildirim gönderir. Bildirim sadece bunun hangi gün olduğunu belirtir. Bu durumda ekstra bir enfeksiyon riski yaşadınız. Enfekte olursanız, virüsü başkalarına aktarabilirsiniz. Kendinizi hasta hissetmeseniz bile.</string>
     <string name="post_notification_header_3">Şimdi ne yapabilirsiniz?</string>
     <string name="generic_notification_header_3">Bu durumda ne yapabilirsiniz?</string>
     <string name="post_notification_list_4"><![CDATA[<ul><li>Şikayetiniz yok mu? Korona testi yaptırın ve sonucu öğrenene kadar evde kalın.</li><li> Korona\'ya uyan (hafif) şikayetleriniz mi var? Korona testi yaptırın ve sonucu öğrenene kadar evde kalın.</li><li> Ciddi şikayetleriniz mi var veya bir risk grubuna dahil misiniz? Doktorunuzu arayın </li> </ul>]]></string>
@@ -71,12 +71,12 @@
     <string name="post_notification_paragraph_8">"Kendinizi ücretsiz test ettirin. Test uzun sürmez ve genellikle çok çabuk randevu alabilirsiniz. Sonuçlar 48 saat içinde belli olur. Sonucu öğrenene kadar evde kalın."</string>
     <string name="post_notification_paragraph_9">Korona testi talep etmek için <b>%1$s</b>yi ücretsiz arayın.</string>
     <string name="post_notification_message">Sosyal güvenlik numaranızı hazır bulundurun. Bunu pasaportunuzda veya kimlik kartınızda bulabilirsiniz</string>
-    <string name="post_notification_button">Korona testi talep edin</string>
+    <string name="post_notification_button">Korona testi için arayın</string>
     <string name="treat_perspective_header_1">Korona virüsü (COVID-19) ile ilgili şikayetler (COVID-19)</string>
     <string name="treat_perspective_list_2"><![CDATA[<ul><li>soğuk algınlığı şikayetleri</li><li>soğuk algınlığı, burun akıntısı, hapşırma, boğaz ağrısı</li><li>öksürük</li><li>ateş</li><li> ani koku ve/veya tad alma kaybı</li></ul>]]></string>
     <string name="request_test_toolbar_title">Korona testi talep etmek</string>
     <string name="request_test_header_1">Korona ile uyumlu şikayetleriniz mi var ? Test talep edin</string>
-    <string name="request_test_paragraph_2" tools:ignore="Typos">Korona virüsü ile uyumlu olan (hafif) şikayetleriniz mi var? Kendinizi ücretsiz test ettirin. Test uzun sürmez ve genellikle çok çabuk randevu alabilirsiniz. Sonuçlar 48 saat içinde belli olur. Sonucu öğrenene kadar evde kalın. Ciddi şikayetleriniz mi var ya da bir risk grubuna dahil misiniz? O durumda doktorunuzu arayın.</string>
+    <string name="request_test_paragraph_2" tools:ignore="Typos">Korona virüsü ile uyumlu olan (hafif) şikayetleriniz mi var? Ücretsiz test yaptırın. Uzun sürmez ve genellikle hızlı bir şekilde randevu alabilirsiniz. Sonuçlar 48 saat içinde belli olur. Sonucu öğrenene kadar evde kalın. Ciddi şikayetleriniz mi var ya da bir risk grubunda mısınız? O durumda doktorunuzu arayın.</string>
     <string name="status_reset_exposure">Bildirimi silin</string>
     <string name="status_dialog_remove_exposure_title">Mogelijke besmetting op %1$s</string>
     <string name="status_dialog_remove_exposure_message">Weet je zeker dat je deze melding wilt verwijderen? Je kunt de datum daarna niet meer terugvinden in de app. Onthoud deze dus goed.</string>
@@ -85,7 +85,7 @@
     <string name="status_info_about_title">Uygulama hakkında</string>
     <string name="status_info_about_subtitle">Uygulamanın nasıl çalıştığını ve gizliliğiniz için ne anlama geldiğini görün</string>
     <string name="status_info_share_title">Başkalarını uygulamaya davet etmek</string>
-    <string name="status_info_share_subtitle">Korona\'yı birlikte kontrol altına almak için uygulamayı başkalarıyla paylaşın</string>
+    <string name="status_info_share_subtitle">Korona\'yı birlikte durdurmak için uygulamayı başkalarıyla paylaşın</string>
     <string name="status_info_notification_title">Bildirimde ne yazar?</string>
     <string name="status_info_notification_subtitle">Korona olan birisinin yakınında bulunmuş olduğunuzu ögrendikten sonra neler yapabileceğinizi okuyun</string>
     <string name="status_info_test_title">Korona testi talep edin</string>
@@ -94,7 +94,7 @@
     <string name="status_info_lab_subtitle">Size virüs bulaşmışsa başkalarına GGD ile anonim bir bildirim gönderin</string>
     <string name="status_app_version">Sürümü %1$s build %2$s</string>
     <string name="status_exposure_what_next">Şimdi ne yapabilirim?</string>
-    <string name="status_error_consent_required">%1$s sadece gerekli ayarlar açıksa çalışır.</string>
+    <string name="status_error_consent_required">%1$s yalnızca gerekli ayarlar etkinleştirilirse çalışır</string>
     <string name="status_error_action_consent">Uygulamayı açmak</string>
     <string name="status_error_sync_issues">Uygulama, son 24 saat içinde internete bağlanamadı. Wifi veya mobil verilerinizin açık olup olmadığını kontrol edin ve tekrar deneyin.</string>
     <string name="status_error_action_sync_issues">Tekrar deneyin</string>
@@ -108,58 +108,34 @@
     <string name="about_review">Uygulamayı değerlendirin</string>
     <string name="about_privacy_statement">Gizlilik beyanı</string>
     <string name="about_accessibility">Ulaşılabilirlik</string>
-    <string name="about_colofon">Kolofon</string>
+    <string name="about_colofon">Basım</string>
     <string name="faq_header">Sıkça Sorulan Sorular</string>
     <string name="faq_detail_toolbar_title">Sıkça Sorulan Soru</string>
     <string name="faq_reason">Bu uygulama neden önemlidir?</string>
     <string name="faq_location">Uygulama konumumu görebilir mi?</string>
     <string name="faq_anonymous">Uygulama nasıl anonim olabilir?</string>
     <string name="faq_notification">Uygulamadan ne zaman bildirim alacağım?</string>
-    <string name="faq_upload_keys">Bende Korona olduğunda başkalarına bildirim gönderebilir miyim?</string>
+    <string name="faq_upload_keys">Nasıl bildirim gönderirim?</string>
     <string name="faq_bluetooth">Bluetooth sinyali duvardan geçer mi?</string>
     <string name="faq_power_usage">Uygulama ne kadar elektrik kullanıyor?</string>
     <string name="faq_deletion">Bluetooth verilerini telefonumdan nasıl silerim?</string>
     <string name="faq_location_permission">Konum ayarlarım neden açık olmalı?</string>
     <string name="faq_technical">Uygulama tam olarak nasıl çalışır?</string>
-    <string name="faq_reason_paragraph_1">"Korona olan birinin yakınında bulunduktan sonra uygulama sizi hızlı bir şekilde uyarabilir. Sizde henüz şikayetler oluşmadan bile. Korona taşıyor olabilirsiniz ve fark etmeden bulaşıcı olabilirsiniz. "</string>
-    <string name="faq_reason_paragraph_2">Uygulama aracılığıyla bir uyarı alırsanız, kendinizi test ettirebilirsiniz. Ayrıca evde kalmanız tavsiye edilir. Bu şekilde çevrenizdeki insanları bilinçsizce enfekte etmeyi önlersiniz.</string>
-    <string name="faq_reason_paragraph_3">"Test edildiniz ve sizde Korona mı var? Daha sonra GGD ile birlikte etrafınızda uzun süre bulunmuş olan kişileri uyarabilirsiniz. Tanımadığınız kişileri de. Bir restoranda, sinemada veya bekleme odasında. Uygulama bu kişiler tarafından kullanıldığı sürece."</string>
-    <string name="faq_reason_paragraph_4">CoronaMelder sayesinde daha hızlı müdahale edip yeni enfeksiyonların önüne geçebiliriz. Korona\'yı ancak birlikte kontrol altına alabiliriz.</string>
-    <string name="faq_location_paragraph_1">Hayır. Uygulama, yalnızca uygulaması olan diğer kişilerin yakınındaysanız Bluetooth üzerinden görür. Bluetooth konumunuza bağlı değildir. Bu nedenle uygulama nerede olduğunuzu göremez. 
-
-Bluetooth, birbirine yakın olan 2 cihaz arasında kablosuz bağlantı kurmak içindir. Telefonunuz ve hoparlör veya kulaklık gibi.
-
-Uygulama, bluetooth sinyalinin gücüne göre 2 telefon arasındaki mesafeyi tahmin edebilir.</string>
-    <string name="faq_anonymous_paragraph_1">Uygulama, diğer telefonlarla rastgele kod değişimi yapar. Bu kodlar herhangi bir kişisel bilgi veya konum bilgisi içermezler. Kod değişimi, uygulamaya sahip olan bir kişinin yakınında olduğunuzda gerçekleşir.</string>
-    <string name="faq_anonymous_paragraph_2">Bu kişinin daha sonra Korona olduğu mu anlaşıldı? Bu durumda uygulamadaki kişi, kodlarını virüs bulaşmış kişilerin kodları listesine ekleyebilir. Kodlar ancak virüs bulaşmış kişinin GGD anahtarını GGD\'ye bildirdikten sonra eklenebilir. Bu şekilde bulaşma teyit edilebilir. 
-
-Bu kontrolden sonra telefonlarında bu kodlar bulunan herkese bir bildirim göndermek mümkün olur. Bu bildirimde sadece virüs bulaşmış olan bir kişinin ne zaman yakınında bulunmuş oldukları belirtilir. Bu kişinin kim olduğu ve o kişiye nerede rastladıkları bildirilmez.</string>
-    <string name="faq_notification_paragraph_1">Ekstra bir enfeksiyon riskine maruz kaldıktan sonra bir bildirim alırsınız. Bu en az 15 dakika boyunca Korona olduğu ortaya çıkan birine yakın olmanız durumunda olur. Ve tabii ki ancak bu kişi de uygulamayı kullanıyorsa. 
-
-Bildirim alıp almayacağınız Bluetooth sinyalinin gücüne bağlıdır. Ve iletişim sürenize. Birisi sokakta bisikletle yanınızdan mı geçti? O zaman sonrasında size bildirim gelmez. Birbirine çok yakındınız, Bluetooth sinyali onun için güçlüydü. Ancak temas o kadar kısa sürdü ki, daha fazla enfeksiyon riski olmadı. 
-
-Trende ya da ofiste birine yakınında mıydınız? O zaman sonrasında bir bildirim alabilirsiniz. Bluetooth sinyali yeterince güçlüydü ve uzun süre birbirinize yakındınız.</string>
-    <string name="faq_upload_keys_paragraph_1">Ancak test edilipte Korona olduğunuz ortaya çıktığında başkalarına bildirim gönderebilirsiniz. Bu durumda GGD sizi arayacaktır. 
-
-Bu telefon görüşmesi sırasında GGD çalışanı GGD anahtarınızı kontrol eder. Bunu uygulamada bulabilirsiniz. Bu şekilde, sadece gerçekten enfekte olmuş olan kişilerin bildirim gönderebileceği her zaman kesindir.</string>
-    <string name="faq_upload_keys_paragraph_2">"GGD anahtarınız kontrol edildikten sonra, telefonunuzun son 14 gün içinde başka telefonlara gönderdiği kodları paylaşabilirsiniz.
-
-Bu şekilde, bulaşıcı olduğunuzda yakınında bulunduğunuz kişilere, anonim bir bildirim gönderilir. Sadece bu kişiler de uygulamayı kullanıyorsa."</string>
-    <string name="faq_bluetooth_paragraph_1">Evet, ancak bu durumda sinyal çok zayıflar. Bluetooth, en iyi sonucu telefonunuz başka bir kişinin telefonuyla aynı odada bulunduğu takdirde verir. 
-
-Örneğin, uygulamanızın komşularınızdan Bluetooth sinyali alması ihtimali çok düşüktür. 
-
-Bu nedenle, komşunuzda Korona olduğu ortaya çıkarsa ve aynı odada bulunmuyorsanız, bildirim alma şansınız çok azdır.</string>
+    <string name="faq_reason_paragraph_1">"Bu uygulama ile Korona virüsünün yayılmasını durdurmak için yardımcı olursunuz. Çünkü uygulama GGD'nin temas soruşturmasını tamamlar. Test yaptırırsanız ve Korona olduğunuz ortaya çıkarsa, GGD sizi arar. Bu konuşma sırasında GGD bulaşıcı olduğunuz sırada kiminle temasta bulunduğunuzu sorar. GGD bu kişileri de Korona olabilecekleri konusunda uyarmak için arar."</string>
+    <string name="faq_reason_paragraph_2">Muhtemelen tanımadığınız insanların etrafında da bulundunuz. Trende, sinemada veya restoranda. Bu uygulama bu hususta yardımcı olur. Uygulamayı çevrenizdeki bulunmuş olan tüm insanları uyarmak için kullanabilirsiniz. Tanımadığınız insanları da. Tabii ki uygulamayı kullandıkları sürece.</string>
+    <string name="faq_reason_paragraph_3">"GGD, adları veya iletişim bilgileri sizde olan kişilerle temas kurar. Aynı zamanda uygulama tanıştığınız ancak adlarını veya iletişim bilgilerini bilmediğiniz kişileri uyarır. Bu şekilde hızlı bir şekilde bilgilendirilirler, önlemler alabilirler ve böylece başkalarına bulaştırmalarını önleyebilirler. GGD'nin temas soruşturması, daha sık temasta bulunduğunuz kişilerin daha büyük risk altında olabileceğinden,  devam eder."</string>
+    <string name="faq_reason_paragraph_4">Tabii ki uygulama aracılığıyla siz de uyarılar alabilirsiniz. Şayet bu olursa, son birkaç gündür Korona olan birisinin çevresinde bulunduğunuz anlamına gelir. Bunu duyduğunuzda siz de virüsü başkalarına bulaştırmanıza engel olabilirsiniz. Bunu, Korona\'ya uyan (hafif) şikayetlere fazladan dikkat ederek ve bu şikayetleriniz varsa kendinizi test ettirerek yapabilirsiniz.</string>
+    <string name="faq_location_paragraph_1">Hayır. Uygulama, yalnızca uygulaması olan diğer kişilerin yanındaysanız Bluetooth üzerinden görür. Bluetooth konumunuza bağlı değil. Bu nedenle uygulama nerede olduğunuzu göremez. Bluetooth yalnızca birbirine yakın 2 cihaz arasında kablosuz bağlantı kurmayı amaçlamaktadır. Telefonunuz ve ses kutusu veya kulaklık gibi.</string>
+    <string name="faq_anonymous_paragraph_1">Uygulama diğer telefonlarla kod alışverişinde bulunur. Bu kodlar hakkınızda kişisel veya konum bilgisi içermez. Tamamen rastgeledir. Kod değişimi, uygulaması olan bir kişiye yakın olduğunuz anda gerçekleşir.</string>
+    <string name="faq_anonymous_paragraph_2">Bu kişinin daha sonra Korona olduğu mu anlaşıldı? Bu durumda uygulamadaki kişi, kodlarını virüs bulaşmış kişilerin kodları listesine ekleyebilir. Kodlar ancak virüs bulaşmış kişinin GGD anahtarını GGD\'ye bildirdikten sonra eklenebilir. Bu şekilde bulaşma teyit edilebilir. Bu kontrolden sonra telefonlarında bu kodlar bulunan herkese bir bildirim göndermek mümkün olur. Bu bildirimde sadece virüs bulaşmış bir kişinin ne zaman yakınında bulunmuş oldukları belirtilir. Bunun kim olduğu ve o kişiye nerede rastladığı bildirilmez.</string>
+    <string name="faq_notification_paragraph_1">Fazladan bir enfeksiyon riskiyle karşılaştıktan sonra bir bildirim alırsınız. Bu en az 15 dakika boyunca korona olduğu ortaya çıkan birine yakın olmanız durumunda olur. Ve tabii ki ancak bu kişi de uygulamayı kullanıyorsa. Bildirim alıp almayacağınız Bluetooth sinyalinin gücüne bağlıdır. Ve iletişim sürenize. Birisi sokakta bisikletle yanınızdan mı geçti? O zaman daha sonra size bildirim gelmez. Birbirine çok yakındınız, Bluetooth sinyali onun için güçlüydü. Ancak temas o kadar kısa sürdü ki, daha fazla enfeksiyon riski olmadı. Trende ya da ofiste birine yakınında mıydınız? O zaman daha sonra bir bildirim alabilirsiniz. Bluetooth sinyali yeterince güçlüydü ve uzun süre birbirinize yakındınız.</string>
+    <string name="faq_upload_keys_paragraph_1">Ancak test edilipte Korona olduğuz ortaya çıktığında başkalarına bildirim gönderebilirsiniz. Bu durumda GGD sizi arayacaktır. Bu telefon görüşmesi sırasında  GGD çalışanı GGD anahtarınızı kontrol eder. Bunu uygulamada bulabilirsiniz. Bu şekilde, yalnızca gerçekten enfekte olmuş kişilerin bildirim gönderebileceği her zaman kesindir.</string>
+    <string name="faq_upload_keys_paragraph_2">"GGD anahtarınız kontrol edildikten sonra, bulaşıcı olduğunuzda yakınında bulunduğunuz kişilere, anonim bir bildirim gönderilir. Ancak bu kişiler de uygulamayı kullanıyorsa."</string>
+    <string name="faq_bluetooth_paragraph_1">Evet, ancak sinyal çok zayıflar. Bluetooth, en iyi sonucu telefonunuz başka bir kişinin telefonuyla aynı odada bulunuyorsa verir. Örneğin, uygulamanızın komşularınızdan Bluetooth sinyali alması ihtimali çok düşüktür. Bu nedenle, komşunuzda Korona olduğu ortaya çıkarsa ve aynı odada bulunmuyorsanız, bildirim alma şansı çok azdır.</string>
     <string name="faq_power_usage_paragraph_1">Uygulama Bluetooth Low Energy (Bluetooth Düşük Enerji) kullanır. Bu, çok az elektrik kullanan özel bir Bluetooth biçimidir. Telefon bataryasının yüzde kaçını kullandığı telefondan telefona değişir.</string>
     <string name="faq_deletion_paragraph_1">"Uygulama tarafından kaydedilen Bluetooth verilerini kendiniz silebilirsiniz. Şöyle: Telefonunuzda, Ayarlar -&gt; Google -&gt; COVID-19'a olası maruz kalma ile ilgili bildirimler bölümüne gidin. Rastgele Kimlikleri Kaldır -&gt; Kaldır'ı tıklayın. Uygulamanın yeni Bluetooth verilerini saklamasını durdurmasını istiyor musunuz? Ardından uygulamayı silin."</string>
     <string name="faq_deletion_button">Ayarları aç</string>
-    <string name="faq_location_permission_paragraph_1">CoronaMelder nerede olduğunuzu bilmez, ancak konum ayarlarınızın açık olması gerekiyor. Aksi takdirde uygulama çalışmayacaktır. Bu biraz saçma gelebilir. Şöyle:
-
-CoronaMelder \'bluetooth taraması\' kullanır. Bu, örneğin kablosuz kulaklıklara bağlanmak için kullanılandan farklı bir Bluetooth teknolojisidir. Az enerji tüketen bir tekniktir. Uygulama, Bluetooth taraması aracılığıyla yakındaki telefonlarla rastgele kod değişimi yapar.
-
-Bazı uygulamalar (CoronaMelder değil) konumunuzu belirlemek için bluetooth taraması kullanır. Bu nedenle Google, bluetooth taramasını kullanmak için konum ayarlarının her zaman açık olması gerektiğini belirledi. Ancak CoronaMelder gibi ulusal korona uygulamaları için Google, Android\'in gelecekteki bir sürümünde bir istisna yapacak.
-
-Unutulmaması gereken önemli konu: CoronaMelder hiçbir zaman konumunuza erişemez.</string>
+    <string name="faq_location_permission_paragraph_1">Bazı uygulamalar konumunuzu belirlemek için Bluetooth kullanır. Bu yüzden konum ayarlarınızın bir parçasıdır. CoronaMelder\'ın çalışması için Bluetooth\'a ihtiyacı vardır, ancak bu yalnızca uygulamaya sahip olan başka bir kişinin etrafında olup olmadığınızı görmek içindir. Uygulamanın konumunuza hiçbir zaman erişimi yoktur.</string>
     <string name="faq_technical_toolbar_title">Teknik açıklama</string>
     <string name="faq_technical_header_1">1. Uygulama her telefon için kendi kodunu oluşturur</string>
     <string name="faq_technical_paragraph_2">Bu kod siz veya telefonunuz hakkında hiçbir bilgi içermez. Kod tamamen anonimdir ve her 15 dakikada bir değişir.</string>
@@ -173,7 +149,7 @@ Unutulmaması gereken önemli konu: CoronaMelder hiçbir zaman konumunuza erişe
     <string name="faq_technical_paragraph_10">Virüs bulaşmış kişinin yakınında ne zaman olduğuzu bu bildirimde okuyabilirsiniz. Kim olduğunu ve nerede olduğunu değil. Uygulama ayrıca en iyi ne yapabileceğinizi söyler. Kendi kodlarınız virüslü kodlar listesinde değil, kendi telefonunuzda 14 gün boyunca saklanır.</string>
     <string name="faq_technical_github_title">Kaynak kodunu görüntüle</string>
     <string name="faq_technical_github_subtitle">GitHub\'a git</string>
-    <string name="share_content">Korona’nın kontrol altına alınmasına yardımcı oluyorum. Siz de katılır mısınız? %1$s</string>
+    <string name="share_content">CoronaMelder ile koronayı kontrol altında tutmaya yardım ediyorum. Siz de katılır mısınız? %1$s</string>
     <string name="share_title">Uygulamayı başkalarıyla paylaş</string>
     <string name="lab_test_toolbar_title">GGD anahtarı</string>
     <string name="lab_test_paragraph_1"><![CDATA[Test edildiniz ve sizde Korona mı var? O zaman bir GGD çalışanı sizi arayacaktır. Bunun için GGD anahtarınıza ihtiyacınız olacak. <a href=""> Bu nasıl çalışır?</a>]]></string>
@@ -214,7 +190,7 @@ Unutulmaması gereken önemli konu: CoronaMelder hiçbir zaman konumunuza erişe
     <string name="end_of_life_action">Daha fazlasını oku</string>
     <string name="end_of_life_description">Sağlık, Refah ve Spor Bakanlığı uygulamanın artık gerekli olmadığına karar verdi. Dolayısıyla, Korona bulasmış birinin etrafında bulunduktan sonra artık size bildirim gönderilmeyecektir.</string>
     <string name="end_of_life_headline">CoronaMelder durdu</string>
-    <string name="status_error_notifications_disabled">Bildirimleriniz açık değil. Bu nedenle, Korona bulaşmış olan birinin yakınında bulunduktan sonra size bildirim gönderilmez.</string>
+    <string name="status_error_notifications_disabled">Bildirimleriniz açık degil. Bu nedenle, Korona bulaşmış birinin etrafında bulunduktan sonra size bildirim gönderilmez.</string>
     <string name="status_error_action_notifications_disabled">Bildirimleri açmak</string>
     <string name="cd_status_active">Uygulamanın doğru kurulduğunu gösteren yeşil daire içinde onay işareti</string>
     <string name="cd_status_disabled">Uyarı olarak sarı daire içinde ünlem işareti</string>
@@ -229,10 +205,10 @@ Unutulmaması gereken önemli konu: CoronaMelder hiçbir zaman konumunuza erişe
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[CoronaMelder\'i kullanmak için <a href="">Gizlilik Bildirimi</a> \'ni kabul etmelisiniz. Bilinmesi gerekenler:]]></string>
     <string name="onboarding_privacy_policy_check_1">Uygulamanız şifrelenmiş Bluetooth verileri yayınlar.</string>
     <string name="onboarding_privacy_policy_check_2">Sizinle temasta bulunmuş olan diğer kullanıcılar bu verileri en fazla 14 gün saklarlar.</string>
-    <string name="onboarding_privacy_policy_check_3">Bir Korona testi, Korona olduğunuzu gösterirse, diğer kullanıcıları uyarmak için bunu uygulamada bildirebilirsiniz.</string>
+    <string name="onboarding_privacy_policy_check_3">Bir Korona testi, Korona’ya yakalandığınızı gösterirse, bunu diğer kullanıcıları uyarmak için uygulamada bildirebilirsiniz.</string>
     <string name="onboarding_privacy_policy_check_4">Verileri telefonunuzdan istediğiniz zaman silebilirsiniz.</string>
     <string name="onboarding_privacy_policy_consent_label">Gizlilik bildirimini okudum ve kabul ediyorum</string>
-    <string name="request_test_paragraph_3">Kendinizi ücretsiz olarak test ettirin. Uzun sürmez ve genellikle hızlı bir şekilde randevu alabilirsiniz. Sonuçlar 48 saat içinde belli olur. Sonuçları öğrenene kadar evde kalın.</string>
+    <string name="request_test_paragraph_3">Kendinizi ücretsiz test ettirin. Test uzun sürmez ve genellikle çok çabuk randevu alabilirsiniz. Sonuçlar 48 saat içinde belli olur. Sonucu öğrenene kadar evde kalın.</string>
     <string name="lab_test_how_does_it_work">Bu nasıl çalışıyor?</string>
     <string name="faq_notification_message">Wat staat er in een melding?</string>
     <string name="faq_pause">Kan ik de app pauzeren?</string>

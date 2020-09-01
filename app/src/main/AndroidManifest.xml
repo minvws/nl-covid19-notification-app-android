@@ -37,7 +37,12 @@
         </activity>
 
         <receiver android:name=".notifier.DismissReminderReceiver" />
-        <receiver android:name=".job.PeriodicWakeUpReceiver" />
+
+        <receiver android:name=".job.PeriodicWakeUpReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
 
         <receiver
             android:name=".notification.ExposureNotificationReceiver"

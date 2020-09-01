@@ -39,7 +39,7 @@ private var labTestService: LabTestService? = null
 private var notificationPreferences: SharedPreferences? = null
 private var statusCache: StatusCache? = null
 
-private const val MINIMUM_PLAY_SERVICES_VERSION = 201813000
+private const val MINIMUM_PLAY_SERVICES_VERSION = 202665000
 
 fun createExposureNotificationsRepository(context: Context): ExposureNotificationsRepository {
     val service = cdnService ?: CdnService.create(context).also { cdnService = it }

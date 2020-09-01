@@ -17,6 +17,9 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.common.api.internal.ApiKey
+import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
+import com.google.android.gms.nearby.exposurenotification.DailySummary
+import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
@@ -531,6 +534,37 @@ class NearbyExposureNotificationApiTest {
             config: ExposureConfiguration,
             token: String
         ): Task<Void> = Tasks.forException(IllegalStateException())
+
+        override fun provideDiagnosisKeys(files: List<File>): Task<Void> =
+            Tasks.forException(IllegalStateException())
+
+        override fun deviceSupportsLocationlessScanning(): Boolean {
+            throw NotImplementedError()
+        }
+
+        override fun getExposureWindows(): Task<MutableList<ExposureWindow>> {
+            throw NotImplementedError()
+        }
+
+        override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping?): Task<Void> {
+            throw NotImplementedError()
+        }
+
+        override fun getDiagnosisKeysDataMapping(): Task<DiagnosisKeysDataMapping> {
+            throw NotImplementedError()
+        }
+
+        override fun getCalibrationConfidence(): Task<Int> {
+            throw NotImplementedError()
+        }
+
+        override fun getVersion(): Task<Long> {
+            throw NotImplementedError()
+        }
+
+        override fun getDailySummaries(p0: DailySummariesConfig?): Task<MutableList<DailySummary>> {
+            throw NotImplementedError()
+        }
 
         override fun getExposureSummary(token: String): Task<ExposureSummary> =
             Tasks.forException(IllegalStateException())
