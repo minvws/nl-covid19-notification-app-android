@@ -232,6 +232,7 @@ class LabTestRepository(
 
     suspend fun sendDecoyTraffic(): SendDecoyResult {
         if (getCachedRegistrationCode() == null) {
+            Timber.d("Register for decoy")
             registerForUpload()
             return SendDecoyResult.Registered(getDecoyRegistrationDelay())
         }

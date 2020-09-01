@@ -30,7 +30,7 @@ class DecoyWorker(
             val result = repository.sendDecoyTraffic()
             if (result is LabTestRepository.SendDecoyResult.Registered) {
                 Timber.d("Registered, delaying post keys for ${result.delayMillis}")
-                queue(applicationContext, result.delayMillis)
+                queue(applicationContext, result.delayMillis, replace = true)
             }
         } catch (ex: Exception) {
             Timber.d(ex, "Error sending decoy traffic")
@@ -39,7 +39,7 @@ class DecoyWorker(
     }
 
     companion object {
-        fun queue(context: Context, delayMills: Long) {
+        fun queue(context: Context, delayMills: Long, replace: Boolean = false) {
             val request = OneTimeWorkRequestBuilder<DecoyWorker>().setConstraints(
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
             ).apply {
@@ -48,7 +48,11 @@ class DecoyWorker(
 
             // if already queued, keep the existing decoy
             WorkManager.getInstance(context)
-                .enqueueUniqueWork(WORKER_ID, ExistingWorkPolicy.KEEP, request.build())
+                .enqueueUniqueWork(
+                    WORKER_ID,
+                    if (replace) ExistingWorkPolicy.REPLACE else ExistingWorkPolicy.KEEP,
+                    request.build()
+                )
         }
 
         fun cancel(context: Context) {
