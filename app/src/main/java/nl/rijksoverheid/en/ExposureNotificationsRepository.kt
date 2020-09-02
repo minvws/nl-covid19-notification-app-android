@@ -14,7 +14,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.location.LocationManager
-import android.os.Build
 import android.util.Base64
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
@@ -158,7 +157,7 @@ class ExposureNotificationsRepository(
             }
         }
         val filter = IntentFilter().apply {
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            if (!exposureNotificationsApi.deviceSupportsLocationlessScanning()) {
                 addAction(LocationManager.MODE_CHANGED_ACTION)
             }
             addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
@@ -224,7 +223,7 @@ class ExposureNotificationsRepository(
      */
     private fun isLocationPreconditionSatisfied(): Boolean {
         return context.getSystemService(LocationManager::class.java)
-            ?.let { LocationManagerCompat.isLocationEnabled(it) || Build.VERSION.SDK_INT > Build.VERSION_CODES.Q }
+            ?.let { LocationManagerCompat.isLocationEnabled(it) || exposureNotificationsApi.deviceSupportsLocationlessScanning() }
             ?: true
     }
 

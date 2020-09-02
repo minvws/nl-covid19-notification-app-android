@@ -60,4 +60,10 @@ interface ExposureNotificationApi {
      * @return the summary or null if there's no match or an error occurred
      */
     suspend fun getSummary(token: String): ExposureSummary?
+
+    /**
+     * Return whether the device requires location services enabled for BLE scanning
+     * @return true if location services do not need to be enabled, false otherwise
+     */
+    fun deviceSupportsLocationlessScanning(): Boolean
 }
