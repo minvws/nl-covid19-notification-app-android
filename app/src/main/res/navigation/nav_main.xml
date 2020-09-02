@@ -108,6 +108,14 @@
         <argument
             android:name="faqItemId"
             app:argType="nl.rijksoverheid.en.about.FAQItemId" />
+        <argument
+            android:name="inOnboarding"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_about_detail"
+            app:destination="@id/nav_about_detail"
+            app:popUpTo="@id/nav_about_detail"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/nav_lab_test"
@@ -153,7 +161,11 @@
     <dialog
         android:id="@+id/nav_remove_exposed_message_dialog"
         android:name="nl.rijksoverheid.en.status.RemoveExposedMessageDialogFragment"
-        android:label="RemoveExposedMessageDialogFragment" />
+        android:label="RemoveExposedMessageDialogFragment">
+        <argument
+            android:name="formattedDate"
+            app:argType="string" />
+    </dialog>
 
     <fragment
         android:id="@+id/nav_upload_keys_failed_notification"
@@ -162,7 +174,7 @@
         tools:layout="@layout/fragment_list" />
 
     <fragment
-        tools:layout="@layout/fragment_end_of_life"
         android:id="@+id/nav_end_of_life"
-        android:name="nl.rijksoverheid.en.applifecycle.EndOfLifeFragment" />
+        android:name="nl.rijksoverheid.en.applifecycle.EndOfLifeFragment"
+        tools:layout="@layout/fragment_end_of_life" />
 </navigation>

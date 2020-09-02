@@ -6,21 +6,22 @@
  */
 package nl.rijksoverheid.en.about
 
-import androidx.annotation.StringRes
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemFaqBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 
-class FAQItem(val id: FAQItemId, @StringRes private val text: Int) :
+class FAQItem(
+    val id: FAQItemId
+) :
     BaseBindableItem<ItemFaqBinding>() {
     override fun getLayout() = R.layout.item_faq
 
     override fun bind(viewBinding: ItemFaqBinding, position: Int) {
-        viewBinding.text = text
+        viewBinding.text = id.label
     }
 
     override fun isClickable() = true
-    override fun isSameAs(other: Item<*>): Boolean = other is FAQItem && other.text == text
-    override fun hasSameContentAs(other: Item<*>) = other is FAQItem && other.text == text
+    override fun isSameAs(other: Item<*>): Boolean = other is FAQItem && other.id == id
+    override fun hasSameContentAs(other: Item<*>) = other is FAQItem && other.id == id
 }

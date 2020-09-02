@@ -7,15 +7,19 @@
 package nl.rijksoverheid.en.about
 
 import androidx.annotation.Keep
+import androidx.annotation.StringRes
 import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItemId.ANONYMOUS
 import nl.rijksoverheid.en.about.FAQItemId.BLUETOOTH
 import nl.rijksoverheid.en.about.FAQItemId.DELETION
+import nl.rijksoverheid.en.about.FAQItemId.INTEROPERABILITY
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION_PERMISSION
 import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION
+import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION_MESSAGE
 import nl.rijksoverheid.en.about.FAQItemId.ONBOARDING
+import nl.rijksoverheid.en.about.FAQItemId.PAUSE
 import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
 import nl.rijksoverheid.en.about.FAQItemId.REASON
 import nl.rijksoverheid.en.about.FAQItemId.TECHNICAL
@@ -24,9 +28,25 @@ import nl.rijksoverheid.en.items.ButtonItem
 import nl.rijksoverheid.en.items.FAQOnboardingExplanationItem
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.ParagraphItem
+import nl.rijksoverheid.en.notification.GenericNotificationSection
 
 @Keep
-enum class FAQItemId { REASON, LOCATION, ANONYMOUS, NOTIFICATION, UPLOAD_KEYS, BLUETOOTH, POWER_USAGE, DELETION, LOCATION_PERMISSION, TECHNICAL, ONBOARDING }
+enum class FAQItemId(@StringRes val label: Int) {
+    REASON(R.string.faq_reason),
+    LOCATION(R.string.faq_location),
+    ANONYMOUS(R.string.faq_anonymous),
+    NOTIFICATION(R.string.faq_notification),
+    NOTIFICATION_MESSAGE(R.string.faq_notification_message),
+    UPLOAD_KEYS(R.string.faq_upload_keys),
+    BLUETOOTH(R.string.faq_bluetooth),
+    POWER_USAGE(R.string.faq_power_usage),
+    PAUSE(R.string.faq_pause),
+    INTEROPERABILITY(R.string.faq_interoperability),
+    DELETION(R.string.faq_deletion),
+    LOCATION_PERMISSION(R.string.faq_location_permission),
+    TECHNICAL(R.string.faq_technical),
+    ONBOARDING(R.string.about_onboarding_title)
+}
 
 class FAQDetailSections(private val openSettings: () -> Unit = {}) {
     fun getSection(faqItemId: FAQItemId) = when (faqItemId) {
@@ -58,6 +78,7 @@ class FAQDetailSections(private val openSettings: () -> Unit = {}) {
                 ParagraphItem(R.string.faq_notification_paragraph_1)
             )
         )
+        NOTIFICATION_MESSAGE -> GenericNotificationSection()
         UPLOAD_KEYS -> Section(
             listOf(
                 HeaderItem(R.string.faq_upload_keys),
@@ -75,6 +96,23 @@ class FAQDetailSections(private val openSettings: () -> Unit = {}) {
             listOf(
                 HeaderItem(R.string.faq_power_usage),
                 ParagraphItem(R.string.faq_power_usage_paragraph_1)
+            )
+        )
+        PAUSE -> Section(
+            listOf(
+                HeaderItem(R.string.faq_pause),
+                ParagraphItem(R.string.faq_pause_paragraph_1),
+                ParagraphItem(R.string.faq_pause_paragraph_2),
+                ParagraphItem(R.string.faq_pause_paragraph_3),
+                ButtonItem(R.string.faq_deletion_button, openSettings)
+            )
+        )
+        INTEROPERABILITY -> Section(
+            listOf(
+                HeaderItem(R.string.faq_interoperability),
+                ParagraphItem(R.string.faq_interoperability_paragraph_1),
+                ParagraphItem(R.string.faq_interoperability_paragraph_2),
+                ParagraphItem(R.string.faq_interoperability_paragraph_3)
             )
         )
         DELETION -> Section(
@@ -138,7 +176,8 @@ class FAQDetailSections(private val openSettings: () -> Unit = {}) {
                     R.string.onboarding_example_2_description,
                     R.drawable.illustration_explanation_example_2,
                     isExample = true
-                )
+                ),
+                FAQTechnicalExplanationItem()
             )
         )
     }

@@ -8,26 +8,29 @@ package nl.rijksoverheid.en.notification
 
 import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.items.BulletedListItem
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.IllustrationItem
-import nl.rijksoverheid.en.items.MessageBoxItem
+import nl.rijksoverheid.en.items.InlineIllustrationItem
 import nl.rijksoverheid.en.items.ParagraphItem
 
-class GenericNotificationSection(phoneNumber: String) : Section(
+class GenericNotificationSection : Section(
     listOf(
         IllustrationItem(R.drawable.illustration_generic_notification),
         HeaderItem(R.string.generic_notification_header_1),
         ParagraphItem(R.string.generic_notification_paragraph_2),
         HeaderItem(R.string.generic_notification_header_3),
-        BulletedListItem(R.string.post_notification_list_4),
-        BulletedListItem(R.string.post_notification_list_5),
-        HeaderItem(R.string.post_notification_header_6),
-        ParagraphItem(R.string.post_notification_paragraph_7),
-        ParagraphItem(R.string.post_notification_paragraph_8),
-        ParagraphItem(R.string.post_notification_paragraph_9, phoneNumber),
-        MessageBoxItem(R.string.post_notification_message),
-        HeaderItem(R.string.treat_perspective_header_1),
-        BulletedListItem(R.string.treat_perspective_list_2)
+        ParagraphItem(R.string.generic_notification_paragraph_4),
+        ParagraphItem(R.string.generic_notification_paragraph_5),
+        InlineIllustrationItem(
+            R.drawable.illustration_sample_exposed_state,
+            R.string.generic_notification_alt_text_6,
+            R.string.generic_notification_caption_7
+        ),
+        HeaderItem(R.string.generic_notification_header_8),
+        ParagraphItem(R.string.generic_notification_paragraph_9),
+        ParagraphItem(R.string.generic_notification_paragraph_10),
+        HeaderItem(R.string.generic_notification_header_11),
+        ParagraphItem(R.string.generic_notification_paragraph_12),
+        ParagraphItem(R.string.generic_notification_paragraph_13)
     )
 )

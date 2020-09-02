@@ -10,6 +10,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
@@ -17,7 +19,50 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.about.FAQItemId.ANONYMOUS
+import nl.rijksoverheid.en.about.FAQItemId.BLUETOOTH
+import nl.rijksoverheid.en.about.FAQItemId.DELETION
+import nl.rijksoverheid.en.about.FAQItemId.INTEROPERABILITY
+import nl.rijksoverheid.en.about.FAQItemId.LOCATION
+import nl.rijksoverheid.en.about.FAQItemId.LOCATION_PERMISSION
+import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION
+import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION_MESSAGE
+import nl.rijksoverheid.en.about.FAQItemId.ONBOARDING
+import nl.rijksoverheid.en.about.FAQItemId.PAUSE
+import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
+import nl.rijksoverheid.en.about.FAQItemId.REASON
+import nl.rijksoverheid.en.about.FAQItemId.TECHNICAL
+import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
 import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+
+private val onboardingCrossLinks = mapOf(
+    REASON to listOf(LOCATION, NOTIFICATION_MESSAGE),
+    ANONYMOUS to listOf(NOTIFICATION_MESSAGE, LOCATION, LOCATION_PERMISSION),
+    LOCATION to listOf(BLUETOOTH, LOCATION_PERMISSION),
+    NOTIFICATION to listOf(NOTIFICATION_MESSAGE, BLUETOOTH),
+    NOTIFICATION_MESSAGE to listOf(NOTIFICATION, REASON, BLUETOOTH),
+    LOCATION_PERMISSION to listOf(LOCATION, REASON, ANONYMOUS),
+    BLUETOOTH to listOf(NOTIFICATION, ANONYMOUS),
+    POWER_USAGE to listOf(LOCATION_PERMISSION, REASON)
+)
+
+private val aboutCrossLinks = mapOf(
+    ONBOARDING to listOf(REASON, LOCATION, ANONYMOUS),
+    TECHNICAL to listOf(BLUETOOTH, DELETION, INTEROPERABILITY),
+    REASON to listOf(TECHNICAL, NOTIFICATION_MESSAGE),
+    ANONYMOUS to listOf(TECHNICAL, NOTIFICATION_MESSAGE, LOCATION, LOCATION_PERMISSION),
+    LOCATION to listOf(BLUETOOTH, LOCATION_PERMISSION),
+    NOTIFICATION to listOf(NOTIFICATION_MESSAGE, BLUETOOTH, UPLOAD_KEYS),
+    UPLOAD_KEYS to listOf(NOTIFICATION_MESSAGE, ANONYMOUS, TECHNICAL),
+    NOTIFICATION_MESSAGE to listOf(NOTIFICATION, BLUETOOTH, REASON),
+    BLUETOOTH to listOf(NOTIFICATION, ANONYMOUS),
+    LOCATION_PERMISSION to listOf(LOCATION, REASON, ANONYMOUS),
+    POWER_USAGE to listOf(LOCATION_PERMISSION, REASON, PAUSE),
+    DELETION to listOf(BLUETOOTH, PAUSE),
+    PAUSE to listOf(BLUETOOTH, POWER_USAGE, LOCATION),
+    INTEROPERABILITY to listOf(TECHNICAL, NOTIFICATION, LOCATION)
+)
 
 class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
 
@@ -30,6 +75,12 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
         adapter.add(FAQDetailSections(openSettings = {
             startActivity(Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS))
         }).getSection(args.faqItemId))
+
+        val crossLinksMap = if (args.inOnboarding) onboardingCrossLinks else aboutCrossLinks
+        crossLinksMap[args.faqItemId]?.let { crossLinks ->
+            adapter.add(FAQHeaderItem(R.string.cross_links_header))
+            adapter.addAll(crossLinks.map(::FAQItem))
+        }
 
         enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
         exitTransition =
@@ -47,18 +98,41 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
 
         binding.toolbar.setTitle(
             when (args.faqItemId) {
-                FAQItemId.ONBOARDING -> R.string.about_onboarding_title
-                FAQItemId.TECHNICAL -> R.string.faq_technical_toolbar_title
+                ONBOARDING -> R.string.about_onboarding_title
+                TECHNICAL -> R.string.faq_technical_toolbar_title
                 else -> R.string.faq_detail_toolbar_title
             }
         )
         binding.content.adapter = adapter
+        binding.content.addItemDecoration(
+            FAQItemDecoration(
+                requireContext(),
+                resources.getDimensionPixelOffset(R.dimen.activity_horizontal_margin)
+            )
+        )
 
         adapter.setOnItemClickListener { item, _ ->
             when (item) {
                 is GithubItem -> {
                     val uri = Uri.parse(getString(R.string.github_url))
                     startActivity(Intent(Intent.ACTION_VIEW, uri))
+                }
+                is FAQItem -> {
+                    enterTransition = exitTransition
+                    findNavController().navigateCatchingErrors(
+                        AboutDetailFragmentDirections.actionAboutDetail(item.id, args.inOnboarding),
+                        FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+                    )
+                }
+                is FAQTechnicalExplanationItem -> {
+                    enterTransition = exitTransition
+                    findNavController().navigateCatchingErrors(
+                        AboutDetailFragmentDirections.actionAboutDetail(
+                            TECHNICAL,
+                            args.inOnboarding
+                        ),
+                        FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+                    )
                 }
             }
         }
