@@ -38,6 +38,7 @@ class ProcessManifestWorker(
         Timber.d("Processing result is $result")
         return when (result) {
             is ProcessManifestResult.Success -> {
+                SyncIssuesReceiver.cancel(applicationContext)
                 notificationsRepository.cancelSyncIssuesNotification()
                 if (inputData.getInt(KEY_UPDATE_INTERVAL, 0) != result.nextIntervalMinutes) {
                     queue(applicationContext, result.nextIntervalMinutes)

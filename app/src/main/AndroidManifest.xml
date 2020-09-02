@@ -37,6 +37,7 @@
         </activity>
 
         <receiver android:name=".notifier.DismissReminderReceiver" />
+        <receiver android:name=".job.SyncIssuesReceiver" />
 
         <receiver android:name=".job.PeriodicWakeUpReceiver">
             <intent-filter>

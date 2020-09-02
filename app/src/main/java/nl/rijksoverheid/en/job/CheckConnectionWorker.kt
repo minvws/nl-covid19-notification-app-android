@@ -34,7 +34,7 @@ class CheckConnectionWorker(
             notificationsRepository.showAppInactiveNotification()
         } else if (repository.keyProcessingOverdue) {
             Timber.d("Key processing is overdue")
-            notificationsRepository.showSyncIssuesNotification()
+            SyncIssuesReceiver.schedule(applicationContext)
         }
         return Result.success()
     }
@@ -53,6 +53,7 @@ class CheckConnectionWorker(
         }
 
         fun cancel(context: Context) {
+            SyncIssuesReceiver.cancel(context)
             WorkManager.getInstance(context).cancelUniqueWork(WORKER_ID)
         }
     }
