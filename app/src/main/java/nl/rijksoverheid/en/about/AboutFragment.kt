@@ -52,21 +52,15 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
         adapter.setOnItemClickListener { item, _ ->
             when (item) {
                 is FAQOnboardingItem -> findNavController().navigateCatchingErrors(
-                    AboutFragmentDirections.actionAboutDetail(
-                        FAQItemId.ONBOARDING, inOnboarding = false
-                    ),
+                    AboutFragmentDirections.actionAboutDetail(FAQItemId.ONBOARDING),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
                 is FAQTechnicalExplanationItem -> findNavController().navigateCatchingErrors(
-                    AboutFragmentDirections.actionAboutDetail(
-                        FAQItemId.TECHNICAL, inOnboarding = false
-                    ),
+                    AboutFragmentDirections.actionAboutDetail(FAQItemId.TECHNICAL),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
                 is FAQItem -> findNavController().navigateCatchingErrors(
-                    AboutFragmentDirections.actionAboutDetail(
-                        item.id, inOnboarding = false
-                    ),
+                    AboutFragmentDirections.actionAboutDetail(item.id),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
                 is HelpdeskItem -> {

@@ -227,6 +227,11 @@
         <action
             android:id="@+id/action_next"
             app:destination="@id/nav_share" />
+        <action
+            android:id="@+id/action_how_it_works_detail"
+            app:destination="@id/nav_how_it_works_detail"
+            app:popUpTo="@id/nav_how_it_works_detail"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <dialog

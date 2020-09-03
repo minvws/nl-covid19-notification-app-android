@@ -75,10 +75,7 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
 
         adapter.setOnItemClickListener { _, _ ->
             findNavController().navigate(
-                LabTestFragmentDirections.actionHowItWorks(
-                    FAQItemId.UPLOAD_KEYS,
-                    inOnboarding = false
-                ),
+                LabTestFragmentDirections.actionHowItWorks(FAQItemId.UPLOAD_KEYS),
                 FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
             )
         }
