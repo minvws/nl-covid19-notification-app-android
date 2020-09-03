@@ -18,9 +18,12 @@ class GenericNotificationSection : Section(
         IllustrationItem(R.drawable.illustration_generic_notification),
         HeaderItem(R.string.generic_notification_header_1),
         ParagraphItem(R.string.generic_notification_paragraph_2),
-        HeaderItem(R.string.generic_notification_header_3),
+        InlineIllustrationItem(
+            R.drawable.illustration_sample_notification,
+            R.string.generic_notification_sample_notification_content_description,
+            null
+        ),
         ParagraphItem(R.string.generic_notification_paragraph_4),
-        ParagraphItem(R.string.generic_notification_paragraph_5),
         InlineIllustrationItem(
             R.drawable.illustration_sample_exposed_state,
             R.string.generic_notification_alt_text_6,
@@ -28,9 +31,11 @@ class GenericNotificationSection : Section(
         ),
         HeaderItem(R.string.generic_notification_header_8),
         ParagraphItem(R.string.generic_notification_paragraph_9),
+        ParagraphItem(R.string.generic_notification_advice_stay_home),
         ParagraphItem(R.string.generic_notification_paragraph_10),
         HeaderItem(R.string.generic_notification_header_11),
         ParagraphItem(R.string.generic_notification_paragraph_12),
-        ParagraphItem(R.string.generic_notification_paragraph_13)
+        ParagraphItem(R.string.generic_notification_paragraph_13),
+        ParagraphItem(R.string.generic_notification_exposure_summaries)
     )
 )

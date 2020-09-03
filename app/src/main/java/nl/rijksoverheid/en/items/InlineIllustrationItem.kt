@@ -15,20 +15,22 @@ import nl.rijksoverheid.en.databinding.ItemInlineIllustrationBinding
 class InlineIllustrationItem(
     @DrawableRes private val image: Int,
     @StringRes private val contentDescription: Int,
-    @StringRes private val caption: Int
+    @StringRes private val caption: Int?
 ) : BaseBindableItem<ItemInlineIllustrationBinding>() {
 
     data class ViewState(
         @DrawableRes val image: Int,
         val contentDescription: String,
-        @StringRes val caption: Int
+        val caption: String?
     )
 
     override fun getLayout() = R.layout.item_inline_illustration
 
     override fun bind(viewBinding: ItemInlineIllustrationBinding, position: Int) {
         viewBinding.viewState = ViewState(
-            image, viewBinding.root.context.getString(contentDescription), caption
+            image,
+            viewBinding.root.context.getString(contentDescription),
+            caption?.let { viewBinding.root.context.getString(it) }
         )
     }
 

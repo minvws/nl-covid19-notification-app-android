@@ -253,4 +253,5 @@ So können die Personen, in deren Nähe Sie waren, als Sie ansteckend waren, ein
     <string name="post_notification_medical_help_header">Medische hulp nodig?</string>
     <string name="post_notification_after_stay_home_header">Na %1$s</string>
     <string name="post_notification_after_stay_home_paragraph">Heb je tot 31 augustus geen klachten gekregen? Dan hoef je niet meer thuis te blijven. Blijf wel de algemene regels tegen corona volgen.</string>
+    <string name="generic_notification_about_notification_paragraph">De melding verschijnt bij je notificaties. Net als berichten van andere apps. De melding heeft het symbool van CoronaMelder.   Heb je een melding ontvangen? Open dan CoronaMelder. Daar lees je wat je verder kunt doen.</string>
 </resources>

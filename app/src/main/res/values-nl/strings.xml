@@ -69,18 +69,16 @@
     <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart.</string>
     <string name="post_notification_button">Coronatest aanvragen</string>
     <string name="generic_notification_toolbar_title">Melding krijgen</string>
-    <string name="generic_notification_header_1">Wat betekent het als je een melding krijgt?</string>
-    <string name="generic_notification_paragraph_2">De app stuurt een melding als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. In de melding staat alleen op welke dag dit was. Je hebt in deze situatie extra kans op besmetting gelopen. Als je besmet bent, kun je het virus aan anderen doorgeven. Ook als je je niet ziek voelt.</string>
-    <string name="generic_notification_header_3">Hoe ziet een melding eruit?</string>
-    <string name="generic_notification_paragraph_4">De melding lijkt op wat je ziet als je een sms-bericht ontvangt. In de melding staat op welke dag je in de buurt was van iemand met het coronavirus.</string>
-    <string name="generic_notification_paragraph_5">Klik op de melding om CoronaMelder te openen. Daar lees je wat je verder kunt doen.</string>
+    <string name="generic_notification_header_1">Wat staat er in een melding?</string>
+    <string name="generic_notification_paragraph_2">De app stuurt een melding als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. </string>
+    <string name="generic_notification_paragraph_4">De melding verschijnt bij je notificaties. Net als berichten van andere apps. De melding heeft het symbool van CoronaMelder.\n\nHeb je een melding ontvangen? Open dan CoronaMelder. Daar lees je wat je verder kunt doen.</string>
     <string name="generic_notification_alt_text_6">Rood scherm met alarmbel dat aangeeft dat er nu actie nodig is</string>
     <string name="generic_notification_caption_7">Voorbeeld: Zo ziet de app eruit als je een melding hebt ontvangen.</string>
-    <string name="generic_notification_header_8">Wat kun je doen als je een melding krijgt?</string>
-    <string name="generic_notification_paragraph_9">Laat je testen op corona. Wanneer precies hangt af van of je klachten hebt die bij corona passen. En op welke dag je in de buurt was van de persoon met corona. Blijf in ieder geval thuis tot je de uitslag weet. Zo voorkom je dat je onbewust anderen besmet.</string>
-    <string name="generic_notification_paragraph_10">Was je in de buurt van iemand die jou kende, en word je gebeld door de GGD? Volg dan het advies van de GGD, niet dat van de app.</string>
+    <string name="generic_notification_header_8">Wat kun je doen als je in de buurt was van iemand met corona?</string>
+    <string name="generic_notification_paragraph_9">Volg het advies in de app. Het advies hangt af van je situatie. Of je klachten hebt die bij corona passen. En op welke dag je in de buurt was van de besmette persoon.</string>
+    <string name="generic_notification_paragraph_10">Geeft de GGD je aan de telefoon andere adviezen dan de app? Volg dan het advies van de GGD.</string>
     <string name="generic_notification_header_11">Andere meldingen</string>
-    <string name="generic_notification_paragraph_12">De app kan je ook een melding sturen als er een technisch probleem is. Bijvoorbeeld als je Bluetooth uitstaat. Of als er langer dan een dag geen internetverbindig was. De app helpt je dit op te lossen.</string>
+    <string name="generic_notification_paragraph_12">CoronaMelder kan je ook een melding sturen als er een technisch probleem is. Bijvoorbeeld als je Bluetooth uitstaat. Of als er langer dan een dag geen internetverbindig was. De app helpt je dit op te lossen.</string>
     <string name="generic_notification_paragraph_13">Heb je zo’n melding ontvangen, en is de app wel gewoon actief? Dan is het probleem in de tussentijd al opgelost.</string>
     <string name="treat_perspective_header_1">Klachten die passen bij het coronavirus</string>
     <string name="treat_perspective_list_2"><![CDATA[<ul><li>verkoudheidklachten zoals neusverkoudheid, loopneus, niezen, keelpijn</li><li>hoesten</li><li>benauwdheid</li><li>verhoging of koorts</li><li>plotseling verlies van reuk en/of smaak (zonder neusverstopping)</li></ul>]]></string>
@@ -240,4 +238,6 @@
     <string name="post_notification_medical_help_header">Medische hulp nodig?</string>
     <string name="post_notification_after_stay_home_header">Na %1$s</string>
     <string name="post_notification_after_stay_home_paragraph">Heb je tot %1$s geen klachten gekregen? Dan hoef je niet meer thuis te blijven. Blijf wel de algemene regels tegen corona volgen.</string>
+    <string name="generic_notification_advice_stay_home">Blijf in ieder geval thuis tot je zeker weet dat je geen corona hebt. Zo voorkom je dat je onbewust anderen besmet.</string>
+    <string name="generic_notification_exposure_summaries">"Je krijgt soms ook meldingen waarin staat dat je telefoon COVID-19 controles uitvoert. Open dan CoronaMelder. Goed om te weten: meestal is er niks aan de hand. "</string>
 </resources>

@@ -21,7 +21,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal"
+            android:text="@{viewState.caption}"
+            android:textAppearance="?attr/textAppearanceCaption"
+            app:show="@{viewState.caption != null}" />
 
         <ImageView
             android:id="@+id/content"
@@ -31,13 +41,5 @@
             android:contentDescription="@{viewState.contentDescription}"
             app:imageResource="@{viewState.image}"
             tools:src="@drawable/illustration_lab_test" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center_horizontal"
-            android:text="@{viewState.caption}"
-            android:textAppearance="?attr/textAppearanceCaption" />
     </LinearLayout>
 </layout>
