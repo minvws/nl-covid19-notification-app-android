@@ -108,9 +108,6 @@
         <argument
             android:name="faqItemId"
             app:argType="nl.rijksoverheid.en.about.FAQItemId" />
-        <argument
-            android:name="inOnboarding"
-            app:argType="boolean" />
         <action
             android:id="@+id/action_about_detail"
             app:destination="@id/nav_about_detail"

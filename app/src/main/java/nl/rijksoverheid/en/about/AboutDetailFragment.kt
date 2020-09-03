@@ -36,18 +36,7 @@ import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
-private val onboardingCrossLinks = mapOf(
-    REASON to listOf(LOCATION, NOTIFICATION_MESSAGE),
-    ANONYMOUS to listOf(NOTIFICATION_MESSAGE, LOCATION, LOCATION_PERMISSION),
-    LOCATION to listOf(BLUETOOTH, LOCATION_PERMISSION),
-    NOTIFICATION to listOf(NOTIFICATION_MESSAGE, BLUETOOTH),
-    NOTIFICATION_MESSAGE to listOf(NOTIFICATION, REASON, BLUETOOTH),
-    LOCATION_PERMISSION to listOf(LOCATION, REASON, ANONYMOUS),
-    BLUETOOTH to listOf(NOTIFICATION, ANONYMOUS),
-    POWER_USAGE to listOf(LOCATION_PERMISSION, REASON)
-)
-
-private val aboutCrossLinks = mapOf(
+private val crossLinks = mapOf(
     ONBOARDING to listOf(REASON, LOCATION, ANONYMOUS),
     TECHNICAL to listOf(BLUETOOTH, DELETION, INTEROPERABILITY),
     REASON to listOf(TECHNICAL, NOTIFICATION_MESSAGE),
@@ -76,8 +65,7 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
             startActivity(Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS))
         }).getSection(args.faqItemId))
 
-        val crossLinksMap = if (args.inOnboarding) onboardingCrossLinks else aboutCrossLinks
-        crossLinksMap[args.faqItemId]?.let { crossLinks ->
+        crossLinks[args.faqItemId]?.let { crossLinks ->
             adapter.add(FAQHeaderItem(R.string.cross_links_header))
             adapter.addAll(crossLinks.map(::FAQItem))
         }
@@ -120,17 +108,14 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
                 is FAQItem -> {
                     enterTransition = exitTransition
                     findNavController().navigateCatchingErrors(
-                        AboutDetailFragmentDirections.actionAboutDetail(item.id, args.inOnboarding),
+                        AboutDetailFragmentDirections.actionAboutDetail(item.id),
                         FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                     )
                 }
                 is FAQTechnicalExplanationItem -> {
                     enterTransition = exitTransition
                     findNavController().navigateCatchingErrors(
-                        AboutDetailFragmentDirections.actionAboutDetail(
-                            TECHNICAL,
-                            args.inOnboarding
-                        ),
+                        AboutDetailFragmentDirections.actionAboutDetail(TECHNICAL),
                         FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                     )
                 }
