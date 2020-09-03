@@ -37,4 +37,5 @@ open class FakeExposureNotificationApi : ExposureNotificationApi {
     ): DiagnosisKeysResult = DiagnosisKeysResult.Success
 
     override suspend fun getSummary(token: String): ExposureSummary? = null
+    override fun deviceSupportsLocationlessScanning(): Boolean = false
 }

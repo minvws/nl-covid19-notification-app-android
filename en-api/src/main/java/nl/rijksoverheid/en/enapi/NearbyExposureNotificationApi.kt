@@ -182,6 +182,10 @@ class NearbyExposureNotificationApi(
             0
         ) != null
     }
+
+    override fun deviceSupportsLocationlessScanning(): Boolean {
+        return client.deviceSupportsLocationlessScanning()
+    }
 }
 
 /**
