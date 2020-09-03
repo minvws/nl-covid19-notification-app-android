@@ -66,7 +66,7 @@
     <string name="post_notification_paragraph_7">Zelfs als je je niet ziek voelt. Want zonder je ziek te voelen kun je het coronavirus al verspreiden en zo anderen besmetten.</string>
     <string name="post_notification_paragraph_8">"Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet."</string>
     <string name="post_notification_paragraph_9">Bel gratis <b>%1$s</b> om een coronatest aan te vragen.</string>
-    <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart</string>
+    <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart.</string>
     <string name="post_notification_button">Coronatest aanvragen</string>
     <string name="generic_notification_toolbar_title">Melding krijgen</string>
     <string name="generic_notification_header_1">Wat betekent het als je een melding krijgt?</string>
@@ -83,12 +83,11 @@
     <string name="generic_notification_paragraph_12">De app kan je ook een melding sturen als er een technisch probleem is. Bijvoorbeeld als je Bluetooth uitstaat. Of als er langer dan een dag geen internetverbindig was. De app helpt je dit op te lossen.</string>
     <string name="generic_notification_paragraph_13">Heb je zo’n melding ontvangen, en is de app wel gewoon actief? Dan is het probleem in de tussentijd al opgelost.</string>
     <string name="treat_perspective_header_1">Klachten die passen bij het coronavirus</string>
-    <string name="treat_perspective_list_2"><![CDATA[<ul><li>verkoudheidsklachten</li><li>neusverkoudheid, loopneus, niezen, keelpijn</li><li>hoesten</li><li>verhoging</li><li>plotseling verlies van reuk en/of smaak</li></ul>]]></string>
+    <string name="treat_perspective_list_2"><![CDATA[<ul><li>verkoudheidklachten zoals neusverkoudheid, loopneus, niezen, keelpijn</li><li>hoesten</li><li>benauwdheid</li><li>verhoging of koorts</li><li>plotseling verlies van reuk en/of smaak (zonder neusverstopping)</li></ul>]]></string>
     <string name="request_test_toolbar_title">Coronatest aanvragen</string>
     <string name="request_test_header_1">Heb je klachten die passen bij corona? Vraag een test aan</string>
-    <string name="request_test_paragraph_2">Heb je (lichte) klachten die passen bij het coronavirus? Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet. Heb je ernstige klachten of zit je in een risicogroep? Bel dan je huisarts.</string>
-    <string name="request_test_paragraph_3">Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
-    <string name="request_test_paragraph_4">Heb je ernstige klachten zoals hoge koorts of moeite met ademhalen? Of zit je een risicogroep? Bel je huisarts.</string>
+    <string name="request_test_paragraph_2">Heb je (lichte) klachten die passen bij het coronavirus? Laat je gratis testen. Het duurt niet lang en je kan meestal snel een afspraak maken.\n\nDe uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
+    <string name="request_test_paragraph_4">Heb je ernstige klachten zoals hoge koorts of moeite met ademhalen? Of zit je een risicogroep en krijg je koorts? Bel eerst je huisarts</string>
     <string name="request_test_button_call">Bel %1$s</string>
     <string name="request_test_button_website">Ga naar coronatest.nl</string>
     <string name="status_reset_exposure">Melding verwijderen</string>
