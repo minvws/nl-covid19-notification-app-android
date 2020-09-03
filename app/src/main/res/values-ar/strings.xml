@@ -251,4 +251,13 @@
     <string name="faq_interoperability_paragraph_3">From mid-September, you\'ll likely be able to always keep using your own country\'s app. And you won\'t need to make a daily app switch anymore.</string>
     <string name="cross_links_header">إقرأ أيضًا</string>
     <string name="request_test_header_5">طلب إجراء فحص كورونا</string>
+    <string name="post_notification_guidance_follow_ggd">Geeft de GGD je aan de telefoon andere adviezen dan de app? Volg dan het advies van de GGD.</string>
+    <string name="post_notification_stay_home_header">Blijf tot %1$s thuis</string>
+    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Laat anderen boodschappen doen. Kan dit echt niet en heb je geen klachten? Dan mag je wel even naar buiten om boodschappen te doen. Houd 1,5 meter afstand en raak niemand aan.</li><li>Je mag in de tuin of op het balkon zitten.</li><li>Kinderen van 4-12 jaar mogen naar school en/of sporten.</li></ul>]]></string>
+    <string name="post_notification_no_visitors_header">Ontvang geen bezoek</string>
+    <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>Alleen de mensen die bij je wonen, mogen samen met jou in huis zijn. Blijf bij elkaar uit de buurt en houd 1,5 meter afstand. Dus niet knuffelen, niet zoenen en geen seks.</li></ul>]]></string>
+    <string name="post_notification_medical_help_list"><![CDATA[<ul><li>Ga niet naar de huisarts of het ziekenhuis, maar bel eerst met je huisarts. Vertel dat je in de buurt was van iemand die het coronavirus heeft.</li><li>Je huisarts of andere medische hulp mag wel bij je langskomen.</li></ul>]]></string>
+    <string name="post_notification_medical_help_header">Medische hulp nodig?</string>
+    <string name="post_notification_after_stay_home_header">Na %1$s</string>
+    <string name="post_notification_after_stay_home_paragraph">Heb je tot 31 augustus geen klachten gekregen? Dan hoef je niet meer thuis te blijven. Blijf wel de algemene regels tegen corona volgen.</string>
 </resources>

@@ -10,6 +10,7 @@
     <string name="phone_number" translatable="false">0800–1202</string>
     <string name="helpdesk_phone_number" translatable="false">0800–1280</string>
     <string name="exposure_date_format" translatable="false">EEEE d MMMM</string>
+    <string name="exposure_date_short_format" translatable="false">d MMMM</string>
     <string name="github_url" translatable="false">https://github.com/minvws/nl-covid19-notification-app-android</string>
     <string name="play_store_url" translatable="false">https://play.google.com/store/apps/details?id=nl.rijksoverheid.en</string>
     <string name="privacy_policy_url" translatable="false">https://coronamelder.nl/%1$s/privacy-in-app</string>

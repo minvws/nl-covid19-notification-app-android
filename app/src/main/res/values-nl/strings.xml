@@ -58,10 +58,10 @@
     <string name="sync_issue_notification_title">Geen internetverbinding</string>
     <string name="sync_issue_notification_message">De app kon de afgelopen 24 uur geen internetverbinding maken. Controleer of je wifi of mobiele data aanstaan.</string>
     <string name="post_notification_toolbar_title">Kans op besmetting</string>
-    <string name="post_notification_header_1">Je bent in de buurt geweest van iemand met het coronavirus</string>
-    <string name="post_notification_paragraph_2">Je was %1$s (op %2$s) dicht bij iemand die later corona bleek te hebben. Je hebt in deze situatie mogelijk extra kans op besmetting gelopen. Als je inderdaad besmet bent, kun je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
+    <string name="post_notification_header_1">Je was in de buurt van iemand met het coronavirus</string>
+    <string name="post_notification_paragraph_2">Op %2$s (%1$s) ben jij misschien besmet geraakt. Je was die dag minstens 15 minuten dicht bij iemand met corona.\n\nAls je inderdaad besmet bent, kun je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt. </string>
     <string name="post_notification_header_3">Wat kun je nu doen?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>Heb je geen klachten? Doe een coronatest en blijf thuis tot je de uitslag weet</li><li>Heb je (lichte) klachten die passen bij corona? Doe een coronatest en blijf thuis tot je de uitslag weet</li><li>Heb je ernstige klachten of zit je in een risicogroep? Bel je huisarts</li></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>Blijf tot %1$s thuis en let extra goed op klachten die kunnen passen bij corona</li><li>Heb je (lichte) klachten die passen bij het coronavirus? Doe een coronatest en blijf thuis tot %1$s</li><li>Heb je ernstige klachten zoals hoge koorts of moeite met ademhalen? Of zit je een risicogroep en krijg je koorts? Bel eerst je huisarts</ul></ul></ul>]]></string>
     <string name="post_notification_header_6">Doe een coronatest</string>
     <string name="post_notification_paragraph_7">Zelfs als je je niet ziek voelt. Want zonder je ziek te voelen kun je het coronavirus al verspreiden en zo anderen besmetten.</string>
     <string name="post_notification_paragraph_8">"Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet."</string>
@@ -82,7 +82,7 @@
     <string name="generic_notification_header_11">Andere meldingen</string>
     <string name="generic_notification_paragraph_12">De app kan je ook een melding sturen als er een technisch probleem is. Bijvoorbeeld als je Bluetooth uitstaat. Of als er langer dan een dag geen internetverbindig was. De app helpt je dit op te lossen.</string>
     <string name="generic_notification_paragraph_13">Heb je zo’n melding ontvangen, en is de app wel gewoon actief? Dan is het probleem in de tussentijd al opgelost.</string>
-    <string name="treat_perspective_header_1">Klachten die passen bij het coronavirus (COVID-19)</string>
+    <string name="treat_perspective_header_1">Klachten die passen bij het coronavirus</string>
     <string name="treat_perspective_list_2"><![CDATA[<ul><li>verkoudheidsklachten</li><li>neusverkoudheid, loopneus, niezen, keelpijn</li><li>hoesten</li><li>verhoging</li><li>plotseling verlies van reuk en/of smaak</li></ul>]]></string>
     <string name="request_test_toolbar_title">Coronatest aanvragen</string>
     <string name="request_test_header_1">Heb je klachten die passen bij corona? Vraag een test aan</string>
@@ -213,7 +213,6 @@
     <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
     <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">Lees meer</string>
-    <string name="post_notification_list_5"><![CDATA[<b>Blijf je goed aan de maatregelen houden:</b><ul><li>Was je handen regelmatig</li><li>Hoest/nies in je elleboog</li><li>Houd 1,5 meter afstand van mensen buiten je huishouden</li></ul>]]></string>
     <string name="onboarding_privacy_policy_headline">Toestemming gegevensgebruik</string>
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[Om CoronaMelder te gebruiken moet je akkoord gaan met de <a href="">privacyverklaring</a>. Belangrijk om te weten:]]></string>
     <string name="onboarding_privacy_policy_check_1">Je app zendt versleutelde bluetoothgegevens uit.</string>
@@ -233,4 +232,13 @@
     <string name="faq_interoperability_paragraph_3">Vanaf eind september kun je waarschijnlijk de app van je eigen land blijven gebruiken, en hoef je niet meer dagelijks te wisselen.</string>
     <string name="cross_links_header">Lees ook</string>
     <string name="request_test_header_5">Coronatest aanvragen</string>
+    <string name="post_notification_guidance_follow_ggd">Geeft de GGD je aan de telefoon andere adviezen dan de app? Volg dan het advies van de GGD.</string>
+    <string name="post_notification_stay_home_header">Blijf tot %1$s thuis</string>
+    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Laat anderen boodschappen doen. Kan dit echt niet en heb je geen klachten? Dan mag je wel even naar buiten om boodschappen te doen. Houd 1,5 meter afstand en raak niemand aan.</li><li>Je mag in de tuin of op het balkon zitten.</li><li>Kinderen van 4–12 jaar mogen naar school en/of sporten.</li></ul>]]></string>
+    <string name="post_notification_no_visitors_header">Ontvang geen bezoek</string>
+    <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>Alleen de mensen die bij je wonen, mogen samen met jou in huis zijn. Blijf bij elkaar uit de buurt en houd 1,5 meter afstand. Dus niet knuffelen, niet zoenen en geen seks.</li></ul>]]></string>
+    <string name="post_notification_medical_help_list"><![CDATA[<ul><li>Ga niet naar de huisarts of het ziekenhuis, maar bel eerst met je huisarts. Vertel dat je in de buurt was van iemand die het coronavirus heeft.</li><li>Je huisarts of andere medische hulp mag wel bij je langskomen.</li></ul>]]></string>
+    <string name="post_notification_medical_help_header">Medische hulp nodig?</string>
+    <string name="post_notification_after_stay_home_header">Na %1$s</string>
+    <string name="post_notification_after_stay_home_paragraph">Heb je tot %1$s geen klachten gekregen? Dan hoef je niet meer thuis te blijven. Blijf wel de algemene regels tegen corona volgen.</string>
 </resources>
