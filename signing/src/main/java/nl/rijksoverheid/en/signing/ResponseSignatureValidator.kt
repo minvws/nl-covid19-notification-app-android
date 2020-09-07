@@ -32,11 +32,11 @@ import javax.net.ssl.X509TrustManager
 
 // The publicly known default SubjectKeyIdentifier for the root CA, retrieved from the device trust store
 private val DEFAULT_ANCHOR_SUBJECT_KEY_IDENTIFIER =
-    SubjectKeyIdentifier(Hex.decode("041454adfac79257aeca359c2e12fbe4ba5d20dc9457"))
+    SubjectKeyIdentifier(Hex.decode("0414feab0090989e24fca9cc1a8afb27b8bf306ea83b"))
 
 // The publicly known default AuthorityKeyIdentifier for the issuer that issued the signing certificate
 private val DEFAULT_AUTHORITY_KEY_IDENTIFIER =
-    Hex.decode("30168014c39aa67b5e742b82b6c672fd744e85d297cdfd18")
+    Hex.decode("30168014084aaabb99246fbe5b07f1a58a995b2d47efb93c")
 
 class ResponseSignatureValidator(
     trustManager: X509TrustManager = getDefaultTrustManager(),
