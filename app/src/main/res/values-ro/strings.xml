@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="faq_notification_paragraph_1">Veți primi notificări după ce ați fost expus unui risc mare de infectare. Acest lucru se întâmplă dacă ați fost cel puțin 15 minute aproape de cineva care ulterior se dovedește a fi infectat cu coronavirus. Bineînțeles, notificările pot fi trimise doar dacă și acea persoană folosește aplicația. \n\nPrimirea unei notificări depinde de puterea semnalului Bluetooth și de durata contactului. \n\nA trecut cineva cu bicicleta pe lângă dvs.? Atunci nu veți primi o notificare. Ați fost aproape unul de altul, deci semnalul Bluetooth a fost puternic, dar durata contactului a fost așa de scurtă încât riscul de infectare este foarte mic. \n\nAți stat aproape de cineva în tren sau la birou? Atunci puteți primi notificări. Semnalul Bluetooth a fost puternic și ați fost aproape unul de celălalt mult timp.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">ro</string>
@@ -34,9 +35,9 @@
     <string name="onboarding_share_continue">Continuați</string>
     <string name="onboarding_share_share">Distribuiți aplicația</string>
     <string name="status_no_exposure_detected_headline">Aplicația este activă</string>
-    <string name="status_no_exposure_detected_description">Chiar dacă închideți aplicația, %1$s rămâne activă</string>
+    <string name="status_no_exposure_detected_description">"  Se ține evidența întâlnirilor, chiar dacă închideți aplicația   "</string>
     <string name="status_exposure_detected_headline">Ați fost în apropierea unei persoane infectate cu coronavirus</string>
-    <string name="status_exposure_detected_description">Acum %1$s zile (%2$s) ați fost expus riscului de infectare</string>
+    <string name="status_exposure_detected_description">Pe  %1$s (acum %2$s zile) probabil ați fost infectat</string>
     <string name="status_disabled_headline">Aplicația nu este activă</string>
     <string name="status_en_api_disabled_description">%1$s funcționează doar dacă configurările necesare sunt activate.</string>
     <string name="status_en_api_disabled_enable">Activare aplicație</string>
@@ -54,40 +55,38 @@
     <string name="update_notification_message">Actualizați aplicația pentru a funcționa corect în continuare.</string>
     <string name="sync_issue_channel_name">Notificări de eroare</string>
     <string name="sync_issue_channel_description">Notificări dacă aplicația nu funcționează corect</string>
-    <string name="sync_issue_notification_title">Fără conexiune internet</string>
-    <string name="sync_issue_notification_message">Aplicația nu a putut să se conecteze la internet în ultimele 24 de ore. Verificați dacă WiFi-ul sau datele celulare sunt activate.</string>
+    <string name="sync_issue_notification_title">Problemă tehnică</string>
+    <string name="sync_issue_notification_message">Aplicația nu a putut să verifice dacă persoanele întâlnite s-au dovedid a fi infectate cu coronavirus.</string>
     <string name="post_notification_toolbar_title">Risc de infectare</string>
-    <string name="post_notification_header_1">Ați fost în apropierea cuiva infectat cu coronavirus</string>
-    <string name="post_notification_paragraph_2">Acum %1$s zile (%2$s) ați fost în apropierea unei persoane care ulterior s-a dovedit a fi infectată cu coronavirus. În această situație este posibil să fi fost expus unui risc mai mare de a fi infectat. Dacă sunteți într-adevăr contaminat, puteți transmite virusul altora. Chiar dacă acum nu vă simțiți rău.</string>
+    <string name="post_notification_header_1">Ați fost aproape de cineva infectat cu coronavirus</string>
+    <string name="post_notification_paragraph_2">Este posibil ca pe %2$s (acum %1$s zile) să fi fost infectat. In acea zi ați fost în apropierea cuiva infectat cu corona. \n\nDacă sunteți într-adevăr infectat, puteți transmite virusul altora. Chiar dacă acum nu vă simțiți rău.</string>
     <string name="post_notification_header_3">Ce puteți face acum?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>Nu aveți niciun simptom? Faceți un test pentru coronavirus și rămâneți acasă până aflați rezultatele</li><li> Aveți simptome ușoare care ar putea fi asociate cu coronavirus? Faceți un test pentru coronavirus și rămâneți acasă până aflați rezultatele </li><li> Aveți simptome grave sau faceți parte dintr-o categorie de risc? Sunați medicul de familie</li></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>Rămâneți până pe %1$s acasă și fiți atenți la simptome care pot fi asociate cu coronavirus.</li><li> Aveți simptome ușoare care ar putea fi asociate cu coronavirus? Faceți un test pentru coronavirus și rămâneți acasă până pe %1$s</li><li> Aveți simptome grave cum ar fi febră mare sau respirație greoaie sau faceți parte dintr-o categorie de risc? Sunați întâi medicul de familie</li></ul>]]></string>
     <string name="post_notification_header_6">Faceți un test pentru coronavirus</string>
     <string name="post_notification_paragraph_7">Chiar dacă încă nu vă simțiți rău, deoarece chiar fără a vă simți rău, puteți răspândi deja coronavirusul, infectându-i astfel pe alții.</string>
     <string name="post_notification_paragraph_8">"Testați-vă gratuit. Nu durează mult și, de regulă, puteți face repede o programare. Rezultatele vor fi cunoscute în 48 de ore. Stați acasă până aflați rezultatul."</string>
     <string name="post_notification_paragraph_9">Sunați gratuit la <b>%1$s</b> pentru a solicita un test pentru coronavirus.</string>
-    <string name="post_notification_message">Țineți numărul de securitate socială olandez (BSN) la îndemână. Acest număr îl găsiți pe pașaport sau pe cartea de identitate.</string>
+    <string name="post_notification_message">Țineți numărul de securitate socială olandez (BSN) la îndemână. Acest număr îl găsiți în pașaport sau pe cartea de identitate.</string>
     <string name="post_notification_button">Solicitați testul pentru coronavirus</string>
-    <string name="generic_notification_toolbar_title">Primire notificare</string>
-    <string name="generic_notification_header_1">Ce înseamnă dacă primiți o notificare?</string>
-    <string name="generic_notification_paragraph_2">Aplicația trimite o notificare dacă ați fost cel puțin 15 minute în apropierea unei persoane care se dovedește ulterior a fi infectată cu coronavirus. În notificare se menționează doar ziua în care s-a întâmplat. În această situație ați fost expus unui risc ridicat de infectare. Dacă sunteți infectat, puteți transmite virusul altora. Chiar dacă nu vă simțiți rău.</string>
-    <string name="generic_notification_header_3">Cum arată o notificare?</string>
-    <string name="generic_notification_paragraph_4">Notificarea este asemănătoare unui mesaj sms. În notificare se menționează în ce zi v-ați aflat în apropierea cuiva infectat cu coronavirus.</string>
-    <string name="generic_notification_paragraph_5">Deschideți notificarea. În notificare veți putea citi ce puteți face mai departe.</string>
-    <string name="generic_notification_alt_text_6">Red screen with alarm bell that shows you need to take action immediately</string>
+    <string name="generic_notification_toolbar_title">Primire de notificare</string>
+    <string name="generic_notification_header_1">Ce conține o notificare?</string>
+    <string name="generic_notification_paragraph_2">Aplicația trimite o notificare dacă ați fost cel puțin 15 minute în apropierea unei persoane care se dovedește ulterior a fi infectată cu coronavirus.</string>
+    <string name="generic_notification_paragraph_4">Mesajul apare la notificări, la fel ca mesajele altor aplicații. Mesajul are simbolul aplicației CoronaMelder. \nAți primit o notificare? Atunci deschideți CoronaMelder. Veți citi în aplicație ce puteți face mai departe.</string>
+    <string name="generic_notification_alt_text_6">Cerc roșu cu clopoțel de alarmă care indică faptul că o acțiune este  necesară acum</string>
     <string name="generic_notification_caption_7">Exemplu: așa arată aplicația în momentul în care ați primit o notificare</string>
-    <string name="generic_notification_header_8">Ce puteți face când ați primit o notificare?</string>
-    <string name="generic_notification_paragraph_9">Testați-vă pentru coronavirus. Când va avea loc testul? Depinde dacă prezentați simptome care pot fi asociate cu coronavirus și când v-ați aflat în apropierea persoanei infectată cu coronavirus. În orice caz, rămâneți acasă până aflați rezultatul. În acest fel preveniți infectarea altora.</string>
-    <string name="generic_notification_paragraph_10">Ați fost în apropierea unei persoane pe care o cunoașteți și sunteți sunat de către GGD (Serviciul de Sănătate Municipal)? Atunci trebuie să urmați recomandările de la GGD, nu cele din aplicație.</string>
+    <string name="generic_notification_header_8">Ce puteți face dacă ați fost în apropierea unei persoane infectată cu coronavirus?</string>
+    <string name="generic_notification_paragraph_9">"Urmați recomandările din aplicație. Recomandările depind de situație, dacă aveți simptome care care pot fi asociate cu coronavirus și în ce zi v-ați aflat în apropierea persoanei infectate. "</string>
+    <string name="generic_notification_paragraph_10">Primiți de la GGD (Serviciul de Sănătate Municipal),  în timpul convorbirii telefonice, alte recomandări decât cele din aplicație?  Atunci trebuie să urmați recomandările GGD-ului.</string>
     <string name="generic_notification_header_11">Alte notificări</string>
-    <string name="generic_notification_paragraph_12">Aplicația vă poate trimite și notificări în cazul unor probleme tehnice. De exemplu, dacă Bluetooth este dezactivat sau dacă nu ați avut legătură la internet mai mult de o zi. Aplicația vă ajută să soluționați problema.</string>
+    <string name="generic_notification_paragraph_12">CoronaMelder vă poate trimite și notificări în cazul unor probleme tehnice. De exemplu, dacă Bluetooth este dezactivat sau dacă nu ați avut legătură la internet mai mult de o zi. Aplicația vă ajută să soluționați problema.</string>
     <string name="generic_notification_paragraph_13">Ați primit o astfel de notificare dar aplicația este activă? Înseamnă că problema a fost rezolvată între timp.</string>
-    <string name="treat_perspective_header_1">Simptome coronavirus (COVID-19)</string>
-    <string name="treat_perspective_list_2"><![CDATA[<ul><li>simptome de răceală</li><li>rinită, curgerea nasului, strănut, dureri în gât</li><li>tuse</li><li>temperatură</li><li>dispariția bruscă a simțului mirosului și gustului</li></ul>]]></string>
+    <string name="treat_perspective_header_1">Simptome are pot fi asociate coronavirus</string>
+    <string name="treat_perspective_list_2"><![CDATA[<ul>
+<li>simptome de răceală cum ar fi rinită, curgerea nasului, strănut, dureri în gât</li><li>tuse</li><li>senzație de sufocare</li><li>temperatură</li><li>dispariția bruscă a simțului mirosului și /sau gustului (fără a avea nasul înfundat)</li></ul>]]></string>
     <string name="request_test_toolbar_title">Solicitați test pentru coronavirus</string>
     <string name="request_test_header_1">Aveți simptome care pot fi asociate cu coronavirus? Solicitați un test</string>
-    <string name="request_test_paragraph_2">Aveți simptome (ușoare) care pot fi asociate cu coronavirus? Testați-vă gratuit. Nu durează mult și, de regulă, puteți face repede o programare.  Rezultatele vor fi cunoscute în 48 de ore. Rămâneți acasă până aflați rezultatele. Aveți simptome grave sau faceți parte dintr-un grup de risc ? Sunați medicul de familie.</string>
-    <string name="request_test_paragraph_3">Testați-vă gratuit. Nu durează mult și, de regulă, puteți face repede o programare. Rezultatele vor fi cunoscute în 48 de ore. Stați acasă până primiți rezultatului.</string>
-    <string name="request_test_paragraph_4">Aveți simptome grave sau faceți parte dintr-o categorie de risc? Sunați medicul de familie</string>
+    <string name="request_test_paragraph_2">"Aveți simptome (ușoare) care pot fi asociate cu coronavirus? Testați-vă gratuit. Nu durează mult și, de regulă, puteți face repede o programare.  \n\nRezultatele vor fi cunoscute în 48 de ore. Rămâneți acasă până aflați rezultatele.  "</string>
+    <string name="request_test_paragraph_4">Aveți simptome grave, cum ar fi febră sau respirație greoaie sau faceți parte dintr-un grup de risc? Sunați întâi medicul de familie</string>
     <string name="request_test_button_call">Sunați la %1$s</string>
     <string name="request_test_button_website">Accesați coronatest.nl</string>
     <string name="status_reset_exposure">Ștergere notificare</string>
@@ -95,7 +94,7 @@
     <string name="status_dialog_remove_exposure_message">Sunteți sigur că doriți să ștergeți această notificare? Nu veți mai putea regăsi data în aplicație. Deci rețineți bine această dată.</string>
     <string name="status_dialog_remove_exposure_confirm">Ștergeți</string>
     <string name="status_dialog_remove_exposure_cancel">Anulați</string>
-    <string name="status_info_about_title">Despre aplicație</string>
+    <string name="status_info_about_title">Aveți întrebări despre aplicație?</string>
     <string name="status_info_about_subtitle">Vedeți cum funcționează aplicația și ce înseamnă pentru confidențialitatea dvs.</string>
     <string name="status_info_share_title">Invitați alte persoane la folosirea aplicației</string>
     <string name="status_info_share_subtitle">Distribuiți aplicația cât mai multor persoane pentru ca împreună să ținem coronavirus sub control.</string>
@@ -109,11 +108,11 @@
     <string name="status_exposure_what_next">Ce pot face acum?</string>
     <string name="status_error_consent_required">%1$s funcționează doar dacă setările necesare sunt activate.</string>
     <string name="status_error_action_consent">Activare aplicație</string>
-    <string name="status_error_sync_issues">Aplicația nu a putut să se conecteze la internet în ultimele 24 de ore. Verificați dacă  WiFi sau datele celulare sunt activate și încercați din nou.</string>
+    <string name="status_error_sync_issues">În ultimele 24 de ore, aplicația nu a putut să verifice dacă persoanele întâlnite s-au dovedit a fi infectate cu coronavirus. Verificați dacă  WiFi sau datele celulare sunt activate și încercați din nou.</string>
     <string name="status_error_action_sync_issues">Încercați din nou</string>
     <string name="about_toolbar_title">Despre aplicație</string>
     <string name="about_helpdesk_title">Altă întrebare despre aplicație?</string>
-    <string name="about_helpdesk_subtitle">Sunați la biroul de asistență</string>
+    <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Sunați gratuit la 0800-1280</string>
     <string name="about_technical_explanation_title">Cum funcționează aplicația?</string>
     <string name="about_technical_explanation_subtitle">Citiți explicația tehnică</string>
     <string name="about_onboarding_title">Ce face CoronaMelder?</string>
@@ -135,32 +134,20 @@
     <string name="faq_location_permission">De ce trebuie să fie configurările locației activate?</string>
     <string name="faq_technical">Cum funcționează aplicația exact?</string>
     <string name="faq_reason_paragraph_1">"Aplicația vă poate avertiza, înainte de prezenta simptome, dacă ați fost în apropierea unei persoane infectate cu coronavirus, Puteți fi infectat și puteți contagia alte persoane cu coronavirus fără ca dvs. să știți acest lucru. "</string>
-    <string name="faq_reason_paragraph_2">Dacă primiți o avertizare prin aplicație, vă puteți testa. Vi se recomandă să stați acasă. În acest fel preveniți infectarea involuntară a persoanelor din jurul dumneavoastră.</string>
+    <string name="faq_reason_paragraph_2">Dacă primiți o avertizare prin aplicație, citiți în aplicație ce puteți face și dacă trebuie să vă testați. În acest fel preveniți infectarea, în 
+ mod involuntar, a persoanelor din jurul dumneavoastră.</string>
     <string name="faq_reason_paragraph_3">"Ați fost testat și sunteți infectat cu coronavirus? Împreună cu GGD (Serviciul de Sănătate Municipal) puteți avertiza persoanele care s-au aflat mult timp în apropierea dvs., chiar și persoanele necunoscute, întâlnite într-un restaurant, cinematograf sau sală de așteptare. Acest lucru este posibil doar dacă și aceste persoane folosesc aplicația."</string>
     <string name="faq_reason_paragraph_4">Datorită aplicației CoronaMelder putem interveni rapid și putem preveni noi infectări. Numai împreună putem ține coronavirus sub control.</string>
     <string name="faq_location_paragraph_1">Nu, aplicația vede prin semnalul Bluetooth doar dacă sunteți în preajma altor persoane care au aplicația activată.  Aplicația nu vede unde vă aflați. \n\n\nBluetooth este destinat doar să creeze o conexiune wireless între 2 dispozitive apropiate unul de altul, cum ar fi telefonul și o boxă sau căști.\n\n\nAplicația poate estima distanța dintre 2 telefoane prin puterea semnalului Bluetooth.</string>
     <string name="faq_anonymous_paragraph_1">Aplicația schimbă coduri aleatoare cu alte telefoane. Aceste coduri nu conțin date personale sau date despre locația dvs. Schimbul de coduri are loc în momentul în care sunteți aproape de o persoană care are aplicația activată.</string>
-    <string name="faq_anonymous_paragraph_2">Se dovedește ulterior că această persoană este infectată cu coronavirus? Atunci, acea persoană, împreună cu GGD (Serviciul de Sănătate Municipal) poate adăuga codurile sale la o listă cu coduri ale persoanelor infectate. În acest fel infectarea poate fi confirmată. 
-
-
-După aceea se trimit notificări tuturor celor care au aceste coduri pe telefon. Aceste notificări menționează numai când s-au aflat în apropierea unei persoane infectate. Nu precizează nici cine este această persoană și nici unde au întâlnit-o.</string>
-    <string name="faq_notification_paragraph_1">"Veți primi notificări după ce ați fost expus unui risc mare de infectare. Acest lucru se întâmplă dacă ați fost cel puțin 15 minute aproape de cineva care ulterior se dovedește a fi infectat cu coronavirus. Bineînțeles, notificările pot fi trimise doar dacă și acea persoană folosește aplicația. 
-
-
-Primirea unei notificări depinde de puterea semnalului Bluetooth și de durata contactului. A trecut cineva cu bicicleta pe lângă dvs.? Atunci nu veți primi o notificare. Ați fost aproape unul de altul, deci semnalul Bluetooth a fost puternic, dar durata contactului a fost așa de scurtă încât riscul de infectare este foarte mic. 
-
-
-Ați stat aproape de cineva în tren sau la birou? Atunci puteți primi notificări. Semnalul Bluetooth a fost puternic și ați fost aproape unul de celălalt mult timp."</string>
-    <string name="faq_upload_keys_paragraph_1">Puteți trimite notificări altor persoane numai dacă ați fost testat și s-a dovedit că sunteți infectat cu coronavirus. În acest caz, GGD (Serviciul de Sănătate Municipal) vă va contacta pentru a vă da rezultatul testului. \n\n\nÎn timpul acestei conversații telefonice, un angajat GGD va verifica cheia GGD personală. Cheia o găsiți în aplicație. Această cheie garantează că doar codurile unei persoane contaminate pot fi adăugate pe listă.</string>
-    <string name="faq_upload_keys_paragraph_2">"După ce cheia GGD a fost verificată, puteți distribui codurile pe care telefonul dvs. le-a transmis altor telefoane în ultimele 14 zile.
-
-
-În acest fel, persoanele care au fost în apropierea dvs. când erați infectat, vor primi o notificare anonimă. Acest lucru este posibil doar dacă și aceste persoane folosesc aplicația."</string>
-    <string name="faq_bluetooth_paragraph_1">"Da, dar semnalul este foarte slab. Bluetooth funcționează cel mai bine dacă telefonul dvs. se află în aceeași cameră cu telefonul unei alte persoane. \n\n\nDe exemplu, este puțin probabil ca aplicația dvs. să primească semnalul Bluetooth de la vecini. \n\n\nDe aceea, este la fel de puțin probabil să primiți o notificare dacă vecinul dvs. se dovedește a avea coronavirus dar nu ați fost în aceeași cameră."</string>
+    <string name="faq_anonymous_paragraph_2">Se dovedește ulterior că această persoană este infectată cu coronavirus? Atunci, acea persoană, împreună cu GGD (Serviciul de Sănătate Municipal) poate adăuga codurile sale la o listă cu coduri ale persoanelor infectate. În acest fel infectarea poate fi confirmată. \n\nDupă aceea se trimit notificări tuturor celor care au aceste coduri pe telefon. Aceste notificări menționează doar când s-au aflat în apropierea unei persoane infectate. Nu precizează nici cine este această persoană și nici unde au întâlnit-o.</string>
+    <string name="faq_upload_keys_paragraph_1">Puteți trimite notificări altor persoane numai dacă ați fost testat și s-a dovedit că sunteți infectat cu coronavirus. În acest caz, GGD (Serviciul de Sănătate Municipal) vă va contacta pentru a vă da rezultatul testului. \nÎn timpul acestei conversații telefonice, un angajat GGD va verifica cheia GGD personală. Cheia o găsiți în aplicație. Această cheie garantează că doar codurile unei persoane contaminate pot fi adăugate pe listă.</string>
+    <string name="faq_upload_keys_paragraph_2">"După ce cheia GGD a fost verificată, puteți distribui codurile pe care telefonul dvs. le-a transmis altor telefoane în ultimele 14 zile.\n\nÎn acest fel, persoanele care au fost în apropierea dvs. când erați contagios, vor primi o notificare anonimă. Acest lucru este posibil doar dacă și aceste persoane folosesc aplicația."</string>
+    <string name="faq_bluetooth_paragraph_1">"Da, dar semnalul este foarte slab. Bluetooth funcționează cel mai bine dacă telefonul dvs. se află în aceeași cameră cu telefonul unei alte persoane. \nDe exemplu, este puțin probabil ca aplicația dvs. să primească semnalul Bluetooth de la vecini. \nDe aceea, este la fel de puțin probabil să primiți o notificare dacă vecinul dvs. se dovedește a avea coronavirus dar nu ați fost în aceeași cameră."</string>
     <string name="faq_power_usage_paragraph_1">Aplicația utilizează Bluetooth Low Energy (Energie Scăzută Bluetooth). Aceasta este o formă specială de Bluetooth care consumă foarte puțină baterie. Numărul de procente consumate diferă de la un telefon la altul.</string>
-    <string name="faq_deletion_paragraph_1">"You can delete the Bluetooth files saved by the app yourself. Press the button below and then press &lt;strong&gt;Delete random IDs&lt;/strong&gt;. If you don't want the app to save new Bluetooth data, delete the app."</string>
+    <string name="faq_deletion_paragraph_1">"Puteți șterge singur datele Bluetooth stocate de CoronaMelder. Apăsați pe butonul de mai jos, apoi pe &lt;strong&gt;Ștergere coduri aleatoare&lt;/strong&gt;. \n \nNu mai doriți ca aplicația să stocheze noi date Bluetooth?  Atunci ștergeți aplicația."</string>
     <string name="faq_deletion_button">Accesați Configurări</string>
-    <string name="faq_location_permission_paragraph_1">CoronaMelder nu vede unde vă aflați dar configurările locației trebuie să fie activate. Altfel aplicația nu funcționează. Poate vi se pare că sună puțin ciudat, dar există o explicație:\n\n\nCoronaMelder folosește \"bluetooth scanning\".  Aceasta este o tehnologie Bluetooth diferită de cea pe care o utilizați pentru a vă conecta la căști wireless, de exemplu. Este o tehnică care necesită puțină energie. Prin bluetooth scanning aplicația schimbă coduri aleatorii cu telefoanele din apropiere. \n\n\nUnele aplicații (dar nu și CoronaMelder) folosesc bluetooth scanning pentru a vă determina locația. De aceea, Google a stabilit că, pentru a folosi bluetooth scanning, configurările locației trebuie să fie activate.  Dar, pentru aplicațiile de depistare a coronavirus la nivel național, cum ar fi CoronaMelder, Google va face o excepție într-o versiune Android viitoare.\n\n\nImportant de reținut: CoronaMelder nu are acces la datele locației dvs.</string>
+    <string name="faq_location_permission_paragraph_1">CoronaMelder nu vede unde vă aflați dar configurările locației trebuie să fie activate. Altfel aplicația nu funcționează. Poate vi se pare că sună puțin ciudat, dar există o explicație:\nCoronaMelder folosește \"bluetooth scanning\".  Aceasta este o tehnologie Bluetooth diferită de cea pe care o utilizați pentru a vă conecta la căști wireless, de exemplu. Este o tehnică care necesită puțină energie. Prin bluetooth scanning aplicația schimbă coduri aleatorii cu telefoanele din apropiere. \nUnele aplicații (dar nu și CoronaMelder) folosesc bluetooth scanning pentru a vă determina locația. De aceea, pentru a folosi bluetooth scanning, configurările locației trebuie să fie activate, chiar dacă o aplicație nu folosește datele locației dvs.\nImportant de reținut: CoronaMelder nu are niciodată acces la datele locației dvs.</string>
     <string name="faq_technical_toolbar_title">Explicație tehnică</string>
     <string name="faq_technical_header_1">1. Aplicația creează pentru fiecare telefon un cod propriu.</string>
     <string name="faq_technical_paragraph_2">În acest cod nu se găsesc informații despre dvs. sau despre telefonul dvs. Codul este anonim și se schimbă la fiecare sfert de oră.</string>
@@ -226,7 +213,6 @@ Ați stat aproape de cineva în tren sau la birou? Atunci puteți primi notific�
     <string name="faq_test_phase">Ce înseamnă versiunea de testare și de investigare?</string>
     <string name="footer_test_phase">Versiunea de testare și de investigare %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">Citiți în continuare</string>
-    <string name="post_notification_list_5"><![CDATA[<b> Respectați măsurile: </b> <ul> <li> Spălați-vă regulat pe mâini </li> <li> Tușiți / strănutați în brațul flexat </li> <li> Mențineți 1,5 metri departe de persoanele din afara gospodăriei dvs. </li> </ul>]]></string>
     <string name="onboarding_privacy_policy_headline">Autorizație pentru utilizarea datelor</string>
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[Pentru a utiliza CoronaMelder, trebuie să fiți de acord cu  <a href="">declarația de confidențialitate</a>. Important de știut:]]></string>
     <string name="onboarding_privacy_policy_check_1">Aplicația transmite date Bluetooth criptate.</string>
@@ -236,24 +222,28 @@ Ați stat aproape de cineva în tren sau la birou? Atunci puteți primi notific�
     <string name="onboarding_privacy_policy_consent_label">Am citit și sunt de acord cu declarația de confidențialitate</string>
     <string name="lab_test_how_does_it_work">Cum funcționează?</string>
     <string name="faq_notification_message">Ce conține o notificare?</string>
-    <string name="faq_pause">Can I pause the app?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Yes, you can do so by turning off Bluetooth. Do this through <strong>Settings > Connections >Bluetooth</strong>. If you turn off Bluetooth, the app won\'t exchange codes anymore. After this, you get a reminder to turn on the app again every 24 hours.]]></string>
-    <string name="faq_pause_paragraph_2">If you want to keep Bluetooth turned on, you can also pause the app by temporarily turning off &lt;strong&gt;Exposure notifications&lt;/strong&gt;. You can do this by pressing the button below. You wil also then get a reminder to turn on the app again every 24 hours.</string>
-    <string name="faq_pause_paragraph_3">However, it\'s mostly not recommended to pause the app. Because you might forget to turn it on again. You can pause the app in certain moments. For example, when you\'re near (potential) corona patients and you\'re wearing the appropriate medical protection.</string>
+    <string name="faq_pause">Pot pune aplicația pe pauză?</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Da, este posibil dezactivând semnalul Bluetooth. Faceți acest lucru prin <strong>Setări> Conexiuni >Bluetooth</strong>. Dacă dezactivați Bluetooth, aplicația nu va mai face schimb de coduri. Veți primi o reamintire o dată la fiecare 24 de ore pentru a activa aplicația din nou.]]></string>
+    <string name="faq_pause_paragraph_2">Dacă doriți să lăsați Bluetooth activat, puteți de asemenea să puteți aplicația în pauză dezactivând temporar &lt;strong&gt;Notificări de expunere&lt;/strong&gt; . Puteți face acest lucru apăsând pe butonul de mai jos. Veți primi de asemenea o reamintire o dată la 24 de ore pentru a activa din nou aplicația.</string>
+    <string name="faq_pause_paragraph_3">Totuși, de cele mai multe ori, nu este recomandat să dezactivați temporar aplicația deoarece s-ar putea să uitați să o activați. Puteți dezactiva temporar aplicația în anumite situații, de exemplu, dacă vă aflați în apropierea unor (posibili) pacienți infectați cu coronavirus  dar sunteți sigur că purtați mijloace de protecție.</string>
     <string name="faq_interoperability">Colaborează CoronaMelder și cu aplicații din alte tări?</string>
-    <string name="faq_interoperability_paragraph_1">Not yet, unfortunately. However, we expect this feature in September. Then, CoronaMelder will be able to exchange codes with certain apps from other countries. Like the German app, for example.</string>
-    <string name="faq_interoperability_paragraph_2">If you install the German Corona-Warn-App alongside CoronaMelder, your phone will tell you that only 1 app can be active. This is the app you\'re currently using to check your encounters. If you want to do this in other countries, you need to switch apps yourself. You can then get notifications from the app you switched to. If you switch apps once a day, both apps will check your encounters. This way you won’t miss anything.</string>
-    <string name="faq_interoperability_paragraph_3">From mid-September, you\'ll likely be able to always keep using your own country\'s app. And you won\'t need to make a daily app switch anymore.</string>
+    <string name="faq_interoperability_paragraph_1">Din păcate, încă nu, dar este de așteptat ca, în cursul lunii septembrie, acest lucru să fie posibil. CoronaMelder va putea, de asemenea, să schimbe coduri cu anumite aplicații din alte țări, cum ar fi Germania.</string>
+    <string name="faq_interoperability_paragraph_2">Dacă, pe lângă CoronaMelder, instalați și aplicația germană Corona-Warn-App, telefonul vă va înștiința că doar 1 aplicație poate fi activă în același timp. Aplicația pe care o alegeți este singura aplicație care, în acel moment, verifică întâlnirile dvs. Dacă doriți să verificați acest lucru în mai multe țări, atunci trebuie să alternați între aplicații. Veți primi notificări de la aplicația activată la acel moment. Dacă faceți acest lucru o dată pe zi, ambele aplicații verifică întâlnirile, deci nu pierdeți nici o informație.</string>
+    <string name="faq_interoperability_paragraph_3">De la sfârșitul lunii septembrie, probabil veți putea folosi în paralel și aplicația din țara dvs., fără a fi necesară alternarea aplicațiilor în fiecare zi.</string>
     <string name="cross_links_header">Citiți de asemenea</string>
     <string name="request_test_header_5">Solicitați test pentru coronavirus</string>
-    <string name="post_notification_guidance_follow_ggd">Geeft de GGD je aan de telefoon andere adviezen dan de app? Volg dan het advies van de GGD.</string>
-    <string name="post_notification_stay_home_header">Blijf tot %1$s thuis</string>
-    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Laat anderen boodschappen doen. Kan dit echt niet en heb je geen klachten? Dan mag je wel even naar buiten om boodschappen te doen. Houd 1,5 meter afstand en raak niemand aan.</li><li>Je mag in de tuin of op het balkon zitten.</li><li>Kinderen van 4-12 jaar mogen naar school en/of sporten.</li></ul>]]></string>
-    <string name="post_notification_no_visitors_header">Ontvang geen bezoek</string>
-    <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>Alleen de mensen die bij je wonen, mogen samen met jou in huis zijn. Blijf bij elkaar uit de buurt en houd 1,5 meter afstand. Dus niet knuffelen, niet zoenen en geen seks.</li></ul>]]></string>
-    <string name="post_notification_medical_help_list"><![CDATA[<ul><li>Ga niet naar de huisarts of het ziekenhuis, maar bel eerst met je huisarts. Vertel dat je in de buurt was van iemand die het coronavirus heeft.</li><li>Je huisarts of andere medische hulp mag wel bij je langskomen.</li></ul>]]></string>
-    <string name="post_notification_medical_help_header">Medische hulp nodig?</string>
-    <string name="post_notification_after_stay_home_header">Na %1$s</string>
-    <string name="post_notification_after_stay_home_paragraph">Heb je tot 31 augustus geen klachten gekregen? Dan hoef je niet meer thuis te blijven. Blijf wel de algemene regels tegen corona volgen.</string>
-    <string name="generic_notification_about_notification_paragraph">De melding verschijnt bij je notificaties. Net als berichten van andere apps. De melding heeft het symbool van CoronaMelder.   Heb je een melding ontvangen? Open dan CoronaMelder. Daar lees je wat je verder kunt doen.</string>
+    <string name="post_notification_guidance_follow_ggd">Primiți de la GGD (Serviciul de Sănătate Municipal),  în timpul convorbirii telefonice, alte recomandări decât cele din aplicație?  Atunci trebuie să urmați recomandările GGD-ului.</string>
+    <string name="post_notification_stay_home_header">Rămâneți acasă până pe %1$s</string>
+    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Lăsați-i pe alții să facă cumpărături. Dacă acest lucru nu este posibil și nu aveți simptome, atunci puteți ieși din casă pentru a face cumpărături. Păstrați distanța de 1,5 metri și nu atingeți alte persoane.</li><li>Puteți sta în grădină sau pe balcon.</li><li>Copii între 4 și 12 ani au voie să meargă la școală și/sau să facă sport.</li></ul>]]></string>
+    <string name="post_notification_no_visitors_header">Nu primiți vizite.</string>
+    <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>Doar persoanele cu care locuiți au voie să se afle cu dvs. în casă. Stați departe unul de celălalt și păstrați distanța de 1,5 metri. Deci, nu vă îmbrățișați, nu vă sărutați, nu întrețineți rapoarte sexuale.</li></ul>]]></string>
+    <string name="post_notification_medical_help_list"><![CDATA[<ul><li>Nu mergeți la medicul de familie sau la spital, sunați mai întâi medicul de familie. Spuneți-i că ați fost în apropierea cuiva infectat cu coronavirus.</li><li>Medicul de familie sau alte persoane care acordă asistență medicală au voie să vă viziteze.</li></ul>]]></string>
+    <string name="post_notification_medical_help_header">Aveți nevoie de asistență medicală?</string>
+    <string name="post_notification_after_stay_home_header">După %1$s</string>
+    <string name="post_notification_after_stay_home_paragraph">Nu ați avut până pe %1$s niciun simptom? Atunci nu trebuie să mai rămâneți în casă. Respectați în continuare regulile generale împotriva coronavirus.</string>
+    <string name="generic_notification_advice_stay_home">Rămâneți, în orice caz, acasă până știți sigur că nu sunteți infectat. În acest fel preveniți infectarea, în mod involuntar, a celorlalți.</string>
+    <string name="generic_notification_exposure_summaries">"Uneori primiți notificări în care se menționează că telefonul dvs. face controale COVID-19.  Atunci, deschideți CoronaMelder. Bine de reținut: de cele mai multe ori, nu este nici o problemă. "</string>
+    <string name="generic_notification_header_3">Cum arată o notificare?</string>
+    <string name="generic_notification_paragraph_5">Deschideți notificarea. În notificare veți putea citi ce puteți face mai departe.</string>
+    <string name="request_test_paragraph_3">Rezultatele vor fi cunoscute în 48 de ore. Stați acasă până primiți rezultatului.</string>
 </resources>

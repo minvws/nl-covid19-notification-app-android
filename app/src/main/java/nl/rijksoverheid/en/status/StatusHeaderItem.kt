@@ -48,10 +48,8 @@ class StatusHeaderItem(
             R.string.status_no_exposure_detected_headline,
             showIllustration = true
         ) {
-            override fun getDescription(context: Context) = context.getString(
-                R.string.status_no_exposure_detected_description,
-                context.getString(R.string.app_name)
-            )
+            override fun getDescription(context: Context) =
+                context.getString(R.string.status_no_exposure_detected_description)
         }
         is StatusViewModel.HeaderState.Disabled -> object : HeaderViewState(
             R.drawable.gradient_status_disabled,

@@ -55,13 +55,13 @@
     <string name="update_notification_message">Update de app om te zorgen dat deze goed blijft werken.</string>
     <string name="sync_issue_channel_name">Foutmeldingen</string>
     <string name="sync_issue_channel_description">Meldingen als de app niet goed werkt</string>
-    <string name="sync_issue_notification_title">Geen internetverbinding</string>
-    <string name="sync_issue_notification_message">De app kon de afgelopen 24 uur geen internetverbinding maken. Controleer of je wifi of mobiele data aanstaan.</string>
+    <string name="sync_issue_notification_title">Technisch probleem</string>
+    <string name="sync_issue_notification_message">De app kon 24 uur niet controleren of de mensen die jij hebt ontmoet later corona bleken te hebben.</string>
     <string name="post_notification_toolbar_title">Kans op besmetting</string>
     <string name="post_notification_header_1">Je was in de buurt van iemand met het coronavirus</string>
-    <string name="post_notification_paragraph_2">Op %2$s (%1$s) ben jij misschien besmet geraakt. Je was die dag minstens 15 minuten dicht bij iemand met corona.\n\nAls je inderdaad besmet bent, kun je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt. </string>
+    <string name="post_notification_paragraph_2">Op %2$s (%1$s) ben jij misschien besmet geraakt. Je was die dag minstens 15 minuten dicht bij iemand met corona.\n\nAls je inderdaad besmet bent, kun je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
     <string name="post_notification_header_3">Wat kun je nu doen?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>Blijf tot %1$s thuis en let extra goed op klachten die kunnen passen bij corona</li><li>Heb je (lichte) klachten die passen bij het coronavirus? Doe een coronatest en blijf thuis tot %1$s</li><li>Heb je ernstige klachten zoals hoge koorts of moeite met ademhalen? Of zit je een risicogroep en krijg je koorts? Bel eerst je huisarts</ul></ul></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>Blijf tot %1$s thuis en let extra goed op klachten die kunnen passen bij corona</li><li>Heb je (lichte) klachten die passen bij het coronavirus? Doe een coronatest en blijf thuis tot %1$s</li><li>Heb je ernstige klachten zoals hoge koorts of moeite met ademhalen? Of zit je een risicogroep en krijg je koorts? Bel eerst je huisarts</li></ul>]]></string>
     <string name="post_notification_header_6">Doe een coronatest</string>
     <string name="post_notification_paragraph_7">Zelfs als je je niet ziek voelt. Want zonder je ziek te voelen kun je het coronavirus al verspreiden en zo anderen besmetten.</string>
     <string name="post_notification_paragraph_8">"Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet."</string>
@@ -70,8 +70,8 @@
     <string name="post_notification_button">Coronatest aanvragen</string>
     <string name="generic_notification_toolbar_title">Melding krijgen</string>
     <string name="generic_notification_header_1">Wat staat er in een melding?</string>
-    <string name="generic_notification_paragraph_2">De app stuurt een melding als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. </string>
-    <string name="generic_notification_paragraph_4">De melding verschijnt bij je notificaties. Net als berichten van andere apps. De melding heeft het symbool van CoronaMelder.\n\nHeb je een melding ontvangen? Open dan CoronaMelder. Daar lees je wat je verder kunt doen.</string>
+    <string name="generic_notification_paragraph_2">De app stuurt een melding als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben.</string>
+    <string name="generic_notification_paragraph_4">De melding verschijnt bij je notificaties. Net als berichten van andere apps. De melding heeft het symbool van CoronaMelder\n\nHeb je een melding ontvangen? Open dan CoronaMelder. Daar lees je wat je verder kunt doen.</string>
     <string name="generic_notification_alt_text_6">Rood scherm met alarmbel dat aangeeft dat er nu actie nodig is</string>
     <string name="generic_notification_caption_7">Voorbeeld: Zo ziet de app eruit als je een melding hebt ontvangen.</string>
     <string name="generic_notification_header_8">Wat kun je doen als je in de buurt was van iemand met corona?</string>
@@ -107,7 +107,7 @@
     <string name="status_exposure_what_next">Wat kan ik nu doen?</string>
     <string name="status_error_consent_required">%1$s werkt alleen als de noodzakelijke instellingen aanstaan.</string>
     <string name="status_error_action_consent">App aanzetten</string>
-    <string name="status_error_sync_issues">De app kon de afgelopen 24 uur geen internetverbinding maken. Controleer of je wifi of mobiele data aanstaan en probeer het opnieuw.</string>
+    <string name="status_error_sync_issues">De app kon 24 uur niet controleren of de mensen die jij hebt ontmoet later corona bleken te hebben. Controleer of je wifi of mobiele data aanstaan en probeer het opnieuw.</string>
     <string name="status_error_action_sync_issues">Probeer opnieuw</string>
     <string name="about_toolbar_title">Over de app</string>
     <string name="about_helpdesk_title">Andere vraag over de app?</string>
@@ -240,4 +240,8 @@
     <string name="post_notification_after_stay_home_paragraph">Heb je tot %1$s geen klachten gekregen? Dan hoef je niet meer thuis te blijven. Blijf wel de algemene regels tegen corona volgen.</string>
     <string name="generic_notification_advice_stay_home">Blijf in ieder geval thuis tot je zeker weet dat je geen corona hebt. Zo voorkom je dat je onbewust anderen besmet.</string>
     <string name="generic_notification_exposure_summaries">"Je krijgt soms ook meldingen waarin staat dat je telefoon COVID-19 controles uitvoert. Open dan CoronaMelder. Goed om te weten: meestal is er niks aan de hand. "</string>
+    <string name="generic_notification_header_3">Hoe ziet een melding eruit?</string>
+    <string name="generic_notification_paragraph_5">Klik op de melding om CoronaMelder te openen. Daar lees je wat je verder kunt doen.</string>
+    <string name="request_test_paragraph_3">De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
+    <string name="generic_notification_sample_notification_content_description">Voorbeeld van een notificatie</string>
 </resources>
