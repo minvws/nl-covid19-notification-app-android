@@ -248,4 +248,7 @@
     <string name="generic_notification_header_3">كيف يبدو الإشعار؟</string>
     <string name="generic_notification_paragraph_5">" انقر على الإشعار لفتح تطبيق CoronaMelder. هناك يمكنك قراءة ما يمكنك القيام به بعد ذلك."</string>
     <string name="request_test_paragraph_3">ستعرف النتيجة في غضون 48 ساعة. إبق في المنزل حتى تعرف النتيجة.</string>
+    <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
+    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
 </resources>

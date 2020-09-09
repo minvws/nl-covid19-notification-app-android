@@ -245,4 +245,7 @@
     <string name="generic_notification_header_3">Jak wygląda powiadomienie?</string>
     <string name="generic_notification_paragraph_5">Kliknij na powiadomienie, aby otworzyć CoronaMelder. Tam przeczytasz, jakie są zalecenia.</string>
     <string name="request_test_paragraph_3">Wyniki są znane w ciągu 48 godzin. Pozostań w domu do momentu poznania wyników.</string>
+    <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
+    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
 </resources>

@@ -39,6 +39,9 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
 
     val notificationsResult: LiveData<Event<NotificationsStatusResult>> = MutableLiveData()
 
+    val locationPreconditionSatisfied: Boolean
+        get() = repository.isLocationPreconditionSatisfied()
+
     fun requestEnableNotifications() {
         viewModelScope.launch {
             updateResult(repository.requestEnableNotifications())

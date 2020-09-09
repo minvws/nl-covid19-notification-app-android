@@ -72,68 +72,50 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/headline"
-                        android:layout_width="0dp"
+                    <ImageView
+                        android:id="@+id/illustration"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        android:accessibilityHeading="true"
-                        android:text="@string/onboarding_consent_headline"
-                        android:textAppearance="?attr/textAppearanceHeadline5"
-                        app:layout_constraintBottom_toTopOf="@id/check_1"
+                        android:adjustViewBounds="true"
+                        android:importantForAccessibility="no"
+                        app:hideOnSmallScreenHeight="@{true}"
+                        app:layout_constraintBottom_toTopOf="@id/headline"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_chainStyle="packed"
-                        tools:targetApi="p" />
+                        app:srcCompat="@drawable/illustration_enable_api" />
 
-                    <include
-                        android:id="@+id/check_1"
-                        layout="@layout/include_enable_api_step"
+                    <TextView
+                        android:id="@+id/headline"
+                        android:layout_marginTop="4dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        android:layout_marginTop="16dp"
+                        android:text="@string/onboarding_enable_headline"
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        app:image="@{@drawable/ic_shield_bluetooth}"
-                        app:itemText="@{@string/onboarding_consent_check_1}"
-                        app:layout_constraintBottom_toTopOf="@id/check_2"
+                        android:textAppearance="?attr/textAppearanceHeadline5"
+                        app:layout_constraintBottom_toTopOf="@id/description"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/headline" />
+                        app:layout_constraintTop_toBottomOf="@id/illustration"
+                        app:layout_goneMarginTop="16dp" />
 
-                    <include
-                        android:id="@+id/check_2"
-                        layout="@layout/include_enable_api_step"
+                    <TextView
+                        android:id="@+id/description"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        app:image="@{@drawable/ic_shield_lock}"
-                        app:itemText="@{@string/onboarding_consent_check_2}"
-                        app:layout_constraintBottom_toTopOf="@id/check_3"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/check_1" />
-
-                    <include
-                        android:id="@+id/check_3"
-                        layout="@layout/include_enable_api_step"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        android:layout_marginBottom="16dp"
-                        app:image="@{@drawable/ic_shield_lock}"
-                        app:itemText="@{@string/onboarding_consent_check_3}"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        app:htmlText="@{viewModel.locationPreconditionSatisfied ? @string/onboarding_enable_description : @string/onboarding_enable_description_location}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/check_2" />
+                        app:layout_constraintTop_toBottomOf="@id/headline"
+                        tools:text="@string/onboarding_enable_description" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
 

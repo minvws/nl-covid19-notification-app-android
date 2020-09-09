@@ -134,7 +134,7 @@
     <string name="faq_location_permission">De ce trebuie să fie configurările locației activate?</string>
     <string name="faq_technical">Cum funcționează aplicația exact?</string>
     <string name="faq_reason_paragraph_1">"Aplicația vă poate avertiza, înainte de prezenta simptome, dacă ați fost în apropierea unei persoane infectate cu coronavirus, Puteți fi infectat și puteți contagia alte persoane cu coronavirus fără ca dvs. să știți acest lucru. "</string>
-    <string name="faq_reason_paragraph_2">Dacă primiți o avertizare prin aplicație, citiți în aplicație ce puteți face și dacă trebuie să vă testați. În acest fel preveniți infectarea, în 
+    <string name="faq_reason_paragraph_2">Dacă primiți o avertizare prin aplicație, citiți în aplicație ce puteți face și dacă trebuie să vă testați. În acest fel preveniți infectarea, în
  mod involuntar, a persoanelor din jurul dumneavoastră.</string>
     <string name="faq_reason_paragraph_3">"Ați fost testat și sunteți infectat cu coronavirus? Împreună cu GGD (Serviciul de Sănătate Municipal) puteți avertiza persoanele care s-au aflat mult timp în apropierea dvs., chiar și persoanele necunoscute, întâlnite într-un restaurant, cinematograf sau sală de așteptare. Acest lucru este posibil doar dacă și aceste persoane folosesc aplicația."</string>
     <string name="faq_reason_paragraph_4">Datorită aplicației CoronaMelder putem interveni rapid și putem preveni noi infectări. Numai împreună putem ține coronavirus sub control.</string>
@@ -246,4 +246,7 @@
     <string name="generic_notification_header_3">Cum arată o notificare?</string>
     <string name="generic_notification_paragraph_5">Deschideți notificarea. În notificare veți putea citi ce puteți face mai departe.</string>
     <string name="request_test_paragraph_3">Rezultatele vor fi cunoscute în 48 de ore. Stați acasă până primiți rezultatului.</string>
+    <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
+    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
 </resources>

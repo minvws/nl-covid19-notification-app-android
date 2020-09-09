@@ -244,4 +244,7 @@
     <string name="generic_notification_header_3">Wie sieht eine Nachricht aus?</string>
     <string name="generic_notification_paragraph_5">Klicken Sie auf die Nachricht, um CoronaMelder zu öffnen. Dort lesen Sie, was Sie tun können.</string>
     <string name="request_test_paragraph_3">Lassen Sie sich kostenlos testen. Es dauert nicht lange und Sie können meistens schnell einen Termin vereinbaren. Das Ergebnis ist innerhalb von 48 Stunden bekannt. Bleiben Sie zu Hause, bis Sie das Ergebnis haben.</string>
+    <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
+    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
 </resources>

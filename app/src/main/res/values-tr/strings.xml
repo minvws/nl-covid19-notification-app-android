@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="faq_notification_paragraph_1">Ekstra bir enfeksiyon riskine maruz kaldıktan sonra bir bildirim alırsınız. Bunu en az 15 dakika boyunca Korona olduğu ortaya çıkan birine yakın olduğunuz durumda olur. Ve tabii ki ancak bu kişi de uygulamayı kullanıyorsa. \n\nBildirim alıp almayacağınız Bluetooth sinyalinin gücüne ve iletişim sürenize bağlıdır.\n\nBirisi sokakta bisikletle yanınızdan mı geçti? O zaman sonrasında size bildirim gelmez. Birbirine çok yakındınız, Bluetooth sinyali onun için güçlüydü. Ancak temas o kadar kısa sürdü ki, daha fazla enfeksiyon riski olmadı. 
+    <string name="faq_notification_paragraph_1">Ekstra bir enfeksiyon riskine maruz kaldıktan sonra bir bildirim alırsınız. Bunu en az 15 dakika boyunca Korona olduğu ortaya çıkan birine yakın olduğunuz durumda olur. Ve tabii ki ancak bu kişi de uygulamayı kullanıyorsa. \n\nBildirim alıp almayacağınız Bluetooth sinyalinin gücüne ve iletişim sürenize bağlıdır.\n\nBirisi sokakta bisikletle yanınızdan mı geçti? O zaman sonrasında size bildirim gelmez. Birbirine çok yakındınız, Bluetooth sinyali onun için güçlüydü. Ancak temas o kadar kısa sürdü ki, daha fazla enfeksiyon riski olmadı.
 \n\nTrende ya da ofiste birinin yakınında mıydınız? O zaman sonrasında bir bildirim alabilirsiniz. Bluetooth sinyali yeterince güçlüydü ve uzun süre birbirinize yakındınız.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
@@ -245,4 +245,7 @@
     <string name="generic_notification_paragraph_5">CoronaMelder\'ı açmak için bildirime tıklayın. Orada daha sonra ne yapabileceğinizi okuyabilirsiniz.</string>
     <string name="request_test_paragraph_3">Sonuçlar 48 saat içinde belli olur. Sonucu öğrenene kadar evde kalın.</string>
     <string name="generic_notification_sample_notification_content_description">Bir bildirim örneği</string>
+    <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
+    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
 </resources>

@@ -244,4 +244,7 @@
     <string name="generic_notification_paragraph_5">Klik op de melding om CoronaMelder te openen. Daar lees je wat je verder kunt doen.</string>
     <string name="request_test_paragraph_3">De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
     <string name="generic_notification_sample_notification_content_description">Voorbeeld van een notificatie</string>
+    <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
+    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <br/><br/><ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
 </resources>

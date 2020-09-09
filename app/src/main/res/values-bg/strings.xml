@@ -243,4 +243,7 @@
     <string name="generic_notification_header_3">Как изглежда едно известие?</string>
     <string name="generic_notification_paragraph_5">Кликни върху известието, за да отвориш CoronaMelder. Там ще прочетеш какво можеш да направиш по-нататък.</string>
     <string name="request_test_paragraph_3">Направи си безплатен тест. Не отнема много време, а и в повечето случаи бързо може да си запишеш час. Резултатът става известен в рамките на 48 часа. Остани си вкъщи, докато научиш резултата.</string>
+    <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
+    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
 </resources>

@@ -245,4 +245,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="generic_notification_header_3">¿Qué aspecto tiene una notificación?</string>
     <string name="generic_notification_paragraph_5">Pulsa la notificación para abrir CoronaMelder y consultar qué puedes hacer.</string>
     <string name="request_test_paragraph_3">Hazte un test gratis. No tarda mucho en hacerse y normalmente puedes concertar la cita rápidamente. Recibirás los resultados en 48 horas. Quédate en casa hasta que sepas los resultados.</string>
+    <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
+    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
 </resources>
