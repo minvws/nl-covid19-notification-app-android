@@ -8,12 +8,8 @@
 
 package nl.rijksoverheid.en.status
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
@@ -22,7 +18,8 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentLocationServicesRequiredBinding
-import timber.log.Timber
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.openLocationSettings
 
 class LocationServicesRequiredFragment :
     BaseFragment(R.layout.fragment_location_services_required) {
@@ -35,16 +32,11 @@ class LocationServicesRequiredFragment :
         val binding = FragmentLocationServicesRequiredBinding.bind(view)
 
         binding.enableLocationServicesClickListener = View.OnClickListener {
-            try {
-                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-            } catch (ex: ActivityNotFoundException) {
-                Timber.e(ex, "Error opening location services settings")
-                Toast.makeText(
-                    requireContext(),
-                    R.string.location_services_required_enable_error,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+            openLocationSettings()
+        }
+
+        binding.explanationClickListener = View.OnClickListener {
+            findNavController().navigateCatchingErrors(LocationServicesRequiredFragmentDirections.actionShowFaq())
         }
 
         viewLifecycleOwner.lifecycle.coroutineScope.launchWhenStarted {

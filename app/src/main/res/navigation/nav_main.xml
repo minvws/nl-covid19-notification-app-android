@@ -84,7 +84,18 @@
         android:name="nl.rijksoverheid.en.status.LocationServicesRequiredFragment"
         tools:layout="@layout/fragment_location_services_required">
 
+        <action
+            android:id="@+id/action_show_faq"
+            app:destination="@id/nav_location_services_required_faq"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_location_services_required_faq"
+        android:name="nl.rijksoverheid.en.status.LocationServicesRequiredFAQFragment" />
 
     <fragment
         android:id="@+id/nav_update_google_play_services"
