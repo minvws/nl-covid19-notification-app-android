@@ -26,7 +26,6 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.config.isTestPhaseVersion
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
-import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.formatExposureDate
 import timber.log.Timber
@@ -93,10 +92,6 @@ class StatusFragment @JvmOverloads constructor(
             }
         }
 
-        statusViewModel.requestEnableNotifications.observe(viewLifecycleOwner, EventObserver {
-            viewModel.requestEnableNotifications()
-        })
-
         statusViewModel.headerState.observe(viewLifecycleOwner) {
             when (it) {
                 StatusViewModel.HeaderState.Active -> section.updateHeader(
@@ -128,7 +123,11 @@ class StatusFragment @JvmOverloads constructor(
     }
 
     private fun resetAndRequestEnableNotifications() {
-        viewModel.requestEnableNotificationsForcingConsent()
+        if (viewModel.locationPreconditionSatisfied) {
+            viewModel.requestEnableNotificationsForcingConsent()
+        } else {
+            findNavController().navigateCatchingErrors(StatusFragmentDirections.actionEnableLocationServices())
+        }
     }
 
     private fun navigateToPostNotification(epochDay: Long) =

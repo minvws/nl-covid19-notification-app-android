@@ -70,6 +70,20 @@
             android:id="@+id/action_remove_exposed_message"
             app:destination="@id/nav_remove_exposed_message_dialog" />
 
+        <action
+            android:id="@+id/action_enable_location_services"
+            app:destination="@id/nav_location_services_required"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_location_services_required"
+        android:name="nl.rijksoverheid.en.status.LocationServicesRequiredFragment"
+        tools:layout="@layout/fragment_location_services_required">
+
     </fragment>
 
     <fragment

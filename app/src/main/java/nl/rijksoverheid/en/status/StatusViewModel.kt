@@ -6,8 +6,6 @@
  */
 package nl.rijksoverheid.en.status
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -18,7 +16,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.enapi.StatusResult
-import nl.rijksoverheid.en.lifecyle.Event
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import java.time.Clock
@@ -30,8 +27,6 @@ class StatusViewModel(
     private val notificationsRepository: NotificationsRepository,
     private val clock: Clock = Clock.systemDefaultZone()
 ) : ViewModel() {
-
-    val requestEnableNotifications: LiveData<Event<Unit>> = MutableLiveData()
 
     fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
 

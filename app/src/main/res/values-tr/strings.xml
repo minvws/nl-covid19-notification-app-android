@@ -248,4 +248,8 @@
     <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
     <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
     <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
+    <string name="location_services_required_title">Locatie-instellingen</string>
+    <string name="location_services_required_headline">De app werkt alleen als je locatie-instellingen aanstaan</string>
+    <string name="location_services_required_explain">Hoe zit dat precies?</string>
+    <string name="location_services_required_enable_error">Locatie-instellingen kunnen niet geopend worden.</string>
 </resources>
