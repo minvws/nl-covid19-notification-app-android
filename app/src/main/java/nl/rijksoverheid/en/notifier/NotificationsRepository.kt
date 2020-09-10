@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.job.RemindExposureNotificationWorker
 import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.util.formatDaysSince
 import java.time.Clock
@@ -135,6 +136,7 @@ class NotificationsRepository(
 
     fun cancelExposureNotification() {
         NotificationManagerCompat.from(context).cancel(EXPOSURE_NOTIFICATION_ID)
+        RemindExposureNotificationWorker.cancel(context)
     }
 
     fun showAppUpdateNotification() {
