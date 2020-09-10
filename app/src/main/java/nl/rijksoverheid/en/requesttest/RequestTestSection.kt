@@ -18,7 +18,6 @@ class RequestTestSection : Section(
         IllustrationItem(R.drawable.illustration_request_test),
         HeaderItem(R.string.request_test_header_1),
         ParagraphItem(R.string.request_test_paragraph_2),
-        ParagraphItem(R.string.request_test_paragraph_3),
         HeaderItem(R.string.treat_perspective_header_1),
         BulletedListItem(R.string.treat_perspective_list_2),
         ParagraphItem(R.string.request_test_paragraph_4),

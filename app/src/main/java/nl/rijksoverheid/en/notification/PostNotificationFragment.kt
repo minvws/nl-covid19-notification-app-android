@@ -16,9 +16,9 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
-import nl.rijksoverheid.en.util.forceLtr
 import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatExposureDate
+import nl.rijksoverheid.en.util.formatExposureDateShort
 import java.time.Clock
 import java.time.LocalDate
 
@@ -33,12 +33,13 @@ class PostNotificationFragment(
         super.onCreate(savedInstanceState)
 
         val exposureDate = LocalDate.ofEpochDay(args.epochDayOfLastExposure)
+        val stayHomeDate = exposureDate.plusDays(10)
 
         adapter.add(
             PostNotificationSection(
                 daysSince = exposureDate.formatDaysSince(requireContext(), clock),
                 date = exposureDate.formatExposureDate(requireContext()),
-                phoneNumber = getString(R.string.phone_number).forceLtr()
+                stayHomeDate = stayHomeDate.formatExposureDateShort(requireContext())
             )
         )
     }

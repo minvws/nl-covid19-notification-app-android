@@ -35,3 +35,15 @@ fun LocalDate.formatExposureDate(context: Context): String =
         ),
         Locale(context.getString(R.string.app_language))
     ).format(this)
+
+/**
+ * Formats the exposure date using the correct locale.
+ */
+fun LocalDate.formatExposureDateShort(context: Context): String =
+    DateTimeFormatter.ofPattern(
+        DateFormat.getBestDateTimePattern(
+            Locale(context.getString(R.string.app_language)),
+            context.getString(R.string.exposure_date_short_format)
+        ),
+        Locale(context.getString(R.string.app_language))
+    ).format(this)

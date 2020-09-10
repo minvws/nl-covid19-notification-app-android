@@ -20,12 +20,13 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemParagraphBinding
 
 class BulletedListItem(
-    @StringRes private val text: Int
+    @StringRes private val text: Int,
+    private vararg val formatArgs: String
 ) : BaseBindableItem<ItemParagraphBinding>() {
     override fun getLayout() = R.layout.item_paragraph
 
     override fun bind(viewBinding: ItemParagraphBinding, position: Int) {
-        val html = viewBinding.root.context.getString(text)
+        val html = viewBinding.root.context.getString(text, *formatArgs)
 
         val spannableBuilder = fromHtml(html)
         val bulletSpans =
@@ -105,6 +106,11 @@ class BulletedListItem(
         return spannableBuilder
     }
 
-    override fun isSameAs(other: Item<*>): Boolean = other is BulletedListItem && other.text == text
-    override fun hasSameContentAs(other: Item<*>) = other is BulletedListItem && other.text == text
+    override fun isSameAs(other: Item<*>): Boolean =
+        other is BulletedListItem && other.text == text && other.formatArgs.contentEquals(
+            formatArgs
+        )
+
+    override fun hasSameContentAs(other: Item<*>) =
+        other is BulletedListItem && other.text == text && other.formatArgs.contentEquals(formatArgs)
 }
