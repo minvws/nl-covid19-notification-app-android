@@ -75,8 +75,8 @@ class StatusHeaderItem(
         ) {
             override fun getDescription(context: Context) = context.getString(
                 R.string.status_exposure_detected_description,
-                headerState.date.formatDaysSince(context, headerState.clock),
-                headerState.date.formatExposureDate(context)
+                headerState.date.formatExposureDate(context),
+                headerState.date.formatDaysSince(context, headerState.clock)
             )
         }
     }
