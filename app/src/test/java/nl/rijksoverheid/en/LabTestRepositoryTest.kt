@@ -24,6 +24,7 @@ import nl.rijksoverheid.en.api.model.Registration
 import nl.rijksoverheid.en.api.model.RegistrationRequest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.labtest.DecoyScheduler
 import nl.rijksoverheid.en.labtest.KeysStorage
 import nl.rijksoverheid.en.labtest.LabTestRepository
@@ -370,7 +371,7 @@ class LabTestRepositoryTest {
     }
 
     @Test
-    fun `scheduleNextDecoyScheduleSequence schedules between 7am and 7pm of the current day`() =
+    fun `scheduleNextDecoyScheduleSequence schedules a decoy for the current day`() =
         runBlocking {
             val delay = AtomicLong(0)
             // current time after the schedule window
@@ -389,7 +390,9 @@ class LabTestRepositoryTest {
                     ApplicationProvider.getApplicationContext<Application>()
                         .getSharedPreferences("test", 0)
                 },
-                mock(),
+                object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                },
                 mock(),
                 NOOP_SCHEDULER,
                 { delayMillis -> delay.set(delayMillis) },
@@ -482,7 +485,9 @@ class LabTestRepositoryTest {
                 ApplicationProvider.getApplicationContext<Application>()
                     .getSharedPreferences("test", 0)
             },
-            mock(),
+            object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+            },
             api,
             NOOP_SCHEDULER,
             NOOP_DECOY_SCHEDULER,
@@ -539,7 +544,9 @@ class LabTestRepositoryTest {
             lazy {
                 prefs
             },
-            mock(),
+            object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+            },
             api,
             NOOP_SCHEDULER,
             NOOP_DECOY_SCHEDULER,
@@ -550,5 +557,61 @@ class LabTestRepositoryTest {
         val result = repository.sendDecoyTraffic()
         assertEquals(LabTestRepository.SendDecoyResult.Success, result)
         assertNotNull(postedRequest)
+    }
+
+    @Test
+    fun `sendDecoyTraffic skips if exposure notifications are disabled`() = runBlocking {
+        val prefs =
+            ApplicationProvider.getApplicationContext<Application>().getSharedPreferences("test", 0)
+
+        prefs.edit {
+            putString("lab_confirmation_id", "cached-code")
+            putLong("registration_expiration", clock.millis() + 30000)
+            putString("bucket_id", "bucket-id")
+        }
+
+        val api = object : LabTestService {
+            override suspend fun register(
+                request: RegistrationRequest,
+                sizes: RequestSize
+            ): Registration {
+                throw AssertionError()
+            }
+
+            override suspend fun postKeys(
+                request: PostKeysRequest,
+                hmacSecret: HmacSecret,
+                requestSize: RequestSize
+            ) {
+                throw AssertionError()
+            }
+
+            override suspend fun stopKeys(
+                request: PostKeysRequest,
+                hmacSecret: HmacSecret,
+                requestSize: RequestSize
+            ) {
+                throw AssertionError()
+            }
+        }
+
+        val repository = LabTestRepository(
+            lazy {
+                prefs
+            },
+            object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult {
+                    return StatusResult.Disabled
+                }
+            },
+            api,
+            NOOP_SCHEDULER,
+            NOOP_DECOY_SCHEDULER,
+            appConfigManager,
+            clock
+        )
+
+        val result = repository.sendDecoyTraffic()
+        assertEquals(LabTestRepository.SendDecoyResult.Success, result)
     }
 }

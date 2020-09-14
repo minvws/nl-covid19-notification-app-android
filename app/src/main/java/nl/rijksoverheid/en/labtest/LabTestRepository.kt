@@ -21,6 +21,7 @@ import nl.rijksoverheid.en.api.model.PostKeysRequest
 import nl.rijksoverheid.en.api.model.Registration
 import nl.rijksoverheid.en.api.model.RegistrationRequest
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import retrofit2.HttpException
@@ -231,6 +232,11 @@ class LabTestRepository(
     }
 
     suspend fun sendDecoyTraffic(): SendDecoyResult {
+        if (exposureNotificationApi.getStatus() != StatusResult.Enabled) {
+            Timber.w("Exposure notification API is not enabled, skip decoy traffic")
+            return SendDecoyResult.Success
+        }
+
         if (getCachedRegistrationCode() == null) {
             Timber.d("Register for decoy")
             registerForUpload()
