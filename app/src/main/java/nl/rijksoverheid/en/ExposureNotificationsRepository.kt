@@ -134,7 +134,7 @@ class ExposureNotificationsRepository(
         return requestEnableNotifications()
     }
 
-    private suspend fun requestDisableNotifications(): DisableNotificationsResult {
+    suspend fun requestDisableNotifications(): DisableNotificationsResult {
         manifestWorkerScheduler.cancel()
         preferences.edit {
             remove(KEY_LAST_KEYS_PROCESSED)
