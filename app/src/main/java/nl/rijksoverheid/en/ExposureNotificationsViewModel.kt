@@ -77,6 +77,12 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
         (notificationsResult as MutableLiveData).value = Event(result)
     }
 
+    fun disableExposureNotifications() {
+        viewModelScope.launch {
+            repository.requestDisableNotifications()
+        }
+    }
+
     sealed class NotificationsState {
         object Enabled : NotificationsState()
         object InvalidPreconditions : NotificationsState()

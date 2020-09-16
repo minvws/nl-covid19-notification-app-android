@@ -72,9 +72,12 @@ class MainActivity : AppCompatActivity() {
                         RC_UPDATE_APP
                     )
                 }
-                AppLifecycleViewModel.AppLifecycleStatus.EndOfLife -> findNavController(R.id.nav_host_fragment).navigate(
-                    EndOfLifeFragmentDirections.actionEndOfLife()
-                )
+                AppLifecycleViewModel.AppLifecycleStatus.EndOfLife -> {
+                    viewModel.disableExposureNotifications()
+                    findNavController(R.id.nav_host_fragment).navigate(
+                        EndOfLifeFragmentDirections.actionEndOfLife()
+                    )
+                }
             }
         })
 
