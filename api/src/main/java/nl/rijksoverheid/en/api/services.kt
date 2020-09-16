@@ -28,8 +28,10 @@ internal fun createMoshi() =
 internal fun createOkHttpClient(context: Context): OkHttpClient {
     return okHttpClient ?: OkHttpClient.Builder()
         // enable cache for config and resource bundles
-        .cache(Cache(File(context.cacheDir, "http"), 32 * 1024 * 1024))
+        .followRedirects(false)
         .apply {
+            val cache = Cache(File(context.cacheDir, "http"), 32 * 1024 * 1024)
+            cache(cache)
             addNetworkInterceptor(CacheOverrideInterceptor())
             addNetworkInterceptor(SignedResponseInterceptor())
             addInterceptor(PaddedRequestInterceptor())
@@ -41,6 +43,7 @@ internal fun createOkHttpClient(context: Context): OkHttpClient {
                     }
                 }).setLevel(HttpLoggingInterceptor.Level.BODY))
             }
+            addInterceptor(CorruptedCacheInterceptor(cache))
             if (BuildConfig.FEATURE_SSL_PINNING) {
                 connectionSpecs(
                     listOf(
