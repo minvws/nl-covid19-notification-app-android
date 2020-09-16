@@ -81,10 +81,25 @@
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
                         android:text="@string/onboarding_privacy_policy_paragraph"
                         android:textAppearance="?attr/textAppearanceBody1"
-                        app:layout_constraintBottom_toTopOf="@id/check_1"
+                        app:layout_constraintBottom_toTopOf="@id/voluntary"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/headline" />
+
+                    <include
+                        android:id="@+id/voluntary"
+                        layout="@layout/include_enable_api_step"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        app:image="@{@drawable/ic_shield_privacy}"
+                        app:itemText="@{@string/onboarding_privacy_policy_voluntary}"
+                        app:layout_constraintBottom_toTopOf="@id/check_1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/description" />
 
                     <include
                         android:id="@+id/check_1"
@@ -99,7 +114,7 @@
                         app:layout_constraintBottom_toTopOf="@id/check_2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/description" />
+                        app:layout_constraintTop_toBottomOf="@id/voluntary" />
 
                     <include
                         android:id="@+id/check_2"

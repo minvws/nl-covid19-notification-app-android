@@ -259,4 +259,5 @@
     <string name="onboarding_privacy_policy_identity"><![CDATA[Je naam wordt <b>niet</b> gebruikt of bewaard.]]></string>
     <string name="onboarding_privacy_policy_location"><![CDATA[Je gps-locatiegegevens worden <b>niet</b> gebruikt of bewaard.]]></string>
     <string name="onboarding_privacy_policy_send_alert">Als uit een coronatest blijkt dat je corona hebt kun je dit in de app melden om andere gebruikers te waarschuwen.</string>
+    <string name="onboarding_privacy_policy_voluntary">Gebruik van CoronaMelder is altijd vrijwillig</string>
 </resources>
