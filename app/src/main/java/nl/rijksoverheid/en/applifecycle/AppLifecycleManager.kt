@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.applifecycle
 
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.android.play.core.appupdate.AppUpdateInfo
@@ -18,8 +19,10 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 private const val KEY_MINIMUM_VERSION_CODE = "minimum_version_code"
+private const val PLAY_STORE_PACKAGE_NAME = "com.android.vending"
 
 class AppLifecycleManager(
+    private val context: Context,
     private val preferences: SharedPreferences,
     private val appUpdateManager: AppUpdateManager,
     private val onShowAppUpdateNotification: () -> Unit
@@ -51,20 +54,27 @@ class AppLifecycleManager(
             val minimumVersionCode = preferences.getInt(KEY_MINIMUM_VERSION_CODE, 1)
             val currentVersionCode = BuildConfig.VERSION_CODE
             if (minimumVersionCode > currentVersionCode) {
-                val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+                val source = context.packageManager.getInstallerPackageName(context.packageName)
 
-                appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) ||
-                        appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
-                    ) {
-                        c.resume(UpdateState.NeedsUpdate(appUpdateManager, appUpdateInfo))
-                    } else {
-                        c.resume(UpdateState.UpToDate)
+                if (source == PLAY_STORE_PACKAGE_NAME) {
+                    val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+
+                    appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+                        if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                            appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) ||
+                            appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
+                        ) {
+                            c.resume(UpdateState.InAppUpdate(appUpdateManager, appUpdateInfo))
+                        } else {
+                            // update might not be available for in-app update, for example for a staged roll out
+                            c.resume(UpdateState.UpToDate)
+                        }
+                    }.addOnFailureListener {
+                        Timber.e("Error requesting app update state")
+                        c.resume(UpdateState.Error(it))
                     }
-                }.addOnFailureListener {
-                    Timber.e("Error requesting app update state")
-                    c.resume(UpdateState.Error(it))
+                } else {
+                    c.resume(UpdateState.UpdateRequired(source))
                 }
             } else {
                 c.resume(UpdateState.UpToDate)
@@ -72,10 +82,12 @@ class AppLifecycleManager(
         }
 
     sealed class UpdateState {
-        data class NeedsUpdate(
+        data class InAppUpdate(
             val appUpdateManager: AppUpdateManager,
             val appUpdateInfo: AppUpdateInfo
         ) : UpdateState()
+
+        data class UpdateRequired(val installerPackageName: String?) : UpdateState()
 
         data class Error(val ex: Exception) : UpdateState()
 
