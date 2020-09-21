@@ -33,7 +33,7 @@ class ResponseSignatureValidatorTest {
             ResponseSignatureValidatorTest::class.java.getResourceAsStream("/content.sig")!!
                 .readBytes()
         val target =
-            ResponseSignatureValidatorTest::class.java.getResourceAsStream("/content.bin")!!
+            ResponseSignatureValidatorTest::class.java.getResourceAsStream("/export.bin")!!
 
         validator.verifySignature(target, signature)
     }
@@ -77,7 +77,7 @@ class ResponseSignatureValidatorTest {
             ResponseSignatureValidatorTest::class.java.getResourceAsStream("/content.sig")!!
                 .readBytes()
         val target =
-            ResponseSignatureValidatorTest::class.java.getResourceAsStream("/content.bin")!!
+            ResponseSignatureValidatorTest::class.java.getResourceAsStream("/export.bin")!!
 
         validator.verifySignature(target, signature)
     }

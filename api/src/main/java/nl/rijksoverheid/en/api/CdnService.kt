@@ -21,20 +21,20 @@ import retrofit2.http.Path
 import retrofit2.http.Streaming
 
 interface CdnService {
-    @GET("v1/exposurekeyset/{id}")
+    @GET("v2/exposurekeyset/{id}")
     @Streaming
     @CacheOverride("no-store")
     suspend fun getExposureKeySetFile(@Path("id") id: String): Response<ResponseBody>
 
-    @GET("v1/manifest")
+    @GET("v2/manifest")
     @SignedResponse
     suspend fun getManifest(@Header("Cache-control") cacheHeader: String? = null): Manifest
 
-    @GET("v1/riskcalculationparameters/{id}")
+    @GET("v2/riskcalculationparameters/{id}")
     @SignedResponse
     suspend fun getRiskCalculationParameters(@Path("id") id: String): RiskCalculationParameters
 
-    @GET("v1/appconfig/{id}")
+    @GET("v2/appconfig/{id}")
     @SignedResponse
     suspend fun getAppConfig(
         @Path("id") id: String,
