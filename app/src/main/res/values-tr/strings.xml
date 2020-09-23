@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="faq_notification_paragraph_1">Ekstra bir enfeksiyon riskine maruz kaldıktan sonra bir bildirim alırsınız. Bunu en az 15 dakika boyunca Korona olduğu ortaya çıkan birine yakın olduğunuz durumda olur. Ve tabii ki ancak bu kişi de uygulamayı kullanıyorsa. \n\nBildirim alıp almayacağınız Bluetooth sinyalinin gücüne ve iletişim sürenize bağlıdır.\n\nBirisi sokakta bisikletle yanınızdan mı geçti? O zaman sonrasında size bildirim gelmez. Birbirine çok yakındınız, Bluetooth sinyali onun için güçlüydü. Ancak temas o kadar kısa sürdü ki, daha fazla enfeksiyon riski olmadı.
-\n\nTrende ya da ofiste birinin yakınında mıydınız? O zaman sonrasında bir bildirim alabilirsiniz. Bluetooth sinyali yeterince güçlüydü ve uzun süre birbirinize yakındınız.</string>
+    <string name="faq_notification_paragraph_1">Ekstra bir enfeksiyon riskine maruz kaldıktan sonra bir bildirim alırsınız. Bunu en az 15 dakika boyunca Korona olduğu ortaya çıkan birine yakın olduğunuz durumda olur. Ve tabii ki ancak bu kişi de uygulamayı kullanıyorsa. \n\nBildirim alıp almayacağınız Bluetooth sinyalinin gücüne ve iletişim sürenize bağlıdır.\n\nBirisi sokakta bisikletle yanınızdan mı geçti? O zaman sonrasında size bildirim gelmez. Birbirine çok yakındınız, Bluetooth sinyali onun için güçlüydü. Ancak temas o kadar kısa sürdü ki, daha fazla enfeksiyon riski oluşmadı.\n\nTrende ya da ofiste birinin yakınında mıydınız? O zaman sonrasında bir bildirim alabilirsiniz. Bluetooth sinyali yeterince güçlüydü ve uzun süre birbirinize yakındınız.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">Türkçe</string>
@@ -62,7 +61,7 @@
     <string name="post_notification_header_1">Koronavirüs olan birisinin yakınında bulundunuz</string>
     <string name="post_notification_paragraph_2">%2$s (%1$s) tarihinde enfekte olmuş olabilirsiniz. O gün Korona olan birinin en az 15 dakika yakınında bulundunuz. \n\nGerçekten enfekte olursanız, virüsü başkalarına bulaştırabilirsiniz. Şimdilik kendinizi hasta hissetmeseniz bile.</string>
     <string name="post_notification_header_3">Şimdi ne yapabilirsiniz?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>%1$s tarihine kadar evde kalın ve Korona ile ilişkili olabilecek şikayetlere daha fazla dikkat edin</li><li>Korona\'ya uyan (hafif) şikayetleriniz mi var? Korona testi yaptırın ve %1$s tarihine  kadar evde kalın.</li><li> Yüksek ateş veya nefes almada güçlük gibi ciddi şikayetleriniz mi var veya bir risk grubuna dahil misiniz? Doktorunuzu arayın</li></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>%1$s tarihine kadar evde kalın ve Korona ile ilişkili olabilecek şikayetlere daha fazla dikkat edin</li><li>Korona\'ya uyan (hafif) şikayetleriniz mi var? Korona testi yaptırın ve %1$s tarihine  kadar evde kalın.</li><li> Yüksek ateş veya nefes almada güçlük gibi ciddi şikayetleriniz mi var veya bir risk grubuna dahil misiniz? Önce doktorunuzu arayın</li></ul>]]></string>
     <string name="post_notification_header_6">Korona testi yaptırın</string>
     <string name="post_notification_paragraph_7">Kendinizi hasta hissetmeseniz bile. Çünkü hasta hissetmeden Korona virüsü yayabilir ve böylece başkalarına bulaştırabilirsiniz.</string>
     <string name="post_notification_paragraph_8">"Kendinizi ücretsiz test ettirin. Test uzun sürmez ve genellikle çok çabuk randevu alabilirsiniz. Sonuçlar 48 saat içinde belli olur. Sonucu öğrenene kadar evde kalın."</string>
@@ -72,7 +71,7 @@
     <string name="generic_notification_toolbar_title">Bildirim almak</string>
     <string name="generic_notification_header_1">Bildirimde ne yazar?</string>
     <string name="generic_notification_paragraph_2">Daha sonra Korona olduğu ortaya çıkan birinin yakınında en az 15 dakika boyunca bulunduysanız, uygulama size bir bildirim gönderir.</string>
-    <string name="generic_notification_paragraph_4">Bildirim, bildirimlerinizle birlikte görünecektir. Tıpkı diğer uygulamalardan gelen mesajlar gibi. Bildirimde CoronaMelder sembolü bulunur.\nBir bildirim mi aldınız? O zaman CoronaMelder\'ı açın. Orada daha sonra ne yapabileceğinizi okuyabilirsiniz.</string>
+    <string name="generic_notification_paragraph_4">Bildirim, bildirimlerinizle birlikte görünecektir. Tıpkı diğer uygulamalardan gelen mesajlar gibi. Bildirimde CoronaMelder\'ın sembolü mevcuttur.\n\nBir bildirim mi aldınız? O zaman CoronaMelder\'ı açın. Sonrasında ne yapabileceğinizi orada okuyabilirsiniz.</string>
     <string name="generic_notification_alt_text_6">Hemen harekete geçmeniz gerektiğini gösteren alarm zili ile kırmızı ekran</string>
     <string name="generic_notification_caption_7">Örnek: Bildirim aldığınızda uygulama bu şekilde görünür</string>
     <string name="generic_notification_header_8">Korona olan birisinin yakınında bulunduktan sonra neler yapabilirsiniz?</string>
@@ -82,11 +81,11 @@
     <string name="generic_notification_paragraph_12">CoronaMelder, teknik bir sorun olması durumunda da size bir bildirim gönderebilir. Örneğin, Bluetooth\'unuz kapalıysa. Veya bir günden fazla bir süredir internet bağlantısı yoksa. Uygulama bunu çözmenize yardımcı olacaktır.</string>
     <string name="generic_notification_paragraph_13">Böyle bir bildirim mi aldınız ve uygulama hala aktif mi? O zaman sorun bu meyanda çözülmüştür.</string>
     <string name="treat_perspective_header_1">Korona virüsü ile ilgili şikayetler</string>
-    <string name="treat_perspective_list_2"><![CDATA[<ul><li>burun nezlesi, burun akıntısı, hapşırma, boğaz ağrısı gibi soğuk algınlığı semptomları</li><li>öksürme</li><li>göğüste daralma</li><li>ateş </li><li> ani koku ve / veya tat alma (burun tıkanıklığı olmadan) kaybı</li></ul>]]></string>
+    <string name="treat_perspective_list_2"><![CDATA[<ul><li>burun nezlesi, burun akıntısı, hapşırma, boğaz ağrısı gibi soğuk algınlığı semptomları</li><li>öksürme</li><li>göğüste daralma</li><li>vücut ısısınin yükselmesi veya ateş </li><li> ani koku ve / veya tat alma (burun tıkanıklığı olmadan) kaybı</li></ul>]]></string>
     <string name="request_test_toolbar_title">Korona testi talep etmek</string>
     <string name="request_test_header_1">Korona ile uyumlu şikayetleriniz mi var ? Test talep edin</string>
     <string name="request_test_paragraph_2">Korona virüsü ile uyumlu olan (hafif) şikayetleriniz mi var? Kendinizi ücretsiz test ettirin. Test uzun sürmez ve genellikle çok çabuk randevu alabilirsiniz. \n\nSonuçlar 48 saat içinde belli olur. Sonucu öğrenene kadar evde kalın.</string>
-    <string name="request_test_paragraph_4">Yüksek ateş veya nefes almada güçlük çekme gibi ciddi şikayetleriniz mi var? Veya risk grubunda mısınız ve ateşiniz mi var? Önce doktorunuzu arayın</string>
+    <string name="request_test_paragraph_4">Yüksek ateş veya nefes almada güçlük çekme gibi ciddi şikayetleriniz mi var? Veya risk grubuna dahil misiniz ve ateşiniz mi çıkıyor? Önce doktorunuzu arayın.</string>
     <string name="request_test_button_call">%1$s\'yi arayın</string>
     <string name="request_test_button_website">Coronatest.nl adresine gidin</string>
     <string name="status_reset_exposure">Bildirimi silin</string>
@@ -103,7 +102,7 @@
     <string name="status_info_test_title">Korona testi talep edin</string>
     <string name="status_info_test_subtitle">Size bulaşmış olup olmadığını en kısa sürede öğrenin</string>
     <string name="status_info_lab_title">GGD anahtarını paylaşmak</string>
-    <string name="status_info_lab_subtitle">Size virüs bulaşmışsa başkalarına GGD ile anonim bir bildirim gönderin</string>
+    <string name="status_info_lab_subtitle">GGD sizi Korona testinizin sonuçları ile ilgili aradığında buraya gidin</string>
     <string name="status_app_version">Sürümü %1$s build %2$s</string>
     <string name="status_exposure_what_next">Şimdi ne yapabilirim?</string>
     <string name="status_error_consent_required">%1$s sadece gerekli ayarlar açıksa çalışır.</string>
@@ -125,7 +124,7 @@
     <string name="faq_detail_toolbar_title">Sıkça Sorulan Soru</string>
     <string name="faq_reason">Bu uygulama neden önemlidir?</string>
     <string name="faq_location">Uygulama konumumu görebilir mi?</string>
-    <string name="faq_anonymous">Uygulama nasıl anonim olabilir?</string>
+    <string name="faq_anonymous">Uygulama benim kim olduğumu ve kimlerle buluştuğumu bilir mi?</string>
     <string name="faq_notification">Uygulamadan ne zaman bildirim alacağım?</string>
     <string name="faq_upload_keys">Bende Korona olduğunda başkalarına bildirim gönderebilir miyim?</string>
     <string name="faq_bluetooth">Bluetooth sinyali duvardan geçer mi?</string>
@@ -141,7 +140,7 @@
     <string name="faq_anonymous_paragraph_1">Uygulama, diğer telefonlarla rastgele kod değişimi yapar. Bu kodlar herhangi bir kişisel bilgi veya konum bilgisi içermezler. Kod değişimi, uygulamaya sahip olan bir kişinin yakınında olduğunuzda gerçekleşir.</string>
     <string name="faq_anonymous_paragraph_2">Bu kişinin daha sonra Korona olduğu mu anlaşıldı? Bu durumda uygulamadaki kişi, kodlarını virüs bulaşmış kişilerin kodları listesine ekleyebilir. Kodlar ancak virüs bulaşmış kişinin GGD anahtarını GGD\'ye bildirdikten sonra eklenebilir. Bu şekilde bulaşma teyit edilebilir. \n\nBu kontrolden sonra telefonlarında bu kodlar bulunan herkese bir bildirim göndermek mümkün olur. Bu bildirimde sadece virüs bulaşmış olan bir kişinin ne zaman yakınında bulunmuş oldukları belirtilir. Bu kişinin kim olduğu ve o kişiye nerede rastladıkları bildirilmez.</string>
     <string name="faq_upload_keys_paragraph_1">Ancak test edildiyseniz ve Korona taşıdığınız tespit edildiyse başkalarına bildirim gönderebilirsiniz. Bu durumda GGD test sonucunu size bildirecektir. \n\nBu telefon görüşmesi sırasında GGD çalışanı GGD anahtarınızı kontrol eder. Bunu uygulamada bulabilirsiniz. Bu şekilde, sadece gerçekten enfekte olmuş olan kişilerin bildirim gönderebileceği her zaman kesindir.</string>
-    <string name="faq_upload_keys_paragraph_2">"GGD anahtarınız kontrol edildikten sonra, telefonunuzun son 14 gün içinde başka telefonlara gönderdiği kodları paylaşabilirsiniz.\n\nBu şekilde, bulaşıcı olduğunuzda yakınında bulunduğunuz kişilere, anonim bir bildirim gönderilir. Sadece bu kişiler de uygulamayı kullanıyorsa."</string>
+    <string name="faq_upload_keys_paragraph_2">"GGD anahtarınız kontrol edildikten sonra, telefonunuzun son 14 gün içinde başka telefonlara gönderdiği kodları paylaşabilirsiniz.\n\nBu şekilde, bulaşıcı olduğunuzda yakınında bulunduğunuz kişilere bir bildirim gönderilir. Ancak bu kişiler de uygulamayı kullanıyorsa."</string>
     <string name="faq_bluetooth_paragraph_1">"Evet, ancak bu durumda sinyal çok zayıflar. Bluetooth, en iyi sonucu telefonunuz başka bir kişinin telefonuyla aynı odada bulunduğu takdirde verir. \n\nÖrneğin, uygulamanızın komşularınızdan Bluetooth sinyali alması ihtimali çok düşüktür. \n\nBu nedenle, komşunuzda Korona olduğu ortaya çıkarsa ve aynı odada bulunmuyorsanız, bildirim alma şansınız çok azdır."</string>
     <string name="faq_power_usage_paragraph_1">Uygulama Bluetooth Low Energy (Bluetooth Düşük Enerji) kullanır. Bu, çok az elektrik kullanan özel bir Bluetooth biçimidir. Telefon bataryasının yüzde kaçını kullandığı telefondan telefona değişir.</string>
     <string name="faq_deletion_paragraph_1">"CoronaMelder'ın kaydettiği bluetooth verilerini kendiniz silebilirsiniz. Aşağıdaki düğmeye basın ve ardından &lt;strong&gt;Rastgele Kimlikleri Sil&lt;/strong&gt; 'e basın.\n\nUygulamanın yeni Bluetooth verilerini kaydetmeyi durdurmasını mı istiyorsunuz? O zaman uygulamayı silin."</string>
@@ -149,7 +148,7 @@
     <string name="faq_location_permission_paragraph_1">CoronaMelder nerede olduğunuzu bilmez, ancak konum ayarlarınızın açık olması gerekir. Aksi takdirde uygulama çalışmayacaktır. Bu biraz saçma gelebilir. Şöyle:\n\nCoronaMelder \'Bluetooth taraması\' kullanır. Bu, örneğin kablosuz kulaklıklara bağlanmak için kullanılandan farklı bir Bluetooth teknolojisidir. Az enerji tüketen bir tekniktir. Uygulama, Bluetooth taraması aracılığıyla yakındaki telefonlarla rastgele kod değişimi yapar.\n\nBazı uygulamalar (CoronaMelder değil) konumunuzu belirlemek için Bluetooth taraması kullanır. Bu nedenle Bluetooth taramasını kullanmak için konum ayarlarının her zaman açık olması gerekir. Uygulama konumunuzu kullanmasa bile.\n\nUnutulmaması gereken önemli konu: CoronaMelder hiçbir zaman konumunuza erişemez.</string>
     <string name="faq_technical_toolbar_title">Teknik açıklama</string>
     <string name="faq_technical_header_1">1. Uygulama her telefon için kendi kodunu oluşturur</string>
-    <string name="faq_technical_paragraph_2">Bu kod siz veya telefonunuz hakkında hiçbir bilgi içermez. Kod tamamen anonimdir ve her 15 dakikada bir değişir.</string>
+    <string name="faq_technical_paragraph_2">Bu kod siz veya telefonunuz hakkında hiçbir bilgi içermez. Kod tamamen rastgeledir ve her 15 dakikada bir değişir.</string>
     <string name="faq_technical_header_3">2. Telefonlar birbirlerinin yakınında olduklarında kodlarını paylaşırlar</string>
     <string name="faq_technical_paragraph_4">Karşılaştığınız kişinin de uygulaması var mı? Ardından telefonlarınız  kodlarını Bluetooth Düşük Enerji ile karşılıklı olarak değiştirir. Bu şekilde, uygulama hangi telefonların yakında olduğunu bilir. Uygulama, telefonların ait olduğunu veya nerede olduğunuzu bilmez.</string>
     <string name="faq_technical_header_5">3. Birinde korona varsa, bu kişi kodlarını bir listeye ekleyebilir</string>
@@ -163,13 +162,13 @@
     <string name="share_content">Korona’nın kontrol altına alınmasına yardımcı oluyorum. Siz de katılır mısınız? %1$s</string>
     <string name="share_title">Uygulamayı başkalarıyla paylaş</string>
     <string name="lab_test_toolbar_title">GGD anahtarı</string>
-    <string name="lab_test_paragraph_1"><![CDATA[Test edildiniz ve sizde Korona mı var? O zaman bir GGD çalışanı sizi arayacaktır. Bunun için GGD anahtarınıza ihtiyacınız olacak. <a href=""> Bu nasıl çalışır?</a>]]></string>
+    <string name="lab_test_paragraph_1"><![CDATA[Test edildiniz ve sizde Korona mı var? O zaman bir GGD çalışanı sizi arayacaktır. Çalışan, yakınınızda bulunmuş olan kişileri uyarmanıza yardımcı olacaktır. Bunun için GGD anahtarınıza ihtiyacınız var. <a href=""> Bu nasıl çalışır? </a>]]></string>
     <string name="lab_test_step_1">Bu GGD anahtarını GGD çalışanına gönderin:</string>
     <string name="lab_test_token_loading">Anahtar alınıyor</string>
     <string name="lab_test_token_error">Uygulama GGD anahtarını yükleyemedi. İnternet bağlantınızı kontrol edin.</string>
     <string name="lab_test_token_retry">Tekrar deneyin</string>
     <string name="lab_test_step_2">Bir sonraki adım için GGD çalışanını bekleyin</string>
-    <string name="lab_test_step_3">Anonim bildirim göndererek başkalarını uyar</string>
+    <string name="lab_test_step_3">Bir bildirim göndererek başkalarını uyarın</string>
     <string name="lab_test_button">Devam et</string>
     <string name="lab_test_upload_error">Başkalarına bildirim göndermek mümkün olmadı. Lütfen daha sonra tekrar deneyiniz.</string>
     <string name="lab_test_done_toolbar_title">Teşekkürler</string>
@@ -231,33 +230,33 @@
     <string name="cross_links_header">Ayrıca okuyun</string>
     <string name="request_test_header_5">Korona testi talep etmek</string>
     <string name="post_notification_guidance_follow_ggd">GGD size telefonda uygulamadan farklı tavsiyeler mi veriyor? O zaman, GGD\'nin tavsiyelerine uyun.</string>
-    <string name="post_notification_stay_home_header">%1$s tarihine kadar evde kalın</string>
+    <string name="post_notification_stay_home_header">%1$s tarihine kadar evinizde kalın</string>
     <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Alışverişlerinizi başkalarına yaptırın. Bu gerçekten mümkün değil mi ve hiç şikayetiniz yok mu? O zaman alışveriş yapmak için dışarı çıkabilirsiniz. 1,5 metre mesafe koruyun ve kimseye dokunmayın.</li><li>Bahçede veya balkonda oturabilirsiniz.</li><li> 4–12 yaş arası çocuklar okula gidebilirler ve / veya spor yapabilirler.</li></ul>]]></string>
     <string name="post_notification_no_visitors_header">Ziyaretçi kabul etmeyin</string>
     <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>Ancak sizinle birlikte yaşayanlar sizinle birlikte aynı evde bulunabilirler. Birbirinizden uzak durun ve 1,5 metre mesafe koruyun. Yani sarılmak, öpüşmek ve sevişmek yok. </li></ul>]]></string>
     <string name="post_notification_medical_help_list"><![CDATA[<ul><li>Doktora veya hastaneye gitmeyin, önce doktorunuzu arayın. Korona virüsü olan birinin yakınında bulunmuş olduğunuzu söyleyin. </li><li>Doktorunuz veya diğer tıbbi yardımcı sizi ziyaret edebilir.</li></ul>]]></string>
     <string name="post_notification_medical_help_header">Tıbbi yardıma mı ihtiyacınız var?</string>
     <string name="post_notification_after_stay_home_header">%1$s tarihinden sonra</string>
-    <string name="post_notification_after_stay_home_paragraph">%1$s tarihine kadar sizde şikayetler oluşmadı mı? Öyleyse artık evde kalmak zorunda değilsiniz. Korona\'dan korunmak için genel önlemleri almaya devam edin.</string>
+    <string name="post_notification_after_stay_home_paragraph">%1$s tarihine kadar sizde şikayetler oluşmadı mı? Öyleyse artık evinizde kalmak zorunda değilsiniz. Korona\'dan korunmak için genel önlemleri almaya devam edin.</string>
     <string name="generic_notification_advice_stay_home">Her durumda, Korona olmadığınızdan emin olana kadar evde kalın. Böylece, farkında olmadan başkalarına bulaştırmanızı engellersiniz.</string>
     <string name="generic_notification_exposure_summaries">"Bazen telefonunuzun COVID-19 kontrolleri yaptığını söyleyen bildirimler alırsınız. O zaman CoronaMelder'ı açın. Bilmekte fayda var: genellikle hiçbir sorun yoktur. "</string>
     <string name="generic_notification_header_3">Bildirim nasıl gözükür?</string>
     <string name="generic_notification_paragraph_5">CoronaMelder\'ı açmak için bildirime tıklayın. Orada daha sonra ne yapabileceğinizi okuyabilirsiniz.</string>
     <string name="request_test_paragraph_3">Sonuçlar 48 saat içinde belli olur. Sonucu öğrenene kadar evde kalın.</string>
     <string name="generic_notification_sample_notification_content_description">Bir bildirim örneği</string>
-    <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
-    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
-    <string name="location_services_required_title">Locatie-instellingen</string>
-    <string name="location_services_required_headline">De app werkt alleen als je locatie-instellingen aanstaan</string>
-    <string name="location_services_required_description">Sommige apps gebruiken bluetooth om je locatie te bepalen. Daarom is dit onderdeel van locatie-instellingen. CoronaMelder heeft bluetooth nodig om te werken, maar heeft nooit toegang tot je locatie.</string>
-    <string name="location_services_required_explain">Hoe zit dat precies?</string>
-    <string name="location_services_required_enable_error">Locatie-instellingen kunnen niet geopend worden.</string>
-    <string name="onboarding_privacy_policy_bt_keys">Je app zendt versleutelde Bluetooth-gegevens uit.</string>
-    <string name="onboarding_privacy_policy_retention">Andere gebruikers die met jou in contact zijn geweest bewaren deze gegevens maximaal 14 dagen.</string>
-    <string name="onboarding_privacy_policy_data_removal">Je kunt op ieder moment de gegevens van je telefoon verwijderen.</string>
-    <string name="onboarding_privacy_policy_identity"><![CDATA[Je naam wordt <b>niet</b> gebruikt of bewaard.]]></string>
-    <string name="onboarding_privacy_policy_location"><![CDATA[Je gps-locatiegegevens worden <b>niet</b> gebruikt of bewaard.]]></string>
-    <string name="onboarding_privacy_policy_send_alert">Als uit een coronatest blijkt dat je corona hebt kun je dit in de app melden om andere gebruikers te waarschuwen.</string>
-    <string name="onboarding_privacy_policy_voluntary">Gebruik van CoronaMelder is altijd vrijwillig</string>
+    <string name="onboarding_enable_headline">CoronaMelder\'ı açın</string>
+    <string name="onboarding_enable_description">CoronaMelder, ancak uygulamaya diğer uygulama kullanıcılarıyla buluşmaları takip etme izni verirseniz sizi uyarabilir.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder, ancak uygulamaya aşağıdakiler için izin verirseniz sizi bilgilendirebilir:<br/><br/><ul><li> Diğer uygulama kullanıcılarıyla buluşmaları takip etme</li><li>Konum ayarlarınızı açın (CoronaMelder konumunuzu bilmiyor)</li></ul>]]></string>
+    <string name="location_services_required_title">Konum ayarları</string>
+    <string name="location_services_required_headline">Uygulama yalnızca konum ayarlarınız açıksa çalışır</string>
+    <string name="location_services_required_description">Bazı uygulamalar konumunuzu belirlemek için bluetooth kullanır. Dolayısıyla bu, konum ayarlarının bir parçasıdır. CoronaMelder\'ın çalışması için bluetooth\'a ihtiyacı vardır, ancak konumunuza asla erişemez.</string>
+    <string name="location_services_required_explain">Bu tam olarak nasıl olur?</string>
+    <string name="location_services_required_enable_error">Konum ayarları açılamaz.</string>
+    <string name="onboarding_privacy_policy_bt_keys">Uygulamanız şifrelenmiş bluetooth verilerini yayınlar.</string>
+    <string name="onboarding_privacy_policy_retention">Sizinle iletişim halinde olan diğer kullanıcılar bu verileri en fazla 14 gün saklarlar.</string>
+    <string name="onboarding_privacy_policy_data_removal">Verileri telefonunuzdan istediğiniz zaman silebilirsiniz.</string>
+    <string name="onboarding_privacy_policy_identity"><![CDATA[Adınız <b>kullanılmaz</b> veya kaydedilmez.]]></string>
+    <string name="onboarding_privacy_policy_location"><![CDATA[GPS veya konum verileriniz <b>kullanılmaz</b> veya kaydedilmez.]]></string>
+    <string name="onboarding_privacy_policy_send_alert">Bir Korona testi Korona olduğunuzu gösterirse, diğer kullanıcıları uyarmak için bunu uygulamada bildirebilirsiniz.</string>
+    <string name="onboarding_privacy_policy_voluntary">CoronaMelder\'ın kullanımı her zaman gönüllüdür</string>
 </resources>

@@ -86,7 +86,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="request_test_toolbar_title">Solicitar test de coronavirus</string>
     <string name="request_test_header_1">¿Muestras síntomas relacionados con el coronavirus? Solicita un test</string>
     <string name="request_test_paragraph_2">¿Muestras síntomas, aunque sean leves, relacionados con el coronavirus? Hazte un test gratis. No tarda mucho en hacerse  y normalmente puedes concertar la cita rápidamente.\n\nRecibirás los resultados en 48 horas. Quédate en casa hasta que sepas los resultados.</string>
-    <string name="request_test_paragraph_4">¿Muestras síntomas graves, como fiebre alta o problemas de respiración, o formas parte de un grupo de riesgo y tienes fiebre? Llama primero a tu médico de cabecera</string>
+    <string name="request_test_paragraph_4">¿Muestras síntomas graves, como fiebre alta o problemas de respiración, o formas parte de un grupo de riesgo y tienes fiebre? Llama primero a tu médico de cabecera.</string>
     <string name="request_test_button_call">Llama al %1$s</string>
     <string name="request_test_button_website">Ir a coronatest.nl</string>
     <string name="status_reset_exposure">Eliminar notificación</string>
@@ -103,7 +103,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="status_info_test_title">Solicitar test de coronavirus</string>
     <string name="status_info_test_subtitle">Descubre lo antes posible si tú estás contagiado</string>
     <string name="status_info_lab_title">Enviar clave GGD</string>
-    <string name="status_info_lab_subtitle">Envía a través del GGD (servicio de salud municipal) una notificación anónima a otras personas si estás contagiado</string>
+    <string name="status_info_lab_subtitle">Pulsa aquí si te llama el GGD con los resultados de tu test</string>
     <string name="status_app_version">Versión %1$s build %2$s</string>
     <string name="status_exposure_what_next">¿Qué puedo hacer ahora?</string>
     <string name="status_error_consent_required">%1$s solo funciona si están activados los ajustes necesarios.</string>
@@ -125,7 +125,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="faq_detail_toolbar_title">Preguntas frecuentes</string>
     <string name="faq_reason">¿Por qué es importante esta app?</string>
     <string name="faq_location">¿La app puede ver mi localización?</string>
-    <string name="faq_anonymous">¿Cómo hace la app para mantener mi anonimato?</string>
+    <string name="faq_anonymous">¿Sabe la app quién soy y con quién me he encontrado?</string>
     <string name="faq_notification">¿Cuándo recibo notificaciones de la app?</string>
     <string name="faq_upload_keys">¿Puedo enviar una notificación a otras personas si tengo coronavirus?</string>
     <string name="faq_bluetooth">¿Funciona Bluetooth a través de las paredes?</string>
@@ -142,7 +142,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="faq_anonymous_paragraph_1">La app intercambia códigos aleatorios con otros teléfonos. Estos códigos no contienen datos personales ni de localización. El intercambio de códigos ocurre en el momento en que te encuentras cerca de una persona que también tiene la app.</string>
     <string name="faq_anonymous_paragraph_2">Si resulta más tarde que esa persona tiene coronavirus, podrá añadir sus códigos con ayuda del GGD (servicio de salud municipal) a una lista con códigos de personas contagiadas. De esta forma, se puede confirmar el contagio. \n\nDespués de confirmarlo, se podrán enviar notificaciones a todas las personas que tengan esos códigos en sus teléfonos. En la notificación solo pone cuándo han estado cerca de una persona contagiada; nunca dirá quién ni dónde fue.</string>
     <string name="faq_upload_keys_paragraph_1">Solo puedes enviar notificaciones a otras personas si te has hecho un test y resulta que tienes coronavirus. En ese caso, te llamará el GGD (servicio de salud municipal) con los resultados.\n\nDurante la llamada, el asistente del GGD controlará tu clave GGD. Esta clave la encontrarás en la app. De esta forma, se está siempre seguro de que solo las personas que están realmente contagiadas puedan enviar sus notificaciones.</string>
-    <string name="faq_upload_keys_paragraph_2">"Una vez controlada tu clave GGD, podrás compartir los códigos que tu teléfono haya enviado a otros teléfonos en los últimos 14 días.\n\nAsí la gente que ha estado cerca de ti mientras eras contagioso recibirá una notificación anónima, siempre y cuando utilicen también la app."</string>
+    <string name="faq_upload_keys_paragraph_2">"Una vez controlada tu clave GGD, podrás compartir los códigos que tu teléfono haya enviado a otros teléfonos en los últimos 14 días.\n\nAsí la gente que ha estado cerca de ti mientras eras contagioso recibirá una notificación, siempre y cuando utilicen también la app."</string>
     <string name="faq_bluetooth_paragraph_1">"Sí, pero la señal se vuelve muy débil. Bluetooth funciona mejor si tu teléfono se encuentra en el mismo espacio que el teléfono de otra persona. \nPor ejemplo, la probabilidad de que recibas la señal de Bluetooth de tus vecinos es mínima y, por tanto, la probabilidad de que recibas una notificación si tu vecino resulta tener el coronavirus y no habéis estado en el mismo espacio es también mínima."</string>
     <string name="faq_power_usage_paragraph_1">La app utiliza Bluetooth Low Energy (Bluetooth de bajo consumo). Es una versión especial de Bluetooth que consume muy poca batería. El porcentaje exacto de consumo depende del teléfono.</string>
     <string name="faq_deletion_paragraph_1">"Puedes eliminar por tu cuenta los datos de Bluetooth que ha guardado CoronaMelder. Pulsa el botón aquí abajo y luego pulsa &lt;strong&gt;Elimiar ID aleatorios&lt;/strong&gt;.\n\n¿Quieres que la app deje de guardar datos de Bluetooth nuevos? Entonces elimina la app."</string>
@@ -164,13 +164,13 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="share_content">Estoy ayudando a contener el coronavirus con CoronaMelder. ¡Únete! %1$s</string>
     <string name="share_title">Comparte la app con más gente</string>
     <string name="lab_test_toolbar_title">Clave GGD</string>
-    <string name="lab_test_paragraph_1"><![CDATA[¿Te has hecho el test y tienes coronavirus? En ese caso, te llamará un asistente del GGD (servicio de salud municipal). Necesitarás tu clave GGD. <a href="">¿Cómo funciona?</a>]]></string>
+    <string name="lab_test_paragraph_1"><![CDATA[¿Te has hecho el test y tienes coronavirus? En ese caso, te llamará un asistente del GGD (servicio de salud municipal) que te ayudará a avisar a las personas que estuvieron cerca de ti. Necesitarás tu clave GGD para ello.<a href="">¿Cómo funciona?</a>]]></string>
     <string name="lab_test_step_1">Dale la clave GGD al asistente del GGD:</string>
     <string name="lab_test_token_loading">Descargando clave</string>
     <string name="lab_test_token_error">La app no ha podido descargar una clave GGD. Comprueba tu conexión a internet.</string>
     <string name="lab_test_token_retry">Probar otra vez</string>
     <string name="lab_test_step_2">Espera al asistente del GGD para seguir con el siguiente paso</string>
-    <string name="lab_test_step_3">Avisa a otros enviando una notificación anónima</string>
+    <string name="lab_test_step_3">Avisa a otros enviando una notificación</string>
     <string name="lab_test_button">Continuar</string>
     <string name="lab_test_upload_error">No se ha podido enviar una notificación. Prueba otra vez más tarde.</string>
     <string name="lab_test_done_toolbar_title">Gracias</string>
@@ -239,25 +239,26 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="post_notification_medical_help_list"><![CDATA[<ul><li>No vayas al médico de cabecera ni al hospital; llama primero a tu médico de cabecera. Cuéntale que has estado cerca de alguien que tiene el coronavirus.</li><li>Tu médico de cabecera u otro servicio de asistencia médica pueden venir a verte.</li></ul>]]></string>
     <string name="post_notification_medical_help_header">¿Necesitas asistencia médica?</string>
     <string name="post_notification_after_stay_home_header">Después del %1$s</string>
-    <string name="post_notification_after_stay_home_paragraph">¿No has mostrado ningún síntoma hasta el %1$s? Entonces ya no tienes que quedarte en casa. Aun así, no te olvides de seguir respetando las medidas generales contra el coronavirus.</string>
+    <string name="post_notification_after_stay_home_paragraph">"¿No has mostrado ningún síntoma hasta el %1$s? Entonces ya no tienes que quedarte en casa. Aun así, no te olvides de seguir respetando las medidas generales contra el coronavirus. "</string>
     <string name="generic_notification_advice_stay_home">En cualquier caso, quédate en casa hasta que estés seguro de que no tienes coronavirus. Así evitarás contagiar a otros sin querer.</string>
     <string name="generic_notification_exposure_summaries">"A veces recibirás también notificaciones en las que ponen que tu teléfono está llevando a cabo controles de COVID-19. En ese caso, abre CoronaMelder. Importante saber: normalmente no significa ningún problema."</string>
     <string name="generic_notification_header_3">¿Qué aspecto tiene una notificación?</string>
     <string name="generic_notification_paragraph_5">Pulsa la notificación para abrir CoronaMelder y consultar qué puedes hacer.</string>
     <string name="request_test_paragraph_3">Hazte un test gratis. No tarda mucho en hacerse y normalmente puedes concertar la cita rápidamente. Recibirás los resultados en 48 horas. Quédate en casa hasta que sepas los resultados.</string>
-    <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
-    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
-    <string name="location_services_required_title">Locatie-instellingen</string>
-    <string name="location_services_required_headline">De app werkt alleen als je locatie-instellingen aanstaan</string>
-    <string name="location_services_required_description">Sommige apps gebruiken bluetooth om je locatie te bepalen. Daarom is dit onderdeel van locatie-instellingen. CoronaMelder heeft bluetooth nodig om te werken, maar heeft nooit toegang tot je locatie.</string>
-    <string name="location_services_required_explain">Hoe zit dat precies?</string>
-    <string name="location_services_required_enable_error">Locatie-instellingen kunnen niet geopend worden.</string>
-    <string name="onboarding_privacy_policy_bt_keys">Je app zendt versleutelde Bluetooth-gegevens uit.</string>
-    <string name="onboarding_privacy_policy_retention">Andere gebruikers die met jou in contact zijn geweest bewaren deze gegevens maximaal 14 dagen.</string>
-    <string name="onboarding_privacy_policy_data_removal">Je kunt op ieder moment de gegevens van je telefoon verwijderen.</string>
-    <string name="onboarding_privacy_policy_identity"><![CDATA[Je naam wordt <b>niet</b> gebruikt of bewaard.]]></string>
-    <string name="onboarding_privacy_policy_location"><![CDATA[Je gps-locatiegegevens worden <b>niet</b> gebruikt of bewaard.]]></string>
-    <string name="onboarding_privacy_policy_send_alert">Als uit een coronatest blijkt dat je corona hebt kun je dit in de app melden om andere gebruikers te waarschuwen.</string>
-    <string name="onboarding_privacy_policy_voluntary">Gebruik van CoronaMelder is altijd vrijwillig</string>
+    <string name="generic_notification_sample_notification_content_description">Ejemplo de una notificación</string>
+    <string name="onboarding_enable_headline">Activar CoronaMelder</string>
+    <string name="onboarding_enable_description">CoronaMelder solo puede avisarte si permites a la app registrar los encuentros con otros usuarios de la app.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder solo puede avisarte si permites a la app:<br/><br/><ul><li>Registrar encuentros con otros usuarios de la app</li><li>Activar tus ajustes de localización (CoronaMelder no sabe tu localización)</li></ul>]]></string>
+    <string name="location_services_required_title">Ajustes de localización</string>
+    <string name="location_services_required_headline">La app solo funciona si tienes activados tus ajustes de localización</string>
+    <string name="location_services_required_description">Algunas apps utilizan Bluetooth para determinar tu localización. Por eso, forma parte de tus ajustes de localización. CoronaMelder necesita Bluetooth para funcionar, pero nunca tiene acceso a tu localización.</string>
+    <string name="location_services_required_explain">¿Cómo funciona exactamente?</string>
+    <string name="location_services_required_enable_error">No se pueden abrir los ajustes de localización.</string>
+    <string name="onboarding_privacy_policy_bt_keys">La app envía datos de Bluetooth encriptados.</string>
+    <string name="onboarding_privacy_policy_retention">Otros usuarios que hayan estado en contacto contigo guardarán estos datos durante un máximo de 14 días.</string>
+    <string name="onboarding_privacy_policy_data_removal">Puedes eliminar los datos de tu teléfono en cualquier momento.</string>
+    <string name="onboarding_privacy_policy_identity"><![CDATA[La app <b>no</b> utiliza ni guarda tu nombre.]]></string>
+    <string name="onboarding_privacy_policy_location"><![CDATA[La app <b>no</b> utiliza ni guarda tus datos GPS ni de localización.]]></string>
+    <string name="onboarding_privacy_policy_send_alert">Si te has hecho un test y resulta que tienes coronavirus, puedes usar la app para avisar a otros usuarios.</string>
+    <string name="onboarding_privacy_policy_voluntary">El uso de CoronaMelder siempre es voluntario</string>
 </resources>

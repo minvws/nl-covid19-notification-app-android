@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="faq_notification_paragraph_1">Vous recevez une notification après avoir couru un plus grand risque d’être contaminé(e). Ceci se produit si vous êtes au moins pendant 15 minutes près de quelqu\'un qui, par la suite, s\'avère être contaminé. Et naturellement, uniquement si cette personne utilise aussi l\'application. Le fait de recevoir une notification dépend de la puissance du signal Bluetooth et de la durée de votre contact. Quelqu\'un vous dépasse en vélo en rue ? Vous ne recevrez pas de notification. Vous étiez près l\'un de l\'autre, donc le signal Bluetooth était puissant, mais le contact a été tellement court que le risque de contamination est minime. Vous étiez assis(e) près de quelqu\'un dans le train ou au bureau ? Alors, il est possible que vous receviez une notification par la suite. Le signal Bluetooth était assez puissant et vous étiez proches l\'un de l\'autre pendant une durée assez longue.</string>
+    <string name="faq_notification_paragraph_1">Vous recevez une notification après avoir couru un plus grand risque d’être contaminé(e). Ceci se produit si vous êtes au moins pendant 15 minutes près de quelqu\'un qui, par la suite, s\'avère être contaminé. Et naturellement, uniquement si cette personne utilise aussi l\'application.\n\nLe fait de recevoir une notification dépend de la puissance du signal Bluetooth et de la durée de votre contact.\n\nQuelqu\'un vous dépasse en vélo en rue ? Vous ne recevrez pas de notification. Vous étiez près l\'un de l\'autre, donc le signal Bluetooth était puissant, mais le contact a été tellement court que le risque de contamination est minime.\n\nVous étiez assis(e) près de quelqu\'un dans le train ou au bureau ? Alors, il est possible que vous receviez une notification par la suite. Le signal Bluetooth était assez puissant et vous étiez proches l\'un de l\'autre pendant une durée assez longue.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">fr</string>
@@ -61,7 +61,7 @@
     <string name="post_notification_header_1">Vous étiez à proximité de quelqu\'un qui a le Covid-19</string>
     <string name="post_notification_paragraph_2">Vous étiez, %1$s (le %2$s), à proximité de quelqu\'un qui, par la suite, s\'est avéré avoir le Covid-19. Lors de cette situation, vous avez probablement couru un plus grand risque d’être contaminé(e). Si vous avez effectivement été contaminé(e), vous pouvez transmettre le virus aux personnes autour de vous, même si vous n\'avez aucun symptôme pour l\'instant.</string>
     <string name="post_notification_header_3">Que pouvez-vous faire ?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>Restez chez vous jusqu\'au %1$s et faites très attention aux symptômes qui pourraient correspondre à ceux du Covid-19</li><li>Vous avez des (légers) symptômes qui correspondent à ceux du Covid-19 ? Faites un test de dépistage et restez chez vous jusqu\'au %1$s</li><li>Vous avez de graves symptômes comme une forte fièvre ou des difficultés à respirer ? Ou vous faites partie d\'un groupe à risques et vous avez de la fièvre ? Appelez d\'abord votre médecin traitant</li></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>Restez chez vous jusqu\'au %1$s et faites très attention aux symptômes qui pourraient correspondre à ceux du Covid-19</li>,<li>Vous avez des (légers) symptômes qui correspondent à ceux du Covid-19 ? Faites un test de dépistage et restez chez vous jusqu\'au %1$s</li><li>Vous avez de graves symptômes comme une forte fièvre ou des difficultés à respirer ? Ou vous faites partie d\'un groupe à risques et vous avez de la fièvre ? Appelez d\'abord votre médecin traitant</li></ul>]]></string>
     <string name="post_notification_header_6">Faites un test de dépistage du Covid-19</string>
     <string name="post_notification_paragraph_7">Même si vous n\'avez aucun symptôme, car sans symptôme, vous pouvez quand même transmettre le Covid-19 et contaminer les personnes autour de vous.</string>
     <string name="post_notification_paragraph_8">"Faites le test gratuitement. Il ne dure pas longtemps et vous pouvez généralement fixer un rendez-vous rapidement. Le résultat est connu dans les 48 heures. Restez chez vous jusqu'à la communication du résultat."</string>
@@ -71,14 +71,14 @@
     <string name="generic_notification_toolbar_title">Recevoir une notification</string>
     <string name="generic_notification_header_1">Que contient une notification ?</string>
     <string name="generic_notification_paragraph_2">L\'application envoie une notification si vous avez été au moins pendant 15 minutes à proximité de quelqu\'un qui, par la suite, s\'est avéré avoir le Covid-19.</string>
-    <string name="generic_notification_paragraph_4">La notification s\'affiche dans vos notifications, tout comme les messages des autres applications. La notification a le symbole de CoronaMelder.\n\nAvez-vous reçu une notification ? Ouvrez alors CoronaMelder. Vous y lirez ce que vous devez faire.</string>
+    <string name="generic_notification_paragraph_4">La notification s\'affiche dans vos notifications, tout comme les messages des autres applications. La notification a le symbole de CoronaMelder.\nAvez-vous reçu une notification ? Ouvrez alors CoronaMelder. Vous y lirez ce que vous devez faire.</string>
     <string name="generic_notification_alt_text_6">Écran rouge avec sonnette d\'alarme qui indique qu\'une action est maintenant nécessaire</string>
     <string name="generic_notification_caption_7">Exemple : Voilà à quoi ressemble l’application lorsque vous recevez une notification</string>
     <string name="generic_notification_header_8">Que pouvez-vous faire si vous avez été en contact avec quelqu\'un qui a le Covid-19 ?</string>
     <string name="generic_notification_paragraph_9">Suivez les conseils de l\'application. Le conseil dépend de votre situation : si vous avez des symptômes qui correspondent à ceux du Covid-19 et le jour où vous étiez à proximité de la personne contaminée.</string>
     <string name="generic_notification_paragraph_10">Au téléphone, le GGD vous donne d\'autres conseils que ceux de l\'application ? Suivez alors les conseils du GGD.</string>
     <string name="generic_notification_header_11">Autres notifications</string>
-    <string name="generic_notification_paragraph_12">CoronaMelder peut aussi vous envoyer une notification en cas de problème technique. Par exemple si votre Bluetooth est désactivé. Ou si la connexion internet a été interrompue depuis plus d’une journée. L’application vous aide à résoudre le problème.</string>
+    <string name="generic_notification_paragraph_12">CoronaMelder peut aussi vous envoyer une notification en cas de problème technique. Par exemple si votre Bluetooth est désactivé. Ou si la connexion internet a été interrompue depuis plus d’une journée. L’application vous aide à résoudre tout cela.</string>
     <string name="generic_notification_paragraph_13">Avez-vous reçu une telle notification et l’application est activée ? Alors le problème a été résolu entretemps.</string>
     <string name="treat_perspective_header_1">Symptômes qui correspondent à ceux du Covid-19</string>
     <string name="treat_perspective_list_2"><![CDATA[<ul><li>symptômes du rhume comme un nez qui coule, éternuements, mal de gorge</li><li>toux</li><li>angoisse</li><li>fièvre</li><li>perte soudaine de l\'odorat et/ou du goût (sans congestion nasale)</li></ul>]]></string>
@@ -89,7 +89,7 @@
     <string name="request_test_button_call">Composez le %1$s</string>
     <string name="request_test_button_website">Consultez coronatest.nl</string>
     <string name="status_reset_exposure">Supprimer la notification</string>
-    <string name="status_dialog_remove_exposure_title">Possible infection on %1$s</string>
+    <string name="status_dialog_remove_exposure_title">Contamination possible le %1$s</string>
     <string name="status_dialog_remove_exposure_message">Êtes-vous sûr(e) de vouloir supprimer cette notification? Vous ne retrouverez plus cette date dans l’application. Retenez-la donc bien.</string>
     <string name="status_dialog_remove_exposure_confirm">Supprimer</string>
     <string name="status_dialog_remove_exposure_cancel">Désactiver</string>
@@ -102,7 +102,7 @@
     <string name="status_info_test_title">Demander à faire un test de dépistage du Covid-19</string>
     <string name="status_info_test_subtitle">Découvrez le plus vite possible si vous êtes contaminé(e)</string>
     <string name="status_info_lab_title">Partager le code GGD</string>
-    <string name="status_info_lab_subtitle">Envoyez via le GGD une notification anonyme à vos contacts récents si vous êtes contaminé(e)</string>
+    <string name="status_info_lab_subtitle">Rendez-vous là-bas si le GGD vous appelle avec le résultat de votre test.</string>
     <string name="status_app_version">Version %1$s créée %2$s</string>
     <string name="status_exposure_what_next">Que puis-je faire maintenant ?</string>
     <string name="status_error_consent_required">%1$s fonctionne uniquement si les paramètres nécessaires ont été activés</string>
@@ -124,7 +124,7 @@
     <string name="faq_detail_toolbar_title">Question fréquente</string>
     <string name="faq_reason">Pourquoi cette application est-elle importante ?</string>
     <string name="faq_location">L\'application peut-elle voir mes données de géolocalisation ?</string>
-    <string name="faq_anonymous">Comment l\'application peut-elle préserver mon anonymat ?</string>
+    <string name="faq_anonymous">L\'application sait-elle qui je suis et qui j\'ai rencontré ?</string>
     <string name="faq_notification">Quand l\'application m\'envoie-t-elle une notification ?</string>
     <string name="faq_upload_keys">Puis-je envoyer une notification aux autres si j\'ai le Covid-19 ?</string>
     <string name="faq_bluetooth">Le Bluetooth fonctionne-t-il à travers les murs ?</string>
@@ -140,7 +140,7 @@
     <string name="faq_anonymous_paragraph_1">L\'application échange des codes aléatoires avec d\'autres téléphones. Aucune donnée personnelle ni de localisation vous concernant ne se trouve dans ces codes. L\'échange des codes se fait au moment où vous êtes proche d\'une personne qui a également l\'application.</string>
     <string name="faq_anonymous_paragraph_2">Il s\'avère par la suite que cette personne a le Covid-19 ? Alors, celle-ci peut ajouter ses codes à une liste de codes des personnes contaminées dans l\'application. L\'ajout de ces codes ne peut se faire qu\'après que la personne contaminée ait communiqué un code GGD au GGD. La contamination peut alors être confirmée. À l\'issue de ce contrôle, il est possible d\'envoyer une notification à toutes les autres personnes qui ont ces codes sur leur téléphone. Cette notification indique uniquement quand elles ont été en contact avec une personne infectée, mais pas qui elle est ni où elle l\'a rencontrée.</string>
     <string name="faq_upload_keys_paragraph_1">Vous ne pouvez envoyer de notifications aux autres que si vous avez fait un test et qu\'il indique que vous avez le Covid-19. Dans ce cas, le GGD vous appelle pour vous communiquer le résultat du test. Pendant cet entretien téléphonique, un employé du GGD vérifie votre code GGD. Vous trouverez ce code dans l\'application. Il est donc toujours certain que seules les personnes vraiment contaminées puissent envoyer des notifications.</string>
-    <string name="faq_upload_keys_paragraph_2">"Après vérification de votre code GGD, les personnes qui ont été en contact avec vous lorsque vous étiez contagieux(se) reçoivent une notification anonyme, mais uniquement si ces personnes utilisent également l'application."</string>
+    <string name="faq_upload_keys_paragraph_2">"Après que votre code GGD ait été controlé, vous pouvez partager les codes que votre téléphone a envoyés à d'autres téléphones les 14 jours précédents. \nAinsi, les personnes qui ont été en contact avec vous lorsque vous étiez contagieux(se) reçoivent une notification, mais uniquement si ces personnes utilisent également l'application."</string>
     <string name="faq_bluetooth_paragraph_1">"Oui, mais le signal est alors très faible. Le Bluetooth fonctionne mieux si votre téléphone se trouve dans la même pièce que le téléphone d'une autre personne. Par exemple, il y a très peu de risques que votre application réceptionne le signal Bluetooth de vos voisins. \nEt le risque est également minime que vous receviez une notification si votre voisin a le Covid-19 et que vous n'avez pas été dans la même pièce que lui."</string>
     <string name="faq_power_usage_paragraph_1">L\'application utilise la technologie Bluetooth Low Energy. Il s\'agit d\'une forme spéciale de Bluetooth qui consomme très peu de courant. Le pourcentage que cela exige de votre batterie de téléphone diffère selon les téléphones.</string>
     <string name="faq_deletion_paragraph_1">"Vous pouvez supprimer vous-même les données Bluetooth que CoronaMelder conserve. Cliquez sur le bouton ci-dessous et ensuite sur &lt;strong&gt;Supprimer les identifiants arbitraires&lt;/strong&gt;.\n\nSi vous voulez que l'application ne conserve plus de nouvelles données Bluetooth, supprimez l'application."</string>
@@ -148,7 +148,7 @@
     <string name="faq_location_permission_paragraph_1">CoronaMelder ne sait pas où vous êtes, mais vos données de géolocalisation doivent quand même être activées. Autrement, l\'application ne fonctionne pas. Ça peut paraître fou, mais en vérité :\nCoronaMelder se sert de \"Bluetooth scanning\". C\'est une autre technologie Bluetooth que celle qui établit par exemple la connexion avec un écouteur sans fil. Cette technologie est économe en énergie. Via Bluetooth scanning, l\'application échange des codes aléatoires avec les téléphones proches.\nCertaines applications (mais pas CoronaMelder) utilisent Bluetooth scanning pour déterminer votre position. C\'est pour cela que vous devez toujours activer vos paramètres de localisation pour utiliser Bluetooth scanning. Meme si une application n\'utilise pas votre localisation.\nIl est important de retenir que CoronaMelder n\'a jamais accès à vos données de géolocalisation.</string>
     <string name="faq_technical_toolbar_title">Explication technique</string>
     <string name="faq_technical_header_1">1. L\'application crée un code personnel pour chaque téléphone</string>
-    <string name="faq_technical_paragraph_2">Ce code ne contient pas d\'informations sur vous ni sur votre téléphone. Le code est entièrement anonyme et change tous les quarts d\'heure.</string>
+    <string name="faq_technical_paragraph_2">Ce code ne contient pas d\'informations sur vous ni sur votre téléphone. Le code est entièrement aléatoire et change tous les quarts d\'heure.</string>
     <string name="faq_technical_header_3">2. Les téléphones partagent leurs codes s\'ils sont proches les uns des autres</string>
     <string name="faq_technical_paragraph_4">La personne que vous rencontrez utilise également l\'application ? Alors vos téléphones échangent leurs codes via le Bluetooth Low Energy. L\'application sait quels étaient les téléphones proches les uns des autres. L\'application ne sait pas à qui appartiennent les téléphones ni où vous étiez.</string>
     <string name="faq_technical_header_5">3. Si une personne a le Covid-19,  elle peut placer ses codes sur une liste</string>
@@ -162,13 +162,13 @@
     <string name="share_content">J\'aide à stopper la propagation du Covid-19 avec CoronaMelder. Vous voulez le faire aussi ? %1$s</string>
     <string name="share_title">Partagez donc l\'application autour de vous</string>
     <string name="lab_test_toolbar_title">Code GGD</string>
-    <string name="lab_test_paragraph_1"><![CDATA[Vous avez fait le test et vous avez le Covid-19 ? Dans ce cas, un employé du GGD va vous contacter et vous aurez besoin de votre code GGD. <a href="">Comment ça fonctionne ?</a>]]></string>
+    <string name="lab_test_paragraph_1"><![CDATA[Vous avez fait le test et vous avez le Covid-19 ? Dans ce cas, un employé du GGD va vous contacter pour vous aider à prévenir les autres qui étaient dans votre entourage. Ã cet effet, vous aurez besoin de votre code GGD. <a href="">Comment ça fonctionne ?</a>]]></string>
     <string name="lab_test_step_1">Communiquez le code GGD à l\'employé du GGD :</string>
     <string name="lab_test_token_loading">Récupération du code</string>
     <string name="lab_test_token_error">L\'application n\'a pas pu récupérer le code GGD. Veuillez contrôler votre connexion internet.</string>
     <string name="lab_test_token_retry">Veuillez réessayer</string>
     <string name="lab_test_step_2">Veuillez attendre l\'employé GGD pour l\'étape suivante</string>
-    <string name="lab_test_step_3">Prévenez les personnes qui vous entourent en envoyant une notification anonyme</string>
+    <string name="lab_test_step_3">Prévenez les personnes qui vous entourent en envoyant une notification</string>
     <string name="lab_test_button">Continuer</string>
     <string name="lab_test_upload_error">Impossible d\'envoyer la notification aux autres personnes. Veuillez réessayer plus tard.</string>
     <string name="lab_test_done_toolbar_title">Merci</string>
@@ -240,25 +240,26 @@
     <string name="post_notification_medical_help_list"><![CDATA[<ul><li>N\'allez pas chez le médecin ni à l’hôpital, mais appelez d\'abord votre médecin traitant. Dites-lui que vous avez été en contact avec quelqu\'un qui a le Covid-19.</li><li>votre médecin ou une autre assistance médicale peut passer chez vous.</li></ul>]]></string>
     <string name="post_notification_medical_help_header">Besoin d\'une assistance médicale ?</string>
     <string name="post_notification_after_stay_home_header">Après le %1$s</string>
-    <string name="post_notification_after_stay_home_paragraph">Si vous n\'avez pas de symptôme jusqu\'au %1$s, vous ne devez plus rester chez vous. Continuez toutefois à suivre les règles générales de lutte contre la diffusion du Covid-19.</string>
+    <string name="post_notification_after_stay_home_paragraph">Si vous n\'avez pas de symptôme jusqu\'au %1$s, il n\'est plus nécessaire de rester chez vous. Continuez toutefois à suivre les règles générales de lutte contre la diffusion du Covid-19.</string>
     <string name="generic_notification_advice_stay_home">Restez en tous cas chez vous jusqu\'à ce que vous soyez certain(e) de ne pas avoir le Covid-19. Vous évitez ainsi de contaminer sans le savoir ceux qui vous entourent.</string>
     <string name="generic_notification_exposure_summaries">"Vous recevez aussi parfois des notifications qui vous indiquent que votre téléphone effectue des contrôles COVID-19. Bon à savoir : généralement, ce n'est rien de grave."</string>
     <string name="generic_notification_header_3">À quoi ressemble une notification ?</string>
     <string name="generic_notification_paragraph_5">Cliquez sur la notification pour ouvrir CoronaMelder. Vous y lirez ce que vous devez faire.</string>
     <string name="request_test_paragraph_3">Le résultat est connu dans les 48 heures. Restez chez vous jusqu\'à la communication du résultat.</string>
-    <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
-    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
-    <string name="location_services_required_title">Locatie-instellingen</string>
-    <string name="location_services_required_headline">De app werkt alleen als je locatie-instellingen aanstaan</string>
-    <string name="location_services_required_description">Sommige apps gebruiken bluetooth om je locatie te bepalen. Daarom is dit onderdeel van locatie-instellingen. CoronaMelder heeft bluetooth nodig om te werken, maar heeft nooit toegang tot je locatie.</string>
-    <string name="location_services_required_explain">Hoe zit dat precies?</string>
-    <string name="location_services_required_enable_error">Locatie-instellingen kunnen niet geopend worden.</string>
-    <string name="onboarding_privacy_policy_bt_keys">Je app zendt versleutelde Bluetooth-gegevens uit.</string>
-    <string name="onboarding_privacy_policy_retention">Andere gebruikers die met jou in contact zijn geweest bewaren deze gegevens maximaal 14 dagen.</string>
-    <string name="onboarding_privacy_policy_data_removal">Je kunt op ieder moment de gegevens van je telefoon verwijderen.</string>
-    <string name="onboarding_privacy_policy_identity"><![CDATA[Je naam wordt <b>niet</b> gebruikt of bewaard.]]></string>
-    <string name="onboarding_privacy_policy_location"><![CDATA[Je gps-locatiegegevens worden <b>niet</b> gebruikt of bewaard.]]></string>
-    <string name="onboarding_privacy_policy_send_alert">Als uit een coronatest blijkt dat je corona hebt kun je dit in de app melden om andere gebruikers te waarschuwen.</string>
-    <string name="onboarding_privacy_policy_voluntary">Gebruik van CoronaMelder is altijd vrijwillig</string>
+    <string name="generic_notification_sample_notification_content_description">Exemple d\'une notification</string>
+    <string name="onboarding_enable_headline">Activez CoronaMelder</string>
+    <string name="onboarding_enable_description">CoronaMelder ne peut vous avertir que si vous autorisez l\'application à enregistrer les rencontres avec d\'autres utilisateurs de l\'application.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaReport ne peut vous avertir que si vous autorisez l\'application à : <br/><br/><ul><li> Enregistrer les rencontres avec d\'autres utilisateurs de l\'application</li><li>Activer vos paramètres de localisation (CoronaMelder ne connaît pas votre position)</li></ul>]]></string>
+    <string name="location_services_required_title">Paramètres de localisation</string>
+    <string name="location_services_required_headline">L\'application ne fonctionne que si les paramètres de localisation sont activés.</string>
+    <string name="location_services_required_description">Certaines applications utilisent Bluetooth pour déterminer votre position. Par conséquent, cela fait partie des paramètres de localisation. CoronaMelder a besoin du Bluetooth pour fonctionner, mais n\'a jamais accès à votre position.</string>
+    <string name="location_services_required_explain">Comment cela fonctionne-t-il exactement ?</string>
+    <string name="location_services_required_enable_error">Impossible d\'ouvrir les paramètres de localisation.</string>
+    <string name="onboarding_privacy_policy_bt_keys">Votre application diffuse des données Bluetooth cryptées.</string>
+    <string name="onboarding_privacy_policy_retention">Les autres utilisateurs qui ont été en contact avec vous conservent ces données pendant un maximum de 14 jours.</string>
+    <string name="onboarding_privacy_policy_data_removal">Vous pouvez à tout moment supprimer les données de votre téléphone.</string>
+    <string name="onboarding_privacy_policy_identity"><![CDATA[Votre nom n\'est <strong>pas</strong> utilisé ni conservé.]]></string>
+    <string name="onboarding_privacy_policy_location"><![CDATA[Vos données GPS ou de localisation ne sont <b>pas</b> utilisées ni conservées.]]></string>
+    <string name="onboarding_privacy_policy_send_alert">Si un test de dépistage révèle que vous avez le COVID-19, vous pouvez le signaler dans l\'application pour avertir les autres utilisateurs.</string>
+    <string name="onboarding_privacy_policy_voluntary">L\'utilisation de CoronaMelder est toujours volontaire</string>
 </resources>
