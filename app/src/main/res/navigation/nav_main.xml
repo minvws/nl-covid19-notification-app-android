@@ -95,7 +95,8 @@
 
     <fragment
         android:id="@+id/nav_location_services_required_faq"
-        android:name="nl.rijksoverheid.en.status.LocationServicesRequiredFAQFragment" />
+        android:name="nl.rijksoverheid.en.status.LocationServicesRequiredFAQFragment"
+        tools:layout="@layout/fragment_list_with_button" />
 
     <fragment
         android:id="@+id/nav_update_google_play_services"
