@@ -7,13 +7,22 @@
 package nl.rijksoverheid.en
 
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.location.LocationManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
@@ -38,6 +47,25 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
     }.asLiveData(viewModelScope.coroutineContext)
 
     val notificationsResult: LiveData<Event<NotificationsStatusResult>> = MutableLiveData()
+
+    val locationPreconditionSatisfied: Boolean
+        get() = repository.isLocationPreconditionSatisfied()
+
+    fun observeLocationPreconditionSatisfied(context: Context) = callbackFlow {
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                offer(locationPreconditionSatisfied)
+            }
+        }
+
+        context.registerReceiver(receiver, IntentFilter(LocationManager.MODE_CHANGED_ACTION))
+
+        offer(locationPreconditionSatisfied)
+
+        awaitClose {
+            context.unregisterReceiver(receiver)
+        }
+    }.filter { it }.take(1).map { Unit }
 
     fun requestEnableNotifications() {
         viewModelScope.launch {

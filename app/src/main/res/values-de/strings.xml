@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="faq_notification_paragraph_1">Sie erhalten eine Nachricht, wenn für Sie eine erhöhte Ansteckungsgefahr bestand. Das ist der Fall, wenn Sie mindestens 15 Minuten in der Nähe einer Person waren, bei der später Corona festgestellt wurde. Und natürlich nur, wenn diese Person auch die App nutzt.\n\nOb Sie eine Nachricht erhalten, hängt von der Stärke des Bluetooth-Signals ab. Und von der Dauer der Begegnung. \n\nFuhr jemand auf der Straße mit dem Rad vorbei? Dann bekommen Sie später keine Nachricht. Sie waren dicht beieinander, also war das Bluetooth-Signal stark. Aber die Begegnung war so kurz, dass die Ansteckungsgefahr sehr gering ist.\n\nSaßen Sie im Zug oder Büro dicht beieinander? Dann können Sie später eine Nachricht bekommen. Das Bluetooth-Signal war stark genug, und Sie waren längere Zeit dicht beieinander.</string>
+    <string name="faq_notification_paragraph_1">Sie erhalten eine Nachricht, wenn für Sie eine erhöhte Ansteckungsgefahr bestand. Das ist der Fall, wenn Sie mindestens 15 Minuten in der Nähe einer Person waren, bei der später Corona festgestellt wurde. Und natürlich nur, wenn diese Person auch die App benutzt.\n\nOb Sie eine Nachricht erhalten, hängt von der Stärke des Bluetooth-Signals ab. Und von der Dauer der Begegnung. \n\nFuhr jemand auf der Straße mit dem Rad vorbei? Dann bekommen Sie später keine Nachricht. Sie waren dicht beieinander, also war das Bluetooth-Signal stark. Aber die Begegnung war so kurz, dass die Ansteckungsgefahr sehr gering ist.\n\nSaßen Sie im Zug oder Büro dicht beieinander? Dann können Sie später eine Nachricht bekommen. Das Bluetooth-Signal war stark genug, und Sie waren längere Zeit nah beieinander.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">de</string>
@@ -61,7 +61,7 @@
     <string name="post_notification_header_1">Sie waren in der Nähe einer Person mit Corona.</string>
     <string name="post_notification_paragraph_2">Am %2$s (%1$s) sind Sie möglicherweise angesteckt worden. Sie waren an diesem Tag länger als 15 Minuten in der Nähe einer Person, bei der später Corona festgestellt wurde. \n\nWenn Sie tatsächlich Corona haben, können Sie andere mit dem Virus anstecken. Auch wenn Sie sich jetzt nicht krank fühlen.</string>
     <string name="post_notification_header_3">Was können Sie jetzt tun?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>Bleiben Sie bis zum %1$s zu Hause und achten Sie genau auf Beschwerden, die zu Corona passen können</li><li>Haben Sie (leichte) Beschwerden, die zum Corona-Virus passen?  Machen Sie einen Coronatest und bleiben Sie bis zum %1$s zu Hause</li><li>Haben Sie ernste Symptome, wie hohes Fieber oder Atembeschwerden? Oder gehören Sie zu einer Risikogruppe und bekommen Sie Fieber? Rufen Sie zuerst Ihren Hausarzt an.</li></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>Bleiben Sie bis einschließlich %1$s zu Hause und achten Sie genau auf Symptome, die zu Corona passen können</li><li>Haben Sie (leichte) Beschwerden, die zum Corona-Virus passen?  Machen Sie einen Coronatest und bleiben Sie bis einschließlich %1$s zu Hause</li><li>Haben Sie ernste Symptome, wie hohes Fieber oder Atembeschwerden? Oder gehören Sie zu einer Risikogruppe und bekommen Sie Fieber? Rufen Sie zuerst Ihren Hausarzt an.</li></ul>]]></string>
     <string name="post_notification_header_6">Machen Sie einen Coronatest</string>
     <string name="post_notification_paragraph_7">Auch wenn Sie sich nicht krank fühlen. Denn auch dann können Sie das Coronavirus schon übertragen und andere anstecken.</string>
     <string name="post_notification_paragraph_8">"Lassen Sie sich kostenlos testen. Es dauert nicht lange und Sie können meistens schnell einen Termin vereinbaren. Das Ergebnis ist innerhalb von 48 Stunden bekannt. Bleiben Sie zu Hause, bis Sie das Ergebnis haben."</string>
@@ -71,21 +71,21 @@
     <string name="generic_notification_toolbar_title">Nachricht erhalten</string>
     <string name="generic_notification_header_1">Was steht in der Nachricht?</string>
     <string name="generic_notification_paragraph_2">Die App schickt eine Nachricht, wenn Sie mindestens 15 Minuten in der Nähe einer Person waren, bei der später Corona festgestellt wurde.</string>
-    <string name="generic_notification_paragraph_4">Die Nachricht erscheint bei Ihren Meldungen, wie Nachrichten aus den anderen Apps. Die Nachricht hat das Symbol des CoronaMelders.\n\nHaben Sie eine Nachricht erhalten? Dann öffnen Sie den CoronaMelder. Dort lesen Sie, was in diesem Fall zu tun ist.</string>
+    <string name="generic_notification_paragraph_4">Die Nachricht erscheint bei Ihren Meldungen, wie Nachrichten aus den anderen Apps. Die Nachricht hat das Symbol des CoronaMelders. Haben Sie eine Nachricht erhalten? Öffnen Sie dann den CoronaMelder. Dort lesen Sie, was in diesem Fall zu tun ist.</string>
     <string name="generic_notification_alt_text_6">Ein roter Bildschirm mit Alarmglocke gibt an, dass jetzt eine Aktion erforderlich ist.</string>
     <string name="generic_notification_caption_7">Beispiel: So sieht die App aus, wenn Sie eine Nachricht erhalten haben.</string>
     <string name="generic_notification_header_8">Was können Sie tun, wenn Sie in der Nähe einer Person mit Corona waren?</string>
     <string name="generic_notification_paragraph_9">Befolgen Sie den Ratschlägen in der App. Die Ratschläge hängen von Ihrer persönlichen Situation ab. Ob Sie Symptome haben, die zu Corona passen. Und an welchem Tag Sie in der Nähe einer Person mit Corona waren.</string>
     <string name="generic_notification_paragraph_10">Gibt der GGD Ihnen am Telefon andere Anweisungen als die App? Befolgen Sie dann den Anweisungen des GGD.</string>
     <string name="generic_notification_header_11">Andere Nachrichten</string>
-    <string name="generic_notification_paragraph_12">CoronaMelder kann Ihnen auch eine Nachricht schicken, wenn es ein technisches Problem gibt. Zum Beispiel, wenn bei Ihnen Bluetooth deaktiviert ist. Oder wenn es länger als einen Tag keine Internetverbindung gab. Die App hilft Ihnen, das zu lösen.</string>
+    <string name="generic_notification_paragraph_12">CoronaMelder kann Ihnen auch eine Nachricht schicken, wenn es ein technisches Problem gibt. Zum Beispiel, wenn Bluetooth bei Ihnen deaktiviert ist. Oder wenn es länger als einen Tag keine Internetverbindung gab. Die App hilft Ihnen, das zu lösen.</string>
     <string name="generic_notification_paragraph_13">Haben Sie eine solche Nachricht erhalten? Und funktioniert Ihre App normal? Dann wurde das Problem in der Zwischenzeit gelöst.</string>
     <string name="treat_perspective_header_1">Beschwerden, die zum Coronavirus passen</string>
     <string name="treat_perspective_list_2"><![CDATA[<ul><li>Erkältungsbeschwerden wie Schnupfen, laufende Nase, Niesen, Halsschmerzen</li><li>Husten</li><li>Atemschwierigkeiten</li><li>erhöhte Temperatur oder Fieber</li><li>plötzlicher Geruchs- und/oder Geschmacksverlust (ohne verstopfte Nase)</li></ul>]]></string>
     <string name="request_test_toolbar_title">Coronatest anfordern</string>
     <string name="request_test_header_1">Haben Sie Beschwerden, die zu Corona passen? Fordern Sie dann einen Test an.</string>
     <string name="request_test_paragraph_2">Haben Sie (leichte) Beschwerden, die zu Corona passen? Lassen Sie sich kostenlos testen. Es dauert nicht lange und Sie können meistens schnell einen Termin vereinbaren. \n\nDas Ergebnis ist innerhalb von 48 Stunden bekannt. Bleiben Sie zu Hause, bis Sie das Ergebnis haben.</string>
-    <string name="request_test_paragraph_4">Haben Sie ernste Symptome wie hohes Fieber oder Atembeschwerden? Oder gehören Sie zu einer Risikogruppe? Rufen Sie dann zuerst den Hausarzt an.</string>
+    <string name="request_test_paragraph_4">Haben Sie ernste Symptome wie hohes Fieber oder Atembeschwerden? Oder gehören Sie zu einer Risikogruppe und bekommen Sie Fieber? Rufen Sie dann zuerst den Hausarzt an.</string>
     <string name="request_test_button_call">Rufen Sie %1$s an</string>
     <string name="request_test_button_website">Gehen Sie zu coronatest.nl</string>
     <string name="status_reset_exposure">Nachricht löschen</string>
@@ -102,7 +102,7 @@
     <string name="status_info_test_title">Coronatest anfordern</string>
     <string name="status_info_test_subtitle">Erfahren Sie schnellstmöglich, ob Sie selbst Corona haben.</string>
     <string name="status_info_lab_title">GGD-Schlüssel weiterleiten</string>
-    <string name="status_info_lab_subtitle">Schicken Sie mit dem GGD eine anonyme Nachricht an andere, wenn Sie Corona haben.</string>
+    <string name="status_info_lab_subtitle">Gehen Sie hierhin, wenn der GGD Sie mit dem Corona-Testergebnis anruft.</string>
     <string name="status_app_version">Version %1$s Build %2$s</string>
     <string name="status_exposure_what_next">Was kann ich jetzt machen?</string>
     <string name="status_error_consent_required">%1$s funktioniert nur, wenn die erforderlichen Einstellungen aktiviert sind.</string>
@@ -124,7 +124,7 @@
     <string name="faq_detail_toolbar_title">Häufig gestellte Frage</string>
     <string name="faq_reason">Warum ist diese App wichtig?</string>
     <string name="faq_location">Kann die App meinen Standort erkennen?</string>
-    <string name="faq_anonymous">Wie kann die App anonym funktionieren?</string>
+    <string name="faq_anonymous">Weiß die App wer ich bin und wen ich begegnet bin?</string>
     <string name="faq_notification">Wann bekomme ich eine App-Nachricht?</string>
     <string name="faq_upload_keys">Kann ich anderen eine Nachricht schicken, wenn ich Corona habe?</string>
     <string name="faq_bluetooth">Funktioniert Bluetooth durch Wände hindurch?</string>
@@ -140,7 +140,7 @@
     <string name="faq_anonymous_paragraph_1">Die App tauscht willkürliche Codes mit anderen Telefonen aus. Die Codes enthalten keine Personen- oder Standortdaten. Die Codes werden ausgetauscht, wenn Sie in der Nähe einer Person sind, die auch die App hat.</string>
     <string name="faq_anonymous_paragraph_2">Stellt sich später heraus, dass diese Person Corona hat? Dann kann diese Person gemeinsam mit dem GGD ihre Codes einer Liste mit Codes von Personen hinzufügen, die auch Corona haben. So wird die Ansteckung bestätigt. \n\nDanach wird eine Nachricht an alle anderen Personen geschickt, die diese Codes auf ihrem Telefon haben. In dieser Nachricht steht nur, wann sie in der Nähe einer Person mit Corona waren. Aber nicht, wer das ist und wo sie der Person begegnet sind.</string>
     <string name="faq_upload_keys_paragraph_1">Sie können nur eine Nachricht an andere schicken, wenn sich nach einem Test herausstellt, dass Sie Corona haben. Der GGD ruft Sie in diesem Fall an.\n\nBei diesem Gespräch kontrolliert ein GGD-Mitarbeiter Ihren GGD-Schlüssel. Sie finden ihn in der App. So wird immer sichergestellt, dass nur Personen Nachrichten verschicken können, die wirklich Corona haben.</string>
-    <string name="faq_upload_keys_paragraph_2">"Nach der Kontrolle Ihres GGD-Schlüssels können Sie die Codes teilen, die Ihr Telefon in den letzten 14 Tagen an andere Telefone geschickt hat.\n\nSo können die Personen, in deren Nähe Sie waren, als Sie ansteckend waren, eine anonyme Nachricht erhalten. Aber nur, wenn diese Personen auch die App verwenden."</string>
+    <string name="faq_upload_keys_paragraph_2">"Nach der Kontrolle Ihres GGD-Schlüssels können Sie die Codes teilen, die Ihr Telefon in den letzten 14 Tagen an andere Telefone geschickt hat.\n\nSo können die Personen, in deren Nähe Sie waren, als Sie ansteckend waren, eine Nachricht erhalten. Aber nur, wenn diese Personen auch die App verwenden."</string>
     <string name="faq_bluetooth_paragraph_1">"Ja, aber das Signal ist dann sehr schwach. Bluetooth funktioniert am besten, wenn Ihr Telefon im selben Raum ist wie das Telefon der anderen Person. \n\nEs ist zum Beispiel sehr unwahrscheinlich, dass Ihre App das Bluetooth-Signal des Nachbarn auffängt.\n\nDeshalb ist es auch sehr unwahrscheinlich, dass Sie eine Nachricht erhalten, wenn sich Ihr Nachbar mit Corona angesteckt hat und Sie nicht im selben Raum waren."</string>
     <string name="faq_power_usage_paragraph_1">Die App verwendet Bluetooth Low Energy. Das ist eine Sonderform von Bluetooth, die sehr wenig Strom verbraucht. Es hängt von Ihrem Telefon ab, wieviel Prozent das genau sind.</string>
     <string name="faq_deletion_paragraph_1">"Sie können die Bluetooth-Daten, die CoronaMelder gespeichert hat, selbst löschen. Tippen Sie auf die untenstehende Taste und danach auf&lt;strong&gt;Zufallserkennungen löschen&lt;/strong&gt;. \n\nMöchten Sie, dass die App keine neuen Bluetooth-Daten mehr speichert? Entfernen Sie dann die App."</string>
@@ -148,7 +148,7 @@
     <string name="faq_location_permission_paragraph_1">CoronaMelder weiß nicht, wo Sie sind. Ihre Standorteinstellungen müssen aber aktiviert sein. Sonst funktioniert die App nicht. Das klingt vielleicht komisch. Es ist so:\n\nCoronaMelder verwendet ‘Bluetooth Scanning’. Das ist eine andere Bluetooth-Technik als die, mit der zum Beispiel Verbindung mit einem drahtlosen Kopfhörer hergestellt wird. Bluetooth Scanning verbraucht wenig Strom. Damit tauscht die App willkürliche Codes mit Telefonen in der Nähe aus.\n\nEinige Apps (nicht CoronaMelder) verwenden Bluetooth Scanning zur Standortbestimmung. Deshalb müssen Standorteinstellungen immer aktiviert sein , um Bluetooth Scanning zu verwenden. Auch wenn eine App nicht Ihren Standort benutzt.\n\nBitte merken Sie sich: CoronaMelder hat nie Zugang zu Ihrem Standort.</string>
     <string name="faq_technical_toolbar_title">Technische Erläuterungen</string>
     <string name="faq_technical_header_1">1. Die App erstellt für jedes Telefon einen eigenen Code.</string>
-    <string name="faq_technical_paragraph_2">Der Code enthält keine Informationen über Sie oder Ihr Telefon. Der Code ist völlig anonym und ändert sich alle 15 Minuten.</string>
+    <string name="faq_technical_paragraph_2">Der Code enthält keine Informationen über Sie oder Ihr Telefon. Der Code ist völlig willkürlich und ändert sich alle 15 Minuten.</string>
     <string name="faq_technical_header_3">2. Telefone tauschen ihre Codes aus, wenn sie dicht beieinander sind.</string>
     <string name="faq_technical_paragraph_4">Hat die Person, der Sie begegnen, auch die App? Dann tauschen beide Telefone ihre Codes über Bluetooth Low Energy miteinander aus. So weiß die App, welche Telefone dicht beieinander waren. Die App weiß nicht, zu wem die Telefone gehören oder wo Sie gewesen sind.</string>
     <string name="faq_technical_header_5">3. Stellt sich heraus, dass eine Person Corona hat? Dann kann diese Person ihre Codes auf eine Liste setzen.</string>
@@ -162,13 +162,13 @@
     <string name="share_content">Ich helfe dabei, Corona mit CoronaMelder unter Kontrolle zu bekommen. Machen Sie auch mit? %1$s</string>
     <string name="share_title">App mit anderen teilen</string>
     <string name="lab_test_toolbar_title">GGD-Schlüssel</string>
-    <string name="lab_test_paragraph_1"><![CDATA[Wurden Sie getestet und haben Sie Corona? Dann ruft Sie ein GGD-Mitarbeiter an. Sie benötigen dazu Ihren GGD-Schlüssel. <a href="">Wie funktioniert das?</a>]]></string>
+    <string name="lab_test_paragraph_1"><![CDATA[Wurden Sie getestet und haben Sie Corona? Dann ruft Sie ein GGD-Mitarbeiter an. Der Mitarbeiter wird Ihnen dabei helfen, anderen zu warnen, die in Ihrer Nähe waren. Sie benötigen dazu Ihren GGD-Schlüssel. <a href="">Wie funktioniert das?</a>]]></string>
     <string name="lab_test_step_1">Leiten Sie diesen GGD-Schlüssel an den GGD-Mitarbeiter weiter:</string>
     <string name="lab_test_token_loading">Schlüssel wird geladen</string>
     <string name="lab_test_token_error">Die App konnte keinen GGD-Schlüssel laden. Kontrollieren Sie die Internetverbindung.</string>
     <string name="lab_test_token_retry">Versuchen Sie es erneut.</string>
     <string name="lab_test_step_2">Warten Sie auf den GGD-Mitarbeiter, bevor Sie fortfahren.</string>
-    <string name="lab_test_step_3">Warnen Sie andere mit einer anonymen Nachricht.</string>
+    <string name="lab_test_step_3">Warnen Sie andere durch das Senden einer Nachricht.</string>
     <string name="lab_test_button">Weiter</string>
     <string name="lab_test_upload_error">Es ist nicht gelungen, anderen eine Nachricht zu schicken. Versuchen Sie es später erneut.</string>
     <string name="lab_test_done_toolbar_title">Danke.</string>
@@ -230,18 +230,34 @@
     <string name="cross_links_header">Lesen Sie auch</string>
     <string name="request_test_header_5">Coronatest anfordern</string>
     <string name="post_notification_guidance_follow_ggd">Gibt Ihnen der GGD andere Anweisungen per Telefon als die App? Befolgen Sie dann die Anweisungen des GGD.</string>
-    <string name="post_notification_stay_home_header">Bleiben Sie bis zum %1$s zu Hause.</string>
+    <string name="post_notification_stay_home_header">Bleiben Sie bis einschließlich %1$s zu Hause.</string>
     <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Lassen Sie Ihre Einkäufe von anderen machen. Ist dies nicht möglich und haben Sie keine Symptome? Dann können Sie für kurze Zeit das Haus verlassen, um Ihre Einkäufe zu erledigen. Halten Sie einen Abstand von 1,5 Metern ein und berühren Sie niemanden.</li><li> Sie dürfen im Garten oder auf dem Balkon sitzen.</li><li>Kinder im Alter von 4 - 12 Jahren dürfen in die Schule und/oder zum Sport.</li></ul>]]></string>
     <string name="post_notification_no_visitors_header">Empfangen Sie keinen Besuch.</string>
     <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>Es dürfen nur Personen, die bei Ihnen wohnen, in Ihrer Wohnung sein. Bleiben Sie sich fern und halten Sie 1,5 Meter abstand. Also keine Umarmungen, keine Küsse und kein Sex.</li></ul>]]></string>
     <string name="post_notification_medical_help_list"><![CDATA[<ul><li>Gehen Sie nicht zu Ihrem Hausarzt oder ins Krankenhaus, sondern rufen Sie zuerst Ihren Hausarzt an. </li><li>Erzählen Sie Ihrem Arzt, dass Sie Kontakt zu jemandem hatten, der das Coronavirus hat. Ihr Hausarzt oder medizinisches Personal darf Sie zu Hause besuchen.</li></ul>]]></string>
     <string name="post_notification_medical_help_header">Brauchen Sie medizinische Hilfe?</string>
     <string name="post_notification_after_stay_home_header">Ab dem %1$s</string>
-    <string name="post_notification_after_stay_home_paragraph">Haben Sie bis zum %1$s keine Symptome bekommen? Dann brauchen Sie nicht mehr zu Hause zu bleiben. Halten Sie aber weiter die allgemeine Corona-Verhaltensregeln ein.</string>
+    <string name="post_notification_after_stay_home_paragraph">Haben Sie bis einschließlich %1$s keine Symptome bekommen? Dann brauchen Sie nicht mehr zu Hause zu bleiben. Halten Sie aber weiter die allgemeine Corona-Verhaltensregeln ein.</string>
     <string name="generic_notification_advice_stay_home">Bleiben Sie in jedem Fall zu Hause, bis Sie sicher sind, dass Sie keine Corona haben. So vermeiden Sie, dass Sie unbewusst andere Menschen anstecken.</string>
     <string name="generic_notification_exposure_summaries">"Manchmal erhalten Sie Nachrichten, in denen steht, dass Ihr Smartphone COVID-19-Überprüfungen ausführt. Öffnen Sie dann den CoronaMelder. Gut zu wissen: Meistens ist alles in Ordnung.
 "</string>
     <string name="generic_notification_header_3">Wie sieht eine Nachricht aus?</string>
     <string name="generic_notification_paragraph_5">Klicken Sie auf die Nachricht, um CoronaMelder zu öffnen. Dort lesen Sie, was Sie tun können.</string>
     <string name="request_test_paragraph_3">Lassen Sie sich kostenlos testen. Es dauert nicht lange und Sie können meistens schnell einen Termin vereinbaren. Das Ergebnis ist innerhalb von 48 Stunden bekannt. Bleiben Sie zu Hause, bis Sie das Ergebnis haben.</string>
+    <string name="generic_notification_sample_notification_content_description">Beispiel einer Nachricht</string>
+    <string name="onboarding_enable_headline">Aktivieren Sie CoronaMelder</string>
+    <string name="onboarding_enable_description">CoronaMelder kann Sie nur warnen, wenn Sie der App die Erlaubnis erteilen, Begegnungen mit anderen App-Nutzern aufzuzeichnen.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kann Sie nur warnen, wenn Sie der App die Erlaubnis erteilen, um:<br/><br/><ul><li>Begegnungen mit anderen App-Nutzern aufzuzeichnen</li><li>Ihre Standort-Einstellungen einzuschalten (CoronaMelder kennt Ihren Standort nicht)</li></ul>]]></string>
+    <string name="location_services_required_title">Standort-Einstellungen</string>
+    <string name="location_services_required_headline">Die App funktioniert nur, wenn die Standort-Einstellungen eingeschaltet sind.</string>
+    <string name="location_services_required_description">Einige Apps nutzen Bluetooth, um Ihren Standort zu bestimmen. Deshalb ist dies Teil der Standort-Einstellungen. CoronaMelder benötigt Bluetooth, um zu funktionieren, hat jedoch nie Zugang zu Ihrem Standort.</string>
+    <string name="location_services_required_explain">Wie funktioniert das genau?</string>
+    <string name="location_services_required_enable_error">Standort-Einstellungen können nicht geöffnet werden.</string>
+    <string name="onboarding_privacy_policy_bt_keys">Ihre App versendet verschlüsselte Bluetooth-Daten.</string>
+    <string name="onboarding_privacy_policy_retention">Andere Benutzer, mit denen Sie Kontakt hatten, speichern diese Daten höchstens 14 Tage.</string>
+    <string name="onboarding_privacy_policy_data_removal">Sie können die Daten auf Ihrem Telefon jederzeit löschen.</string>
+    <string name="onboarding_privacy_policy_identity"><![CDATA[Ihr Name wird <b>nicht</b> verwendet oder gespeichert.]]></string>
+    <string name="onboarding_privacy_policy_location"><![CDATA[Ihre GPS- oder Standortdaten werden <b>nicht</b> verwendet oder gespeichert.]]></string>
+    <string name="onboarding_privacy_policy_send_alert">Wenn ein Coronatest ergibt, dass Sie Corona haben, können Sie dies in der App melden, um andere Benutzer zu warnen.</string>
+    <string name="onboarding_privacy_policy_voluntary">Die Verwendung von CoronaMelder ist immer freiwillig.</string>
 </resources>

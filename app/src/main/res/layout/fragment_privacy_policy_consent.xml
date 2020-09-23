@@ -81,10 +81,25 @@
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
                         android:text="@string/onboarding_privacy_policy_paragraph"
                         android:textAppearance="?attr/textAppearanceBody1"
-                        app:layout_constraintBottom_toTopOf="@id/check_1"
+                        app:layout_constraintBottom_toTopOf="@id/voluntary"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/headline" />
+
+                    <include
+                        android:id="@+id/voluntary"
+                        layout="@layout/include_enable_api_step"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        app:image="@{@drawable/ic_shield_privacy}"
+                        app:itemText="@{@string/onboarding_privacy_policy_voluntary}"
+                        app:layout_constraintBottom_toTopOf="@id/check_1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/description" />
 
                     <include
                         android:id="@+id/check_1"
@@ -94,12 +109,12 @@
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        app:image="@{@drawable/ic_shield_lock}"
-                        app:itemText="@{@string/onboarding_privacy_policy_check_1}"
+                        app:image="@{@drawable/ic_shield_bluetooth}"
+                        app:itemText="@{@string/onboarding_privacy_policy_bt_keys}"
                         app:layout_constraintBottom_toTopOf="@id/check_2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/description" />
+                        app:layout_constraintTop_toBottomOf="@id/voluntary" />
 
                     <include
                         android:id="@+id/check_2"
@@ -109,8 +124,8 @@
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        app:image="@{@drawable/ic_shield_lock}"
-                        app:itemText="@{@string/onboarding_privacy_policy_check_2}"
+                        app:image="@{@drawable/ic_shield_bluetooth}"
+                        app:itemText="@{@string/onboarding_privacy_policy_retention}"
                         app:layout_constraintBottom_toTopOf="@id/check_3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -124,8 +139,9 @@
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        app:image="@{@drawable/ic_shield_lock}"
-                        app:itemText="@{@string/onboarding_privacy_policy_check_3}"
+                        app:image="@{@drawable/ic_shield_bluetooth}"
+                        app:itemText="@{@string/onboarding_privacy_policy_data_removal}"
+                        tools:text="@string/onboarding_privacy_policy_data_removal"
                         app:layout_constraintBottom_toTopOf="@id/check_4"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -139,13 +155,43 @@
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        android:layout_marginBottom="16dp"
                         app:image="@{@drawable/ic_shield_lock}"
-                        app:itemText="@{@string/onboarding_privacy_policy_check_4}"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:itemText="@{@string/onboarding_privacy_policy_identity}"
+                        app:layout_constraintBottom_toTopOf="@id/check_5"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/check_3" />
+
+                    <include
+                        android:id="@+id/check_5"
+                        layout="@layout/include_enable_api_step"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        app:image="@{@drawable/ic_shield_lock}"
+                        app:itemText="@{@string/onboarding_privacy_policy_location}"
+                        app:layout_constraintBottom_toTopOf="@id/check_6"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/check_4" />
+
+                    <include
+                        android:id="@+id/check_6"
+                        layout="@layout/include_enable_api_step"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="16dp"
+                        app:image="@{@drawable/ic_shield_bell}"
+                        app:itemText="@{@string/onboarding_privacy_policy_send_alert}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/check_5" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
 

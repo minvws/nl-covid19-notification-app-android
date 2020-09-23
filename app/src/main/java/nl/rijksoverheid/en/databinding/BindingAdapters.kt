@@ -12,9 +12,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
-import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
+import nl.rijksoverheid.en.util.fromHtmlWithCustomReplacements
 
 object BindingAdapters {
     @JvmStatic
@@ -64,7 +64,7 @@ object BindingAdapters {
     @JvmStatic
     @BindingAdapter("htmlText")
     fun setHtmlText(view: TextView, htmlText: String) {
-        view.text = HtmlCompat.fromHtml(htmlText, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        view.text = fromHtmlWithCustomReplacements(view.context, htmlText)
     }
 
     @JvmStatic

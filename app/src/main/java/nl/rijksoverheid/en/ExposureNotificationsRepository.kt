@@ -221,7 +221,7 @@ class ExposureNotificationsRepository(
      * Check the location manager to see if location is enabled.
      * @return false if location is not enabled, true if the [LocationManager] service is null or if running on Android R and up
      */
-    private fun isLocationPreconditionSatisfied(): Boolean {
+    fun isLocationPreconditionSatisfied(): Boolean {
         return context.getSystemService(LocationManager::class.java)
             ?.let { LocationManagerCompat.isLocationEnabled(it) || exposureNotificationsApi.deviceSupportsLocationlessScanning() }
             ?: true
