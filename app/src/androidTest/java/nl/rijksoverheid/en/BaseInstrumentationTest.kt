@@ -6,18 +6,4 @@
  */
 package nl.rijksoverheid.en
 
-import com.microsoft.appcenter.espresso.Factory
-import com.microsoft.appcenter.espresso.ReportHelper
-import org.junit.After
-import org.junit.Rule
-
-abstract class BaseInstrumentationTest {
-    @JvmField
-    @Rule
-    val reportHelper: ReportHelper = Factory.getReportHelper()
-
-    @After
-    open fun tearDown() {
-        reportHelper.label("End of test")
-    }
-}
+abstract class BaseInstrumentationTest
