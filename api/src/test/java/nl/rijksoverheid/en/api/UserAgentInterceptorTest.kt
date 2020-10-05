@@ -38,16 +38,17 @@ class UserAgentInterceptorTest {
 
     @Test
     fun `Check if the request contains the expected user-agent header`() {
+        val appVersionCode = 71407
         val expectedUserAgent =
             "CoronaMelder/" +
-                "${BuildConfig.VERSION_CODE} " +
+                "$appVersionCode " +
                 "(${Build.MANUFACTURER} ${Build.MODEL}) " +
                 "Android (${Build.VERSION.SDK_INT})"
 
         mockWebServer.enqueue(MockResponse().setBody("Test"))
 
         val okHttpBuilder = OkHttpClient.Builder()
-        okHttpBuilder.addInterceptor(UserAgentInterceptor())
+        okHttpBuilder.addInterceptor(UserAgentInterceptor(appVersionCode))
 
         val request: Request = Request.Builder().url(mockWebServer.url("/").toUrl()).build()
         val result = okHttpBuilder.build().newCall(request).execute().body

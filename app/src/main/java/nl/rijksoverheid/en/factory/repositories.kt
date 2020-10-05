@@ -42,7 +42,7 @@ private var statusCache: StatusCache? = null
 private const val MINIMUM_PLAY_SERVICES_VERSION = 202665000
 
 fun createExposureNotificationsRepository(context: Context): ExposureNotificationsRepository {
-    val service = cdnService ?: CdnService.create(context).also { cdnService = it }
+    val service = cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE).also { cdnService = it }
     val statusCache = statusCache ?: StatusCache(
         context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.cache", 0)
     ).also { statusCache = it }
@@ -104,11 +104,11 @@ fun createLabTestRepository(context: Context): LabTestRepository {
 }
 
 private fun createLabTestService(context: Context): LabTestService {
-    return labTestService ?: LabTestService.create(context).also { labTestService = it }
+    return labTestService ?: LabTestService.create(context, BuildConfig.VERSION_CODE).also { labTestService = it }
 }
 
 fun createAppConfigManager(context: Context): AppConfigManager {
-    val service = cdnService ?: CdnService.create(context).also { cdnService = it }
+    val service = cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE).also { cdnService = it }
     return AppConfigManager(service)
 }
 

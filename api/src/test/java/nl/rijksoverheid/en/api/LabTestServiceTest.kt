@@ -46,6 +46,7 @@ class LabTestServiceTest {
     fun `postKeys with interceptor signs request`() = runBlocking {
         val api = LabTestService.create(
             ApplicationProvider.getApplicationContext(),
+            BuildConfig.VERSION_CODE,
             baseUrl = mockWebServer.url("").toString()
         )
         mockWebServer.enqueue(MockResponse())
@@ -69,6 +70,7 @@ class LabTestServiceTest {
     fun `postKeys converts padding to base64`() = runBlocking {
         val api = LabTestService.create(
             ApplicationProvider.getApplicationContext(),
+            BuildConfig.VERSION_CODE,
             baseUrl = mockWebServer.url("").toString()
         )
         mockWebServer.enqueue(MockResponse())
@@ -94,6 +96,7 @@ class LabTestServiceTest {
     fun `postKeys adds padding to the request`() = runBlocking {
         val api = LabTestService.create(
             ApplicationProvider.getApplicationContext(),
+            BuildConfig.VERSION_CODE,
             baseUrl = mockWebServer.url("").toString()
         )
         mockWebServer.enqueue(MockResponse())
@@ -130,6 +133,7 @@ class LabTestServiceTest {
     fun `register adds padding to the request`() = runBlocking {
         val api = LabTestService.create(
             ApplicationProvider.getApplicationContext(),
+            BuildConfig.VERSION_CODE,
             baseUrl = mockWebServer.url("").toString()
         )
         mockWebServer.enqueue(MockResponse().setBody("{\"labConfirmationId\":\"server-code\",\"bucketId\":\"vPUC39ia6grsuAnpEEullKJTea6XBJC475EEKpZaD+I=\",\"confirmationKey\":\"I+dl3vS844SEZNYUZ1GDayU9yfGhN5oF0ae70q+Runk=\",\"validity\":64028}"))

@@ -14,7 +14,7 @@ import okhttp3.Response
  * Interceptor that modifies the user-agent so it contains the Device model,
  * OS version and App version.
  */
-class UserAgentInterceptor : Interceptor {
+class UserAgentInterceptor(appVersionCode: Int) : Interceptor {
 
     companion object {
         private const val USER_AGENT = "User-Agent"
@@ -22,7 +22,7 @@ class UserAgentInterceptor : Interceptor {
 
     private val userAgent: String =
         "CoronaMelder/" +
-            "${BuildConfig.VERSION_CODE} " +
+            "$appVersionCode " +
             "(${Build.MANUFACTURER} ${Build.MODEL}) " +
             "Android (${Build.VERSION.SDK_INT})"
 
