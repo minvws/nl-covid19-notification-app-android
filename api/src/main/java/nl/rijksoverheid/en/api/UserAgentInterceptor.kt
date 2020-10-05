@@ -21,10 +21,7 @@ class UserAgentInterceptor(appVersionCode: Int) : Interceptor {
     }
 
     private val userAgent: String =
-        "CoronaMelder/" +
-            "$appVersionCode " +
-            "(${Build.MANUFACTURER} ${Build.MODEL}) " +
-            "Android (${Build.VERSION.SDK_INT})"
+        "CoronaMelder/$appVersionCode (${Build.MANUFACTURER} ${Build.MODEL}) Android (${Build.VERSION.SDK_INT})"
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestWithUserAgent = chain.request().newBuilder()
