@@ -17,6 +17,9 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentAppUpdateRequiredBinding
+import timber.log.Timber
+
+private const val APP_GALLERY_PACKAGE = "com.huawei.appmarket"
 
 class AppUpdateRequiredFragment : BaseFragment(R.layout.fragment_app_update_required) {
     private val args: AppUpdateRequiredFragmentArgs by navArgs()
@@ -35,6 +38,25 @@ class AppUpdateRequiredFragment : BaseFragment(R.layout.fragment_app_update_requ
     }
 
     private fun openAppStore() {
+        when (args.appStorePackage) {
+            APP_GALLERY_PACKAGE -> openAppGallery()
+            else -> openPlayStore()
+        }
+    }
+
+    private fun openAppGallery() {
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("appmarket://details?id=${BuildConfig.APPLICATION_ID}")
+        ).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+            requireActivity().startActivity(intent)
+        } catch (ex: ActivityNotFoundException) {
+            Timber.w("Could not open app gallery!")
+        }
+    }
+
+    private fun openPlayStore() {
         val intent = Intent(
             Intent.ACTION_VIEW,
             Uri.parse("market://details?id=${BuildConfig.APPLICATION_ID}")
