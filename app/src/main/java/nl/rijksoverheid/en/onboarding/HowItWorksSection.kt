@@ -13,6 +13,7 @@ import nl.rijksoverheid.en.about.FAQItem
 import nl.rijksoverheid.en.about.FAQItemId.ANONYMOUS
 import nl.rijksoverheid.en.about.FAQItemId.BLUETOOTH
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION
+import nl.rijksoverheid.en.about.FAQItemId.LOCATION_PERMISSION
 import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION
 import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION_MESSAGE
 import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
@@ -22,8 +23,9 @@ class HowItWorksSection : Section(
     listOf(
         FAQHeaderItem(R.string.faq_header),
         FAQItem(REASON),
-        FAQItem(ANONYMOUS),
         FAQItem(LOCATION),
+        FAQItem(LOCATION_PERMISSION),
+        FAQItem(ANONYMOUS),
         FAQItem(NOTIFICATION),
         FAQItem(NOTIFICATION_MESSAGE),
         FAQItem(BLUETOOTH),
