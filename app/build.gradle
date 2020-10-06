@@ -5,6 +5,7 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: "com.github.triplet.play"
 apply plugin: "com.osacky.fladle"
 apply plugin: 'com.google.firebase.appdistribution'
+apply plugin: 'ru.cian.huawei-publish'
 
 version = "1.0.4"
 def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 71407
@@ -133,6 +134,15 @@ play {
     enabled = System.getenv("PLAY_STORE_CREDENTIALS") != null
     serviceAccountCredentials = System.getenv("PLAY_STORE_CREDENTIALS") != null ? new File(System.getenv("PLAY_STORE_CREDENTIALS")) : null
     track = "internal"
+}
+
+huaweiPublish {
+    instances {
+        prodRelease {
+            buildFormat = "aab"
+            publish = false
+        }
+    }
 }
 
 fladle {
