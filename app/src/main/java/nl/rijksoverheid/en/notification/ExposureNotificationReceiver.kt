@@ -22,6 +22,8 @@ class ExposureNotificationReceiver : BroadcastReceiver() {
             } else {
                 Timber.e("No token")
             }
+        } else if (intent.action == ExposureNotificationClient.ACTION_EXPOSURE_NOT_FOUND) {
+            Timber.d("No exposure detected")
         }
     }
 }
