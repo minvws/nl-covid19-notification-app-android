@@ -6,12 +6,10 @@
  */
 package nl.rijksoverheid.en.status
 
-import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.PowerManager
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
@@ -19,21 +17,23 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
-import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.config.isTestPhaseVersion
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.formatExposureDate
+import nl.rijksoverheid.en.util.isIgnoringBatteryOptimizations
+import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
 import timber.log.Timber
 
-private const val RC_DISABLE_BATTERY_OPTIMISATIONS = 1
+private const val RC_DISABLE_BATTERY_OPTIMIZATIONS = 1
 
 class StatusFragment @JvmOverloads constructor(
     factoryProducer: (() -> ViewModelProvider.Factory)? = null
@@ -126,31 +126,24 @@ class StatusFragment @JvmOverloads constructor(
             }
         }
 
-        if (!isIgnoringBatteryOptimizations()) {
-            section.showBatteryOptimisationsError { requestDisableBatteryOptimisations() }
-        }
-    }
-
-    @SuppressLint("BatteryLife")
-    private fun requestDisableBatteryOptimisations() {
-        startActivityForResult(
-            Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).setData(Uri.parse("package:${BuildConfig.APPLICATION_ID}")),
-            RC_DISABLE_BATTERY_OPTIMISATIONS
-        )
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_DISABLE_BATTERY_OPTIMISATIONS) {
-            if (isIgnoringBatteryOptimizations()) {
-                section.removeBatteryOptimisationsError()
+        viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
+            if (!requireContext().isIgnoringBatteryOptimizations()) {
+                section.showBatteryOptimisationsError {
+                    requestDisableBatteryOptimizations(
+                        RC_DISABLE_BATTERY_OPTIMIZATIONS
+                    )
+                }
             }
         }
     }
 
-    private fun isIgnoringBatteryOptimizations(): Boolean {
-        return requireContext().getSystemService(PowerManager::class.java)!!
-            .isIgnoringBatteryOptimizations(BuildConfig.APPLICATION_ID)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_DISABLE_BATTERY_OPTIMIZATIONS) {
+            if (requireContext().isIgnoringBatteryOptimizations()) {
+                section.removeBatteryOptimisationsError()
+            }
+        }
     }
 
     private fun resetAndRequestEnableNotifications() {
