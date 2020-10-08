@@ -81,4 +81,30 @@ class ResponseSignatureValidatorTest {
 
         validator.verifySignature(target, signature)
     }
+
+    @Test(expected = SignatureValidationException::class)
+    fun `Signature with an invalid CN does not validate`() {
+        val trustManager =
+            TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+        val keyStore = KeyStore.getInstance(KeyStore.getDefaultType())
+        // root key is on the device
+        keyStore.load(
+            ResponseSignatureValidatorTest::class.java.getResourceAsStream("/nl-root.jks"),
+            "test".toCharArray()
+        )
+        trustManager.init(keyStore)
+
+        val validator = ResponseSignatureValidator(
+            trustManager = trustManager.trustManagers[0] as X509TrustManager,
+            validateCN = { it.contains("InvalidCN") }
+        )
+
+        val signature =
+            ResponseSignatureValidatorTest::class.java.getResourceAsStream("/content.sig")!!
+                .readBytes()
+        val target =
+            ResponseSignatureValidatorTest::class.java.getResourceAsStream("/export.bin")!!
+
+        validator.verifySignature(target, signature)
+    }
 }

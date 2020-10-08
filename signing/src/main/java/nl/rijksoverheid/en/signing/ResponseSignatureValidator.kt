@@ -43,7 +43,8 @@ private val DEFAULT_AUTHORITY_KEY_IDENTIFIER =
 class ResponseSignatureValidator(
     trustManager: X509TrustManager = getDefaultTrustManager(),
     trustAnchorSubjectKeyIdentifier: SubjectKeyIdentifier = DEFAULT_ANCHOR_SUBJECT_KEY_IDENTIFIER,
-    private val authorityKeyIdentifier: ByteArray = DEFAULT_AUTHORITY_KEY_IDENTIFIER
+    private val authorityKeyIdentifier: ByteArray = DEFAULT_AUTHORITY_KEY_IDENTIFIER,
+    private val validateCN: (cn: String) -> Boolean = ::validateCN
 ) {
 
     private val trustAnchor: TrustAnchor?
@@ -94,12 +95,11 @@ class ResponseSignatureValidator(
                 ?: throw SignatureValidationException()
             val signingCertificate = result.certPath.certificates[0] as X509Certificate
 
-            val validCN = verifyCN(signingCertificate)
-
-            if (!signer.verify(
+            if (!verifyCN(signingCertificate) ||
+                !signer.verify(
                     JcaSimpleSignerInfoVerifierBuilder().setProvider(provider)
                         .build(signingCertificate)
-                ) || !validCN
+                )
             ) {
                 throw SignatureValidationException()
             }
@@ -137,7 +137,7 @@ class ResponseSignatureValidator(
     private fun verifyCN(signingCertificate: X509Certificate): Boolean {
         return JcaX509CertificateHolder(signingCertificate).subject.getRDNs(BCStyle.CN).any {
             val cn = IETFUtils.valueToString(it.first.value)
-            cn.matches(".*(?i)CoronaMelder.*\\.nl$".toRegex())
+            validateCN(cn)
         }
     }
 }
@@ -149,5 +149,8 @@ private fun getDefaultTrustManager(): X509TrustManager {
     tm.init(null as? KeyStore)
     return tm.trustManagers[0] as X509TrustManager
 }
+
+private fun validateCN(cn: String) =
+    cn.contains("CoronaMelder", true) && cn.endsWith(".nl")
 
 class SignatureValidationException : RuntimeException()
