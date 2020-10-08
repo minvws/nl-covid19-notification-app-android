@@ -259,4 +259,6 @@
     <string name="onboarding_privacy_policy_location"><![CDATA[GPS данните или данните за местоположението ти <b>не</b> се използват или съхраняват.]]></string>
     <string name="onboarding_privacy_policy_send_alert">Ако тест за коронавирус покаже, че имаш коронавирус, можеш да съобщиш за това в приложението, за да предупредиш други  потребители.</string>
     <string name="onboarding_privacy_policy_voluntary">Използването на CoronaMelder винаги е доброволно</string>
+    <string name="status_error_battery_optimisation">Batterij-optimalisatie staat aan. Hierdoor kan de app niet controleren of de mensen die jij hebt ontmoet later corona bleken te hebben. Tip: open de app elke 24 uur als je batterij-optimalisatie niet uitzet.</string>
+    <string name="status_error_action_disable_battery_optimisation">Batterij-optimalisatie uitzetten</string>
 </resources>

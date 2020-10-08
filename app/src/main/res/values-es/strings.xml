@@ -261,4 +261,6 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="onboarding_privacy_policy_location"><![CDATA[La app <b>no</b> utiliza ni guarda tus datos GPS ni de localización.]]></string>
     <string name="onboarding_privacy_policy_send_alert">Si te has hecho un test y resulta que tienes coronavirus, puedes usar la app para avisar a otros usuarios.</string>
     <string name="onboarding_privacy_policy_voluntary">El uso de CoronaMelder siempre es voluntario</string>
+    <string name="status_error_battery_optimisation">Batterij-optimalisatie staat aan. Hierdoor kan de app niet controleren of de mensen die jij hebt ontmoet later corona bleken te hebben. Tip: open de app elke 24 uur als je batterij-optimalisatie niet uitzet.</string>
+    <string name="status_error_action_disable_battery_optimisation">Batterij-optimalisatie uitzetten</string>
 </resources>

@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.status
 
+import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 
 class StatusSection : Section() {
@@ -14,7 +15,10 @@ class StatusSection : Section() {
     private var errorState: StatusViewModel.ErrorState = StatusViewModel.ErrorState.None
 
     private val headerGroup = Section()
-    private val errorGroup = Section()
+    private val errorGroup = Section().apply {
+        setHideWhenEmpty(true)
+    }
+    private val errorItems = mutableListOf<Item<*>>()
 
     init {
         addAll(
@@ -43,11 +47,24 @@ class StatusSection : Section() {
     ) {
         if (this.errorState != errorState) {
             this.errorState = errorState
-            if (errorState is StatusViewModel.ErrorState.None) {
-                errorGroup.clear()
-            } else {
-                errorGroup.update(listOf(StatusErrorItem(errorState, action)))
+            errorItems.removeAll { it is StatusErrorItem }
+            if (errorState !is StatusViewModel.ErrorState.None) {
+                errorItems.add(0, StatusErrorItem(errorState, action))
             }
+            errorGroup.update(errorItems)
+        }
+    }
+
+    fun showBatteryOptimisationsError(action: () -> Unit) {
+        if (errorItems.firstOrNull { it is BatteryOptimisationErrorItem } == null) {
+            errorItems.add(BatteryOptimisationErrorItem(action))
+            errorGroup.update(errorItems)
+        }
+    }
+
+    fun removeBatteryOptimisationsError() {
+        if (errorItems.removeAll { it is BatteryOptimisationErrorItem }) {
+            errorGroup.update(errorItems)
         }
     }
 

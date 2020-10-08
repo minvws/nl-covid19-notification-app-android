@@ -265,4 +265,6 @@
     <string name="onboarding_privacy_policy_location"><![CDATA[<b> لا</ b>يتم استخدام أوتخزين بيانات الجي بي إس الخاصة بك أو بيانات موقعك الجغرافي.]]></string>
     <string name="onboarding_privacy_policy_send_alert">إذا تبين من اختبار كورونا أنك مصاب بكورونا، يمكنك الإبلاغ عن ذلك من خلال التطبيق لتحذير المستخدمين الآخرين.</string>
     <string name="onboarding_privacy_policy_voluntary">استخدام CoronaMelder طوعي دائمًا</string>
+    <string name="status_error_battery_optimisation">Batterij-optimalisatie staat aan. Hierdoor kan de app niet controleren of de mensen die jij hebt ontmoet later corona bleken te hebben. Tip: open de app elke 24 uur als je batterij-optimalisatie niet uitzet.</string>
+    <string name="status_error_action_disable_battery_optimisation">Batterij-optimalisatie uitzetten</string>
 </resources>

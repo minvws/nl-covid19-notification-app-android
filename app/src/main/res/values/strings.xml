@@ -260,4 +260,6 @@
     <string name="onboarding_privacy_policy_location"><![CDATA[Your GPS or location data will <b>not</b> be used or saved.]]></string>
     <string name="onboarding_privacy_policy_send_alert">If you\'ve been tested and have coronavirus, you can report it in the app to warn other users.</string>
     <string name="onboarding_privacy_policy_voluntary">Using CoronaMelder is never mandatory</string>
+    <string name="status_error_battery_optimisation">Batterij-optimalisatie staat aan. Hierdoor kan de app niet controleren of de mensen die jij hebt ontmoet later corona bleken te hebben. Tip: open de app elke 24 uur als je batterij-optimalisatie niet uitzet.</string>
+    <string name="status_error_action_disable_battery_optimisation">Batterij-optimalisatie uitzetten</string>
 </resources>

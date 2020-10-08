@@ -259,4 +259,6 @@
     <string name="onboarding_privacy_policy_location"><![CDATA[GPS veya konum verileriniz <b>kullanılmaz</b> veya kaydedilmez.]]></string>
     <string name="onboarding_privacy_policy_send_alert">Bir Korona testi Korona olduğunuzu gösterirse, diğer kullanıcıları uyarmak için bunu uygulamada bildirebilirsiniz.</string>
     <string name="onboarding_privacy_policy_voluntary">CoronaMelder\'ın kullanımı her zaman gönüllüdür</string>
+    <string name="status_error_battery_optimisation">Batterij-optimalisatie staat aan. Hierdoor kan de app niet controleren of de mensen die jij hebt ontmoet later corona bleken te hebben. Tip: open de app elke 24 uur als je batterij-optimalisatie niet uitzet.</string>
+    <string name="status_error_action_disable_battery_optimisation">Batterij-optimalisatie uitzetten</string>
 </resources>

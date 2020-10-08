@@ -6,10 +6,12 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.PowerManager
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
@@ -22,6 +24,7 @@ import androidx.navigation.fragment.findNavController
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
+import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.config.isTestPhaseVersion
@@ -29,6 +32,8 @@ import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.formatExposureDate
 import timber.log.Timber
+
+private const val RC_DISABLE_BATTERY_OPTIMISATIONS = 1
 
 class StatusFragment @JvmOverloads constructor(
     factoryProducer: (() -> ViewModelProvider.Factory)? = null
@@ -120,6 +125,32 @@ class StatusFragment @JvmOverloads constructor(
                 is StatusViewModel.ErrorState.ConsentRequired -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
             }
         }
+
+        if (!isIgnoringBatteryOptimizations()) {
+            section.showBatteryOptimisationsError { requestDisableBatteryOptimisations() }
+        }
+    }
+
+    @SuppressLint("BatteryLife")
+    private fun requestDisableBatteryOptimisations() {
+        startActivityForResult(
+            Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).setData(Uri.parse("package:${BuildConfig.APPLICATION_ID}")),
+            RC_DISABLE_BATTERY_OPTIMISATIONS
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_DISABLE_BATTERY_OPTIMISATIONS) {
+            if (isIgnoringBatteryOptimizations()) {
+                section.removeBatteryOptimisationsError()
+            }
+        }
+    }
+
+    private fun isIgnoringBatteryOptimizations(): Boolean {
+        return requireContext().getSystemService(PowerManager::class.java)!!
+            .isIgnoringBatteryOptimizations(BuildConfig.APPLICATION_ID)
     }
 
     private fun resetAndRequestEnableNotifications() {
