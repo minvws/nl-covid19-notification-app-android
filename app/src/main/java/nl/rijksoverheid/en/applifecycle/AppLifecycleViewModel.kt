@@ -7,21 +7,18 @@
 package nl.rijksoverheid.en.applifecycle
 
 import android.annotation.SuppressLint
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.config.AppConfigManager
-import nl.rijksoverheid.en.config.saveIsTestPhaseVersion
 import nl.rijksoverheid.en.lifecyle.Event
 
 @SuppressLint("StaticFieldLeak")
 class AppLifecycleViewModel(
     private val appLifecycleManager: AppLifecycleManager,
-    private val appConfigManager: AppConfigManager,
-    private val context: Context
+    private val appConfigManager: AppConfigManager
 ) : ViewModel() {
 
     val updateEvent: LiveData<Event<AppLifecycleStatus>> =
@@ -30,7 +27,6 @@ class AppLifecycleViewModel(
     fun checkForForcedAppUpdate() {
         viewModelScope.launch {
             val config = appConfigManager.getConfigOrDefault()
-            context.saveIsTestPhaseVersion(config.testPhase)
             if (config.deactivated) {
                 (updateEvent as MutableLiveData).value = Event(AppLifecycleStatus.EndOfLife)
             } else {

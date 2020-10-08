@@ -13,7 +13,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -24,7 +23,6 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.config.isTestPhaseVersion
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.formatExposureDate
@@ -54,8 +52,6 @@ class StatusFragment @JvmOverloads constructor(
             findNavController().navigate(StatusFragmentDirections.actionOnboarding())
         }
 
-        section.setTestVersion(isTestPhaseVersion())
-
         val binding = FragmentStatusBinding.bind(view)
         binding.content.adapter = adapter
         adapter.setOnItemClickListener { item, _ ->
@@ -73,15 +69,6 @@ class StatusFragment @JvmOverloads constructor(
                 StatusActionItem.LabTest -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionLabTest()
                 )
-                is TestStatusFooterItem -> {
-                    val url = Uri.parse(
-                        getString(
-                            R.string.test_phase_url,
-                            getString(R.string.app_language)
-                        )
-                    )
-                    CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
-                }
             }
         }
 

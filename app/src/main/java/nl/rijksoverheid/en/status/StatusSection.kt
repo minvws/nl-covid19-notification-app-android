@@ -33,10 +33,6 @@ class StatusSection : Section() {
         setFooter(StatusFooterItem())
     }
 
-    fun setTestVersion(testVersion: Boolean) {
-        if (testVersion) setFooter(TestStatusFooterItem()) else setFooter(StatusFooterItem())
-    }
-
     fun updateErrorState(
         errorState: StatusViewModel.ErrorState,
         action: () -> Unit = {}

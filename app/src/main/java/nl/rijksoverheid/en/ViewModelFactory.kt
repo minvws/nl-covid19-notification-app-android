@@ -31,8 +31,7 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
             ) as T
             AppLifecycleViewModel::class.java -> AppLifecycleViewModel(
                 createAppLifecycleManager(context),
-                createAppConfigManager(context),
-                context
+                createAppConfigManager(context)
             ) as T
             OnboardingViewModel::class.java -> OnboardingViewModel(
                 createOnboardingRepository(context)
