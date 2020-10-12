@@ -21,7 +21,7 @@ import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
 import nl.rijksoverheid.en.about.FAQItemId.REASON
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
 
-class AboutSection(showTestPhaseFAQItem: Boolean) : Section(
+class AboutSection : Section(
     listOf(
         FAQOnboardingItem(),
         FAQTechnicalExplanationItem(),
@@ -39,7 +39,6 @@ class AboutSection(showTestPhaseFAQItem: Boolean) : Section(
         FAQItem(PAUSE),
         FAQItem(INTEROPERABILITY)
     ) +
-        (if (showTestPhaseFAQItem) listOf(TestPhaseItem()) else emptyList<FAQItem>()) +
         listOf(
             HelpdeskItem(),
             FAQHeaderItem(R.string.about_toolbar_title),
