@@ -224,9 +224,9 @@
     <string name="faq_pause_paragraph_2">Als je bluetooth aan wilt laten staan, kun je de app ook pauzeren door &lt;strong&gt;Blootstellingsmeldingen gebruiken&lt;/strong&gt; tijdelijk uit te zetten. Dit doe je via de knop hieronder. Ook dan krijg je elke 24 uur automatisch een herinnering om de app weer aan te zetten.</string>
     <string name="faq_pause_paragraph_3">Toch is het meestal niet aan te raden om de app te pauzeren, omdat je misschien vergeet hem weer aan te zetten. Je kunt de app wel pauzeren in bijzondere situaties. Bijvoorbeeld als je in de buurt komt van (mogelijke) coronapatiënten, maar zeker weet dat je medische beschermingsmiddelen draagt.</string>
     <string name="faq_interoperability">Werkt CoronaMelder ook samen met apps uit andere landen?</string>
-    <string name="faq_interoperability_paragraph_1">Helaas nu nog niet, maar de verwachting is dat het eind september wel kan. Dan zal CoronaMelder ook codes kunnen uitwisselen met sommige apps uit andere landen. Bijvoorbeeld de Duitse app.</string>
+    <string name="faq_interoperability_paragraph_1">Helaas nu nog niet, maar er wordt hard gewerkt om dit mogelijk te maken. Dan zal CoronaMelder ook codes kunnen uitwisselen met sommige apps uit andere landen. Bijvoorbeeld de Duitse app.</string>
     <string name="faq_interoperability_paragraph_2">Als je naast CoronaMelder de Duitse Corona-Warn-App installeert, zegt je telefoon dat er maar 1 app tegelijk actief kan zijn. De app die je kiest is de enige app die op dat moment jouw ontmoetingen controleert. Wil je dat in meerdere landen doen, dan moet je dus zelf wisselen van app. Van die app kun je dan meldingen ontvangen. Als je 1 keer per dag wisselt van app, controleren beide apps je ontmoetingen. Zo mis je niks.</string>
-    <string name="faq_interoperability_paragraph_3">Vanaf eind september kun je waarschijnlijk de app van je eigen land blijven gebruiken, en hoef je niet meer dagelijks te wisselen.</string>
+    <string name="faq_interoperability_paragraph_3">In de toekomst kun je waarschijnlijk de app van je eigen land blijven gebruiken, en hoef je niet meer dagelijks te wisselen.</string>
     <string name="cross_links_header">Lees ook</string>
     <string name="request_test_header_5">Coronatest aanvragen</string>
     <string name="post_notification_guidance_follow_ggd">Geeft de GGD je aan de telefoon andere adviezen dan de app? Volg dan het advies van de GGD.</string>
@@ -245,8 +245,8 @@
     <string name="request_test_paragraph_3">De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
     <string name="generic_notification_sample_notification_content_description">Voorbeeld van een notificatie</string>
     <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
-    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <br/><br/><ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
+    <string name="onboarding_enable_description"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om:<br/><br/><ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Batterij-optimalisatie voor alleen deze app uit te zetten (niet noodzakelijk)</li></ul>]]></string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <br/><br/><ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li><li></li>Batterij-optimalisatie voor alleen deze app uit te zetten (niet noodzakelijk)</ul>]]></string>
     <string name="location_services_required_title">Locatie-instellingen</string>
     <string name="location_services_required_headline">De app werkt alleen als je locatie-instellingen aanstaan</string>
     <string name="location_services_required_description">Sommige apps gebruiken bluetooth om je locatie te bepalen. Daarom is dit onderdeel van locatie-instellingen. CoronaMelder heeft bluetooth nodig om te werken, maar heeft nooit toegang tot je locatie.</string>
