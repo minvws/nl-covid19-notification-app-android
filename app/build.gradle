@@ -209,6 +209,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidx_espresso_version"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$androidx_espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$androidx_espresso_version"
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
     androidTestImplementation 'com.bartoszlipinski:disable-animations-rule:2.0.0'
     androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitokotlin_version"
