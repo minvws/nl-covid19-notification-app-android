@@ -9,6 +9,7 @@ package nl.rijksoverheid.en.api
 import android.content.Context
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -40,6 +41,13 @@ interface CdnService {
         @Path("id") id: String,
         @Tag cacheStrategy: CacheStrategy? = null
     ): AppConfig
+
+    @GET("v2/resourcebundle/{id")
+    @SignedResponse
+    suspend fun getResourceBundle(
+        @Path("id") id: String,
+        @Tag cacheStrategy: CacheStrategy = CacheStrategy.CACHE_FIRST
+    ): ResourceBundle
 
     companion object {
         fun create(

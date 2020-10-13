@@ -451,6 +451,15 @@ class ExposureNotificationsRepository(
                     return@withContext ProcessManifestResult.Disabled
                 }
 
+                try {
+                    // warm up the cache
+                    manifest.resourceBundleId?.let {
+                        api.getResourceBundle(it)
+                    }
+                } catch (ex: java.lang.Exception) {
+                    Timber.w("Could not fetch resource bundle")
+                }
+
                 val result = processExposureKeySets(manifest)
                 Timber.d("Processing keys result = $result")
 
