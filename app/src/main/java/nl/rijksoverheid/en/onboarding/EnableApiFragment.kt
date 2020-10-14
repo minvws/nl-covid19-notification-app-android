@@ -22,6 +22,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentEnableApiBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
 import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
 
 private const val RC_REQUEST_DISABLE_BATTERY_OPTIMIZATIONS = 1
@@ -51,7 +52,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
         binding.explanationClickListener = View.OnClickListener {
             enterTransition = null
             exitTransition = null
-            findNavController().navigate(EnableApiFragmentDirections.actionExplain())
+            findNavController().navigateCatchingErrors(EnableApiFragmentDirections.actionExplain())
         }
 
         viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
@@ -82,7 +83,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_REQUEST_DISABLE_BATTERY_OPTIMIZATIONS) {
             val binding = DataBindingUtil.getBinding<FragmentEnableApiBinding>(requireView())!!
-            findNavController().navigate(
+            findNavController().navigateCatchingErrors(
                 EnableApiFragmentDirections.actionNext(),
                 FragmentNavigatorExtras(
                     binding.appbar to binding.appbar.transitionName

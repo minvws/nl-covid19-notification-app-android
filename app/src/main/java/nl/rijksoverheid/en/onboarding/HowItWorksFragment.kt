@@ -88,7 +88,7 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_DISABLE_BATTERY_OPTIMIZATIONS) {
             val binding = DataBindingUtil.getBinding<FragmentListWithButtonBinding>(requireView())!!
-            findNavController().navigate(
+            findNavController().navigateCatchingErrors(
                 HowItWorksFragmentDirections.actionNext(), FragmentNavigatorExtras(
                     binding.appbar to binding.appbar.transitionName
                 )
