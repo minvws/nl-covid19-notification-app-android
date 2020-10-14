@@ -17,7 +17,6 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.xwray.groupie.GroupAdapter
@@ -125,14 +124,15 @@ class StatusFragment @JvmOverloads constructor(
                 is StatusViewModel.ErrorState.ConsentRequired -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
             }
         }
+    }
 
-        viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
-            if (!requireContext().isIgnoringBatteryOptimizations()) {
-                section.showBatteryOptimisationsError {
-                    requestDisableBatteryOptimizations(
-                        RC_DISABLE_BATTERY_OPTIMIZATIONS
-                    )
-                }
+    override fun onResume() {
+        super.onResume()
+        if (!requireContext().isIgnoringBatteryOptimizations()) {
+            section.showBatteryOptimisationsError {
+                requestDisableBatteryOptimizations(
+                    RC_DISABLE_BATTERY_OPTIMIZATIONS
+                )
             }
         }
     }
