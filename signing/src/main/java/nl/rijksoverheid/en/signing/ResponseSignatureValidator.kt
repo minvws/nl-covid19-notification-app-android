@@ -6,6 +6,8 @@
  */
 package nl.rijksoverheid.en.signing
 
+import org.bouncycastle.asn1.x500.style.BCStyle
+import org.bouncycastle.asn1.x500.style.IETFUtils
 import org.bouncycastle.asn1.x509.Extension
 import org.bouncycastle.asn1.x509.SubjectKeyIdentifier
 import org.bouncycastle.cert.jcajce.JcaCertStoreBuilder
@@ -92,7 +94,8 @@ class ResponseSignatureValidator(
                 ?: throw SignatureValidationException()
             val signingCertificate = result.certPath.certificates[0] as X509Certificate
 
-            if (!signer.verify(
+            if (!verifyCN(signingCertificate) ||
+                !signer.verify(
                     JcaSimpleSignerInfoVerifierBuilder().setProvider(provider)
                         .build(signingCertificate)
                 )
@@ -128,6 +131,13 @@ class ResponseSignatureValidator(
         params.addCertStore(certs)
         params.isRevocationEnabled = false
         return pathBuilder.build(params) as PKIXCertPathBuilderResult
+    }
+
+    private fun verifyCN(signingCertificate: X509Certificate): Boolean {
+        return JcaX509CertificateHolder(signingCertificate).subject.getRDNs(BCStyle.CN).any {
+            val cn = IETFUtils.valueToString(it.first.value)
+            cn.contains("CoronaMelder", true) && cn.endsWith(".nl")
+        }
     }
 }
 
