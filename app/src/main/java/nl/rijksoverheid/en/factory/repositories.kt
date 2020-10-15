@@ -20,7 +20,7 @@ import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.LabTestService
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
-import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
+import nl.rijksoverheid.en.enapi.nearby.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.job.CheckConnectionWorker
 import nl.rijksoverheid.en.job.DecoyWorker
@@ -49,7 +49,10 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
 
     return ExposureNotificationsRepository(
         context,
-        NearbyExposureNotificationApi(context, Nearby.getExposureNotificationClient(context)),
+        NearbyExposureNotificationApi(
+            context,
+            Nearby.getExposureNotificationClient(context)
+        ),
         service,
         createSecurePreferences(context),
         object : BackgroundWorkScheduler {

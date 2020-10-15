@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *  SPDX-License-Identifier: EUPL-1.2
+ *   SPDX-License-Identifier: EUPL-1.2
+ *
  */
-package nl.rijksoverheid.en.enapi
+package nl.rijksoverheid.en.enapi.nearby
 
 import android.content.Context
 import android.content.Intent
@@ -14,7 +15,12 @@ import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
-import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
+import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
+import nl.rijksoverheid.en.enapi.DisableNotificationsResult
+import nl.rijksoverheid.en.enapi.EnableNotificationsResult
+import nl.rijksoverheid.en.enapi.ExposureNotificationApi
+import nl.rijksoverheid.en.enapi.StatusResult
+import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import timber.log.Timber
 import java.io.File
 import kotlin.coroutines.resume
@@ -48,12 +54,18 @@ class NearbyExposureNotificationApi(
                         ExposureNotificationStatusCodes.API_NOT_CONNECTED -> StatusResult.Unavailable(
                             apiException.getMostSpecificStatusCode()
                         )
-                        else -> StatusResult.UnknownError(it)
+                        else -> StatusResult.UnknownError(
+                            it
+                        )
                     }
                 )
             }
         } else {
-            c.resume(StatusResult.Unavailable(ExposureNotificationStatusCodes.FAILED_TEMPORARILY_DISABLED))
+            c.resume(
+                StatusResult.Unavailable(
+                    ExposureNotificationStatusCodes.FAILED_TEMPORARILY_DISABLED
+                )
+            )
         }
     }
 
@@ -76,17 +88,25 @@ class NearbyExposureNotificationApi(
                             )
                             null -> {
                                 Timber.e(it, "Error while enabling notifications")
-                                EnableNotificationsResult.UnknownError(it)
+                                EnableNotificationsResult.UnknownError(
+                                    it
+                                )
                             }
                             else -> {
                                 Timber.e(it, "Error while enabling notifications, status = $status")
-                                EnableNotificationsResult.Unavailable(status)
+                                EnableNotificationsResult.Unavailable(
+                                    status
+                                )
                             }
                         }
                     )
                 }
             } else {
-                c.resume(EnableNotificationsResult.Unavailable(ExposureNotificationStatusCodes.FAILED_TEMPORARILY_DISABLED))
+                c.resume(
+                    EnableNotificationsResult.Unavailable(
+                        ExposureNotificationStatusCodes.FAILED_TEMPORARILY_DISABLED
+                    )
+                )
             }
         }
 
@@ -103,7 +123,9 @@ class NearbyExposureNotificationApi(
                 c.resume(
                     // Technically we could get a connection error, but this is not
                     // really expected, since this is only called when previously enabled.
-                    DisableNotificationsResult.UnknownError(it)
+                    DisableNotificationsResult.UnknownError(
+                        it
+                    )
                 )
             }
         }
@@ -115,7 +137,11 @@ class NearbyExposureNotificationApi(
     override suspend fun requestTemporaryExposureKeyHistory(): TemporaryExposureKeysResult =
         suspendCoroutine { c ->
             client.temporaryExposureKeyHistory.addOnSuccessListener {
-                c.resume(TemporaryExposureKeysResult.Success(it))
+                c.resume(
+                    TemporaryExposureKeysResult.Success(
+                        it
+                    )
+                )
             }.addOnFailureListener {
                 val apiException = it as? ApiException
                 c.resume(
@@ -123,7 +149,9 @@ class NearbyExposureNotificationApi(
                         ExposureNotificationStatusCodes.RESOLUTION_REQUIRED -> TemporaryExposureKeysResult.RequireConsent(
                             apiException.status.resolution!!
                         )
-                        else -> TemporaryExposureKeysResult.UnknownError(it)
+                        else -> TemporaryExposureKeysResult.UnknownError(
+                            it
+                        )
                     }
                 )
             }
@@ -150,7 +178,9 @@ class NearbyExposureNotificationApi(
             c.resume(
                 when (apiException?.statusCode) {
                     ExposureNotificationStatusCodes.FAILED_DISK_IO -> DiagnosisKeysResult.FailedDiskIo
-                    else -> DiagnosisKeysResult.UnknownError(it)
+                    else -> DiagnosisKeysResult.UnknownError(
+                        it
+                    )
                 }
             )
         }.addOnCompleteListener {

@@ -33,7 +33,6 @@ import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
-import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import org.junit.Assert.assertEquals

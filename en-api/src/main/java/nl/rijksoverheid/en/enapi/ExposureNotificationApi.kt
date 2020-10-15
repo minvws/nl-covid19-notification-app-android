@@ -1,18 +1,14 @@
 /*
- * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *  SPDX-License-Identifier: EUPL-1.2
+ *   SPDX-License-Identifier: EUPL-1.2
+ *
  */
-package nl.rijksoverheid.en.enapi.nearby
+package nl.rijksoverheid.en.enapi
 
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
-import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
-import nl.rijksoverheid.en.enapi.DisableNotificationsResult
-import nl.rijksoverheid.en.enapi.EnableNotificationsResult
-import nl.rijksoverheid.en.enapi.StatusResult
-import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import java.io.File
 
 interface ExposureNotificationApi {
