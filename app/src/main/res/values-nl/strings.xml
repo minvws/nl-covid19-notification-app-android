@@ -61,7 +61,7 @@
     <string name="post_notification_header_1">Je was in de buurt van iemand met het coronavirus</string>
     <string name="post_notification_paragraph_2">Op %2$s (%1$s) ben jij misschien besmet geraakt. Je was die dag minstens 15 minuten dicht bij iemand met corona.\n\nAls je inderdaad besmet bent, kun je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.</string>
     <string name="post_notification_header_3">Wat kun je nu doen?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>Blijf tot en met %1$s thuis en let extra goed op klachten die kunnen passen bij corona</li><li>Heb je (lichte) klachten die passen bij het coronavirus? Doe een coronatest en blijf thuis tot en met %1$s</li><li>Heb je ernstige klachten zoals hoge koorts of moeite met ademhalen? Of zit je een risicogroep en krijg je koorts? Bel eerst je huisarts</li></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>Blijf tot en met %1$s thuis en let extra goed op klachten die kunnen passen bij corona</li><li>Heb je (lichte) klachten die passen bij het coronavirus? Doe een coronatest en blijf thuis tot en met %1$s</li><li>Heb je ernstige klachten zoals hoge koorts of moeite met ademhalen? Of zit je in een risicogroep en krijg je koorts? Bel eerst je huisarts</li></ul>]]></string>
     <string name="post_notification_header_6">Doe een coronatest</string>
     <string name="post_notification_paragraph_7">Zelfs als je je niet ziek voelt. Want zonder je ziek te voelen kun je het coronavirus al verspreiden en zo anderen besmetten.</string>
     <string name="post_notification_paragraph_8">"Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken. De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet."</string>
@@ -84,7 +84,7 @@
     <string name="treat_perspective_list_2"><![CDATA[<ul><li>verkoudheidsklachten zoals neusverkoudheid, loopneus, niezen, keelpijn</li><li>hoesten</li><li>benauwdheid</li><li>verhoging of koorts</li><li>plotseling verlies van reuk en/of smaak (zonder neusverstopping)</li></ul>]]></string>
     <string name="request_test_toolbar_title">Coronatest aanvragen</string>
     <string name="request_test_header_1">Heb je klachten die passen bij corona? Vraag een test aan</string>
-    <string name="request_test_paragraph_2">Heb je (lichte) klachten die passen bij het coronavirus? Laat je gratis testen. Het duurt niet lang en je kan meestal snel een afspraak maken.\n\nDe uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
+    <string name="request_test_paragraph_2">Heb je (lichte) klachten die passen bij het coronavirus? Laat je gratis testen. Het duurt niet lang en je kunt meestal snel een afspraak maken.\n\nDe uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
     <string name="request_test_paragraph_4">Heb je ernstige klachten zoals hoge koorts of moeite met ademhalen? Of zit je in een risicogroep en krijg je koorts? Bel eerst je huisarts.</string>
     <string name="request_test_button_call">Bel %1$s</string>
     <string name="request_test_button_website">Ga naar coronatest.nl</string>
@@ -145,12 +145,12 @@
     <string name="faq_power_usage_paragraph_1">De app maakt gebruikt van Bluetooth Low Energy (lage-energiebluetooth). Dit is een speciale vorm van bluetooth die heel weinig stroom gebruikt. Hoeveel procent dit precies van je telefoonbatterij vraagt verschilt per telefoon.</string>
     <string name="faq_deletion_paragraph_1">"Je kunt de bluetoothgegevens die CoronaMelder heeft bewaard zelf verwijderen. Druk op de knop hieronder en daarna op &lt;strong&gt;Willekeurige ID’s verwijderen&lt;/strong&gt;. \n\nWil je dat de app geen nieuwe bluetoothgegevens meer bewaart? Verwijder dan de app."</string>
     <string name="faq_deletion_button">Open Instellingen</string>
-    <string name="faq_location_permission_paragraph_1">CoronaMelder weet niet waar je bent, maar je locatie-instellingen moeten wel aanstaan. Anders werkt de app niet. Dat klinkt misschien een beetje gek. Het zit zo:\n\nCoronaMelder gebruikt ‘bluetooth scanning’. Dat is een andere bluetoothtechniek dan waarmee je bijvoorbeeld verbinding maakt met een draadloze koptelefoon. Het is een techniek die weinig energie kost. Via bluetooth scanning wisselt de app willekeurige codes uit met telefoons in de buurt.\n\nSommige apps (niet CoronaMelder) gebruiken bluetooth scanning om je locatie te bepalen. Daarom moeten je locatie-instellingen altijd aanstaan om bluetooth scanning te gebruiken. Ook als een app je locatie niet gebruikt.\n\nBelangrijk om te onthouden: CoronaMelder heeft nooit toegang tot je locatie.</string>
+    <string name="faq_location_permission_paragraph_1">CoronaMelder weet niet waar je bent, maar je locatie-instellingen moeten wel aanstaan. Anders werkt de app niet. Dat klinkt misschien een beetje gek. Het zit zo:\n\nCoronaMelder gebruikt ‘bluetooth scanning’. Dat is een andere bluetoothtechniek dan waarmee je bijvoorbeeld verbinding maakt met een draadloze koptelefoon. Het is een techniek die weinig energie kost. Via bluetooth scanning wisselt de app willekeurige codes uit met telefoons in de buurt.\n\nSommige apps (niet CoronaMelder) gebruiken bluetooth scanning om je locatie te bepalen. Daarom moeten je locatie-instellingen altijd aanstaan om bluetooth scanning te gebruiken. Ook als een app je locatie niet gebruikt.\n\nBelangrijk om te onthouden: CoronaMelder heeft nooit toegang tot je locatie. Vanaf Android-versie 11 hoeven je locatie-instellingen niet meer aan te staan.</string>
     <string name="faq_technical_toolbar_title">Technische uitleg</string>
     <string name="faq_technical_header_1">1. De app maakt voor elke telefoon een eigen code</string>
     <string name="faq_technical_paragraph_2">In deze code staat geen informatie over jou of je telefoon. De code is helemaal willekeurig en verandert elk kwartier.</string>
-    <string name="faq_technical_header_3">2. Telefoons delen hun codes als ze bij elkaar in de buurt zijn</string>
-    <string name="faq_technical_paragraph_4">Heeft de persoon die je tegenkomt ook de app? Dan wisselen jullie telefoons hun codes uit via Bluetooth Low Energy. Zo weet de app welke telefoons in de buurt waren. De app weet niet van wie de telefoons zijn en ook niet waar jullie waren.</string>
+    <string name="faq_technical_header_3">2. Telefoons delen codes als ze bij elkaar in de buurt zijn</string>
+    <string name="faq_technical_paragraph_4">Heeft de persoon die je tegenkomt ook de app? Dan wisselen jullie telefoons codes uit via Bluetooth Low Energy. Zo weet de app welke telefoons in de buurt waren. De app weet niet van wie de telefoons zijn en ook niet waar jullie waren.</string>
     <string name="faq_technical_header_5">3. Als iemand corona heeft kan deze persoon zijn of haar codes op een lijst zetten</string>
     <string name="faq_technical_paragraph_6">Deze lijst bevat alleen codes van besmette personen. Om de codes toe te voegen moet een besmet persoon eerst een GGD-sleutel doorgeven aan de GGD. Zo is altijd zeker dat de toegevoegde codes ook echt horen bij iemand die corona heeft. Alle codes ouder dan 14 dagen worden automatisch van de lijst verwijderd.</string>
     <string name="faq_technical_header_7">4. Elke telefoon controleert of het de codes op de lijst eerder is tegengekomen</string>
@@ -210,13 +210,13 @@
     <string name="faq_test_phase">Wat betekent test- en onderzoeksversie?</string>
     <string name="footer_test_phase">Test- en onderzoeksversie %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">Lees meer</string>
-    <string name="onboarding_privacy_policy_headline">Toestemming gegevensgebruik</string>
-    <string name="onboarding_privacy_policy_paragraph"><![CDATA[Om CoronaMelder te gebruiken moet je akkoord gaan met de <a href="">privacyverklaring</a>. Belangrijk om te weten:]]></string>
+    <string name="onboarding_privacy_policy_headline">Zo gebruikt CoronaMelder je gegevens</string>
+    <string name="onboarding_privacy_policy_paragraph"><![CDATA[In de <a href="">privacyverklaring</a> staat hoe CoronaMelder jouw gegevens gebruikt. Dit zijn de belangrijkste punten:]]></string>
     <string name="onboarding_privacy_policy_check_1">Je app zendt versleutelde bluetoothgegevens uit.</string>
     <string name="onboarding_privacy_policy_check_2">Andere gebruikers die met jou in contact zijn geweest bewaren deze gegevens maximaal 14 dagen.</string>
     <string name="onboarding_privacy_policy_check_3">Als uit een coronatest blijkt dat je corona hebt, kun je dit in de app melden om andere gebruikers te waarschuwen.</string>
     <string name="onboarding_privacy_policy_check_4">Je kunt op ieder moment de gegevens van je telefoon verwijderen.</string>
-    <string name="onboarding_privacy_policy_consent_label">Ik heb de privacyverklaring gelezen en ga hiermee akkoord</string>
+    <string name="onboarding_privacy_policy_consent_label">Ik heb de privacyverklaring gelezen en begrijp hoe CoronaMelder mijn gegevens gebruikt</string>
     <string name="lab_test_how_does_it_work">Hoe werkt dit?</string>
     <string name="faq_notification_message">Wat staat er in een melding?</string>
     <string name="faq_pause">Kan ik de app pauzeren?</string>
@@ -224,14 +224,14 @@
     <string name="faq_pause_paragraph_2">Als je bluetooth aan wilt laten staan, kun je de app ook pauzeren door &lt;strong&gt;Blootstellingsmeldingen gebruiken&lt;/strong&gt; tijdelijk uit te zetten. Dit doe je via de knop hieronder. Ook dan krijg je elke 24 uur automatisch een herinnering om de app weer aan te zetten.</string>
     <string name="faq_pause_paragraph_3">Toch is het meestal niet aan te raden om de app te pauzeren, omdat je misschien vergeet hem weer aan te zetten. Je kunt de app wel pauzeren in bijzondere situaties. Bijvoorbeeld als je in de buurt komt van (mogelijke) coronapatiënten, maar zeker weet dat je medische beschermingsmiddelen draagt.</string>
     <string name="faq_interoperability">Werkt CoronaMelder ook samen met apps uit andere landen?</string>
-    <string name="faq_interoperability_paragraph_1">Helaas nu nog niet, maar de verwachting is dat het eind september wel kan. Dan zal CoronaMelder ook codes kunnen uitwisselen met sommige apps uit andere landen. Bijvoorbeeld de Duitse app.</string>
+    <string name="faq_interoperability_paragraph_1">Helaas nu nog niet, maar er wordt hard gewerkt om dit mogelijk te maken. Dan zal CoronaMelder ook codes kunnen uitwisselen met sommige apps uit andere landen. Bijvoorbeeld de Duitse app.</string>
     <string name="faq_interoperability_paragraph_2">Als je naast CoronaMelder de Duitse Corona-Warn-App installeert, zegt je telefoon dat er maar 1 app tegelijk actief kan zijn. De app die je kiest is de enige app die op dat moment jouw ontmoetingen controleert. Wil je dat in meerdere landen doen, dan moet je dus zelf wisselen van app. Van die app kun je dan meldingen ontvangen. Als je 1 keer per dag wisselt van app, controleren beide apps je ontmoetingen. Zo mis je niks.</string>
-    <string name="faq_interoperability_paragraph_3">Vanaf eind september kun je waarschijnlijk de app van je eigen land blijven gebruiken, en hoef je niet meer dagelijks te wisselen.</string>
+    <string name="faq_interoperability_paragraph_3">In de toekomst kun je waarschijnlijk de app van je eigen land blijven gebruiken, en hoef je niet meer dagelijks te wisselen.</string>
     <string name="cross_links_header">Lees ook</string>
     <string name="request_test_header_5">Coronatest aanvragen</string>
     <string name="post_notification_guidance_follow_ggd">Geeft de GGD je aan de telefoon andere adviezen dan de app? Volg dan het advies van de GGD.</string>
     <string name="post_notification_stay_home_header">Blijf tot en met %1$s thuis</string>
-    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Laat anderen boodschappen doen. Kan dit echt niet en heb je geen klachten? Dan mag je wel even naar buiten om boodschappen te doen. Houd 1,5 meter afstand en raak niemand aan.</li><li>Je mag in de tuin of op het balkon zitten.</li><li>Kinderen van 4–12 jaar mogen naar school en/of sporten.</li></ul>]]></string>
+    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Laat anderen boodschappen doen. Kan dit echt niet en heb je geen klachten? Dan mag je wel even naar buiten om boodschappen te doen. Houd 1,5 meter afstand en raak niemand aan.</li><li>Je mag in de tuin of op het balkon zitten.</li><li>Schoolgaande kinderen onder de 18 jaar mogen naar school en/of sporten.</li></ul>]]></string>
     <string name="post_notification_no_visitors_header">Ontvang geen bezoek</string>
     <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>Alleen de mensen die bij je wonen, mogen samen met jou in huis zijn. Blijf bij elkaar uit de buurt en houd 1,5 meter afstand. Dus niet knuffelen, niet zoenen en geen seks.</li></ul>]]></string>
     <string name="post_notification_medical_help_list"><![CDATA[<ul><li>Ga niet naar de huisarts of het ziekenhuis, maar bel eerst met je huisarts. Vertel dat je in de buurt was van iemand die het coronavirus heeft.</li><li>Je huisarts of andere medische hulp mag wel bij je langskomen.</li></ul>]]></string>
@@ -245,8 +245,8 @@
     <string name="request_test_paragraph_3">De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
     <string name="generic_notification_sample_notification_content_description">Voorbeeld van een notificatie</string>
     <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
-    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om ontmoetingen met andere app-gebruikers bij te houden.</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <br/><br/><ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li></ul>]]></string>
+    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Ontmoetingen met andere app-gebruikers bij te houden&lt;/li&gt;&lt;li&gt;Batterij-optimalisatie voor alleen deze app uit te zetten (niet noodzakelijk)&lt;/li&gt;&lt;/ul&gt;</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <br/><br/><ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li><li></li>Batterij-optimalisatie voor alleen deze app uit te zetten (niet noodzakelijk)</ul>]]></string>
     <string name="location_services_required_title">Locatie-instellingen</string>
     <string name="location_services_required_headline">De app werkt alleen als je locatie-instellingen aanstaan</string>
     <string name="location_services_required_description">Sommige apps gebruiken bluetooth om je locatie te bepalen. Daarom is dit onderdeel van locatie-instellingen. CoronaMelder heeft bluetooth nodig om te werken, maar heeft nooit toegang tot je locatie.</string>
@@ -259,4 +259,8 @@
     <string name="onboarding_privacy_policy_location"><![CDATA[Je gps- of locatiegegevens worden <b>niet</b> gebruikt of bewaard.]]></string>
     <string name="onboarding_privacy_policy_send_alert">Als uit een coronatest blijkt dat je corona hebt kun je dit in de app melden om andere gebruikers te waarschuwen.</string>
     <string name="onboarding_privacy_policy_voluntary">Gebruik van CoronaMelder is altijd vrijwillig</string>
+    <string name="status_error_battery_optimisation">Je telefoon heeft een functie die batterij-optimalisatie heet. Hierdoor werkt de app misschien niet goed. Het is dus belangrijk dat je deze functie uitzet voor CoronaMelder.</string>
+    <string name="status_error_action_disable_battery_optimisation">Probleem oplossen</string>
+    <string name="update_app_headline">Je hebt een verouderde versie van CoronaMelder</string>
+    <string name="update_app_description">Update de app op je telefoon om te zorgen dat CoronaMelder goed blijft werken.</string>
 </resources>

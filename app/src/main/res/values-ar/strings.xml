@@ -60,9 +60,10 @@
     <string name="sync_issue_notification_message">لم يتمكن التطبيق من التحقق لمدة 24 ساعة فيما إذا تبين لاحقًا أن الأشخاص الذين قابلتهم مصابين بكورونا.</string>
     <string name="post_notification_toolbar_title">احتمالية الإصابة بالعدوى</string>
     <string name="post_notification_header_1">لقد كنت بالقرب من شخص مصاب بفيروس كورونا</string>
-    <string name="post_notification_paragraph_2">قد تعرضت للإصابة في %2$s\n(%1$s). كنت قريبًا من شخص مصاب بكورونا لمدة 15 دقيقة على الأقل في ذلك اليوم.\n\nإذا كنت مصابًا بالفعل، يمكنك نقل الفيروس إلى الآخرين. حتى لو لم تشعر بالمرض الآن.</string>
+    <string name="post_notification_paragraph_2">من المحتمل أنك قد تعرضت للإصابة في %2$s\n(%1$s). كنت قريبًا من شخص مصاب بكورونا لمدة 15 دقيقة على الأقل في ذلك اليوم.\n\nإذا كنت مصابًا بالفعل، يمكنك نقل الفيروس إلى الآخرين. حتى لو لم تشعر بالمرض الآن.</string>
     <string name="post_notification_header_3">ما الذي يمكنك القيام به الآن؟</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>إبق في المنزل حتى%1$s وانتبه أكثر للأعراض التي قد تتناسب مع أعراض كورونا</li><li>هل لديك أعراض (خفيفة) تتناسب مع أعراض فيروس كورونا؟ قم بإجراء اختبار كورونا والزم المنزل حتى%1$s</li><li>هل لديك أعراض خطيرة مثل ارتفاع في درجة الحرارة أو صعوبة في التنفس؟ أم هل أنت من ضمن مجموعة معرضة للخطر وهل لديك حمى؟ اتصل بطبيبك أولاً</li></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>إبق في المنزل حتى%1$s وانتبه أكثر للأعراض التي قد تتناسب مع أعراض كورونا</li><li>هل لديك أعراض (خفيفة) تتناسب مع أعراض فيروس كورونا؟ قم بإجراء اختبار كورونا والزم المنزل حتى%1$s</li><li>هل لديك أعراض خطيرة مثل ارتفاع في درجة الحرارة أو صعوبة في التنفس؟ أم هل أنت من ضمن مجموعة معرضة للخطر وهل لديك حمى؟ اتصل بطبيبك أولاً</li></ul>
+]]></string>
     <string name="post_notification_header_6">قم بإجراء فحص كورونا</string>
     <string name="post_notification_paragraph_7">" حتى إذا لم تشعر بالمرض. حيث أنه من الممكن أن تنقل الفيروس بدون الشعور بالمرض وبذلك نقل العدوى إلى الآخرين."</string>
     <string name="post_notification_paragraph_8">"اطلب إجراء الفحص مجانًا. لا يستغرق ذلك وقتًا طويلاً، وتستطيع في معظم الحالات تحديد موعد بسرعة. ستعرف النتيجة خلال 48 ساعة. الزم المنزل حتى تعرف النتيجة."</string>
@@ -146,12 +147,12 @@
     <string name="faq_power_usage_paragraph_1">"يستخدم التطبيق البلوتوث منخفض الطاقة (Bluetooth Low Energy). هذا نوع خاص من البلوتوث يستهلك كمية قليلة جدًا من الطاقة. أن كمية الطاقة التي يتطلبها من بطارية التليفون تختلف من هاتف لآخر. "</string>
     <string name="faq_deletion_paragraph_1">"يمكنك حذف بيانات البلوتوث التي خزّنها CoronaMelder بنفسك. انقر على الزر أدناه ثم على &lt;strong&gt;حذف الهويات العشوائية&lt;/strong&gt;.\n\nهل تريد أن يتوقف التطبيق عن تخزين بيانات البلوثوث الجديدة؟ احذف التطبيق إذًا."</string>
     <string name="faq_deletion_button">فتح الإعدادات</string>
-    <string name="faq_location_permission_paragraph_1">لا يعرف CoronaMelder مكانك، ولكن يجب تشغيل إعدادات موقعك الجغرافي. وإلا فإن التطبيق لن يعمل. قد يبدو هذا غريبًا بعض الشيء. الأمر كالتالي:\n\nCoronaMelder يستخدم \"مسح البلوتوث\". تقنية البلوتوث هذه مختلفة عن التي يمكنك استخدامها للاتصال بسماعات رأس لاسلكية، على سبيل المثال. إنها تقنية تتطلب القليل من الطاقة. يتبادل التطبيق الرموز العشوائية مع الهواتف القريبة عبر مسح البلوتوث.\n\nتستخدم بعض التطبيقات (غير CoronaMelder) مسح البلوتوث لتحديد موقعك الجغرافي. لهذا السبب يجب أن تكون إعدادات موقعك الجغرافي قيد التشغيل دائمًا لاستخدام مسح البلوتوث. حتى إذا كان التطبيق لا يستخدم موقعك الجغرافي.\n\nمن المهم أن تتذكر: لا يستطيع CoronaMelder الوصول إلى موقعك الجغرافي مطلقًا.</string>
+    <string name="faq_location_permission_paragraph_1">لا يعرف CoronaMelder مكانك، ولكن يجب تشغيل إعدادات موقعك الجغرافي. وإلا فإن التطبيق لن يعمل. قد يبدو هذا غريبًا بعض الشيء. الأمر كالتالي:\n\nCoronaMelder يستخدم \"مسح البلوتوث\". تقنية البلوتوث هذه مختلفة عن التي يمكنك استخدامها للاتصال بسماعات رأس لاسلكية، على سبيل المثال. إنها تقنية تتطلب القليل من الطاقة. يتبادل التطبيق الرموز العشوائية مع الهواتف القريبة عبر مسح البلوتوث.\n\nتستخدم بعض التطبيقات (غير CoronaMelder) مسح البلوتوث لتحديد موقعك الجغرافي. لهذا السبب يجب أن تكون إعدادات موقعك الجغرافي قيد التشغيل دائمًا لاستخدام مسح البلوتوث. حتى إذا كان التطبيق لا يستخدم موقعك الجغرافي.\n\nمن المهم أن تتذكر: لا يستطيع CoronaMelder الوصول إلى موقعك الجغرافي مطلقًا. اعتبارًا من الإصدار 11 من Android، لا داعي لأن تكون إعدادات موقعك مشغلة.</string>
     <string name="faq_technical_toolbar_title">الشرح التقني</string>
     <string name="faq_technical_header_1">1. يقوم التطبيق بإنشاء رمز خاص لكل هاتف</string>
     <string name="faq_technical_paragraph_2">لا يحتوي هذا الرمزعلى معلومات عنك أو عن هاتفك. الرمز عشوائي تمامًا ويتغير كل ربع ساعة.</string>
     <string name="faq_technical_header_3">2. تتبادل الهواتف رموزها عند تواجدها بالقرب من بعضها</string>
-    <string name="faq_technical_paragraph_4">هل لدى الشخص التي تصادفه التطبيق أيضاً؟ تتبادل هواتفكم في تلك الحالة الرموز عن طريق البلوتوث منخفض الطاقة. بهذه الطريقة يعرف التطبيق ما هي الهواتف التي تواجدت بالقرب منه. لا يعرف التطبيق من هم أصحاب هذه الهواتف ولا مكان تواجدكم.</string>
+    <string name="faq_technical_paragraph_4">هل لدى الشخص الذي تقابله التطبيق أيضًا؟ سوف تتبادل هواتفكم في تلك الحالة رموزها عن طريق البلوتوث منخفض الطاقة. بهذه الطريقة يعرف التطبيق ما هي الهواتف التي تواجدت بالقرب منه. لا يعرف التطبيق من هم أصحاب هذه الهواتف ولا مكان تواجدكم.</string>
     <string name="faq_technical_header_5">3. إذا كان شخصًا ما مصابًا بكورونا، فيستطيع هذا الشخص وضع رموزه أو رموزها على قائمة</string>
     <string name="faq_technical_paragraph_6">تتضمن هذه القائمة رموز الأشخاص المصابين بالعدوى فقط. من أجل إضافة الرموز، يجب على الشخص المصاب إرسال رمزالـ GGD إلى الـ GGD. بهذه الطريقة يمكن التأكد من أن الرموز المضافة تنتمي بالفعل إلى شخص مصاب بكورونا. يتم حذف كل الرموز التي يتجاوز عمرها 14 يوماً.</string>
     <string name="faq_technical_header_7">يتأكد كل هاتف فيما إذا لاحظ الرموز على القائمة من قبل.</string>
@@ -216,13 +217,13 @@
     <string name="faq_test_phase">ماذا يعني إصدار الفحص والبحث؟</string>
     <string name="footer_test_phase">إصدار الفحص والبحث %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">إقرأ المزيد</string>
-    <string name="onboarding_privacy_policy_headline">إعطاء الموافقة لاستخدام البيانات</string>
-    <string name="onboarding_privacy_policy_paragraph"><![CDATA[لاستخدام CoronaMelder، يجب أن توافق على<a href=""> بيان حماية الخصوصية </a>. من المهم معرفة:]]></string>
+    <string name="onboarding_privacy_policy_headline">بهذه الطريقة يقوم CoronaMelder باستخدام بياناتك.</string>
+    <string name="onboarding_privacy_policy_paragraph"><![CDATA[يتم في<a href=""> بيان حماية الخصوصية </a> توضيح كيفية تعامل CoronaMelder مع بياناتك. النقاط الرئيسية هي:]]></string>
     <string name="onboarding_privacy_policy_check_1">يرسل تطبيقك بيانات بلوتوث مشفرة.</string>
     <string name="onboarding_privacy_policy_check_2">يحتفظ المستخدمون الآخرون الذين كانوا بالقرب منك بهذه البيانات لمدة أقصاها 14 يومًا.</string>
     <string name="onboarding_privacy_policy_check_3">إذا تبين من اختبار كورونا أنك مصاب بكورونا، يمكنك الإبلاغ عن ذلك من خلال التطبيق لتحذير المستخدمين الآخرين.</string>
     <string name="onboarding_privacy_policy_check_4">يمكنك حذف البيانات من هاتفك في أي وقت.</string>
-    <string name="onboarding_privacy_policy_consent_label">لقد قرأت بيان حماية الخصوصية وأوافق عليه</string>
+    <string name="onboarding_privacy_policy_consent_label">لقد قرأت بيان حماية الخصوصية وأفهم الطريقة التي يقوم فيها CoronaMelder باستخدام بياناتي.</string>
     <string name="lab_test_how_does_it_work">كيف يعمل هذا؟</string>
     <string name="faq_notification_message">ماذا يحتوي الإشعار؟</string>
     <string name="faq_pause">هل يمكنني إيقاف التطبيق مؤقتًا؟</string>
@@ -230,14 +231,14 @@
     <string name="faq_pause_paragraph_2">إذا كنت تريد ترك البلوتوث قيد التشغيل، فيمكنك أيضًا إيقاف التطبيق مؤقتًا عن طريق &lt;strong&gt; أيقاف استخدام تنبيهات التعرض للإصابة&lt;/ strong&gt; مؤقتًا. يمكنك القيام بذلك من خلال الزر أدناه. حتى ذلك الحين، ستتلقى تذكيرًا تلقائيًا كل 24 ساعة لإعادة تشغيل التطبيق.</string>
     <string name="faq_pause_paragraph_3">إلا أنه لا يُنصح عادةً بإيقاف التطبيق مؤقتًا لأنك قد تنسى إعادة تشغيله. يمكنك إيقاف التطبيق مؤقتًا في حالات خاصة. إذا اقتربت من مرضى كورونا (محتملين) على سبيل المثال، لكنك متأكد من أنك ترتدي معدات الوقاية الطبية اللازمة.</string>
     <string name="faq_interoperability">هل يعمل CoronaMelder أيضًا مع تطبيقات من دول أخرى؟</string>
-    <string name="faq_interoperability_paragraph_1">للأسف ليس بعد، لكن من المتوقع أن يكون ذلك ممكنًا في نهاية سبتمبر. بعد ذلك سيتمكن CoronaMelder أيضًا من تبادل الرموز مع بعض التطبيقات من بلدان أخرى. مع التطبيق الألماني على سبيل المثال.</string>
+    <string name="faq_interoperability_paragraph_1">للأسف ليس بعد، لكننا نعمل بجد لجعل ذلك ممكنًا. سيتمكن CoronaMelder بعد ذلك أيضًا من تبادل الرموز مع بعض التطبيقات من بلدان أخرى.التطبيق الألماني على سبيل المثال .</string>
     <string name="faq_interoperability_paragraph_2">إذا قمت بتثبيت تطبيق Corona-Warn-الألماني بالإضافة إلى CoronaMelder، فسيشير هاتفك إلى إن تطبيقًا واحدًا فقط يمكن أن يكون نشطًا في كل مرة. هذا هو التطبيق المستخدم حاليًا للتحقق من المصادفات. إذا كنت تريد القيام بذلك في عدة بلدان، فعليك تبديل التطبيق بنفسك، يمكنك بعد ذلك تلقي إشعارات من هذا التطبيق. إذا قمت بتبديل التطبيقات مرة واحدة في اليوم، يتحقق كلا التطبيقين من  المصادفات. لن تفوّت شيئًا بهذه الطريقة.</string>
-    <string name="faq_interoperability_paragraph_3">اعتبارًا من نهاية شهر سبتمبر، من المحتمل أن تتمكن من الاستمرار في استخدام تطبيق بلدك ولن تعد بحاجة إلى التبديل يوميًا.</string>
+    <string name="faq_interoperability_paragraph_3">ربما ستتمكن في المستقبل في مواصلة استخدام تطبيق بلدك دون الحاجة إلى التبديل يوميًا.</string>
     <string name="cross_links_header">إقرأ أيضًا</string>
     <string name="request_test_header_5">طلب إجراء فحص كورونا</string>
     <string name="post_notification_guidance_follow_ggd">هل تعطيك الـ GGD عبر الهاتف نصائح مختلفة عن النصائح الموجودة في التطبيق؟ اتبع إذًا نصيحة الـ GGD.</string>
     <string name="post_notification_stay_home_header">ابق في المنزل إلى غاية %1$s</string>
-    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>دع الآخرين يقومون بمهمة شراء البقالة لك. هل هذا غير ممكن وهل ليست لديك أعراض؟ يمكنك الخروج للقيام بشراء البقالة. حافظ على مسافة 1.5 متر ولا تلمس أي شخص.</li><li>يمكنك الجلوس في الحديقة أو الشرفة.</li><li>يُسمح للأطفال الذين تتراوح أعمارهم بين 4 و 12 عامًا بالذهاب إلى المدرسة و/أو ممارسة الرياضة.</li></ul>]]></string>
+    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>دع الآخرين يقومون بمهمة شراء البقالة لك. هل هذا غير ممكن وهل ليست لديك أعراض؟ يمكنك الخروج للقيام بشراء البقالة. حافظ على مسافة 1.5 متر ولا تلمس أي شخص.</li><li>يمكنك الجلوس في الحديقة أو الشرفة.</li><li>يُسمح للأطفال دون الـ18 عامًا بالذهاب إلى المدرسة و/أو ممارسة الرياضة.</li></ul>]]></string>
     <string name="post_notification_no_visitors_header">لا تستقبل الزوار</string>
     <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>فقط الأشخاص الذين يعيشون معك يستطيعون التواجد معك في المنزل. ابتعدوا عن بعضكم البعض وحافظوا على مسافة 1.5 متر. لا تقم إذًا بالمعانقة ولا التقبيل ولا ممارسة العلاقة الحميمة</li></ul>.]]></string>
     <string name="post_notification_medical_help_list"><![CDATA[<ul><li>لا تذهب إلى الطبيب أو المستشفى، ولكن اتصل بطبيبك أولاً. قل له أنك كنت بالقرب من شخص مصاب بفيروس كورونا.</li><li>.بإمكان طبيب العائلة أو مساعدة طبية أخرى القيام بزيارتك.</li></ul>]]></string>
@@ -251,8 +252,8 @@
     <string name="request_test_paragraph_3">ستعرف النتيجة في غضون 48 ساعة. إبق في المنزل حتى تعرف النتيجة.</string>
     <string name="generic_notification_sample_notification_content_description">مثال على الإشعار</string>
     <string name="onboarding_enable_headline">قم بتشغيل CoronaMelder</string>
-    <string name="onboarding_enable_description">يمكن لـ CoronaMelder فقط تحذيرك إذا منحت التطبيق إذنًا لتتبع المصادفات مع مستخدمي التطبيق الآخرين.</string>
-    <string name="onboarding_enable_description_location"><![CDATA[يمكن لـ CoronaMelder تحذيرك فقط إذا منحت التطبيق الإذن لـ: <br/><br/><ul><li> تتبع المصادفات مع مستخدمي التطبيق الآخرين</li><li>قم بتشغيل إعدادات موقعك الجغرافي (CoronaMelder لا يعرف موقعك الجغرافي)</li> </ul>]]></string>
+    <string name="onboarding_enable_description">يمكن لـ CoronaMelder تحذيرك فقط إذا منحت التطبيق إذنًا لـ: &lt;br/&gt;&lt;br/&gt;&lt;ul&gt; &lt;li&gt; تتبع المصادفات مع مستخدمي التطبيق الآخرين&lt;/li&gt;&lt;li&gt; إيقاف تشغيل تحسين البطارية لهذا التطبيق فقط (ليس ضروريًا) &lt;/li&gt; &lt;/ul&gt;</string>
+    <string name="onboarding_enable_description_location"><![CDATA[يمكن لـ CoronaMelder تحذيرك فقط إذا منحت التطبيق الإذن لـ: <br/><br/><ul><li> تتبع المصادفات مع مستخدمي التطبيق الآخرين</li><li> شغّل إعدادات موقعك (لا يعرف CoronaMelder موقعك الجغرافي) </li><li></li> أوقف تشغيل تحسين البطارية لهذا التطبيق فقط (ليس ضروريًا) </ul>]]></string>
     <string name="location_services_required_title">إعدادات الموقع الجغرافي</string>
     <string name="location_services_required_headline">التطبيق يعمل فقط إذا قمت بتشغيل إعدادات موقعك الجغرافي</string>
     <string name="location_services_required_description">تستخدم بعض التطبيقات البلوتوث لتحديد موقعك الجغرافي. وبالتالي، هذا جزء من إعدادات الموقع. يحتاج CoronaMelder إلى تقنية البلوتوث ليعمل، ولكن لا يمكنه الوصول إلى موقعك الجغرافي على الإطلاق.</string>
@@ -265,4 +266,8 @@
     <string name="onboarding_privacy_policy_location"><![CDATA[<b> لا</ b>يتم استخدام أوتخزين بيانات الجي بي إس الخاصة بك أو بيانات موقعك الجغرافي.]]></string>
     <string name="onboarding_privacy_policy_send_alert">إذا تبين من اختبار كورونا أنك مصاب بكورونا، يمكنك الإبلاغ عن ذلك من خلال التطبيق لتحذير المستخدمين الآخرين.</string>
     <string name="onboarding_privacy_policy_voluntary">استخدام CoronaMelder طوعي دائمًا</string>
+    <string name="status_error_battery_optimisation">يحتوي هاتفك على وظيفة تسمى تحسين البطارية. قد يتسبب هذا في حدوث خلل في التطبيق. لذلك من المهم أن تقوم بتعطيل هذه الوظيفة في CoronaMelder.</string>
+    <string name="status_error_action_disable_battery_optimisation">"حل المشكلة "</string>
+    <string name="update_app_headline">إصدار CoronaMelder هذا أصبح قديمًا.</string>
+    <string name="update_app_description">حدّث التطبيق في هاتفك لكي يستمر في العمل بشكل صحيح.</string>
 </resources>

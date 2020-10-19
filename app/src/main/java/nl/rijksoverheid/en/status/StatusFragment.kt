@@ -26,7 +26,11 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.formatExposureDate
+import nl.rijksoverheid.en.util.isIgnoringBatteryOptimizations
+import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
 import timber.log.Timber
+
+private const val RC_DISABLE_BATTERY_OPTIMIZATIONS = 1
 
 class StatusFragment @JvmOverloads constructor(
     factoryProducer: (() -> ViewModelProvider.Factory)? = null
@@ -105,6 +109,26 @@ class StatusFragment @JvmOverloads constructor(
                 StatusViewModel.ErrorState.SyncIssues -> section.updateErrorState(it) { statusViewModel.resetErrorState() }
                 StatusViewModel.ErrorState.NotificationsDisabled -> section.updateErrorState(it) { navigateToNotificationSettings() }
                 is StatusViewModel.ErrorState.ConsentRequired -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!requireContext().isIgnoringBatteryOptimizations()) {
+            section.showBatteryOptimisationsError {
+                requestDisableBatteryOptimizations(
+                    RC_DISABLE_BATTERY_OPTIMIZATIONS
+                )
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_DISABLE_BATTERY_OPTIMIZATIONS) {
+            if (requireContext().isIgnoringBatteryOptimizations()) {
+                section.removeBatteryOptimisationsError()
             }
         }
     }

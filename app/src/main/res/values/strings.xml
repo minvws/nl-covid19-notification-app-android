@@ -35,7 +35,7 @@
     <string name="onboarding_share_continue">Continue</string>
     <string name="onboarding_share_share">Share app</string>
     <string name="status_no_exposure_detected_headline">The app is active</string>
-    <string name="status_no_exposure_detected_description">Encounters will be tracked when you close the app</string>
+    <string name="status_no_exposure_detected_description">Encounters will be tracked, even when you close the app</string>
     <string name="status_exposure_detected_headline">You\'ve been near someone with coronavirus</string>
     <string name="status_exposure_detected_description">You had a higher risk of infection on %1$s (%2$s)</string>
     <string name="status_disabled_headline">The app is not active</string>
@@ -59,9 +59,9 @@
     <string name="sync_issue_notification_message">The app wasn\'t able to check for 24 hours if the people you encountered later turned out to have corona.</string>
     <string name="post_notification_toolbar_title">Risk of infection</string>
     <string name="post_notification_header_1">You\'ve been near someone with coronavirus</string>
-    <string name="post_notification_paragraph_2">You were near someone on %1$s (%2$s) who was later found to have coronavirus. You were exposed to a higher risk of infection in this situation.\n\nIf you are indeed infected, you can infect other people with coronavirus. Even if you don\'t feel sick right now.</string>
+    <string name="post_notification_paragraph_2">You were near someone on %2$s (%1$s) who was later found to have coronavirus. You were exposed to a higher risk of infection in this situation.\n\nIf you are indeed infected, you can infect other people with coronavirus. Even if you don\'t feel sick right now.</string>
     <string name="post_notification_header_3">What can you do now?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>Stay home up to and including %1$s and look out for symptoms related to the coronavirus</li><li>Do you have (mild) symptoms related to the coronavirus? Get tested for coronavirus and stay home up to and including %1$s</li><li>Serious symptoms like high fever or difficulty breathing? Or part of a high-risk group and having a fever? Call your doctor</li></ul>]]></string>
+    <string name="post_notification_list_4"><![CDATA[<ul><li>Stay home until after %1$s. And look out for symptoms related to the coronavirus</li><li>Do you have (mild) symptoms related to the coronavirus? Get tested for coronavirus and stay home up until after %1$s</li><li>Serious symptoms like high fever or difficulty breathing? Or part of a high-risk group and have a fever? Call your doctor first.</li></ul>]]></string>
     <string name="post_notification_header_6">Get tested for coronavirus</string>
     <string name="post_notification_paragraph_7">Even if you don\'t feel sick. Because you can still infect others and spread the virus without feeling sick.</string>
     <string name="post_notification_paragraph_8">"Get a free test. It doesn't take long to get tested and waiting times are usually short. You get the results within 48 hours. In the meantime, stay home."</string>
@@ -145,7 +145,7 @@
     <string name="faq_power_usage_paragraph_1">The app uses Bluetooth Low Energy — a special kind of Bluetooth that only uses a tiny amount of power. How fast this drains your battery depends on your phone.</string>
     <string name="faq_deletion_paragraph_1">"You can delete the Bluetooth files saved by the app yourself. Press the button below and then press &lt;strong&gt;Delete random IDs&lt;/strong&gt;.\n\nIf you don't want the app to save new Bluetooth data, delete the app."</string>
     <string name="faq_deletion_button">Open Settings</string>
-    <string name="faq_location_permission_paragraph_1">CoronaMelder doesn\'t know where you are. However, your location settings need to be turned on for the app to work. That might sound a little strange. Here\'s how it works:\n\nCoronaMelder uses \'Bluetooth scanning\'. This is a different technology from the one used to, for example connect to a pair of wireless headphones. It\'s a special kind of Bluetooth that only uses a tiny amount of power. Using Bluetooth scanning the app exchanges random codes with nearby phones.\n\nSome apps (not CoronaMelder) use Bluetooth scanning to determine your location. That\'s why your location settings always need to be turned on to use Bluetooth scanning. Even if an app isn\'t using your location.\n\nIt\'s important to remember that CoronaMelder never knows your location.</string>
+    <string name="faq_location_permission_paragraph_1">CoronaMelder doesn\'t know where you are. However, your location settings need to be turned on for the app to work. That might sound a little strange. Here\'s how it works:\n\nCoronaMelder uses \'Bluetooth scanning\'. This is a different technology from the one used to, for example connect to a pair of wireless headphones. It\'s a special kind of Bluetooth that only uses a tiny amount of power. Using Bluetooth scanning the app exchanges random codes with nearby phones.\n\nSome apps (not CoronaMelder) use Bluetooth scanning to determine your location. That\'s why your location settings always need to be turned on to use Bluetooth scanning. Even if an app isn\'t using your location.\n\nImportant to remember: CoronaMelder can never access your location. From Android version 11 your location settings will never have to be turned on.</string>
     <string name="faq_technical_toolbar_title">Technical explanation</string>
     <string name="faq_technical_header_1">1. The app makes a unique code for each phone</string>
     <string name="faq_technical_paragraph_2">This code doesn\'t include any information about you or your phone. The code is completely random and changes every 15 minutes.</string>
@@ -210,13 +210,13 @@
     <string name="faq_test_phase">What does test and research version mean?</string>
     <string name="footer_test_phase">Test and research version %1$s (%2$s)</string>
     <string name="footer_test_phase_read_more">Read more</string>
-    <string name="onboarding_privacy_policy_headline">Permission to use data</string>
-    <string name="onboarding_privacy_policy_paragraph"><![CDATA[To use CoronaMelder, you have to accept the <a href="">privacy statement</a>. Important to know:]]></string>
+    <string name="onboarding_privacy_policy_headline">This is how CoronaMelder uses your data</string>
+    <string name="onboarding_privacy_policy_paragraph"><![CDATA[Read the <a href="">privacy statement</a> to learn how CoronaMelder uses your data. These are the most important points:]]></string>
     <string name="onboarding_privacy_policy_check_1">Your app sends out encrypted Bluetooth data.</string>
     <string name="onboarding_privacy_policy_check_2">Other users who\'ve been in contact with you save this data for a maximum of 14 days.</string>
     <string name="onboarding_privacy_policy_check_3">If you\'ve been tested and have coronavirus, you can report it in the app to warn other users.</string>
     <string name="onboarding_privacy_policy_check_4">You can delete the data from your phone whenever you want.</string>
-    <string name="onboarding_privacy_policy_consent_label">I\'ve read and accepted the privacy statement</string>
+    <string name="onboarding_privacy_policy_consent_label">I\'ve read the privacy statement and understand how CoronaMelder uses my data</string>
     <string name="lab_test_how_does_it_work">How does this work?</string>
     <string name="faq_notification_message">What does a notification say?</string>
     <string name="faq_pause">Can I pause the app?</string>
@@ -224,18 +224,18 @@
     <string name="faq_pause_paragraph_2">" If you want to keep Bluetooth turned on, you can also pause the app by temporarily turning off &lt;strong&gt;Exposure notifications&lt;/strong&gt;. You can do this by pressing the button below. You wil also then get a reminder to turn on the app again every 24 hours."</string>
     <string name="faq_pause_paragraph_3">However, it\'s mostly not recommended to pause the app. Because you might forget to turn it on again. You can pause the app in certain moments. For example, when you\'re near (potential) corona patients and you\'re wearing the appropriate medical protection.</string>
     <string name="faq_interoperability">Does CoronaMelder work with apps from other countries?</string>
-    <string name="faq_interoperability_paragraph_1">Not yet, unfortunately. However, we expect this feature in September. Then, CoronaMelder will be able to exchange codes with certain apps from other countries. Like the German app, for example.</string>
+    <string name="faq_interoperability_paragraph_1">Not yet, unfortunately. But we\'re working hard to make this possible. Then, CoronaMelder will be able to exchange codes with certain apps from other countries. Like the German app, for example.</string>
     <string name="faq_interoperability_paragraph_2">If you install the German Corona-Warn-App alongside CoronaMelder, your phone will tell you that only 1 app can be active. This is the app you\'re currently using to check your encounters. If you want to do this in other countries, you need to switch apps yourself. You can then get notifications from the app you switched to. If you switch apps once a day, both apps will check your encounters. This way you won’t miss anything.</string>
-    <string name="faq_interoperability_paragraph_3">From mid-September, you\'ll likely be able to always keep using your own country\'s app. And you won\'t need to make a daily app switch anymore.</string>
+    <string name="faq_interoperability_paragraph_3">In the future, you\'ll likely be able to always keep using your own country\'s app. And you won\'t need to make a daily app switch anymore.</string>
     <string name="cross_links_header">Also read</string>
     <string name="request_test_header_5">Get tested for coronavirus</string>
     <string name="post_notification_guidance_follow_ggd">Were you called by the GGD? Follow the advice given by the GGD, not the advice given by the app.</string>
     <string name="post_notification_stay_home_header">Stay home up to and including %1$s</string>
-    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Ask someone else to get groceries. Is this impossible and are you free of symptoms? Then it\'s alright if you quickly go to the shop. Keep a 1,5 metre distance and don\'t touch anyone.</li><li>You\'re allowed to enjoy your own yard or balcony.</li><li>Children between the ages of 4 and 12 are allowed to go to school and/or play sports.</li></ul>]]></string>
+    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Ask someone else to get groceries. Is this impossible and are you free of symptoms? Then it\'s alright if you quickly go to the shop. Keep a 1,5 metre distance and don\'t touch anyone.</li><li>You\'re allowed to enjoy your own yard or balcony.</li><li>Children under the age of 18 are allowed to go to school and/or play sports.</li></ul>]]></string>
     <string name="post_notification_no_visitors_header">Don\'t see visitors</string>
     <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>Only the people who live with you are allowed to be in the same house as you. Stay away from each other and keep a 1,5 metre distance. That means no cuddling, no kissing and no sex.</li></ul>]]></string>
     <string name="post_notification_medical_help_list"><![CDATA[<ul><li>Don\'t go to see your doctor or go to the hospital, but call your doctor first. Tell them you\'ve been in contact with someone who has coronavirus.</li><li>Your doctor and other medical personnel are allowed to visit you.</li></ul>]]></string>
-    <string name="post_notification_medical_help_header">Do you need medical help?</string>
+    <string name="post_notification_medical_help_header">Need medical help?</string>
     <string name="post_notification_after_stay_home_header">After %1$s</string>
     <string name="post_notification_after_stay_home_paragraph">No symptoms up to and including %1$s? You don\'t have to stay at home anymore. Do keep following the basic rules.</string>
     <string name="generic_notification_advice_stay_home">In any case, stay home until you know for sure you don\'t have the coronavirus. So you’ll prevent unknowingly infecting others.</string>
@@ -245,8 +245,8 @@
     <string name="request_test_paragraph_3">You get the results within 48 hours. In the meantime stay home.</string>
     <string name="generic_notification_sample_notification_content_description">Example notification</string>
     <string name="onboarding_enable_headline">Turn on CoronaMelder</string>
-    <string name="onboarding_enable_description">CoronaMelder can only warn you when you give the app permission to track encounters with other app users.</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder can only warn you when you give the app permission to:<br/><br/><ul><li> Track encounters with other app users.</li><li>Turn on your location settings (CoronaMelder doesn\'t know your location)</li></ul>]]></string>
+    <string name="onboarding_enable_description">CoronaMelder can only warn you when you give the app permission to:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt; Track encounters with other app users&lt;/li&gt;&lt;li&gt;Turn off battery optimisation for only this app (not necessary)&lt;/li&gt;&lt;/ul&gt;</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder can only warn you when you give the app permission to:<br/><br/><ul><li> Track encounters with other app users</li><li>Turn on your location settings (CoronaMelder doesn\'t know your location)</li><li>Turn off battery optimisation for only this app (not necessary)</li></ul>]]></string>
     <string name="location_services_required_title">Location settings</string>
     <string name="location_services_required_headline">The app only works when your location settings are turned on</string>
     <string name="location_services_required_description">Some apps use Bluetooth to determine your location. That\'s why it\'s part of your location settings. CoronaMelder requires Bluetooth to work, but it never knows your location.</string>
@@ -260,4 +260,8 @@
     <string name="onboarding_privacy_policy_location"><![CDATA[Your GPS or location data will <b>not</b> be used or saved.]]></string>
     <string name="onboarding_privacy_policy_send_alert">If you\'ve been tested and have coronavirus, you can report it in the app to warn other users.</string>
     <string name="onboarding_privacy_policy_voluntary">Using CoronaMelder is never mandatory</string>
+    <string name="status_error_battery_optimisation">Your phone has an option called \'battery optimisation\'. This might make the app not work correctly. So it\'s important you turn this option off for CoronaMelder.</string>
+    <string name="status_error_action_disable_battery_optimisation">Resolve issue</string>
+    <string name="update_app_headline">You have an outdated version of CoronaMelder</string>
+    <string name="update_app_description">Update the app on your phone to make sure CoronaMelder keeps working correctly.</string>
 </resources>

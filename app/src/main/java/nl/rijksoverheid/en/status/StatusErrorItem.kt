@@ -7,25 +7,15 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
-import androidx.annotation.StringRes
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusErrorBinding
-import nl.rijksoverheid.en.items.BaseBindableItem
 
 class StatusErrorItem(
     errorState: StatusViewModel.ErrorState,
     private val action: () -> Unit
-) :
-    BaseBindableItem<ItemStatusErrorBinding>() {
+) : BaseStatusErrorItem() {
 
-    abstract class ErrorViewState(
-        @StringRes val actionLabel: Int,
-        val action: () -> Unit
-    ) {
-        abstract fun getMessage(context: Context): String
-    }
-
-    val viewState = when (errorState) {
+    override val viewState = when (errorState) {
         is StatusViewModel.ErrorState.ConsentRequired -> object :
             ErrorViewState(R.string.status_error_action_consent, action) {
             override fun getMessage(context: Context) = context.getString(
