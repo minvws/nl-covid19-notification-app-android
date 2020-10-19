@@ -43,7 +43,8 @@ interface LabTestService {
     companion object {
         fun create(
             context: Context,
-            client: OkHttpClient = createOkHttpClient(context),
+            appVersionCode: Int,
+            client: OkHttpClient = createOkHttpClient(context, appVersionCode),
             baseUrl: String = BuildConfig.API_BASE_URL
         ): LabTestService {
             return Retrofit.Builder()

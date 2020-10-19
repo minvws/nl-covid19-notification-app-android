@@ -10,6 +10,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.TextAppearanceSpan
 import android.text.style.URLSpan
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.text.HtmlCompat
 import androidx.core.text.getSpans
@@ -37,11 +38,22 @@ class ParagraphItem(
                 val start = getSpanStart(it)
                 val end = getSpanEnd(it)
                 setSpan(
+                    object : URLSpan(it.url) {
+                        override fun onClick(widget: View) {
+                            viewBinding.root.performClick()
+                        }
+                    },
+                    start,
+                    end,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                setSpan(
                     TextAppearanceSpan(viewBinding.root.context, R.style.TextAppearance_App_Link),
                     start,
                     end,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
+                removeSpan(it)
             }
         }
     }

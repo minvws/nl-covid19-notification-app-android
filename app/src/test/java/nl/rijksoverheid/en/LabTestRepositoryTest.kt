@@ -107,6 +107,7 @@ class LabTestRepositoryTest {
                 FakeExposureNotificationApi(),
                 LabTestService.create(
                     ApplicationProvider.getApplicationContext(),
+                    BuildConfig.VERSION_CODE,
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
@@ -142,6 +143,7 @@ class LabTestRepositoryTest {
             FakeExposureNotificationApi(),
             LabTestService.create(
                 ApplicationProvider.getApplicationContext(),
+                BuildConfig.VERSION_CODE,
                 baseUrl = mockWebServer.url("/").toString()
             ),
             NOOP_SCHEDULER,
@@ -177,6 +179,7 @@ class LabTestRepositoryTest {
                 FakeExposureNotificationApi(),
                 LabTestService.create(
                     ApplicationProvider.getApplicationContext(),
+                    BuildConfig.VERSION_CODE,
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
@@ -205,6 +208,7 @@ class LabTestRepositoryTest {
                 FakeExposureNotificationApi(),
                 LabTestService.create(
                     ApplicationProvider.getApplicationContext(),
+                    BuildConfig.VERSION_CODE,
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
@@ -239,6 +243,7 @@ class LabTestRepositoryTest {
                 FakeExposureNotificationApi(),
                 LabTestService.create(
                     ApplicationProvider.getApplicationContext(),
+                    BuildConfig.VERSION_CODE,
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
@@ -274,6 +279,7 @@ class LabTestRepositoryTest {
                 FakeExposureNotificationApi(),
                 LabTestService.create(
                     ApplicationProvider.getApplicationContext(),
+                    BuildConfig.VERSION_CODE,
                     baseUrl = mockWebServer.url("/").toString()
                 ),
                 NOOP_SCHEDULER,
@@ -315,6 +321,7 @@ class LabTestRepositoryTest {
             mock(),
             LabTestService.create(
                 ApplicationProvider.getApplicationContext(),
+                BuildConfig.VERSION_CODE,
                 baseUrl = mockWebServer.url("/").toString()
             ),
             NOOP_SCHEDULER,
@@ -356,6 +363,7 @@ class LabTestRepositoryTest {
             mock(),
             LabTestService.create(
                 ApplicationProvider.getApplicationContext(),
+                BuildConfig.VERSION_CODE,
                 baseUrl = mockWebServer.url("/").toString()
             ),
             NOOP_SCHEDULER,

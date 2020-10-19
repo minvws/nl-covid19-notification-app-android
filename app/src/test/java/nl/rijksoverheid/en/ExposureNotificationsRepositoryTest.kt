@@ -162,6 +162,7 @@ class ExposureNotificationsRepositoryTest {
         val context = ApplicationProvider.getApplicationContext<Application>()
         val service = CdnService.create(
             context,
+            BuildConfig.VERSION_CODE,
             OkHttpClient(),
             mockWebServer.url("/").toString()
         )
@@ -219,6 +220,7 @@ class ExposureNotificationsRepositoryTest {
         val context = ApplicationProvider.getApplicationContext<Application>()
         val service = CdnService.create(
             context,
+            BuildConfig.VERSION_CODE,
             OkHttpClient(),
             mockWebServer.url("/").toString()
         )
@@ -275,6 +277,7 @@ class ExposureNotificationsRepositoryTest {
         val context = ApplicationProvider.getApplicationContext<Application>()
         val service = CdnService.create(
             context,
+            BuildConfig.VERSION_CODE,
             OkHttpClient(),
             mockWebServer.url("/").toString()
         )
@@ -319,6 +322,7 @@ class ExposureNotificationsRepositoryTest {
             val context = ApplicationProvider.getApplicationContext<Application>()
             val service = CdnService.create(
                 context,
+                BuildConfig.VERSION_CODE,
                 OkHttpClient(),
                 mockWebServer.url("/").toString()
             )
@@ -369,6 +373,7 @@ class ExposureNotificationsRepositoryTest {
             val context = ApplicationProvider.getApplicationContext<Application>()
             val service = CdnService.create(
                 context,
+                BuildConfig.VERSION_CODE,
                 OkHttpClient(),
                 mockWebServer.url("/").toString()
             )
@@ -421,6 +426,7 @@ class ExposureNotificationsRepositoryTest {
             val context = ApplicationProvider.getApplicationContext<Application>()
             val service = CdnService.create(
                 context,
+                BuildConfig.VERSION_CODE,
                 OkHttpClient(),
                 mockWebServer.url("/").toString()
             )
@@ -478,6 +484,7 @@ class ExposureNotificationsRepositoryTest {
             val context = ApplicationProvider.getApplicationContext<Application>()
             val service = CdnService.create(
                 context,
+                BuildConfig.VERSION_CODE,
                 OkHttpClient(),
                 mockWebServer.url("/").toString()
             )
@@ -542,6 +549,7 @@ class ExposureNotificationsRepositoryTest {
             val context = ApplicationProvider.getApplicationContext<Application>()
             val service = CdnService.create(
                 context,
+                BuildConfig.VERSION_CODE,
                 OkHttpClient(),
                 mockWebServer.url("/").toString()
             )
@@ -801,6 +809,7 @@ class ExposureNotificationsRepositoryTest {
 
             val fakeService = CdnService.create(
                 ApplicationProvider.getApplicationContext<Application>(),
+                BuildConfig.VERSION_CODE,
                 OkHttpClient(),
                 mockWebServer.url("/").toString()
             )

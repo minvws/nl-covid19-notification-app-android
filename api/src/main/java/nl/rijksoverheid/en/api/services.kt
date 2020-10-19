@@ -26,7 +26,7 @@ private var okHttpClient: OkHttpClient? = null
 internal fun createMoshi() =
     Moshi.Builder().add(Base64Adapter()).add(KotlinJsonAdapterFactory()).build()
 
-internal fun createOkHttpClient(context: Context): OkHttpClient {
+internal fun createOkHttpClient(context: Context, appVersionCode: Int): OkHttpClient {
     return okHttpClient ?: OkHttpClient.Builder()
         // enable cache for config and resource bundles
         .followRedirects(false)
@@ -37,6 +37,7 @@ internal fun createOkHttpClient(context: Context): OkHttpClient {
             addNetworkInterceptor(SignedResponseInterceptor())
             addInterceptor(PaddedRequestInterceptor())
             addInterceptor(SignedBodyInterceptor())
+            addInterceptor(UserAgentInterceptor(appVersionCode))
             if (Timber.forest().isNotEmpty()) {
                 addInterceptor(HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
                     override fun log(message: String) {

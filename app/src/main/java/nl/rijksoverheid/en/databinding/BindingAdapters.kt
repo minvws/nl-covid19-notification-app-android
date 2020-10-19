@@ -12,6 +12,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
 import nl.rijksoverheid.en.util.fromHtmlWithCustomReplacements
@@ -81,5 +84,21 @@ object BindingAdapters {
     @BindingAdapter("contentDescriptionRes")
     fun setContentDescriptionRes(view: View, @StringRes stringRes: Int) {
         view.contentDescription = view.context.getString(stringRes)
+    }
+
+    @JvmStatic
+    @BindingAdapter("markAsButtonForAccessibility")
+    fun markAsButtonForAccessibility(view: View, mark: Boolean) {
+        if (mark) {
+            ViewCompat.setAccessibilityDelegate(view, object : AccessibilityDelegateCompat() {
+                override fun onInitializeAccessibilityNodeInfo(
+                    host: View,
+                    info: AccessibilityNodeInfoCompat
+                ) {
+                    super.onInitializeAccessibilityNodeInfo(host, info)
+                    info.className = Button::class.java.name
+                }
+            })
+        }
     }
 }

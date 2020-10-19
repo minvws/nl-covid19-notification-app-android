@@ -18,7 +18,6 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.config.isTestPhaseVersion
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
@@ -31,7 +30,7 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
         exitTransition =
             TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
 
-        adapter.add(AboutSection(isTestPhaseVersion()))
+        adapter.add(AboutSection())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,15 +96,6 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
                 is ColofonItem -> {
                     val url =
                         Uri.parse(getString(R.string.colofon_url, getString(R.string.app_language)))
-                    CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
-                }
-                is TestPhaseItem -> {
-                    val url = Uri.parse(
-                        getString(
-                            R.string.test_phase_url,
-                            getString(R.string.app_language)
-                        )
-                    )
                     CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
                 }
             }

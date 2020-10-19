@@ -44,7 +44,8 @@ interface CdnService {
     companion object {
         fun create(
             context: Context,
-            client: OkHttpClient = createOkHttpClient(context),
+            appVersionCode: Int,
+            client: OkHttpClient = createOkHttpClient(context, appVersionCode),
             baseUrl: String = BuildConfig.CDN_BASE_URL
         ): CdnService {
             return Retrofit.Builder()

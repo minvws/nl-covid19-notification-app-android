@@ -145,6 +145,7 @@ class FAQDetailSections(private val openSettings: () -> Unit = {}) {
                 CenteredIllustrationItem(R.drawable.illustration_technical_5),
                 HeaderItem(R.string.faq_technical_header_9),
                 ParagraphItem(R.string.faq_technical_paragraph_10),
+                FAQOnboardingItem(),
                 GithubItem()
             )
         )

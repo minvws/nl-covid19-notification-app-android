@@ -59,6 +59,7 @@ buildscript {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$androidx_nav_version"
         classpath "com.github.triplet.gradle:play-publisher:2.8.0"
         classpath 'com.google.firebase:firebase-appdistribution-gradle:2.0.1'
+        classpath "ru.cian:huawei-publish-gradle-plugin:1.1.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -81,7 +82,6 @@ allprojects {
         jcenter() {
             content {
                 includeGroup "org.jetbrains.trove4j"
-                includeGroup "com.microsoft.appcenter"
                 includeGroup "com.jraska"
                 includeGroup "tools.fastlane"
             }
