@@ -19,7 +19,8 @@ class StatusSection : Section() {
     init {
         addAll(
             listOf(
-                headerGroup, errorGroup, Section(
+                headerGroup, errorGroup,
+                Section(
                     listOf(
                         StatusActionItem.About,
                         StatusActionItem.Share,

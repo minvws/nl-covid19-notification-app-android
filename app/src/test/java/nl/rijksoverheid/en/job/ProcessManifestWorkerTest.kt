@@ -48,9 +48,11 @@ class ProcessManifestWorkerTest {
     @Test
     fun `Successful sync cancels sync error notification`() {
         val repository = ExposureNotificationsRepository(
-            context, object : FakeExposureNotificationApi() {
+            context,
+            object : FakeExposureNotificationApi() {
                 override suspend fun getStatus(): StatusResult = StatusResult.Enabled
-            }, object : CdnService {
+            },
+            object : CdnService {
                 override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
                     throw NotImplementedError()
                 }
@@ -86,20 +88,20 @@ class ProcessManifestWorkerTest {
 
         val worker =
             TestListenableWorkerBuilder<ProcessManifestWorker>(context).setWorkerFactory(object :
-                WorkerFactory() {
-                override fun createWorker(
-                    appContext: Context,
-                    workerClassName: String,
-                    workerParameters: WorkerParameters
-                ): ListenableWorker? {
-                    return ProcessManifestWorker(
-                        appContext,
-                        workerParameters,
-                        repository,
-                        NotificationsRepository(context)
-                    )
-                }
-            }).build() as CoroutineWorker
+                    WorkerFactory() {
+                    override fun createWorker(
+                        appContext: Context,
+                        workerClassName: String,
+                        workerParameters: WorkerParameters
+                    ): ListenableWorker? {
+                        return ProcessManifestWorker(
+                            appContext,
+                            workerParameters,
+                            repository,
+                            NotificationsRepository(context)
+                        )
+                    }
+                }).build() as CoroutineWorker
 
         runBlocking {
             worker.doWork()

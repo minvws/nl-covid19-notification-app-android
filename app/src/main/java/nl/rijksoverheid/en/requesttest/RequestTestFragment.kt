@@ -37,10 +37,12 @@ class RequestTestFragment : BaseFragment(R.layout.fragment_list_with_two_buttons
                 getString(R.string.phone_number).forceLtr()
             )
             setOnClickListener {
-                startActivity(Intent(Intent.ACTION_DIAL).apply {
-                    val phoneNumber = getString(R.string.phone_number)
-                    data = Uri.parse("tel:$phoneNumber")
-                })
+                startActivity(
+                    Intent(Intent.ACTION_DIAL).apply {
+                        val phoneNumber = getString(R.string.phone_number)
+                        data = Uri.parse("tel:$phoneNumber")
+                    }
+                )
             }
         }
         binding.button2.apply {

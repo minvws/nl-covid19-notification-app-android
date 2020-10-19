@@ -125,7 +125,7 @@ private val MOCK_RISK_PARAMS_RESPONSE = MockResponse().setBody(
                 56
               ]
             }
-            """.trimIndent()
+    """.trimIndent()
 )
 
 @RunWith(RobolectricTestRunner::class)
@@ -634,10 +634,12 @@ class ExposureNotificationsRepositoryTest {
         val api = object : FakeExposureNotificationApi() {
             override suspend fun getSummary(token: String) =
                 when (token) {
-                    "sample-token-old" -> ExposureSummary.ExposureSummaryBuilder()
-                        .setDaysSinceLastExposure(8).setMatchedKeyCount(1).build()
-                    "sample-token-new" -> ExposureSummary.ExposureSummaryBuilder()
-                        .setDaysSinceLastExposure(4).setMatchedKeyCount(1).build()
+                    "sample-token-old" ->
+                        ExposureSummary.ExposureSummaryBuilder()
+                            .setDaysSinceLastExposure(8).setMatchedKeyCount(1).build()
+                    "sample-token-new" ->
+                        ExposureSummary.ExposureSummaryBuilder()
+                            .setDaysSinceLastExposure(4).setMatchedKeyCount(1).build()
                     else -> null
                 }
         }
@@ -871,7 +873,8 @@ class ExposureNotificationsRepositoryTest {
                     context.getSharedPreferences(
                         "test_config",
                         0
-                    ), mock()
+                    ),
+                    mock()
                 ) {
                     NotificationsRepository(context).showAppUpdateNotification()
                 },
@@ -1181,7 +1184,8 @@ class ExposureNotificationsRepositoryTest {
                 StatusResult.Enabled,
                 StatusResult.Disabled,
                 StatusResult.Enabled
-            ), result.await()
+            ),
+            result.await()
         )
     }
 
@@ -1337,28 +1341,32 @@ class ExposureNotificationsRepositoryTest {
                 }
             }
 
-            val repository = createRepository(api = api, cdnService = object : CdnService {
-                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                    throw NotImplementedError()
-                }
+            val repository = createRepository(
+                api = api,
+                cdnService = object : CdnService {
+                    override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                        throw NotImplementedError()
+                    }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
-                    Manifest(listOf(), "risk", "config")
+                    override suspend fun getManifest(cacheHeader: String?): Manifest =
+                        Manifest(listOf(), "risk", "config")
 
-                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
-                    throw NotImplementedError()
-                }
+                    override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                        throw NotImplementedError()
+                    }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
-                    AppConfig()
-            }, scheduler = object : BackgroundWorkScheduler {
-                override fun schedule(intervalMinutes: Int) {
-                }
+                    override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                        AppConfig()
+                },
+                scheduler = object : BackgroundWorkScheduler {
+                    override fun schedule(intervalMinutes: Int) {
+                    }
 
-                override fun cancel() {
-                    throw AssertionError()
+                    override fun cancel() {
+                        throw AssertionError()
+                    }
                 }
-            })
+            )
 
             repository.requestEnableNotificationsForcingConsent()
             assertTrue(disableCalled.get())

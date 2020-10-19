@@ -66,9 +66,11 @@ class TestMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        setContentView(FragmentContainerView(this).apply {
-            this.id = viewModel.viewId
-        })
+        setContentView(
+            FragmentContainerView(this).apply {
+                this.id = viewModel.viewId
+            }
+        )
     }
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {
@@ -98,7 +100,8 @@ class TestMainActivity : AppCompatActivity() {
                             super.instantiate(classLoader, className)
                         }
                     }
-                })
+                }
+            )
         }
 
         fun <T : Fragment> launchWithFragment(

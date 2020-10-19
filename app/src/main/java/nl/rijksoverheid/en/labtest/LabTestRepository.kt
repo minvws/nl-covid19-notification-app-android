@@ -197,13 +197,16 @@ class LabTestRepository(
         confirmationKey: ByteArray
     ) {
         val config = appConfigManager.getCachedConfigOrDefault()
-        val request = PostKeysRequest(requestedKeys.map {
-            nl.rijksoverheid.en.api.model.TemporaryExposureKey(
-                it.keyData,
-                it.rollingStartIntervalNumber,
-                it.rollingPeriod
-            )
-        }, bucketId)
+        val request = PostKeysRequest(
+            requestedKeys.map {
+                nl.rijksoverheid.en.api.model.TemporaryExposureKey(
+                    it.keyData,
+                    it.rollingStartIntervalNumber,
+                    it.rollingPeriod
+                )
+            },
+            bucketId
+        )
         api.postKeys(request, HmacSecret(confirmationKey), config.requestSize)
     }
 
@@ -214,9 +217,11 @@ class LabTestRepository(
             )
             is TemporaryExposureKeysResult.UnknownError -> RequestUploadDiagnosisKeysResult.UnknownError
             is TemporaryExposureKeysResult.Success -> {
-                if (!(preferences.contains(KEY_CONFIRMATION_KEY) && preferences.contains(
-                        KEY_BUCKET_ID
-                    ))
+                if (!(
+                    preferences.contains(KEY_CONFIRMATION_KEY) && preferences.contains(
+                            KEY_BUCKET_ID
+                        )
+                    )
                 ) {
                     throw IllegalStateException()
                 }
@@ -256,7 +261,8 @@ class LabTestRepository(
                     key,
                     (clock.millis() / 600000L).toInt(), 144
                 )
-            ), generateDecoyBucketId(bucketId.length)
+            ),
+            generateDecoyBucketId(bucketId.length)
         )
 
         api.stopKeys(

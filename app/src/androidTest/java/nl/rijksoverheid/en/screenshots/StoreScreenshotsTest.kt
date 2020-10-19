@@ -139,7 +139,8 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
     private val statusViewModel = StatusViewModel(
         OnboardingRepository(
             sharedPreferences = configPreferences,
-            googlePlayServicesUpToDateChecker = { true }),
+            googlePlayServicesUpToDateChecker = { true }
+        ),
         repository,
         NotificationsRepository(context, clock),
         clock
@@ -163,13 +164,15 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         }
 
         withFragment(
-            StatusFragment(factoryProducer = {
-                object : ViewModelProvider.Factory {
-                    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                        return statusViewModel as T
+            StatusFragment(
+                factoryProducer = {
+                    object : ViewModelProvider.Factory {
+                        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                            return statusViewModel as T
+                        }
                     }
                 }
-            }),
+            ),
             navController,
             R.style.AppTheme,
             activityViewModelFactory
@@ -193,13 +196,15 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         }
 
         withFragment(
-            StatusFragment(factoryProducer = {
-                object : ViewModelProvider.Factory {
-                    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                        return statusViewModel as T
+            StatusFragment(
+                factoryProducer = {
+                    object : ViewModelProvider.Factory {
+                        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                            return statusViewModel as T
+                        }
                     }
                 }
-            }),
+            ),
             navController,
             R.style.AppTheme,
             activityViewModelFactory

@@ -26,23 +26,26 @@ class StatusErrorItem(
     }
 
     val viewState = when (errorState) {
-        is StatusViewModel.ErrorState.ConsentRequired -> object :
-            ErrorViewState(R.string.status_error_action_consent, action) {
-            override fun getMessage(context: Context) = context.getString(
-                R.string.status_error_consent_required,
-                context.getString(R.string.app_name)
-            )
-        }
-        is StatusViewModel.ErrorState.NotificationsDisabled -> object :
-            ErrorViewState(R.string.status_error_action_notifications_disabled, action) {
-            override fun getMessage(context: Context) =
-                context.getString(R.string.status_error_notifications_disabled)
-        }
-        else -> object :
-            ErrorViewState(R.string.status_error_action_sync_issues, action) {
-            override fun getMessage(context: Context) =
-                context.getString(R.string.status_error_sync_issues)
-        }
+        is StatusViewModel.ErrorState.ConsentRequired ->
+            object :
+                ErrorViewState(R.string.status_error_action_consent, action) {
+                override fun getMessage(context: Context) = context.getString(
+                    R.string.status_error_consent_required,
+                    context.getString(R.string.app_name)
+                )
+            }
+        is StatusViewModel.ErrorState.NotificationsDisabled ->
+            object :
+                ErrorViewState(R.string.status_error_action_notifications_disabled, action) {
+                override fun getMessage(context: Context) =
+                    context.getString(R.string.status_error_notifications_disabled)
+            }
+        else ->
+            object :
+                ErrorViewState(R.string.status_error_action_sync_issues, action) {
+                override fun getMessage(context: Context) =
+                    context.getString(R.string.status_error_sync_issues)
+            }
     }
 
     override fun bind(viewBinding: ItemStatusErrorBinding, position: Int) {

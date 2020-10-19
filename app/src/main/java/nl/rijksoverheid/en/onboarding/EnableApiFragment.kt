@@ -51,29 +51,33 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
         viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
                 findNavController().navigate(
-                    EnableApiFragmentDirections.actionNext(), FragmentNavigatorExtras(
+                    EnableApiFragmentDirections.actionNext(),
+                    FragmentNavigatorExtras(
                         binding.appbar to binding.appbar.transitionName
                     )
                 )
             }
         }
 
-        onboardingViewModel.skipConsentConfirmation.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(EnableApiFragmentDirections.actionSkipConsentConfirmation())
-            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
-                SkipConsentConfirmationDialogFragment.SKIP_CONSENT_RESULT
-            )?.observe(viewLifecycleOwner) { skip ->
-                if (skip) {
-                    findNavController().navigate(
-                        EnableApiFragmentDirections.actionNext(),
-                        FragmentNavigatorExtras(
-                            binding.appbar to binding.appbar.transitionName
+        onboardingViewModel.skipConsentConfirmation.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                findNavController().navigate(EnableApiFragmentDirections.actionSkipConsentConfirmation())
+                findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+                    SkipConsentConfirmationDialogFragment.SKIP_CONSENT_RESULT
+                )?.observe(viewLifecycleOwner) { skip ->
+                    if (skip) {
+                        findNavController().navigate(
+                            EnableApiFragmentDirections.actionNext(),
+                            FragmentNavigatorExtras(
+                                binding.appbar to binding.appbar.transitionName
+                            )
                         )
-                    )
-                } else {
-                    viewModel.requestEnableNotificationsForcingConsent()
+                    } else {
+                        viewModel.requestEnableNotificationsForcingConsent()
+                    }
                 }
             }
-        })
+        )
     }
 }

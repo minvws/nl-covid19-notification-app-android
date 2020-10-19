@@ -104,9 +104,11 @@ class NotificationsRepository(
         val pendingIntent = NavDeepLinkBuilder(context)
             .setGraph(R.navigation.nav_main)
             .setDestination(R.id.nav_post_notification)
-            .setArguments(Bundle().apply {
-                putLong("epochDayOfLastExposure", dateOfLastExposure.toEpochDay())
-            }).createPendingIntent()
+            .setArguments(
+                Bundle().apply {
+                    putLong("epochDayOfLastExposure", dateOfLastExposure.toEpochDay())
+                }
+            ).createPendingIntent()
         val message = context.getString(
             R.string.notification_message,
             dateOfLastExposure.formatDaysSince(context, clock)
@@ -141,7 +143,8 @@ class NotificationsRepository(
 
     fun showAppUpdateNotification() {
         showNotification(
-            APP_UPDATE_NOTIFICATION_ID, createNotification(
+            APP_UPDATE_NOTIFICATION_ID,
+            createNotification(
                 APP_UPDATE_NOTIFICATION_CHANNEL_ID,
                 R.string.update_notification_title,
                 R.string.update_notification_message
@@ -156,7 +159,8 @@ class NotificationsRepository(
             .createPendingIntent()
 
         showNotification(
-            UPLOAD_KEYS_FAILED_ID, createNotification(
+            UPLOAD_KEYS_FAILED_ID,
+            createNotification(
                 SYNC_ISSUES_NOTIFICATION_CHANNEL_ID,
                 R.string.upload_keys_failed_title,
                 R.string.upload_keys_failed_message
@@ -166,7 +170,8 @@ class NotificationsRepository(
 
     fun showAppInactiveNotification() {
         showNotification(
-            APP_INACTIVE_NOTIFICATION_ID, createNotification(
+            APP_INACTIVE_NOTIFICATION_ID,
+            createNotification(
                 SYNC_ISSUES_NOTIFICATION_CHANNEL_ID,
                 R.string.app_inactive_title,
                 R.string.app_inactive_message
