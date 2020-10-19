@@ -117,7 +117,12 @@ class ExposureNotificationsRepository(
             }
             val interval = appConfigManager.getCachedConfigOrDefault().updatePeriodMinutes
             manifestWorkerScheduler.schedule(interval)
-            statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+
+            if (isBluetoothEnabled() && isLocationPreconditionSatisfied()) {
+                statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+            } else {
+                statusCache.updateCachedStatus(StatusCache.CachedStatus.INVALID_PRECONDITIONS)
+            }
         }
         return result
     }
