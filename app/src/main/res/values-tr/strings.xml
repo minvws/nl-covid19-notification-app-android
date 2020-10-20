@@ -231,7 +231,7 @@
     <string name="request_test_header_5">Korona testi talep etmek</string>
     <string name="post_notification_guidance_follow_ggd">GGD size telefonda uygulamadan farklı tavsiyeler mi veriyor? O zaman, GGD\'nin tavsiyelerine uyun.</string>
     <string name="post_notification_stay_home_header">%1$s tarihine kadar evinizde kalın</string>
-    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Alışverişlerinizi başkalarına yaptırın. Bu gerçekten mümkün değil mi ve hiç şikayetiniz yok mu? O zaman alışveriş yapmak için dışarı çıkabilirsiniz. 1,5 metre mesafe koruyun ve kimseye dokunmayın.</li><li>Bahçede veya balkonda oturabilirsiniz.</li><li> Okul çağındaki 18 yaşın altındaki çocukların okula gidebilirler ve / veya spor yapabilirler.</li></ul>]]></string>
+    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Alışverişlerinizi başkalarına yaptırın. Bu gerçekten mümkün değil mi ve hiç şikayetiniz yok mu? O zaman alışveriş yapmak için dışarı çıkabilirsiniz. 1,5 metre mesafe koruyun ve kimseye dokunmayın.</li><li>Bahçede veya balkonda oturabilirsiniz.</li><li> 18 yaşın altında olan okul çağındaki çocuklar okula gidebilirler ve / veya spor yapabilirler.</li></ul>]]></string>
     <string name="post_notification_no_visitors_header">Ziyaretçi kabul etmeyin</string>
     <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>Ancak sizinle birlikte yaşayanlar sizinle birlikte aynı evde bulunabilirler. Birbirinizden uzak durun ve 1,5 metre mesafe koruyun. Yani sarılmak, öpüşmek ve sevişmek yok. </li></ul>]]></string>
     <string name="post_notification_medical_help_list"><![CDATA[<ul><li>Doktora veya hastaneye gitmeyin, önce doktorunuzu arayın. Korona virüsü olan birinin yakınında bulunmuş olduğunuzu söyleyin. </li><li>Doktorunuz veya diğer tıbbi yardımcı sizi ziyaret edebilir.</li></ul>]]></string>
@@ -246,7 +246,7 @@
     <string name="generic_notification_sample_notification_content_description">Bir bildirim örneği</string>
     <string name="onboarding_enable_headline">CoronaMelder\'ı açın</string>
     <string name="onboarding_enable_description">CoronaMelder, yalnızca uygulamaya aşağıdakiler için izin verirseniz sizi uyarabilir: &lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Diğer uygulama kullanıcılarıyla buluşmaları takip etme&lt;/li&gt;&lt;li&gt;Yalnızca bu uygulama için pil optimizasyonunu kapatmak (gerekli değil)&lt;/li&gt;&lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder, ancak uygulamaya aşağıdakiler için izin verirseniz sizi bilgilendirebilir:<br/><br/><ul><li> Diğer uygulama kullanıcılarıyla buluşmaları takip etme</li><li>Konum ayarlarınızı açın (CoronaMelder konumunuzu bilmiyor) </li><li></li> Pil optimizasyonunu yalnızca bu uygulama için kapatın (gerekli değildir) </ul>]]></string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder, ancak uygulamaya aşağıdakiler için izin verdiğiniz takdirde sizi bilgilendirebilir:<br/><br/><ul><li> Diğer uygulama kullanıcılarıyla buluşmaları takip etmek için</li><li>Konum ayarlarınızı açmak için (CoronaMelder konumunuzu bilmiyor) </li><li></li> Pil optimizasyonunu yalnızca bu uygulamaya kapatmak için (gerekli değildir) </ul>]]></string>
     <string name="location_services_required_title">Konum ayarları</string>
     <string name="location_services_required_headline">Uygulama yalnızca konum ayarlarınız açıksa çalışır</string>
     <string name="location_services_required_description">Bazı uygulamalar konumunuzu belirlemek için bluetooth kullanır. Dolayısıyla bu, konum ayarlarının bir parçasıdır. CoronaMelder\'ın çalışması için bluetooth\'a ihtiyacı vardır, ancak konumunuza asla erişemez.</string>
@@ -260,7 +260,7 @@
     <string name="onboarding_privacy_policy_send_alert">Bir Korona testi Korona olduğunuzu gösterirse, diğer kullanıcıları uyarmak için bunu uygulamada bildirebilirsiniz.</string>
     <string name="onboarding_privacy_policy_voluntary">CoronaMelder\'ın kullanımı her zaman gönüllüdür</string>
     <string name="status_error_battery_optimisation">Telefonunuzun pil optimizasyonu adı verilen bir özelliği vardır. Bu, uygulamanın arızalanmasına neden olabilir. Bu nedenle CoronaMelder için bu işlevi devre dışı bırakmanız önemlidir.</string>
-    <string name="status_error_action_disable_battery_optimisation">Bir sorunu çözmek</string>
+    <string name="status_error_action_disable_battery_optimisation">Sorunu çözmek</string>
     <string name="update_app_headline">CoronaMelder\'ın eski bir sürümüne sahipsiniz</string>
     <string name="update_app_description">CoronaMelder\'in düzgün çalışmasını sağlamak için telefonunuzdaki uygulamayı güncelleyin.</string>
 </resources>
