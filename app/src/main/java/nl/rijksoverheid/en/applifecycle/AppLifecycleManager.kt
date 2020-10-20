@@ -25,6 +25,7 @@ class AppLifecycleManager(
     private val context: Context,
     private val preferences: SharedPreferences,
     private val appUpdateManager: AppUpdateManager,
+    private val currentVersionCode: Int = BuildConfig.VERSION_CODE,
     private val onShowAppUpdateNotification: () -> Unit
 ) {
 
@@ -39,7 +40,6 @@ class AppLifecycleManager(
             preferences.edit {
                 putInt(KEY_MINIMUM_VERSION_CODE, minimumVersionCode)
             }
-            val currentVersionCode = BuildConfig.VERSION_CODE
             if (notify && currentVersionCode < minimumVersionCode) {
                 onShowAppUpdateNotification()
             }
@@ -52,7 +52,6 @@ class AppLifecycleManager(
     suspend fun getUpdateState(): UpdateState =
         suspendCoroutine { c ->
             val minimumVersionCode = preferences.getInt(KEY_MINIMUM_VERSION_CODE, 1)
-            val currentVersionCode = BuildConfig.VERSION_CODE
             if (minimumVersionCode > currentVersionCode) {
                 val source = context.packageManager.getInstallerPackageName(context.packageName)
 

@@ -36,9 +36,10 @@ class AppLifecycleManagerTest {
             )
             val appUpdateManager = FakeAppUpdateManager(context)
             val preferences = context.getSharedPreferences("test_update", 0)
-            val appLifecycleManager = AppLifecycleManager(context, preferences, appUpdateManager) {
-                /* nothing */
-            }
+            val appLifecycleManager =
+                AppLifecycleManager(context, preferences, appUpdateManager, 1) {
+                    /* nothing */
+                }
 
             appUpdateManager.setUpdateAvailable(123)
             appLifecycleManager.verifyMinimumVersion(123, false)
@@ -57,9 +58,10 @@ class AppLifecycleManagerTest {
             )
             val appUpdateManager = FakeAppUpdateManager(context)
             val preferences = context.getSharedPreferences("test_update", 0)
-            val appLifecycleManager = AppLifecycleManager(context, preferences, appUpdateManager) {
-                /* nothing */
-            }
+            val appLifecycleManager =
+                AppLifecycleManager(context, preferences, appUpdateManager, 1) {
+                    /* nothing */
+                }
 
             appUpdateManager.setUpdateAvailable(123)
             appLifecycleManager.verifyMinimumVersion(123, false)
