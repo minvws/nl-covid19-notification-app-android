@@ -868,6 +868,7 @@ class ExposureNotificationsRepositoryTest {
                     override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 },
                 appLifecycleManager = AppLifecycleManager(
+                    context,
                     context.getSharedPreferences(
                         "test_config",
                         0
@@ -1527,6 +1528,7 @@ class ExposureNotificationsRepositoryTest {
             preferences
         ),
         appLifecycleManager: AppLifecycleManager = AppLifecycleManager(
+            context,
             preferences,
             mock()
         ) {},

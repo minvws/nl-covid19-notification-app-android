@@ -82,7 +82,7 @@ class HowItWorksDetailFragmentTest : BaseInstrumentationTest() {
             override fun cancel() {
             }
         },
-        AppLifecycleManager(configPreferences, AppUpdateManagerFactory.create(context)) {},
+        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)) {},
         StatusCache(notificationsPreferences),
         AppConfigManager(service)
     )
