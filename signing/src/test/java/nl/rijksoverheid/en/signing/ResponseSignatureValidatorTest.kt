@@ -107,7 +107,8 @@ class ResponseSignatureValidatorTest {
         val validator = ResponseSignatureValidator(
             trustManager = trustManager.trustManagers[0] as X509TrustManager,
             trustAnchorSubjectKeyIdentifier = SubjectKeyIdentifier(
-                Hex.decode("04143ebd1363a152e330842def2c1869ca979073d062")),
+                Hex.decode("04143ebd1363a152e330842def2c1869ca979073d062")
+            ),
             authorityKeyIdentifier = Hex.decode("301680143ebd1363a152e330842def2c1869ca979073d062")
         )
 

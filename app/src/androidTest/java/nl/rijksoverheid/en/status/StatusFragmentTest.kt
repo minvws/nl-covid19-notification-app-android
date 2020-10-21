@@ -110,7 +110,8 @@ class StatusFragmentTest : BaseInstrumentationTest() {
     private val statusViewModel = StatusViewModel(
         OnboardingRepository(
             sharedPreferences = configPreferences,
-            googlePlayServicesUpToDateChecker = { true }),
+            googlePlayServicesUpToDateChecker = { true }
+        ),
         repository,
         NotificationsRepository(context, clock),
         clock
@@ -133,13 +134,15 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             setCurrentDestination(R.id.nav_status)
         }
         withFragment(
-            StatusFragment(factoryProducer = {
-                object : ViewModelProvider.Factory {
-                    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                        return statusViewModel as T
+            StatusFragment(
+                factoryProducer = {
+                    object : ViewModelProvider.Factory {
+                        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                            return statusViewModel as T
+                        }
                     }
                 }
-            }),
+            ),
             navController,
             R.style.AppTheme,
             activityViewModelFactory

@@ -82,7 +82,8 @@ class LabTestServiceTest {
                 listOf(),
                 padding = byteArrayOf(1, 2, 3, 4),
                 bucketId = "bucketId"
-            ), HmacSecret("testId".toByteArray()),
+            ),
+            HmacSecret("testId".toByteArray()),
             RequestSize(0, 0)
         )
 
@@ -107,7 +108,8 @@ class LabTestServiceTest {
             PostKeysRequest(
                 listOf(TemporaryExposureKey(byteArrayOf(1, 2, 3), 1234, 1)),
                 bucketId = "bucketId"
-            ), HmacSecret("testId".toByteArray()),
+            ),
+            HmacSecret("testId".toByteArray()),
             RequestSize(2000, 3000)
         )
 

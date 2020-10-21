@@ -63,10 +63,12 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
                 is HelpdeskItem -> {
-                    startActivity(Intent(Intent.ACTION_DIAL).apply {
-                        val phoneNumber = getString(R.string.helpdesk_phone_number)
-                        data = Uri.parse("tel:$phoneNumber")
-                    })
+                    startActivity(
+                        Intent(Intent.ACTION_DIAL).apply {
+                            val phoneNumber = getString(R.string.helpdesk_phone_number)
+                            data = Uri.parse("tel:$phoneNumber")
+                        }
+                    )
                 }
                 is ReviewItem -> {
                     val intent = Intent(Intent.ACTION_VIEW).apply {

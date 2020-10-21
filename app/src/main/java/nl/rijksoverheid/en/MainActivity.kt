@@ -40,58 +40,64 @@ class MainActivity : AppCompatActivity() {
         window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
-        viewModel.notificationsResult.observe(this, EventObserver {
-            when (it) {
-                is ExposureNotificationsViewModel.NotificationsStatusResult.ConsentRequired -> {
-                    startIntentSenderForResult(
-                        it.intent.intentSender,
-                        RC_REQUEST_CONSENT,
-                        null,
-                        0,
-                        0,
-                        0
-                    )
-                }
-                is ExposureNotificationsViewModel.NotificationsStatusResult.Unavailable,
-                is ExposureNotificationsViewModel.NotificationsStatusResult.UnknownError -> {
-                    if (supportFragmentManager.findFragmentByTag(TAG_GENERIC_ERROR) == null) {
-                        ExposureNotificationApiNotAvailableDialogFragment().show(
-                            supportFragmentManager,
-                            TAG_GENERIC_ERROR
+        viewModel.notificationsResult.observe(
+            this,
+            EventObserver {
+                when (it) {
+                    is ExposureNotificationsViewModel.NotificationsStatusResult.ConsentRequired -> {
+                        startIntentSenderForResult(
+                            it.intent.intentSender,
+                            RC_REQUEST_CONSENT,
+                            null,
+                            0,
+                            0,
+                            0
                         )
                     }
-                }
-            }
-        })
-
-        appLifecycleViewModel.updateEvent.observe(this, EventObserver {
-            when (it) {
-                is AppLifecycleViewModel.AppLifecycleStatus.Update -> {
-                    if (it.update is AppLifecycleManager.UpdateState.InAppUpdate) {
-                        it.update.appUpdateManager.startUpdateFlowForResult(
-                            it.update.appUpdateInfo,
-                            AppUpdateType.IMMEDIATE,
-                            this,
-                            RC_UPDATE_APP
-                        )
-                    } else {
-                        val installerPackageName =
-                            (it.update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
-                        findNavController(R.id.nav_host_fragment).navigate(
-                            AppUpdateRequiredFragmentDirections.actionAppUpdateRequired(
-                                installerPackageName
+                    is ExposureNotificationsViewModel.NotificationsStatusResult.Unavailable,
+                    is ExposureNotificationsViewModel.NotificationsStatusResult.UnknownError -> {
+                        if (supportFragmentManager.findFragmentByTag(TAG_GENERIC_ERROR) == null) {
+                            ExposureNotificationApiNotAvailableDialogFragment().show(
+                                supportFragmentManager,
+                                TAG_GENERIC_ERROR
                             )
+                        }
+                    }
+                }
+            }
+        )
+
+        appLifecycleViewModel.updateEvent.observe(
+            this,
+            EventObserver {
+                when (it) {
+                    is AppLifecycleViewModel.AppLifecycleStatus.Update -> {
+                        if (it.update is AppLifecycleManager.UpdateState.InAppUpdate) {
+                            it.update.appUpdateManager.startUpdateFlowForResult(
+                                it.update.appUpdateInfo,
+                                AppUpdateType.IMMEDIATE,
+                                this,
+                                RC_UPDATE_APP
+                            )
+                        } else {
+                            val installerPackageName =
+                                (it.update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
+                            findNavController(R.id.nav_host_fragment).navigate(
+                                AppUpdateRequiredFragmentDirections.actionAppUpdateRequired(
+                                    installerPackageName
+                                )
+                            )
+                        }
+                    }
+                    AppLifecycleViewModel.AppLifecycleStatus.EndOfLife -> {
+                        viewModel.disableExposureNotifications()
+                        findNavController(R.id.nav_host_fragment).navigate(
+                            EndOfLifeFragmentDirections.actionEndOfLife()
                         )
                     }
                 }
-                AppLifecycleViewModel.AppLifecycleStatus.EndOfLife -> {
-                    viewModel.disableExposureNotifications()
-                    findNavController(R.id.nav_host_fragment).navigate(
-                        EndOfLifeFragmentDirections.actionEndOfLife()
-                    )
-                }
             }
-        })
+        )
 
         if (BuildConfig.FEATURE_DEBUG_NOTIFICATION) {
             DebugNotification(this).show()

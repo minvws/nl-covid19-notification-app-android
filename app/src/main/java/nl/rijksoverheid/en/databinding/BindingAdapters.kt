@@ -28,8 +28,10 @@ object BindingAdapters {
         keepInLayout: Boolean,
         hideOnSmallScreenHeight: Boolean?
     ) {
-        val hideSmallScreen = (hideOnSmallScreenHeight
-            ?: false) && isSmallScreen(view.context.resources.configuration)
+        val hideSmallScreen = (
+            hideOnSmallScreenHeight
+                ?: false
+            ) && isSmallScreen(view.context.resources.configuration)
 
         val visibility = when {
             hideSmallScreen -> {
@@ -90,15 +92,18 @@ object BindingAdapters {
     @BindingAdapter("markAsButtonForAccessibility")
     fun markAsButtonForAccessibility(view: View, mark: Boolean) {
         if (mark) {
-            ViewCompat.setAccessibilityDelegate(view, object : AccessibilityDelegateCompat() {
-                override fun onInitializeAccessibilityNodeInfo(
-                    host: View,
-                    info: AccessibilityNodeInfoCompat
-                ) {
-                    super.onInitializeAccessibilityNodeInfo(host, info)
-                    info.className = Button::class.java.name
+            ViewCompat.setAccessibilityDelegate(
+                view,
+                object : AccessibilityDelegateCompat() {
+                    override fun onInitializeAccessibilityNodeInfo(
+                        host: View,
+                        info: AccessibilityNodeInfoCompat
+                    ) {
+                        super.onInitializeAccessibilityNodeInfo(host, info)
+                        info.className = Button::class.java.name
+                    }
                 }
-            })
+            )
         }
     }
 }

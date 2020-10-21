@@ -48,7 +48,8 @@ class PrivacyPolicyConsentFragment : BaseFragment(R.layout.fragment_privacy_poli
         binding.lifecycleOwner = viewLifecycleOwner
         binding.nextButtonClickListener = View.OnClickListener {
             findNavController().navigate(
-                PrivacyPolicyConsentFragmentDirections.actionNext(), FragmentNavigatorExtras(
+                PrivacyPolicyConsentFragmentDirections.actionNext(),
+                FragmentNavigatorExtras(
                     binding.appbar to binding.appbar.transitionName
                 )
             )
@@ -64,11 +65,14 @@ class PrivacyPolicyConsentFragment : BaseFragment(R.layout.fragment_privacy_poli
             getSpans<URLSpan>().forEach {
                 val start = getSpanStart(it)
                 val end = getSpanEnd(it)
-                setSpan(object : URLSpan(it.url) {
-                    override fun onClick(widget: View) {
-                        binding.description.performClick()
-                    }
-                }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                setSpan(
+                    object : URLSpan(it.url) {
+                        override fun onClick(widget: View) {
+                            binding.description.performClick()
+                        }
+                    },
+                    start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
                 setSpan(
                     TextAppearanceSpan(view.context, R.style.TextAppearance_App_Link),
                     start,

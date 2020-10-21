@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
@@ -89,7 +88,8 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
         if (requestCode == RC_DISABLE_BATTERY_OPTIMIZATIONS) {
             val binding = DataBindingUtil.getBinding<FragmentListWithButtonBinding>(requireView())!!
             findNavController().navigateCatchingErrors(
-                HowItWorksFragmentDirections.actionNext(), FragmentNavigatorExtras(
+                HowItWorksFragmentDirections.actionNext(),
+                FragmentNavigatorExtras(
                     binding.appbar to binding.appbar.transitionName
                 )
             )

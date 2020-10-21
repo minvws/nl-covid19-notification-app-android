@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import nl.rijksoverheid.en.BaseFragment

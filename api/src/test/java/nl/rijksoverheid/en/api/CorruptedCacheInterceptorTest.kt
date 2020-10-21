@@ -123,9 +123,12 @@ class CorruptedCacheInterceptorTest {
             }
         }
 
-        return OkHttpClient.Builder().sslSocketFactory(SSLContext.getInstance("TLS").apply {
-            init(null, arrayOf(trustManager), null)
-        }.socketFactory, trustManager).hostnameVerifier(HostnameVerifier { _, _ -> true })
+        return OkHttpClient.Builder().sslSocketFactory(
+            SSLContext.getInstance("TLS").apply {
+                init(null, arrayOf(trustManager), null)
+            }.socketFactory,
+            trustManager
+        ).hostnameVerifier(HostnameVerifier { _, _ -> true })
     }
 
     private fun createCorruptedCacheEntry(url: String) {
@@ -157,7 +160,7 @@ class CorruptedCacheInterceptorTest {
                     *%^INVALID&*
                     0
                     TLSv1.2
-""".trimIndent()
+            """.trimIndent()
         )
     }
 }

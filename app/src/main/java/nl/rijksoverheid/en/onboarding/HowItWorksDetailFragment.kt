@@ -10,7 +10,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -62,9 +61,13 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter.add(FAQDetailSections(openSettings = {
-            startActivity(Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS))
-        }).getSection(args.faqItemId))
+        adapter.add(
+            FAQDetailSections(
+                openSettings = {
+                    startActivity(Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS))
+                }
+            ).getSection(args.faqItemId)
+        )
 
         crossLinks[args.faqItemId]?.let { crossLinks ->
             adapter.add(FAQHeaderItem(R.string.cross_links_header))
@@ -114,7 +117,8 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
         viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
                 findNavController().navigate(
-                    HowItWorksDetailFragmentDirections.actionNext(), FragmentNavigatorExtras(
+                    HowItWorksDetailFragmentDirections.actionNext(),
+                    FragmentNavigatorExtras(
                         binding.appbar to binding.appbar.transitionName
                     )
                 )

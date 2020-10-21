@@ -12,7 +12,6 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
@@ -61,18 +60,21 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
             }
         }
 
-        onboardingViewModel.skipConsentConfirmation.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(EnableApiFragmentDirections.actionSkipConsentConfirmation())
-            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
-                SkipConsentConfirmationDialogFragment.SKIP_CONSENT_RESULT
-            )?.observe(viewLifecycleOwner) { skip ->
-                if (skip) {
-                    requestDisableBatteryOptimizationsAndContinue()
-                } else {
-                    viewModel.requestEnableNotificationsForcingConsent()
+        onboardingViewModel.skipConsentConfirmation.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                findNavController().navigate(EnableApiFragmentDirections.actionSkipConsentConfirmation())
+                findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+                    SkipConsentConfirmationDialogFragment.SKIP_CONSENT_RESULT
+                )?.observe(viewLifecycleOwner) { skip ->
+                    if (skip) {
+                        requestDisableBatteryOptimizationsAndContinue()
+                    } else {
+                        viewModel.requestEnableNotificationsForcingConsent()
+                    }
                 }
             }
-        })
+        )
     }
 
     private fun requestDisableBatteryOptimizationsAndContinue() {
