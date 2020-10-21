@@ -15,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.google.android.play.core.install.model.AppUpdateType
+import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.applifecycle.AppLifecycleViewModel
+import nl.rijksoverheid.en.applifecycle.AppUpdateRequiredFragmentDirections
 import nl.rijksoverheid.en.applifecycle.EndOfLifeFragmentDirections
 import nl.rijksoverheid.en.debug.DebugNotification
 import nl.rijksoverheid.en.job.RemindExposureNotificationWorker
@@ -70,12 +72,22 @@ class MainActivity : AppCompatActivity() {
             EventObserver {
                 when (it) {
                     is AppLifecycleViewModel.AppLifecycleStatus.Update -> {
-                        it.update.appUpdateManager.startUpdateFlowForResult(
-                            it.update.appUpdateInfo,
-                            AppUpdateType.IMMEDIATE,
-                            this,
-                            RC_UPDATE_APP
-                        )
+                        if (it.update is AppLifecycleManager.UpdateState.InAppUpdate) {
+                            it.update.appUpdateManager.startUpdateFlowForResult(
+                                it.update.appUpdateInfo,
+                                AppUpdateType.IMMEDIATE,
+                                this,
+                                RC_UPDATE_APP
+                            )
+                        } else {
+                            val installerPackageName =
+                                (it.update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
+                            findNavController(R.id.nav_host_fragment).navigate(
+                                AppUpdateRequiredFragmentDirections.actionAppUpdateRequired(
+                                    installerPackageName
+                                )
+                            )
+                        }
                     }
                     AppLifecycleViewModel.AppLifecycleStatus.EndOfLife -> {
                         viewModel.disableExposureNotifications()

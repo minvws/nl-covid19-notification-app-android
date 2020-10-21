@@ -11,10 +11,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -101,7 +102,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             override fun cancel() {
             }
         },
-        AppLifecycleManager(configPreferences, AppUpdateManagerFactory.create(context)) {},
+        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)) {},
         StatusCache(notificationsPreferences),
         AppConfigManager(service),
         clock = clock
@@ -146,15 +147,15 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             R.style.AppTheme,
             activityViewModelFactory
         ) {
-            Espresso.onView(withId(R.id.status_text))
+            onView(withId(R.id.status_text))
                 .check(matches(withText(R.string.status_disabled_headline)))
 
-            Espresso.onView(withId(R.id.error_box_text))
-                .check(matches(withText(R.string.status_error_sync_issues)))
+            onView(withText(R.string.status_error_sync_issues)).check(matches(isDisplayed()))
+            onView(withText(R.string.status_error_action_sync_issues)).check(matches(isDisplayed()))
 
-            Espresso.onView(withId(R.id.error_box_button)).perform(click())
+            onView(withText(R.string.status_error_action_sync_issues)).perform(click())
 
-            Espresso.onView(withId(R.id.error_box_text)).check(doesNotExist())
+            onView(withText(R.string.status_error_sync_issues)).check(doesNotExist())
         }
     }
 }

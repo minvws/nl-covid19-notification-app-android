@@ -32,19 +32,21 @@ class AppLifecycleViewModel(
             } else {
                 appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode, false)
                 when (val result = appLifecycleManager.getUpdateState()) {
-                    is AppLifecycleManager.UpdateState.NeedsUpdate -> {
+                    is AppLifecycleManager.UpdateState.UpdateRequired,
+                    is AppLifecycleManager.UpdateState.InAppUpdate -> {
                         (updateEvent as MutableLiveData).value =
                             Event(AppLifecycleStatus.Update(result))
                     }
                     else -> {
-                    } // ignore
+                        /* nothing, no updates */
+                    }
                 }
             }
         }
     }
 
     sealed class AppLifecycleStatus {
-        data class Update(val update: AppLifecycleManager.UpdateState.NeedsUpdate) :
+        data class Update(val update: AppLifecycleManager.UpdateState) :
             AppLifecycleStatus()
 
         object EndOfLife : AppLifecycleStatus()

@@ -7,6 +7,8 @@
 package nl.rijksoverheid.en.onboarding
 
 import android.content.Context
+import android.net.Uri
+import android.provider.Settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
@@ -14,6 +16,10 @@ import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
@@ -34,7 +40,9 @@ import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
 import okhttp3.ResponseBody
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -48,6 +56,16 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
         @ClassRule
         @JvmField
         val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
+    }
+
+    @Before
+    fun setup() {
+        Intents.init()
+    }
+
+    @After
+    fun tearDown() {
+        Intents.release()
     }
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
@@ -84,7 +102,7 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
             override fun cancel() {
             }
         },
-        AppLifecycleManager(configPreferences, AppUpdateManagerFactory.create(context)) {},
+        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)) {},
         StatusCache(notificationsPreferences),
         AppConfigManager(service)
     )
@@ -132,10 +150,8 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
         ) {
             onView(ViewMatchers.withId(R.id.request)).perform(click())
 
-            assertEquals(
-                "Request permission with success navigates to share screen",
-                R.id.nav_share, navController.currentDestination?.id
-            )
+            intended(hasAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS))
+            intended(hasData(Uri.parse("package:${BuildConfig.APPLICATION_ID}")))
         }
     }
 

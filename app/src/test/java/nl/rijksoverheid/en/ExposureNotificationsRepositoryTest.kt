@@ -870,6 +870,7 @@ class ExposureNotificationsRepositoryTest {
                     override suspend fun getStatus(): StatusResult = StatusResult.Enabled
                 },
                 appLifecycleManager = AppLifecycleManager(
+                    context,
                     context.getSharedPreferences(
                         "test_config",
                         0
@@ -1323,6 +1324,136 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
+    fun `requestEnableNotifications updates statusCache to InvalidPreconditions when bluetooth is disabled`() = runBlockingTest {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus() = StatusResult.Enabled
+            override suspend fun requestEnableNotifications(): EnableNotificationsResult {
+                return EnableNotificationsResult.Enabled
+            }
+            override suspend fun disableNotifications(): DisableNotificationsResult {
+                return DisableNotificationsResult.Disabled
+            }
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs)
+
+        val repository = createRepository(
+            context = context,
+            api = api,
+            preferences = sharedPrefs,
+            statusCache = statusCache,
+            cdnService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                    Manifest(listOf(), "risk", "config")
+
+                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig()
+            },
+            scheduler = object : BackgroundWorkScheduler {
+                override fun schedule(intervalMinutes: Int) {
+                }
+
+                override fun cancel() {
+                    throw AssertionError()
+                }
+            }
+        )
+
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.disable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+        }
+
+        val result = async { repository.getStatus().take(2).toList() }
+        yield()
+
+        repository.requestEnableNotificationsForcingConsent()
+
+        assertEquals(
+            listOf(
+                StatusResult.Disabled,
+                StatusResult.InvalidPreconditions
+            ),
+            result.await()
+        )
+    }
+
+    @Test
+    fun `requestEnableNotifications updates statusCache to Enabled when preconditions are correct`() = runBlockingTest {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus() = StatusResult.Enabled
+            override suspend fun requestEnableNotifications(): EnableNotificationsResult {
+                return EnableNotificationsResult.Enabled
+            }
+            override suspend fun disableNotifications(): DisableNotificationsResult {
+                return DisableNotificationsResult.Disabled
+            }
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs)
+
+        val repository = createRepository(
+            context = context,
+            api = api,
+            preferences = sharedPrefs,
+            statusCache = statusCache,
+            cdnService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                    Manifest(listOf(), "risk", "config")
+
+                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    AppConfig()
+            },
+            scheduler = object : BackgroundWorkScheduler {
+                override fun schedule(intervalMinutes: Int) {
+                }
+
+                override fun cancel() {
+                    throw AssertionError()
+                }
+            }
+        )
+
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+        }
+
+        val result = async { repository.getStatus().take(2).toList() }
+        yield()
+
+        repository.requestEnableNotificationsForcingConsent()
+
+        assertEquals(
+            listOf(
+                StatusResult.Disabled,
+                StatusResult.Enabled
+            ),
+            result.await()
+        )
+    }
+
+    @Test
     fun `requestEnableNotificationsForcingConsent disables then enables the EN api`() =
         runBlocking {
             val disableCalled = AtomicBoolean(false)
@@ -1407,6 +1538,7 @@ class ExposureNotificationsRepositoryTest {
             preferences
         ),
         appLifecycleManager: AppLifecycleManager = AppLifecycleManager(
+            context,
             preferences,
             mock()
         ) {},

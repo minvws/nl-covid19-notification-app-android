@@ -114,6 +114,7 @@ fun createAppConfigManager(context: Context): AppConfigManager {
 
 fun createAppLifecycleManager(context: Context): AppLifecycleManager {
     return AppLifecycleManager(
+        context,
         context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0),
         AppUpdateManagerFactory.create(context)
     ) { NotificationsRepository(context).showAppUpdateNotification() }

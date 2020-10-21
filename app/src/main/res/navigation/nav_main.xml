@@ -11,6 +11,12 @@
         app:popUpTo="@id/main_nav"
         app:popUpToInclusive="true" />
 
+    <action
+        android:id="@+id/action_app_update_required"
+        app:destination="@id/nav_app_update_required"
+        app:popUpTo="@id/main_nav"
+        app:popUpToInclusive="true" />
+
     <fragment
         android:id="@+id/nav_status"
         android:name="nl.rijksoverheid.en.status.StatusFragment"
@@ -200,4 +206,14 @@
         android:id="@+id/nav_end_of_life"
         android:name="nl.rijksoverheid.en.applifecycle.EndOfLifeFragment"
         tools:layout="@layout/fragment_end_of_life" />
+
+    <fragment
+        android:id="@+id/nav_app_update_required"
+        android:name="nl.rijksoverheid.en.applifecycle.AppUpdateRequiredFragment"
+        tools:layout="@layout/fragment_app_update_required">
+        <argument
+            android:name="app_store_package"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>
