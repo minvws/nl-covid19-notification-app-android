@@ -17,13 +17,10 @@ class ExposureNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == ExposureNotificationClient.ACTION_EXPOSURE_STATE_UPDATED) {
             val token = intent.getStringExtra(ExposureNotificationClient.EXTRA_TOKEN)
-            if (token != null) {
-                ExposureNotificationJob.showNotification(context, token)
-            } else {
-                Timber.e("No token")
-            }
+                ?: ExposureNotificationClient.TOKEN_A
+            ExposureNotificationJob.showNotification(context, token)
         } else if (intent.action == ExposureNotificationClient.ACTION_EXPOSURE_NOT_FOUND) {
-            Timber.d("No exposure detected")
+            Timber.d("No exposure new detected")
         }
     }
 }

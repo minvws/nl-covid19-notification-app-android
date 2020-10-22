@@ -9,20 +9,33 @@ package nl.rijksoverheid.en.enapi.nearby
 
 import android.content.Context
 import android.content.Intent
+import androidx.annotation.Keep
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
+import com.google.android.gms.nearby.exposurenotification.ExposureWindow
+import com.google.android.gms.nearby.exposurenotification.Infectiousness
+import com.google.android.gms.nearby.exposurenotification.ReportType
+import com.squareup.moshi.JsonClass
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
+import okio.Okio
 import timber.log.Timber
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -34,6 +47,9 @@ class NearbyExposureNotificationApi(
     private val client: ExposureNotificationClient
 ) :
     ExposureNotificationApi {
+
+    private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+
     /**
      * Get the status of the exposure notifications api
      * @return the status
@@ -131,7 +147,7 @@ class NearbyExposureNotificationApi(
         }
 
     /**
-     * Request the tempoary exposure key history
+     * Request the temporary exposure key history
      * @return the result. For the initial call is is most likely [TemporaryExposureKeysResult.RequireConsent]
      */
     override suspend fun requestTemporaryExposureKeyHistory(): TemporaryExposureKeysResult =
@@ -169,22 +185,68 @@ class NearbyExposureNotificationApi(
         files: List<File>,
         configuration: ExposureConfiguration,
         token: String
-    ) = suspendCoroutine<DiagnosisKeysResult> { c ->
-        client.provideDiagnosisKeys(files, configuration, token).addOnSuccessListener {
-            c.resume(DiagnosisKeysResult.Success)
-        }.addOnFailureListener {
-            Timber.e(it, "Error while providing diagnosis keys")
-            val apiException = it as? ApiException
-            c.resume(
-                when (apiException?.statusCode) {
-                    ExposureNotificationStatusCodes.FAILED_DISK_IO -> DiagnosisKeysResult.FailedDiskIo
-                    else -> DiagnosisKeysResult.UnknownError(
-                        it
-                    )
+    ): DiagnosisKeysResult {
+        persistExposureConfiguration(configuration)
+        return suspendCoroutine { c ->
+            // TODO keep compatible with v1 if we can
+            client.setDiagnosisKeysDataMapping(
+                DiagnosisKeysDataMapping.DiagnosisKeysDataMappingBuilder()
+                    //TODO set this to the correct mapping if days_since_onset is supplied
+                    .setDaysSinceOnsetToInfectiousness(emptyMap())
+                    .setReportTypeWhenMissing(ReportType.CONFIRMED_TEST)
+                    .setInfectiousnessWhenDaysSinceOnsetMissing(Infectiousness.STANDARD).build()
+            ).continueWith {
+                client.provideDiagnosisKeys(files).apply {
+                    addOnSuccessListener {
+                        c.resume(DiagnosisKeysResult.Success)
+                    }.addOnFailureListener {
+                        Timber.e(it, "Error while providing diagnosis keys")
+                        val apiException = it as? ApiException
+                        c.resume(
+                            when (apiException?.statusCode) {
+                                ExposureNotificationStatusCodes.FAILED_DISK_IO -> DiagnosisKeysResult.FailedDiskIo
+                                else -> DiagnosisKeysResult.UnknownError(
+                                    it
+                                )
+                            }
+                        )
+                    }.addOnCompleteListener {
+                        files.forEach { it.delete() }
+                    }
                 }
+            }
+        }
+    }
+
+    @Suppress("BlockingMethodInNonBlockingContext")
+    private suspend fun persistExposureConfiguration(config: ExposureConfiguration) =
+        withContext(Dispatchers.IO) {
+            val persistedConfig = PersistedConfig(
+                config.daysSinceLastExposureScores.toList(),
+                config.transmissionRiskScores.toList(),
+                config.minimumRiskScore,
+                config.durationScores.toList(),
+                config.attenuationScores.toList()
             )
-        }.addOnCompleteListener {
-            files.forEach { it.delete() }
+            FileOutputStream(File(context.filesDir, "exposure_config")).use {
+                val sink = Okio.buffer(Okio.sink(it))
+                moshi.adapter(PersistedConfig::class.java).toJson(sink, persistedConfig)
+                sink.flush()
+            }
+        }
+
+    @Suppress("BlockingMethodInNonBlockingContext")
+    private suspend fun loadExposureConfiguration() = withContext(Dispatchers.IO) {
+        FileInputStream(File(context.filesDir, "exposure_config")).use {
+            val persisted =
+                moshi.adapter(PersistedConfig::class.java).fromJson(Okio.buffer(Okio.source(it)))
+                    ?: throw IllegalStateException("config not persisted")
+            ExposureConfiguration.ExposureConfigurationBuilder()
+                .setDurationScores(*persisted.durationScores.toIntArray())
+                .setTransmissionRiskScores(*persisted.transmissionRiskScores.toIntArray())
+                .setMinimumRiskScore(persisted.minimumRiskScore)
+                .setDaysSinceLastExposureScores(*persisted.daysSinceLastExposureScores.toIntArray())
+                .setAttenuationScores(*persisted.attenuationScores.toIntArray()).build()
         }
     }
 
@@ -193,18 +255,34 @@ class NearbyExposureNotificationApi(
      * @param token the token passed to [provideDiagnosisKeys] and from [ExposureNotificationClient.EXTRA_TOKEN]
      * @return the summary or null if there's no match or an error occurred
      */
-    override suspend fun getSummary(token: String): ExposureSummary? =
-        suspendCoroutine { c ->
-            client.getExposureSummary(token).addOnSuccessListener {
-                c.resume(it)
-            }.addOnFailureListener {
-                Timber.e(it, "Error getting ExposureSummary")
-                // TODO determine if we want bubble up errors here; this is used
-                // when processing the notification and at that point the API should never return
-                // null. If it does or throws an error, all we can do is retry or give up
-                c.resume(null)
+    override suspend fun getSummary(token: String): ExposureSummary? {
+        return if (token == ExposureNotificationClient.TOKEN_A) {
+            val windows = getExposureWindows()
+            LegacyRiskModel(
+                loadExposureConfiguration()
+            ).getSummary(windows)
+        } else {
+            suspendCoroutine { c ->
+                client.getExposureSummary(token).addOnSuccessListener {
+                    c.resume(it)
+                }.addOnFailureListener {
+                    Timber.e(it, "Error getting ExposureSummary")
+                    // TODO determine if we want bubble up errors here; this is used
+                    // when processing the notification and at that point the API should never return
+                    // null. If it does or throws an error, all we can do is retry or give up
+                    c.resume(null)
+                }
             }
         }
+    }
+
+    private suspend fun getExposureWindows(): List<ExposureWindow> = suspendCoroutine { c ->
+        client.exposureWindows.addOnSuccessListener {
+            c.resume(it)
+        }.addOnFailureListener {
+            c.resume(emptyList())
+        }
+    }
 
     private fun isApiAvailable(): Boolean {
         return context.packageManager.resolveActivity(
@@ -234,3 +312,13 @@ private fun ApiException.getMostSpecificStatusCode(): Int {
     }
     return statusCode
 }
+
+@JsonClass(generateAdapter = true)
+@Keep
+internal class PersistedConfig(
+    val daysSinceLastExposureScores: List<Int>,
+    val transmissionRiskScores: List<Int>,
+    val minimumRiskScore: Int,
+    val durationScores: List<Int>,
+    val attenuationScores: List<Int>
+)

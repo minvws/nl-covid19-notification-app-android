@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
 
@@ -42,6 +43,12 @@ dependencies {
     implementation "com.google.android.gms:play-services-tasks:$play_services_tasks_version"
 
     implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation "androidx.core:core-ktx:$androidx_core_version"
+
+    implementation("com.squareup.moshi:moshi-kotlin:$moshi_version") {
+        exclude group: "org.jetbrains.kotlin", module: "kotlin-reflect"
+    }
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
     testImplementation "junit:junit:$junit_version"
     testImplementation "androidx.test:core:$androidx_test_core_version"
