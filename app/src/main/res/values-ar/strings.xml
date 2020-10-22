@@ -253,7 +253,7 @@
     <string name="generic_notification_sample_notification_content_description">مثال على الإشعار</string>
     <string name="onboarding_enable_headline">قم بتشغيل CoronaMelder</string>
     <string name="onboarding_enable_description">يمكن لـ CoronaMelder تحذيرك فقط إذا منحت التطبيق إذنًا لـ: &lt;br/&gt;&lt;br/&gt;&lt;ul&gt; &lt;li&gt; تتبع المصادفات مع مستخدمي التطبيق الآخرين&lt;/li&gt;&lt;li&gt; إيقاف تشغيل تحسين البطارية لهذا التطبيق فقط (ليس ضروريًا) &lt;/li&gt; &lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[يمكن لـ CoronaMelder تحذيرك فقط إذا منحت التطبيق الإذن لـ: <br/><br/><ul><li> تتبع المصادفات مع مستخدمي التطبيق الآخرين</li><li> شغّل إعدادات موقعك (لا يعرف CoronaMelder موقعك الجغرافي) </li><li></li> أوقف تشغيل تحسين البطارية لهذا التطبيق فقط (ليس ضروريًا) </ul>]]></string>
+    <string name="onboarding_enable_description_location"><![CDATA[يمكن لـ CoronaMelder تحذيرك فقط إذا منحت التطبيق الإذن لـ: <br/><br/><ul><li> تتبع المصادفات مع مستخدمي التطبيق الآخرين</li><li> شغّل إعدادات موقعك (لا يعرف CoronaMelder موقعك الجغرافي) </li><li> أوقف تشغيل تحسين البطارية لهذا التطبيق فقط (ليس ضروريًا) </li></ul>]]></string>
     <string name="location_services_required_title">إعدادات الموقع الجغرافي</string>
     <string name="location_services_required_headline">التطبيق يعمل فقط إذا قمت بتشغيل إعدادات موقعك الجغرافي</string>
     <string name="location_services_required_description">تستخدم بعض التطبيقات البلوتوث لتحديد موقعك الجغرافي. وبالتالي، هذا جزء من إعدادات الموقع. يحتاج CoronaMelder إلى تقنية البلوتوث ليعمل، ولكن لا يمكنه الوصول إلى موقعك الجغرافي على الإطلاق.</string>
