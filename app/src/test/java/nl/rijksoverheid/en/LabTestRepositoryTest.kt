@@ -30,6 +30,7 @@ import nl.rijksoverheid.en.labtest.KeysStorage
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.labtest.RegistrationResult
 import nl.rijksoverheid.en.labtest.UploadScheduler
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.ResponseBody
 import okhttp3.mockwebserver.MockResponse
@@ -103,7 +104,7 @@ class LabTestRepositoryTest {
                 ApplicationProvider.getApplicationContext<Application>()
                     .getSharedPreferences("test", 0)
             val repository = LabTestRepository(
-                lazy { prefs },
+                AsyncSharedPreferences { prefs },
                 FakeExposureNotificationApi(),
                 LabTestService.create(
                     ApplicationProvider.getApplicationContext(),
@@ -139,7 +140,7 @@ class LabTestRepositoryTest {
         }
 
         val repository = LabTestRepository(
-            lazy { prefs },
+            AsyncSharedPreferences { prefs },
             FakeExposureNotificationApi(),
             LabTestService.create(
                 ApplicationProvider.getApplicationContext(),
@@ -175,7 +176,7 @@ class LabTestRepositoryTest {
             }
 
             val repository = LabTestRepository(
-                lazy { prefs },
+                AsyncSharedPreferences { prefs },
                 FakeExposureNotificationApi(),
                 LabTestService.create(
                     ApplicationProvider.getApplicationContext(),
@@ -204,7 +205,7 @@ class LabTestRepositoryTest {
                     .getSharedPreferences("test", 0)
 
             val repository = LabTestRepository(
-                lazy { prefs },
+                AsyncSharedPreferences { prefs },
                 FakeExposureNotificationApi(),
                 LabTestService.create(
                     ApplicationProvider.getApplicationContext(),
@@ -239,7 +240,7 @@ class LabTestRepositoryTest {
             }
 
             val repository = LabTestRepository(
-                lazy { prefs },
+                AsyncSharedPreferences { prefs },
                 FakeExposureNotificationApi(),
                 LabTestService.create(
                     ApplicationProvider.getApplicationContext(),
@@ -275,7 +276,7 @@ class LabTestRepositoryTest {
             }
 
             val repository = LabTestRepository(
-                lazy { prefs },
+                AsyncSharedPreferences { prefs },
                 FakeExposureNotificationApi(),
                 LabTestService.create(
                     ApplicationProvider.getApplicationContext(),
@@ -317,7 +318,7 @@ class LabTestRepositoryTest {
         }
 
         val repository = LabTestRepository(
-            lazy { prefs },
+            AsyncSharedPreferences { prefs },
             mock(),
             LabTestService.create(
                 ApplicationProvider.getApplicationContext(),
@@ -359,7 +360,7 @@ class LabTestRepositoryTest {
         }
 
         val repository = LabTestRepository(
-            lazy { prefs },
+            AsyncSharedPreferences { prefs },
             mock(),
             LabTestService.create(
                 ApplicationProvider.getApplicationContext(),
@@ -394,7 +395,7 @@ class LabTestRepositoryTest {
             }
 
             val repository = LabTestRepository(
-                lazy {
+                AsyncSharedPreferences {
                     ApplicationProvider.getApplicationContext<Application>()
                         .getSharedPreferences("test", 0)
                 },
@@ -432,7 +433,7 @@ class LabTestRepositoryTest {
             }
 
             val repository = LabTestRepository(
-                lazy {
+                AsyncSharedPreferences {
                     ApplicationProvider.getApplicationContext<Application>()
                         .getSharedPreferences("test", 0)
                 },
@@ -489,7 +490,7 @@ class LabTestRepositoryTest {
         }
 
         val repository = LabTestRepository(
-            lazy {
+            AsyncSharedPreferences {
                 ApplicationProvider.getApplicationContext<Application>()
                     .getSharedPreferences("test", 0)
             },
@@ -549,7 +550,7 @@ class LabTestRepositoryTest {
         }
 
         val repository = LabTestRepository(
-            lazy {
+            AsyncSharedPreferences {
                 prefs
             },
             object : FakeExposureNotificationApi() {
@@ -604,7 +605,7 @@ class LabTestRepositoryTest {
         }
 
         val repository = LabTestRepository(
-            lazy {
+            AsyncSharedPreferences {
                 prefs
             },
             object : FakeExposureNotificationApi() {

@@ -44,6 +44,7 @@ import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.labtest.LabTestFragment
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.requesttest.RequestTestFragment
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.status.StatusFragment
@@ -123,7 +124,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
             override suspend fun getStatus(): StatusResult = StatusResult.Enabled
         },
         service,
-        notificationsPreferences,
+        AsyncSharedPreferences { notificationsPreferences },
         object : BackgroundWorkScheduler {
             override fun schedule(intervalMinutes: Int) {
             }

@@ -42,9 +42,14 @@ class StatusViewModel(
         exposureNotificationsRepository.lastKeyProcessed()
             .flatMapLatest { exposureNotificationsRepository.getStatus() },
         exposureNotificationsRepository.getLastExposureDate(),
-        notificationsRepository.exposureNotificationsEnabled()
+        notificationsRepository.exposureNotificationsEnabled(),
     ) { statusResult, localDate, exposureNotificationsEnabled ->
-        createErrorState(statusResult, localDate, exposureNotificationsEnabled)
+        createErrorState(
+            statusResult,
+            localDate,
+            exposureNotificationsEnabled,
+            exposureNotificationsRepository.keyProcessingOverdue()
+        )
     }.asLiveData(viewModelScope.coroutineContext)
 
     fun hasCompletedOnboarding(): Boolean {
@@ -62,20 +67,23 @@ class StatusViewModel(
     private fun createErrorState(
         status: StatusResult,
         date: LocalDate?,
-        exposureNotificationsEnabled: Boolean
+        exposureNotificationsEnabled: Boolean,
+        keyProcessingOverdue: Boolean
     ): ErrorState =
         if (status != StatusResult.Enabled && date != null) {
             ErrorState.ConsentRequired
         } else if (!exposureNotificationsEnabled) {
             ErrorState.NotificationsDisabled
-        } else if (exposureNotificationsRepository.keyProcessingOverdue) {
+        } else if (keyProcessingOverdue) {
             ErrorState.SyncIssues
         } else {
             ErrorState.None
         }
 
     fun removeExposure() {
-        exposureNotificationsRepository.resetExposures()
+        viewModelScope.launch {
+            exposureNotificationsRepository.resetExposures()
+        }
     }
 
     fun resetErrorState() {

@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.testing.TestNavHostController
@@ -21,6 +22,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.BaseInstrumentationTest
 import nl.rijksoverheid.en.BuildConfig
@@ -36,9 +38,11 @@ import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
 import okhttp3.ResponseBody
+import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -57,6 +61,8 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         @JvmField
         val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
     }
+
+    private lateinit var preferencesFactory: suspend () -> SharedPreferences
 
     private val clock = object : Clock() {
         var instant = Instant.parse("2020-06-20T10:15:30.00Z")
@@ -94,7 +100,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         context,
         FakeExposureNotificationApi(),
         service,
-        notificationsPreferences,
+        AsyncSharedPreferences { preferencesFactory() },
         object : BackgroundWorkScheduler {
             override fun schedule(intervalMinutes: Int) {
             }
@@ -121,6 +127,11 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return viewModel as T
         }
+    }
+
+    @Before
+    fun setup() {
+        preferencesFactory = { notificationsPreferences }
     }
 
     @Test
@@ -156,6 +167,37 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             onView(withText(R.string.status_error_action_sync_issues)).perform(click())
 
             onView(withText(R.string.status_error_sync_issues)).check(doesNotExist())
+        }
+    }
+
+    @Test
+    fun testWaitingForPreferencesLoadedShowsLoadingScreen() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val navController = TestNavHostController(context).apply {
+            setGraph(R.navigation.nav_main)
+            setCurrentDestination(R.id.nav_status)
+        }
+
+        preferencesFactory = {
+            delay(10000)
+            notificationsPreferences
+        }
+
+        withFragment(
+            StatusFragment(
+                factoryProducer = {
+                    object : ViewModelProvider.Factory {
+                        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                            return statusViewModel as T
+                        }
+                    }
+                }
+            ),
+            navController,
+            R.style.AppTheme,
+            activityViewModelFactory
+        ) {
+            onView(withId(R.id.loading)).check(matches(isDisplayed()))
         }
     }
 }

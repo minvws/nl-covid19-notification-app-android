@@ -7,7 +7,6 @@
 package nl.rijksoverheid.en.factory
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.google.android.gms.common.ConnectionResult
@@ -31,12 +30,14 @@ import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.GooglePlayServicesUpToDateChecker
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.status.StatusCache
+import nl.rijksoverheid.en.util.retry
 
 // cached service instance
 private var cdnService: CdnService? = null
 private var labTestService: LabTestService? = null
-private var notificationPreferences: SharedPreferences? = null
+private var notificationPreferences: AsyncSharedPreferences? = null
 private var statusCache: StatusCache? = null
 
 private const val MINIMUM_PLAY_SERVICES_VERSION = 202665000
@@ -91,7 +92,7 @@ fun createOnboardingRepository(
 
 fun createLabTestRepository(context: Context): LabTestRepository {
     return LabTestRepository(
-        lazy(mode = LazyThreadSafetyMode.NONE) { createSecurePreferences(context) },
+        createSecurePreferences(context),
         NearbyExposureNotificationApi(
             context,
             Nearby.getExposureNotificationClient(context)
@@ -120,12 +121,17 @@ fun createAppLifecycleManager(context: Context): AppLifecycleManager {
     ) { NotificationsRepository(context).showAppUpdateNotification() }
 }
 
-private fun createSecurePreferences(context: Context): SharedPreferences {
-    return notificationPreferences ?: EncryptedSharedPreferences.create(
-        "${BuildConfig.APPLICATION_ID}.notifications",
-        MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
-        context,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    ).also { notificationPreferences = it }
+@Suppress("BlockingMethodInNonBlockingContext")
+private fun createSecurePreferences(context: Context): AsyncSharedPreferences {
+    return notificationPreferences ?: AsyncSharedPreferences {
+        retry {
+            EncryptedSharedPreferences.create(
+                "${BuildConfig.APPLICATION_ID}.notifications",
+                MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
+                context,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+        }
+    }.also { notificationPreferences = it }
 }

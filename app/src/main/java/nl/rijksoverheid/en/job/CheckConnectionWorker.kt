@@ -29,14 +29,18 @@ class CheckConnectionWorker(
 
     override suspend fun doWork(): Result {
         Timber.d("Check if key processing is overdue or EN is disabled")
-        if (repository.getCurrentStatus() == StatusResult.Disabled) {
-            Timber.d("EN is disabled")
-            notificationsRepository.showAppInactiveNotification()
-        } else if (repository.keyProcessingOverdue) {
-            Timber.d("Key processing is overdue")
-            SyncIssuesReceiver.schedule(applicationContext)
+        // try / catch this to be sure the worker always returns success and keeps being scheduled
+        try {
+            if (repository.getCurrentStatus() == StatusResult.Disabled) {
+                Timber.d("EN is disabled")
+                notificationsRepository.showAppInactiveNotification()
+            } else if (repository.keyProcessingOverdue()) {
+                Timber.d("Key processing is overdue")
+                SyncIssuesReceiver.schedule(applicationContext)
+            }
+        } finally {
+            return Result.success()
         }
-        return Result.success()
     }
 
     companion object {

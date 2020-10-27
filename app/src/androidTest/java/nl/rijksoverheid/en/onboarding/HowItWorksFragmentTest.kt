@@ -34,6 +34,7 @@ import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
@@ -89,9 +90,12 @@ class HowItWorksFragmentTest : BaseInstrumentationTest() {
 
     private val repository = ExposureNotificationsRepository(
         context,
-        FakeExposureNotificationApi(),
+        object : FakeExposureNotificationApi() {
+            // prevent precondition failures when location is disabled on an emulator
+            override fun deviceSupportsLocationlessScanning(): Boolean = true
+        },
         service,
-        notificationsPreferences,
+        AsyncSharedPreferences { notificationsPreferences },
         object : BackgroundWorkScheduler {
             override fun schedule(intervalMinutes: Int) {
             }
