@@ -1,11 +1,9 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
-
 package nl.rijksoverheid.en.util
 
 import android.content.ComponentName
@@ -41,7 +39,8 @@ class BatteryOptimizationUtilsTest {
         packageManager.addActivityIfNotPresent(ComponentName("com.test", "com.test.TestActivity"))
 
         packageManager.addIntentFilterForActivity(
-            ComponentName("com.test", "com.test.TestActivity"), IntentFilter(
+            ComponentName("com.test", "com.test.TestActivity"),
+            IntentFilter(
                 Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
             ).apply {
                 addDataScheme("package")
@@ -59,7 +58,8 @@ class BatteryOptimizationUtilsTest {
         packageManager.addActivityIfNotPresent(ComponentName("com.test", "com.test.TestActivity"))
 
         packageManager.addIntentFilterForActivity(
-            ComponentName("com.test", "com.test.TestActivity"), IntentFilter(
+            ComponentName("com.test", "com.test.TestActivity"),
+            IntentFilter(
                 Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
             ).apply {
                 addDataScheme("package")
