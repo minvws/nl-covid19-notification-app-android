@@ -22,6 +22,7 @@ class UserAgentInterceptor(appVersionCode: Int) : Interceptor {
 
     private val userAgent: String =
         "CoronaMelder/$appVersionCode (${Build.MANUFACTURER} ${Build.MODEL}) Android (${Build.VERSION.SDK_INT})"
+            .stripNonAscii()
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestWithUserAgent = chain.request().newBuilder()
@@ -29,5 +30,9 @@ class UserAgentInterceptor(appVersionCode: Int) : Interceptor {
             .build()
 
         return chain.proceed(requestWithUserAgent)
+    }
+
+    private fun String.stripNonAscii() = filter {
+        it == '\t' || it in '\u0020'..'\u007e'
     }
 }
