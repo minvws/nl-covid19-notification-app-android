@@ -6,9 +6,11 @@
  */
 package nl.rijksoverheid.en.onboarding
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -28,6 +30,10 @@ import nl.rijksoverheid.en.about.FAQItemId
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
+import timber.log.Timber
+
+private const val RC_DISABLE_BATTERY_OPTIMIZATIONS = 1
 
 private val crossLinks = mapOf(
     FAQItemId.REASON to listOf(FAQItemId.LOCATION, FAQItemId.NOTIFICATION_MESSAGE),
@@ -116,13 +122,35 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
         }
         viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
-                findNavController().navigate(
-                    HowItWorksDetailFragmentDirections.actionNext(),
-                    FragmentNavigatorExtras(
-                        binding.appbar to binding.appbar.transitionName
-                    )
-                )
+                requestDisableBatteryOptimizationsAndContinue()
             }
+        }
+    }
+
+    private fun requestDisableBatteryOptimizationsAndContinue() {
+        try {
+            requestDisableBatteryOptimizations(RC_DISABLE_BATTERY_OPTIMIZATIONS)
+        } catch (ex: ActivityNotFoundException) {
+            // ignore
+            Timber.e(ex)
+            continueOnboarding()
+        }
+    }
+
+    private fun continueOnboarding() {
+        val binding = DataBindingUtil.getBinding<FragmentListWithButtonBinding>(requireView())!!
+        findNavController().navigateCatchingErrors(
+            HowItWorksDetailFragmentDirections.actionNext(),
+            FragmentNavigatorExtras(
+                binding.appbar to binding.appbar.transitionName
+            )
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_DISABLE_BATTERY_OPTIMIZATIONS) {
+            continueOnboarding()
         }
     }
 }
