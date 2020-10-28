@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.onboarding
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -23,6 +24,7 @@ import nl.rijksoverheid.en.ignoreInitiallyEnabled
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
+import timber.log.Timber
 
 private const val RC_REQUEST_DISABLE_BATTERY_OPTIMIZATIONS = 1
 
@@ -78,19 +80,29 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
     }
 
     private fun requestDisableBatteryOptimizationsAndContinue() {
-        requestDisableBatteryOptimizations(RC_REQUEST_DISABLE_BATTERY_OPTIMIZATIONS)
+        try {
+            requestDisableBatteryOptimizations(RC_REQUEST_DISABLE_BATTERY_OPTIMIZATIONS)
+        } catch (ex: ActivityNotFoundException) {
+            // ignore
+            Timber.e(ex)
+            continueOnboarding()
+        }
+    }
+
+    private fun continueOnboarding() {
+        val binding = DataBindingUtil.getBinding<FragmentEnableApiBinding>(requireView())!!
+        findNavController().navigateCatchingErrors(
+            EnableApiFragmentDirections.actionNext(),
+            FragmentNavigatorExtras(
+                binding.appbar to binding.appbar.transitionName
+            )
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_REQUEST_DISABLE_BATTERY_OPTIMIZATIONS) {
-            val binding = DataBindingUtil.getBinding<FragmentEnableApiBinding>(requireView())!!
-            findNavController().navigateCatchingErrors(
-                EnableApiFragmentDirections.actionNext(),
-                FragmentNavigatorExtras(
-                    binding.appbar to binding.appbar.transitionName
-                )
-            )
+            continueOnboarding()
         }
     }
 }
