@@ -30,6 +30,15 @@ class PeriodicWakeUpReceiver : BroadcastReceiver() {
     companion object {
         fun schedule(context: Context) {
             val alarmManager = context.getSystemService(AlarmManager::class.java)
+            // Cancel existing alarm, if any. Needed for some devices
+            PendingIntent.getBroadcast(
+                context,
+                0,
+                Intent(context, PeriodicWakeUpReceiver::class.java),
+                PendingIntent.FLAG_NO_CREATE
+            )?.let {
+                alarmManager?.cancel(it)
+            }
             val operation = PendingIntent.getBroadcast(
                 context,
                 0,
