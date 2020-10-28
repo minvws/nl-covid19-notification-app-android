@@ -26,7 +26,8 @@ private val requestDisableBatteryOptimizationsIntent =
  */
 fun Context.isIgnoringBatteryOptimizations(): Boolean {
     return if (supportsRequestDisableBatteryOptimisations(this)) {
-        (getSystemService(PowerManager::class.java)?.isIgnoringBatteryOptimizations(BuildConfig.APPLICATION_ID) ?: true)
+        getSystemService(PowerManager::class.java)?.isIgnoringBatteryOptimizations(BuildConfig.APPLICATION_ID)
+            ?: true
     } else {
         true
     }

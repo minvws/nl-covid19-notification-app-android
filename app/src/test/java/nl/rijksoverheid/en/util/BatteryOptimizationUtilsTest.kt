@@ -73,8 +73,6 @@ class BatteryOptimizationUtilsTest {
     @Test
     fun `isIgnoringBatteryOptimizations returns true if battery no activity exists for disabling the setting`() {
         val powerManager = shadowOf(context.getSystemService(PowerManager::class.java))
-        val packageManager = shadowOf(context.packageManager)
-        packageManager.addActivityIfNotPresent(ComponentName("com.test", "com.test.TestActivity"))
         powerManager.setIgnoringBatteryOptimizations(BuildConfig.APPLICATION_ID, false)
         assertTrue(context.isIgnoringBatteryOptimizations())
     }
