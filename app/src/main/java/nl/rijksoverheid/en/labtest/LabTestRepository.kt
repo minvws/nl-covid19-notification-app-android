@@ -7,9 +7,7 @@
 package nl.rijksoverheid.en.labtest
 
 import android.app.PendingIntent
-import android.content.SharedPreferences
 import android.util.Base64
-import androidx.core.content.edit
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,6 +22,7 @@ import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
@@ -49,7 +48,7 @@ typealias UploadScheduler = () -> Unit
 typealias DecoyScheduler = (Long) -> Unit
 
 class LabTestRepository(
-    preferences: Lazy<SharedPreferences>,
+    private val preferences: AsyncSharedPreferences,
     private val exposureNotificationApi: ExposureNotificationApi,
     private val api: LabTestService,
     private val uploadScheduler: UploadScheduler,
@@ -58,7 +57,6 @@ class LabTestRepository(
     private val clock: Clock = Clock.systemDefaultZone(),
     private val random: Random = Random
 ) {
-    private val preferences by preferences
 
     suspend fun scheduleNextDecoyScheduleSequence() {
         val r = random.nextDouble()
@@ -111,7 +109,7 @@ class LabTestRepository(
         }
     }
 
-    private fun storeResult(result: Registration) {
+    private suspend fun storeResult(result: Registration) {
         preferences.edit {
             putString(
                 KEY_CONFIRMATION_KEY,
@@ -126,19 +124,19 @@ class LabTestRepository(
         }
     }
 
-    private fun getCachedRegistrationCode(): String? {
+    private suspend fun getCachedRegistrationCode(): String? {
         clearKeyDataIfExpired()
         return preferences.getString(KEY_LAB_CONFIRMATION_ID, null)
     }
 
-    private fun clearKeyDataIfExpired() {
+    private suspend fun clearKeyDataIfExpired() {
         val expiration = preferences.getLong(KEY_REGISTRATION_EXPIRATION, 0)
         if (expiration == 0L || expiration < clock.millis()) {
             clearKeyData()
         }
     }
 
-    private fun clearKeyData() {
+    private suspend fun clearKeyData() {
         preferences.edit {
             remove(KEY_CONFIRMATION_KEY)
             remove(KEY_REGISTRATION_EXPIRATION)
@@ -173,7 +171,7 @@ class LabTestRepository(
             preferences.getString(KEY_CONFIRMATION_KEY, null)
                 ?.let { Base64.decode(it, Base64.NO_WRAP) } ?: throw IllegalStateException()
         val bucketId = preferences.getString(KEY_BUCKET_ID, null) ?: throw IllegalStateException()
-        val keyStorage = KeysStorage(KEY_PENDING_KEYS, preferences)
+        val keyStorage = KeysStorage(KEY_PENDING_KEYS, preferences.getPreferences())
         val exposureKeys = keyStorage.getKeys()
         return try {
             uploadKeys(exposureKeys, bucketId, confirmationKey)
@@ -217,15 +215,10 @@ class LabTestRepository(
             )
             is TemporaryExposureKeysResult.UnknownError -> RequestUploadDiagnosisKeysResult.UnknownError
             is TemporaryExposureKeysResult.Success -> {
-                if (!(
-                    preferences.contains(KEY_CONFIRMATION_KEY) && preferences.contains(
-                            KEY_BUCKET_ID
-                        )
-                    )
-                ) {
+                if (!(preferences.contains(KEY_CONFIRMATION_KEY) && preferences.contains(KEY_BUCKET_ID))) {
                     throw IllegalStateException()
                 }
-                val keyStorage = KeysStorage(KEY_PENDING_KEYS, preferences)
+                val keyStorage = KeysStorage(KEY_PENDING_KEYS, preferences.getPreferences())
                 keyStorage.storeKeys(result.keys)
                 preferences.edit {
                     putBoolean(KEY_UPLOAD_DIAGNOSTIC_KEYS, true)

@@ -24,6 +24,7 @@ import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.ResponseBody
 import org.junit.Assert.assertTrue
@@ -66,7 +67,7 @@ class ProcessManifestWorkerTest {
                 override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
                     AppConfig()
             },
-            context.getSharedPreferences("test_repository", 0),
+            AsyncSharedPreferences { context.getSharedPreferences("test_repository", 0) },
             object : BackgroundWorkScheduler {
                 override fun schedule(intervalMinutes: Int) {
                 }

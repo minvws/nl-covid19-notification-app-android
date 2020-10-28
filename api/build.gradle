@@ -89,5 +89,6 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "androidx.test:core:$androidx_test_core_version"
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
+    testImplementation "com.squareup.okhttp3:okhttp-tls:$okhttp3_version"
     testImplementation "org.robolectric:robolectric:$robolectric_version"
 }

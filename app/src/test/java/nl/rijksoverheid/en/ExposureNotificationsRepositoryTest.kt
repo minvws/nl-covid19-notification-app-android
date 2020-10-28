@@ -43,6 +43,7 @@ import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.OkHttpClient
@@ -1045,7 +1046,9 @@ class ExposureNotificationsRepositoryTest {
             clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
-        assertTrue(repository.keyProcessingOverdue)
+        runBlocking {
+            assertTrue(repository.keyProcessingOverdue())
+        }
     }
 
     @Test
@@ -1073,7 +1076,9 @@ class ExposureNotificationsRepositoryTest {
             clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
-        assertFalse(repository.keyProcessingOverdue)
+        runBlocking {
+            assertFalse(repository.keyProcessingOverdue())
+        }
     }
 
     @Test
@@ -1552,7 +1557,7 @@ class ExposureNotificationsRepositoryTest {
             context,
             api,
             cdnService,
-            preferences,
+            AsyncSharedPreferences { preferences },
             scheduler,
             appLifecycleManager,
             statusCache,

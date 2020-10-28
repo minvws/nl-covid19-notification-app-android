@@ -21,21 +21,7 @@ class StatusSection : Section() {
     private val errorItems = mutableListOf<Item<*>>()
 
     init {
-        addAll(
-            listOf(
-                headerGroup, errorGroup,
-                Section(
-                    listOf(
-                        StatusActionItem.About,
-                        StatusActionItem.Share,
-                        StatusActionItem.GenericNotification,
-                        StatusActionItem.RequestTest,
-                        StatusActionItem.LabTest
-                    )
-                )
-            )
-        )
-        setFooter(StatusFooterItem())
+        setPlaceholder(LoadingItem())
     }
 
     fun updateErrorState(
@@ -50,6 +36,7 @@ class StatusSection : Section() {
             }
             errorGroup.update(errorItems)
         }
+        ensureInitialized()
     }
 
     fun showBatteryOptimisationsError(action: () -> Unit) {
@@ -81,6 +68,27 @@ class StatusSection : Section() {
                     )
                 )
             )
+        }
+        ensureInitialized()
+    }
+
+    private fun ensureInitialized() {
+        if (isEmpty) {
+            addAll(
+                listOf(
+                    headerGroup, errorGroup,
+                    Section(
+                        listOf(
+                            StatusActionItem.About,
+                            StatusActionItem.Share,
+                            StatusActionItem.GenericNotification,
+                            StatusActionItem.RequestTest,
+                            StatusActionItem.LabTest
+                        )
+                    )
+                )
+            )
+            setFooter(StatusFooterItem())
         }
     }
 }

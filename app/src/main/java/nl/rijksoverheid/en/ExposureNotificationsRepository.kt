@@ -17,7 +17,6 @@ import android.location.LocationManager
 import android.util.Base64
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
-import androidx.core.content.edit
 import androidx.core.location.LocationManagerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -50,6 +49,7 @@ import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.lifecyle.asFlow
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
 import nl.rijksoverheid.en.status.StatusCache
@@ -84,7 +84,7 @@ class ExposureNotificationsRepository(
     private val context: Context,
     private val exposureNotificationsApi: ExposureNotificationApi,
     private val api: CdnService,
-    private val preferences: SharedPreferences,
+    private val preferences: AsyncSharedPreferences,
     private val manifestWorkerScheduler: BackgroundWorkScheduler,
     private val appLifecycleManager: AppLifecycleManager,
     private val statusCache: StatusCache,
@@ -97,16 +97,15 @@ class ExposureNotificationsRepository(
         const val DEBUG_TOKEN = "TEST-TOKEN"
     }
 
-    val keyProcessingOverdue: Boolean
-        get() {
-            val timestamp = preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0)
-            return if (timestamp > 0) {
-                Duration.between(Instant.ofEpochMilli(timestamp), clock.instant())
-                    .toMinutes() > KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
-            } else {
-                false
-            }
+    suspend fun keyProcessingOverdue(): Boolean {
+        val timestamp = preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0)
+        return if (timestamp > 0) {
+            Duration.between(Instant.ofEpochMilli(timestamp), clock.instant())
+                .toMinutes() > KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
+        } else {
+            false
         }
+    }
 
     suspend fun requestEnableNotifications(): EnableNotificationsResult {
         val result = exposureNotificationsApi.requestEnableNotifications()
@@ -127,7 +126,7 @@ class ExposureNotificationsRepository(
         return result
     }
 
-    fun resetLastKeysProcessed() {
+    suspend fun resetLastKeysProcessed() {
         preferences.edit {
             // reset the timer
             putLong(KEY_LAST_KEYS_PROCESSED, clock.millis())
@@ -243,7 +242,7 @@ class ExposureNotificationsRepository(
             return ProcessExposureKeysResult.Success
         }
 
-        val processedSets = preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())!!
+        val processedSets = preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())
         val updates = manifest.exposureKeysSetIds.toMutableSet().apply {
             removeAll(processedSets)
         }
@@ -321,10 +320,10 @@ class ExposureNotificationsRepository(
      * @param manifest the manifest
      */
     @WorkerThread
-    private fun updateProcessedExposureKeySets(processed: Set<String>, manifest: Manifest) {
+    private suspend fun updateProcessedExposureKeySets(processed: Set<String>, manifest: Manifest) {
         // the ids we have previously processed + the newly processed ids
         val currentProcessedIds =
-            preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())!!.toMutableSet().apply {
+            preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet()).toMutableSet().apply {
                 addAll(processed)
             }
         // store the set of ids that are in the manifest and are processed
@@ -479,6 +478,8 @@ class ExposureNotificationsRepository(
                 }
             }
 
+        val preferences = preferences.getPreferences()
+
         preferences.registerOnSharedPreferenceChangeListener(listener)
 
         offer(preferences.getString(KEY_LAST_TOKEN_ID, null))
@@ -496,6 +497,7 @@ class ExposureNotificationsRepository(
                 }
             }
 
+        val preferences = preferences.getPreferences()
         preferences.registerOnSharedPreferenceChangeListener(listener)
 
         offer(preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0))
@@ -520,7 +522,7 @@ class ExposureNotificationsRepository(
         }
     }
 
-    fun resetExposures() {
+    suspend fun resetExposures() {
         preferences.edit {
             // Use putString instead of remove, otherwise encrypted shared preferences don't call
             // an associated shared preferences listener.
