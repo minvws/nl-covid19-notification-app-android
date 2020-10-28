@@ -17,12 +17,20 @@
             type="Integer" />
     </data>
 
-    <ImageView
-        android:id="@+id/content"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:importantForAccessibility="no"
-        app:imageResource="@{image}"
-        tools:src="@drawable/illustration_lab_test" />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:importantForAccessibility="no"
+            app:hideOnSmallScreenHeight="@{true}"
+            app:imageResource="@{image}"
+            tools:src="@drawable/illustration_lab_test" />
+
+    </FrameLayout>
+
 </layout>
