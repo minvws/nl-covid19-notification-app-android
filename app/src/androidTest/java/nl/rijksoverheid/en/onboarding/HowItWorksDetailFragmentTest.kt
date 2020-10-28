@@ -7,12 +7,16 @@
 package nl.rijksoverheid.en.onboarding
 
 import android.content.Context
+import android.net.Uri
+import android.provider.Settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
@@ -35,7 +39,8 @@ import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
 import okhttp3.ResponseBody
-import org.junit.Assert
+import org.junit.After
+import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -94,6 +99,16 @@ class HowItWorksDetailFragmentTest : BaseInstrumentationTest() {
         }
     }
 
+    @Before
+    fun setup() {
+        Intents.init()
+    }
+
+    @After
+    fun tearDown() {
+        Intents.release()
+    }
+
     @Test
     fun testRequest() {
         val context = ApplicationProvider.getApplicationContext<Context>()
@@ -112,10 +127,8 @@ class HowItWorksDetailFragmentTest : BaseInstrumentationTest() {
         ) {
             Espresso.onView(ViewMatchers.withId(R.id.button)).perform(ViewActions.click())
 
-            Assert.assertEquals(
-                "Request permission with success opens the share screen",
-                R.id.nav_share, navController.currentDestination?.id
-            )
+            Intents.intended(IntentMatchers.hasAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS))
+            Intents.intended(IntentMatchers.hasData(Uri.parse("package:${BuildConfig.APPLICATION_ID}")))
         }
     }
 }
