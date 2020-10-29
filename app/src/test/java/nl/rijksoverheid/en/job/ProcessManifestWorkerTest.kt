@@ -18,9 +18,11 @@ import androidx.work.testing.TestListenableWorkerBuilder
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.ExposureNotificationsRepository
+import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
@@ -58,14 +60,24 @@ class ProcessManifestWorkerTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                     Manifest(listOf(), "risk", "config")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters =
                     throw NotImplementedError()
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
                     AppConfig()
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
             },
             AsyncSharedPreferences { context.getSharedPreferences("test_repository", 0) },
             object : BackgroundWorkScheduler {

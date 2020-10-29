@@ -30,9 +30,11 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.yield
+import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
@@ -715,15 +717,22 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
-                    Manifest(emptyList(), "riskParamId", "configId")
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                    Manifest(emptyList(), "", "appConfig")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
                     AppConfig(1, 5, 0.0)
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -749,6 +758,51 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
+    fun `processManifest fetches the latest resource bundle`() =
+        runBlocking {
+            val dateTime = "2020-06-20T10:15:30.00Z"
+            val called = AtomicBoolean(false)
+            val fakeService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                    Manifest(emptyList(), "", "appConfig", resourceBundleId = "bundle")
+
+                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
+                    AppConfig(1, 5, 0.0)
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy
+                ): ResourceBundle {
+                    called.set(true)
+                    return ResourceBundle(emptyMap(), ResourceBundle.Guidance(10, emptyList()))
+                }
+            }
+
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+
+            val repository = createRepository(
+                api = object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                },
+                cdnService = fakeService,
+                preferences = sharedPrefs,
+                clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            )
+
+            repository.processManifest()
+            assertTrue(called.get())
+        }
+
+    @Test
     fun `processManifest stops processing when the app is disabled`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
@@ -757,15 +811,25 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                     Manifest(emptyList(), "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
                     AppConfig(1, 5, 0.0, coronaMelderDeactivated = "deactivated")
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy
+                ): ResourceBundle {
+                    throw IllegalStateException()
+                }
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -852,15 +916,25 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                     Manifest(emptyList(), "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
                     AppConfig(BuildConfig.VERSION_CODE + 1, 5, 0.0)
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -903,15 +977,25 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                     Manifest(emptyList(), "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
                     AppConfig(0, 5, 0.0)
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -958,16 +1042,27 @@ class ExposureNotificationsRepositoryTest {
                         throw NotImplementedError()
                     }
 
-                    override suspend fun getManifest(cacheHeader: String?): Manifest = Manifest(
-                        listOf(), "risk", "config"
-                    )
+                    override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                        Manifest(
+                            listOf(), "risk", "config"
+                        )
 
                     override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                         throw NotImplementedError()
                     }
 
-                    override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    override suspend fun getAppConfig(
+                        id: String,
+                        cacheStrategy: CacheStrategy?
+                    ): AppConfig =
                         AppConfig()
+
+                    override suspend fun getResourceBundle(
+                        id: String,
+                        cacheStrategy: CacheStrategy
+                    ): ResourceBundle {
+                        throw java.lang.IllegalStateException()
+                    }
                 },
                 scheduler = object : BackgroundWorkScheduler {
                     override fun schedule(intervalMinutes: Int) {
@@ -1020,7 +1115,7 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(cacheHeader: String?): Manifest {
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest {
                 throw NotImplementedError()
             }
 
@@ -1028,8 +1123,18 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+            override suspend fun getAppConfig(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): AppConfig =
                 AppConfig(1, 5, 0.0)
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy
+            ): ResourceBundle {
+                throw java.lang.IllegalStateException()
+            }
         }
 
         val context = ApplicationProvider.getApplicationContext<Application>()
@@ -1059,7 +1164,7 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(cacheHeader: String?): Manifest {
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest {
                 throw NotImplementedError()
             }
 
@@ -1067,8 +1172,18 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+            override suspend fun getAppConfig(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): AppConfig =
                 AppConfig(1, 5, 0.0)
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy
+            ): ResourceBundle {
+                throw java.lang.IllegalStateException()
+            }
         }
 
         val repository = createRepository(
@@ -1353,15 +1468,25 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                     Manifest(listOf(), "risk", "config")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
                     AppConfig()
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
             },
             scheduler = object : BackgroundWorkScheduler {
                 override fun schedule(intervalMinutes: Int) {
@@ -1418,15 +1543,25 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                     Manifest(listOf(), "risk", "config")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
                     AppConfig()
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
             },
             scheduler = object : BackgroundWorkScheduler {
                 override fun schedule(intervalMinutes: Int) {
@@ -1484,15 +1619,25 @@ class ExposureNotificationsRepositoryTest {
                         throw NotImplementedError()
                     }
 
-                    override suspend fun getManifest(cacheHeader: String?): Manifest =
+                    override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                         Manifest(listOf(), "risk", "config")
 
                     override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                         throw NotImplementedError()
                     }
 
-                    override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    override suspend fun getAppConfig(
+                        id: String,
+                        cacheStrategy: CacheStrategy?
+                    ): AppConfig =
                         AppConfig()
+
+                    override suspend fun getResourceBundle(
+                        id: String,
+                        cacheStrategy: CacheStrategy
+                    ): ResourceBundle {
+                        throw java.lang.IllegalStateException()
+                    }
                 },
                 scheduler = object : BackgroundWorkScheduler {
                     override fun schedule(intervalMinutes: Int) {
