@@ -88,6 +88,8 @@
                 android:fontFamily="monospace"
                 android:gravity="center"
                 android:letterSpacing="0.3"
+                android:textIsSelectable="true"
+                android:textColorHighlight="@color/color_control_highlight"
                 android:text="@{viewState.key}"
                 android:contentDescription="@{viewState.keyContentDescription}"
                 android:textAppearance="?attr/textAppearanceHeadline5"
