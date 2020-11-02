@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.about
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -33,6 +34,7 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
         adapter.add(AboutSection())
     }
 
+    @SuppressLint("StringFormatInvalid") // for overridden urls in fy language
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
