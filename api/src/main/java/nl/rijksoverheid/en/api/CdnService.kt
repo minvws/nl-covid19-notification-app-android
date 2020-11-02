@@ -42,7 +42,7 @@ interface CdnService {
         @Tag cacheStrategy: CacheStrategy? = null
     ): AppConfig
 
-    @GET("v2/resourcebundle/{id")
+    @GET("v2/resourcebundle/{id}")
     @SignedResponse
     suspend fun getResourceBundle(
         @Path("id") id: String,
