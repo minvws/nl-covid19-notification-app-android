@@ -456,8 +456,8 @@ class ExposureNotificationsRepository(
                     manifest.resourceBundleId?.let {
                         api.getResourceBundle(it)
                     }
-                } catch (ex: java.lang.Exception) {
-                    Timber.w("Could not fetch resource bundle")
+                } catch (ex: Exception) {
+                    Timber.w(ex, "Could not fetch resource bundle")
                 }
 
                 val result = processExposureKeySets(manifest)
