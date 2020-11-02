@@ -68,10 +68,16 @@ class CacheStrategyInterceptorTest {
     @Test
     fun `cacheStrategy CACHE_FIRST will try the cache first, then network`() = runBlocking {
         mockWebServer.enqueue(MockResponse().setBody(MANIFEST_RESPONSE))
-        val manifest = cdnService.getManifest()
+        cdnService.getManifest(CacheStrategy.CACHE_FIRST)
+        assertEquals(1, mockWebServer.requestCount)
+    }
 
-        val cachedManifest = cdnService.getManifest(CacheStrategy.CACHE_FIRST)
-        assertEquals(manifest, cachedManifest)
+    @Test
+    fun `cacheStrategy CACHE_FIRST returns cached response`() = runBlocking {
+        mockWebServer.enqueue(MockResponse().setBody(MANIFEST_RESPONSE))
+        // network request
+        cdnService.getManifest()
+        cdnService.getManifest(CacheStrategy.CACHE_FIRST)
         assertEquals(1, mockWebServer.requestCount)
     }
 

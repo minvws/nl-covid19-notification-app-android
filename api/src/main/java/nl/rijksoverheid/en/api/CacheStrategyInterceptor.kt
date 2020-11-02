@@ -18,11 +18,17 @@ class CacheStrategyInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         return when (chain.request().tag(CacheStrategy::class.java)) {
             CacheStrategy.CACHE_FIRST -> {
-                return try {
+                val cacheResponse = try {
                     chain.proceed(
                         chain.request().newBuilder().cacheControl(CacheControl.FORCE_CACHE).build()
                     )
                 } catch (ex: IOException) {
+                    Timber.w(ex, "Error getting response from cache")
+                    null
+                }
+                return if (cacheResponse?.isSuccessful == true) {
+                    cacheResponse
+                } else {
                     Timber.d("Cache request failed, retry network")
                     chain.proceed(chain.request())
                 }
