@@ -14,9 +14,7 @@ import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.formatExposureDateShort
-import retrofit2.HttpException
 import timber.log.Timber
-import java.io.IOException
 import java.time.LocalDate
 
 private const val DEFAULT_LANGUAGE = "en"
@@ -48,10 +46,7 @@ class ResourceBundleManager(private val context: Context, private val cdnService
             } else {
                 null
             }
-        } catch (ex: IOException) {
-            Timber.w(ex, "Error fetching resource bundle")
-            null
-        } catch (ex: HttpException) {
+        } catch (ex: Exception) {
             Timber.w(ex, "Error fetching resource bundle")
             null
         }
