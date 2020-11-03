@@ -59,15 +59,6 @@
     <string name="sync_issue_notification_title">مشكلة تقنية</string>
     <string name="sync_issue_notification_message">لم يتمكن التطبيق من التحقق لمدة 24 ساعة فيما إذا تبين لاحقًا أن الأشخاص الذين قابلتهم مصابين بكورونا.</string>
     <string name="post_notification_toolbar_title">احتمالية الإصابة بالعدوى</string>
-    <string name="post_notification_header_1">لقد كنت بالقرب من شخص مصاب بفيروس كورونا</string>
-    <string name="post_notification_paragraph_2">من المحتمل أنك قد تعرضت للإصابة في %2$s\n(%1$s). كنت قريبًا من شخص مصاب بكورونا لمدة 15 دقيقة على الأقل في ذلك اليوم.\n\nإذا كنت مصابًا بالفعل، يمكنك نقل الفيروس إلى الآخرين. حتى لو لم تشعر بالمرض الآن.</string>
-    <string name="post_notification_header_3">ما الذي يمكنك القيام به الآن؟</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>إبق في المنزل حتى%1$s وانتبه أكثر للأعراض التي قد تتناسب مع أعراض كورونا</li><li>هل لديك أعراض (خفيفة) تتناسب مع أعراض فيروس كورونا؟ قم بإجراء اختبار كورونا والزم المنزل حتى%1$s</li><li>هل لديك أعراض خطيرة مثل ارتفاع في درجة الحرارة أو صعوبة في التنفس؟ أم هل أنت من ضمن مجموعة معرضة للخطر وهل لديك حمى؟ اتصل بطبيبك أولاً</li></ul>
-]]></string>
-    <string name="post_notification_header_6">قم بإجراء فحص كورونا</string>
-    <string name="post_notification_paragraph_7">" حتى إذا لم تشعر بالمرض. حيث أنه من الممكن أن تنقل الفيروس بدون الشعور بالمرض وبذلك نقل العدوى إلى الآخرين."</string>
-    <string name="post_notification_paragraph_8">"اطلب إجراء الفحص مجانًا. لا يستغرق ذلك وقتًا طويلاً، وتستطيع في معظم الحالات تحديد موعد بسرعة. ستعرف النتيجة خلال 48 ساعة. الزم المنزل حتى تعرف النتيجة."</string>
-    <string name="post_notification_paragraph_9">اتصل مجانًا ب <b>%1$s</b>  لطلب إجراء فحص كورونا.</string>
     <string name="post_notification_message">تأكد من وجود رقم خدمات المواطن (BSN) في متناول اليد. تجد هذا الرقم في جواز سفرك أو بطاقة هويتك.</string>
     <string name="post_notification_button">طلب إجراء فحص كورونا</string>
     <string name="generic_notification_toolbar_title">استلام إشعار</string>
@@ -236,15 +227,6 @@
     <string name="faq_interoperability_paragraph_3">ربما ستتمكن في المستقبل في مواصلة استخدام تطبيق بلدك دون الحاجة إلى التبديل يوميًا.</string>
     <string name="cross_links_header">إقرأ أيضًا</string>
     <string name="request_test_header_5">طلب إجراء فحص كورونا</string>
-    <string name="post_notification_guidance_follow_ggd">هل تعطيك الـ GGD عبر الهاتف نصائح مختلفة عن النصائح الموجودة في التطبيق؟ اتبع إذًا نصيحة الـ GGD.</string>
-    <string name="post_notification_stay_home_header">ابق في المنزل إلى غاية %1$s</string>
-    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>دع الآخرين يقومون بمهمة شراء البقالة لك. هل هذا غير ممكن وهل ليست لديك أعراض؟ يمكنك الخروج للقيام بشراء البقالة. حافظ على مسافة 1.5 متر ولا تلمس أي شخص.</li><li>يمكنك الجلوس في الحديقة أو الشرفة.</li><li>يُسمح للأطفال دون الـ18 عامًا بالذهاب إلى المدرسة و/أو ممارسة الرياضة.</li></ul>]]></string>
-    <string name="post_notification_no_visitors_header">لا تستقبل الزوار</string>
-    <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>فقط الأشخاص الذين يعيشون معك يستطيعون التواجد معك في المنزل. ابتعدوا عن بعضكم البعض وحافظوا على مسافة 1.5 متر. لا تقم إذًا بالمعانقة ولا التقبيل ولا ممارسة العلاقة الحميمة</li></ul>.]]></string>
-    <string name="post_notification_medical_help_list"><![CDATA[<ul><li>لا تذهب إلى الطبيب أو المستشفى، ولكن اتصل بطبيبك أولاً. قل له أنك كنت بالقرب من شخص مصاب بفيروس كورونا.</li><li>.بإمكان طبيب العائلة أو مساعدة طبية أخرى القيام بزيارتك.</li></ul>]]></string>
-    <string name="post_notification_medical_help_header">هل أنت بحاجة الى مساعدة طبية؟</string>
-    <string name="post_notification_after_stay_home_header">بعد %1$s</string>
-    <string name="post_notification_after_stay_home_paragraph">ألم تظهر عليك أعراض إلى غاية %1$s؟ لم يعد عليك البقاء في المنزل إذًا. لكن استمر في اتباع القواعد العامة ضد كورونا.</string>
     <string name="generic_notification_advice_stay_home">إبق في المنزل على أي حال حتى تتأكد من عدم إصابتك بكورونا. فتتفادى بهذه الطريقة من نقل العدوى إلى الآخرين دون قصد.</string>
     <string name="generic_notification_exposure_summaries">"تتلقى في بعض الأحيان أيضًا إشعارات تخبرك أن هاتفك يجري فحوصات COVID-19. قم بفتح CoronaMelder. من المهم أن تعرف: في العادة لا يوجد هناك شيء يدعو إلى القلق."</string>
     <string name="generic_notification_header_3">كيف يبدو الإشعار؟</string>
