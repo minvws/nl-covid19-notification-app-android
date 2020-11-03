@@ -20,14 +20,16 @@ class PostNotificationSection : Section() {
     }
 
     fun setGuidance(guidance: List<ResourceBundle.Guidance.Element>) {
-        update(guidance.mapNotNull {
-            when (it) {
-                is ResourceBundle.Guidance.Element.Paragraph -> listOf(
-                    ResourceBundleHeaderItem(it.title),
-                    ResourceBundleParagraphItem(it.body)
-                )
-                else -> null
-            }
-        }.flatten())
+        update(
+            guidance.mapNotNull {
+                when (it) {
+                    is ResourceBundle.Guidance.Element.Paragraph -> listOf(
+                        ResourceBundleHeaderItem(it.title),
+                        ResourceBundleParagraphItem(it.body)
+                    )
+                    else -> null
+                }
+            }.flatten()
+        )
     }
 }

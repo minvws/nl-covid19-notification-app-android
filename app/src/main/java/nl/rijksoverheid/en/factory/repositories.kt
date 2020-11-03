@@ -125,7 +125,8 @@ fun createAppLifecycleManager(context: Context): AppLifecycleManager {
 fun createResourceBundleManager(context: Context): ResourceBundleManager {
     return ResourceBundleManager(
         context,
-        cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE).also { cdnService = it })
+        cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE).also { cdnService = it }
+    )
 }
 
 @Suppress("BlockingMethodInNonBlockingContext")
