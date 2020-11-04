@@ -13,6 +13,7 @@ import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.runBlocking
+import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.HmacSecret
 import nl.rijksoverheid.en.api.LabTestService
@@ -22,6 +23,7 @@ import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.PostKeysRequest
 import nl.rijksoverheid.en.api.model.Registration
 import nl.rijksoverheid.en.api.model.RegistrationRequest
+import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.StatusResult
@@ -69,15 +71,22 @@ class LabTestRepositoryTest {
             throw NotImplementedError()
         }
 
-        override suspend fun getManifest(cacheHeader: String?): Manifest =
+        override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
             Manifest(listOf(), "", "appconfig")
 
         override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
             throw NotImplementedError()
         }
 
-        override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig {
+        override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?): AppConfig {
             return AppConfig(requestMinimumSize = 0, requestMaximumSize = 0, decoyProbability = 1.0)
+        }
+
+        override suspend fun getResourceBundle(
+            id: String,
+            cacheStrategy: CacheStrategy?
+        ): ResourceBundle {
+            throw java.lang.IllegalStateException()
         }
     }
 

@@ -29,9 +29,11 @@ import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
@@ -80,15 +82,22 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
             throw NotImplementedError()
         }
 
-        override suspend fun getManifest(cacheHeader: String?): Manifest =
+        override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
             Manifest(emptyList(), "", "appConfig")
 
         override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
             throw NotImplementedError()
         }
 
-        override suspend fun getAppConfig(id: String, cacheHeader: String?) =
+        override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
             AppConfig(1, 10, 0.0)
+
+        override suspend fun getResourceBundle(
+            id: String,
+            cacheStrategy: CacheStrategy?
+        ): ResourceBundle {
+            throw IllegalStateException()
+        }
     }
 
     private val repository = ExposureNotificationsRepository(

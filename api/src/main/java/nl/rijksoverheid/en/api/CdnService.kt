@@ -9,6 +9,7 @@ package nl.rijksoverheid.en.api
 import android.content.Context
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -16,9 +17,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Streaming
+import retrofit2.http.Tag
 
 interface CdnService {
     @GET("v2/exposurekeyset/{id}")
@@ -28,7 +29,7 @@ interface CdnService {
 
     @GET("v2/manifest")
     @SignedResponse
-    suspend fun getManifest(@Header("Cache-control") cacheHeader: String? = null): Manifest
+    suspend fun getManifest(@Tag cacheStrategy: CacheStrategy? = null): Manifest
 
     @GET("v2/riskcalculationparameters/{id}")
     @SignedResponse
@@ -38,8 +39,15 @@ interface CdnService {
     @SignedResponse
     suspend fun getAppConfig(
         @Path("id") id: String,
-        @Header("Cache-control") cacheHeader: String? = null
+        @Tag cacheStrategy: CacheStrategy? = null
     ): AppConfig
+
+    @GET("v2/resourcebundle/{id}")
+    @SignedResponse
+    suspend fun getResourceBundle(
+        @Path("id") id: String,
+        @Tag cacheStrategy: CacheStrategy? = null
+    ): ResourceBundle
 
     companion object {
         fun create(

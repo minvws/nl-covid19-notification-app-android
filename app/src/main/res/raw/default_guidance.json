@@ -1,0 +1,220 @@
+{
+  "resources": {
+    "en": {
+      "exposure_notification_title": "You've been near someone with coronavirus",
+      "exposure_notification_body": "You were near someone on {ExposureDate} ({ExposureDaysAgo}) who was later found to have coronavirus. You were exposed to a higher risk of infection in this situation.\n\nIf you are indeed infected, you can infect other people with coronavirus. Even if you don't feel sick right now.",
+      "next_steps_title": "What can you do now?",
+      "next_steps_body": "<ul><li>Stay home up to and including {StayHomeUntilDate} and look out for symptoms related to the coronavirus</li><li>Do you have (mild) symptoms related to the coronavirus? Get tested for coronavirus and stay home up to and including {StayHomeUntilDate}</li><li>Serious symptoms like high fever or difficulty breathing? Or part of a high-risk group and having a fever? Call your doctor</li></ul>\nWere you called by the GGD? Follow the advice given by the GGD, not the advice given by the app.",
+      "stay_home_title": "Stay home up to and including {StayHomeUntilDate}",
+      "stay_home_body": "<ul><li>Ask someone else to get groceries. Is this impossible and are you free of symptoms? Then it's alright if you quickly go to the shop. Keep a 1,5 metre distance and don't touch anyone.</li><li>You're allowed to enjoy your own yard or balcony.</li><li>Children under the age of 18 are allowed to go to school and/or play sports.</li></ul>",
+      "no_visitors_title": "Don't see visitors",
+      "no_visitors_body": "Only the people who live with you are allowed to be in the same house as you. Stay away from each other and keep a 1,5 metre distance. That means no cuddling, no kissing and no sex.",
+      "medical_help_title": "Do you need medical help?",
+      "medical_help_body": "<ul><li>Don't go to see your doctor or go to the hospital, but call your doctor first. Tell them you've been in contact with someone who has coronavirus.</li><li>Your doctor and other medical personnel are allowed to visit you.</li></ul>",
+      "after_stay_home_title": "After {StayHomeUntilDate}",
+      "after_stay_home_body": "No symptoms up to and including {StayHomeUntilDate}? You don't have to stay at home anymore. Do keep following the basic rules.",
+      "symptoms_title": "Possible coronavirus symptoms",
+      "symptoms_body": "<ul><li>cold symptoms like nasal cold, runny nose, sneezing, sore throat</li><li>cough</li><li>shortness of breath</li><li>elevated temperature or fever</li><li>sudden loss of smell or taste (without nasal congestion)</li></ul>"
+    },
+    "fr": {
+      "exposure_notification_title": "Vous étiez à proximité de quelqu'un qui a le Covid-19",
+      "exposure_notification_body": "Vous étiez, {ExposureDate} ({ExposureDaysAgo}), à proximité de quelqu'un qui, par la suite, s'est avéré avoir le Covid-19. Lors de cette situation, vous avez probablement couru un plus grand risque d’être contaminé(e). \n\nSi vous avez effectivement été contaminé(e), vous pouvez transmettre le virus aux personnes autour de vous, même si vous n'avez aucun symptôme pour l'instant.",
+      "next_steps_title": "Que pouvez-vous faire ?",
+      "next_steps_body": "<ul><li>Restez chez vous jusqu'au {StayHomeUntilDate} et faites très attention aux symptômes qui pourraient correspondre à ceux du Covid-19</li>,<li>Vous avez des (légers) symptômes qui correspondent à ceux du Covid-19 ? Faites un test de dépistage et restez chez vous jusqu'au {StayHomeUntilDate}</li><li>Vous avez de graves symptômes comme une forte fièvre ou des difficultés à respirer ? Ou vous faites partie d'un groupe à risques et vous avez de la fièvre ? Appelez d'abord votre médecin traitant</li></ul>\nAu téléphone, le GGD vous donne d'autres conseils que ceux de l'application ? Suivez alors les conseils du GGD.",
+      "stay_home_title": "Restez chez vous jusqu'au {StayHomeUntilDate}",
+      "stay_home_body": "<ul><li>Faites faire vos courses par d'autres personnes. Si ce n'est vraiment pas possible et que vous n'avez aucun symptôme, vous pouvez sortir pour faire vos courses. Veillez à maintenir une distance d'1,5 mètre et ne touchez personne.</li><li>Vous pouvez vous installer au jardin ou sur le balcon.</li><li>Les écoliers de moins de 18 ans peuvent aller à l'école et/ou faire du sport.</li></ul>",
+      "no_visitors_title": "Ne recevez personne.",
+      "no_visitors_body": "Seules les personnes qui habitent avec vous peuvent se trouver à la maison avec vous. Restez toutefois éloignés les uns des autres et gardez une distance d'1,5 mètre. Donc pas de câlins, ni de baisers ou de rapports sexuels.",
+      "medical_help_title": "Besoin d'une assistance médicale ?",
+      "medical_help_body": "<ul><li>N'allez pas chez le médecin ni à l’hôpital, mais appelez d'abord votre médecin traitant. Dites-lui que vous avez été en contact avec quelqu'un qui a le Covid-19.</li><li>votre médecin ou une autre assistance médicale peut passer chez vous.</li></ul>",
+      "after_stay_home_title": "Après le {StayHomeUntilDate}",
+      "after_stay_home_body": "Si vous n'avez pas de symptôme jusqu'au {StayHomeUntilDate}, il n'est plus nécessaire de rester chez vous. Continuez toutefois à suivre les règles générales de lutte contre la diffusion du Covid-19.",
+      "symptoms_title": "Symptômes qui correspondent à ceux du Covid-19",
+      "symptoms_body": "<ul><li>symptômes du rhume comme un nez qui coule, éternuements, mal de gorge</li><li>toux</li><li>angoisse</li><li>fièvre</li><li>perte soudaine de l'odorat et/ou du goût (sans congestion nasale)</li></ul>"
+    },
+    "de": {
+      "exposure_notification_title": "Sie waren in der Nähe einer Person mit Corona.",
+      "exposure_notification_body": "Am {ExposureDate} ({ExposureDaysAgo}) sind Sie möglicherweise angesteckt worden. Sie waren an diesem Tag länger als 15 Minuten in der Nähe einer Person, bei der später Corona festgestellt wurde.  \n\nWenn Sie tatsächlich Corona haben, können Sie andere mit dem Virus anstecken. Auch wenn Sie sich jetzt nicht krank fühlen.",
+      "next_steps_title": "Was können Sie jetzt tun?",
+      "next_steps_body": "<ul><li>Bleiben Sie bis einschließlich{StayHomeUntilDate} zu Hause und achten Sie genau auf Beschwerden, die zu Corona passen können.</li><li>Haben Sie (leichte) Beschwerden, die zum Corona-Virus passen? Machen Sie einen Coronatest und bleiben Sie bis einschließlich {StayHomeUntilDate} zu Hause.</li><li>Haben Sie ernste Beschwerden, wie hohes Fieber oder Atembeschwerden? Oder gehören Sie zu einer Risikogruppe und bekommen Fieber? Rufen Sie dann zuerst Ihren Hausarzt an.</li></ul>\nGibt der GGD Ihnen am Telefon andere Anweisungen als die App? Befolgen Sie dann die Anweisungen des GGD.",
+      "stay_home_title": "Bleiben Sie bis einschließlich {StayHomeUntilDate} zu Hause.",
+      "stay_home_body": "<ul><li>Lassen Sie Ihre Einkäufe von anderen erledigen. Ist dies wirklich nicht möglich und haben Sie keine Beschwerden? Dann können Sie für kurze Zeit das Haus verlassen, um einzukaufen. Halten Sie einen Abstand von 1,5 Metern ein und berühren Sie niemanden.</li><li>Sie dürfen im Garten oder auf dem Balkon sitzen.</li><li>Schulkinder unter 18 Jahren dürfen in die Schule und/oder zum Sport.</li></ul>",
+      "no_visitors_title": "Empfangen Sie keinen Besuch.",
+      "no_visitors_body": "Es dürfen nur Personen, die bei Ihnen wohnen, in Ihrer Wohnung sein. Bleiben Sie sich fern und halten Sie 1,5 Meter Abstand. Also keine Umarmungen, keine Küsse und kein Sex.",
+      "medical_help_title": "Brauchen Sie medizinische Hilfe?",
+      "medical_help_body": "<ul><li>Gehen Sie nicht zu Ihrem Hausarzt oder ins Krankenhaus, sondern rufen Sie zuerst Ihren Hausarzt an.</li><li>Erzählen Sie, dass Sie Kontakt zu einer Person hatten, die Corona hat. Ihr Hausarzt oder medizinisches Personal darf Sie zu Hause besuchen.</li></ul>",
+      "after_stay_home_title": "Ab dem {StayHomeUntilDate}",
+      "after_stay_home_body": "Haben Sie bis einschließlich {StayHomeUntilDate} keine Beschwerden bekommen? Dann brauchen Sie nicht mehr zu Hause zu bleiben. Halten Sie aber weiterhin die allgemeinen Corona-Verhaltensregeln ein.",
+      "symptoms_title": "Beschwerden, die zu Corona passen",
+      "symptoms_body": "<ul><li>Erkältungsbeschwerden wie Schnupfen, laufende Nase, Niesen, Halsschmerzen,</li><li>Husten,</li><li>Atembeschwerden,</li><li>erhöhte Temperatur oder Fieber,</li><li>plötzlicher Geruchs- und/oder Geschmacksverlust (ohne verstopfte Nase)</li></ul>"
+    },
+    "nl": {
+      "exposure_notification_title": "Je was in de buurt van iemand met het coronavirus",
+      "exposure_notification_body": "Op {ExposureDate} ({ExposureDaysAgo}) ben jij misschien besmet geraakt. Je was die dag minstens 15 minuten dicht bij iemand met corona.\n\nAls je inderdaad besmet bent, kun je het virus aan anderen doorgeven. Ook als je je nu niet ziek voelt.",
+      "next_steps_title": "Wat kun je nu doen?",
+      "next_steps_body": "<ul><li>Blijf tot en met {StayHomeUntilDate} thuis en let extra goed op klachten die kunnen passen bij corona</li><li>Heb je (lichte) klachten die passen bij het coronavirus? Doe een coronatest en blijf thuis tot en met {StayHomeUntilDate}</li><li>Heb je ernstige klachten zoals hoge koorts of moeite met ademhalen? Of zit je een risicogroep en krijg je koorts? Bel eerst je huisarts</li></ul>\nGeeft de GGD je aan de telefoon andere adviezen dan de app? Volg dan het advies van de GGD",
+      "stay_home_title": "Blijf tot en met {StayHomeUntilDate} thuis",
+      "stay_home_body": "<ul><li>Laat anderen boodschappen doen. Kan dit echt niet en heb je geen klachten? Dan mag je wel even naar buiten om boodschappen te doen. Houd 1,5 meter afstand en raak niemand aan.</li><li>Je mag in de tuin of op het balkon zitten.</li><li>Schoolgaande kinderen onder de 18 jaar mogen naar school en/of sporten.</li></ul>",
+      "no_visitors_title": "Ontvang geen bezoek",
+      "no_visitors_body": "Alleen de mensen die bij je wonen, mogen samen met jou in huis zijn. Blijf bij elkaar uit de buurt en houd 1,5 meter afstand. Dus niet knuffelen, niet zoenen en geen seks.",
+      "medical_help_title": "Medische hulp nodig?",
+      "medical_help_body": "<ul><li>Ga niet naar de huisarts of het ziekenhuis, maar bel eerst met je huisarts. Vertel dat je in de buurt was van iemand die het coronavirus heeft.</li><li>Je huisarts of andere medische hulp mag wel bij je langskomen.</li></ul>",
+      "after_stay_home_title": "Na {StayHomeUntilDate}",
+      "after_stay_home_body": "Heb je tot en met {StayHomeUntilDate} geen klachten gekregen? Dan hoef je niet meer thuis te blijven. Blijf wel de algemene regels tegen corona volgen.",
+      "symptoms_title": "Klachten die passen bij het coronavirus",
+      "symptoms_body": "<ul><li>verkoudheidsklachten zoals neusverkoudheid, loopneus, niezen, keelpijn</li><li>hoesten</li><li>benauwdheid</li><li>verhoging of koorts</li><li>plotseling verlies van reuk en/of smaak (zonder neusverstopping)</li></ul>"
+    },
+    "tr": {
+      "exposure_notification_title": "Koronavirüs olan birisinin yakınında bulundunuz",
+      "exposure_notification_body": "{ExposureDate} ({ExposureDaysAgo}) tarihinde enfekte olmuş olabilirsiniz. O gün Korona olan birinin en az 15 dakika yakınında bulundunuz.  \n\nGerçekten enfekte olursanız, virüsü başkalarına bulaştırabilirsiniz. Şimdilik kendinizi hasta hissetmeseniz bile.",
+      "next_steps_title": "Şimdi ne yapabilirsiniz?",
+      "next_steps_body": "<ul><li>{StayHomeUntilDate} tarihine kadar evde kalın ve Korona ile ilişkili olabilecek şikayetlere daha fazla dikkat edin</li><li>Korona'ya uyan (hafif) şikayetleriniz mi var? Korona testi yaptırın ve {StayHomeUntilDate} tarihine  kadar evde kalın.</li><li> Yüksek ateş veya nefes almada güçlük gibi ciddi şikayetleriniz mi var veya bir risk grubuna dahil misiniz? Önce doktorunuzu arayın</li></ul>\nGGD size telefonda uygulamadan farklı tavsiyeler mi veriyor? O zaman, GGD'nin tavsiyelerine uyun.",
+      "stay_home_title": "{StayHomeUntilDate} tarihine kadar evinizde kalın",
+      "stay_home_body": "<ul><li>Alışverişlerinizi başkalarına yaptırın. Bu gerçekten mümkün değil mi ve hiç şikayetiniz yok mu? O zaman alışveriş yapmak için dışarı çıkabilirsiniz. 1,5 metre mesafe koruyun ve kimseye dokunmayın.</li><li>Bahçede veya balkonda oturabilirsiniz.</li><li> 18 yaşın altında olan okul çağındaki çocuklar okula gidebilirler ve / veya spor yapabilirler.</li></ul>",
+      "no_visitors_title": "Ziyaretçi kabul etmeyin",
+      "no_visitors_body": "Ancak sizinle birlikte yaşayanlar sizinle birlikte aynı evde bulunabilirler. Birbirinizden uzak durun ve 1,5 metre mesafe koruyun. Yani sarılmak, öpüşmek ve sevişmek yok.",
+      "medical_help_title": "Tıbbi yardıma mı ihtiyacınız var?",
+      "medical_help_body": "<ul><li>Doktora veya hastaneye gitmeyin, önce doktorunuzu arayın. Korona virüsü olan birinin yakınında bulunmuş olduğunuzu söyleyin. </li><li>Doktorunuz veya diğer tıbbi yardımcı sizi ziyaret edebilir.</li></ul>",
+      "after_stay_home_title": "{StayHomeUntilDate} tarihinden sonra",
+      "after_stay_home_body": "{StayHomeUntilDate} tarihine kadar sizde şikayetler oluşmadı mı? Öyleyse artık evinizde kalmak zorunda değilsiniz. Korona'dan korunmak için genel önlemleri almaya devam edin.",
+      "symptoms_title": "Korona virüsü ile ilgili şikayetler",
+      "symptoms_body": "<ul><li>burun nezlesi, burun akıntısı, hapşırma, boğaz ağrısı gibi soğuk algınlığı semptomları</li><li>öksürme</li><li>göğüste daralma</li><li>vücut ısısınin yükselmesi veya ateş </li><li> ani koku ve / veya tat alma (burun tıkanıklığı olmadan) kaybı</li></ul>"
+    },
+    "pl": {
+      "exposure_notification_title": "Znajdowałeś się w pobliżu osoby z koronawirusem",
+      "exposure_notification_body": "{ExposureDate} ({ExposureDaysAgo}) mogłeś zostać zarażony. Tego dnia znajdowałeś się przez co najmniej 15 minut w pobliżu osoby zarażonej koronawirusem.\n\nJeśli rzeczywiście jesteś zarażony, możesz przekazywać wirusa innym. Nawet jeśli teraz nie czujesz się chory.",
+      "next_steps_title": "Co możesz teraz zrobić?",
+      "next_steps_body": "<ul><li>Pozostań w domu do {StayHomeUntilDate} włącznie i zwróć szczególną uwagę na dolegliwości typowe dla koronawirusa</li><li>Masz (łagodne) dolegliwości, które są typowe dla koronawirusa? Zrób test na obecność koronawirusa i pozostań w domu do {StayHomeUntilDate} włącznie</li><li>Masz poważne dolegliwości tj. wysoką gorączkę lub trudności z oddychaniem? Albo znajdujesz się w grupie wysokiego ryzyka i masz gorączkę? W pierwszej kolejności zadzwoń do swojego lekarza rodzinnego</li></ul>\nGGD w rozmowie telefonicznej podaje inne zalecenia niż aplikacja? Postępuj zgodnie z zaleceniami GGD.",
+      "stay_home_title": "Pozostań w domu do {StayHomeUntilDate} włącznie",
+      "stay_home_body": "<ul><li>Niech inni zrobią za Ciebie zakupy. Naprawdę nikt nie może tego zrobić, a Ty nie masz żadnych dolegliwości? W takim razie możesz wyjść, aby zrobić zakupy. Zachowuj 1,5 metra odległości i nikogo nie dotykaj.</li><li>Możesz przebywać w ogrodzie lub siedzieć na balkonie.</li><li>Dzieci w wieku szkolnym poniżej 18 roku życia mogą chodzić do szkoły lub uprawiać sport.</li></ul>",
+      "no_visitors_title": "Nie przyjmuj gości",
+      "no_visitors_body": "Wyłącznie osoby, z którymi mieszkasz, mogą przebywać razem z Tobą w mieszkaniu. Trzymajcie się z dala od siebie i zachowujcie 1,5 metra odległości. Należy się powstrzymać od przytualania, całowania i uprawiania seksu.",
+      "medical_help_title": "Potrzebujesz pomocy medycznej?",
+      "medical_help_body": "<ul><li>W pierwszej kolejności zadzwoń do swojego lekarza rodzinnego zamiast iść do przychodni lub szpitala. Poinformuj lekarza o kontakcie z osobą zarażoną koronawirusem.</li><li>Twój lekarz rodzinny lub inna pomoc medyczna może przyjść do Ciebie.</li></ul>",
+      "after_stay_home_title": "Po {StayHomeUntilDate}",
+      "after_stay_home_body": "Do {StayHomeUntilDate} włącznie nie pojawiły się żadne dolegliwości? A więc nie musisz dłużej pozostawać w domu. Jednak trzymaj się ogólnych zasad zapobiegających koronawirusowi.",
+      "symptoms_title": "Dolegliwości typowe dla koronawirusa",
+      "symptoms_body": "<ul><li>objawy przeziębienia takie jak nieżyt nosa, katar, kichanie, ból gardła</li><li>kaszel</li><li>duszności</li><li>podwyższona temperatura ciała</li><li>nagła utrata zmysłu zapachu lub smaku (bez przekrwienia nosa)</li></ul>"
+    },
+    "ro": {
+      "exposure_notification_title": "Ați fost aproape de cineva infectat cu coronavirus",
+      "exposure_notification_body": "Este posibil ca pe {ExposureDate} ({ExposureDaysAgo}) să fi fost infectat. In acea zi ați fost în apropierea cuiva infectat cu corona.\n\nDacă sunteți într-adevăr infectat, puteți transmite virusul altora. Chiar dacă acum nu vă simțiți rău.",
+      "next_steps_title": "Ce puteți face acum?",
+      "next_steps_body": "<ul><li>Rămâneți acasă până la data de {StayHomeUntilDate} (inclusiv) și fiți atenți la simptome care pot fi asociate cu coronavirus.</li><li> Aveți simptome ușoare care ar putea fi asociate cu coronavirus? Faceți un test pentru coronavirus și rămâneți acasă până la data de {StayHomeUntilDate} (inclusiv)</li><li> Aveți simptome grave cum ar fi febră mare sau respirație greoaie? Vă aflați într-un grup de risc și aveți febră? Sunați întâi medicul de familie</li></ul>\nPrimiți de la GGD (Serviciul de Sănătate Municipal),  în timpul convorbirii telefonice, alte recomandări decât cele din aplicație?  Atunci trebuie să urmați recomandările GGD-ului.",
+      "stay_home_title": "Rămâneți acasă până la data de  {StayHomeUntilDate} (inclusiv)",
+      "stay_home_body": "<ul><li>Lăsați-i pe alții să facă cumpărături. Nu este posibil acest lucru și nu aveți simptome? Atunci puteți ieși din casă pentru a face cumpărături. Păstrați distanța de 1,5 metri și nu atingeți alte persoane.</li><li>Puteți sta în grădină sau pe balcon.</li><li>Elevii sub 18 ani au voie să meargă la școală și/sau să facă sport.</li></ul>",
+      "no_visitors_title": "Nu primiți vizite.",
+      "no_visitors_body": "Doar persoanele cu care locuiți au voie să se afle cu dvs. în casă. Stați departe unul de celălalt și păstrați distanța de 1,5 metri. Deci, nu vă îmbrățișați, nu vă sărutați, nu întrețineți rapoarte sexuale.",
+      "medical_help_title": "Aveți nevoie de asistență medicală?",
+      "medical_help_body": "<ul><li>Nu mergeți la medicul de familie sau la spital, sunați mai întâi medicul de familie. Spuneți-i că ați fost în apropierea cuiva infectat cu coronavirus.</li><li>Medicul de familie sau alte persoane care acordă asistență medicală au voie să vă viziteze.</li></ul>",
+      "after_stay_home_title": "După {StayHomeUntilDate}",
+      "after_stay_home_body": "Nu ați avut până la data de {StayHomeUntilDate} (inclusiv) niciun simptom? Atunci nu trebuie să mai rămâneți în casă. Respectați în continuare regulile generale împotriva coronavirusului.",
+      "symptoms_title": "Simptome are pot fi asociate coronavirusului",
+      "symptoms_body": "<ul><li>simptome de răceală cum ar fi rinită, curgerea nasului, strănut, dureri în gât</li><li>tuse</li><li>senzație de sufocare</li><li>temperatură</li><li>dispariția bruscă a simțului mirosului și /sau gustului (fără a avea nasul înfundat)</li></ul>"
+    },
+    "ar": {
+      "exposure_notification_title": "لقد كنت بالقرب من شخص مصاب بفيروس كورونا",
+      "exposure_notification_body": "قد تعرضت للإصابة في {ExposureDate} ({ExposureDaysAgo}). كنت قريبًا من شخص مصاب بكورونا لمدة 15 دقيقة على الأقل في ذلك اليوم. إذا كنت مصابًا بالفعل، يمكنك نقل الفيروس إلى الآخرين. حتى لو لم تشعر بالمرض الآن.",
+      "next_steps_title": "ما الذي يمكنك القيام به الآن؟",
+      "next_steps_body": "<ul><li>إبق في المنزل حتى{StayHomeUntilDate} وانتبه أكثر للأعراض التي قد تتناسب مع أعراض كورونا</li><li>هل لديك أعراض (خفيفة) تتناسب مع أعراض فيروس كورونا؟ قم بإجراء اختبار كورونا والزم المنزل حتى{StayHomeUntilDate}</li><li>هل لديك أعراض خطيرة مثل ارتفاع في درجة الحرارة أو صعوبة في التنفس؟ أم هل أنت من ضمن مجموعة معرضة للخطر وهل لديك حمى؟ \nاتصل بطبيبك أولاً</li></ul>\nهل تعطيك الـ GGD عبر الهاتف نصائح مختلفة عن النصائح الموجودة في التطبيق؟ اتبع إذًا نصيحة الـ GGD.",
+      "stay_home_title": "ابق في المنزل إلى غاية {StayHomeUntilDate}",
+      "stay_home_body": "<ul><li>دع الآخرين يقومون بمهمة شراء البقالة لك. هل هذا غير ممكن وهل ليست لديك أعراض؟ يمكنك الخروج للقيام بشراء البقالة. حافظ على مسافة 1.5 متر ولا تلمس أي شخص.</li><li>يمكنك الجلوس في الحديقة أو الشرفة.</li><li>يُسمح للأطفال في سن التمدرس الذين أعمارهم تقل عن 18عامًا بالذهاب إلى المدرسة و/أو ممارسة الرياضة.</li></ul>",
+      "no_visitors_title": "لا تستقبل الزوار",
+      "no_visitors_body": "فقط الأشخاص الذين يعيشون معك يستطيعون التواجد معك في المنزل. ابتعدوا عن بعضكم البعض وحافظوا على مسافة 1.5 متر. لا تقم إذًا بالمعانقة ولا التقبيل ولا ممارسة العلاقة الحميمة",
+      "medical_help_title": "هل أنت بحاجة الى مساعدة طبية؟",
+      "medical_help_body": "<ul><li>لا تذهب إلى الطبيب أو المستشفى، ولكن اتصل بطبيبك أولاً. قل له أنك كنت بالقرب من شخص مصاب بفيروس كورونا.</li><li>.بإمكان طبيب العائلة أو مساعدة طبية أخرى القيام بزيارتك.</li></ul>",
+      "after_stay_home_title": "بعد {StayHomeUntilDate}",
+      "after_stay_home_body": "ألم تظهر عليك أعراض إلى غاية {StayHomeUntilDate}؟ لم يعد عليك البقاء في المنزل إذًا. لكن استمر في اتباع القواعد العامة ضد كورونا.",
+      "symptoms_title": "الأعراض التي تتناسب مع فيروس كورونا",
+      "symptoms_body": "<ul><li>أعراص الزكام مثل حساسية الأنف وسيلان الأنف والعطس وألم في الحلق</li><li>السعال </li><li>ضيق في التنفس</li><li>ارتفاع في درجة حرارة الجسم</li><li>فقدان مفاجئ لحاسة الشم و/أو التذوق (بدون احتقان في الأنف)</li></ul>"
+    },
+    "fy": {
+      "exposure_notification_title": "Do wiest yn 'e buert fan immen mei it koroanafirus",
+      "exposure_notification_body": "Op {ExposureDate} ({ExposureDaysAgo}) bist mooglik besmet rekke. Do wiest dy dei op syn minst 15 minuten ticht by immen mei koroana.\n\nAst yndie besmet bist, kinst it firus oan oaren trochjaan. Ek ast dy no net siik fielst.",
+      "next_steps_title": "Wat kinst no dwaan?",
+      "next_steps_body": "<ul><li>Bliuw oant en mei {StayHomeUntilDate} thús en hâld klachten dy't by koroana passe ekstra goed yn 'e gaten</li><li>Hast (lichte) klachten dy't passe by it koroanafirus? Doch in koroanatest en bliuw thús oant en mei {StayHomeUntilDate}</li><li>Hast earnstige klachten lykas hege koarts of muoite mei sykheljen? Of sitst yn in risikogroep en krigest koarts? Belje earst dyn húsdokter</li></ul>\nJout de GGD dy oan de telefoan oare advizen as de app? Folgje dan it advys fan de GGD.",
+      "stay_home_title": "Bliuw oant en mei {StayHomeUntilDate} thús.",
+      "stay_home_body": "<ul><li>Lit oaren boadskippen dwaan. Kin dat echt net en hast gjin klachten? Dan meist wol efkes nei bûten om boadskippen te dwaan. Hâld 1,5 meter ôfstân en reitsje nimmen oan.</li><li>Do meist yn 'e tún of op it balkon sitte.</li><li>Skoalgeande bern ûnder de 18 jier meie nei skoalle en/of sporte.</li></ul>",
+      "no_visitors_title": "Untfang gjin besite",
+      "no_visitors_body": "Allinne de minsken dy't by dy wenje, meie by dy yn 'e hûs wêze. Bliuw byinoar út 'e buert en hâld 1,5 meter ôfstân. Dus net oankrûpe, net tútsje en gjin seks.",
+      "medical_help_title": "Medyske help nedich?",
+      "medical_help_body": "<ul><li>Gean net nei de húsdokter of it sikehûs, mar belje earst mei dyn húsdokter. Fertel datst yn 'e buert fan immen, dy't it koroanafirus hat, west hast.</li><li>Dyn húsdokter of oare medyske help mei wol by dy lânskomme.</li></ul>",
+      "after_stay_home_title": "Nei {StayHomeUntilDate}",
+      "after_stay_home_body": "Hast oant en mei {StayHomeUntilDate} gjin klachten krige? Dan hoechst net mear thús te bliuwen. Hâld wol de algemiene regels tsjin koroana yn acht.",
+      "symptoms_title": "Klachten dy't by it koroanafirus passe",
+      "symptoms_body": "<ul><li>ferkâldheidsklachten lykas noasferkâldheid, dripnoas, prûste, seare kiel</li><li>hoastje</li><li>benaudens</li><li>ferheging of koarts</li><li>ynienen gjin rook en/of smaak mear hawwe (sûnder dat de noas ferstoppe is)</li></ul>"
+    },
+    "es": {
+      "exposure_notification_title": "Has estado cerca de alguien con coronavirus",
+      "exposure_notification_body": "El {ExposureDate} ({ExposureDaysAgo}) corriste riesgo de contagio. Estuviste ese día al menos 15 minutos cerca de alguien con coronavirus.\n\nSi estás realmente contagiado, puedes transmitir el virus a otros, incluso aunque no te sientas mal ahora.",
+      "next_steps_title": "¿Qué puedo hacer ahora?",
+      "next_steps_body": "<ul><li>Quédate en casa hasta el {StayHomeUntilDate} y estate atento para ver si muestras síntomas relacionados con el coronavirus</li><li>¿Muestras síntomas, aunque sean leves, relacionados con el coronavirus? Hazte un test y quédate en casa hasta el {StayHomeUntilDate}</li><li>¿Muestras síntomas graves, como fiebre alta o problemas de respiración, o formas parte de un grupo de riesgo y tienes fiebre? Llama primero a tu médico de cabecera</li></ul>\n¿El GGD (servicio de salud municipal) te ha dado recomendaciones que difieren con las de la app? En ese caso, sigue las recomendaciones del GGD.",
+      "stay_home_title": "Quédate en casas hasta el {StayHomeUntilDate}",
+      "stay_home_body": "<ul><li>Deja que te hagan la compra otras personas. ¿Realmente no puedes y no muestras síntomas? Entonces puedes salir afuera para hacer la compra. Mantén una distancia de 1,5 metros y no toques a nadie.</li><li>Puedes estar en tu jardín o balcón.</li><li>Los escolares menores de 18 años pueden ir al colegio o hacer deporte.</li></ul>",
+      "no_visitors_title": "No recibas ninguna visita",
+      "no_visitors_body": "Solo las personas que vivan contigo pueden estar juntas contigo en la casa. No os acerquéis y mantened una distancia de 1,5 metros. Es decir, no os deis abrazos ni besos ni tengáis sexo.",
+      "medical_help_title": "¿Necesitas asistencia médica?",
+      "medical_help_body": "<ul><li>No vayas al médico de cabecera ni al hospital; llama primero a tu médico de cabecera. Cuéntale que has estado cerca de alguien que tiene el coronavirus.</li><li>Tu médico de cabecera u otro servicio de asistencia médica pueden venir a verte.</li></ul>",
+      "after_stay_home_title": "Después del {StayHomeUntilDate}",
+      "after_stay_home_body": "¿No has mostrado ningún síntoma hasta el {StayHomeUntilDate}? Entonces ya no tienes que quedarte en casa. Aun así, no te olvides de seguir respetando las medidas generales contra el coronavirus.",
+      "symptoms_title": "Síntomas relacionados con el coronavirus",
+      "symptoms_body": "<ul><li>síntomas de resfriado como congestión nasal, moqueo, estornudos, dolor de garganta</li><li>tos</li><li>problemas respiratorios</li><li>fiebre</li><li>una pérdida súbita del olfato o el gusto (sin congestión nasal)</li></ul>"
+    },
+    "bg": {
+      "exposure_notification_title": "Бил си близо до някой с коронавирус",
+      "exposure_notification_body": "На {ExposureDate} ({ExposureDaysAgo}) може би си се заразил. На този ден най-малко 15 минути си бил близо до човек с коронавирус.\n\nАко наистина си заразен, може да предадеш вируса на други хора. Дори сега да не се чувстваш болен.",
+      "next_steps_title": "Какво можеш да направиш сега?",
+      "next_steps_body": "<ul><li>Остани си вкъщи до {StayHomeUntilDate} и следи много внимателно за симптоми, които може да са характерни за коронавирус</li><li>Имаш (леки) оплаквания, които са характерни за коронавируса? Направи си тест за коронавирус и си остани вкъщи до {StayHomeUntilDate}</li><li>Имаш сериозни оплаквания като висока температура или затруднено дишане? Или се намираш в рискова група и си вдигнал температура? Обади се първо на личния си лекар</li></ul>\nАко Общинската здравна инспекция (GGD) ти дава по телефона различни съвети от приложението, тогава следвай съветите на GGD.",
+      "stay_home_title": "Остани си вкъщи до {StayHomeUntilDate} включително",
+      "stay_home_body": "<ul><li>Остави други хора да ти пазаруват. Ако наистина не може и нямаш оплаквания, може да излезеш за малко, за да напазаруваш. Спазвай дистанция от 1,5 метра и не докосвай никого.</li><li>Може да седиш в градината или на балкона.</li><li>Деца в училищна възраст до 18 г. може да ходят на училище и/или да спортуват.</li></ul>",
+      "no_visitors_title": "Не приемай гости",
+      "no_visitors_body": "Само хората, с които живееш, може да са в жилището заедно с теб. Не се събирайте на едно място и спазвайте дистанция от 1,5 метра. Тоест, без гушкане, целувки и секс.",
+      "medical_help_title": "Необходима ти е медицинска помощ?",
+      "medical_help_body": "<ul><li>Не ходи при личния лекар или в болницата, а първо се обади по телефона на личния си лекар. Кажи, че си бил при някой, който има коронавирус.</li><li>Позволено е на личния ти лекар или на друго медицинско лице да дойде при теб.</li></ul>",
+      "after_stay_home_title": "След {StayHomeUntilDate}",
+      "after_stay_home_body": "Ако до {StayHomeUntilDate} включително не си получил оплаквания, няма нужда повече да си стоиш вкъщи. Все пак продължи да спазваш общите правила срещу коронавирус.",
+      "symptoms_title": "Оплаквания, характерни за коронавируса",
+      "symptoms_body": "<ul><li>настинка като хрема, течащ нос, кихане, болки в гърлото</li><li>кашлица</li><li>задух</li><li>повишена температура или треска</li><li>внезапна загуба на обоняние и/или вкус (без запушен нос)</li></ul>"
+    }
+  },
+  "guidance": {
+    "quarantineDays": 10,
+    "layout": [
+      {
+        "title": "exposure_notification_title",
+        "body": "exposure_notification_body",
+        "type": "paragraph"
+      },
+      {
+        "title": "next_steps_title",
+        "body": "next_steps_body",
+        "type": "paragraph"
+      },
+      {
+        "title": "stay_home_title",
+        "body": "stay_home_body",
+        "type": "paragraph"
+      },
+      {
+        "title": "no_visitors_title",
+        "body": "no_visitors_body",
+        "type": "paragraph"
+      },
+      {
+        "title": "medical_help_title",
+        "body": "medical_help_body",
+        "type": "paragraph"
+      },
+      {
+        "title": "after_stay_home_title",
+        "body": "after_stay_home_body",
+        "type": "paragraph"
+      },
+      {
+        "title": "symptoms_title",
+        "body": "symptoms_body",
+        "type": "paragraph"
+      }
+    ]
+  }
+}

@@ -9,7 +9,9 @@ package nl.rijksoverheid.en.api
 import android.content.Context
 import android.net.Uri
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import nl.rijksoverheid.en.api.model.ResourceBundle
 import okhttp3.Cache
 import okhttp3.CertificatePinner
 import okhttp3.ConnectionSpec
@@ -24,7 +26,14 @@ private const val SSL_PIN = "sha256/lR7gRvqDMW5nhsCMRPE7TKLq0tJkTWMxQ5HAzHCIfQ0=
 private var okHttpClient: OkHttpClient? = null
 
 internal fun createMoshi() =
-    Moshi.Builder().add(Base64Adapter()).add(KotlinJsonAdapterFactory()).build()
+    Moshi.Builder()
+        .add(
+            PolymorphicJsonAdapterFactory.of(ResourceBundle.Guidance.Element::class.java, "type")
+                .withSubtype(ResourceBundle.Guidance.Element.Paragraph::class.java, "paragraph")
+                .withDefaultValue(ResourceBundle.Guidance.Element.Unknown)
+        )
+        .add(Base64Adapter())
+        .add(KotlinJsonAdapterFactory()).build()
 
 internal fun createOkHttpClient(context: Context, appVersionCode: Int): OkHttpClient {
     return okHttpClient ?: OkHttpClient.Builder()
@@ -33,6 +42,7 @@ internal fun createOkHttpClient(context: Context, appVersionCode: Int): OkHttpCl
         .apply {
             val cache = Cache(File(context.cacheDir, "http"), 32 * 1024 * 1024)
             cache(cache)
+            addInterceptor(CacheStrategyInterceptor())
             addNetworkInterceptor(CacheOverrideInterceptor())
             addNetworkInterceptor(SignedResponseInterceptor())
             addInterceptor(PaddedRequestInterceptor())

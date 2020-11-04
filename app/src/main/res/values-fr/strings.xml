@@ -58,14 +58,6 @@
     <string name="sync_issue_notification_title">Problème technique</string>
     <string name="sync_issue_notification_message">L\'application n\'a pas pu vérifier pendant 24 heures si les personnes que vous avez rencontrées se sont avérées avoir le Covid-19 par la suite.</string>
     <string name="post_notification_toolbar_title">Risque de contamination</string>
-    <string name="post_notification_header_1">Vous étiez à proximité de quelqu\'un qui a le Covid-19</string>
-    <string name="post_notification_paragraph_2">Vous étiez, le %2$s (%1$s), à proximité de quelqu\'un qui, par la suite, s\'est avéré avoir le Covid-19. Lors de cette situation, vous avez probablement couru un plus grand risque d’être contaminé(e). \n\nSi vous avez effectivement été contaminé(e), vous pouvez transmettre le virus aux personnes autour de vous, même si vous n\'avez aucun symptôme pour l\'instant.</string>
-    <string name="post_notification_header_3">Que pouvez-vous faire ?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>Restez chez vous jusqu\'au %1$s et faites très attention aux symptômes qui pourraient correspondre à ceux du Covid-19</li>,<li>Vous avez des (légers) symptômes qui correspondent à ceux du Covid-19 ? Faites un test de dépistage et restez chez vous jusqu\'au %1$s</li><li>inclus. Vous avez de graves symptômes comme une forte fièvre ou des difficultés à respirer ? Ou vous faites partie d\'un groupe à risques et vous avez de la fièvre ? Appelez d\'abord votre médecin traitant</li></ul>]]></string>
-    <string name="post_notification_header_6">Faites un test de dépistage du Covid-19</string>
-    <string name="post_notification_paragraph_7">Même si vous n\'avez aucun symptôme, car sans symptôme, vous pouvez quand même transmettre le Covid-19 et contaminer les personnes autour de vous.</string>
-    <string name="post_notification_paragraph_8">"Faites le test gratuitement. Il ne dure pas longtemps et vous pouvez généralement fixer un rendez-vous rapidement. Le résultat est connu dans les 48 heures. Restez chez vous jusqu'à la communication du résultat."</string>
-    <string name="post_notification_paragraph_9">Appelez gratuitement le <b>%1$s</b> pour demander à faire un test de dépistage du Covid-19.</string>
     <string name="post_notification_message">Gardez votre numéro national (BSN) à portée de main. Celui-ci figure sur votre passeport ou carte d\'identité.</string>
     <string name="post_notification_button">Demandez à faire un test de dépistage du Covid-19</string>
     <string name="generic_notification_toolbar_title">Recevoir une notification</string>
@@ -230,16 +222,6 @@
     <string name="faq_interoperability_paragraph_3">Dans le futur, vous pourrez probablement continuer à utiliser l\'application de votre pays et vous ne devrez plus changer tous les jours.</string>
     <string name="cross_links_header">Lire aussi</string>
     <string name="request_test_header_5">Demander à faire un test de dépistage du Covid-19</string>
-    <string name="post_notification_guidance_follow_ggd">Au téléphone, le GGD vous donne d\'autres conseils que ceux de l\'application ? Suivez alors les conseils du GGD.</string>
-    <string name="post_notification_stay_home_header">Restez chez vous jusqu\'au %1$s</string>
-    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Faites faire vos courses par d\'autres personnes. Si ce n\'est vraiment pas possible et que vous n\'avez aucun symptôme, vous pouvez sortir pour faire vos courses. Veillez à maintenir une distance d\'1,5 mètre et ne touchez personne.</li><li>Vous pouvez vous installer au jardin ou sur le balcon.</li><li>Les écoliers de moins de 18 ans peuvent aller à l\'école et/ou faire du sport.</li></ul>
-]]></string>
-    <string name="post_notification_no_visitors_header">Ne recevez personne.</string>
-    <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>Seules les personnes qui habitent avec vous peuvent se trouver à la maison avec vous. Restez toutefois éloignés les uns des autres et gardez une distance d\'1,5 mètre. Donc pas de câlins, ni de baisers ou de rapports sexuels.</li></ul>]]></string>
-    <string name="post_notification_medical_help_list"><![CDATA[<ul><li>N\'allez pas chez le médecin ni à l’hôpital, mais appelez d\'abord votre médecin traitant. Dites-lui que vous avez été en contact avec quelqu\'un qui a le Covid-19.</li><li>votre médecin ou une autre assistance médicale peut passer chez vous.</li></ul>]]></string>
-    <string name="post_notification_medical_help_header">Besoin d\'une assistance médicale ?</string>
-    <string name="post_notification_after_stay_home_header">Après le %1$s</string>
-    <string name="post_notification_after_stay_home_paragraph">Si vous n\'avez pas de symptôme jusqu\'au %1$s, il n\'est plus nécessaire de rester chez vous. Continuez toutefois à suivre les règles générales de lutte contre la diffusion du Covid-19.</string>
     <string name="generic_notification_advice_stay_home">Restez en tous cas chez vous jusqu\'à ce que vous soyez certain(e) de ne pas avoir le Covid-19. Vous évitez ainsi de contaminer sans le savoir ceux qui vous entourent.</string>
     <string name="generic_notification_exposure_summaries">"Vous recevez aussi parfois des notifications qui vous indiquent que votre téléphone effectue des contrôles COVID-19. Bon à savoir : généralement, ce n'est rien de grave."</string>
     <string name="generic_notification_header_3">À quoi ressemble une notification ?</string>

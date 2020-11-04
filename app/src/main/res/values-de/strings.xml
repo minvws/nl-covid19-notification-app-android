@@ -58,14 +58,6 @@
     <string name="sync_issue_notification_title">Technisches Problem</string>
     <string name="sync_issue_notification_message">Die App konnte in den vergangenen 24 Stunden nicht überprüfen, ob Sie Personen begegnet sind, bei denen später Corona festgestellt wurde.</string>
     <string name="post_notification_toolbar_title">Ansteckungsgefahr</string>
-    <string name="post_notification_header_1">Sie waren in der Nähe einer Person mit Corona.</string>
-    <string name="post_notification_paragraph_2">Am %2$s (%1$s) sind Sie möglicherweise angesteckt worden. Sie waren an diesem Tag länger als 15 Minuten in der Nähe einer Person, bei der später Corona festgestellt wurde. \n\nWenn Sie tatsächlich Corona haben, können Sie andere mit dem Virus anstecken. Auch wenn Sie sich jetzt nicht krank fühlen.</string>
-    <string name="post_notification_header_3">Was können Sie jetzt tun?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>Bleiben Sie bis einschließlich %1$s zu Hause und achten Sie genau auf Beschwerden, die zu Corona passen können.</li><li>Haben Sie (leichte) Beschwerden, die zu Corona passen? Machen Sie einen Coronatest und bleiben Sie bis einschließlich %1$s zu Hause.</li><li>Haben Sie ernste Beschwerden, wie hohes Fieber oder Atembeschwerden? Oder gehören Sie zu einer Risikogruppe und bekommen Fieber? Rufen Sie dann zuerst Ihren Hausarzt an.</li></ul>]]></string>
-    <string name="post_notification_header_6">Machen Sie einen Coronatest</string>
-    <string name="post_notification_paragraph_7">Auch wenn Sie sich nicht krank fühlen. Denn auch dann können Sie das Coronavirus schon übertragen und andere anstecken.</string>
-    <string name="post_notification_paragraph_8">"Lassen Sie sich kostenlos testen. Es dauert nicht lange und Sie können meistens schnell einen Termin vereinbaren. Das Ergebnis ist innerhalb von 48 Stunden bekannt. Bleiben Sie zu Hause, bis Sie das Ergebnis haben."</string>
-    <string name="post_notification_paragraph_9">Rufen Sie kostenlos <b>%1$s</b> an, um einen Coronatest anzufordern.</string>
     <string name="post_notification_message">Sie brauchen dazu Ihre Bürgerservicenummer. Diese steht auf Ihrem Pass oder Personalausweis.</string>
     <string name="post_notification_button">Coronatest anfordern</string>
     <string name="generic_notification_toolbar_title">Nachricht erhalten</string>
@@ -229,15 +221,6 @@
     <string name="faq_interoperability_paragraph_3">In Zukunft können Sie wahrscheinlich die App Ihres eigenen Landes weiterhin nutzen und müssen nicht mehr täglich wechseln.</string>
     <string name="cross_links_header">Lesen Sie auch</string>
     <string name="request_test_header_5">Coronatest anfordern</string>
-    <string name="post_notification_guidance_follow_ggd">Gibt Ihnen der GGD andere Anweisungen per Telefon als die App? Befolgen Sie dann die Anweisungen des GGD.</string>
-    <string name="post_notification_stay_home_header">Bleiben Sie bis einschließlich %1$s zu Hause.</string>
-    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Lassen Sie Ihre Einkäufe von anderen erledigen. Ist dies wirklich nicht möglich und haben Sie keine Beschwerden? Dann können Sie für kurze Zeit das Haus verlassen, um einzukaufen. Halten Sie einen Abstand von 1,5 Metern ein und berühren Sie niemanden.</li><li> Sie dürfen im Garten oder auf dem Balkon sitzen.</li><li>Schulkinder unter 18 Jahren dürfen in die Schule und/oder zum Sport.</li></ul>]]></string>
-    <string name="post_notification_no_visitors_header">Empfangen Sie keinen Besuch.</string>
-    <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>Es dürfen nur Personen, die bei Ihnen wohnen, in Ihrer Wohnung sein. Bleiben Sie sich fern und halten Sie 1,5 Meter abstand. Also keine Umarmungen, keine Küsse und kein Sex.</li></ul>]]></string>
-    <string name="post_notification_medical_help_list"><![CDATA[<ul><li>Gehen Sie nicht zu Ihrem Hausarzt oder ins Krankenhaus, sondern rufen Sie zuerst Ihren Hausarzt an. </li><li>Erzählen Sie Ihrem Arzt, dass Sie Kontakt zu jemandem hatten, der das Coronavirus hat. Ihr Hausarzt oder medizinisches Personal darf Sie zu Hause besuchen.</li></ul>]]></string>
-    <string name="post_notification_medical_help_header">Brauchen Sie medizinische Hilfe?</string>
-    <string name="post_notification_after_stay_home_header">Ab dem %1$s</string>
-    <string name="post_notification_after_stay_home_paragraph">Haben Sie bis einschließlich %1$s keine Symptome bekommen? Dann brauchen Sie nicht mehr zu Hause zu bleiben. Halten Sie aber weiter die allgemeine Corona-Verhaltensregeln ein.</string>
     <string name="generic_notification_advice_stay_home">Bleiben Sie in jedem Fall zu Hause, bis Sie sicher sind, dass Sie keine Corona haben. So vermeiden Sie, dass Sie unbewusst andere Menschen anstecken.</string>
     <string name="generic_notification_exposure_summaries">"Manchmal erhalten Sie Nachrichten, in denen steht, dass Ihr Smartphone COVID-19-Überprüfungen ausführt. Öffnen Sie dann den CoronaMelder. Gut zu wissen: Meistens ist alles in Ordnung.
 "</string>

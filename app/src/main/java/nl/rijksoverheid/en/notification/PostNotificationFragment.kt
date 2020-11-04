@@ -10,38 +10,27 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
-import nl.rijksoverheid.en.util.formatDaysSince
-import nl.rijksoverheid.en.util.formatExposureDate
-import nl.rijksoverheid.en.util.formatExposureDateShort
-import java.time.Clock
 import java.time.LocalDate
 
-class PostNotificationFragment(
-    private val clock: Clock = Clock.systemDefaultZone()
-) : BaseFragment(R.layout.fragment_list_with_button) {
+class PostNotificationFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val args: PostNotificationFragmentArgs by navArgs()
 
+    private val viewModel: PostNotificationViewModel by viewModels()
     private val adapter = GroupAdapter<GroupieViewHolder>()
+    private val section = PostNotificationSection().also {
+        adapter.add(it)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val exposureDate = LocalDate.ofEpochDay(args.epochDayOfLastExposure)
-        val stayHomeDate = exposureDate.plusDays(10)
-
-        adapter.add(
-            PostNotificationSection(
-                daysSince = exposureDate.formatDaysSince(requireContext(), clock),
-                date = exposureDate.formatExposureDate(requireContext()),
-                stayHomeDate = stayHomeDate.formatExposureDateShort(requireContext())
-            )
-        )
+        viewModel.setExposureDate(LocalDate.ofEpochDay(args.epochDayOfLastExposure))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,6 +43,11 @@ class PostNotificationFragment(
             setNavigationContentDescription(R.string.cd_close)
         }
         binding.content.adapter = adapter
+
+        viewModel.guidance.observe(viewLifecycleOwner) {
+            section.setGuidance(it)
+        }
+
         binding.button.apply {
             setText(R.string.post_notification_button)
             setOnClickListener {

@@ -31,6 +31,7 @@ import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.GooglePlayServicesUpToDateChecker
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
+import nl.rijksoverheid.en.resource.ResourceBundleManager
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.util.retry
 
@@ -119,6 +120,13 @@ fun createAppLifecycleManager(context: Context): AppLifecycleManager {
         context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0),
         AppUpdateManagerFactory.create(context)
     ) { NotificationsRepository(context).showAppUpdateNotification() }
+}
+
+fun createResourceBundleManager(context: Context): ResourceBundleManager {
+    return ResourceBundleManager(
+        context,
+        cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE).also { cdnService = it }
+    )
 }
 
 @Suppress("BlockingMethodInNonBlockingContext")
