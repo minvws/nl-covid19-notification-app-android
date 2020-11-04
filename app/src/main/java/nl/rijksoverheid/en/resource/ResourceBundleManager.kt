@@ -29,7 +29,7 @@ class ResourceBundleManager(
 
     private suspend fun loadResourceBundle(): ResourceBundle {
         val bundle = if (resourceBundle == null) {
-            getResourceBundleFromNetwork() ?: loadDefaultResourceBundle()
+            getResourceBundleFromCacheOrNetwork() ?: loadDefaultResourceBundle()
         } else {
             resourceBundle
         }
@@ -43,10 +43,10 @@ class ResourceBundleManager(
         }
     }
 
-    private suspend fun getResourceBundleFromNetwork(): ResourceBundle? {
+    private suspend fun getResourceBundleFromCacheOrNetwork(): ResourceBundle? {
         return try {
             cdnService.getManifest(CacheStrategy.CACHE_FIRST).resourceBundleId?.let {
-                cdnService.getResourceBundle(it)
+                cdnService.getResourceBundle(it, CacheStrategy.CACHE_FIRST)
             }
         } catch (ex: Exception) {
             Timber.w(ex, "Error fetching resource bundle")

@@ -295,7 +295,7 @@ class ResourceBundleManagerTest {
 
         override suspend fun getResourceBundle(
             id: String,
-            cacheStrategy: CacheStrategy
+            cacheStrategy: CacheStrategy?
         ): ResourceBundle = resourceBundle
     }
 }

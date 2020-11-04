@@ -92,7 +92,7 @@ class HowItWorksFragmentTest : BaseInstrumentationTest() {
 
         override suspend fun getResourceBundle(
             id: String,
-            cacheStrategy: CacheStrategy
+            cacheStrategy: CacheStrategy?
         ): ResourceBundle {
             throw IllegalStateException()
         }

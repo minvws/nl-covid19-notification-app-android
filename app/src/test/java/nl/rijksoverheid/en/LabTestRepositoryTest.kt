@@ -84,7 +84,7 @@ class LabTestRepositoryTest {
 
         override suspend fun getResourceBundle(
             id: String,
-            cacheStrategy: CacheStrategy
+            cacheStrategy: CacheStrategy?
         ): ResourceBundle {
             throw java.lang.IllegalStateException()
         }

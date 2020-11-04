@@ -46,7 +46,7 @@ interface CdnService {
     @SignedResponse
     suspend fun getResourceBundle(
         @Path("id") id: String,
-        @Tag cacheStrategy: CacheStrategy = CacheStrategy.CACHE_FIRST
+        @Tag cacheStrategy: CacheStrategy? = null
     ): ResourceBundle
 
     companion object {

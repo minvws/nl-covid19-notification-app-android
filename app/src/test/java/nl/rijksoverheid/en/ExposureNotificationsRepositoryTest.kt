@@ -729,7 +729,7 @@ class ExposureNotificationsRepositoryTest {
 
                 override suspend fun getResourceBundle(
                     id: String,
-                    cacheStrategy: CacheStrategy
+                    cacheStrategy: CacheStrategy?
                 ): ResourceBundle {
                     throw java.lang.IllegalStateException()
                 }
@@ -779,7 +779,7 @@ class ExposureNotificationsRepositoryTest {
 
                 override suspend fun getResourceBundle(
                     id: String,
-                    cacheStrategy: CacheStrategy
+                    cacheStrategy: CacheStrategy?
                 ): ResourceBundle {
                     called.set(true)
                     return ResourceBundle(emptyMap(), ResourceBundle.Guidance(10, emptyList()))
@@ -826,7 +826,7 @@ class ExposureNotificationsRepositoryTest {
 
                 override suspend fun getResourceBundle(
                     id: String,
-                    cacheStrategy: CacheStrategy
+                    cacheStrategy: CacheStrategy?
                 ): ResourceBundle {
                     throw IllegalStateException()
                 }
@@ -931,7 +931,7 @@ class ExposureNotificationsRepositoryTest {
 
                 override suspend fun getResourceBundle(
                     id: String,
-                    cacheStrategy: CacheStrategy
+                    cacheStrategy: CacheStrategy?
                 ): ResourceBundle {
                     throw java.lang.IllegalStateException()
                 }
@@ -992,7 +992,7 @@ class ExposureNotificationsRepositoryTest {
 
                 override suspend fun getResourceBundle(
                     id: String,
-                    cacheStrategy: CacheStrategy
+                    cacheStrategy: CacheStrategy?
                 ): ResourceBundle {
                     throw java.lang.IllegalStateException()
                 }
@@ -1059,7 +1059,7 @@ class ExposureNotificationsRepositoryTest {
 
                     override suspend fun getResourceBundle(
                         id: String,
-                        cacheStrategy: CacheStrategy
+                        cacheStrategy: CacheStrategy?
                     ): ResourceBundle {
                         throw java.lang.IllegalStateException()
                     }
@@ -1131,7 +1131,7 @@ class ExposureNotificationsRepositoryTest {
 
             override suspend fun getResourceBundle(
                 id: String,
-                cacheStrategy: CacheStrategy
+                cacheStrategy: CacheStrategy?
             ): ResourceBundle {
                 throw java.lang.IllegalStateException()
             }
@@ -1180,7 +1180,7 @@ class ExposureNotificationsRepositoryTest {
 
             override suspend fun getResourceBundle(
                 id: String,
-                cacheStrategy: CacheStrategy
+                cacheStrategy: CacheStrategy?
             ): ResourceBundle {
                 throw java.lang.IllegalStateException()
             }
@@ -1483,7 +1483,7 @@ class ExposureNotificationsRepositoryTest {
 
                 override suspend fun getResourceBundle(
                     id: String,
-                    cacheStrategy: CacheStrategy
+                    cacheStrategy: CacheStrategy?
                 ): ResourceBundle {
                     throw java.lang.IllegalStateException()
                 }
@@ -1558,7 +1558,7 @@ class ExposureNotificationsRepositoryTest {
 
                 override suspend fun getResourceBundle(
                     id: String,
-                    cacheStrategy: CacheStrategy
+                    cacheStrategy: CacheStrategy?
                 ): ResourceBundle {
                     throw java.lang.IllegalStateException()
                 }
@@ -1634,7 +1634,7 @@ class ExposureNotificationsRepositoryTest {
 
                     override suspend fun getResourceBundle(
                         id: String,
-                        cacheStrategy: CacheStrategy
+                        cacheStrategy: CacheStrategy?
                     ): ResourceBundle {
                         throw java.lang.IllegalStateException()
                     }
