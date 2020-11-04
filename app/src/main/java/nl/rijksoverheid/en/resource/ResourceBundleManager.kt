@@ -15,11 +15,16 @@ import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.formatExposureDateShort
 import timber.log.Timber
+import java.time.Clock
 import java.time.LocalDate
 
 private const val DEFAULT_LANGUAGE = "en"
 
-class ResourceBundleManager(private val context: Context, private val cdnService: CdnService) {
+class ResourceBundleManager(
+    private val context: Context,
+    private val cdnService: CdnService,
+    private val clock: Clock = Clock.systemDefaultZone()
+) {
     private var resourceBundle: ResourceBundle? = null
 
     private suspend fun loadResourceBundle(): ResourceBundle {
@@ -78,8 +83,9 @@ class ResourceBundleManager(private val context: Context, private val cdnService
         val exposureDateFormatted = exposureDate.formatExposureDate(context)
         val stayHomeUntilDate = exposureDate.plusDays(quarantineDays.toLong())
             .formatExposureDateShort(context)
-        val daysSinceExposure = exposureDate.formatDaysSince(context)
-        return this.replace("{ExposureDate}", exposureDateFormatted)
+        val daysSinceExposure = exposureDate.formatDaysSince(context, clock)
+        return this.replace("\\\n", "\n")
+            .replace("{ExposureDate}", exposureDateFormatted)
             .replace("{ExposureDaysAgo}", daysSinceExposure)
             .replace("{StayHomeUntilDate}", stayHomeUntilDate)
     }
