@@ -45,11 +45,8 @@ class ResourceBundleManager(
 
     private suspend fun getResourceBundleFromNetwork(): ResourceBundle? {
         return try {
-            val manifest = cdnService.getManifest(CacheStrategy.CACHE_FIRST)
-            if (manifest.resourceBundleId != null) {
-                cdnService.getResourceBundle(manifest.resourceBundleId!!)
-            } else {
-                null
+            cdnService.getManifest(CacheStrategy.CACHE_FIRST).resourceBundleId?.let {
+                cdnService.getResourceBundle(it)
             }
         } catch (ex: Exception) {
             Timber.w(ex, "Error fetching resource bundle")
