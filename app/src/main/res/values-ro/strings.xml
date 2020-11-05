@@ -201,9 +201,6 @@
     <string name="cd_status_exposed">Cerc roșu cu clopoțel de alarmă care indică faptul că o acțiune este acum necesară</string>
     <string name="cd_error_box">Avertizare</string>
     <string name="cd_info_box">Important</string>
-    <string name="faq_test_phase">Ce înseamnă versiunea de testare și de investigare?</string>
-    <string name="footer_test_phase">Versiunea de testare și de investigare %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">Citiți în continuare</string>
     <string name="onboarding_privacy_policy_headline">Cum folosește CoronaMelder datele dvs.</string>
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[În  <a href="">declarația de confidențialitate</a> se menționează cum folosește CoronaMelder datele dvs. Cele mai importante puncte sunt:]]></string>
     <string name="onboarding_privacy_policy_check_1">Aplicația transmite date Bluetooth criptate.</string>

@@ -29,7 +29,7 @@ android {
         versionName version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resConfigs "nl", "en", "de", "pl", "ro", "tr", "fr", "es", "bg", "ar"
+        resConfigs "nl", "en", "de", "pl", "ro", "tr", "fr", "es", "bg", "ar", "fy"
 
         buildConfigField "boolean", "FEATURE_LOGGING", "false"
         buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "false"

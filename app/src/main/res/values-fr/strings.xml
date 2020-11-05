@@ -199,9 +199,6 @@
     <string name="cd_status_exposed">Cercle rouge avec sonnette d\'alarme qui indique qu\'une action est nécessaire</string>
     <string name="cd_error_box">Avertissement</string>
     <string name="cd_info_box">Important</string>
-    <string name="faq_test_phase">Que veut dire version test et analyse ?</string>
-    <string name="footer_test_phase">Version test et analyse %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">En savoir plus</string>
     <string name="onboarding_privacy_policy_headline">Comment CoronaMelder utilise vos données</string>
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[Dans la <a href=""> déclaration de protection de la vie privée</a>, vous verrez comment CoronaMelder utilise vos données. Voici les points essentiels :]]></string>
     <string name="onboarding_privacy_policy_check_1">Votre application diffuse des données Bluetooth cryptées.</string>

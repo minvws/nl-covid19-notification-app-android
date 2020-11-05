@@ -201,9 +201,6 @@
     <string name="cd_status_exposed">Czerwone kółko z dzwonkiem alarmowym oznacza, że konieczne jest podjęcie działań</string>
     <string name="cd_error_box">Ostrzeżenie</string>
     <string name="cd_info_box">Ważne</string>
-    <string name="faq_test_phase">Co oznacza wersja testowa i badawcza?</string>
-    <string name="footer_test_phase">Wersja testowa i badawcza %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">Czytaj więcej</string>
     <string name="onboarding_privacy_policy_headline">W ten sposób CoronaMelder używa Twoich danych</string>
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[W <a href="">oświadczeniu o ochronie prywatności</a>. znajduje się informacja, w jaki sposób CoronaMelder używa Twoich danych. Najważniejsze punkty to:]]></string>
     <string name="onboarding_privacy_policy_check_1">Twoja aplikacja przesyła zaszyfrowane dane Bluetooth.</string>

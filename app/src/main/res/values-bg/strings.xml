@@ -199,9 +199,6 @@
     <string name="cd_status_exposed">Червено кръгче с алармен звънец, който показва, че в момента трябва да се направи нещо</string>
     <string name="cd_error_box">Предупреждение</string>
     <string name="cd_info_box">Важно</string>
-    <string name="faq_test_phase">Какво означава версия за тестване и изследване?</string>
-    <string name="footer_test_phase">Версия за тестване и изследване %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">Повече информация</string>
     <string name="onboarding_privacy_policy_headline">CoronaMelder използва данните ти по следния начин</string>
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[В <a href="">декларацията за поверителност</a> е посочено как CoronaMelder използва данните ти. Това са най-важните неща:]]></string>
     <string name="onboarding_privacy_policy_check_1">Твоето приложение изпраща кодирани Bluetooth данни.</string>

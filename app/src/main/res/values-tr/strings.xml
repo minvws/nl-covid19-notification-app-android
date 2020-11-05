@@ -199,9 +199,6 @@
     <string name="cd_status_exposed">Eyleme geçmenin gerekli olduğunu gösteren alarm zilli kırmızı daire</string>
     <string name="cd_error_box">Uyarı</string>
     <string name="cd_info_box">Önemli</string>
-    <string name="faq_test_phase">Test ve araştırma versiyonu ne anlama gelir?</string>
-    <string name="footer_test_phase">Test ve araştırma versiyonu %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">Daha fazlasını oku</string>
     <string name="onboarding_privacy_policy_headline">CoronaMelder verilerinizi böyle kullanır</string>
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[<a href="">Gizlilik bildiriminde</a>, CoronaMelder\'ın verilerinizi nasıl kullandığı yazılıdır. Önemli noktalar şunlardır:]]></string>
     <string name="onboarding_privacy_policy_check_1">Uygulamanız şifrelenmiş Bluetooth verileri yayınlar.</string>

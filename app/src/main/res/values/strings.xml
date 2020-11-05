@@ -199,9 +199,6 @@
     <string name="cd_status_exposed">Red circle with alarm bell that shows you need to take action immediately</string>
     <string name="cd_error_box">Warning</string>
     <string name="cd_info_box">Important</string>
-    <string name="faq_test_phase">What does test and research version mean?</string>
-    <string name="footer_test_phase">Test and research version %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">Read more</string>
     <string name="onboarding_privacy_policy_headline">This is how CoronaMelder uses your data</string>
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[Read the <a href="">privacy statement</a> to learn how CoronaMelder uses your data. These are the most important points:]]></string>
     <string name="onboarding_privacy_policy_check_1">Your app sends out encrypted Bluetooth data.</string>
