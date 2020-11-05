@@ -37,7 +37,7 @@
     <string name="status_no_exposure_detected_headline">De app is aktyf</string>
     <string name="status_no_exposure_detected_description">Moetings wurde byhâlden, ek ast de app slútst.</string>
     <string name="status_exposure_detected_headline">Do wiest yn \'e buert fan immen mei koroana.</string>
-    <string name="status_exposure_detected_description">Op%1$s(%2$s) bisto mooglik besmet rekke.</string>
+    <string name="status_exposure_detected_description">Op %1$s (%2$s) bisto mooglik besmet rekke.</string>
     <string name="status_disabled_headline">De app is net aktyf.</string>
     <string name="status_en_api_disabled_description">%1$s wurket allinne as de needsaaklike ynstellingen oansteane.</string>
     <string name="status_en_api_disabled_enable">App oansette</string>
