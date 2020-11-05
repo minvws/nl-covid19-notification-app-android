@@ -201,9 +201,6 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="cd_status_exposed">Círculo rojo con campana de alerta que indica que hay que reaccionar urgentemente</string>
     <string name="cd_error_box">Aviso</string>
     <string name="cd_info_box">Importante</string>
-    <string name="faq_test_phase">¿Qué significa la versión de prueba e investigación?</string>
-    <string name="footer_test_phase">Versión de prueba e investigación %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">Más información</string>
     <string name="onboarding_privacy_policy_headline">CoronaMelder utiliza así tus datos</string>
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[En la <a href="">declaración de privacidad</a> pone cómo CoronaMelder utiliza tus datos. Estos son los puntos más importantes:]]></string>
     <string name="onboarding_privacy_policy_check_1">La app envía datos de Bluetooth encriptados.</string>

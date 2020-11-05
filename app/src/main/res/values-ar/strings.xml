@@ -205,9 +205,6 @@
     <string name="cd_status_exposed">دائرة حمراء مع جرس الإنذار تشير إلى أنه ينبغي عليك التصرف الآن</string>
     <string name="cd_error_box">تحذير</string>
     <string name="cd_info_box">هام</string>
-    <string name="faq_test_phase">ماذا يعني إصدار الفحص والبحث؟</string>
-    <string name="footer_test_phase">إصدار الفحص والبحث %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">إقرأ المزيد</string>
     <string name="onboarding_privacy_policy_headline">بهذه الطريقة يقوم CoronaMelder باستخدام بياناتك.</string>
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[يتم في<a href=""> بيان حماية الخصوصية </a> توضيح كيفية تعامل CoronaMelder مع بياناتك. النقاط الرئيسية هي:]]></string>
     <string name="onboarding_privacy_policy_check_1">يرسل تطبيقك بيانات بلوتوث مشفرة.</string>

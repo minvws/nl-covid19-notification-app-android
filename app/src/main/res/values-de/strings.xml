@@ -199,9 +199,6 @@
     <string name="cd_status_exposed">Ein roter Kreis mit Alarmglocke gibt an, dass jetzt eine Aktion erforderlich ist.</string>
     <string name="cd_error_box">Warnung</string>
     <string name="cd_info_box">Wichtig</string>
-    <string name="faq_test_phase">Was bedeutet Test- und Untersuchungsversion?</string>
-    <string name="footer_test_phase">Test- und Untersuchungsversion %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">Lesen Sie weiter</string>
     <string name="onboarding_privacy_policy_headline">So verwendet CoronaMelder Ihre Daten</string>
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[In der <a href="">Datenschutzerklärung</a> steht, wie CoronaMelder Ihre Daten verwendet. Das sind die wichtigsten Punkte:]]></string>
     <string name="onboarding_privacy_policy_check_1">Die App sendet verschlüsselte Bluetooth-Daten.</string>
