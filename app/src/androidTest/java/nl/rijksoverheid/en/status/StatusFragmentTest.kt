@@ -29,6 +29,7 @@ import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.announcement.AnnouncementRepository
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
@@ -81,6 +82,8 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
     private val configPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0)
+    private val announcementPreferences = context
+        .getSharedPreferences("${BuildConfig.APPLICATION_ID}.announcement", 0)
 
     private val service = object : CdnService {
         override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
@@ -127,6 +130,9 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             sharedPreferences = configPreferences,
             googlePlayServicesUpToDateChecker = { true }
         ),
+        AnnouncementRepository(announcementPreferences).apply {
+            setHasSeenInteropAnnouncement(true)
+        },
         repository,
         NotificationsRepository(context, clock),
         clock
@@ -207,6 +213,45 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             activityViewModelFactory
         ) {
             onView(withId(R.id.loading)).check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun testInteropAnnouncementInfoState() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val navController = TestNavHostController(context).apply {
+            setGraph(R.navigation.nav_main)
+            setCurrentDestination(R.id.nav_status)
+        }
+
+        val statusViewModel = StatusViewModel(
+            OnboardingRepository(
+                sharedPreferences = configPreferences,
+                googlePlayServicesUpToDateChecker = { true }
+            ),
+            AnnouncementRepository(announcementPreferences).apply {
+                setHasSeenInteropAnnouncement(false)
+            },
+            repository,
+            NotificationsRepository(context, clock),
+            clock
+        )
+
+        withFragment(
+            StatusFragment(
+                factoryProducer = {
+                    object : ViewModelProvider.Factory {
+                        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                            return statusViewModel as T
+                        }
+                    }
+                }
+            ),
+            navController,
+            R.style.AppTheme,
+            activityViewModelFactory
+        ) {
+            onView(withId(R.id.info_box_text)).check(matches(isDisplayed()))
         }
     }
 }

@@ -57,7 +57,6 @@ class StatusSection : Section() {
             }
             infoGroup.update(infoItems)
         }
-        ensureInitialized()
     }
 
     fun showBatteryOptimisationsError(action: () -> Unit) {
