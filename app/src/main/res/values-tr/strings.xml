@@ -101,6 +101,9 @@
     <string name="status_error_action_consent">Uygulamayı açmak</string>
     <string name="status_error_sync_issues">Uygulama, tanıştığınız kişilerin daha sonra Korona olup olmadıklarını 24 saat boyunca kontrol edemedi. Wi-Fi veya mobil verinizin açık olduğundan emin olun ve tekrar deneyin.</string>
     <string name="status_error_action_sync_issues">Tekrar deneyin</string>
+    <string name="status_info_interop_announcement_message">CoronaMelder werkt vanaf 30 november samen met corona-apps uit andere Europese landen.</string>
+    <string name="status_info_action_more_info">Meer informatie</string>
+    <string name="status_info_action_close">Sluiten</string>
     <string name="about_toolbar_title">Uygulama hakkında</string>
     <string name="about_helpdesk_title">Uygulama ile ilgili başka sorunuz mu var?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">0800-1280\'i ücretsiz olarak arayın</string>

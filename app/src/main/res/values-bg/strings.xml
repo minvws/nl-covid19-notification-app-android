@@ -101,6 +101,9 @@
     <string name="status_error_action_consent">Включване на приложението</string>
     <string name="status_error_sync_issues">24 часа приложението не можа да контролира дали при хората, с които си се срещал, по-късно е установен коронавирус. Провери дали са включени wifi или мобилните ти данни и опитай отново.</string>
     <string name="status_error_action_sync_issues">Опитай отново</string>
+    <string name="status_info_interop_announcement_message">CoronaMelder werkt vanaf 30 november samen met corona-apps uit andere Europese landen.</string>
+    <string name="status_info_action_more_info">Meer informatie</string>
+    <string name="status_info_action_close">Sluiten</string>
     <string name="about_toolbar_title">Относно приложението</string>
     <string name="about_helpdesk_title">Друг въпрос относно приложението?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Обади се на безплатен номер 0800-1280</string>

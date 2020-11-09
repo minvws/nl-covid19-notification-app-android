@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+  ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+  ~
+  ~   SPDX-License-Identifier: EUPL-1.2
+  ~
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewState"
+            type="nl.rijksoverheid.en.status.BaseStatusInfoItem.InfoViewState" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/message_box_background"
+        android:backgroundTint="@color/info_surface"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp">
+
+        <ImageView
+            android:id="@+id/info_box_image"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/cd_error_box"
+            android:src="@drawable/ic_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/info_box_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@{viewState.getMessage(context)}"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/info_box_image"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="CoronaMelder werkt vanaf 30 november samen met corona-apps uit andere Europese landen." />
+
+        <Button
+            android:id="@+id/more_info_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Snackbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewState.actionMoreInfo.invoke()}"
+            android:text="@string/status_info_action_more_info"
+            app:layout_constraintTop_toBottomOf="@id/info_box_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/close_button"
+            app:layout_constraintHorizontal_bias="1" />
+
+        <Button
+            android:id="@+id/close_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Snackbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewState.actionClose.invoke()}"
+            android:text="@string/status_info_action_close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/info_box_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

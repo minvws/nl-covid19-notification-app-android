@@ -101,6 +101,9 @@
     <string name="status_error_action_consent">App aanzetten</string>
     <string name="status_error_sync_issues">De app kon 24 uur niet controleren of de mensen die jij hebt ontmoet later corona bleken te hebben. Controleer of je wifi of mobiele data aanstaan en probeer het opnieuw.</string>
     <string name="status_error_action_sync_issues">Probeer opnieuw</string>
+    <string name="status_info_interop_announcement_message">CoronaMelder werkt vanaf 30 november samen met corona-apps uit andere Europese landen.</string>
+    <string name="status_info_action_more_info">Meer informatie</string>
+    <string name="status_info_action_close">Sluiten</string>
     <string name="about_toolbar_title">Over de app</string>
     <string name="about_helpdesk_title">Andere vraag over de app?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Bel gratis 0800-1280</string>

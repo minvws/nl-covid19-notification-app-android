@@ -110,6 +110,21 @@ class StatusFragment @JvmOverloads constructor(
                 is StatusViewModel.ErrorState.ConsentRequired -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
             }
         }
+        statusViewModel.infoState.observe(viewLifecycleOwner) {
+            when (it) {
+                StatusViewModel.InfoState.None -> section.updateInfoState(it)
+                StatusViewModel.InfoState.InteropAnnouncement -> section.updateInfoState(
+                    it,
+                    actionMoreInfo = {
+                        val uri = Uri.parse(getString(R.string.interop_url, getString(R.string.app_language)))
+                        startActivity(Intent(Intent.ACTION_VIEW, uri))
+                    },
+                    actionClose = {
+                        statusViewModel.markInteropAnnouncementAsSeen()
+                    }
+                )
+            }
+        }
     }
 
     override fun onResume() {

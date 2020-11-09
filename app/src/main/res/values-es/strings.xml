@@ -102,6 +102,9 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="status_error_action_consent">Activar la app</string>
     <string name="status_error_sync_issues">La app no ha podido controlar si las personas con las que te has encontrado resultaron tener coronavirus. Comprueba si están activados tu wifi o tus datos y prueba otra vez.</string>
     <string name="status_error_action_sync_issues">Probar otra vez</string>
+    <string name="status_info_interop_announcement_message">CoronaMelder werkt vanaf 30 november samen met corona-apps uit andere Europese landen.</string>
+    <string name="status_info_action_more_info">Meer informatie</string>
+    <string name="status_info_action_close">Sluiten</string>
     <string name="about_toolbar_title">Sobre la app</string>
     <string name="about_helpdesk_title">¿Tienes más preguntas sobre la app?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Llama gratis al 0800-1280</string>

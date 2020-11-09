@@ -9,9 +9,13 @@ package nl.rijksoverheid.en.onboarding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import nl.rijksoverheid.en.announcement.AnnouncementRepository
 import nl.rijksoverheid.en.lifecyle.Event
 
-class OnboardingViewModel(private val repository: OnboardingRepository) : ViewModel() {
+class OnboardingViewModel(
+    private val repository: OnboardingRepository,
+    private val announcementRepository: AnnouncementRepository
+) : ViewModel() {
     val onboardingComplete: LiveData<Event<Unit>> = MutableLiveData()
     val skipConsentConfirmation: LiveData<Event<Unit>> = MutableLiveData()
     val privacyPolicyConsentGiven: LiveData<Boolean> = MutableLiveData(false)
@@ -19,11 +23,13 @@ class OnboardingViewModel(private val repository: OnboardingRepository) : ViewMo
     fun isGooglePlayServicesUpToDate() = repository.isGooglePlayServicesUpToDate()
 
     fun finishOnboarding() {
+        announcementRepository.setHasSeenInteropAnnouncement(true)
         repository.setHasCompletedOnboarding(true)
         (onboardingComplete as MutableLiveData).value = Event(Unit)
     }
 
     fun skipConsent() {
+        announcementRepository.setHasSeenInteropAnnouncement(true)
         (skipConsentConfirmation as MutableLiveData).value = Event(Unit)
     }
 

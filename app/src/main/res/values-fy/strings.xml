@@ -101,6 +101,9 @@
     <string name="status_error_action_consent">App oansette</string>
     <string name="status_error_sync_issues">De app koe 24 oeren net kontrolearje oft de minsken dy\'tsto moete hast letter koroana blieken te hawwen. Kontrolearje oft dyn wifi of mobile data oansteane en besykje it nochris.</string>
     <string name="status_error_action_sync_issues">Besykje it nochris</string>
+    <string name="status_info_interop_announcement_message">CoronaMelder wurket fan 30 novimber ôf gear mei koroana-apps út oare Europeeske lannen.</string>
+    <string name="status_info_action_more_info">Mear ynformaasje</string>
+    <string name="status_info_action_close">Slute</string>
     <string name="about_toolbar_title">Oer de app</string>
     <string name="about_helpdesk_title">Oare fraach oer de app?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Belje fergees 0800-1280</string>

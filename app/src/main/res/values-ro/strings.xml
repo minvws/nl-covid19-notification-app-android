@@ -101,6 +101,9 @@
     <string name="status_error_action_consent">Activare aplicație</string>
     <string name="status_error_sync_issues">În ultimele 24 de ore, aplicația nu a putut să verifice dacă persoanele întâlnite s-au dovedit a fi infectate cu coronavirus. Verificați dacă  WiFi sau datele celulare sunt activate și încercați din nou.</string>
     <string name="status_error_action_sync_issues">Încercați din nou</string>
+    <string name="status_info_interop_announcement_message">CoronaMelder werkt vanaf 30 november samen met corona-apps uit andere Europese landen.</string>
+    <string name="status_info_action_more_info">Meer informatie</string>
+    <string name="status_info_action_close">Sluiten</string>
     <string name="about_toolbar_title">Despre aplicație</string>
     <string name="about_helpdesk_title">Altă întrebare despre aplicație?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Sunați gratuit la 0800-1280</string>
