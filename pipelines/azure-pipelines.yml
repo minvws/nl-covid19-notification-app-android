@@ -26,7 +26,7 @@ stages:
           - task: Cache@2
             displayName: Cache
             inputs:
-              key: gradle | "$(Agent.OS)"
+              key: gradle | gradle/wrapper/gradle-wrapper.jar | "$(Agent.OS)"
               path: $(GRADLE_USER_HOME)
               cacheHitVar: gradle
           - task: Gradle@2
