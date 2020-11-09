@@ -1,0 +1,28 @@
+name: Gradle wrapper update
+
+on: 
+  schedule:
+  - cron: '0 7 * * *'
+  push:
+
+jobs:
+  run-test:
+    env:
+      APP_CENTER_TOKEN: ${{secrets.APP_CENTER_TOKEN}}
+      APP_CENTER_APP: ${{secrets.APP_CENTER_APP}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Validate checksum gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - uses: rahulsom/gradle-up@v0.2.0
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
