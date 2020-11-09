@@ -61,7 +61,7 @@
     <string name="post_notification_message">Houd je burgerservicenummer bij de hand. Dit vind je op je paspoort of identiteitskaart.</string>
     <string name="post_notification_button">Coronatest aanvragen</string>
     <string name="generic_notification_toolbar_title">Melding krijgen</string>
-    <string name="generic_notification_header_1">Wat staat er in een melding?</string>
+    <string name="generic_notification_header_1">Hoe herken ik een melding?</string>
     <string name="generic_notification_paragraph_2">De app stuurt een melding als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben.</string>
     <string name="generic_notification_paragraph_4">De melding verschijnt bij je notificaties. Net als berichten van andere apps. De melding heeft het symbool van CoronaMelder.\n\nHeb je een melding ontvangen? Open dan CoronaMelder. Daar lees je wat je verder kunt doen.</string>
     <string name="generic_notification_alt_text_6">Rood scherm met alarmbel dat aangeeft dat er nu actie nodig is</string>
@@ -85,12 +85,12 @@
     <string name="status_dialog_remove_exposure_message">Weet je zeker dat je deze melding wilt verwijderen? Je kunt de datum daarna niet meer terugvinden in de app. Onthoud deze dus goed.</string>
     <string name="status_dialog_remove_exposure_confirm">Verwijder</string>
     <string name="status_dialog_remove_exposure_cancel">Annuleer</string>
-    <string name="status_info_about_title">Vragen over de app?</string>
+    <string name="status_info_about_title">Vragen over de app</string>
     <string name="status_info_about_subtitle">Bekijk hoe de app werkt en wat dit voor je privacy betekent</string>
     <string name="status_info_share_title">Mensen uitnodigen voor de app</string>
     <string name="status_info_share_subtitle">Deel de app met anderen om samen corona onder controle te krijgen</string>
-    <string name="status_info_notification_title">Wat staat er in een melding?</string>
-    <string name="status_info_notification_subtitle">Lees wat je kunt doen nadat je in de buurt bent geweest van iemand met corona</string>
+    <string name="status_info_notification_title">Hoe herken ik een melding?</string>
+    <string name="status_info_notification_subtitle">Ontdek hoe een melding eruitziet en wat je kunt doen als je er een krijgt</string>
     <string name="status_info_test_title">Coronatest aanvragen</string>
     <string name="status_info_test_subtitle">Ontdek zo snel mogelijk of je zelf besmet bent</string>
     <string name="status_info_lab_title">GGD-sleutel doorgeven</string>
@@ -207,7 +207,7 @@
     <string name="onboarding_privacy_policy_check_4">Je kunt op ieder moment de gegevens van je telefoon verwijderen.</string>
     <string name="onboarding_privacy_policy_consent_label">Ik heb de privacyverklaring gelezen en begrijp hoe CoronaMelder mijn gegevens gebruikt</string>
     <string name="lab_test_how_does_it_work">Hoe werkt dit?</string>
-    <string name="faq_notification_message">Wat staat er in een melding?</string>
+    <string name="faq_notification_message">Hoe herken ik een melding?</string>
     <string name="faq_pause">Kan ik de app pauzeren?</string>
     <string name="faq_pause_paragraph_1"><![CDATA[Ja, dat kan door je bluetooth uit te zetten. Dit doe je via <strong>Instellingen > Verbindingen > Bluetooth</strong>. Als je bluetooth uitzet, wisselt de app geen codes meer uit. Je krijgt hierna elke 24 uur automatisch een herinnering om de app weer aan te zetten.]]></string>
     <string name="faq_pause_paragraph_2">Als je bluetooth aan wilt laten staan, kun je de app ook pauzeren door &lt;strong&gt;Blootstellingsmeldingen gebruiken&lt;/strong&gt; tijdelijk uit te zetten. Dit doe je via de knop hieronder. Ook dan krijg je elke 24 uur automatisch een herinnering om de app weer aan te zetten.</string>
@@ -243,4 +243,8 @@
     <string name="status_error_action_disable_battery_optimisation">Probleem oplossen</string>
     <string name="update_app_headline">Je hebt een verouderde versie van CoronaMelder</string>
     <string name="update_app_description">Update de app op je telefoon om te zorgen dat CoronaMelder goed blijft werken.</string>
+    <string name="status_info_settings_title">Instellingen</string>
+    <string name="status_info_settings_subtitle">Pas je instellingen aan voor het gebruik van mobiele data</string>
+    <string name="settings_wifi_only_title">Alleen codes controleren via wifi</string>
+    <string name="settings_wifi_only_summary">CoronaMelder controleert een paar keer per dag of je in de buurt bent geweest van iemand met corona. Als je mobiele data uitzet, doet de app dit alleen nog als je op wifi zit. Je ontmoetingen worden ook bijgehouden als je geen internetverbinding hebt.</string>
 </resources>

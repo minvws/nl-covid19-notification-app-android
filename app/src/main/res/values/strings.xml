@@ -244,4 +244,8 @@
     <string name="status_error_action_disable_battery_optimisation">Resolve issue</string>
     <string name="update_app_headline">You have an outdated version of CoronaMelder</string>
     <string name="update_app_description">Update the app on your phone to make sure CoronaMelder keeps working correctly.</string>
+    <string name="status_info_settings_title">Instellingen</string>
+    <string name="status_info_settings_subtitle">Pas je instellingen aan voor meldingen van corona-apps uit andere landen</string>
+    <string name="settings_wifi_only_title">Alleen codes controleren via wifi</string>
+    <string name="settings_wifi_only_summary">CoronaMelder controleert een paar keer per dag of je in de buurt bent geweest van iemand met corona. Als je mobiele data uitzet, doet de app dit alleen nog als je op wifi zit. Je ontmoetingen worden ook bijgehouden als je geen internetverbinding hebt.</string>
 </resources>

@@ -15,6 +15,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.labtest.LabTestRepository
+import nl.rijksoverheid.en.settings.Settings
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -40,8 +41,11 @@ class DecoyWorker(
 
     companion object {
         fun queue(context: Context, delayMills: Long, replace: Boolean = false) {
+            val settings = Settings(context)
             val request = OneTimeWorkRequestBuilder<DecoyWorker>().setConstraints(
-                Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+                Constraints.Builder()
+                    .setRequiredNetworkType(if (settings.checkOnWifiOnly) NetworkType.UNMETERED else NetworkType.CONNECTED)
+                    .build()
             ).apply {
                 setInitialDelay(delayMills, TimeUnit.MILLISECONDS)
             }

@@ -114,8 +114,8 @@ class ExposureNotificationsRepository(
                 // reset the timer
                 putLong(KEY_LAST_KEYS_PROCESSED, clock.millis())
             }
-            val interval = appConfigManager.getCachedConfigOrDefault().updatePeriodMinutes
-            manifestWorkerScheduler.schedule(interval)
+
+            scheduleBackgroundJobs()
 
             if (isBluetoothEnabled() && isLocationPreconditionSatisfied()) {
                 statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
@@ -124,6 +124,20 @@ class ExposureNotificationsRepository(
             }
         }
         return result
+    }
+
+    private suspend fun scheduleBackgroundJobs() {
+        val interval = appConfigManager.getCachedConfigOrDefault().updatePeriodMinutes
+        manifestWorkerScheduler.schedule(interval)
+    }
+
+    suspend fun rescheduleBackgroundJobs() {
+        // use as a proxy for background work being enabled
+        if (preferences.contains(KEY_LAST_KEYS_PROCESSED)) {
+            Timber.d("Rescheduling background jobs")
+            manifestWorkerScheduler.cancel()
+            scheduleBackgroundJobs()
+        }
     }
 
     suspend fun resetLastKeysProcessed() {

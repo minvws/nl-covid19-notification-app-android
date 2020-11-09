@@ -111,6 +111,12 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
         }
     }
 
+    fun rescheduleBackgroundJobs() {
+        viewModelScope.launch {
+            repository.rescheduleBackgroundJobs()
+        }
+    }
+
     sealed class NotificationsState {
         object Enabled : NotificationsState()
         object InvalidPreconditions : NotificationsState()

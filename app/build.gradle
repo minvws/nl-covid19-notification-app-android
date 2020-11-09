@@ -191,6 +191,8 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$androidx_work_version"
     implementation "androidx.security:security-crypto:1.0.0-rc03"
 
+    implementation "androidx.preference:preference-ktx:1.1.1"
+
     implementation "androidx.navigation:navigation-fragment-ktx:$androidx_nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$androidx_nav_version"
 

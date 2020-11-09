@@ -80,9 +80,10 @@ class StatusSection : Section() {
                     Section(
                         listOf(
                             StatusActionItem.About,
-                            StatusActionItem.Share,
+                            StatusActionItem.Settings,
                             StatusActionItem.GenericNotification,
                             StatusActionItem.RequestTest,
+                            StatusActionItem.Share,
                             StatusActionItem.LabTest
                         )
                     )
