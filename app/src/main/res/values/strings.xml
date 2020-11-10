@@ -244,4 +244,5 @@
     <string name="status_error_action_disable_battery_optimisation">Resolve issue</string>
     <string name="update_app_headline">You have an outdated version of CoronaMelder</string>
     <string name="update_app_description">Update the app on your phone to make sure CoronaMelder keeps working correctly.</string>
+    <string name="faq_interop_countries">Met welke buitenlandse apps werkt CoronaMelder samen?</string>
 </resources>
