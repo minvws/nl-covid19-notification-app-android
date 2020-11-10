@@ -26,7 +26,6 @@ class OnboardingViewModel(
     }
 
     fun skipConsent() {
-        repository.setHasSeenLatestTerms()
         (skipConsentConfirmation as MutableLiveData).value = Event(Unit)
     }
 
