@@ -33,7 +33,6 @@ import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.announcement.AnnouncementRepository
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
@@ -78,8 +77,6 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
     private val configPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0)
-    private val announcementPreferences = context
-        .getSharedPreferences("${BuildConfig.APPLICATION_ID}.announcement", 0)
 
     @Rule @JvmField
     val localeTestRule = LocaleTestRule()
@@ -153,10 +150,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         OnboardingRepository(
             sharedPreferences = configPreferences,
             googlePlayServicesUpToDateChecker = { true }
-        ),
-        AnnouncementRepository(announcementPreferences).apply {
-            setHasSeenInteropAnnouncement(true)
-        },
+        ).apply { setHasSeenLatestTerms() },
         repository,
         NotificationsRepository(context, clock),
         clock

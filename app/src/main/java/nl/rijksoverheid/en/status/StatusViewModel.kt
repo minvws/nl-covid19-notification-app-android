@@ -6,8 +6,6 @@
  */
 package nl.rijksoverheid.en.status
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -17,7 +15,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.ExposureNotificationsRepository
-import nl.rijksoverheid.en.announcement.AnnouncementRepository
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
@@ -26,7 +23,6 @@ import java.time.LocalDate
 
 class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
-    private val announcementRepository: AnnouncementRepository,
     private val exposureNotificationsRepository: ExposureNotificationsRepository,
     private val notificationsRepository: NotificationsRepository,
     private val clock: Clock = Clock.systemDefaultZone()
@@ -56,8 +52,7 @@ class StatusViewModel(
         )
     }.asLiveData(viewModelScope.coroutineContext)
 
-    val infoState: LiveData<InfoState> = announcementRepository.hasSeenInteropAnnouncement()
-        .map { if (it) InfoState.None else InfoState.InteropAnnouncement }
+    val hasSeenLatestTerms = onboardingRepository.hasSeenLatestTerms()
         .asLiveData(viewModelScope.coroutineContext)
 
     fun hasCompletedOnboarding(): Boolean {
@@ -100,9 +95,8 @@ class StatusViewModel(
         }
     }
 
-    fun markInteropAnnouncementAsSeen() {
-        announcementRepository.setHasSeenInteropAnnouncement(true)
-        (infoState as MutableLiveData).value = InfoState.None
+    fun setHasSeenLatestTerms() {
+        onboardingRepository.setHasSeenLatestTerms()
     }
 
     sealed class HeaderState {
@@ -116,10 +110,5 @@ class StatusViewModel(
         object ConsentRequired : ErrorState()
         object NotificationsDisabled : ErrorState()
         object SyncIssues : ErrorState()
-    }
-
-    sealed class InfoState {
-        object None : InfoState()
-        object InteropAnnouncement : InfoState()
     }
 }

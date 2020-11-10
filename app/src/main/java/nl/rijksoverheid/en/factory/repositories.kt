@@ -15,7 +15,6 @@ import com.google.android.gms.nearby.Nearby
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
-import nl.rijksoverheid.en.announcement.AnnouncementRepository
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.LabTestService
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
@@ -89,12 +88,6 @@ fun createOnboardingRepository(
     return OnboardingRepository(
         context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.onboarding", 0),
         checker
-    )
-}
-
-fun createAnnouncementRepository(context: Context): AnnouncementRepository {
-    return AnnouncementRepository(
-        context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.announcement", 0),
     )
 }
 

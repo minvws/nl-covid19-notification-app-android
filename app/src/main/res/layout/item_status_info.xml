@@ -14,7 +14,7 @@
 
         <variable
             name="viewState"
-            type="nl.rijksoverheid.en.status.BaseStatusInfoItem.InfoViewState" />
+            type="nl.rijksoverheid.en.status.StatusInfoItem.ViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
             android:id="@+id/info_box_image"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:contentDescription="@string/cd_error_box"
+            android:contentDescription="@string/cd_info_box"
             android:src="@drawable/ic_info"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="@{viewState.getMessage(context)}"
+            android:text="@{viewState.message}"
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/info_box_image"

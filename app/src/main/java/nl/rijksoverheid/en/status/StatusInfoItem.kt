@@ -6,24 +6,27 @@
  */
 package nl.rijksoverheid.en.status
 
-import android.content.Context
+import androidx.annotation.StringRes
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusInfoBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 
-abstract class BaseStatusInfoItem : BaseBindableItem<ItemStatusInfoBinding>() {
+class StatusInfoItem(
+    @StringRes private val message: Int,
+    private val actionMoreInfo: () -> Unit,
+    private val actionClose: () -> Unit
+) : BaseBindableItem<ItemStatusInfoBinding>() {
 
-    abstract class InfoViewState(
+    data class ViewState(
+        @StringRes val message: Int,
         val actionMoreInfo: () -> Unit,
         val actionClose: () -> Unit,
-    ) {
-        abstract fun getMessage(context: Context): String
-    }
-
-    abstract val viewState: InfoViewState
+    )
 
     override fun bind(viewBinding: ItemStatusInfoBinding, position: Int) {
-        viewBinding.viewState = viewState
+        viewBinding.viewState = ViewState(
+            message, actionMoreInfo, actionClose
+        )
     }
 
     override fun getLayout() = R.layout.item_status_info

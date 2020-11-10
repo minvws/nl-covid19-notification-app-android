@@ -10,7 +10,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import nl.rijksoverheid.en.applifecycle.AppLifecycleViewModel
-import nl.rijksoverheid.en.factory.createAnnouncementRepository
 import nl.rijksoverheid.en.factory.createAppConfigManager
 import nl.rijksoverheid.en.factory.createAppLifecycleManager
 import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
@@ -37,12 +36,10 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
                 createAppConfigManager(context)
             ) as T
             OnboardingViewModel::class.java -> OnboardingViewModel(
-                createOnboardingRepository(context),
-                createAnnouncementRepository(context)
+                createOnboardingRepository(context)
             ) as T
             StatusViewModel::class.java -> StatusViewModel(
                 createOnboardingRepository(context),
-                createAnnouncementRepository(context),
                 createExposureNotificationsRepository(context),
                 NotificationsRepository(context)
             ) as T

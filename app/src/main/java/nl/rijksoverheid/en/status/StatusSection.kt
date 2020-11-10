@@ -13,7 +13,6 @@ class StatusSection : Section() {
 
     private var headerState: StatusViewModel.HeaderState? = null
     private var errorState: StatusViewModel.ErrorState = StatusViewModel.ErrorState.None
-    private var infoState: StatusViewModel.InfoState = StatusViewModel.InfoState.None
 
     private val headerGroup = Section()
     private val errorGroup = Section().apply {
@@ -23,7 +22,11 @@ class StatusSection : Section() {
     private val infoGroup = Section().apply {
         setHideWhenEmpty(true)
     }
-    private val infoItems = mutableListOf<Item<*>>()
+    var infoItem: StatusInfoItem? = null
+        set(value) {
+            field = value
+            infoGroup.update(listOfNotNull(value))
+        }
 
     init {
         setPlaceholder(LoadingItem())
@@ -42,21 +45,6 @@ class StatusSection : Section() {
             errorGroup.update(errorItems)
         }
         ensureInitialized()
-    }
-
-    fun updateInfoState(
-        infoState: StatusViewModel.InfoState,
-        actionMoreInfo: () -> Unit = {},
-        actionClose: () -> Unit = {}
-    ) {
-        if (this.infoState != infoState) {
-            this.infoState = infoState
-            infoItems.clear()
-            if (infoState is StatusViewModel.InfoState.InteropAnnouncement) {
-                infoItems.add(0, InteropAnnouncementInfoItem(actionMoreInfo, actionClose))
-            }
-            infoGroup.update(infoItems)
-        }
     }
 
     fun showBatteryOptimisationsError(action: () -> Unit) {

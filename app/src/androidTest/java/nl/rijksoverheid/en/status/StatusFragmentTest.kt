@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.status
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.testing.TestNavHostController
@@ -29,7 +30,6 @@ import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.announcement.AnnouncementRepository
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
@@ -82,8 +82,6 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
     private val configPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0)
-    private val announcementPreferences = context
-        .getSharedPreferences("${BuildConfig.APPLICATION_ID}.announcement", 0)
 
     private val service = object : CdnService {
         override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
@@ -129,10 +127,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         OnboardingRepository(
             sharedPreferences = configPreferences,
             googlePlayServicesUpToDateChecker = { true }
-        ),
-        AnnouncementRepository(announcementPreferences).apply {
-            setHasSeenInteropAnnouncement(true)
-        },
+        ).apply { setHasSeenLatestTerms() },
         repository,
         NotificationsRepository(context, clock),
         clock
@@ -147,6 +142,9 @@ class StatusFragmentTest : BaseInstrumentationTest() {
     @Before
     fun setup() {
         preferencesFactory = { notificationsPreferences }
+        notificationsPreferences.edit {
+            clear()
+        }
     }
 
     @Test
@@ -159,6 +157,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             setGraph(R.navigation.nav_main)
             setCurrentDestination(R.id.nav_status)
         }
+
         withFragment(
             StatusFragment(
                 factoryProducer = {
@@ -224,18 +223,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             setCurrentDestination(R.id.nav_status)
         }
 
-        val statusViewModel = StatusViewModel(
-            OnboardingRepository(
-                sharedPreferences = configPreferences,
-                googlePlayServicesUpToDateChecker = { true }
-            ),
-            AnnouncementRepository(announcementPreferences).apply {
-                setHasSeenInteropAnnouncement(false)
-            },
-            repository,
-            NotificationsRepository(context, clock),
-            clock
-        )
+        configPreferences.edit { remove("terms_version") }
 
         withFragment(
             StatusFragment(
