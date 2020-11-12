@@ -20,7 +20,8 @@ class ResourceBundle(
 ) {
     @JsonClass(generateAdapter = true)
     class Guidance(
-        @Json(name = "quarantineDays") val quarantineDays: Int,
+        @Deprecated("Removed in v3 endpoint. Kept for compatibility will be removed in a future release")
+        @Json(name = "quarantineDays") val quarantineDays: Int = 10,
         val layout: List<Element>
     ) {
         sealed class Element {
