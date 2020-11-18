@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.Application
 import android.app.PendingIntent
 import android.content.Intent
@@ -84,7 +85,12 @@ class EnApplication : Application(), Configuration.Provider {
         )
         val pi = PendingIntent.getBroadcast(this, -1, intent, PendingIntent.FLAG_NO_CREATE)
         Timber.d("Pending intent = $pi")
-        pi?.cancel()
+
+        pi?.let {
+            val alarmManager = getSystemService(AlarmManager::class.java)
+            alarmManager?.cancel(it)
+            it.cancel()
+        }
     }
 
     override fun getWorkManagerConfiguration(): Configuration {
