@@ -52,6 +52,9 @@ class StatusViewModel(
         )
     }.asLiveData(viewModelScope.coroutineContext)
 
+    val hasSeenLatestTerms = onboardingRepository.hasSeenLatestTerms()
+        .asLiveData(viewModelScope.coroutineContext)
+
     fun hasCompletedOnboarding(): Boolean {
         return onboardingRepository.hasCompletedOnboarding()
     }
@@ -90,6 +93,10 @@ class StatusViewModel(
         viewModelScope.launch {
             exposureNotificationsRepository.resetLastKeysProcessed()
         }
+    }
+
+    fun setHasSeenLatestTerms() {
+        onboardingRepository.setHasSeenLatestTerms()
     }
 
     sealed class HeaderState {

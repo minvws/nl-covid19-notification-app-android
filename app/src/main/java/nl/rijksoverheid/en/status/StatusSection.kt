@@ -19,6 +19,14 @@ class StatusSection : Section() {
         setHideWhenEmpty(true)
     }
     private val errorItems = mutableListOf<Item<*>>()
+    private val infoGroup = Section().apply {
+        setHideWhenEmpty(true)
+    }
+    var infoItem: StatusInfoItem? = null
+        set(value) {
+            field = value
+            infoGroup.update(listOfNotNull(value))
+        }
 
     init {
         setPlaceholder(LoadingItem())
@@ -76,7 +84,7 @@ class StatusSection : Section() {
         if (isEmpty) {
             addAll(
                 listOf(
-                    headerGroup, errorGroup,
+                    headerGroup, errorGroup, infoGroup,
                     Section(
                         listOf(
                             StatusActionItem.About,

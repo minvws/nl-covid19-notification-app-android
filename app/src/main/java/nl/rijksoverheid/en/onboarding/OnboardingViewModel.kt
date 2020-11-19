@@ -11,7 +11,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import nl.rijksoverheid.en.lifecyle.Event
 
-class OnboardingViewModel(private val repository: OnboardingRepository) : ViewModel() {
+class OnboardingViewModel(
+    private val repository: OnboardingRepository
+) : ViewModel() {
     val onboardingComplete: LiveData<Event<Unit>> = MutableLiveData()
     val skipConsentConfirmation: LiveData<Event<Unit>> = MutableLiveData()
     val privacyPolicyConsentGiven: LiveData<Boolean> = MutableLiveData(false)
