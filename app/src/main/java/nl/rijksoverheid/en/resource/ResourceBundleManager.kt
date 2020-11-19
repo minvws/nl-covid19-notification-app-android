@@ -77,13 +77,32 @@ class ResourceBundleManager(
     }
 
     private fun String.replacePlaceHolders(exposureDate: LocalDate, quarantineDays: Int): String {
-        val exposureDateFormatted = exposureDate.formatExposureDate(context)
+        // no longer used in v3 endpoint, kept for compatibility for now
         val stayHomeUntilDate = exposureDate.plusDays(quarantineDays.toLong())
             .formatExposureDateShort(context)
         val daysSinceExposure = exposureDate.formatDaysSince(context, clock)
         return this.replace("\\\n", "\n")
-            .replace("{ExposureDate}", exposureDateFormatted)
+            .replaceExposureDateWithOffset(exposureDate, "ExposureDate") {
+                it.formatExposureDate(context)
+            }
+            .replaceExposureDateWithOffset(exposureDate, "ExposureDateShort") {
+                it.formatExposureDateShort(context)
+            }
             .replace("{ExposureDaysAgo}", daysSinceExposure)
             .replace("{StayHomeUntilDate}", stayHomeUntilDate)
+    }
+
+    private fun String.replaceExposureDateWithOffset(
+        exposureDate: LocalDate,
+        token: String,
+        block: (LocalDate) -> String
+    ): String {
+        @Suppress("RegExpRedundantEscape") // crashes on device when not escaping the last '}'
+        val regex = Regex(pattern = "\\{$token(\\+([0-9]+))?\\}")
+        return regex.replace(this) {
+            val days =
+                if (it.groupValues.size >= 2 && it.groupValues[1].isNotEmpty()) it.groupValues[1].toLong() else 0
+            block(exposureDate.plusDays(days))
+        }
     }
 }

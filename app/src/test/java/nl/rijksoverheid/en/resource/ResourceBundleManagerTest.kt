@@ -97,6 +97,80 @@ class ResourceBundleManagerTest {
     }
 
     @Test
+    fun `getExposureNotificationGuidance replaces ExposureDate place holder with offset`() =
+        runBlocking {
+            val service = FakeResourceBundleCdnService(
+                ResourceBundle(
+                    mapOf("en" to mapOf("test_key" to "value with a {ExposureDate+2}")),
+                    ResourceBundle.Guidance(
+                        5,
+                        listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                    )
+                )
+            )
+
+            val resourceBundleManager = ResourceBundleManager(context, service)
+            val date = LocalDate.of(2020, 11, 2)
+
+            val result = resourceBundleManager.getExposureNotificationGuidance(date)
+            val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
+
+            val formattedDate = date.plusDays(2).formatExposureDate(context)
+
+            assertEquals("value with a $formattedDate", paragraph.title)
+            assertEquals("value with a $formattedDate", paragraph.body)
+        }
+
+    @Test
+    fun `getExposureNotificationGuidance replaces ExposureDateShort place holder`() = runBlocking {
+        val service = FakeResourceBundleCdnService(
+            ResourceBundle(
+                mapOf("en" to mapOf("test_key" to "value with a {ExposureDateShort}")),
+                ResourceBundle.Guidance(
+                    5,
+                    listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                )
+            )
+        )
+
+        val resourceBundleManager = ResourceBundleManager(context, service)
+        val date = LocalDate.of(2020, 11, 2)
+
+        val result = resourceBundleManager.getExposureNotificationGuidance(date)
+        val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
+
+        val formattedDate = date.formatExposureDateShort(context)
+
+        assertEquals("value with a $formattedDate", paragraph.title)
+        assertEquals("value with a $formattedDate", paragraph.body)
+    }
+
+    @Test
+    fun `getExposureNotificationGuidance replaces ExposureDateShort place holder with offset`() =
+        runBlocking {
+            val service = FakeResourceBundleCdnService(
+                ResourceBundle(
+                    mapOf("en" to mapOf("test_key" to "value with a {ExposureDateShort+5}")),
+                    ResourceBundle.Guidance(
+                        5,
+                        listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                    )
+                )
+            )
+
+            val resourceBundleManager = ResourceBundleManager(context, service)
+            val date = LocalDate.of(2020, 11, 2)
+
+            val result = resourceBundleManager.getExposureNotificationGuidance(date)
+            val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
+
+            val formattedDate = date.plusDays(5).formatExposureDateShort(context)
+
+            assertEquals("value with a $formattedDate", paragraph.title)
+            assertEquals("value with a $formattedDate", paragraph.body)
+        }
+
+    @Test
     fun `getExposureNotificationGuidance replaces ExposureDaysAgo place holder`() = runBlocking {
         val service = FakeResourceBundleCdnService(
             ResourceBundle(

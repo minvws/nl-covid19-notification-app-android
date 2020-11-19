@@ -211,7 +211,7 @@ class ExposureNotificationsRepositoryTest {
         )
         assertEquals(2, mockWebServer.requestCount)
         assertEquals(ProcessExposureKeysResult.Success, result)
-        assertEquals("/v2/exposurekeyset/test", mockWebServer.takeRequest().path)
+        assertEquals("/v3/exposurekeyset/test", mockWebServer.takeRequest().path)
         assertEquals(setOf("test"), sharedPrefs.getStringSet("exposure_key_sets", emptySet()))
     }
 
@@ -262,9 +262,9 @@ class ExposureNotificationsRepositoryTest {
         assertEquals(2, mockWebServer.requestCount)
         assertEquals(ProcessExposureKeysResult.Success, result)
 
-        assertEquals("/v2/exposurekeyset/test2", mockWebServer.takeRequest().path)
+        assertEquals("/v3/exposurekeyset/test2", mockWebServer.takeRequest().path)
         assertEquals(
-            "/v2/riskcalculationparameters/config-params",
+            "/v3/riskcalculationparameters/config-params",
             mockWebServer.takeRequest().path
         )
 
@@ -533,13 +533,13 @@ class ExposureNotificationsRepositoryTest {
             mockWebServer.dispatcher = object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
                     return when (request.path) {
-                        "/v2/exposurekeyset/test" -> {
+                        "/v3/exposurekeyset/test" -> {
                             MockResponse().setResponseCode(500)
                         }
-                        "/v2/exposurekeyset/test2" -> {
+                        "/v3/exposurekeyset/test2" -> {
                             MockResponse().setBody("dummy_key_file")
                         }
-                        "/v2/riskcalculationparameters/config-params" -> MOCK_RISK_PARAMS_RESPONSE
+                        "/v3/riskcalculationparameters/config-params" -> MOCK_RISK_PARAMS_RESPONSE
 
                         else -> {
                             MockResponse().setResponseCode(404)
@@ -589,10 +589,10 @@ class ExposureNotificationsRepositoryTest {
             val request2 = mockWebServer.takeRequest()
             val requests = listOf(request1, request2).sortedBy { it.path }
 
-            assertEquals("/v2/exposurekeyset/test", requests[0].path)
-            assertEquals("/v2/exposurekeyset/test2", requests[1].path)
+            assertEquals("/v3/exposurekeyset/test", requests[0].path)
+            assertEquals("/v3/exposurekeyset/test2", requests[1].path)
             assertEquals(
-                "/v2/riskcalculationparameters/config-params",
+                "/v3/riskcalculationparameters/config-params",
                 mockWebServer.takeRequest().path
             )
             assertTrue(processed.get())
