@@ -23,6 +23,7 @@ import nl.rijksoverheid.en.about.FAQItemId.ANONYMOUS
 import nl.rijksoverheid.en.about.FAQItemId.BLUETOOTH
 import nl.rijksoverheid.en.about.FAQItemId.DELETION
 import nl.rijksoverheid.en.about.FAQItemId.INTEROPERABILITY
+import nl.rijksoverheid.en.about.FAQItemId.INTEROP_COUNTRIES
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION_PERMISSION
 import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION
@@ -50,7 +51,7 @@ private val crossLinks = mapOf(
     POWER_USAGE to listOf(LOCATION_PERMISSION, REASON, PAUSE),
     DELETION to listOf(BLUETOOTH, PAUSE),
     PAUSE to listOf(BLUETOOTH, POWER_USAGE, LOCATION),
-    INTEROPERABILITY to listOf(TECHNICAL, NOTIFICATION, LOCATION)
+    INTEROPERABILITY to listOf(INTEROP_COUNTRIES, TECHNICAL, NOTIFICATION, LOCATION)
 )
 
 class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
@@ -110,11 +111,16 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
                     startActivity(Intent(Intent.ACTION_VIEW, uri))
                 }
                 is FAQItem -> {
-                    enterTransition = exitTransition
-                    findNavController().navigateCatchingErrors(
-                        AboutDetailFragmentDirections.actionAboutDetail(item.id),
-                        FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
-                    )
+                    if (item.id == INTEROP_COUNTRIES) {
+                        val uri = Uri.parse(getString(R.string.interop_countries_url, getString(R.string.app_language)))
+                        startActivity(Intent(Intent.ACTION_VIEW, uri))
+                    } else {
+                        enterTransition = exitTransition
+                        findNavController().navigateCatchingErrors(
+                            AboutDetailFragmentDirections.actionAboutDetail(item.id),
+                            FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+                        )
+                    }
                 }
                 is FAQOnboardingItem -> {
                     enterTransition = exitTransition

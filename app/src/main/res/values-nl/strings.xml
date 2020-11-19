@@ -215,7 +215,9 @@
     <string name="faq_interoperability">Werkt CoronaMelder ook samen met apps uit andere landen?</string>
     <string name="faq_interoperability_paragraph_1">CoronaMelder werkt samen met een aantal apps uit andere Europese landen. Onder andere Duitsland, Ierland en Italië.</string>
     <string name="faq_interoperability_paragraph_2">Stel, je bent langere tijd in de buurt geweest bij een gebruiker van de Duitse Corona-Warn-App. Deze persoon wordt in Duitsland getest en blijkt corona te hebben. Als die persoon zijn codes deelt met de Duitse GGD, dan krijg jij via CoronaMelder een melding. Andersom geldt hetzelfde. Omdat de corona-apps onderling samenwerken, hoef je dus maar één app aan te hebben staan.</string>
-    <string name="faq_interoperability_paragraph_3">CoronaMelder controleert vanaf 30 november 2020 dagelijks de codes van gebruikers uit verschillende landen. Hierdoor verbruikt de app meer mobiele data dan vroeger.   Je kunt via &lt;strong&gt;Instellingen&lt;/strong&gt; op het hoofdscherm instellen dat de app alleen via wifi controleert of je in de buurt bent geweest van iemand met corona.</string>
+    <string name="faq_interoperability_paragraph_3">CoronaMelder controleert vanaf 30 november 2020 dagelijks de codes van gebruikers uit verschillende landen. Hierdoor verbruikt de app meer mobiele data dan vroeger. 
+
+Je kunt via &lt;strong&gt;Instellingen&lt;/strong&gt; op het hoofdscherm instellen dat de app alleen via wifi controleert of je in de buurt bent geweest van iemand met corona.</string>
     <string name="cross_links_header">Lees ook</string>
     <string name="request_test_header_5">Coronatest aanvragen</string>
     <string name="generic_notification_advice_stay_home">Blijf in ieder geval thuis tot je zeker weet dat je geen corona hebt. Zo voorkom je dat je onbewust anderen besmet.</string>
