@@ -10,7 +10,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.commitNow
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import nl.rijksoverheid.en.BaseFragment
@@ -26,12 +25,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val fragment = childFragmentManager.findFragmentById(R.id.settings)
-        if (fragment == null) {
-            childFragmentManager.commitNow {
-                add(R.id.settings, SettingsPreferenceFragment())
-            }
-        }
         PreferenceManager.getDefaultSharedPreferences(requireContext())
             .registerOnSharedPreferenceChangeListener(sharedPreferenceListener)
     }
