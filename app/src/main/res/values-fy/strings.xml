@@ -61,7 +61,7 @@
     <string name="post_notification_message">Hâld dyn boargerservicenûmer by de hân. Dat stiet op dyn paspoart of identiteitskaart.</string>
     <string name="post_notification_button">Koroanatest oanfreegje</string>
     <string name="generic_notification_toolbar_title">Melding krije</string>
-    <string name="generic_notification_header_1">Wat stiet der yn in melding?</string>
+    <string name="generic_notification_header_1">Wêr kin ik in melding oan werkenne?</string>
     <string name="generic_notification_paragraph_2">De app stjoert in melding ast op syn minst 15 minuten tichteby immen west hast dy\'t letter koroana blykt te hawwen.</string>
     <string name="generic_notification_paragraph_4">De melding ferskynt by dyn notifikaasjes. Krekt as berjochten fan oare apps. De melding hat it symboal fan CoronaMelder.\n\nHast in melding krige? Iepenje dan CoronaMelder. Dêr lêst watst fierder dwaan kinst.</string>
     <string name="generic_notification_alt_text_6">Read skerm mei alarmbel dat oanjout dat der no aksje nedich is.</string>
@@ -85,12 +85,12 @@
     <string name="status_dialog_remove_exposure_message">Bist wis datst dizze melding wiskje wolst? Do kinst de datum dêrnei net mear yn de app weromfine. Unthâld dy dus goed.</string>
     <string name="status_dialog_remove_exposure_confirm">Wiskje</string>
     <string name="status_dialog_remove_exposure_cancel">Annulearje</string>
-    <string name="status_info_about_title">Fragen oer de app?</string>
+    <string name="status_info_about_title">Fragen oer de app</string>
     <string name="status_info_about_subtitle">Besjoch hoe\'t de app wurket en wat dat foar dyn privacy betsjut.</string>
     <string name="status_info_share_title">Minsken foar de app útnûgje</string>
     <string name="status_info_share_subtitle">Diel de app mei oaren om mei-inoar koroana ûnder kontrôle te krijen.</string>
-    <string name="status_info_notification_title">Wat stiet der yn in melding?</string>
-    <string name="status_info_notification_subtitle">Lês watst dwaan kinst neidatst yn \'e buert west hast fan immen mei koroana</string>
+    <string name="status_info_notification_title">Wêr kin ik in melding oan werkenne?</string>
+    <string name="status_info_notification_subtitle">Untdek hoe\'t in melding derútsjocht en watst dwaan kinst ast der ien krigest</string>
     <string name="status_info_test_title">Koroanatest oanfreegje</string>
     <string name="status_info_test_subtitle">Untdek sa gau mooglik oftst sels besmet bist.</string>
     <string name="status_info_lab_title">GGD-sleutel trochjaan</string>
@@ -207,7 +207,7 @@
     <string name="onboarding_privacy_policy_check_4">Do kinst op elk momint de gegevens fan dyn telefoan wiskje.</string>
     <string name="onboarding_privacy_policy_consent_label">Ik haw de privacyferklearring lêzen en begryp hoe\'t de CoronaMelder myn gegevens brûkt.</string>
     <string name="lab_test_how_does_it_work">Hoe wurket dat?</string>
-    <string name="faq_notification_message">Wat stiet der yn in melding?</string>
+    <string name="faq_notification_message">Wêr kin ik in melding oan werkenne?</string>
     <string name="faq_pause">Kin ik de app ûnderbrekke?</string>
     <string name="faq_pause_paragraph_1"><![CDATA[Ja dat kin troch dyn bluetooth út te setten. Dat dochst fia <strong>Instellingen > Verbindingen > Bluetooth</strong>. Ast dy bluetooth útsetst, wikselet de app gjin koades mear út. Do krigest dêrnei ien kear yn \'e 24 oeren automatysk in yn it sin bringer om de app wer oan te setten.]]></string>
     <string name="faq_pause_paragraph_2">Ast de bluetooth oanstean litte wolst, kinst de app ek ûnderbrekke troch &lt;strong&gt;Blootstellingsmeldingen gebruiken&lt;/strong&gt; tydlik út te setten. Dat dochst mei de knop hjirûnder. Ek dan krigest ien kear yn \'e 24 oeren automatysk in yn it sin bringer om de app wer oan te setten.</string>
@@ -243,4 +243,12 @@
     <string name="status_error_action_disable_battery_optimisation">Probleem oplosse</string>
     <string name="update_app_headline">Do hast in ferâldere fersy fan CoronaMelder</string>
     <string name="update_app_description">Update de app op dyn telefoan om te soargjen dat CoronaMelder goed wurket.</string>
+    <string name="status_info_settings_title">Ynstellingen</string>
+    <string name="status_info_settings_subtitle">Pas dyn ynstellingen oan foar it gebrûk fan mobile data</string>
+    <string name="settings_wifi_only_title">Allinne koades kontrolearje fia wifi</string>
+    <string name="settings_wifi_only_summary">CoronaMelder kontrolearret in pear kear deis oftst yn de buert west hast fan immen mei koroana. Ast dyn mobile data útsetst, docht de app dat allinne noch ast op wifi sitst. Dyn moetings wurde ek byhâlden ast gjin ynternetferbining hast.</string>
+    <string name="faq_interop_countries">Mei hokker bûtenlânske apps wurket CoronaMelder gear?</string>
+    <string name="status_info_interop_announcement_message">CoronaMelder wurket fan 30 novimber ôf gear mei koroana-apps út oare Europeeske lannen.</string>
+    <string name="status_info_action_more_info">Mear ynformaasje</string>
+    <string name="status_info_action_close">Slute</string>
 </resources>
