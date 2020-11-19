@@ -61,7 +61,7 @@
     <string name="post_notification_message">Țineți numărul de securitate socială olandez (BSN) la îndemână. Acest număr îl găsiți în pașaport sau pe cartea de identitate.</string>
     <string name="post_notification_button">Solicitați testul pentru coronavirus</string>
     <string name="generic_notification_toolbar_title">Primire de notificare</string>
-    <string name="generic_notification_header_1">Ce conține o notificare?</string>
+    <string name="generic_notification_header_1">Cum recunosc o notificare?</string>
     <string name="generic_notification_paragraph_2">Aplicația trimite o notificare dacă ați fost cel puțin 15 minute în apropierea unei persoane care se dovedește ulterior a fi infectată cu coronavirus.</string>
     <string name="generic_notification_paragraph_4">Mesajul apare la notificări, la fel ca mesajele altor aplicații. Mesajul are simbolul aplicației CoronaMelder.\n\nAți primit o notificare? Atunci deschideți CoronaMelder. Veți citi în aplicație ce puteți face mai departe.</string>
     <string name="generic_notification_alt_text_6">Cerc roșu cu clopoțel de alarmă care indică faptul că o acțiune este  necesară acum</string>
@@ -85,12 +85,12 @@
     <string name="status_dialog_remove_exposure_message">Sunteți sigur că doriți să ștergeți această notificare? Nu veți mai putea regăsi data în aplicație. Deci rețineți bine această dată.</string>
     <string name="status_dialog_remove_exposure_confirm">Ștergeți</string>
     <string name="status_dialog_remove_exposure_cancel">Anulați</string>
-    <string name="status_info_about_title">Aveți întrebări despre aplicație?</string>
+    <string name="status_info_about_title">Întrebări despre aplicație</string>
     <string name="status_info_about_subtitle">Vedeți cum funcționează aplicația și ce înseamnă pentru confidențialitatea dvs.</string>
     <string name="status_info_share_title">Invitați alte persoane la folosirea aplicației</string>
     <string name="status_info_share_subtitle">Distribuiți aplicația cât mai multor persoane pentru ca împreună să ținem coronavirus sub control.</string>
-    <string name="status_info_notification_title">Ce  conține o notificare?</string>
-    <string name="status_info_notification_subtitle">Citiți ce puteți face după ce ați fost în apropierea cuiva infectat cu coronavirus</string>
+    <string name="status_info_notification_title">Cum recunosc o notificare?</string>
+    <string name="status_info_notification_subtitle">Aflați cum arată și ce puteți face dacă primiți o notificare.</string>
     <string name="status_info_test_title">Solicitați un test pentru coronavirus</string>
     <string name="status_info_test_subtitle">Aflați repede dacă sunteți infectat</string>
     <string name="status_info_lab_title">Transmiteți cheia GGD</string>
@@ -212,15 +212,15 @@
     <string name="onboarding_privacy_policy_check_4">Puteți șterge datele din telefon în orice moment.</string>
     <string name="onboarding_privacy_policy_consent_label">Am citit și înțeleg cum folosește CoronaMelder datele mele.</string>
     <string name="lab_test_how_does_it_work">Cum funcționează?</string>
-    <string name="faq_notification_message">Ce conține o notificare?</string>
+    <string name="faq_notification_message">Cum arată o notificare?</string>
     <string name="faq_pause">Pot pune aplicația pe pauză?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Da, este posibil dezactivând semnalul Bluetooth. Faceți acest lucru prin <strong>Setări> Conexiuni >Bluetooth</strong>. Dacă dezactivați Bluetooth, aplicația nu va mai face schimb de coduri. Veți primi o reamintire o dată la fiecare 24 de ore pentru a activa aplicația din nou.]]></string>
-    <string name="faq_pause_paragraph_2">Dacă doriți să lăsați Bluetooth activat, puteți de asemenea să puteți aplicația în pauză dezactivând temporar &lt;strong&gt;Notificări de expunere&lt;/strong&gt; . Puteți face acest lucru apăsând pe butonul de mai jos. Veți primi de asemenea o reamintire o dată la 24 de ore pentru a activa din nou aplicația.</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Da, este posibil dezactivând semnalul Bluetooth. Faceți acest lucru prin <strong>Setări> Conexiuni >Bluetooth</strong>. Dacă dezactivați Bluetooth, aplicația nu va mai face schimb de coduri. Veți primi imediat după aceasta o notificare pentru a reactiva aplicația.]]></string>
+    <string name="faq_pause_paragraph_2">Dacă doriți să lăsați Bluetooth activat, puteți să puneți aplicația în pauză dezactivând temporar &lt;strong&gt;Notificări de expunere&lt;/strong&gt; . Puteți face acest lucru apăsând pe butonul de mai jos. După ceva timp veți primi o notificare pentru a reactiva aplicația.</string>
     <string name="faq_pause_paragraph_3">Totuși, de cele mai multe ori, nu este recomandat să dezactivați temporar aplicația deoarece s-ar putea să uitați să o activați. Puteți dezactiva temporar aplicația în anumite situații, de exemplu, dacă vă aflați în apropierea unor (posibili) pacienți infectați cu coronavirus  dar sunteți sigur că purtați mijloace de protecție.</string>
     <string name="faq_interoperability">Colaborează CoronaMelder și cu aplicații din alte tări?</string>
-    <string name="faq_interoperability_paragraph_1">Din păcate, încă nu, dar se depun eforturi mari pentru ca acest lucru să fie posibil. CoronaMelder va putea, de asemenea, să schimbe coduri cu anumite aplicații din alte țări, cum ar fi Germania.</string>
-    <string name="faq_interoperability_paragraph_2">Dacă, pe lângă CoronaMelder, instalați și aplicația germană Corona-Warn-App, telefonul vă va înștiința că doar 1 aplicație poate fi activă în același timp. Aplicația pe care o alegeți este singura aplicație care, în acel moment, verifică întâlnirile dvs. Dacă doriți să verificați acest lucru în mai multe țări, atunci trebuie să alternați între aplicații. Veți primi notificări de la aplicația activată la acel moment. Dacă faceți acest lucru o dată pe zi, ambele aplicații verifică întâlnirile, deci nu pierdeți nici o informație.</string>
-    <string name="faq_interoperability_paragraph_3">În viitor, probabil veți putea folosi în paralel și aplicația din țara dvs., fără a fi necesară alternarea aplicațiilor în fiecare zi.</string>
+    <string name="faq_interoperability_paragraph_1">CoronaMelder colaborează cu aplicații din alte țări europene, printre care Germania, Irlanda și Italia.</string>
+    <string name="faq_interoperability_paragraph_2">Să presupunem că ați fost pentru un timp mai îndelungat în apropierea unui utilizator al aplicației germane Corona-Warn-App. Această persoană este testată în Germania și reiese că este infectată cu coronavirus. Dacă acea persoană împărtășește codurile ei cu GGD-ul german (Serviciul Municipal de Sănătate), atunci veți primi prin CoronaMelder o notificare. Și invers este valabil acest lucru. Deoarece aplicațiile pentru depistare coronavirus colaborează, este suficient să aveți activată doar una dintre aplicații.</string>
+    <string name="faq_interoperability_paragraph_3">Începând cu 30 noiembrie 2020, CoronaMelder va controla zilnic codurile utilizatorilor din diferite țări. Din această cauză aplicația folosește mai multe date celulare decât înainte. .    Puteți configura prin &lt;strong&gt;Configurări&lt;/strong&gt; pe ecranul principal ca aplicația să controleze doar prin wifi dacă ați fost în apropierea unei persoane infectate cu coronavirus.</string>
     <string name="cross_links_header">Citiți de asemenea</string>
     <string name="request_test_header_5">Solicitați test pentru coronavirus</string>
     <string name="generic_notification_advice_stay_home">Rămâneți, în orice caz, acasă până știți sigur că nu sunteți infectat. În acest fel preveniți infectarea, în mod involuntar, a celorlalți.</string>
@@ -248,4 +248,12 @@
     <string name="status_error_action_disable_battery_optimisation">Soluționarea problemei</string>
     <string name="update_app_headline">Aveți o versiune veche a aplicației CoronaMelder</string>
     <string name="update_app_description">Actualizați aplicația pe telefonul dvs. pentru ca CoronaMelder să funcționeze corect în continuare.</string>
+    <string name="status_info_settings_title">Configurări</string>
+    <string name="status_info_settings_subtitle">Schimbați  configurările pentru folosirea datelor celulare</string>
+    <string name="settings_wifi_only_title">Controlare de coduri doar prin wifi</string>
+    <string name="settings_wifi_only_summary">CoronaMelder controlează de câteva ori pe zi dacă v-ați aflat în apropierea unei persoane infectată cu coronavirus. Dacă dezactivați datele celulare, aplicația va face acest lucru doar daca folosiți wifi. Întâlnirile sunt urmărite chiar dacă nu aveți legătură la internet.</string>
+    <string name="faq_interop_countries">Cu ce alte aplicații străine colaborează CoronaMelder?</string>
+    <string name="status_info_interop_announcement_message">Începând cu 30 noiembrie CoronaMelder colaborează cu aplicații din alte țări europene.</string>
+    <string name="status_info_action_more_info">Mai multe informații</string>
+    <string name="status_info_action_close">Închideți</string>
 </resources>

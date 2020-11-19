@@ -61,7 +61,7 @@
     <string name="post_notification_message">Gardez votre numéro national (BSN) à portée de main. Celui-ci figure sur votre passeport ou carte d\'identité.</string>
     <string name="post_notification_button">Demandez à faire un test de dépistage du Covid-19</string>
     <string name="generic_notification_toolbar_title">Recevoir une notification</string>
-    <string name="generic_notification_header_1">Que contient une notification ?</string>
+    <string name="generic_notification_header_1">Comment reconnaître une notification ?</string>
     <string name="generic_notification_paragraph_2">L\'application envoie une notification si vous avez été au moins pendant 15 minutes à proximité de quelqu\'un qui, par la suite, s\'est avéré avoir le Covid-19.</string>
     <string name="generic_notification_paragraph_4">La notification s\'affiche dans vos notifications, tout comme les messages des autres applications. La notification a le symbole de CoronaMelder.\nAvez-vous reçu une notification ? Ouvrez alors CoronaMelder. Vous y lirez ce que vous devez faire.</string>
     <string name="generic_notification_alt_text_6">Écran rouge avec sonnette d\'alarme qui indique qu\'une action est maintenant nécessaire</string>
@@ -85,12 +85,12 @@
     <string name="status_dialog_remove_exposure_message">Êtes-vous sûr(e) de vouloir supprimer cette notification? Vous ne retrouverez plus cette date dans l’application. Retenez-la donc bien.</string>
     <string name="status_dialog_remove_exposure_confirm">Supprimer</string>
     <string name="status_dialog_remove_exposure_cancel">Désactiver</string>
-    <string name="status_info_about_title">Des questions à propos de l\'application ?</string>
+    <string name="status_info_about_title">Questions à propos de l\'application</string>
     <string name="status_info_about_subtitle">Découvrez le fonctionnement de l\'application et ce qu\'elle signifie pour votre vie privée</string>
     <string name="status_info_share_title">Inviter vos proches à utiliser l\'application</string>
     <string name="status_info_share_subtitle">Partagez l\'application avec vos proches pour stopper ensemble le Covid-19</string>
-    <string name="status_info_notification_title">Que contient une notification ?</string>
-    <string name="status_info_notification_subtitle">Lisez ce que vous pouvez faire après avoir été en contact avec quelqu\'un qui a le Covid-19</string>
+    <string name="status_info_notification_title">Comment reconnaître une notification ?</string>
+    <string name="status_info_notification_subtitle">Découvrez à quoi ressemble une notification et ce que vous pouvez faire après en avoir reçu une.</string>
     <string name="status_info_test_title">Demander à faire un test de dépistage du Covid-19</string>
     <string name="status_info_test_subtitle">Découvrez le plus vite possible si vous êtes contaminé(e)</string>
     <string name="status_info_lab_title">Partager le code GGD</string>
@@ -144,8 +144,8 @@
     <string name="faq_technical_toolbar_title">Explication technique</string>
     <string name="faq_technical_header_1">1. L\'application crée un code personnel pour chaque téléphone</string>
     <string name="faq_technical_paragraph_2">Ce code ne contient pas d\'informations sur vous ni sur votre téléphone. Le code est entièrement aléatoire et change tous les quarts d\'heure.</string>
-    <string name="faq_technical_header_3">2. Les téléphones partagent leurs codes s\'ils sont proches les uns des autres</string>
-    <string name="faq_technical_paragraph_4">La personne que vous rencontrez utilise également l\'application ? Alors vos téléphones échangent leurs codes via le Bluetooth Low Energy. L\'application sait quels étaient les téléphones proches les uns des autres. L\'application ne sait pas à qui appartiennent les téléphones ni où vous étiez.</string>
+    <string name="faq_technical_header_3">2. Les téléphones partagent des codes s\'ils sont proches les uns des autres</string>
+    <string name="faq_technical_paragraph_4">La personne que vous rencontrez utilise également l\'application ? Alors vos téléphones échangent des codes via le Bluetooth Low Energy. L\'application sait ainsi quels étaient les téléphones proches les uns des autres. L\'application ne sait pas à qui appartiennent les téléphones ni où vous étiez.</string>
     <string name="faq_technical_header_5">3. Si une personne a le Covid-19,  elle peut placer ses codes sur une liste</string>
     <string name="faq_technical_paragraph_6">Cette liste contient uniquement les codes des personnes contaminées. Pour ajouter les codes, une personne contaminée doit d\'abord communiquer un code GGD au GGD. Il est donc toujours certain que les codes ajoutés appartiennent vraiment à quelqu\'un qui a le Covid-19. Tous les codes de plus de 14 jours sont automatiquement supprimés de la liste.</string>
     <string name="faq_technical_header_7">4. Chaque téléphone contrôle si les codes de la liste ont été rencontrés plus tôt</string>
@@ -210,16 +210,15 @@
     <string name="onboarding_privacy_policy_check_4">Vous pouvez à tout moment supprimer les données de votre téléphone.</string>
     <string name="onboarding_privacy_policy_consent_label">J\'ai lu la déclaration de protection de la vie privée et j\'ai compris comment CoronaMelder utilise mes données</string>
     <string name="lab_test_how_does_it_work">Comment ça fonctionne ?</string>
-    <string name="faq_notification_message">Que contient une notification ?</string>
+    <string name="faq_notification_message">Comment reconnaître une notification ?</string>
     <string name="faq_pause">Puis-je mettre l\'application en pause ?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Oui, vous pouvez le faire en désactivant votre Bluetooth. Pour ce faire, allez à  <strong>Configurations > Connexions >Bluetooth</strong>. Si vous désactivez le Bluetooth, l\'application n\'échangera plus de codes. Vous recevrez ensuite un rappel automatique toutes les 24 heures pour réactiver l\'application.]]></string>
-    <string name="faq_pause_paragraph_2">"Si vous voulez que votre Bluetooth reste activé, vous pouvez aussi mettre l'application en pause en désactivant provisoirement &lt;strong&gt;Utiliser les notifications d'exposition&lt;/strong&gt;. Pour ce faire, utilisez le bouton ci-dessous. Dans ce cas aussi, vous recevez un rappel automatique toutes les 24 heures pour réactiver l'application.
-"</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Oui, vous pouvez le faire en désactivant votre Bluetooth. Pour ce faire, allez à  <strong>Configurations > Connexions >Bluetooth</strong>. Si vous désactivez le Bluetooth, l\'application n\'échangera plus de codes. Votre téléphone vous envoie ensuite une notification pour réactiver l\'application.]]></string>
+    <string name="faq_pause_paragraph_2">Si vous voulez que votre Bluetooth reste activé, vous pouvez aussi mettre l\'application en pause en désactivant provisoirement &lt;strong&gt;Utiliser les notifications d\'exposition&lt;/strong&gt;. Pour ce faire, utilisez le bouton ci-dessous. Dans ce cas, vous recevez après un certain temps une notification pour réactiver l\'application.</string>
     <string name="faq_pause_paragraph_3">Il n\'est toutefois pas recommandé de mettre l\'application en pause car vous risquez d\'oublier de la réactiver. Vous pouvez par contre mettre l\'application en pause dans des situations particulières. Par exemple si vous êtes à proximité de patients qui ont (probablement) le Covid-19, mais que vous portez bien toutes vos protections médicales.</string>
     <string name="faq_interoperability">Est-ce que CoronaMelder fonctionne aussi avec des applications d’autres pays ?</string>
-    <string name="faq_interoperability_paragraph_1">Hélas pas encore, mais nous travaillons activement pour que ce soit possible. CoronaMelder pourra alors aussi échanger des codes avec certaines applications d\'autres pays. Par exemple l\'application allemande.</string>
-    <string name="faq_interoperability_paragraph_2">Si, en plus de CoronaMelder, vous installez l\'application allemande Corona-Warn, votre téléphone vous indiquera qu\'1 seule application peut être activée à la fois. L\'application que vous choisissez est la seule application qui contrôle vos rencontres à ce moment-là. Si vous voulez le faire dans plusieurs pays, vous devez changer d\'application vous-même. Cette application peut alors vous envoyer des notifications. Si vous changez d\'application 1 fois par jour, les deux applications contrôlent vos rencontres. Vous ne ratez donc rien.</string>
-    <string name="faq_interoperability_paragraph_3">Dans le futur, vous pourrez probablement continuer à utiliser l\'application de votre pays et vous ne devrez plus changer tous les jours.</string>
+    <string name="faq_interoperability_paragraph_1">CoronaMelder collabore avec une série d\'applications d\'autres pays européens. Y compris l\'Allemagne, l\'Irlande et l\'Italie.</string>
+    <string name="faq_interoperability_paragraph_2">Supposez que vous avez été proche pendant un certain temps d\'un utilisateur de l\'application allemande Corona-Warn. Cette personne est testée en Allemagne et elle s\'avère avoir le Coronavirus. Si cette personne partage ses codes avec le GGD allemand, CoronaMelder vous enverra une notification. C\'est la même chose dans le sens inverse. Comme les applications du coronavirus collaborent les unes avec les autres, vous ne devez activer qu\'une seule application.</string>
+    <string name="faq_interoperability_paragraph_3">À partir du 30 novembre 2020, CoronaMelder contrôlera tous les jours les codes des utilisateurs des différents pays. L\'application utilisera donc plus de données mobiles qu\'auparavant.   Dans l\'écran principal de vos &lt;strong&gt;Configurations&lt;/strong&gt;, vous pouvez définir que l\'application ne contrôle votre proximité avec quelqu\'un qui a le coronavirus que par le biais du WiFi.</string>
     <string name="cross_links_header">Lire aussi</string>
     <string name="request_test_header_5">Demander à faire un test de dépistage du Covid-19</string>
     <string name="generic_notification_advice_stay_home">Restez en tous cas chez vous jusqu\'à ce que vous soyez certain(e) de ne pas avoir le Covid-19. Vous évitez ainsi de contaminer sans le savoir ceux qui vous entourent.</string>
@@ -247,4 +246,12 @@
     <string name="status_error_action_disable_battery_optimisation">Résoudre le problème</string>
     <string name="update_app_headline">Vous avez une ancienne version de CoronaMelder</string>
     <string name="update_app_description">Mettez à jour l\'application sur votre téléphone pour garantir le bon fonctionnement de CoronaMelder.</string>
+    <string name="status_info_settings_title">Paramètres</string>
+    <string name="status_info_settings_subtitle">Adaptez vos paramètres pour l\'utilisation des données mobiles</string>
+    <string name="settings_wifi_only_title">Ne contrôler les codes que par le biais du WiFi</string>
+    <string name="settings_wifi_only_summary">CoronaMelder contrôle plusieurs fois par jour si vous avez été proche de quelqu\'un qui a le coronavirus. Si vous désactivez vos données mobiles, l\'application ne le fait plus que si vous utilisez le WiFi. Vos rencontres sont également enregistrées si vous n\'avez pas de connexion à Internet.</string>
+    <string name="faq_interop_countries">Avec quelles applications étrangères collabore CoronaMelder?</string>
+    <string name="status_info_interop_announcement_message">À partir du 30 novembre, CoronaMelder fonctionnera avec des applications coronavirus d\'autres pays.</string>
+    <string name="status_info_action_more_info">Plus d\'informations</string>
+    <string name="status_info_action_close">Fermer</string>
 </resources>

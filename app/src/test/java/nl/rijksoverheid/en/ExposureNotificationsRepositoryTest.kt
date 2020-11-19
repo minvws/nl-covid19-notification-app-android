@@ -1679,6 +1679,86 @@ class ExposureNotificationsRepositoryTest {
         assertNull(repository.getDaysSinceLastExposure())
     }
 
+    @Test
+    fun `rescheduleJobs schedules jobs when previously scheduled`() = runBlocking {
+        val preferences = context.getSharedPreferences("repository_test", 0)
+        preferences.edit {
+            putLong("last_keys_processed", 0)
+        }
+
+        val cancelled = AtomicBoolean(false)
+        val scheduled = AtomicBoolean(false)
+
+        val scheduler: BackgroundWorkScheduler = object : BackgroundWorkScheduler {
+            override fun schedule(intervalMinutes: Int) {
+                scheduled.set(true)
+            }
+
+            override fun cancel() {
+                cancelled.set(true)
+            }
+        }
+        val appConfigManager = AppConfigManager(object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw IllegalStateException()
+            }
+
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest = Manifest(
+                emptyList(), "", "appconfig"
+            )
+
+            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw IllegalStateException()
+            }
+
+            override suspend fun getAppConfig(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): AppConfig = AppConfig(updatePeriodMinutes = 10)
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle {
+                throw IllegalStateException()
+            }
+        })
+        val repository = createRepository(
+            preferences = preferences,
+            scheduler = scheduler,
+            appConfigManager = appConfigManager
+        )
+
+        repository.rescheduleBackgroundJobs()
+
+        assertTrue(cancelled.get())
+        assertTrue(scheduled.get())
+    }
+
+    @Test
+    fun `rescheduleJobs skips scheduling jobs when not previously scheduled`() = runBlocking {
+        val preferences = context.getSharedPreferences("repository_test", 0)
+
+        val cancelled = AtomicBoolean(false)
+        val scheduled = AtomicBoolean(false)
+
+        val scheduler: BackgroundWorkScheduler = object : BackgroundWorkScheduler {
+            override fun schedule(intervalMinutes: Int) {
+                scheduled.set(true)
+            }
+
+            override fun cancel() {
+                cancelled.set(true)
+            }
+        }
+        val repository = createRepository(preferences = preferences, scheduler = scheduler)
+
+        repository.rescheduleBackgroundJobs()
+
+        assertFalse(cancelled.get())
+        assertFalse(scheduled.get())
+    }
+
     private fun createRepository(
         context: Context = ApplicationProvider.getApplicationContext(),
         api: ExposureNotificationApi = FakeExposureNotificationApi(),

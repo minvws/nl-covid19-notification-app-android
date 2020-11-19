@@ -19,6 +19,7 @@ import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ProcessManifestResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
+import nl.rijksoverheid.en.settings.Settings
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -57,13 +58,16 @@ class ProcessManifestWorker(
 
     companion object {
         fun queue(context: Context, intervalMinutes: Int = 240) {
+            val settings = Settings(context)
             val request = PeriodicWorkRequestBuilder<ProcessManifestWorker>(
                 intervalMinutes.toLong(),
                 TimeUnit.MINUTES
             ).setInputData(Data.Builder().putInt(KEY_UPDATE_INTERVAL, intervalMinutes).build())
                 .setInitialDelay(30, TimeUnit.SECONDS)
                 .setConstraints(
-                    Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+                    Constraints.Builder()
+                        .setRequiredNetworkType(if (settings.checkOnWifiOnly) NetworkType.UNMETERED else NetworkType.CONNECTED)
+                        .build()
                 ).setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS).build()
 
             WorkManager.getInstance(context)

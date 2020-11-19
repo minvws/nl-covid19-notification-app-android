@@ -43,8 +43,8 @@ class AppConfigManager(private val cdnService: CdnService) {
      */
     suspend fun getCachedConfigOrDefault(): AppConfig = getConfigOrDefault {
         cdnService.getAppConfig(
-            cdnService.getManifest(CacheStrategy.CACHE_FIRST).appConfigId,
-            CacheStrategy.CACHE_FIRST
+            cdnService.getManifest(CacheStrategy.CACHE_ONLY).appConfigId,
+            CacheStrategy.CACHE_ONLY
         )
     }
 }

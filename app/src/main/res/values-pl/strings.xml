@@ -61,7 +61,7 @@
     <string name="post_notification_message">Miej pod ręką swój numer obsługi mieszkańca (BSN). Znajdziesz go w paszporcie lub na dowodzie osobistym.</string>
     <string name="post_notification_button">Poproś o test na koronawirusa</string>
     <string name="generic_notification_toolbar_title">Otrzymanie powiadomienia</string>
-    <string name="generic_notification_header_1">Jakie informacje znajdują się w powiadomieniu?</string>
+    <string name="generic_notification_header_1">Jak rozpoznać powiadomienie?</string>
     <string name="generic_notification_paragraph_2">Aplikacja wysyła powiadomienie, jeśli znajdowałeś się przez co najmniej 15 minut w pobliżu osoby, u której potem wykryto koronawirusa.</string>
     <string name="generic_notification_paragraph_4">Powiadomienie pojawia się w notyfikacjach. Podobnie jak wiadomości od innych aplikacji. Powiadomienie posiada symbol CoronaMelder.\n\nOtrzymałeś powiadomienie? Otwórz CoronaMelder. Tam przeczytasz co możesz zrobić.</string>
     <string name="generic_notification_alt_text_6">Czerwony ekran z dzwonkiem alarmowym oznacza, że konieczne jest podjęcie działań</string>
@@ -85,12 +85,12 @@
     <string name="status_dialog_remove_exposure_message">Jesteś pewien, że chcesz usunąć to powiadomienie? Później nie będziesz mógł znaleźć tej daty w aplikacji. Dlatego zapamiętaj ją dobrze.</string>
     <string name="status_dialog_remove_exposure_confirm">Usuń</string>
     <string name="status_dialog_remove_exposure_cancel">Anuluj</string>
-    <string name="status_info_about_title">Masz pytania dotyczące aplikacji?</string>
+    <string name="status_info_about_title">Pytania dotyczące aplikacji</string>
     <string name="status_info_about_subtitle">Zobacz jak działa aplikacja i co to oznacza dla Twojej prywatności</string>
     <string name="status_info_share_title">Zaproś znajomych do aplikacji</string>
     <string name="status_info_share_subtitle">Udostępnij aplikację innym, aby razem uzyskać kontrolę nad koronawirusem</string>
-    <string name="status_info_notification_title">Jakie informacje zawiera powiadomienie?</string>
-    <string name="status_info_notification_subtitle">Przeczytaj, co możesz zrobić, gdy okaże się, że znajdowałeś się w pobliżu osoby z koronawirusem</string>
+    <string name="status_info_notification_title">Jak rozpoznać powiadomienie?</string>
+    <string name="status_info_notification_subtitle">Sprawdź jak wygląda zgłoszenie i co możesz zrobić, gdy je otrzymasz</string>
     <string name="status_info_test_title">Poproś o test na koronawirusa</string>
     <string name="status_info_test_subtitle">Dowiedz się możliwie jak najszybciej czy sam jesteś zarażony</string>
     <string name="status_info_lab_title">Przekaż klucz GGD</string>
@@ -212,15 +212,15 @@
     <string name="onboarding_privacy_policy_check_4">W każdym momencie możesz usunąć dane z telefonu.</string>
     <string name="onboarding_privacy_policy_consent_label">Przeczytałem oświadczenie o ochronie prywatności i rozumiem w jaki sposób CoronaMelder używa moich danych.</string>
     <string name="lab_test_how_does_it_work">Jak to działa?</string>
-    <string name="faq_notification_message">Jakie informacje zawiera powiadomienie?</string>
+    <string name="faq_notification_message">Jak rozpoznać powiadomienie?</string>
     <string name="faq_pause">Can I pause the app?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Tak, możesz to zrobić poprzez wyłączenie swojego Bluetooth. Należy przejść do <strong>Ustawienia > Połączenia > Bluetooth</strong>. Po wyłączeniu Bluetooth, aplikacja nie wymienia już żadnych kodów. Co 24 godziny będziesz automatycznie otrzymywał powiadomienia, przypominające o ponownym włączeniu aplikacji.]]></string>
-    <string name="faq_pause_paragraph_2">Jeśli chciałbyś pozostawić włączony Bluetooth, możesz również wstrzymać aplikację poprzez tymczasowe wyłączenie &lt;strong&gt;Powiadomień o ekspozycji&lt;/strong&gt;. Możesz to zrobić klikając poniższy przycisk. Również w tym przypadku co 24 godziny będziesz automatycznie otrzymywał powiadomienia, przypominające o ponownym włączeniu aplikacji.</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Tak, możesz to zrobić poprzez wyłączenie swojego Bluetooth. Należy przejść do <strong>Ustawienia > Połączenia > Bluetooth</strong>. Po wyłączeniu Bluetooth, aplikacja nie wymienia już żadnych kodów. Twój telefon natychmiast wyśle powiadomienie przypominające o ponownym włączeniu aplikacji.]]></string>
+    <string name="faq_pause_paragraph_2">Jeśli chciałbyś pozostawić włączony Bluetooth, możesz również wstrzymać aplikację poprzez tymczasowe wyłączenie &lt;strong&gt;Powiadomień o ekspozycji&lt;/strong&gt;. Możesz to zrobić klikając poniższy przycisk. Po chwili otrzymasz powiadomienie przypominające o ponownym włączeniu aplikacji.</string>
     <string name="faq_pause_paragraph_3">Nie zaleca się jednak wstrzymywania aplikacji, ponieważ możesz zapomnieć o jej ponownym uruchomieniu. Aplikację można wstrzymać w szczególnych przypadkach. Na przykład jeśli znajdujesz się w pobliżu (potencjalnych) pacjentów z koronawirusem, jednak jesteś pewien, że masz na sobie środki ochronne do celów medycznych.</string>
     <string name="faq_interoperability">Czy CoronaMelder współpracuje również z aplikacjami z innych krajów?</string>
-    <string name="faq_interoperability_paragraph_1">Niestety na razie jeszcze nie, jednak ciężko pracujemy nad tym, aby było to możliwe. Wtedy aplikacja Corona Melder będzie mogła wymieniać kody z niektórymi aplikacjami z innych krajów. Na przykład z niemiecką aplikacją.</string>
-    <string name="faq_interoperability_paragraph_2">Jeśli oprócz CoronaMelder zainstalujesz nimiecką aplikację Corona-Warn-App, Twój telefon poinformuje Cię, że tylko 1 aplikacja może być aktywna w danym momencie. Wybrana przez Ciebie aplikacja będzie w danym momencie kontrolować Twoje spotkania. Jeśli chcesz robić to w więcej niż jednym kraju, musisz samodzielnie przełączać aplikacje. Będziesz otrzymywał powiadomienia od wybranej przez siebie aplikacji. Jeśli raz dziennie przełączasz aplikacje, obie kontrolują Twoje spotkania. W ten sposób nic Ci nie umyka.</string>
-    <string name="faq_interoperability_paragraph_3">Prawdopodobnie w przyszłości będziesz mógł korzystać wyłącznie z aplikacji swojego kraju, bez konieczności codziennego przełączania aplikacji.</string>
+    <string name="faq_interoperability_paragraph_1">CoronaMelder współpracuje z kilkoma aplikacjami z innych krajów europejskich m.in. z Niemiec, Irlandii i Włoch.</string>
+    <string name="faq_interoperability_paragraph_2">Przypuśćmy, że przez dłuższy czas znajdowałeś się w pobliżu użytkownika niemieckiej Corona-Warn-App. Osoba ta wykonała w Niemczech test na obecność koronawirusa i uzyskała pozytywny wynik. Jeśli przekaże swoje kody niemieckiemu GGD, otrzymasz powiadomienie z CoronaMelder. Działa to tak samo w drugą stronę. Ponieważ aplikacje dotyczące koronawirusa współpracują ze sobą, wystarczy, abyś aktywował jedną aplikację.</string>
+    <string name="faq_interoperability_paragraph_3">Od 30 listopada 2020 r. aplikacja CoronaMelder będzie codziennie kontrolowała kody użytkowników z różnych krajów. W rezultacie aplikacja zużywa więcej danych komórkowych niż wcześniej.  Należy przejść do &lt;strong&gt;Ustawienia&lt;/strong&gt; na głównym ekranie, aby zezwolić aplikacji na sprawdzanie, czy znajdowałeś się w pobliżu zarażonej osoby, wyłącznie przy połączeniu wi-fi.</string>
     <string name="cross_links_header">Przeczytaj także</string>
     <string name="request_test_header_5">Poproś o test na koronawirusa</string>
     <string name="generic_notification_advice_stay_home">W każdym razie pozostań w domu do momentu, aż będziesz pewien, że nie masz koronawirusa. W ten sposób unikasz nieświadomego zarażenia innych.</string>
@@ -248,4 +248,12 @@
     <string name="status_error_action_disable_battery_optimisation">Rozwiązywanie problemów</string>
     <string name="update_app_headline">Posiadasz nieaktualną wersję alpikacji CoronaMelder</string>
     <string name="update_app_description">Zaktualizuj aplikację w swoim telefonie, aby zapewnić CoronaMelder poprawne działanie.</string>
+    <string name="status_info_settings_title">Ustawienia</string>
+    <string name="status_info_settings_subtitle">Dostosuj swoje ustawienia dla korzystania z danych komórkowych</string>
+    <string name="settings_wifi_only_title">Sprawdzanie kodów tylko przy połączeniu wi-fi</string>
+    <string name="settings_wifi_only_summary">CoronaMelder sprawdza kilka razy dziennie, czy znajdowałeś się w pobliżu zarażonej osoby. Jeśli wyłączysz dane komórkowe, aplikacja będzie to robić przy połączeniu wi-fi. Spotkania są kontrolowane również, gdy nie masz połączenia internetowego.</string>
+    <string name="faq_interop_countries">Z którymi zagranicznymi aplikacjami współpracuje CoronaMelder?</string>
+    <string name="status_info_interop_announcement_message">Od 30 listopada CoronaMelder współpracuje z aplikacjami dotyczącymi koronawirusa z innych krajów europejskich.</string>
+    <string name="status_info_action_more_info">Więcej informacji</string>
+    <string name="status_info_action_close">Zamknij</string>
 </resources>

@@ -72,6 +72,9 @@ class StatusFragment @JvmOverloads constructor(
                 StatusActionItem.LabTest -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionLabTest()
                 )
+                StatusActionItem.Settings -> findNavController().navigateCatchingErrors(
+                    StatusFragmentDirections.actionSettings()
+                )
             }
         }
 
