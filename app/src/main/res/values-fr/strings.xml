@@ -101,9 +101,6 @@
     <string name="status_error_action_consent">Ouvrir l\'application</string>
     <string name="status_error_sync_issues">L\'application n\'a pas pu vérifier pendant 24 heures si les personnes que vous avez rencontrées se sont avérées avoir le Covid-19. Contrôlez si votre Wi-Fi ou votre réseau mobile est activé et réessayez.</string>
     <string name="status_error_action_sync_issues">Veuillez réessayer</string>
-    <string name="status_info_interop_announcement_message">CoronaMelder werkt vanaf 30 november samen met corona-apps uit andere Europese landen.</string>
-    <string name="status_info_action_more_info">Meer informatie</string>
-    <string name="status_info_action_close">Sluiten</string>
     <string name="about_toolbar_title">À propos de l\'application</string>
     <string name="about_helpdesk_title">Vous avez d\'autres questions sur l\'application ?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Appelez gratuitement le 0800-1280</string>

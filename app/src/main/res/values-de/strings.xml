@@ -101,9 +101,6 @@
     <string name="status_error_action_consent">App aktivieren</string>
     <string name="status_error_sync_issues">Die App konnte in den letzten 24 Stunden nicht überprüfen, ob Sie Personen begegnet sind, bei denen später Corona festgestellt wurde. Stellen Sie sicher, dass WLAN bzw. Mobildaten aktiviert sind. Versuchen Sie es dann erneut.</string>
     <string name="status_error_action_sync_issues">Versuchen Sie es erneut.</string>
-    <string name="status_info_interop_announcement_message">CoronaMelder werkt vanaf 30 november samen met corona-apps uit andere Europese landen.</string>
-    <string name="status_info_action_more_info">Meer informatie</string>
-    <string name="status_info_action_close">Sluiten</string>
     <string name="about_toolbar_title">Über die App</string>
     <string name="about_helpdesk_title">Eine andere Frage über die App?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Rufen Sie kostenlos 0800-1280 an.</string>

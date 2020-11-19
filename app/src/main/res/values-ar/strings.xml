@@ -102,9 +102,6 @@
     <string name="status_error_action_consent">تشغيل التطبيق</string>
     <string name="status_error_sync_issues">لم يتمكن التطبيق لمدة 24 ساعة من التحقق فيما إذا تبين لاحقًا أن الأشخاص الذين قابلتهم مصابين بكورونا. تأكد من تشغيل شبكة Wi-Fi أو بيانات الهاتف وحاول مجددًا.</string>
     <string name="status_error_action_sync_issues">حاول مجددًا</string>
-    <string name="status_info_interop_announcement_message">CoronaMelder werkt vanaf 30 november samen met corona-apps uit andere Europese landen.</string>
-    <string name="status_info_action_more_info">Meer informatie</string>
-    <string name="status_info_action_close">Sluiten</string>
     <string name="about_toolbar_title">حوْل التطبيق</string>
     <string name="about_helpdesk_title">سؤال آخر عن التطبيق؟</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">اتصل بالمجان برقم 1280 - 0800</string>

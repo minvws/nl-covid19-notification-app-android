@@ -101,9 +101,6 @@
     <string name="status_error_action_consent">Turn on app</string>
     <string name="status_error_sync_issues">The app wasn\'t able to check for 24 hours if the people you encountered later turned out to have corona. Check if your Wi-Fi or mobile data are turned on and try again.</string>
     <string name="status_error_action_sync_issues">Try again</string>
-    <string name="status_info_interop_announcement_message">CoronaMelder werkt vanaf 30 november samen met corona-apps uit andere Europese landen.</string>
-    <string name="status_info_action_more_info">Meer informatie</string>
-    <string name="status_info_action_close">Sluiten</string>
     <string name="about_toolbar_title">About the app</string>
     <string name="about_helpdesk_title">Other questions about the app?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Call 0800-1280</string>

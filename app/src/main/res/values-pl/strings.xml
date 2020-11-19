@@ -101,9 +101,6 @@
     <string name="status_error_action_consent">Włącz aplikację</string>
     <string name="status_error_sync_issues">Aplikacja w ciągu 24 godzin nie mogła skontrolować, czy wykryto koronwirusa u osób, które spotkałeś. Upewnij się, że wifi lub dane komórkowe są włączone i spróbuj ponownie.</string>
     <string name="status_error_action_sync_issues">Spróbuj ponownie</string>
-    <string name="status_info_interop_announcement_message">CoronaMelder werkt vanaf 30 november samen met corona-apps uit andere Europese landen.</string>
-    <string name="status_info_action_more_info">Meer informatie</string>
-    <string name="status_info_action_close">Sluiten</string>
     <string name="about_toolbar_title">O aplikacji</string>
     <string name="about_helpdesk_title">Masz inne pytanie dotyczące aplikacji?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Zadzwoń pod bezpłatny numer 0800-1280</string>
