@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -120,7 +121,7 @@ class StatusFragment @JvmOverloads constructor(
                     R.string.status_info_interop_announcement_message,
                     actionMoreInfo = {
                         val uri = Uri.parse(getString(R.string.interop_url, getString(R.string.app_language)))
-                        startActivity(Intent(Intent.ACTION_VIEW, uri))
+                        CustomTabsIntent.Builder().build().launchUrl(requireContext(), uri)
                     },
                     actionClose = {
                         statusViewModel.setHasSeenLatestTerms()
