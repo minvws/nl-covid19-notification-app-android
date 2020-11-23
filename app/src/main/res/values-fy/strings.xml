@@ -209,13 +209,13 @@
     <string name="lab_test_how_does_it_work">Hoe wurket dat?</string>
     <string name="faq_notification_message">Wêr kin ik in melding oan werkenne?</string>
     <string name="faq_pause">Kin ik de app ûnderbrekke?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Ja dat kin troch dyn bluetooth út te setten. Dat dochst fia <strong>Instellingen > Verbindingen > Bluetooth</strong>. Ast dy bluetooth útsetst, wikselet de app gjin koades mear út. Do krigest dêrnei ien kear yn \'e 24 oeren automatysk in yn it sin bringer om de app wer oan te setten.]]></string>
-    <string name="faq_pause_paragraph_2">Ast de bluetooth oanstean litte wolst, kinst de app ek ûnderbrekke troch &lt;strong&gt;Blootstellingsmeldingen gebruiken&lt;/strong&gt; tydlik út te setten. Dat dochst mei de knop hjirûnder. Ek dan krigest ien kear yn \'e 24 oeren automatysk in yn it sin bringer om de app wer oan te setten.</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Ja dat kin troch dyn bluetooth út te setten. Dat dochst fia <strong>Instellingen > Verbindingen > Bluetooth</strong>. Ast dyn bluetooth útsetst, wikselet de app gjin koades mear út. Do krigest dêrnei daliks in melding fan dyn telefoan om de app wer oan te setten.]]></string>
+    <string name="faq_pause_paragraph_2">Ast de bluetooth oanstean litte wolst, kinst de app ek ûnderbrekke troch &lt;strong&gt;Blootstellingsmeldingen gebruiken&lt;/strong&gt; tydlik út te setten. Dat dochst mei de knop hjirûnder. Do krigest nei in skoftke in melding om de app wer oan te setten.</string>
     <string name="faq_pause_paragraph_3">Dochs is it meastal net oan te rieden om de app te ûnderbrekken, omdatst mooglik ferjitst om \'m wer oan te setten. Do kinst de app wol yn bysûndere situaasjes ûnderbrekke. Bygelyks ast yn \'e buert komst fan (mooglike) koroanapasjinten, mar der wis fan bist datst medyske beskermingsmiddels draachst.</string>
     <string name="faq_interoperability">Wurket Coronamelder ek gear mei apps út oare lannen?</string>
-    <string name="faq_interoperability_paragraph_1">Spitigernôch no noch net, mar der wurdt hurd wurke om dat mooglik te meitsjen. Dan sil CoronaMelder ek koades mei guon apps út oare lannen útwikselje kinne. Bygelyks de Dútske app.</string>
-    <string name="faq_interoperability_paragraph_2">Ast neist CoronaMelder de Dútske Corona-Warn-App ynstallearrest, seit dyn telefoan dat der mar 1 app tagelyk aktyf wêze kin. De app dy\'tsto kiest is de iennige app dy\'t op dat stuit dyn moetings kontrolearret. Wolst dat yn meardere lannen dwaan, dan moatst dus sels fan app wikselje. Fan dy app kinst dan meldings ûntfange. Ast ien kear deis fan app wikselest, kontrolearje beide app dyn moetings. Sa mist neat.</string>
-    <string name="faq_interoperability_paragraph_3">Yn de takomst kinst nei alle gedachten altyd de app fan dyn eigen lân brûke, en hoechst net mear alle dagen te wikseljen.</string>
+    <string name="faq_interoperability_paragraph_1">CoronaMelder wurket gear mei in tal apps út oare Europeeske lannen. Under oare Dútslân, Ierlân en Italië</string>
+    <string name="faq_interoperability_paragraph_2">Stel, do hast in langer skoft yn \'e buert west by in brûker fan de Dútske Corona-Warn-Ap. Dy persoan wurdt yn Dútslân test en it docht bliken dat hy/sy koroana hat. As dy persoan syn/har koades mei de Dútske GGD dielt, dan krigesto fia CoronaMelder in melding. Oarsom jildt itselde. Omdat de koroana-apps ûnderling gearwurkje, hoechst dus mar ien app oanstean te hawwen.</string>
+    <string name="faq_interoperability_paragraph_3">CoronaMelder kontrolearret fan 30 novimber 2020 ôf alle dagen de koades fan brûkers út ferskillende lannen. Dêrtroch ferbrûkt de app mear mobile data as earder.   Do kinst fia &lt;strong&gt;Instellingen&lt;/strong&gt; op it haadskerm ynstelle dat de app allinne fia wifi kontrolearret oftst yn \'e buert west hast fan immen mei koroana.</string>
     <string name="cross_links_header">Lês ek</string>
     <string name="request_test_header_5">Koroanatest oanfreegje</string>
     <string name="generic_notification_advice_stay_home">Bliuw yn alle gefallen thús oant datst wis bist datst gjin koroana hast. Sa komst tefoaren datst sûnder it te witten oaren besmetst.</string>
@@ -246,7 +246,7 @@
     <string name="status_info_settings_title">Ynstellingen</string>
     <string name="status_info_settings_subtitle">Pas dyn ynstellingen oan foar it gebrûk fan mobile data</string>
     <string name="settings_wifi_only_title">Allinne koades kontrolearje fia wifi</string>
-    <string name="settings_wifi_only_summary">CoronaMelder kontrolearret in pear kear deis oftst yn de buert west hast fan immen mei koroana. Ast dyn mobile data útsetst, docht de app dat allinne noch ast op wifi sitst. Dyn moetings wurde ek byhâlden ast gjin ynternetferbining hast.</string>
+    <string name="settings_wifi_only_summary">CoronaMelder kontrolearret in pear kear deis oftst yn de buert west hast fan immen mei koroana. Ast dyn mobile data útsetst, docht de app dat allinne noch ast wifi brûkst. Dyn moetings wurde ek byhâlden ast gjin ynternetferbining hast.</string>
     <string name="faq_interop_countries">Mei hokker bûtenlânske apps wurket CoronaMelder gear?</string>
     <string name="status_info_interop_announcement_message">CoronaMelder wurket fan 30 novimber ôf gear mei koroana-apps út oare Europeeske lannen.</string>
     <string name="status_info_action_more_info">Mear ynformaasje</string>
