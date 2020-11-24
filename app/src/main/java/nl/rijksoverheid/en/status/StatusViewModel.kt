@@ -38,6 +38,9 @@ class StatusViewModel(
         }
         .asLiveData(viewModelScope.coroutineContext)
 
+    val exposureDetected: Boolean
+        get() = headerState.value is HeaderState.Exposed
+
     val errorState = combine(
         exposureNotificationsRepository.lastKeyProcessed()
             .flatMapLatest { exposureNotificationsRepository.getStatus() },

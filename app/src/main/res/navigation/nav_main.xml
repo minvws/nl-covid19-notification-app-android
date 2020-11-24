@@ -198,7 +198,11 @@
         android:id="@+id/requestTestFragment"
         android:name="nl.rijksoverheid.en.requesttest.RequestTestFragment"
         android:label="RequestTestFragment"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list">
+        <argument
+            android:name="exposureDetected"
+            app:argType="boolean" />
+    </fragment>
 
     <dialog
         android:id="@+id/nav_remove_exposed_message_dialog"
