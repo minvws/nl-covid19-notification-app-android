@@ -53,7 +53,7 @@ class PostNotificationFragment : BaseFragment(R.layout.fragment_list_with_button
             setOnClickListener {
                 startActivity(
                     Intent(Intent.ACTION_DIAL).apply {
-                        val phoneNumber = getString(R.string.phone_number)
+                        val phoneNumber = getString(R.string.request_test_phone_number_exposure)
                         data = Uri.parse("tel:$phoneNumber")
                     }
                 )

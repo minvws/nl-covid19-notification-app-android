@@ -68,7 +68,7 @@ class StatusFragment @JvmOverloads constructor(
                     StatusFragmentDirections.actionGenericNotification()
                 )
                 StatusActionItem.RequestTest -> findNavController().navigateCatchingErrors(
-                    StatusFragmentDirections.actionRequestTest()
+                    StatusFragmentDirections.actionRequestTest(statusViewModel.exposureDetected)
                 )
                 StatusActionItem.LabTest -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionLabTest()
