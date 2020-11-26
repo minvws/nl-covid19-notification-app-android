@@ -10,7 +10,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -77,6 +76,18 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
                 }
             }
         )
+
+        onboardingViewModel.continueOnboarding.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                findNavController().navigateCatchingErrors(
+                    EnableApiFragmentDirections.actionNext(),
+                    FragmentNavigatorExtras(
+                        binding.appbar to binding.appbar.transitionName
+                    )
+                )
+            }
+        )
     }
 
     private fun requestDisableBatteryOptimizationsAndContinue() {
@@ -85,24 +96,14 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
         } catch (ex: ActivityNotFoundException) {
             // ignore
             Timber.e(ex)
-            continueOnboarding()
+            onboardingViewModel.continueOnboarding()
         }
-    }
-
-    private fun continueOnboarding() {
-        val binding = DataBindingUtil.getBinding<FragmentEnableApiBinding>(requireView())!!
-        findNavController().navigateCatchingErrors(
-            EnableApiFragmentDirections.actionNext(),
-            FragmentNavigatorExtras(
-                binding.appbar to binding.appbar.transitionName
-            )
-        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_REQUEST_DISABLE_BATTERY_OPTIMIZATIONS) {
-            continueOnboarding()
+            onboardingViewModel.continueOnboarding()
         }
     }
 }
