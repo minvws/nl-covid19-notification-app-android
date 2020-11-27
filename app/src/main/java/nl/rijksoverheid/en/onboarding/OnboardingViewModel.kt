@@ -15,6 +15,7 @@ class OnboardingViewModel(
     private val repository: OnboardingRepository
 ) : ViewModel() {
     val onboardingComplete: LiveData<Event<Unit>> = MutableLiveData()
+    val continueOnboarding: LiveData<Event<Unit>> = MutableLiveData()
     val skipConsentConfirmation: LiveData<Event<Unit>> = MutableLiveData()
     val privacyPolicyConsentGiven: LiveData<Boolean> = MutableLiveData(false)
 
@@ -31,5 +32,9 @@ class OnboardingViewModel(
 
     fun togglePrivacyPolicyConsent() {
         (privacyPolicyConsentGiven as MutableLiveData).value = !privacyPolicyConsentGiven.value!!
+    }
+
+    fun continueOnboarding() {
+        (continueOnboarding as MutableLiveData).value = Event(Unit)
     }
 }

@@ -10,8 +10,8 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
@@ -24,6 +24,7 @@ import nl.rijksoverheid.en.about.FAQItem
 import nl.rijksoverheid.en.about.FAQItemDecoration
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
+import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
 import timber.log.Timber
@@ -32,6 +33,7 @@ private const val RC_DISABLE_BATTERY_OPTIMIZATIONS = 1
 
 class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
+    private val onboardingViewModel: OnboardingViewModel by viewModels()
 
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(HowItWorksSection()) }
 
@@ -79,6 +81,18 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
                 requestDisableBatteryOptimizationsAndContinue()
             }
         }
+
+        onboardingViewModel.continueOnboarding.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                findNavController().navigateCatchingErrors(
+                    HowItWorksFragmentDirections.actionNext(),
+                    FragmentNavigatorExtras(
+                        binding.appbar to binding.appbar.transitionName
+                    )
+                )
+            }
+        )
     }
 
     private fun requestDisableBatteryOptimizationsAndContinue() {
@@ -87,24 +101,14 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
         } catch (ex: ActivityNotFoundException) {
             // ignore
             Timber.e(ex)
-            continueOnboarding()
+            onboardingViewModel.continueOnboarding()
         }
-    }
-
-    private fun continueOnboarding() {
-        val binding = DataBindingUtil.getBinding<FragmentListWithButtonBinding>(requireView())!!
-        findNavController().navigateCatchingErrors(
-            HowItWorksFragmentDirections.actionNext(),
-            FragmentNavigatorExtras(
-                binding.appbar to binding.appbar.transitionName
-            )
-        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_DISABLE_BATTERY_OPTIMIZATIONS) {
-            continueOnboarding()
+            onboardingViewModel.continueOnboarding()
         }
     }
 }
