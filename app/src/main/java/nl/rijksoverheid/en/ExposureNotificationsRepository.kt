@@ -67,7 +67,7 @@ import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
-import java.time.Period
+import java.time.temporal.ChronoUnit
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
@@ -557,7 +557,7 @@ class ExposureNotificationsRepository(
     suspend fun getDaysSinceLastExposure(): Int? {
         val date = getLastExposureDate().first()
         return date?.let {
-            Period.between(date, LocalDate.now(clock)).days
+            ChronoUnit.DAYS.between(date, LocalDate.now(clock)).toInt()
         }
     }
 

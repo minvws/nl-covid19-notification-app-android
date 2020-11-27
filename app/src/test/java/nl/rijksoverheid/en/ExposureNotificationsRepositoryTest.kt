@@ -1660,7 +1660,7 @@ class ExposureNotificationsRepositoryTest {
         val clock =
             Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("Europe/Amsterdam"))
 
-        val exposureDate = LocalDate.now(clock).minusDays(2)
+        val exposureDate = LocalDate.now(clock).minusDays(36)
         preferences.edit {
             putLong("last_token_exposure_date", exposureDate.toEpochDay())
             putString("last_token_id", "dummy")
@@ -1670,7 +1670,7 @@ class ExposureNotificationsRepositoryTest {
 
         val daysSinceLastExposure = repository.getDaysSinceLastExposure()
 
-        assertEquals(2, daysSinceLastExposure)
+        assertEquals(36, daysSinceLastExposure)
     }
 
     @Test
