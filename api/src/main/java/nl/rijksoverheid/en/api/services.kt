@@ -20,7 +20,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
 import java.io.File
 
-private const val LEGACY_SSL_PIN = "sha256/QiOJQAOogcXfa6sWPbI1wiGhjVS/dZlFgg5nDaguPzk="
 private const val SSL_PIN = "sha256/lR7gRvqDMW5nhsCMRPE7TKLq0tJkTWMxQ5HAzHCIfQ0="
 
 private var okHttpClient: OkHttpClient? = null
@@ -50,11 +49,9 @@ internal fun createOkHttpClient(context: Context, appVersionCode: Int): OkHttpCl
             addInterceptor(UserAgentInterceptor(appVersionCode))
             if (Timber.forest().isNotEmpty()) {
                 addInterceptor(
-                    HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-                        override fun log(message: String) {
-                            Timber.tag("OkHttpClient").d(message)
-                        }
-                    }).setLevel(HttpLoggingInterceptor.Level.BODY)
+                    HttpLoggingInterceptor { message ->
+                        Timber.tag("OkHttpClient").d(message)
+                    }.setLevel(HttpLoggingInterceptor.Level.BODY)
                 )
             }
             addInterceptor(CorruptedCacheInterceptor(cache))
@@ -66,8 +63,6 @@ internal fun createOkHttpClient(context: Context, appVersionCode: Int): OkHttpCl
                 )
                 certificatePinner(
                     CertificatePinner.Builder()
-                        .add(Uri.parse(BuildConfig.CDN_BASE_URL).host!!, LEGACY_SSL_PIN)
-                        .add(Uri.parse(BuildConfig.API_BASE_URL).host!!, LEGACY_SSL_PIN)
                         .add(Uri.parse(BuildConfig.CDN_BASE_URL).host!!, SSL_PIN)
                         .add(Uri.parse(BuildConfig.API_BASE_URL).host!!, SSL_PIN)
                         .build()
