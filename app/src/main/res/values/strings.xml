@@ -106,7 +106,7 @@
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Call 0800-1280</string>
     <string name="about_technical_explanation_title">How does the app work?</string>
     <string name="about_technical_explanation_subtitle">Check the technical explanation</string>
-    <string name="about_onboarding_title">Wat does CoronaMelder do?</string>
+    <string name="about_onboarding_title">What does CoronaMelder do?</string>
     <string name="about_onboarding_subtitle">Read how you can help stop the spread of the coronavirus with this app</string>
     <string name="about_review">Rate the app</string>
     <string name="about_privacy_statement">Privacy statement</string>
