@@ -17,19 +17,13 @@ import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import java.io.File
 
 open class FakeExposureNotificationApi : ExposureNotificationApi {
-    var status: StatusResult = StatusResult.Disabled
+    override suspend fun getStatus(): StatusResult = StatusResult.Disabled
 
-    override suspend fun getStatus(): StatusResult = status
+    override suspend fun requestEnableNotifications(): EnableNotificationsResult =
+        EnableNotificationsResult.Enabled
 
-    override suspend fun requestEnableNotifications(): EnableNotificationsResult {
-        status = StatusResult.Enabled
-        return EnableNotificationsResult.Enabled
-    }
-
-    override suspend fun disableNotifications(): DisableNotificationsResult {
-        status = StatusResult.Disabled
-        return DisableNotificationsResult.Disabled
-    }
+    override suspend fun disableNotifications(): DisableNotificationsResult =
+        DisableNotificationsResult.Disabled
 
     override suspend fun requestTemporaryExposureKeyHistory(): TemporaryExposureKeysResult =
         TemporaryExposureKeysResult.Success(
