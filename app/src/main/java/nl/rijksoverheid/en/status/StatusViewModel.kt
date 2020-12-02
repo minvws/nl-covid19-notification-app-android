@@ -72,8 +72,8 @@ class StatusViewModel(
     private fun createHeaderState(status: StatusResult, date: LocalDate?, keyProcessingOverdue: Boolean): HeaderState {
         return when {
             date != null -> HeaderState.Exposed(date, clock)
-            status !is StatusResult.Enabled -> HeaderState.Disabled(false)
-            keyProcessingOverdue -> HeaderState.Disabled(true)
+            status !is StatusResult.Enabled -> HeaderState.Disabled
+            keyProcessingOverdue -> HeaderState.SyncIssues
             else -> HeaderState.Active
         }
     }
@@ -113,7 +113,8 @@ class StatusViewModel(
 
     sealed class HeaderState {
         object Active : HeaderState()
-        data class Disabled(val hasSyncIssues: Boolean) : HeaderState()
+        object Disabled : HeaderState()
+        object SyncIssues : HeaderState()
         data class Exposed(val date: LocalDate, val clock: Clock) : HeaderState()
     }
 
