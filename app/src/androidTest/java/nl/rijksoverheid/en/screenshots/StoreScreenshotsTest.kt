@@ -48,6 +48,7 @@ import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.requesttest.RequestTestFragment
+import nl.rijksoverheid.en.requesttest.RequestTestFragmentArgs
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.status.StatusFragment
 import nl.rijksoverheid.en.status.StatusViewModel
@@ -248,7 +249,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
     fun takeRequestScreenshot() {
         val navController = TestNavHostController(context).apply {
             setGraph(R.navigation.nav_main)
-            setCurrentDestination(R.id.requestTestFragment)
+            setCurrentDestination(R.id.requestTestFragment, RequestTestFragmentArgs(true).toBundle())
         }
 
         withFragment(

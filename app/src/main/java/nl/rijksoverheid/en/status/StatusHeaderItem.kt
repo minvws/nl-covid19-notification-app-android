@@ -61,9 +61,19 @@ class StatusHeaderItem(
                 enableActionLabel = R.string.status_en_api_disabled_enable,
                 enableAction = primaryAction
             ) {
-                override fun getDescription(context: Context) = context.getString(
-                    R.string.status_en_api_disabled_description, context.getString(R.string.app_name)
-                )
+                override fun getDescription(context: Context) =
+                    context.getString(R.string.status_en_api_disabled_description, context.getString(R.string.app_name))
+            }
+        is StatusViewModel.HeaderState.SyncIssues ->
+            object : HeaderViewState(
+                R.drawable.gradient_status_disabled,
+                R.raw.status_inactive,
+                R.string.cd_status_disabled,
+                R.string.status_disabled_headline,
+                enableActionLabel = R.string.status_error_action_sync_issues,
+                enableAction = primaryAction
+            ) {
+                override fun getDescription(context: Context) = context.getString(R.string.status_error_sync_issues)
             }
         is StatusViewModel.HeaderState.Exposed ->
             object : HeaderViewState(
