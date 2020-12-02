@@ -7,17 +7,23 @@
 package nl.rijksoverheid.en.databinding
 
 import android.content.res.Configuration
+import android.text.format.DateFormat
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
+import androidx.core.text.HtmlCompat
 import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
+import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.util.fromHtmlWithCustomReplacements
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 object BindingAdapters {
     @JvmStatic
@@ -104,6 +110,24 @@ object BindingAdapters {
                     }
                 }
             )
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("pausedState")
+    fun bindPausedState(view: TextView, state: Settings.PausedState?) {
+        when (state) {
+            is Settings.PausedState.Paused -> {
+                val format = if (DateFormat.is24HourFormat(view.context)) "HH:mm" else "hh:mm a"
+                view.text = HtmlCompat.fromHtml(
+                    view.context.getString(
+                        R.string.settings_pause_status,
+                        DateTimeFormatter.ofPattern(format, Locale.getDefault())
+                            .format(state.pausedUntil)
+                    ), HtmlCompat.FROM_HTML_MODE_COMPACT
+                )
+            }
+            else -> view.text = null
         }
     }
 }

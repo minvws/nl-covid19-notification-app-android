@@ -8,18 +8,74 @@ package nl.rijksoverheid.en.settings
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
+private const val KEY_WIFI_ONLY = "wifi_only"
+private const val KEY_PAUSED = "paused"
+private const val KEY_PAUSED_UNTIL = "paused_until"
 
 /**
  * Thin wrapper around the default app preferences
  */
 class Settings(
     context: Context,
-    preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(
+        context
+    )
 ) {
-    val checkOnWifiOnly: Boolean = preferences.getBoolean(KEY_WIFI_ONLY, false)
+    var checkOnWifiOnly: Boolean
+        get() = preferences.getBoolean(KEY_WIFI_ONLY, false)
+        set(value) {
+            preferences.edit {
+                putBoolean(KEY_WIFI_ONLY, value)
+            }
+        }
 
-    companion object {
-        const val KEY_WIFI_ONLY = "wifi_only"
+    val exposureStatePausedState: PausedState
+        get() = if (preferences.getBoolean(KEY_PAUSED, false)) {
+            PausedState.Paused(
+                LocalDateTime.ofEpochSecond(
+                    preferences.getLong(KEY_PAUSED_UNTIL, 0),
+                    0,
+                    ZoneOffset.UTC
+                )
+            )
+        } else {
+            PausedState.Enabled
+        }
+
+    fun setExposureNotificationsPaused(until: LocalDateTime) {
+        preferences.edit {
+            putBoolean(KEY_PAUSED, true)
+            putLong(KEY_PAUSED_UNTIL, until.toEpochSecond(ZoneOffset.UTC))
+        }
+    }
+
+    fun clearExposureNotificationsPaused() {
+        preferences.edit {
+            remove(KEY_PAUSED)
+            remove(KEY_PAUSED_UNTIL)
+        }
+    }
+
+    fun observeChanges(): Flow<Settings> = callbackFlow {
+        val listener =
+            SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> offer(this@Settings) }
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+        offer(this@Settings)
+        awaitClose {
+            preferences.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
+
+    sealed class PausedState {
+        object Enabled : PausedState()
+        data class Paused(val pausedUntil: LocalDateTime) : PausedState()
     }
 }

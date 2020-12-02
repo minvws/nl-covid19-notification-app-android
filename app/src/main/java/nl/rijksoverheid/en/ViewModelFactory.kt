@@ -16,10 +16,12 @@ import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
 import nl.rijksoverheid.en.factory.createLabTestRepository
 import nl.rijksoverheid.en.factory.createOnboardingRepository
 import nl.rijksoverheid.en.factory.createResourceBundleManager
+import nl.rijksoverheid.en.factory.createSettingsRepository
 import nl.rijksoverheid.en.labtest.LabTestViewModel
 import nl.rijksoverheid.en.notification.PostNotificationViewModel
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingViewModel
+import nl.rijksoverheid.en.settings.SettingsViewModel
 import nl.rijksoverheid.en.status.StatusViewModel
 
 class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
@@ -49,6 +51,7 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
             PostNotificationViewModel::class.java -> PostNotificationViewModel(
                 createResourceBundleManager(context)
             ) as T
+            SettingsViewModel::class.java -> SettingsViewModel(createSettingsRepository(context)) as T
             else -> throw IllegalStateException("Unknown view model class $modelClass")
         }
     }

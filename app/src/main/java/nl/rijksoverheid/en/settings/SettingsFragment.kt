@@ -6,44 +6,33 @@
  */
 package nl.rijksoverheid.en.settings
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
+import androidx.fragment.app.viewModels
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.databinding.FragmentSettingsBinding
+import nl.rijksoverheid.en.lifecyle.EventObserver
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
-
-    private val sharedPreferenceListener: SharedPreferences.OnSharedPreferenceChangeListener =
-        SharedPreferences.OnSharedPreferenceChangeListener { _, key -> onPreferenceChanged(key) }
+    private val settingsViewModel: SettingsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        PreferenceManager.getDefaultSharedPreferences(requireContext())
-            .registerOnSharedPreferenceChangeListener(sharedPreferenceListener)
-    }
+        val binding = FragmentSettingsBinding.bind(view)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = settingsViewModel
 
-    private fun onPreferenceChanged(key: String) {
-        when (key) {
-            Settings.KEY_WIFI_ONLY -> viewModel.rescheduleBackgroundJobs()
-        }
-    }
+        settingsViewModel.wifiOnlyChanged.observe(viewLifecycleOwner, EventObserver {
+            viewModel.rescheduleBackgroundJobs()
+        })
 
-    override fun onDestroyView() {
-        PreferenceManager.getDefaultSharedPreferences(requireContext())
-            .unregisterOnSharedPreferenceChangeListener(sharedPreferenceListener)
-        super.onDestroyView()
-    }
-
-    class SettingsPreferenceFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.settings, rootKey)
-        }
+        settingsViewModel.pauseRequested.observe(viewLifecycleOwner, EventObserver {
+            viewModel.disableExposureNotifications()
+        })
     }
 }
