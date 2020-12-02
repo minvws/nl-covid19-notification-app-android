@@ -91,9 +91,12 @@ class StatusFragment @JvmOverloads constructor(
                 StatusViewModel.HeaderState.Active -> section.updateHeader(
                     headerState = it
                 )
-                StatusViewModel.HeaderState.Disabled -> section.updateHeader(
+                is StatusViewModel.HeaderState.Disabled -> section.updateHeader(
                     headerState = it,
-                    primaryAction = ::resetAndRequestEnableNotifications
+                    primaryAction = if (it.hasSyncIssues)
+                        statusViewModel::resetErrorState
+                    else
+                        ::resetAndRequestEnableNotifications
                 )
                 is StatusViewModel.HeaderState.Exposed -> section.updateHeader(
                     headerState = it,
