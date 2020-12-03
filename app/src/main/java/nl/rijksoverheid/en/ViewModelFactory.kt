@@ -48,7 +48,8 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
                 createLabTestRepository(context)
             ) as T
             PostNotificationViewModel::class.java -> PostNotificationViewModel(
-                createResourceBundleManager(context)
+                createResourceBundleManager(context),
+                createAppConfigManager(context)
             ) as T
             else -> throw IllegalStateException("Unknown view model class $modelClass")
         }
