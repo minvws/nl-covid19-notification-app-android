@@ -17,6 +17,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -67,9 +68,20 @@ class StatusFragment @JvmOverloads constructor(
                 StatusActionItem.GenericNotification -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionGenericNotification()
                 )
-                StatusActionItem.RequestTest -> findNavController().navigateCatchingErrors(
-                    StatusFragmentDirections.actionRequestTest(statusViewModel.exposureDetected)
-                )
+                StatusActionItem.RequestTest -> {
+                    if (statusViewModel.exposureDetected) {
+                        viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
+                            val phoneNumber = statusViewModel.getAppointmentPhoneNumber()
+                            findNavController().navigateCatchingErrors(
+                                StatusFragmentDirections.actionRequestTest(phoneNumber)
+                            )
+                        }
+                    } else {
+                        findNavController().navigateCatchingErrors(
+                            StatusFragmentDirections.actionRequestTest(getString(R.string.request_test_phone_number))
+                        )
+                    }
+                }
                 StatusActionItem.LabTest -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionLabTest()
                 )

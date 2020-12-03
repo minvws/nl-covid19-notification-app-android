@@ -42,6 +42,7 @@ import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.StatusResult
+import nl.rijksoverheid.en.factory.createAppConfigManager
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.labtest.LabTestFragment
 import nl.rijksoverheid.en.notifier.NotificationsRepository
@@ -154,6 +155,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         ).apply { setHasSeenLatestTerms() },
         repository,
         NotificationsRepository(context, clock),
+        createAppConfigManager(context),
         clock
     )
     private val viewModel = ExposureNotificationsViewModel(repository)
@@ -249,7 +251,10 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
     fun takeRequestScreenshot() {
         val navController = TestNavHostController(context).apply {
             setGraph(R.navigation.nav_main)
-            setCurrentDestination(R.id.requestTestFragment, RequestTestFragmentArgs(true).toBundle())
+            setCurrentDestination(
+                R.id.requestTestFragment,
+                RequestTestFragmentArgs(context.getString(R.string.request_test_phone_number)).toBundle()
+            )
         }
 
         withFragment(

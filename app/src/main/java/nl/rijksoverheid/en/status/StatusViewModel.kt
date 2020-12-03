@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.ExposureNotificationsRepository
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
@@ -25,6 +26,7 @@ class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
     private val exposureNotificationsRepository: ExposureNotificationsRepository,
     private val notificationsRepository: NotificationsRepository,
+    private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone()
 ) : ViewModel() {
 
@@ -65,11 +67,18 @@ class StatusViewModel(
     val hasSeenLatestTerms = onboardingRepository.hasSeenLatestTerms()
         .asLiveData(viewModelScope.coroutineContext)
 
+    suspend fun getAppointmentPhoneNumber() =
+        appConfigManager.getCachedConfigOrDefault().appointmentPhoneNumber
+
     fun hasCompletedOnboarding(): Boolean {
         return onboardingRepository.hasCompletedOnboarding()
     }
 
-    private fun createHeaderState(status: StatusResult, date: LocalDate?, keyProcessingOverdue: Boolean): HeaderState {
+    private fun createHeaderState(
+        status: StatusResult,
+        date: LocalDate?,
+        keyProcessingOverdue: Boolean
+    ): HeaderState {
         return when {
             date != null -> HeaderState.Exposed(date, clock)
             status !is StatusResult.Enabled -> HeaderState.Disabled

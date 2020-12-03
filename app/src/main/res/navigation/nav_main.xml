@@ -200,8 +200,8 @@
         android:label="RequestTestFragment"
         tools:layout="@layout/fragment_list">
         <argument
-            android:name="exposureDetected"
-            app:argType="boolean" />
+            android:name="phoneNumber"
+            app:argType="string" />
     </fragment>
 
     <dialog

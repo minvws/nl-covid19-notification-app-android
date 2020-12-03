@@ -32,37 +32,14 @@ class RequestTestFragmentTest : BaseInstrumentationTest() {
             setCurrentDestination(R.id.nav_status)
         }
 
-        navController.navigate(StatusFragmentDirections.actionRequestTest(false))
+        navController.navigate(StatusFragmentDirections.actionRequestTest("12345"))
 
         val fragment = RequestTestFragment()
 
         withFragment(fragment, navController, R.style.AppTheme) {
             val expectedLabel = context.getString(
                 R.string.request_test_button_call,
-                context.getString(R.string.request_test_phone_number)
-            )
-            Espresso.onView(ViewMatchers.withId(R.id.button_1))
-                .check(ViewAssertions.matches(ViewMatchers.withText(expectedLabel)))
-        }
-    }
-
-    @Test
-    fun testRequestTestShowsAlternatePhoneNumberWhenExposureIsDetected() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-
-        val navController = TestNavHostController(context).apply {
-            setGraph(R.navigation.nav_main)
-            setCurrentDestination(R.id.nav_status)
-        }
-
-        navController.navigate(StatusFragmentDirections.actionRequestTest(true))
-
-        val fragment = RequestTestFragment()
-
-        withFragment(fragment, navController, R.style.AppTheme) {
-            val expectedLabel = context.getString(
-                R.string.request_test_button_call,
-                context.getString(R.string.request_test_phone_number_exposure)
+                "12345"
             )
             Espresso.onView(ViewMatchers.withId(R.id.button_1))
                 .check(ViewAssertions.matches(ViewMatchers.withText(expectedLabel)))
