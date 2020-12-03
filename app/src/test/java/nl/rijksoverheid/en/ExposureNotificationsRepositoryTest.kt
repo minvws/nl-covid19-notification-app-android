@@ -158,6 +158,47 @@ class ExposureNotificationsRepositoryTest {
     }
 
     @Test
+    fun `processExposureKeySets marks all keys processed on first run`() = runBlocking {
+        mockWebServer.start()
+
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val service = CdnService.create(
+            context,
+            BuildConfig.VERSION_CODE,
+            OkHttpClient(),
+            mockWebServer.url("/").toString()
+        )
+
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+            override suspend fun provideDiagnosisKeys(
+                files: List<File>,
+                configuration: ExposureConfiguration,
+                token: String
+            ): DiagnosisKeysResult = throw AssertionError()
+        }
+
+        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+            .getSharedPreferences("repository_test", 0)
+
+        val repository =
+            createRepository(api = api, cdnService = service, preferences = sharedPrefs)
+
+        val result =
+            repository.processExposureKeySets(
+                Manifest(
+                    listOf("test"),
+                    "config-params",
+                    "appConfigId"
+                )
+            )
+
+        assertEquals(0, mockWebServer.requestCount)
+        assertTrue(result is ProcessExposureKeysResult.Success)
+        assertEquals(setOf("test"), sharedPrefs.getStringSet("exposure_key_sets", emptySet()))
+    }
+
+    @Test
     fun `processExposureKeySets processes exposure key sets`() = runBlocking {
         mockWebServer.enqueue(MockResponse().setBody("dummy_key_file"))
         mockWebServer.enqueue(MOCK_RISK_PARAMS_RESPONSE)
@@ -186,6 +227,10 @@ class ExposureNotificationsRepositoryTest {
 
         val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
             .getSharedPreferences("repository_test", 0)
+
+        sharedPrefs.edit {
+            putStringSet("exposure_key_sets", emptySet())
+        }
 
         val repository =
             createRepository(api = api, cdnService = service, preferences = sharedPrefs)
@@ -395,6 +440,10 @@ class ExposureNotificationsRepositoryTest {
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
 
+            sharedPrefs.edit {
+                putStringSet("exposure_key_sets", emptySet())
+            }
+
             val repository =
                 createRepository(api = api, cdnService = service, preferences = sharedPrefs)
 
@@ -448,6 +497,10 @@ class ExposureNotificationsRepositoryTest {
 
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
+
+            sharedPrefs.edit {
+                putStringSet("exposure_key_sets", emptySet())
+            }
 
             val repository = createRepository(
                 api = api,
@@ -505,6 +558,10 @@ class ExposureNotificationsRepositoryTest {
 
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
+
+            sharedPrefs.edit {
+                putStringSet("exposure_key_sets", emptySet())
+            }
 
             val repository =
                 createRepository(api = api, cdnService = service, signatureValidation = true)
@@ -573,6 +630,10 @@ class ExposureNotificationsRepositoryTest {
 
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
+
+            sharedPrefs.edit {
+                putStringSet("exposure_key_sets", emptySet())
+            }
 
             val repository =
                 createRepository(api = api, cdnService = service, preferences = sharedPrefs)
