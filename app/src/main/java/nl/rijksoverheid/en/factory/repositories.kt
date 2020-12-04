@@ -8,7 +8,7 @@ package nl.rijksoverheid.en.factory
 
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
+import androidx.security.crypto.MasterKey
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.nearby.Nearby
@@ -133,10 +133,12 @@ fun createResourceBundleManager(context: Context): ResourceBundleManager {
 private fun createSecurePreferences(context: Context): AsyncSharedPreferences {
     return notificationPreferences ?: AsyncSharedPreferences {
         retry {
+            val masterKey =
+                MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
             EncryptedSharedPreferences.create(
-                "${BuildConfig.APPLICATION_ID}.notifications",
-                MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
                 context,
+                "${BuildConfig.APPLICATION_ID}.notifications",
+                masterKey,
                 EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             )

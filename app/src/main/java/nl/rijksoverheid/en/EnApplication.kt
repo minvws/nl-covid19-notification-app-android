@@ -7,17 +7,12 @@
 package nl.rijksoverheid.en
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
 import android.app.Application
-import android.app.PendingIntent
-import android.content.Intent
 import android.util.Log
 import androidx.work.Configuration
 import androidx.work.Logger
 import androidx.work.WorkManager
-import androidx.work.impl.utils.ForceStopRunnable
 import nl.rijksoverheid.en.job.EnWorkerFactory
-import nl.rijksoverheid.en.job.PeriodicWakeUpReceiver
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 
@@ -33,9 +28,6 @@ class EnApplication : Application(), Configuration.Provider {
             Timber.plant(FileTree(getExternalFilesDir(null)))
             Timber.d("onCreate")
         }
-        // WM will only reschedule jobs on the job scheduler
-        // when it thinks the app has been forced stopped.
-        emulateWorkManagerForceStopped()
 
         WorkManager.initialize(this, workManagerConfiguration)
         if (BuildConfig.FEATURE_LOGGING) {
@@ -66,31 +58,7 @@ class EnApplication : Application(), Configuration.Provider {
                 }
             })
         }
-        PeriodicWakeUpReceiver.schedule(this)
         notificationsRepository.createOrUpdateNotificationChannels()
-    }
-
-    /**
-     * Make WorkManager think the app was forced stopped. As a result existing jobs
-     * will be rescheduled on JobScheduler when WorkManager is initialised
-     *
-     * Warning: this is a workaround and depends on WorkManager internals!
-     */
-    private fun emulateWorkManagerForceStopped() {
-        val intent = Intent(
-            "ACTION_FORCE_STOP_RESCHEDULE",
-            null,
-            this,
-            ForceStopRunnable.BroadcastReceiver::class.java
-        )
-        val pi = PendingIntent.getBroadcast(this, -1, intent, PendingIntent.FLAG_NO_CREATE)
-        Timber.d("Pending intent = $pi")
-
-        pi?.let {
-            val alarmManager = getSystemService(AlarmManager::class.java)
-            alarmManager?.cancel(it)
-            it.cancel()
-        }
     }
 
     override fun getWorkManagerConfiguration(): Configuration {
