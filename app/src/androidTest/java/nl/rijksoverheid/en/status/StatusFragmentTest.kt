@@ -40,6 +40,7 @@ import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.StatusResult
+import nl.rijksoverheid.en.factory.createAppConfigManager
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
@@ -134,6 +135,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         ).apply { setHasSeenLatestTerms() },
         repository,
         NotificationsRepository(context, clock),
+        createAppConfigManager(context),
         clock
     )
     private val viewModel = ExposureNotificationsViewModel(repository)
