@@ -260,4 +260,7 @@
     <string name="reminder_channel_description">Herinneringen wanneer je de app hebt gepauzeerd</string>
     <string name="app_inactive_paused_title">CoronaMelder is gepauzeerd</string>
     <string name="app_inactive_paused_message">Open de app om de app weer aan te zetten</string>
+    <string name="status_paused_headline">De app is gepauzeerd</string>
+    <string name="status_en_api_paused_description"><![CDATA[CoronaMelder wordt weer actief om <b>%1$s</b>]]></string>
+    <string name="status_en_api_paused_duration_reached">De app is niet actief. Je moet deze zelf weer aanzetten.</string>
 </resources>

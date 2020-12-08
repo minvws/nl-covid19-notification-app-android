@@ -96,7 +96,16 @@
     <fragment
         android:id="@+id/nav_settings"
         android:name="nl.rijksoverheid.en.settings.SettingsFragment"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+
+        <action
+            android:id="@+id/action_enable_location_services"
+            app:destination="@id/nav_location_services_required"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_location_services_required"

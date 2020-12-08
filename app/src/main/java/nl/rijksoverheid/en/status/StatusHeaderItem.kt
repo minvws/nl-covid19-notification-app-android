@@ -7,15 +7,20 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
+import android.text.format.DateFormat
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
+import androidx.core.text.HtmlCompat
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusHeaderBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatExposureDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class StatusHeaderItem(
     headerState: StatusViewModel.HeaderState,
@@ -37,7 +42,7 @@ class StatusHeaderItem(
         val whatsNextAction: () -> Unit = {},
         val resetAction: () -> Unit = {}
     ) {
-        abstract fun getDescription(context: Context): String
+        abstract fun getDescription(context: Context): CharSequence
     }
 
     private val viewState = when (headerState) {
@@ -51,6 +56,31 @@ class StatusHeaderItem(
             ) {
                 override fun getDescription(context: Context) =
                     context.getString(R.string.status_no_exposure_detected_description)
+            }
+        is StatusViewModel.HeaderState.Paused ->
+            object : HeaderViewState(
+                R.drawable.gradient_status_disabled,
+                R.raw.status_inactive,
+                R.string.cd_status_disabled,
+                R.string.status_paused_headline,
+                enableActionLabel = R.string.status_en_api_disabled_enable,
+                enableAction = primaryAction
+            ) {
+                override fun getDescription(context: Context): CharSequence {
+                    return if (headerState.pausedUntil.isAfter(LocalDateTime.now())) {
+                        val format = if (DateFormat.is24HourFormat(context)) "HH:mm" else "hh:mm a"
+                        HtmlCompat.fromHtml(
+                            context.getString(
+                                R.string.status_en_api_paused_description,
+                                DateTimeFormatter.ofPattern(format, Locale.getDefault())
+                                    .format(headerState.pausedUntil)
+                            ),
+                            HtmlCompat.FROM_HTML_MODE_COMPACT
+                        )
+                    } else {
+                        context.getString(R.string.status_en_api_paused_duration_reached)
+                    }
+                }
             }
         is StatusViewModel.HeaderState.Disabled ->
             object : HeaderViewState(

@@ -19,13 +19,17 @@ import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
+import nl.rijksoverheid.en.settings.Settings
+import nl.rijksoverheid.en.settings.SettingsRepository
 import java.time.Clock
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
     private val exposureNotificationsRepository: ExposureNotificationsRepository,
     private val notificationsRepository: NotificationsRepository,
+    settingsRepository: SettingsRepository,
     private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone()
 ) : ViewModel() {
@@ -34,18 +38,22 @@ class StatusViewModel(
 
     val headerState = combine(
         exposureNotificationsRepository.getStatus(),
+        settingsRepository.exposureNotificationsPausedState(),
         exposureNotificationsRepository.lastKeyProcessed()
-    ) { status, _ ->
-        status
-    }.flatMapLatest { status ->
-        exposureNotificationsRepository.getLastExposureDate().map { date -> status to date }
-    }.map { (status, date) ->
-        createHeaderState(status, date, exposureNotificationsRepository.keyProcessingOverdue())
-    }
-        .onEach {
-            notificationsRepository.cancelExposureNotification()
-        }
-        .asLiveData(viewModelScope.coroutineContext)
+    ) { status, pausedState, _ ->
+        status to pausedState
+    }.flatMapLatest { (status, pausedState) ->
+        exposureNotificationsRepository.getLastExposureDate()
+            .map { date -> Triple(status, pausedState,  date) }
+    }.map { (status, pausedState, date) ->
+        createHeaderState(
+            status,
+            date,
+            exposureNotificationsRepository.keyProcessingOverdue(),
+            pausedState)
+    }.onEach {
+        notificationsRepository.cancelExposureNotification()
+    }.asLiveData(viewModelScope.coroutineContext)
 
     val exposureDetected: Boolean
         get() = headerState.value is HeaderState.Exposed
@@ -77,10 +85,12 @@ class StatusViewModel(
     private fun createHeaderState(
         status: StatusResult,
         date: LocalDate?,
-        keyProcessingOverdue: Boolean
+        keyProcessingOverdue: Boolean,
+        pauseState: Settings.PausedState
     ): HeaderState {
         return when {
             date != null -> HeaderState.Exposed(date, clock)
+            pauseState is Settings.PausedState.Paused -> HeaderState.Paused(pauseState.pausedUntil)
             status !is StatusResult.Enabled -> HeaderState.Disabled
             keyProcessingOverdue -> HeaderState.SyncIssues
             else -> HeaderState.Active
@@ -124,6 +134,7 @@ class StatusViewModel(
         object Active : HeaderState()
         object Disabled : HeaderState()
         object SyncIssues : HeaderState()
+        data class Paused(val pausedUntil: LocalDateTime) : HeaderState()
         data class Exposed(val date: LocalDate, val clock: Clock) : HeaderState()
     }
 

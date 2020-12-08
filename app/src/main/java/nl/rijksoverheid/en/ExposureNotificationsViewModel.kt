@@ -27,10 +27,12 @@ import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.lifecyle.Event
+import nl.rijksoverheid.en.settings.SettingsRepository
 import timber.log.Timber
 
-class ExposureNotificationsViewModel(private val repository: ExposureNotificationsRepository) :
-    ViewModel() {
+class ExposureNotificationsViewModel(
+    private val repository: ExposureNotificationsRepository,
+    private val settingsRepository: SettingsRepository) : ViewModel() {
 
     val notificationState: LiveData<NotificationsState> = repository.getStatus().map { result ->
         when (result) {
@@ -82,6 +84,7 @@ class ExposureNotificationsViewModel(private val repository: ExposureNotificatio
     private fun updateResult(result: EnableNotificationsResult) {
         when (result) {
             is EnableNotificationsResult.Enabled -> {
+                settingsRepository.clearExposureNotificationsPaused()
             }
             is EnableNotificationsResult.ResolutionRequired -> updateResult(
                 NotificationsStatusResult.ConsentRequired(

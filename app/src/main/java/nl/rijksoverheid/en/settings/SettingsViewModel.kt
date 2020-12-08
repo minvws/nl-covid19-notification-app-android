@@ -1,11 +1,9 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
-
 package nl.rijksoverheid.en.settings
 
 import androidx.lifecycle.LiveData
@@ -27,6 +25,7 @@ class SettingsViewModel(private val repository: SettingsRepository) : ViewModel(
     val wifiOnly = MutableLiveData(repository.wifiOnly)
     val wifiOnlyChanged: LiveData<Event<Boolean>> = MutableLiveData()
     val pauseRequested: LiveData<Event<Unit>> = MutableLiveData()
+    val enableExposureNotificationsRequested: LiveData<Event<Unit>> = MutableLiveData()
 
     init {
         var firstValue = true
@@ -45,7 +44,6 @@ class SettingsViewModel(private val repository: SettingsRepository) : ViewModel(
     }
 
     fun enableExposureNotifications() {
-        repository.clearExposureNotificationsPaused()
-        (pausedState as MutableLiveData).value = Settings.PausedState.Enabled
+        (enableExposureNotificationsRequested as MutableLiveData).value = Event(Unit)
     }
 }

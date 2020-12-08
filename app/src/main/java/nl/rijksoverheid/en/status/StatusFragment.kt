@@ -111,6 +111,10 @@ class StatusFragment @JvmOverloads constructor(
                     headerState = it,
                     primaryAction = statusViewModel::resetErrorState
                 )
+                is StatusViewModel.HeaderState.Paused -> section.updateHeader(
+                    headerState = it,
+                    primaryAction = ::resetAndRequestEnableNotifications
+                )
                 is StatusViewModel.HeaderState.Exposed -> section.updateHeader(
                     headerState = it,
                     primaryAction = { navigateToPostNotification(it.date.toEpochDay()) },

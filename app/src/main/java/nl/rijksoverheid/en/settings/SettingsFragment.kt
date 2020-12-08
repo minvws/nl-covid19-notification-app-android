@@ -10,11 +10,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentSettingsBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
@@ -27,12 +29,29 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = settingsViewModel
 
-        settingsViewModel.wifiOnlyChanged.observe(viewLifecycleOwner, EventObserver {
-            viewModel.rescheduleBackgroundJobs()
-        })
+        settingsViewModel.wifiOnlyChanged.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                viewModel.rescheduleBackgroundJobs()
+            }
+        )
 
-        settingsViewModel.pauseRequested.observe(viewLifecycleOwner, EventObserver {
-            viewModel.disableExposureNotifications()
-        })
+        settingsViewModel.pauseRequested.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                viewModel.disableExposureNotifications()
+            }
+        )
+
+        settingsViewModel.enableExposureNotificationsRequested.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                if (viewModel.locationPreconditionSatisfied) {
+                    viewModel.requestEnableNotificationsForcingConsent()
+                } else {
+                    findNavController().navigateCatchingErrors(SettingsFragmentDirections.actionEnableLocationServices())
+                }
+            }
+        )
     }
 }

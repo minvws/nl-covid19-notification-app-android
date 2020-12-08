@@ -31,7 +31,8 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             ExposureNotificationsViewModel::class.java -> ExposureNotificationsViewModel(
-                createExposureNotificationsRepository(context)
+                createExposureNotificationsRepository(context),
+                createSettingsRepository(context)
             ) as T
             AppLifecycleViewModel::class.java -> AppLifecycleViewModel(
                 createAppLifecycleManager(context),
@@ -44,6 +45,7 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
                 createOnboardingRepository(context),
                 createExposureNotificationsRepository(context),
                 NotificationsRepository(context),
+                createSettingsRepository(context),
                 createAppConfigManager(context)
             ) as T
             LabTestViewModel::class.java -> LabTestViewModel(
