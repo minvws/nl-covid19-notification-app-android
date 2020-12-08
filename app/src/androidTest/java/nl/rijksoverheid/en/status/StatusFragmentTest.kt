@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -40,6 +39,8 @@ import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.enapi.StatusResult
+import nl.rijksoverheid.en.factory.createAppConfigManager
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
@@ -110,7 +111,9 @@ class StatusFragmentTest : BaseInstrumentationTest() {
 
     private val repository = ExposureNotificationsRepository(
         context,
-        FakeExposureNotificationApi(),
+        object : FakeExposureNotificationApi() {
+            override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+        },
         service,
         AsyncSharedPreferences { preferencesFactory() },
         object : BackgroundWorkScheduler {
@@ -132,6 +135,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         ).apply { setHasSeenLatestTerms() },
         repository,
         NotificationsRepository(context, clock),
+        createAppConfigManager(context),
         clock
     )
     private val viewModel = ExposureNotificationsViewModel(repository)
@@ -174,15 +178,17 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             R.style.AppTheme,
             activityViewModelFactory
         ) {
-            onView(withId(R.id.status_text))
+            onView(withId(R.id.status_headline))
                 .check(matches(withText(R.string.status_disabled_headline)))
 
-            onView(withText(R.string.status_error_sync_issues)).check(matches(isDisplayed()))
-            onView(withText(R.string.status_error_action_sync_issues)).check(matches(isDisplayed()))
+            onView(withId(R.id.status_description))
+                .check(matches(withText(R.string.status_error_sync_issues)))
 
-            onView(withText(R.string.status_error_action_sync_issues)).perform(click())
+            onView(withId(R.id.disabled_enable)).check(matches(withText(R.string.status_error_action_sync_issues)))
+                .perform(click())
 
-            onView(withText(R.string.status_error_sync_issues)).check(doesNotExist())
+            onView(withId(R.id.status_headline)).check(matches(withText(R.string.status_no_exposure_detected_headline)))
+            onView(withId(R.id.status_description)).check(matches(withText(R.string.status_no_exposure_detected_description)))
         }
     }
 

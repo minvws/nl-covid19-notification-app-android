@@ -8,7 +8,6 @@
 
 <resources>
     <string name="request_test_phone_number" translatable="false">0800–1202</string>
-    <string name="request_test_phone_number_exposure" translatable="false">0800-2035</string>
     <string name="helpdesk_phone_number" translatable="false">0800–1280</string>
     <string name="exposure_date_format" translatable="false">EEEE d MMMM</string>
     <string name="exposure_date_short_format" translatable="false">d MMMM</string>

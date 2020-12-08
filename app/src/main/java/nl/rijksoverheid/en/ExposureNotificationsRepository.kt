@@ -256,6 +256,13 @@ class ExposureNotificationsRepository(
             return ProcessExposureKeysResult.Success
         }
 
+        // if the key is missing, then this is our first run
+        if (!preferences.contains(KEY_EXPOSURE_KEY_SETS)) {
+            Timber.d("Skipping processing of initial key set")
+            updateProcessedExposureKeySets(manifest.exposureKeysSetIds.toSet(), manifest)
+            return ProcessExposureKeysResult.Success
+        }
+
         val processedSets = preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())
         val updates = manifest.exposureKeysSetIds.toMutableSet().apply {
             removeAll(processedSets)

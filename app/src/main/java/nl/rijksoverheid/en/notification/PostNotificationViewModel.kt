@@ -10,10 +10,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.resource.ResourceBundleManager
 import java.time.LocalDate
 
-class PostNotificationViewModel(private val resourceBundleManager: ResourceBundleManager) :
+class PostNotificationViewModel(
+    private val resourceBundleManager: ResourceBundleManager,
+    private val appConfigManager: AppConfigManager
+) :
     ViewModel() {
 
     private val exposureDate = MutableLiveData<LocalDate>()
@@ -23,6 +27,9 @@ class PostNotificationViewModel(private val resourceBundleManager: ResourceBundl
             emit(resourceBundleManager.getExposureNotificationGuidance(it))
         }
     }
+
+    suspend fun getAppointmentPhoneNumber() =
+        appConfigManager.getCachedConfigOrDefault().appointmentPhoneNumber
 
     fun setExposureDate(exposureDate: LocalDate) {
         this.exposureDate.value = exposureDate

@@ -43,13 +43,15 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
             StatusViewModel::class.java -> StatusViewModel(
                 createOnboardingRepository(context),
                 createExposureNotificationsRepository(context),
-                NotificationsRepository(context)
+                NotificationsRepository(context),
+                createAppConfigManager(context)
             ) as T
             LabTestViewModel::class.java -> LabTestViewModel(
                 createLabTestRepository(context)
             ) as T
             PostNotificationViewModel::class.java -> PostNotificationViewModel(
-                createResourceBundleManager(context)
+                createResourceBundleManager(context),
+                createAppConfigManager(context)
             ) as T
             SettingsViewModel::class.java -> SettingsViewModel(createSettingsRepository(context)) as T
             else -> throw IllegalStateException("Unknown view model class $modelClass")

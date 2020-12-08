@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.ExposureNotificationsRepository
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
@@ -25,14 +26,22 @@ class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
     private val exposureNotificationsRepository: ExposureNotificationsRepository,
     private val notificationsRepository: NotificationsRepository,
+    private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone()
 ) : ViewModel() {
 
     fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
 
-    val headerState = exposureNotificationsRepository.getStatus().flatMapLatest { status ->
+    val headerState = combine(
+        exposureNotificationsRepository.getStatus(),
+        exposureNotificationsRepository.lastKeyProcessed()
+    ) { status, _ ->
+        status
+    }.flatMapLatest { status ->
         exposureNotificationsRepository.getLastExposureDate().map { date -> status to date }
-    }.map { (status, date) -> createHeaderState(status, date) }
+    }.map { (status, date) ->
+        createHeaderState(status, date, exposureNotificationsRepository.keyProcessingOverdue())
+    }
         .onEach {
             notificationsRepository.cancelExposureNotification()
         }
@@ -58,15 +67,23 @@ class StatusViewModel(
     val hasSeenLatestTerms = onboardingRepository.hasSeenLatestTerms()
         .asLiveData(viewModelScope.coroutineContext)
 
+    suspend fun getAppointmentPhoneNumber() =
+        appConfigManager.getCachedConfigOrDefault().appointmentPhoneNumber
+
     fun hasCompletedOnboarding(): Boolean {
         return onboardingRepository.hasCompletedOnboarding()
     }
 
-    private fun createHeaderState(status: StatusResult, date: LocalDate?): HeaderState {
+    private fun createHeaderState(
+        status: StatusResult,
+        date: LocalDate?,
+        keyProcessingOverdue: Boolean
+    ): HeaderState {
         return when {
             date != null -> HeaderState.Exposed(date, clock)
-            status is StatusResult.Enabled -> HeaderState.Active
-            else -> HeaderState.Disabled
+            status !is StatusResult.Enabled -> HeaderState.Disabled
+            keyProcessingOverdue -> HeaderState.SyncIssues
+            else -> HeaderState.Active
         }
     }
 
@@ -80,7 +97,7 @@ class StatusViewModel(
             ErrorState.ConsentRequired
         } else if (!exposureNotificationsEnabled) {
             ErrorState.NotificationsDisabled
-        } else if (keyProcessingOverdue) {
+        } else if (date != null && keyProcessingOverdue) {
             ErrorState.SyncIssues
         } else {
             ErrorState.None
@@ -95,6 +112,7 @@ class StatusViewModel(
     fun resetErrorState() {
         viewModelScope.launch {
             exposureNotificationsRepository.resetLastKeysProcessed()
+            exposureNotificationsRepository.rescheduleBackgroundJobs()
         }
     }
 
@@ -105,6 +123,7 @@ class StatusViewModel(
     sealed class HeaderState {
         object Active : HeaderState()
         object Disabled : HeaderState()
+        object SyncIssues : HeaderState()
         data class Exposed(val date: LocalDate, val clock: Clock) : HeaderState()
     }
 

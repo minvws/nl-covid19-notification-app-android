@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -51,12 +52,14 @@ class PostNotificationFragment : BaseFragment(R.layout.fragment_list_with_button
         binding.button.apply {
             setText(R.string.post_notification_button)
             setOnClickListener {
-                startActivity(
-                    Intent(Intent.ACTION_DIAL).apply {
-                        val phoneNumber = getString(R.string.request_test_phone_number_exposure)
-                        data = Uri.parse("tel:$phoneNumber")
-                    }
-                )
+                viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
+                    val phoneNumber = viewModel.getAppointmentPhoneNumber()
+                    startActivity(
+                        Intent(Intent.ACTION_DIAL).apply {
+                            data = Uri.parse("tel:$phoneNumber")
+                        }
+                    )
+                }
             }
         }
     }

@@ -34,8 +34,7 @@ class RequestTestFragment : BaseFragment(R.layout.fragment_list_with_two_buttons
         binding.toolbar.setTitle(R.string.request_test_toolbar_title)
         binding.content.adapter = adapter
         binding.button1.apply {
-            val phoneNumber =
-                getString(if (args.exposureDetected) R.string.request_test_phone_number_exposure else R.string.request_test_phone_number)
+            val phoneNumber = args.phoneNumber
             text = getString(
                 R.string.request_test_button_call,
                 phoneNumber.forceLtr()
