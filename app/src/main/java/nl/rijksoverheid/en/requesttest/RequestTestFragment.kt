@@ -6,16 +6,19 @@
  */
 package nl.rijksoverheid.en.requesttest
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListWithTwoButtonsBinding
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.forceLtr
 
 class RequestTestFragment : BaseFragment(R.layout.fragment_list_with_two_buttons) {
@@ -40,11 +43,17 @@ class RequestTestFragment : BaseFragment(R.layout.fragment_list_with_two_buttons
                 phoneNumber.forceLtr()
             )
             setOnClickListener {
-                startActivity(
-                    Intent(Intent.ACTION_DIAL).apply {
-                        data = Uri.parse("tel:$phoneNumber")
-                    }
-                )
+                try {
+                    startActivity(
+                        Intent(Intent.ACTION_DIAL).apply {
+                            data = Uri.parse("tel:$phoneNumber")
+                        }
+                    )
+                } catch (e: ActivityNotFoundException) {
+                    findNavController().navigateCatchingErrors(
+                        RequestTestFragmentDirections.actionPhoneCallNotSupportedDialog(phoneNumber)
+                    )
+                }
             }
         }
         binding.button2.apply {
