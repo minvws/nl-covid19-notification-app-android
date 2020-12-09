@@ -8,7 +8,7 @@ apply plugin: 'com.google.firebase.appdistribution'
 apply plugin: 'ru.cian.huawei-publish'
 
 version = "1.1.2"
-def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 77015
+def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 78961
 archivesBaseName = "covid-notificatie-v${version}-${buildVersionCode}"
 
 
@@ -189,6 +189,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$androidx_lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-process:$androidx_lifecycle_version"
     implementation "androidx.work:work-runtime-ktx:$androidx_work_version"
+    implementation "androidx.work:work-multiprocess:$androidx_work_version"
     implementation "androidx.security:security-crypto:1.1.0-alpha03"
 
     implementation "androidx.preference:preference-ktx:1.1.1"
