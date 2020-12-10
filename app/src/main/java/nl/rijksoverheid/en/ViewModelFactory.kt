@@ -21,6 +21,7 @@ import nl.rijksoverheid.en.labtest.LabTestViewModel
 import nl.rijksoverheid.en.notification.PostNotificationViewModel
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingViewModel
+import nl.rijksoverheid.en.settings.PauseConfirmationViewModel
 import nl.rijksoverheid.en.settings.SettingsViewModel
 import nl.rijksoverheid.en.status.StatusViewModel
 
@@ -56,6 +57,7 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
                 createAppConfigManager(context)
             ) as T
             SettingsViewModel::class.java -> SettingsViewModel(createSettingsRepository(context)) as T
+            PauseConfirmationViewModel::class.java -> PauseConfirmationViewModel(createSettingsRepository(context)) as T
             else -> throw IllegalStateException("Unknown view model class $modelClass")
         }
     }

@@ -27,6 +27,9 @@ class SettingsViewModel(private val repository: SettingsRepository) : ViewModel(
     val pauseRequested: LiveData<Event<Unit>> = MutableLiveData()
     val enableExposureNotificationsRequested: LiveData<Event<Unit>> = MutableLiveData()
 
+    val skipPauseConfirmation: Boolean
+        get() = repository.skipPauseConfirmation
+
     init {
         var firstValue = true
         wifiOnly.observeForever {
@@ -40,10 +43,14 @@ class SettingsViewModel(private val repository: SettingsRepository) : ViewModel(
 
     fun requestPauseExposureNotifications() {
         (pauseRequested as MutableLiveData).value = Event(Unit)
+    }
+
+    fun setExposureNotificationsPaused() {
         repository.setExposureNotificationsPaused(LocalDateTime.now().plusMinutes(2))
     }
 
     fun enableExposureNotifications() {
         (enableExposureNotificationsRequested as MutableLiveData).value = Event(Unit)
     }
+
 }

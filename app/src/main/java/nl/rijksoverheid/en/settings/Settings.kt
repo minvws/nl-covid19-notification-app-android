@@ -19,6 +19,7 @@ import java.time.ZoneOffset
 private const val KEY_WIFI_ONLY = "wifi_only"
 private const val KEY_PAUSED = "paused"
 private const val KEY_PAUSED_UNTIL = "paused_until"
+private const val KEY_PAUSE_CONFIRMATION = "paused_confirmation"
 
 /**
  * Thin wrapper around the default app preferences
@@ -48,6 +49,14 @@ class Settings(
             )
         } else {
             PausedState.Enabled
+        }
+
+    var skipPauseConfirmation: Boolean
+        get() = preferences.getBoolean(KEY_PAUSE_CONFIRMATION, false)
+        set(value) {
+            preferences.edit {
+                putBoolean(KEY_PAUSE_CONFIRMATION, value)
+            }
         }
 
     fun setExposureNotificationsPaused(until: LocalDateTime) {

@@ -39,7 +39,13 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         settingsViewModel.pauseRequested.observe(
             viewLifecycleOwner,
             EventObserver {
-                viewModel.disableExposureNotifications()
+                if(settingsViewModel.skipPauseConfirmation) {
+                    // TODO should be replaced pause duration bottomSheet
+                    settingsViewModel.setExposureNotificationsPaused()
+                    viewModel.disableExposureNotifications()
+                } else {
+                    findNavController().navigateCatchingErrors(SettingsFragmentDirections.actionPauseConfirmation())
+                }
             }
         )
 

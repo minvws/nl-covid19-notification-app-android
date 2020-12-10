@@ -105,7 +105,20 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
+            android:id="@+id/action_pause_confirmation"
+            app:destination="@id/nav_pause_confirmation"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_pause_confirmation"
+        android:name="nl.rijksoverheid.en.settings.PauseConfirmationFragment"
+        tools:layout="@layout/fragment_settings"/>
 
     <fragment
         android:id="@+id/nav_location_services_required"

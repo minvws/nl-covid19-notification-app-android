@@ -21,6 +21,13 @@ class SettingsRepository(private val context: Context, private val settings: Set
         settings.checkOnWifiOnly = wifiOnly
     }
 
+    val skipPauseConfirmation: Boolean
+        get() = settings.skipPauseConfirmation
+
+    fun setSkipPauseConfirmation(skipPauseConfirmation: Boolean) {
+        settings.skipPauseConfirmation = skipPauseConfirmation
+    }
+
     fun exposureNotificationsPausedState(): Flow<Settings.PausedState> =
         settings.observeChanges().map { it.exposureStatePausedState }
 
