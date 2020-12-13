@@ -44,13 +44,14 @@ class StatusViewModel(
         status to pausedState
     }.flatMapLatest { (status, pausedState) ->
         exposureNotificationsRepository.getLastExposureDate()
-            .map { date -> Triple(status, pausedState,  date) }
+            .map { date -> Triple(status, pausedState, date) }
     }.map { (status, pausedState, date) ->
         createHeaderState(
             status,
             date,
             exposureNotificationsRepository.keyProcessingOverdue(),
-            pausedState)
+            pausedState
+        )
     }.onEach {
         notificationsRepository.cancelExposureNotification()
     }.asLiveData(viewModelScope.coroutineContext)

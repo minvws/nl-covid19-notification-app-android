@@ -113,12 +113,25 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
+            android:id="@+id/action_select_pause_dation"
+            app:destination="@id/nav_pause_duration" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_pause_confirmation"
         android:name="nl.rijksoverheid.en.settings.PauseConfirmationFragment"
-        tools:layout="@layout/fragment_settings"/>
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_select_pause_duration"
+            app:destination="@id/nav_pause_duration" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/nav_pause_duration"
+        android:name="nl.rijksoverheid.en.settings.PauseDurationBottomSheetFragment"
+        android:label="PauseDurationBottomSheetFragment"/>
 
     <fragment
         android:id="@+id/nav_location_services_required"

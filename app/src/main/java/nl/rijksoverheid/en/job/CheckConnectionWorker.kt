@@ -28,7 +28,7 @@ class CheckConnectionWorker(
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        //TODO check if paused
+        // TODO check if paused
         Timber.d("Check if key processing is overdue or EN is disabled")
         // try / catch this to be sure the worker always returns success and keeps being scheduled
         val result = kotlin.runCatching {

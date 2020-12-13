@@ -124,7 +124,8 @@ object BindingAdapters {
                         R.string.settings_pause_status,
                         DateTimeFormatter.ofPattern(format, Locale.getDefault())
                             .format(state.pausedUntil)
-                    ), HtmlCompat.FROM_HTML_MODE_COMPACT
+                    ),
+                    HtmlCompat.FROM_HTML_MODE_COMPACT
                 )
             }
             else -> view.text = null

@@ -32,7 +32,8 @@ import timber.log.Timber
 
 class ExposureNotificationsViewModel(
     private val repository: ExposureNotificationsRepository,
-    private val settingsRepository: SettingsRepository) : ViewModel() {
+    private val settingsRepository: SettingsRepository
+) : ViewModel() {
 
     val notificationState: LiveData<NotificationsState> = repository.getStatus().map { result ->
         when (result) {

@@ -45,12 +45,11 @@ class SettingsViewModel(private val repository: SettingsRepository) : ViewModel(
         (pauseRequested as MutableLiveData).value = Event(Unit)
     }
 
-    fun setExposureNotificationsPaused() {
-        repository.setExposureNotificationsPaused(LocalDateTime.now().plusMinutes(2))
+    fun setExposureNotificationsPaused(until: LocalDateTime) {
+        repository.setExposureNotificationsPaused(until)
     }
 
     fun enableExposureNotifications() {
         (enableExposureNotificationsRequested as MutableLiveData).value = Event(Unit)
     }
-
 }

@@ -10,13 +10,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.fragment.findNavController
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentSettingsBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.navigation.getBackStackEntryObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import java.time.LocalDateTime
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
@@ -39,10 +43,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         settingsViewModel.pauseRequested.observe(
             viewLifecycleOwner,
             EventObserver {
-                if(settingsViewModel.skipPauseConfirmation) {
-                    // TODO should be replaced pause duration bottomSheet
-                    settingsViewModel.setExposureNotificationsPaused()
-                    viewModel.disableExposureNotifications()
+                if (settingsViewModel.skipPauseConfirmation) {
+                    showPauseDurationBottomSheet()
                 } else {
                     findNavController().navigateCatchingErrors(SettingsFragmentDirections.actionPauseConfirmation())
                 }
@@ -58,6 +60,27 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                     findNavController().navigateCatchingErrors(SettingsFragmentDirections.actionEnableLocationServices())
                 }
             }
+        )
+    }
+
+    private fun showPauseDurationBottomSheet() {
+        val navBackStackEntry = findNavController().getBackStackEntry(R.id.nav_settings)
+        val observer = navBackStackEntry.getBackStackEntryObserver<LocalDateTime>(
+            KEY_PAUSE_DURATION_RESULT
+        ) {
+            settingsViewModel.setExposureNotificationsPaused(it)
+            viewModel.disableExposureNotifications()
+        }
+        navBackStackEntry.lifecycle.addObserver(observer)
+        viewLifecycleOwner.lifecycle.addObserver(
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_DESTROY) {
+                    navBackStackEntry.lifecycle.removeObserver(observer)
+                }
+            }
+        )
+        findNavController().navigateCatchingErrors(
+            SettingsFragmentDirections.actionSelectPauseDation()
         )
     }
 }
