@@ -145,6 +145,10 @@ class StatusFragment @JvmOverloads constructor(
                 )
             else null
         }
+
+        statusViewModel.lastKeysProcessed.observe(viewLifecycleOwner) {
+            section.lastKeysProcessed = it
+        }
     }
 
     override fun onResume() {

@@ -253,4 +253,6 @@
     <string name="status_info_interop_announcement_message">Începând cu 30 noiembrie CoronaMelder colaborează cu aplicații din alte țări europene.</string>
     <string name="status_info_action_more_info">Mai multe informații</string>
     <string name="status_info_action_close">Închideți</string>
+    <string name="status_last_keys_processed">CoronaMelder houdt continu ontmoetingen bij. Ook checkt de app elke paar uur of iemand die jij hebt ontmoet, op dat moment besmettelijk was. Je krijgt een melding als dat zo was. Laatste check was op %1$s.</string>
+    <string name="status_no_keys_processed">CoronaMelder houdt continu ontmoetingen bij. Ook checkt de app elke paar uur of iemand die jij hebt ontmoet, op dat moment besmettelijk was. Je krijgt een melding als dat zo was.</string>
 </resources>

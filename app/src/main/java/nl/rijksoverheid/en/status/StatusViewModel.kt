@@ -20,7 +20,11 @@ import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import java.time.Clock
+import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.TimeZone
 
 class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
@@ -65,6 +69,14 @@ class StatusViewModel(
     }.asLiveData(viewModelScope.coroutineContext)
 
     val hasSeenLatestTerms = onboardingRepository.hasSeenLatestTerms()
+        .asLiveData(viewModelScope.coroutineContext)
+
+    val lastKeysProcessed = exposureNotificationsRepository.lastKeyProcessed()
+        .map {
+            it?.let {
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneId.systemDefault())
+            }
+        }
         .asLiveData(viewModelScope.coroutineContext)
 
     suspend fun getAppointmentPhoneNumber() =
