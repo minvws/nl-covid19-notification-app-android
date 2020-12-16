@@ -1203,6 +1203,7 @@ class ExposureNotificationsRepositoryTest {
 
         sharedPrefs.edit {
             putLong("last_keys_processed", Instant.parse(lastSyncDateTime).toEpochMilli())
+            putLong("notifications_enabled_timestamp", Instant.parse(lastSyncDateTime).toEpochMilli())
         }
 
         val repository = createRepository(
@@ -1744,7 +1745,7 @@ class ExposureNotificationsRepositoryTest {
     fun `rescheduleJobs schedules jobs when previously scheduled`() = runBlocking {
         val preferences = context.getSharedPreferences("repository_test", 0)
         preferences.edit {
-            putLong("last_keys_processed", 0)
+            putLong("notifications_enabled_timestamp", 0)
         }
 
         val cancelled = AtomicBoolean(false)
