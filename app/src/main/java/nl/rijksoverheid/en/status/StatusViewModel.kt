@@ -121,7 +121,7 @@ class StatusViewModel(
 
     fun resetErrorState() {
         viewModelScope.launch {
-            exposureNotificationsRepository.resetLastKeysProcessed()
+            exposureNotificationsRepository.resetNotificationsEnabledTimestamp()
             exposureNotificationsRepository.rescheduleBackgroundJobs()
         }
     }

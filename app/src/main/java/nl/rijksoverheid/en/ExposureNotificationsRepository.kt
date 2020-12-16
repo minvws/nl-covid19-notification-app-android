@@ -101,7 +101,7 @@ class ExposureNotificationsRepository(
     suspend fun keyProcessingOverdue(): Boolean {
         val notificationsEnabledTimestamp = preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0)
         val lastKeysProcessedTimestamp = preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0)
-        return if (notificationsEnabledTimestamp > 0) {
+        return if (maxOf(notificationsEnabledTimestamp, lastKeysProcessedTimestamp) > 0) {
             !(
                 Duration.between(Instant.ofEpochMilli(lastKeysProcessedTimestamp), clock.instant())
                     .toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES ||
@@ -146,7 +146,7 @@ class ExposureNotificationsRepository(
         }
     }
 
-    suspend fun resetLastKeysProcessed() {
+    suspend fun resetNotificationsEnabledTimestamp() {
         preferences.edit {
             // reset the timer
             putLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, clock.millis())

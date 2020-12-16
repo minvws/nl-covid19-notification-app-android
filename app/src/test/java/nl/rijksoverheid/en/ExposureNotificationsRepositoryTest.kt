@@ -1203,7 +1203,6 @@ class ExposureNotificationsRepositoryTest {
 
         sharedPrefs.edit {
             putLong("last_keys_processed", Instant.parse(lastSyncDateTime).toEpochMilli())
-            putLong("notifications_enabled_timestamp", Instant.parse(lastSyncDateTime).toEpochMilli())
         }
 
         val repository = createRepository(
@@ -1215,6 +1214,58 @@ class ExposureNotificationsRepositoryTest {
 
         runBlocking {
             assertTrue(repository.keyProcessingOverdue())
+        }
+    }
+
+    @Test
+    fun `keyProcessingOverdue returns false if last successful time of key processing is more than 24 hours in the past but enabledNotificationsDateTime isn't`() {
+        val notificationsEnabledDateTime = "2020-06-21T10:10:30.00Z"
+        val lastSyncDateTime = "2020-06-20T10:15:30.00Z"
+        val dateTime = "2020-06-21T10:16:30.00Z"
+        val fakeService = object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getAppConfig(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): AppConfig =
+                AppConfig(1, 5, 0.0)
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle {
+                throw java.lang.IllegalStateException()
+            }
+        }
+
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+
+        sharedPrefs.edit {
+            putLong("last_keys_processed", Instant.parse(lastSyncDateTime).toEpochMilli())
+            putLong("notifications_enabled_timestamp", Instant.parse(notificationsEnabledDateTime).toEpochMilli())
+        }
+
+        val repository = createRepository(
+            context = context,
+            preferences = sharedPrefs,
+            cdnService = fakeService,
+            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        )
+
+        runBlocking {
+            assertFalse(repository.keyProcessingOverdue())
         }
     }
 
