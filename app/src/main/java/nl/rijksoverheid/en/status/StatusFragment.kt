@@ -26,10 +26,12 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.isIgnoringBatteryOptimizations
 import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
 import timber.log.Timber
+import nl.rijksoverheid.en.settings.Settings.PausedState as PausedState
 
 private const val RC_DISABLE_BATTERY_OPTIMIZATIONS = 1
 
@@ -115,17 +117,24 @@ class StatusFragment @JvmOverloads constructor(
                     headerState = it,
                     primaryAction = ::resetAndRequestEnableNotifications
                 )
-                is StatusViewModel.HeaderState.Exposed -> section.updateHeader(
-                    headerState = it,
-                    primaryAction = { navigateToPostNotification(it.date.toEpochDay()) },
-                    secondaryAction = {
-                        showRemoveNotificationConfirmationDialog(
-                            it.date.formatExposureDate(requireContext())
-                        )
-                    }
-                )
+                is StatusViewModel.HeaderState.Exposed -> {
+                    section.updateHeader(
+                        headerState = it,
+                        primaryAction = { navigateToPostNotification(it.date.toEpochDay()) },
+                        secondaryAction = {
+                            showRemoveNotificationConfirmationDialog(
+                                it.date.formatExposureDate(requireContext())
+                            )
+                        }
+                    )
+                }
             }
+            section.pausedItem = if (it is StatusViewModel.HeaderState.Exposed
+                && it.pauseState is PausedState.Paused) {
+                StatusPausedItem(it.pauseState.pausedUntil, ::resetAndRequestEnableNotifications)
+            } else null
         }
+
         statusViewModel.errorState.observe(viewLifecycleOwner) {
             when (it) {
                 StatusViewModel.ErrorState.None -> section.updateErrorState(it)

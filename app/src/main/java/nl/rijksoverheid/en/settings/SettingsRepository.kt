@@ -9,6 +9,7 @@ package nl.rijksoverheid.en.settings
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import nl.rijksoverheid.en.notifier.NotificationsRepository
 import java.time.LocalDateTime
 
 class SettingsRepository(private val context: Context, private val settings: Settings) {
@@ -43,6 +44,7 @@ class SettingsRepository(private val context: Context, private val settings: Set
 
     fun clearExposureNotificationsPaused() {
         ExposureNotificationsPausedReminderReceiver.cancel(context)
+        NotificationsRepository(context).clearAppPausedNotification()
         settings.clearExposureNotificationsPaused()
     }
 }

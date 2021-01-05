@@ -252,22 +252,22 @@
     <string name="status_info_action_more_info">Mear ynformaasje</string>
     <string name="status_info_action_close">Slute</string>
     <string name="settings_pause_app_title">App pauzeren</string>
-    <string name="settings_pause_app_description">Je kan de app tijdelijk pauzeren.</string>
+    <string name="settings_pause_app_description">Als je de app pauzeert, worden je ontmoetingen tijdelijk niet bijgehouden. Ook kun je geen melding krijgen als je bij iemand in de buurt bent geweest die later corona blijkt te hebben. Nadat de pauze is afgelopen, krijg je meteen een melding om de app weer aan te zetten.</string>
     <string name="settings_pause_action_enable">App pauzeren</string>
     <string name="settings_pause_action_disable">App aanzetten</string>
     <string name="settings_pause_status"><![CDATA[De app is gepauzeerd tot <b>%1$s</b>]]></string>
     <string name="reminder_channel_name">Herinneringen</string>
     <string name="reminder_channel_description">Herinneringen wanneer je de app hebt gepauzeerd</string>
-    <string name="app_inactive_paused_title">CoronaMelder is gepauzeerd</string>
-    <string name="app_inactive_paused_message">Open de app om de app weer aan te zetten</string>
+    <string name="app_inactive_paused_title">Pauzeren afgelopen</string>
+    <string name="app_inactive_paused_message">Let op: de app is nog niet actief. Je moet deze zelf weer aanzetten in de app.</string>
     <string name="status_paused_headline">De app is gepauzeerd</string>
     <string name="status_en_api_paused_description"><![CDATA[CoronaMelder wordt weer actief om <b>%1$s</b>]]></string>
     <string name="status_en_api_paused_duration_reached">De app is niet actief. Je moet deze zelf weer aanzetten.</string>
     <string name="pause_confirmation_title">Weet je zeker dat je de app wilt pauzeren?</string>
-    <string name="pause_confirmation_description">De app houdt tijdens het pauzeren geen ontmoetingen bij met andere app-gebruikers. Ben je vóór het pauzeren in de buurt geweest van iemand die later corona blijkt te hebben, dan ontvang je wel een melding.\n\nPauzeer alleen in situaties waarin je telefoon dicht bij telefoons van anderen komt, maar er geen kans op besmetting is. Bijvoorbeeld door het gebruik van medische beschermingsmiddelen.</string>
+    <string name="pause_confirmation_description">De app houdt tijdens het pauzeren tijdelijk geen ontmoetingen bij met andere app-gebruikers. Ook kun je geen melding krijgen als je bij iemand in de buurt bent geweest die later corona blijkt te hebben. \n\nPauzeer alleen in situaties waarin je telefoon dicht bij telefoons van anderen komt, maar er geen kans op besmetting is. Bijvoorbeeld door het gebruik van medische beschermingsmiddelen.</string>
     <string name="pause_confirmation_accept_button">Ja, pauzeer</string>
     <string name="pause_confirmation_decline_button">Nee, pauzeer niet</string>
     <string name="skip_confirmation_checkbox">Dit scherm niet meer tonen</string>
     <string name="pause_duration_hours_option">Pauzeer voor %1$d uur</string>
-    <string name="pause_duration_until_option">Pauzeer tot morgen %1$s</string>
+    <string name="cd_status_paused">Grijs pauze icoon dat aangeeft dat de app gepauzeerd is</string>
 </resources>

@@ -196,7 +196,8 @@ class NotificationsRepository(
             createNotification(
                 REMINDER_NOTIFICATION_CHANNEL_ID,
                 R.string.app_inactive_paused_title,
-                R.string.app_inactive_paused_message
+                R.string.app_inactive_paused_message,
+                false
             ).setPriority(NotificationCompat.PRIORITY_DEFAULT).setOngoing(true).build()
         )
     }
@@ -234,13 +235,15 @@ class NotificationsRepository(
     private fun createNotification(
         channelId: String,
         @StringRes title: Int,
-        @StringRes message: Int
-    ) = createNotification(channelId, title, context.getString(message))
+        @StringRes message: Int,
+        autoCancel: Boolean = true
+    ) = createNotification(channelId, title, context.getString(message), autoCancel)
 
     private fun createNotification(
         channel: String,
         @StringRes title: Int,
-        message: String
+        message: String,
+        autoCancel: Boolean = true
     ): NotificationCompat.Builder {
         val pendingIntent = NavDeepLinkBuilder(context).setGraph(R.navigation.nav_main)
             .setDestination(R.id.main_nav).createPendingIntent()
@@ -255,6 +258,6 @@ class NotificationsRepository(
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setOnlyAlertOnce(true)
-            .setAutoCancel(true)
+            .setAutoCancel(autoCancel)
     }
 }

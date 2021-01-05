@@ -17,9 +17,7 @@ import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentBottomSheetListBinding
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 const val KEY_PAUSE_DURATION_RESULT = "pause_duration_result"
 
@@ -29,11 +27,11 @@ class PauseDurationBottomSheetFragment : BottomSheetDialogFragment() {
         add(
             Section(
                 listOf(
-                    PauseDurationItem(PauseDuration.Hours(1)),
-                    PauseDurationItem(PauseDuration.Hours(2)),
-                    PauseDurationItem(PauseDuration.Hours(4)),
-                    PauseDurationItem(PauseDuration.Hours(8)),
-                    PauseDurationItem(PauseDuration.Until(LocalTime.of(8, 0)))
+                    PauseDurationItem(1),
+                    PauseDurationItem(2),
+                    PauseDurationItem(4),
+                    PauseDurationItem(8),
+                    PauseDurationItem(12)
                 )
             )
         )
@@ -51,22 +49,13 @@ class PauseDurationBottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentBottomSheetListBinding.bind(view)
-
+        
         binding.content.adapter = adapter
         adapter.setOnItemClickListener { item, _ ->
             if (item !is PauseDurationItem)
                 return@setOnItemClickListener
 
-            val until = when (item.pauseDuration) {
-                is PauseDuration.Hours -> {
-                    LocalDateTime.now().plusHours(item.pauseDuration.amountOfHours.toLong())
-                }
-                is PauseDuration.Until -> {
-                    LocalDate.now().atTime(item.pauseDuration.time).let {
-                        if (it.isBefore(LocalDateTime.now())) it.plusDays(1) else it
-                    }
-                }
-            }
+            val until = LocalDateTime.now().plusHours(item.pauseDurationInHours.toLong())
 
             findNavController().previousBackStackEntry?.savedStateHandle
                 ?.set(KEY_PAUSE_DURATION_RESULT, until)

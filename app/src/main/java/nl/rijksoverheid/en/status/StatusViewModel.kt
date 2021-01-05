@@ -62,11 +62,13 @@ class StatusViewModel(
     val errorState = combine(
         exposureNotificationsRepository.lastKeyProcessed()
             .flatMapLatest { exposureNotificationsRepository.getStatus() },
+        settingsRepository.exposureNotificationsPausedState(),
         exposureNotificationsRepository.getLastExposureDate(),
         notificationsRepository.exposureNotificationsEnabled(),
-    ) { statusResult, localDate, exposureNotificationsEnabled ->
+    ) { statusResult, pausedState, localDate, exposureNotificationsEnabled ->
         createErrorState(
             statusResult,
+            pausedState,
             localDate,
             exposureNotificationsEnabled,
             exposureNotificationsRepository.keyProcessingOverdue()
@@ -87,11 +89,11 @@ class StatusViewModel(
         status: StatusResult,
         date: LocalDate?,
         keyProcessingOverdue: Boolean,
-        pauseState: Settings.PausedState
+        pausedState: Settings.PausedState
     ): HeaderState {
         return when {
-            date != null -> HeaderState.Exposed(date, clock)
-            pauseState is Settings.PausedState.Paused -> HeaderState.Paused(pauseState.pausedUntil)
+            date != null -> HeaderState.Exposed(date, clock, pausedState)
+            pausedState is Settings.PausedState.Paused -> HeaderState.Paused(pausedState.pausedUntil)
             status !is StatusResult.Enabled -> HeaderState.Disabled
             keyProcessingOverdue -> HeaderState.SyncIssues
             else -> HeaderState.Active
@@ -100,19 +102,22 @@ class StatusViewModel(
 
     private fun createErrorState(
         status: StatusResult,
+        pauseState: Settings.PausedState,
         date: LocalDate?,
         exposureNotificationsEnabled: Boolean,
         keyProcessingOverdue: Boolean
-    ): ErrorState =
-        if (status != StatusResult.Enabled && date != null) {
+    ): ErrorState {
+        val isPaused = pauseState is Settings.PausedState.Paused
+        return if (status != StatusResult.Enabled && !isPaused && date != null) {
             ErrorState.ConsentRequired
-        } else if (!exposureNotificationsEnabled) {
+        } else if (!exposureNotificationsEnabled && !isPaused) {
             ErrorState.NotificationsDisabled
-        } else if (date != null && keyProcessingOverdue) {
+        } else if (date != null && keyProcessingOverdue && !isPaused ) {
             ErrorState.SyncIssues
         } else {
             ErrorState.None
         }
+    }
 
     fun removeExposure() {
         viewModelScope.launch {
@@ -136,7 +141,7 @@ class StatusViewModel(
         object Disabled : HeaderState()
         object SyncIssues : HeaderState()
         data class Paused(val pausedUntil: LocalDateTime) : HeaderState()
-        data class Exposed(val date: LocalDate, val clock: Clock) : HeaderState()
+        data class Exposed(val date: LocalDate, val clock: Clock, val pauseState: Settings.PausedState) : HeaderState()
     }
 
     sealed class ErrorState {

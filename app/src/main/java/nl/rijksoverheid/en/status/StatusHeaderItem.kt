@@ -59,9 +59,9 @@ class StatusHeaderItem(
             }
         is StatusViewModel.HeaderState.Paused ->
             object : HeaderViewState(
-                R.drawable.gradient_status_disabled,
+                R.drawable.gradient_status_paused,
                 R.raw.status_inactive,
-                R.string.cd_status_disabled,
+                R.string.cd_status_paused,
                 R.string.status_paused_headline,
                 enableActionLabel = R.string.status_en_api_disabled_enable,
                 enableAction = primaryAction
