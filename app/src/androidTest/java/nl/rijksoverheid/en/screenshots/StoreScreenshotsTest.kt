@@ -50,6 +50,8 @@ import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.requesttest.RequestTestFragment
 import nl.rijksoverheid.en.requesttest.RequestTestFragmentArgs
+import nl.rijksoverheid.en.settings.Settings
+import nl.rijksoverheid.en.settings.SettingsRepository
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.status.StatusFragment
 import nl.rijksoverheid.en.status.StatusViewModel
@@ -79,6 +81,8 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
     private val configPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0)
+    private val settingsPreferences = context
+        .getSharedPreferences("${BuildConfig.APPLICATION_ID}.settings", 0)
 
     @Rule @JvmField
     val localeTestRule = LocaleTestRule()
@@ -148,6 +152,10 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         AppConfigManager(service),
         clock = clock
     )
+    private val settingsRepository = SettingsRepository(
+        context, Settings(context, settingsPreferences)
+    )
+
     private val statusViewModel = StatusViewModel(
         OnboardingRepository(
             sharedPreferences = configPreferences,
@@ -155,10 +163,11 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         ).apply { setHasSeenLatestTerms() },
         repository,
         NotificationsRepository(context, clock),
+        settingsRepository,
         createAppConfigManager(context),
         clock
     )
-    private val viewModel = ExposureNotificationsViewModel(repository)
+    private val viewModel = ExposureNotificationsViewModel(repository, settingsRepository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return viewModel as T
@@ -190,7 +199,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
             R.style.AppTheme,
             activityViewModelFactory
         ) {
-            onView(withId(R.id.status_image))
+            onView(withId(R.id.status_animated_image))
             Thread.sleep(5000)
             capture().setName("status_screen").process()
         }
@@ -222,7 +231,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
             R.style.AppTheme,
             activityViewModelFactory
         ) {
-            onView(withId(R.id.status_image))
+            onView(withId(R.id.status_animated_image))
             Thread.sleep(5000)
             capture().setName("status_screen_red").process()
         }

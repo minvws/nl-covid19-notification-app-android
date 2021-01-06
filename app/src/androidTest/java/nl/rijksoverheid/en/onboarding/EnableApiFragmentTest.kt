@@ -39,6 +39,7 @@ import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
+import nl.rijksoverheid.en.settings.SettingsRepository
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
@@ -76,6 +77,8 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
     private val configPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0)
+    private val settingsPreferences = context
+        .getSharedPreferences("${BuildConfig.APPLICATION_ID}.settings", 0)
 
     private val service = object : CdnService {
         override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
@@ -119,7 +122,12 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
         StatusCache(notificationsPreferences),
         AppConfigManager(service)
     )
-    private val viewModel = ExposureNotificationsViewModel(repository)
+
+    private val settingsRepository = SettingsRepository(
+        context, nl.rijksoverheid.en.settings.Settings(context, settingsPreferences)
+    )
+
+    private val viewModel = ExposureNotificationsViewModel(repository, settingsRepository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return viewModel as T
