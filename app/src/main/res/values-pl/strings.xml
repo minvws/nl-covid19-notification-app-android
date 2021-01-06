@@ -253,4 +253,7 @@
     <string name="status_info_interop_announcement_message">Od 30 listopada CoronaMelder współpracuje z aplikacjami dotyczącymi koronawirusa z innych krajów europejskich.</string>
     <string name="status_info_action_more_info">Więcej informacji</string>
     <string name="status_info_action_close">Zamknij</string>
+    <string name="phone_call_not_supported_dialog_title">Je kunt niet bellen met dit apparaat</string>
+    <string name="phone_call_not_supported_dialog_message">Pak je telefoon en bel %1$s</string>
+    <string name="phone_call_not_supported_dialog_close">Ik snap het</string>
 </resources>

@@ -6,18 +6,21 @@
  */
 package nl.rijksoverheid.en.notification
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import java.time.LocalDate
 
 class PostNotificationFragment : BaseFragment(R.layout.fragment_list_with_button) {
@@ -54,11 +57,17 @@ class PostNotificationFragment : BaseFragment(R.layout.fragment_list_with_button
             setOnClickListener {
                 viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
                     val phoneNumber = viewModel.getAppointmentPhoneNumber()
-                    startActivity(
-                        Intent(Intent.ACTION_DIAL).apply {
-                            data = Uri.parse("tel:$phoneNumber")
-                        }
-                    )
+                    try {
+                        startActivity(
+                            Intent(Intent.ACTION_DIAL).apply {
+                                data = Uri.parse("tel:$phoneNumber")
+                            }
+                        )
+                    } catch (e: ActivityNotFoundException) {
+                        findNavController().navigateCatchingErrors(
+                            PostNotificationFragmentDirections.actionPhoneCallNotSupportedDialog(phoneNumber)
+                        )
+                    }
                 }
             }
         }

@@ -257,4 +257,7 @@
     <string name="status_info_interop_announcement_message">اعتبارًا من 30 نوفمبر/تشرين الثاني سيعمل CoronaMelder مع تطبيقات كورونا من دول أوروبية أخرى.</string>
     <string name="status_info_action_more_info">المزيد من المعلومات</string>
     <string name="status_info_action_close">إغلاق</string>
+    <string name="phone_call_not_supported_dialog_title">Je kunt niet bellen met dit apparaat</string>
+    <string name="phone_call_not_supported_dialog_message">Pak je telefoon en bel %1$s</string>
+    <string name="phone_call_not_supported_dialog_close">Ik snap het</string>
 </resources>
