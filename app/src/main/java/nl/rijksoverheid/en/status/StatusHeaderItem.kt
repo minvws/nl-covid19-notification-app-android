@@ -17,6 +17,7 @@ import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatDuration
 import nl.rijksoverheid.en.util.formatExposureDate
+import java.time.LocalDateTime
 
 class StatusHeaderItem(
     headerState: StatusViewModel.HeaderState,
@@ -58,7 +59,10 @@ class StatusHeaderItem(
                 R.drawable.gradient_status_paused,
                 R.raw.status_inactive,
                 R.string.cd_status_paused,
-                R.string.status_paused_headline,
+                if (headerState.pauseState.pausedUntil.isAfter(LocalDateTime.now()))
+                    R.string.status_paused_headline
+                else
+                    R.string.status_paused_duration_reached_headline,
                 enableActionLabel = R.string.status_en_api_disabled_enable,
                 enableAction = primaryAction
             ) {

@@ -285,4 +285,5 @@
     <string name="duration_format_hours_and_minutes">%1$d uur %2$d minuten</string>
     <string name="duration_format_minute">%1$d minuut</string>
     <string name="duration_format_minutes">%1$d minuten</string>
+    <string name="status_paused_duration_reached_headline">Pauzeren is afgelopen</string>
 </resources>
