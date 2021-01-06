@@ -1,11 +1,9 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
-
 package nl.rijksoverheid.en.util
 
 import android.content.Context
@@ -15,7 +13,7 @@ import nl.rijksoverheid.en.settings.Settings
 import java.time.Duration
 import java.time.LocalDateTime
 
-fun Settings.PausedState.Paused.formatDuration(context: Context) : CharSequence {
+fun Settings.PausedState.Paused.formatDuration(context: Context): CharSequence {
     val now = LocalDateTime.now()
     return if (pausedUntil.isAfter(now)) {
 
@@ -68,12 +66,12 @@ fun Settings.PausedState.Paused.formatDuration(context: Context) : CharSequence 
     }
 }
 
-fun Settings.PausedState.Paused.durationHoursAndMinutes() : Pair<Long, Long> {
+fun Settings.PausedState.Paused.durationHoursAndMinutes(): Pair<Long, Long> {
     val now = LocalDateTime.now()
     return if (pausedUntil.isAfter(now)) {
         val duration = Duration.between(LocalDateTime.now(), pausedUntil)
         val durationHours = duration.toHours()
         val durationMinutes = duration.toMinutes() - durationHours * 60
         Pair(durationHours, durationMinutes)
-    } else Pair(0,0)
+    } else Pair(0, 0)
 }

@@ -115,7 +115,7 @@ class StatusViewModel(
             ErrorState.ConsentRequired
         } else if (!exposureNotificationsEnabled && !isPaused) {
             ErrorState.NotificationsDisabled
-        } else if (date != null && keyProcessingOverdue && !isPaused ) {
+        } else if (date != null && keyProcessingOverdue && !isPaused) {
             ErrorState.SyncIssues
         } else {
             ErrorState.None

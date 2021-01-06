@@ -21,7 +21,6 @@ import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.util.formatDuration
 import nl.rijksoverheid.en.util.fromHtmlWithCustomReplacements
 
-
 object BindingAdapters {
     @JvmStatic
     @BindingAdapter("show", "keepInLayout", "hideOnSmallScreenHeight", requireAll = false)

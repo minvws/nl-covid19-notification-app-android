@@ -138,8 +138,6 @@ class StatusFragment @JvmOverloads constructor(
             else null
         }
 
-
-
         statusViewModel.pausedState.observe(viewLifecycleOwner) {
             val now = LocalDateTime.now()
             if (it is PausedState.Paused && it.pausedUntil.isAfter(now)) {
@@ -167,7 +165,6 @@ class StatusFragment @JvmOverloads constructor(
                 pausedDurationTimer = null
             }
         }
-
     }
 
     override fun onResume() {
@@ -213,7 +210,8 @@ class StatusFragment @JvmOverloads constructor(
                 val (durationHours, durationMinutes) = headerState.pauseState.durationHoursAndMinutes()
                 val pausedHeaderState = headerState.copy(
                     durationHours = durationHours,
-                    durationMinutes = durationMinutes)
+                    durationMinutes = durationMinutes
+                )
                 section.updateHeader(
                     headerState = pausedHeaderState,
                     primaryAction = ::resetAndRequestEnableNotifications
@@ -234,15 +232,18 @@ class StatusFragment @JvmOverloads constructor(
     }
 
     private fun updatePausedItem(headerState: StatusViewModel.HeaderState) {
-        section.pausedItem = if (headerState is StatusViewModel.HeaderState.Exposed
-            && headerState.pauseState is PausedState.Paused) {
+        section.pausedItem = if (headerState is StatusViewModel.HeaderState.Exposed &&
+            headerState.pauseState is PausedState.Paused
+        ) {
             val (durationHours, durationMinutes) = headerState.pauseState.durationHoursAndMinutes()
-            StatusPausedItem(StatusPausedItem.ViewState(
-                headerState.pauseState,
-                durationHours,
-                durationMinutes,
-                ::resetAndRequestEnableNotifications
-            ))
+            StatusPausedItem(
+                StatusPausedItem.ViewState(
+                    headerState.pauseState,
+                    durationHours,
+                    durationMinutes,
+                    ::resetAndRequestEnableNotifications
+                )
+            )
         } else null
     }
 

@@ -27,7 +27,7 @@ class StatusSection : Section() {
     }
     var pausedItem: StatusPausedItem? = null
         set(value) {
-            if(value?.viewState != field?.viewState) {
+            if (value?.viewState != field?.viewState) {
                 field = value
                 pausedGroup.update(listOfNotNull(value))
             }

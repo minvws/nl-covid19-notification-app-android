@@ -49,7 +49,7 @@ class PauseDurationBottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentBottomSheetListBinding.bind(view)
-        
+
         binding.content.adapter = adapter
         adapter.setOnItemClickListener { item, _ ->
             if (item !is PauseDurationItem)

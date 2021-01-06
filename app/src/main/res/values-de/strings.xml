@@ -252,6 +252,13 @@
     <string name="status_info_interop_announcement_message">CoronaMelder arbeitet ab 30. November mit Corona-Apps aus anderen europäischen Ländern zusammen.</string>
     <string name="status_info_action_more_info">Mehr Informationen</string>
     <string name="status_info_action_close">Schließen</string>
+    <string name="phone_call_not_supported_dialog_title">Je kunt niet bellen met dit apparaat</string>
+    <string name="phone_call_not_supported_dialog_message">Pak je telefoon en bel %1$s</string>
+    <string name="phone_call_not_supported_dialog_close">Ik snap het</string>
+    <!--Status screen footer text-->
+    <string name="status_last_keys_processed">CoronaMelder houdt continu ontmoetingen bij. Ook checkt de app elke paar uur of iemand die jij hebt ontmoet, op dat moment besmettelijk was. Je krijgt een melding als dat zo was. Laatste check was op %1$s.</string>
+    <!--Status screen footer text, when no keys has been processed.-->
+    <string name="status_no_keys_processed">CoronaMelder houdt continu ontmoetingen bij. Ook checkt de app elke paar uur of iemand die jij hebt ontmoet, op dat moment besmettelijk was. Je krijgt een melding als dat zo was.</string>
     <string name="settings_pause_app_title">App pauzeren</string>
     <string name="settings_pause_app_description">Als je de app pauzeert, worden je ontmoetingen tijdelijk niet bijgehouden. Ook kun je geen melding krijgen als je bij iemand in de buurt bent geweest die later corona blijkt te hebben. Nadat de pauze is afgelopen, krijg je meteen een melding om de app weer aan te zetten.</string>
     <string name="settings_pause_action_enable">App pauzeren</string>
@@ -270,6 +277,7 @@
     <string name="skip_confirmation_checkbox">Dit scherm niet meer tonen</string>
     <string name="pause_duration_hours_option">Pauzeer voor %1$d uur</string>
     <string name="cd_status_paused">Grijs pauze icoon dat aangeeft dat de app gepauzeerd is</string>
+    <string name="duration_format_hour">%1$d uur</string>
     <string name="duration_format_hours">%1$d uur</string>
     <string name="duration_format_hour_and_minute">%1$d uur %2$d minuut</string>
     <string name="duration_format_hour_and_minutes">%1$d uur %2$d minuten</string>

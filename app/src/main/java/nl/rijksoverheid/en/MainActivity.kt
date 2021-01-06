@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        NotificationsRepository(this). clearAppInactiveNotification()
+        NotificationsRepository(this).clearAppInactiveNotification()
         RemindExposureNotificationWorker.cancel(this)
     }
 
