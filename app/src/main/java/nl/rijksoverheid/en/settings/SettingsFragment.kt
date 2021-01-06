@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.settings
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -21,11 +22,14 @@ import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.getBackStackEntryObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
     private val settingsViewModel: SettingsViewModel by viewModels()
+
+    private var pausedDurationTimer: CountDownTimer? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,6 +65,30 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                 }
             }
         )
+
+        settingsViewModel.pausedState.observe(viewLifecycleOwner) {
+            val now = LocalDateTime.now()
+            if (it is Settings.PausedState.Paused && it.pausedUntil.isAfter(now)) {
+                pausedDurationTimer?.cancel()
+                pausedDurationTimer = object : CountDownTimer(now.until(it.pausedUntil, ChronoUnit.MILLIS), 5000) {
+                    override fun onTick(p0: Long) {
+                        binding.viewModel = settingsViewModel
+                    }
+                    override fun onFinish() {
+                        binding.viewModel = settingsViewModel
+                    }
+                }.start()
+            } else if (it !is Settings.PausedState.Paused && pausedDurationTimer != null) {
+                pausedDurationTimer?.cancel()
+                pausedDurationTimer = null
+            }
+        }
+    }
+
+    override fun onPause() {
+        pausedDurationTimer?.cancel()
+        pausedDurationTimer = null
+        super.onPause()
     }
 
     private fun showPauseDurationBottomSheet() {

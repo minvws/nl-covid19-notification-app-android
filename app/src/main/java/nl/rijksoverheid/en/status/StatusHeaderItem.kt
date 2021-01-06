@@ -7,20 +7,16 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
-import android.text.format.DateFormat
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
-import androidx.core.text.HtmlCompat
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusHeaderBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.util.formatDaysSince
+import nl.rijksoverheid.en.util.formatDuration
 import nl.rijksoverheid.en.util.formatExposureDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 class StatusHeaderItem(
     headerState: StatusViewModel.HeaderState,
@@ -66,21 +62,8 @@ class StatusHeaderItem(
                 enableActionLabel = R.string.status_en_api_disabled_enable,
                 enableAction = primaryAction
             ) {
-                override fun getDescription(context: Context): CharSequence {
-                    return if (headerState.pausedUntil.isAfter(LocalDateTime.now())) {
-                        val format = if (DateFormat.is24HourFormat(context)) "HH:mm" else "hh:mm a"
-                        HtmlCompat.fromHtml(
-                            context.getString(
-                                R.string.status_en_api_paused_description,
-                                DateTimeFormatter.ofPattern(format, Locale.getDefault())
-                                    .format(headerState.pausedUntil)
-                            ),
-                            HtmlCompat.FROM_HTML_MODE_COMPACT
-                        )
-                    } else {
-                        context.getString(R.string.status_en_api_paused_duration_reached)
-                    }
-                }
+                override fun getDescription(context: Context) =
+                    headerState.pauseState.formatDuration(context)
             }
         is StatusViewModel.HeaderState.Disabled ->
             object : HeaderViewState(

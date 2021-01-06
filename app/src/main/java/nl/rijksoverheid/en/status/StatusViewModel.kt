@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.status
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -23,7 +24,6 @@ import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.settings.SettingsRepository
 import java.time.Clock
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
@@ -39,7 +39,7 @@ class StatusViewModel(
     val headerState = combine(
         exposureNotificationsRepository.getStatus(),
         settingsRepository.exposureNotificationsPausedState(),
-        exposureNotificationsRepository.lastKeyProcessed()
+        exposureNotificationsRepository.lastKeyProcessed(),
     ) { status, pausedState, _ ->
         status to pausedState
     }.flatMapLatest { (status, pausedState) ->
@@ -78,6 +78,9 @@ class StatusViewModel(
     val hasSeenLatestTerms = onboardingRepository.hasSeenLatestTerms()
         .asLiveData(viewModelScope.coroutineContext)
 
+    val pausedState: LiveData<Settings.PausedState> = settingsRepository.exposureNotificationsPausedState()
+        .asLiveData(viewModelScope.coroutineContext)
+
     suspend fun getAppointmentPhoneNumber() =
         appConfigManager.getCachedConfigOrDefault().appointmentPhoneNumber
 
@@ -93,7 +96,7 @@ class StatusViewModel(
     ): HeaderState {
         return when {
             date != null -> HeaderState.Exposed(date, clock, pausedState)
-            pausedState is Settings.PausedState.Paused -> HeaderState.Paused(pausedState.pausedUntil)
+            pausedState is Settings.PausedState.Paused -> HeaderState.Paused(pausedState)
             status !is StatusResult.Enabled -> HeaderState.Disabled
             keyProcessingOverdue -> HeaderState.SyncIssues
             else -> HeaderState.Active
@@ -140,7 +143,7 @@ class StatusViewModel(
         object Active : HeaderState()
         object Disabled : HeaderState()
         object SyncIssues : HeaderState()
-        data class Paused(val pausedUntil: LocalDateTime) : HeaderState()
+        data class Paused(val pauseState: Settings.PausedState.Paused, val durationHours: Long? = null, val durationMinutes: Long? = null) : HeaderState()
         data class Exposed(val date: LocalDate, val clock: Clock, val pauseState: Settings.PausedState) : HeaderState()
     }
 

@@ -36,38 +36,48 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
-        <View
-            app:show="@{viewModel.exposureNotificationsPaused}"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/pause_status"
-            app:layout_constraintBottom_toBottomOf="@id/pause_status"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/info_surface" />
 
-        <TextView
-            app:show="@{viewModel.exposureNotificationsPaused}"
-            android:includeFontPadding="false"
-            android:layout_marginTop="24dp"
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/pause_status"
-            android:drawablePadding="18dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center"
-            app:drawableStartCompat="@drawable/ic_info_small"
-            android:textAppearance="?attr/textAppearanceBody1"
+            app:show="@{viewModel.exposureNotificationsPaused}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:pausedState="@{viewModel.pausedState}"
-            tools:text="De app is gepauzeerd tot 13:00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_margin="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:padding="12dp"
+            android:background="@color/info_surface">
+
+            <ImageView
+                android:id="@+id/info_box_image"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="2dp"
+                android:contentDescription="@string/cd_info_box"
+                android:src="@drawable/ic_info_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                app:show="@{viewModel.exposureNotificationsPaused}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/info_box_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0"
+                app:pausedState="@{viewModel.pausedState}"
+                tools:text="De app is gepauzeerd tot 13:00" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             app:show="@{viewModel.exposureNotificationsPaused}"

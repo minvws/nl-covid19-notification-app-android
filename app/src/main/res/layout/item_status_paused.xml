@@ -44,12 +44,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="@{viewState.message}"
+            app:pausedState="@{viewState.pausedState}"
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/error_box_image"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="De app heeft blootstelling permissie nodig om te kunnen werken." />
+            tools:text="De app is gepauzeerd tot 13:00" />
 
         <Button
             android:id="@+id/error_box_button"

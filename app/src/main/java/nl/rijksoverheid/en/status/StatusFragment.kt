@@ -10,6 +10,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
@@ -26,13 +27,14 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
-import nl.rijksoverheid.en.notifier.NotificationsRepository
+import nl.rijksoverheid.en.settings.Settings.PausedState
+import nl.rijksoverheid.en.util.durationHoursAndMinutes
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.isIgnoringBatteryOptimizations
 import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
 import timber.log.Timber
-import nl.rijksoverheid.en.settings.Settings.PausedState as PausedState
-
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 private const val RC_DISABLE_BATTERY_OPTIMIZATIONS = 1
 
 class StatusFragment @JvmOverloads constructor(
@@ -43,6 +45,8 @@ class StatusFragment @JvmOverloads constructor(
 
     private lateinit var section: StatusSection
     private val adapter = GroupAdapter<GroupieViewHolder>()
+
+    private var pausedDurationTimer: CountDownTimer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,38 +105,8 @@ class StatusFragment @JvmOverloads constructor(
         }
 
         statusViewModel.headerState.observe(viewLifecycleOwner) {
-            when (it) {
-                StatusViewModel.HeaderState.Active -> section.updateHeader(
-                    headerState = it
-                )
-                is StatusViewModel.HeaderState.Disabled -> section.updateHeader(
-                    headerState = it,
-                    primaryAction = ::resetAndRequestEnableNotifications
-                )
-                is StatusViewModel.HeaderState.SyncIssues -> section.updateHeader(
-                    headerState = it,
-                    primaryAction = statusViewModel::resetErrorState
-                )
-                is StatusViewModel.HeaderState.Paused -> section.updateHeader(
-                    headerState = it,
-                    primaryAction = ::resetAndRequestEnableNotifications
-                )
-                is StatusViewModel.HeaderState.Exposed -> {
-                    section.updateHeader(
-                        headerState = it,
-                        primaryAction = { navigateToPostNotification(it.date.toEpochDay()) },
-                        secondaryAction = {
-                            showRemoveNotificationConfirmationDialog(
-                                it.date.formatExposureDate(requireContext())
-                            )
-                        }
-                    )
-                }
-            }
-            section.pausedItem = if (it is StatusViewModel.HeaderState.Exposed
-                && it.pauseState is PausedState.Paused) {
-                StatusPausedItem(it.pauseState.pausedUntil, ::resetAndRequestEnableNotifications)
-            } else null
+            updateHeaderState(it)
+            updatePausedItem(it)
         }
 
         statusViewModel.errorState.observe(viewLifecycleOwner) {
@@ -149,7 +123,12 @@ class StatusFragment @JvmOverloads constructor(
                 StatusInfoItem(
                     R.string.status_info_interop_announcement_message,
                     actionMoreInfo = {
-                        val uri = Uri.parse(getString(R.string.interop_url, getString(R.string.app_language)))
+                        val uri = Uri.parse(
+                            getString(
+                                R.string.interop_url,
+                                getString(R.string.app_language)
+                            )
+                        )
                         CustomTabsIntent.Builder().build().launchUrl(requireContext(), uri)
                     },
                     actionClose = {
@@ -158,6 +137,37 @@ class StatusFragment @JvmOverloads constructor(
                 )
             else null
         }
+
+
+
+        statusViewModel.pausedState.observe(viewLifecycleOwner) {
+            val now = LocalDateTime.now()
+            if (it is PausedState.Paused && it.pausedUntil.isAfter(now)) {
+                pausedDurationTimer?.cancel()
+                pausedDurationTimer = object : CountDownTimer(
+                    LocalDateTime.now().until(it.pausedUntil, ChronoUnit.MILLIS),
+                    5000
+                ) {
+                    private fun forceRefreshHeaderState() {
+                        statusViewModel.headerState.value?.let { headerState ->
+                            updateHeaderState(headerState)
+                            updatePausedItem(headerState)
+                        }
+                    }
+
+                    override fun onTick(p0: Long) {
+                        forceRefreshHeaderState()
+                    }
+                    override fun onFinish() {
+                        forceRefreshHeaderState()
+                    }
+                }.start()
+            } else if (it !is PausedState.Paused && pausedDurationTimer != null) {
+                pausedDurationTimer?.cancel()
+                pausedDurationTimer = null
+            }
+        }
+
     }
 
     override fun onResume() {
@@ -169,6 +179,12 @@ class StatusFragment @JvmOverloads constructor(
                 )
             }
         }
+        pausedDurationTimer?.start()
+    }
+
+    override fun onPause() {
+        pausedDurationTimer?.cancel()
+        super.onPause()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -178,6 +194,56 @@ class StatusFragment @JvmOverloads constructor(
                 section.removeBatteryOptimisationsError()
             }
         }
+    }
+
+    private fun updateHeaderState(headerState: StatusViewModel.HeaderState) {
+        when (headerState) {
+            StatusViewModel.HeaderState.Active -> section.updateHeader(
+                headerState = headerState
+            )
+            is StatusViewModel.HeaderState.Disabled -> section.updateHeader(
+                headerState = headerState,
+                primaryAction = ::resetAndRequestEnableNotifications
+            )
+            is StatusViewModel.HeaderState.SyncIssues -> section.updateHeader(
+                headerState = headerState,
+                primaryAction = statusViewModel::resetErrorState
+            )
+            is StatusViewModel.HeaderState.Paused -> {
+                val (durationHours, durationMinutes) = headerState.pauseState.durationHoursAndMinutes()
+                val pausedHeaderState = headerState.copy(
+                    durationHours = durationHours,
+                    durationMinutes = durationMinutes)
+                section.updateHeader(
+                    headerState = pausedHeaderState,
+                    primaryAction = ::resetAndRequestEnableNotifications
+                )
+            }
+            is StatusViewModel.HeaderState.Exposed -> {
+                section.updateHeader(
+                    headerState = headerState,
+                    primaryAction = { navigateToPostNotification(headerState.date.toEpochDay()) },
+                    secondaryAction = {
+                        showRemoveNotificationConfirmationDialog(
+                            headerState.date.formatExposureDate(requireContext())
+                        )
+                    }
+                )
+            }
+        }
+    }
+
+    private fun updatePausedItem(headerState: StatusViewModel.HeaderState) {
+        section.pausedItem = if (headerState is StatusViewModel.HeaderState.Exposed
+            && headerState.pauseState is PausedState.Paused) {
+            val (durationHours, durationMinutes) = headerState.pauseState.durationHoursAndMinutes()
+            StatusPausedItem(StatusPausedItem.ViewState(
+                headerState.pauseState,
+                durationHours,
+                durationMinutes,
+                ::resetAndRequestEnableNotifications
+            ))
+        } else null
     }
 
     private fun resetAndRequestEnableNotifications() {

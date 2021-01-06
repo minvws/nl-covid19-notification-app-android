@@ -16,8 +16,10 @@ import nl.rijksoverheid.en.lifecyle.Event
 import java.time.LocalDateTime
 
 class SettingsViewModel(private val repository: SettingsRepository) : ViewModel() {
-    val pausedState: LiveData<Settings.PausedState> =
-        repository.exposureNotificationsPausedState().asLiveData(viewModelScope.coroutineContext)
+
+    val pausedState: LiveData<Settings.PausedState> = repository.exposureNotificationsPausedState()
+        .asLiveData(viewModelScope.coroutineContext)
+
     val exposureNotificationsPaused: LiveData<Boolean> =
         pausedState.map { it is Settings.PausedState.Paused }
 
