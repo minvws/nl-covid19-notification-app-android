@@ -256,4 +256,5 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="phone_call_not_supported_dialog_title">Je kunt niet bellen met dit apparaat</string>
     <string name="phone_call_not_supported_dialog_message">Pak je telefoon en bel %1$s</string>
     <string name="phone_call_not_supported_dialog_close">Ik snap het</string>
+    <string name="lab_test_copy_key_to_clipboard">GGD-sleutel gekopieerd.</string>
 </resources>
