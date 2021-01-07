@@ -9,6 +9,7 @@ package nl.rijksoverheid.en.databinding
 import android.content.res.Configuration
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
@@ -31,7 +32,10 @@ object BindingAdapters {
         val hideSmallScreen = (
             hideOnSmallScreenHeight
                 ?: false
-            ) && isSmallScreen(view.context.resources.configuration)
+            ) && (
+            isSmallScreen(view.context.resources.configuration) ||
+                (view as? ImageView)?.isImageFillingScreen() == true
+            )
 
         val visibility = when {
             hideSmallScreen -> {
@@ -53,6 +57,16 @@ object BindingAdapters {
 
     private fun isSmallScreen(configuration: Configuration): Boolean {
         return configuration.screenHeightDp <= 480 || configuration.fontScale >= 1.3
+    }
+
+    /**
+     * Check if image would fill more than 80% of the screen when scaled full width while keeping the aspect ratio
+     * @return true if the image fills more than 90% of the screen
+     */
+    private fun ImageView.isImageFillingScreen(): Boolean {
+        val ratio = drawable.intrinsicHeight.toFloat() / drawable.intrinsicWidth.toFloat()
+        val configuration = context.resources.configuration
+        return configuration.screenWidthDp * ratio > configuration.screenHeightDp * 0.9
     }
 
     @JvmStatic
