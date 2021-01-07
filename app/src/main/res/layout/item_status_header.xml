@@ -54,6 +54,8 @@
             android:id="@+id/status_animated_image"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:scaleType="center"
+            app:imageResource="@{viewState.icon}"
             app:contentDescriptionRes="@{viewState.iconContentDescription}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,17 +63,6 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:optional_animation="@{viewState.animatedIcon}" />
-
-        <ImageView
-            android:id="@+id/status_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:padding="32dp"
-            app:imageResource="@{viewState.icon}"
-            app:contentDescriptionRes="@{viewState.iconContentDescription}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/clouds" />
 
         <TextView
             android:id="@+id/status_headline"
