@@ -251,6 +251,10 @@
     <string name="status_info_interop_announcement_message">"От 30.11 CoronaMelder работи заедно с приложения за коронавируса от други европейски държави. "</string>
     <string name="status_info_action_more_info">Повече информация</string>
     <string name="status_info_action_close">Затваряне</string>
+    <string name="phone_call_not_supported_dialog_title">Je kunt niet bellen met dit apparaat</string>
+    <string name="phone_call_not_supported_dialog_message">Pak je telefoon en bel %1$s</string>
+    <string name="phone_call_not_supported_dialog_close">Ik snap het</string>
+    <string name="lab_test_copy_key_to_clipboard">GGD-sleutel gekopieerd.</string>
     <string name="status_last_keys_processed">CoronaMelder houdt continu ontmoetingen bij. Ook checkt de app elke paar uur of iemand die jij hebt ontmoet, op dat moment besmettelijk was. Je krijgt een melding als dat zo was. Laatste check was op %1$s.</string>
     <string name="status_no_keys_processed">CoronaMelder houdt continu ontmoetingen bij. Ook checkt de app elke paar uur of iemand die jij hebt ontmoet, op dat moment besmettelijk was. Je krijgt een melding als dat zo was.</string>
 </resources>

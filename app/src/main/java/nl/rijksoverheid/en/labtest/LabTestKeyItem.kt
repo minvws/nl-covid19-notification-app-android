@@ -13,7 +13,7 @@ import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
 import java.util.Locale
 
-class LabTestKeyItem(private val keyState: KeyState, retry: () -> Unit) :
+class LabTestKeyItem(private val keyState: KeyState, private val copy: (String) -> Unit, retry: () -> Unit) :
     BaseBindableItem<ItemLabTestKeyBinding>() {
     data class ViewState(
         val showProgress: Boolean,
@@ -37,6 +37,10 @@ class LabTestKeyItem(private val keyState: KeyState, retry: () -> Unit) :
 
     override fun bind(viewBinding: ItemLabTestKeyBinding, position: Int) {
         viewBinding.viewState = viewState
+        viewBinding.keyContainer.setOnLongClickListener {
+            viewState.key?.let { copy(it) }
+            true
+        }
     }
 
     override fun isSameAs(other: Item<*>): Boolean = other is LabTestKeyItem

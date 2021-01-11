@@ -132,6 +132,9 @@
         <argument
             android:name="epochDayOfLastExposure"
             app:argType="long" />
+        <action
+            android:id="@+id/action_phone_call_not_supported_dialog"
+            app:destination="@id/nav_phone_call_not_supported_dialog" />
     </fragment>
 
     <fragment
@@ -142,6 +145,9 @@
         <action
             android:id="@+id/action_about_detail"
             app:destination="@id/nav_about_detail" />
+        <action
+            android:id="@+id/action_phone_call_not_supported_dialog"
+            app:destination="@id/nav_phone_call_not_supported_dialog" />
     </fragment>
 
     <fragment
@@ -202,6 +208,9 @@
         <argument
             android:name="phoneNumber"
             app:argType="string" />
+        <action
+            android:id="@+id/action_phone_call_not_supported_dialog"
+            app:destination="@id/nav_phone_call_not_supported_dialog" />
     </fragment>
 
     <dialog
@@ -233,4 +242,14 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+
+    <dialog
+        android:id="@+id/nav_phone_call_not_supported_dialog"
+        android:name="nl.rijksoverheid.en.phonecall.PhoneCallNotSupportedDialogFragment"
+        android:label="PhoneCallNotSupportedDialogFragment">
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+    </dialog>
+
 </navigation>
