@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.status
 
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
+import java.time.LocalDateTime
 
 class StatusSection : Section() {
 
@@ -26,6 +27,11 @@ class StatusSection : Section() {
         set(value) {
             field = value
             infoGroup.update(listOfNotNull(value))
+        }
+    var lastKeysProcessed: LocalDateTime? = null
+        set(value) {
+            field = value
+            setFooter(StatusFooterItem(value))
         }
 
     init {
@@ -97,7 +103,7 @@ class StatusSection : Section() {
                     )
                 )
             )
-            setFooter(StatusFooterItem())
+            setFooter(StatusFooterItem(lastKeysProcessed))
         }
     }
 }
