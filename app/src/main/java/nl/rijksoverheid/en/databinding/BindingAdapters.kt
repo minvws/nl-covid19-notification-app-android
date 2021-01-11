@@ -60,7 +60,7 @@ object BindingAdapters {
     }
 
     /**
-     * Check if image would fill more than 80% of the screen when scaled full width while keeping the aspect ratio
+     * Check if image would fill more than 90% of the screen when scaled full width while keeping the aspect ratio
      * @return true if the image fills more than 90% of the screen
      */
     private fun ImageView.isImageFillingScreen(): Boolean {
