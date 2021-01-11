@@ -75,7 +75,7 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
                         )
                     } catch (e: ActivityNotFoundException) {
                         findNavController().navigateCatchingErrors(
-                            AboutDetailFragmentDirections.actionPhoneCallNotSupportedDialog(phoneNumber)
+                            AboutFragmentDirections.actionPhoneCallNotSupportedDialog(phoneNumber)
                         )
                     }
                 }

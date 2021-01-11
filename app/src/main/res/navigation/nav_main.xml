@@ -145,6 +145,9 @@
         <action
             android:id="@+id/action_about_detail"
             app:destination="@id/nav_about_detail" />
+        <action
+            android:id="@+id/action_phone_call_not_supported_dialog"
+            app:destination="@id/nav_phone_call_not_supported_dialog" />
     </fragment>
 
     <fragment
@@ -161,9 +164,6 @@
             app:destination="@id/nav_about_detail"
             app:popUpTo="@id/nav_about_detail"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_phone_call_not_supported_dialog"
-            app:destination="@id/nav_phone_call_not_supported_dialog" />
     </fragment>
     <fragment
         android:id="@+id/nav_lab_test"
