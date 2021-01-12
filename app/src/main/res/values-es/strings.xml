@@ -287,4 +287,5 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="duration_format_minute">%1$d minuut</string>
     <string name="duration_format_minutes">%1$d minuten</string>
     <string name="status_paused_duration_reached_headline">Pauzeren is afgelopen</string>
+    <string name="lab_test_copy_key_to_clipboard">GGD-sleutel gekopieerd.</string>
 </resources>

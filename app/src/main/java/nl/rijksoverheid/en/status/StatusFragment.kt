@@ -165,6 +165,10 @@ class StatusFragment @JvmOverloads constructor(
                 pausedDurationTimer = null
             }
         }
+
+        statusViewModel.lastKeysProcessed.observe(viewLifecycleOwner) {
+            section.lastKeysProcessed = it
+        }
     }
 
     override fun onResume() {

@@ -23,7 +23,10 @@ import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.settings.SettingsRepository
 import java.time.Clock
+import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
@@ -40,7 +43,8 @@ class StatusViewModel(
         exposureNotificationsRepository.getStatus(),
         settingsRepository.exposureNotificationsPausedState(),
         exposureNotificationsRepository.lastKeyProcessed(),
-    ) { status, pausedState, _ ->
+        exposureNotificationsRepository.notificationsEnabledTimestamp()
+    ) { status, pausedState, _, _ ->
         status to pausedState
     }.flatMapLatest { (status, pausedState) ->
         exposureNotificationsRepository.getLastExposureDate()
@@ -60,7 +64,7 @@ class StatusViewModel(
         get() = headerState.value is HeaderState.Exposed
 
     val errorState = combine(
-        exposureNotificationsRepository.lastKeyProcessed()
+        exposureNotificationsRepository.notificationsEnabledTimestamp()
             .flatMapLatest { exposureNotificationsRepository.getStatus() },
         settingsRepository.exposureNotificationsPausedState(),
         exposureNotificationsRepository.getLastExposureDate(),
@@ -80,6 +84,14 @@ class StatusViewModel(
 
     val pausedState: LiveData<Settings.PausedState> = settingsRepository.exposureNotificationsPausedState()
         .asLiveData(viewModelScope.coroutineContext)
+
+    val lastKeysProcessed = exposureNotificationsRepository.lastKeyProcessed()
+        .map {
+            if (it != null && it > 0)
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneId.systemDefault())
+            else
+                null
+        }.asLiveData(viewModelScope.coroutineContext)
 
     suspend fun getAppointmentPhoneNumber() =
         appConfigManager.getCachedConfigOrDefault().appointmentPhoneNumber
@@ -130,7 +142,7 @@ class StatusViewModel(
 
     fun resetErrorState() {
         viewModelScope.launch {
-            exposureNotificationsRepository.resetLastKeysProcessed()
+            exposureNotificationsRepository.resetNotificationsEnabledTimestamp()
             exposureNotificationsRepository.rescheduleBackgroundJobs()
         }
     }

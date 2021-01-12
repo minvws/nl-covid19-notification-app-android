@@ -76,6 +76,7 @@ import nl.rijksoverheid.en.api.BuildConfig as ApiBuildConfig
 private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
+private const val KEY_NOTIFICATIONS_ENABLED_TIMESTAMP = "notifications_enabled_timestamp"
 private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
 private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
 private const val KEY_MIN_RISK_SCORE = "min_risk_score"
@@ -98,10 +99,15 @@ class ExposureNotificationsRepository(
     }
 
     suspend fun keyProcessingOverdue(): Boolean {
-        val timestamp = preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0)
-        return if (timestamp > 0) {
-            Duration.between(Instant.ofEpochMilli(timestamp), clock.instant())
-                .toMinutes() > KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
+        val notificationsEnabledTimestamp = preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0)
+        val lastKeysProcessedTimestamp = preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0)
+        return if (maxOf(notificationsEnabledTimestamp, lastKeysProcessedTimestamp) > 0) {
+            !(
+                Duration.between(Instant.ofEpochMilli(lastKeysProcessedTimestamp), clock.instant())
+                    .toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES ||
+                    Duration.between(Instant.ofEpochMilli(notificationsEnabledTimestamp), clock.instant())
+                    .toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
+                )
         } else {
             false
         }
@@ -112,7 +118,7 @@ class ExposureNotificationsRepository(
         if (result == EnableNotificationsResult.Enabled) {
             preferences.edit {
                 // reset the timer
-                putLong(KEY_LAST_KEYS_PROCESSED, clock.millis())
+                putLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, clock.millis())
             }
 
             scheduleBackgroundJobs()
@@ -133,17 +139,17 @@ class ExposureNotificationsRepository(
 
     suspend fun rescheduleBackgroundJobs() {
         // use as a proxy for background work being enabled
-        if (preferences.contains(KEY_LAST_KEYS_PROCESSED)) {
+        if (preferences.contains(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP)) {
             Timber.d("Rescheduling background jobs")
             manifestWorkerScheduler.cancel()
             scheduleBackgroundJobs()
         }
     }
 
-    suspend fun resetLastKeysProcessed() {
+    suspend fun resetNotificationsEnabledTimestamp() {
         preferences.edit {
             // reset the timer
-            putLong(KEY_LAST_KEYS_PROCESSED, clock.millis())
+            putLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, clock.millis())
         }
     }
 
@@ -155,7 +161,7 @@ class ExposureNotificationsRepository(
     suspend fun requestDisableNotifications(): DisableNotificationsResult {
         manifestWorkerScheduler.cancel()
         preferences.edit {
-            remove(KEY_LAST_KEYS_PROCESSED)
+            remove(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP)
         }
         val result = exposureNotificationsApi.disableNotifications()
         if (result == DisableNotificationsResult.Disabled) {
@@ -531,6 +537,24 @@ class ExposureNotificationsRepository(
         preferences.registerOnSharedPreferenceChangeListener(listener)
 
         offer(preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0))
+
+        awaitClose {
+            preferences.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
+
+    fun notificationsEnabledTimestamp(): Flow<Long?> = callbackFlow {
+        val listener =
+            SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+                if (key == KEY_NOTIFICATIONS_ENABLED_TIMESTAMP) {
+                    offer(sharedPreferences.getLong(key, 0))
+                }
+            }
+
+        val preferences = preferences.getPreferences()
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+
+        offer(preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0))
 
         awaitClose {
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
