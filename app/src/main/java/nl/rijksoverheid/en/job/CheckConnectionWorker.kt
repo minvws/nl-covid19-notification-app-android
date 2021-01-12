@@ -15,6 +15,7 @@ import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
+import nl.rijksoverheid.en.settings.SettingsRepository
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -24,20 +25,26 @@ class CheckConnectionWorker(
     context: Context,
     params: WorkerParameters,
     private val repository: ExposureNotificationsRepository,
-    private val notificationsRepository: NotificationsRepository
+    private val notificationsRepository: NotificationsRepository,
+    private val settingsRepository: SettingsRepository
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        // TODO check if paused
         Timber.d("Check if key processing is overdue or EN is disabled")
         // try / catch this to be sure the worker always returns success and keeps being scheduled
         val result = kotlin.runCatching {
-            if (repository.getCurrentStatus() == StatusResult.Disabled) {
-                Timber.d("EN is disabled")
-                notificationsRepository.showAppInactiveNotification()
-            } else if (repository.keyProcessingOverdue()) {
-                Timber.d("Key processing is overdue")
-                SyncIssuesReceiver.schedule(applicationContext)
+            when {
+                settingsRepository.isPaused() -> {
+                    Timber.d("App is paused")
+                }
+                repository.getCurrentStatus() == StatusResult.Disabled -> {
+                    Timber.d("EN is disabled")
+                    notificationsRepository.showAppInactiveNotification()
+                }
+                repository.keyProcessingOverdue() -> {
+                    Timber.d("Key processing is overdue")
+                    SyncIssuesReceiver.schedule(applicationContext)
+                }
             }
         }
         result.exceptionOrNull()?.let {

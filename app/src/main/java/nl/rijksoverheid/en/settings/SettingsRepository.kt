@@ -30,6 +30,9 @@ class SettingsRepository(private val context: Context, private val settings: Set
     fun exposureNotificationsPausedState(): Flow<Settings.PausedState> =
         settings.observeChanges().map { it.exposureStatePausedState }
 
+    fun isPaused() =
+        settings.exposureStatePausedState is Settings.PausedState.Paused
+
     fun setExposureNotificationsPaused(until: LocalDateTime) {
         ExposureNotificationsPausedReminderReceiver.schedule(context, until)
         settings.setExposureNotificationsPaused(until)
