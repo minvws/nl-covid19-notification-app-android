@@ -32,6 +32,8 @@ import nl.rijksoverheid.en.onboarding.GooglePlayServicesUpToDateChecker
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.resource.ResourceBundleManager
+import nl.rijksoverheid.en.settings.Settings
+import nl.rijksoverheid.en.settings.SettingsRepository
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.util.retry
 
@@ -127,6 +129,10 @@ fun createResourceBundleManager(context: Context): ResourceBundleManager {
         context,
         cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE).also { cdnService = it }
     )
+}
+
+fun createSettingsRepository(context: Context): SettingsRepository {
+    return SettingsRepository(context, Settings(context))
 }
 
 @Suppress("BlockingMethodInNonBlockingContext")

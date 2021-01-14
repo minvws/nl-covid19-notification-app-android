@@ -18,6 +18,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
+import nl.rijksoverheid.en.settings.Settings
+import nl.rijksoverheid.en.util.formatDuration
 import nl.rijksoverheid.en.util.fromHtmlWithCustomReplacements
 
 object BindingAdapters {
@@ -118,6 +120,15 @@ object BindingAdapters {
                     }
                 }
             )
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("pausedState")
+    fun bindPausedState(view: TextView, state: Settings.PausedState?) {
+        view.text = when (state) {
+            is Settings.PausedState.Paused -> state.formatDuration(view.context)
+            else -> null
         }
     }
 }

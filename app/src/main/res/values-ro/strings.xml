@@ -256,7 +256,36 @@
     <string name="phone_call_not_supported_dialog_title">Je kunt niet bellen met dit apparaat</string>
     <string name="phone_call_not_supported_dialog_message">Pak je telefoon en bel %1$s</string>
     <string name="phone_call_not_supported_dialog_close">Ik snap het</string>
-    <string name="lab_test_copy_key_to_clipboard">GGD-sleutel gekopieerd.</string>
+    <!--Status screen footer text-->
     <string name="status_last_keys_processed">CoronaMelder houdt continu ontmoetingen bij. Ook checkt de app elke paar uur of iemand die jij hebt ontmoet, op dat moment besmettelijk was. Je krijgt een melding als dat zo was. Laatste check was op %1$s.</string>
+    <!--Status screen footer text, when no keys has been processed.-->
     <string name="status_no_keys_processed">CoronaMelder houdt continu ontmoetingen bij. Ook checkt de app elke paar uur of iemand die jij hebt ontmoet, op dat moment besmettelijk was. Je krijgt een melding als dat zo was.</string>
+    <string name="settings_pause_app_title">App pauzeren</string>
+    <string name="settings_pause_app_description">Als je de app pauzeert, worden je ontmoetingen tijdelijk niet bijgehouden. Ook kun je geen melding krijgen als je bij iemand in de buurt bent geweest die later corona blijkt te hebben. Nadat de pauze is afgelopen, krijg je meteen een melding om de app weer aan te zetten.</string>
+    <string name="settings_pause_action_enable">App pauzeren</string>
+    <string name="settings_pause_action_disable">App aanzetten</string>
+    <string name="reminder_channel_name">Herinneringen</string>
+    <string name="reminder_channel_description">Herinneringen wanneer je de app hebt gepauzeerd</string>
+    <string name="app_inactive_paused_title">Pauzeren afgelopen</string>
+    <string name="app_inactive_paused_message">Let op: de app is nog niet actief. Je moet deze zelf weer aanzetten in de app.</string>
+    <string name="status_paused_headline">De app is gepauzeerd</string>
+    <string name="paused_en_api_description"><![CDATA[De app wordt over <b>%1$s</b> weer aangezet]]></string>
+    <string name="paused_en_api_duration_reached">De app is niet actief. Je moet deze zelf weer aanzetten.</string>
+    <string name="pause_confirmation_title">Weet je zeker dat je de app wilt pauzeren?</string>
+    <string name="pause_confirmation_description">De app houdt tijdens het pauzeren tijdelijk geen ontmoetingen bij met andere app-gebruikers. Ook kun je geen melding krijgen als je bij iemand in de buurt bent geweest die later corona blijkt te hebben. \n\nPauzeer alleen in situaties waarin je telefoon dicht bij telefoons van anderen komt, maar er geen kans op besmetting is. Bijvoorbeeld door het gebruik van medische beschermingsmiddelen.</string>
+    <string name="pause_confirmation_accept_button">Ja, pauzeer</string>
+    <string name="pause_confirmation_decline_button">Nee, pauzeer niet</string>
+    <string name="skip_confirmation_checkbox">Dit scherm niet meer tonen</string>
+    <string name="pause_duration_hours_option">Pauzeer voor %1$d uur</string>
+    <string name="cd_status_paused">Grijs pauze icoon dat aangeeft dat de app gepauzeerd is</string>
+    <string name="duration_format_hour">%1$d uur</string>
+    <string name="duration_format_hours">%1$d uur</string>
+    <string name="duration_format_hour_and_minute">%1$d uur %2$d minuut</string>
+    <string name="duration_format_hour_and_minutes">%1$d uur %2$d minuten</string>
+    <string name="duration_format_hours_and_minute">%1$d uur %2$d minuut</string>
+    <string name="duration_format_hours_and_minutes">%1$d uur %2$d minuten</string>
+    <string name="duration_format_minute">%1$d minuut</string>
+    <string name="duration_format_minutes">%1$d minuten</string>
+    <string name="status_paused_duration_reached_headline">Pauzeren is afgelopen</string>
+    <string name="lab_test_copy_key_to_clipboard">GGD-sleutel gekopieerd.</string>
 </resources>

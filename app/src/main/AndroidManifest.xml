@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- remove unwanted permissions from the play-core-ktx dependency which is not not specifying a min sdk correctly -->
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
@@ -43,6 +44,24 @@
         <receiver android:name=".job.UpdateReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".settings.ExposureNotificationsStateChangeReceiver"
+            android:permission="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK">
+            <intent-filter>
+                <action android:name="com.google.android.gms.exposurenotification.ACTION_SERVICE_STATE_UPDATED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".settings.ExposureNotificationsPausedReminderReceiver"
+            android:exported="false" />
+
+        <receiver android:name=".settings.ExposureNotificationsPausedBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 

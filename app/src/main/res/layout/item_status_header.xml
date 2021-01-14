@@ -51,16 +51,18 @@
             app:show="@{viewState.showIllustration}" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/status_image"
+            android:id="@+id/status_animated_image"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:scaleType="center"
+            app:imageResource="@{viewState.icon}"
             app:contentDescriptionRes="@{viewState.iconContentDescription}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/clouds"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:optional_animation="@{viewState.icon}" />
+            app:optional_animation="@{viewState.animatedIcon}" />
 
         <TextView
             android:id="@+id/status_headline"
@@ -74,7 +76,7 @@
             android:textAppearance="?attr/textAppearanceHeadline5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/status_image"
+            app:layout_constraintTop_toBottomOf="@id/status_animated_image"
             tools:text="@string/status_no_exposure_detected_headline" />
 
         <TextView

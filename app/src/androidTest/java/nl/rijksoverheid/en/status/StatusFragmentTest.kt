@@ -45,6 +45,8 @@ import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
+import nl.rijksoverheid.en.settings.Settings
+import nl.rijksoverheid.en.settings.SettingsRepository
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
 import okhttp3.ResponseBody
@@ -85,6 +87,8 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
     private val configPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0)
+    private val settingsPreferences = context
+        .getSharedPreferences("${BuildConfig.APPLICATION_ID}.settings", 0)
 
     private val service = object : CdnService {
         override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
@@ -128,6 +132,10 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         AppConfigManager(service),
         clock = clock
     )
+    private val settingsRepository = SettingsRepository(
+        context, Settings(context, settingsPreferences)
+    )
+
     private val statusViewModel = StatusViewModel(
         OnboardingRepository(
             sharedPreferences = configPreferences,
@@ -135,10 +143,11 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         ).apply { setHasSeenLatestTerms() },
         repository,
         NotificationsRepository(context, clock),
+        settingsRepository,
         createAppConfigManager(context),
         clock
     )
-    private val viewModel = ExposureNotificationsViewModel(repository)
+    private val viewModel = ExposureNotificationsViewModel(repository, settingsRepository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return viewModel as T
