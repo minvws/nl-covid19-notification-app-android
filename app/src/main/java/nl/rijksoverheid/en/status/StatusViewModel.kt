@@ -125,7 +125,7 @@ class StatusViewModel(
         val isPaused = pauseState is Settings.PausedState.Paused
         return if (status != StatusResult.Enabled && !isPaused && date != null) {
             ErrorState.ConsentRequired
-        } else if (!exposureNotificationsEnabled && !isPaused) {
+        } else if (!exposureNotificationsEnabled) {
             ErrorState.NotificationsDisabled
         } else if (date != null && keyProcessingOverdue && !isPaused) {
             ErrorState.SyncIssues
