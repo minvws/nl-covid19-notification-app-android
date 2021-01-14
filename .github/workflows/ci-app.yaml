@@ -1,6 +1,6 @@
 name: CI Covid19 Notification
 
-on: push
+on: [push, pull_request]
 
 jobs:
   run-test:
