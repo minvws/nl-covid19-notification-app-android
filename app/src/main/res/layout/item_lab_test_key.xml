@@ -59,6 +59,7 @@
             android:focusable="@{viewState.showCode}"
             android:minHeight="110dp"
             android:padding="16dp"
+            app:markAsButtonForAccessibility="@{true}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
