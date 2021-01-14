@@ -7,7 +7,8 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -63,8 +64,10 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:accessibilityHeading="true"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:targetApi="p" />
 
                     <TextView
                         android:textColor="?android:attr/textColorPrimary"
@@ -104,6 +107,7 @@
                     <TextView
                         android:id="@+id/wifi_only_title"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:accessibilityHeading="true"
                         android:layout_marginTop="24dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
@@ -112,7 +116,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         android:text="@string/settings_wifi_only_title"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:targetApi="p" />
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:checked="@={viewModel.wifiOnly}"
