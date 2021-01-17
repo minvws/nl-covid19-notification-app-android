@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.test
 
 import android.app.Application
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -64,8 +65,15 @@ class TestMainActivity : AppCompatActivity() {
         }
         viewModel.fragmentFactory?.let { supportFragmentManager.fragmentFactory = it }
         super.onCreate(savedInstanceState)
-        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
-            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false)
+        } else {
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        }
+
         setContentView(
             FragmentContainerView(this).apply {
                 this.id = viewModel.viewId
