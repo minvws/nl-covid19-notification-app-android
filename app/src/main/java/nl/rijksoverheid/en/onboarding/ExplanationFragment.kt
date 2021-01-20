@@ -20,6 +20,7 @@ import androidx.transition.TransitionInflater
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentExplanationBinding
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
 class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
     data class ViewState(
@@ -83,7 +84,7 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
         )
 
         binding.nextButtonClickListener = View.OnClickListener {
-            findNavController().navigate(
+            findNavController().navigateCatchingErrors(
                 ExplanationFragmentDirections.actionNext(),
                 FragmentNavigatorExtras(
                     binding.appbar to binding.appbar.transitionName
