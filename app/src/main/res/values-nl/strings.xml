@@ -274,7 +274,6 @@
     <string name="pause_confirmation_accept_button">Ja, pauzeer</string>
     <string name="pause_confirmation_decline_button">Nee, pauzeer niet</string>
     <string name="skip_confirmation_checkbox">Dit scherm niet meer tonen</string>
-    <string name="pause_duration_hours_option">Pauzeer voor %1$d uur</string>
     <string name="cd_status_paused">Grijs pauze-icoon dat aangeeft dat de app gepauzeerd is</string>
     <string name="duration_format_hour">%1$d uur</string>
     <string name="duration_format_hours">%1$d uur</string>
@@ -286,4 +285,8 @@
     <string name="duration_format_minutes">%1$d minuten</string>
     <string name="lab_test_copy_key_to_clipboard">GGD-sleutel gekopieerd</string>
     <string name="status_paused_duration_reached_headline">Zet de app weer aan</string>
+    <plurals name="pause_duration_hours_option_plurals">
+        <item quantity="one">Pauzeer voor %d uur</item>
+        <item quantity="other">Pauzeer voor %d uur</item>
+    </plurals>
 </resources>

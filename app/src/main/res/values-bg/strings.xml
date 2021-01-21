@@ -274,7 +274,6 @@
     <string name="pause_confirmation_accept_button">Да, постави на пауза</string>
     <string name="pause_confirmation_decline_button">Не, не поставяй на пауза</string>
     <string name="skip_confirmation_checkbox">Не показвай повече този екран</string>
-    <string name="pause_duration_hours_option">Постави на пауза за %1$d час(а)</string>
     <string name="cd_status_paused">Сива икона за пауза, която показва, че приложението е на пауза</string>
     <string name="duration_format_hour">%1$d час(а)</string>
     <string name="duration_format_hours">%1$d час(а)</string>
@@ -286,4 +285,8 @@
     <string name="duration_format_minutes">%1$d минути</string>
     <string name="lab_test_copy_key_to_clipboard">GGD-ключът е копиран</string>
     <string name="status_paused_duration_reached_headline">Паузата изтече</string>
+    <plurals name="pause_duration_hours_option_plurals">
+        <item quantity="one">Постави на пауза за %d час(а)</item>
+        <item quantity="other">Постави на пауза за %d час(а)</item>
+    </plurals>
 </resources>

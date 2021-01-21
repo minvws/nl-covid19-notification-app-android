@@ -274,7 +274,6 @@
     <string name="pause_confirmation_accept_button">Evet, duraklat</string>
     <string name="pause_confirmation_decline_button">Hayır, duraklama</string>
     <string name="skip_confirmation_checkbox">Bu ekranı artık gösterme</string>
-    <string name="pause_duration_hours_option">%1$d saat duraklat</string>
     <string name="cd_status_paused">Uygulamanın duraklatıldığını gösteren gri duraklatma simgesi</string>
     <string name="duration_format_hour">%1$d saat</string>
     <string name="duration_format_hours">%1$d saat</string>
@@ -286,4 +285,8 @@
     <string name="duration_format_minutes">%1$d dakika</string>
     <string name="lab_test_copy_key_to_clipboard">GGD anahtarı kopyalandı</string>
     <string name="status_paused_duration_reached_headline">Duraklatma sona erdi</string>
+    <plurals name="pause_duration_hours_option_plurals">
+        <item quantity="one">%d saat duraklat</item>
+        <item quantity="other">%d saat duraklat</item>
+    </plurals>
 </resources>
