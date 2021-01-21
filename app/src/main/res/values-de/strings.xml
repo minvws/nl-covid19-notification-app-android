@@ -281,7 +281,7 @@
     <string name="duration_format_hour_and_minute">%1$d Stunde(n) %2$d Minute</string>
     <string name="duration_format_hour_and_minutes">%1$d Stunde(n) %2$d Minuten</string>
     <string name="duration_format_hours_and_minute">%1$d Stunde(n) %2$d Minute</string>
-    <string name="duration_format_hours_and_minutes">%1$d Stunde(n) %2$d Minute(n)</string>
+    <string name="duration_format_hours_and_minutes">%1$s %2$s</string>
     <string name="duration_format_minute">%1$d Minute</string>
     <string name="duration_format_minutes">%1$d Minuten</string>
     <string name="lab_test_copy_key_to_clipboard">GGD-Schlüssel kopiert</string>

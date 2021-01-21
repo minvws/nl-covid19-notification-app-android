@@ -280,7 +280,7 @@
     <string name="duration_format_hour_and_minute">%1$d час(а) %2$d минута</string>
     <string name="duration_format_hour_and_minutes">%1$d час(а) %2$d минути</string>
     <string name="duration_format_hours_and_minute">%1$d час(а) %2$d минута</string>
-    <string name="duration_format_hours_and_minutes">%1$d час(а) %2$d минути</string>
+    <string name="duration_format_hours_and_minutes">%1$s %2$s</string>
     <string name="duration_format_minute">%1$d минута</string>
     <string name="duration_format_minutes">%1$d минути</string>
     <string name="lab_test_copy_key_to_clipboard">GGD-ключът е копиран</string>

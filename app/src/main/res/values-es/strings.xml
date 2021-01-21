@@ -282,7 +282,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="duration_format_hour_and_minute">%1$d horas %2$d minutos</string>
     <string name="duration_format_hour_and_minutes">%1$d horas %2$d minutos</string>
     <string name="duration_format_hours_and_minute">%1$d horas %2$d minutos</string>
-    <string name="duration_format_hours_and_minutes">%1$d horas %2$d minutos</string>
+    <string name="duration_format_hours_and_minutes">%1$s %2$s</string>
     <string name="duration_format_minute">%1$d minuto</string>
     <string name="duration_format_minutes">%1$d minutos</string>
     <string name="lab_test_copy_key_to_clipboard">Copiada la clave GGD</string>

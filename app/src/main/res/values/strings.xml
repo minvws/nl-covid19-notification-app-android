@@ -276,18 +276,19 @@
     <string name="pause_confirmation_decline_button">No, don\'t pause</string>
     <string name="skip_confirmation_checkbox">Don\'t show this screen again</string>
     <string name="cd_status_paused">Grey pause icon showing the app is paused</string>
-    <string name="duration_format_hour">%1$d hour</string>
-    <string name="duration_format_hours">%1$d hours</string>
-    <string name="duration_format_hour_and_minute">%1$d hour %2$d minute</string>
-    <string name="duration_format_hour_and_minutes">%1$d hour %2$d minutes</string>
-    <string name="duration_format_hours_and_minute">%1$d hours %2$d minute</string>
-    <string name="duration_format_hours_and_minutes">%1$d hours %2$d minutes</string>
-    <string name="duration_format_minute">%1$d minute</string>
-    <string name="duration_format_minutes">%1$d minutes</string>
+    <string name="duration_format_hours_and_minutes">%1$s and %2$s</string>
     <string name="lab_test_copy_key_to_clipboard">GGD key copied</string>
     <string name="status_paused_duration_reached_headline">Turn the app on again</string>
     <plurals name="pause_duration_hours_option_plurals">
         <item quantity="one">Pause for %d hour</item>
         <item quantity="other">Pause for %d hours</item>
+    </plurals>
+    <plurals name="duration_hours_plurals">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="duration_minutes_plurals">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
     </plurals>
 </resources>

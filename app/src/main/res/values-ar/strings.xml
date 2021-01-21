@@ -287,7 +287,7 @@
     <string name="duration_format_hour_and_minute">الساعة %1$d الدقيقة %2$d</string>
     <string name="duration_format_hour_and_minutes">الساعة %1$d الدقيقة %2$d</string>
     <string name="duration_format_hours_and_minute">الساعة %1$d الدقيقة %2$d</string>
-    <string name="duration_format_hours_and_minutes">الساعة %1$d الدقيقة %2$d</string>
+    <string name="duration_format_hours_and_minutes">%1$s %2$s</string>
     <string name="duration_format_minute">%1$d دقيقة</string>
     <string name="duration_format_minutes">%1$d دقيقة</string>
     <string name="lab_test_copy_key_to_clipboard">تم نسخ رمز الـ GGD</string>

@@ -280,7 +280,7 @@
     <string name="duration_format_hour_and_minute">%1$d heure(s) %2$d minute</string>
     <string name="duration_format_hour_and_minutes">%1$d heure(s) %2$d minutes</string>
     <string name="duration_format_hours_and_minute">%1$d heure(s) %2$d minute</string>
-    <string name="duration_format_hours_and_minutes">%1$d heure(s) %2$d minutes</string>
+    <string name="duration_format_hours_and_minutes">%1$s %2$s</string>
     <string name="duration_format_minute">%1$d minute</string>
     <string name="duration_format_minutes">%1$d minutes</string>
     <string name="lab_test_copy_key_to_clipboard">Code GGD copié</string>
