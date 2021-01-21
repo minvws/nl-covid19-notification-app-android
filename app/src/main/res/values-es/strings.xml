@@ -276,7 +276,6 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="pause_confirmation_accept_button">Sí, pausarla</string>
     <string name="pause_confirmation_decline_button">No, no pausarla</string>
     <string name="skip_confirmation_checkbox">No volver a mostrar esta pantalla</string>
-    <string name="pause_duration_hours_option">Pausar durante %1$d horas</string>
     <string name="cd_status_paused">Icono de pausa gris que indica que la app está en pausa</string>
     <string name="duration_format_hour">%1$d horas</string>
     <string name="duration_format_hours">%1$d horas</string>
@@ -288,4 +287,8 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="duration_format_minutes">%1$d minutos</string>
     <string name="lab_test_copy_key_to_clipboard">Copiada la clave GGD</string>
     <string name="status_paused_duration_reached_headline">Se dejó de pausar la app</string>
+    <plurals name="pause_duration_hours_option_plurals">
+        <item quantity="one">Pausar durante %d horas</item>
+        <item quantity="other">Pausar durante %d horas</item>
+    </plurals>
 </resources>

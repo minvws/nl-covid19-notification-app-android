@@ -19,7 +19,7 @@ class PauseDurationItem(
 
     override fun bind(viewBinding: ItemBottomSheetBinding, position: Int) {
         viewBinding.root.context?.let {
-            viewBinding.text = it.getString(R.string.pause_duration_hours_option, pauseDurationInHours)
+            viewBinding.text = it.resources.getQuantityString(R.plurals.pause_duration_hours_option_plurals, pauseDurationInHours, pauseDurationInHours)
         }
     }
 

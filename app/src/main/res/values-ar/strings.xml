@@ -281,7 +281,6 @@
     <string name="pause_confirmation_accept_button">نعم، قم بإيقاف التطبيق مؤقتًا</string>
     <string name="pause_confirmation_decline_button">كلا، لا تقم بإيقاف التشغيل مؤقتًا</string>
     <string name="skip_confirmation_checkbox">لا تقم بإظهار هذه الشاشة مرة أخرى</string>
-    <string name="pause_duration_hours_option">قم بالإيقاف المؤقت لمدة %1$d ساعات</string>
     <string name="cd_status_paused">رمز إيقاف مؤقت رمادي اللون يشير إلى أنه تم إيقاف التطبيق مؤقتًا</string>
     <string name="duration_format_hour">%1$d ساعات</string>
     <string name="duration_format_hours">%1$d ساعات</string>
@@ -293,4 +292,12 @@
     <string name="duration_format_minutes">%1$d دقيقة</string>
     <string name="lab_test_copy_key_to_clipboard">تم نسخ رمز الـ GGD</string>
     <string name="status_paused_duration_reached_headline">انتهى الإيقاف المؤقت</string>
+    <plurals name="pause_duration_hours_option_plurals">
+        <item quantity="one">قم بالإيقاف المؤقت لمدة %d ساعات</item>
+        <item quantity="other">قم بالإيقاف المؤقت لمدة %d ساعات</item>
+        <item quantity="few">قم بالإيقاف المؤقت لمدة %d ساعات</item>
+        <item quantity="many">قم بالإيقاف المؤقت لمدة %d ساعات</item>
+        <item quantity="two">قم بالإيقاف المؤقت لمدة %d ساعات</item>
+        <item quantity="zero">قم بالإيقاف المؤقت لمدة %d ساعات</item>
+    </plurals>
 </resources>

@@ -274,7 +274,6 @@
     <string name="pause_confirmation_accept_button">Oui, mettre en pause</string>
     <string name="pause_confirmation_decline_button">Non, ne pas mettre en pause</string>
     <string name="skip_confirmation_checkbox">Ne plus afficher cet écran</string>
-    <string name="pause_duration_hours_option">Mettre en pause pendant %1$d heure(s)</string>
     <string name="cd_status_paused">Icône de pause gris qui indique que l\'application est mise en pause</string>
     <string name="duration_format_hour">%1$d heure(s)</string>
     <string name="duration_format_hours">%1$d heure(s)</string>
@@ -286,4 +285,8 @@
     <string name="duration_format_minutes">%1$d minutes</string>
     <string name="lab_test_copy_key_to_clipboard">Code GGD copié</string>
     <string name="status_paused_duration_reached_headline">Pause terminée</string>
+    <plurals name="pause_duration_hours_option_plurals">
+        <item quantity="one">Mettre en pause pendant %d heure(s)</item>
+        <item quantity="other">Mettre en pause pendant %d heure(s)</item>
+    </plurals>
 </resources>

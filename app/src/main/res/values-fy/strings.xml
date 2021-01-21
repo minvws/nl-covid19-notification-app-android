@@ -274,7 +274,6 @@
     <string name="pause_confirmation_accept_button">Ja, set op pauze</string>
     <string name="pause_confirmation_decline_button">Nee, set net op pauze</string>
     <string name="skip_confirmation_checkbox">Dit skerm net mear sjen litte</string>
-    <string name="pause_duration_hours_option">Set foar %1$d oeren op pauze</string>
     <string name="cd_status_paused">Griis pauze-ikoan dat oanjout dat de app op pauze stiet</string>
     <string name="duration_format_hour">%1$d oere</string>
     <string name="duration_format_hours">%1$d oeren</string>
@@ -286,4 +285,8 @@
     <string name="duration_format_minutes">%1$d minuten</string>
     <string name="lab_test_copy_key_to_clipboard">GGD-kaai kopiearre</string>
     <string name="status_paused_duration_reached_headline">De pauze is ôfrûn</string>
+    <plurals name="pause_duration_hours_option_plurals">
+        <item quantity="one">Set foar %d oeren op pauze</item>
+        <item quantity="other">Set foar %d oeren op pauze</item>
+    </plurals>
 </resources>
