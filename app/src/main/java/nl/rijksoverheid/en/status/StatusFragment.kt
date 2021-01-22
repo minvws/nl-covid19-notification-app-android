@@ -10,7 +10,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
@@ -28,13 +27,13 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.settings.Settings.PausedState
+import nl.rijksoverheid.en.util.PausedStateTimer
 import nl.rijksoverheid.en.util.durationHoursAndMinutes
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.isIgnoringBatteryOptimizations
 import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
 import timber.log.Timber
 import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 private const val RC_DISABLE_BATTERY_OPTIMIZATIONS = 1
 
 class StatusFragment @JvmOverloads constructor(
@@ -46,7 +45,7 @@ class StatusFragment @JvmOverloads constructor(
     private lateinit var section: StatusSection
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
-    private var pausedDurationTimer: CountDownTimer? = null
+    private var pausedDurationTimer: PausedStateTimer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -142,26 +141,15 @@ class StatusFragment @JvmOverloads constructor(
             val now = LocalDateTime.now()
             if (it is PausedState.Paused && it.pausedUntil.isAfter(now)) {
                 pausedDurationTimer?.cancel()
-                pausedDurationTimer = object : CountDownTimer(
-                    LocalDateTime.now().until(it.pausedUntil, ChronoUnit.MILLIS),
-                    5000
-                ) {
-                    private fun forceRefreshHeaderState() {
-                        statusViewModel.headerState.value?.let { headerState ->
-                            updateHeaderState(headerState)
-                            updatePausedItem(headerState)
-                        }
+                pausedDurationTimer = PausedStateTimer(it) {
+                    statusViewModel.headerState.value?.let { headerState ->
+                        updateHeaderState(headerState)
+                        updatePausedItem(headerState)
                     }
-
-                    override fun onTick(p0: Long) {
-                        forceRefreshHeaderState()
-                    }
-                    override fun onFinish() {
-                        forceRefreshHeaderState()
-                    }
-                }.start()
+                }
+                pausedDurationTimer?.startTimer()
             } else if (it !is PausedState.Paused && pausedDurationTimer != null) {
-                pausedDurationTimer?.cancel()
+                pausedDurationTimer?.cancelTimer()
                 pausedDurationTimer = null
             }
         }
@@ -180,11 +168,12 @@ class StatusFragment @JvmOverloads constructor(
                 )
             }
         }
-        pausedDurationTimer?.start()
+
+        pausedDurationTimer?.startTimer()
     }
 
     override fun onPause() {
-        pausedDurationTimer?.cancel()
+        pausedDurationTimer?.cancelTimer()
         super.onPause()
     }
 

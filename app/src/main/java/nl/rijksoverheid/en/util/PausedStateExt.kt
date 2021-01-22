@@ -51,7 +51,7 @@ fun Settings.PausedState.Paused.formatDuration(context: Context): CharSequence {
                 R.string.duration_format_minute,
                 durationMinutes
             )
-            else -> ""
+            else -> return context.getString(R.string.paused_en_api_duration_reached)
         }
 
         HtmlCompat.fromHtml(
@@ -69,7 +69,10 @@ fun Settings.PausedState.Paused.formatDuration(context: Context): CharSequence {
 fun Settings.PausedState.Paused.durationHoursAndMinutes(): Pair<Long, Long> {
     val now = LocalDateTime.now()
     return if (pausedUntil.isAfter(now)) {
-        val duration = Duration.between(LocalDateTime.now(), pausedUntil)
+        // Get duration rounded up to minutes
+        val duration = Duration.between(now, pausedUntil).let {
+            it.plusMillis(60000 - (it.toMillis() % 60000))
+        }
         val durationHours = duration.toHours()
         val durationMinutes = duration.toMinutes() - durationHours * 60
         Pair(durationHours, durationMinutes)
