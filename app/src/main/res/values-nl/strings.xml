@@ -267,7 +267,7 @@
     <string name="app_inactive_paused_title">Zet CoronaMelder weer aan</string>
     <string name="app_inactive_paused_message">Let op: de app is nog niet actief. Je moet deze zelf aanzetten in de app.</string>
     <string name="status_paused_headline">De app is gepauzeerd</string>
-    <string name="paused_en_api_description"><![CDATA[Je krijgt over <b>%1$s</b> een melding om de app weer aan te zetten]]></string>
+    <string name="paused_en_api_description"><![CDATA[Je krijgt over <b>%1$s</b> een melding om de app weer aan te zetten.]]></string>
     <string name="paused_en_api_duration_reached">CoronaMelder is nog niet actief. Je moet deze zelf aanzetten.</string>
     <string name="pause_confirmation_title">Weet je zeker dat je de app wilt pauzeren?</string>
     <string name="pause_confirmation_description">De app houdt tijdens het pauzeren tijdelijk geen ontmoetingen bij met andere app-gebruikers. Ook kun je geen melding krijgen als je bij iemand in de buurt bent geweest die later corona blijkt te hebben. \n\nPauzeer alleen in situaties waarin je telefoon dicht bij telefoons van anderen komt, maar er geen kans op besmetting is. Bijvoorbeeld door het gebruik van medische beschermingsmiddelen.</string>
