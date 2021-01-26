@@ -64,8 +64,11 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
         super.onCreate(savedInstanceState)
         adapter.add(
             FAQDetailSections(
-                openSettings = {
+                openAndroidSettings = {
                     startActivity(Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS))
+                },
+                openAppSettings = {
+                    findNavController().navigateCatchingErrors(AboutDetailFragmentDirections.actionSettings())
                 }
             ).getSection(args.faqItemId)
         )
