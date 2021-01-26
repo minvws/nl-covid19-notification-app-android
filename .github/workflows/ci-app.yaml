@@ -4,9 +4,6 @@ on: [push, pull_request]
 
 jobs:
   run-test:
-    env:
-      APP_CENTER_TOKEN: ${{secrets.APP_CENTER_TOKEN}}
-      APP_CENTER_APP: ${{secrets.APP_CENTER_APP}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
