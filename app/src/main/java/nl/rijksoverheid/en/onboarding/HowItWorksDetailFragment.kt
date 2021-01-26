@@ -71,7 +71,7 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
         super.onCreate(savedInstanceState)
         adapter.add(
             FAQDetailSections(
-                openSettings = {
+                openAndroidSettings = {
                     startActivity(Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS))
                 }
             ).getSection(args.faqItemId)

@@ -50,7 +50,10 @@ enum class FAQItemId(@StringRes val label: Int) {
     INTEROP_COUNTRIES(R.string.faq_interop_countries)
 }
 
-class FAQDetailSections(private val openSettings: () -> Unit = {}) {
+class FAQDetailSections(
+    private val openAndroidSettings: () -> Unit = {},
+    private val openAppSettings: () -> Unit = {}
+) {
     fun getSection(faqItemId: FAQItemId) = when (faqItemId) {
         REASON -> Section(
             listOf(
@@ -106,7 +109,7 @@ class FAQDetailSections(private val openSettings: () -> Unit = {}) {
                 ParagraphItem(R.string.faq_pause_paragraph_1),
                 ParagraphItem(R.string.faq_pause_paragraph_2),
                 ParagraphItem(R.string.faq_pause_paragraph_3),
-                ButtonItem(R.string.faq_deletion_button, openSettings)
+                ButtonItem(R.string.faq_deletion_button, openAppSettings)
             )
         )
         INTEROPERABILITY -> Section(
@@ -121,7 +124,7 @@ class FAQDetailSections(private val openSettings: () -> Unit = {}) {
             listOf(
                 HeaderItem(R.string.faq_deletion),
                 ParagraphItem(R.string.faq_deletion_paragraph_1),
-                ButtonItem(R.string.faq_deletion_button, openSettings)
+                ButtonItem(R.string.faq_deletion_button, openAndroidSettings)
             )
         )
         LOCATION_PERMISSION -> Section(

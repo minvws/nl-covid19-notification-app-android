@@ -199,6 +199,13 @@
             app:destination="@id/nav_about_detail"
             app:popUpTo="@id/nav_about_detail"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_settings"
+            app:destination="@id/nav_settings"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
     <fragment
         android:id="@+id/nav_lab_test"
