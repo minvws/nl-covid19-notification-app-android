@@ -92,6 +92,7 @@ class ExposureNotificationsRepository(
     private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone(),
     private val signatureValidation: Boolean = ApiBuildConfig.FEATURE_RESPONSE_SIGNATURES,
+    private val signatureValidator: ResponseSignatureValidator = ResponseSignatureValidator(),
     lifecycleOwner: LifecycleOwner = ProcessLifecycleOwner.get()
 ) {
     companion object {
@@ -429,7 +430,6 @@ class ExposureNotificationsRepository(
             } while (true)
         }
         return if (signatureValidation) {
-            val validator = ResponseSignatureValidator()
             var valid = false
             if (signature != null) {
                 ZipInputStream(FileInputStream(file)).use {
@@ -437,7 +437,7 @@ class ExposureNotificationsRepository(
                         val entry = it.nextEntry ?: break
                         if (entry.name == "export.bin") {
                             try {
-                                validator.verifySignature(it, signature!!)
+                                signatureValidator.verifySignature(it, signature!!)
                                 valid = true
                             } catch (ex: SignatureValidationException) {
                                 Timber.e("File for $id did not pass signature validation")
