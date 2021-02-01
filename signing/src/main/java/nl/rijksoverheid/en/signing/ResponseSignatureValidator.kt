@@ -103,7 +103,7 @@ class ResponseSignatureValidator(
             ) {
                 throw SignatureValidationException()
             }
-        } catch (ex: Exception) {
+        } catch (ex: Throwable) {
             throw SignatureValidationException()
         }
     }
