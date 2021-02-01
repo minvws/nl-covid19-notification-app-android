@@ -7,38 +7,50 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
+import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.testing.TestNavHostController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.BaseInstrumentationTest
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.enapi.StatusResult
+import nl.rijksoverheid.en.factory.createAppConfigManager
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
+import nl.rijksoverheid.en.settings.Settings
+import nl.rijksoverheid.en.settings.SettingsRepository
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
 import okhttp3.ResponseBody
+import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -58,6 +70,8 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
     }
 
+    private lateinit var preferencesFactory: suspend () -> SharedPreferences
+
     private val clock = object : Clock() {
         var instant = Instant.parse("2020-06-20T10:15:30.00Z")
         override fun withZone(zone: ZoneId?): Clock = this
@@ -73,28 +87,39 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
     private val configPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0)
+    private val settingsPreferences = context
+        .getSharedPreferences("${BuildConfig.APPLICATION_ID}.settings", 0)
 
     private val service = object : CdnService {
         override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
             throw NotImplementedError()
         }
 
-        override suspend fun getManifest(cacheHeader: String?): Manifest =
+        override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
             Manifest(emptyList(), "", "appConfig")
 
         override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
             throw NotImplementedError()
         }
 
-        override suspend fun getAppConfig(id: String, cacheHeader: String?) =
+        override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
             AppConfig(1, 10, 0.0)
+
+        override suspend fun getResourceBundle(
+            id: String,
+            cacheStrategy: CacheStrategy?
+        ): ResourceBundle {
+            throw IllegalStateException()
+        }
     }
 
     private val repository = ExposureNotificationsRepository(
         context,
-        FakeExposureNotificationApi(),
+        object : FakeExposureNotificationApi() {
+            override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+        },
         service,
-        notificationsPreferences,
+        AsyncSharedPreferences { preferencesFactory() },
         object : BackgroundWorkScheduler {
             override fun schedule(intervalMinutes: Int) {
             }
@@ -107,19 +132,33 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         AppConfigManager(service),
         clock = clock
     )
+    private val settingsRepository = SettingsRepository(
+        context, Settings(context, settingsPreferences)
+    )
+
     private val statusViewModel = StatusViewModel(
         OnboardingRepository(
             sharedPreferences = configPreferences,
             googlePlayServicesUpToDateChecker = { true }
-        ),
+        ).apply { setHasSeenLatestTerms() },
         repository,
         NotificationsRepository(context, clock),
+        settingsRepository,
+        createAppConfigManager(context),
         clock
     )
-    private val viewModel = ExposureNotificationsViewModel(repository)
+    private val viewModel = ExposureNotificationsViewModel(repository, settingsRepository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return viewModel as T
+        }
+    }
+
+    @Before
+    fun setup() {
+        preferencesFactory = { notificationsPreferences }
+        notificationsPreferences.edit {
+            clear()
         }
     }
 
@@ -133,6 +172,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             setGraph(R.navigation.nav_main)
             setCurrentDestination(R.id.nav_status)
         }
+
         withFragment(
             StatusFragment(
                 factoryProducer = {
@@ -147,15 +187,79 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             R.style.AppTheme,
             activityViewModelFactory
         ) {
-            onView(withId(R.id.status_text))
+            onView(withId(R.id.status_headline))
                 .check(matches(withText(R.string.status_disabled_headline)))
 
-            onView(withText(R.string.status_error_sync_issues)).check(matches(isDisplayed()))
-            onView(withText(R.string.status_error_action_sync_issues)).check(matches(isDisplayed()))
+            onView(withId(R.id.status_description))
+                .check(matches(withText(R.string.status_error_sync_issues)))
 
-            onView(withText(R.string.status_error_action_sync_issues)).perform(click())
+            onView(withId(R.id.disabled_enable)).check(matches(withText(R.string.status_error_action_sync_issues)))
+                .perform(click())
 
-            onView(withText(R.string.status_error_sync_issues)).check(doesNotExist())
+            onView(withId(R.id.status_headline)).check(matches(withText(R.string.status_no_exposure_detected_headline)))
+            onView(withId(R.id.status_description)).check(matches(withText(R.string.status_no_exposure_detected_description)))
+        }
+    }
+
+    @Test
+    fun testWaitingForPreferencesLoadedShowsLoadingScreen() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val navController = TestNavHostController(context).apply {
+            setGraph(R.navigation.nav_main)
+            setCurrentDestination(R.id.nav_status)
+        }
+
+        preferencesFactory = {
+            delay(10000)
+            notificationsPreferences
+        }
+
+        withFragment(
+            StatusFragment(
+                factoryProducer = {
+                    object : ViewModelProvider.Factory {
+                        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                            return statusViewModel as T
+                        }
+                    }
+                }
+            ),
+            navController,
+            R.style.AppTheme,
+            activityViewModelFactory
+        ) {
+            onView(withId(R.id.loading)).check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun testInteropAnnouncementInfoState() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val navController = TestNavHostController(context).apply {
+            setGraph(R.navigation.nav_main)
+            setCurrentDestination(R.id.nav_status)
+        }
+
+        configPreferences.edit { remove("terms_version") }
+
+        withFragment(
+            StatusFragment(
+                factoryProducer = {
+                    object : ViewModelProvider.Factory {
+                        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                            return statusViewModel as T
+                        }
+                    }
+                }
+            ),
+            navController,
+            R.style.AppTheme,
+            activityViewModelFactory
+        ) {
+            // Scroll to the 3rd item (1 header item, 1 error item and the info item)
+            onView(withId(R.id.content))
+                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(3))
+            onView(withId(R.id.info_box_text)).check(matches(isDisplayed()))
         }
     }
 }

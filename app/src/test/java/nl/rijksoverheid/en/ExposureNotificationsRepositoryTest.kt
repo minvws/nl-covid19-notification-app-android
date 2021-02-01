@@ -30,9 +30,11 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.yield
+import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
@@ -43,6 +45,8 @@ import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
+import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.OkHttpClient
@@ -66,6 +70,7 @@ import retrofit2.Response
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.security.KeyStore
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDate
@@ -75,6 +80,8 @@ import java.util.concurrent.atomic.AtomicReference
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
+import javax.net.ssl.TrustManagerFactory
+import javax.net.ssl.X509TrustManager
 
 private val MOCK_RISK_PARAMS_RESPONSE = MockResponse().setBody(
     """
@@ -155,6 +162,47 @@ class ExposureNotificationsRepositoryTest {
     }
 
     @Test
+    fun `processExposureKeySets marks all keys processed on first run`() = runBlocking {
+        mockWebServer.start()
+
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val service = CdnService.create(
+            context,
+            BuildConfig.VERSION_CODE,
+            OkHttpClient(),
+            mockWebServer.url("/").toString()
+        )
+
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+            override suspend fun provideDiagnosisKeys(
+                files: List<File>,
+                configuration: ExposureConfiguration,
+                token: String
+            ): DiagnosisKeysResult = throw AssertionError()
+        }
+
+        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+            .getSharedPreferences("repository_test", 0)
+
+        val repository =
+            createRepository(api = api, cdnService = service, preferences = sharedPrefs)
+
+        val result =
+            repository.processExposureKeySets(
+                Manifest(
+                    listOf("test"),
+                    "config-params",
+                    "appConfigId"
+                )
+            )
+
+        assertEquals(0, mockWebServer.requestCount)
+        assertTrue(result is ProcessExposureKeysResult.Success)
+        assertEquals(setOf("test"), sharedPrefs.getStringSet("exposure_key_sets", emptySet()))
+    }
+
+    @Test
     fun `processExposureKeySets processes exposure key sets`() = runBlocking {
         mockWebServer.enqueue(MockResponse().setBody("dummy_key_file"))
         mockWebServer.enqueue(MOCK_RISK_PARAMS_RESPONSE)
@@ -184,6 +232,10 @@ class ExposureNotificationsRepositoryTest {
         val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
             .getSharedPreferences("repository_test", 0)
 
+        sharedPrefs.edit {
+            putStringSet("exposure_key_sets", emptySet())
+        }
+
         val repository =
             createRepository(api = api, cdnService = service, preferences = sharedPrefs)
 
@@ -208,7 +260,7 @@ class ExposureNotificationsRepositoryTest {
         )
         assertEquals(2, mockWebServer.requestCount)
         assertEquals(ProcessExposureKeysResult.Success, result)
-        assertEquals("/v2/exposurekeyset/test", mockWebServer.takeRequest().path)
+        assertEquals("/v3/exposurekeyset/test", mockWebServer.takeRequest().path)
         assertEquals(setOf("test"), sharedPrefs.getStringSet("exposure_key_sets", emptySet()))
     }
 
@@ -259,9 +311,9 @@ class ExposureNotificationsRepositoryTest {
         assertEquals(2, mockWebServer.requestCount)
         assertEquals(ProcessExposureKeysResult.Success, result)
 
-        assertEquals("/v2/exposurekeyset/test2", mockWebServer.takeRequest().path)
+        assertEquals("/v3/exposurekeyset/test2", mockWebServer.takeRequest().path)
         assertEquals(
-            "/v2/riskcalculationparameters/config-params",
+            "/v3/riskcalculationparameters/config-params",
             mockWebServer.takeRequest().path
         )
 
@@ -392,6 +444,10 @@ class ExposureNotificationsRepositoryTest {
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
 
+            sharedPrefs.edit {
+                putStringSet("exposure_key_sets", emptySet())
+            }
+
             val repository =
                 createRepository(api = api, cdnService = service, preferences = sharedPrefs)
 
@@ -446,11 +502,16 @@ class ExposureNotificationsRepositoryTest {
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
 
+            sharedPrefs.edit {
+                putStringSet("exposure_key_sets", emptySet())
+            }
+
             val repository = createRepository(
                 api = api,
                 cdnService = service,
                 preferences = sharedPrefs,
-                signatureValidation = true
+                signatureValidation = true,
+                signatureValidator = ResponseSignatureValidator(createTrustManager())
             )
 
             val result =
@@ -503,8 +564,16 @@ class ExposureNotificationsRepositoryTest {
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
 
-            val repository =
-                createRepository(api = api, cdnService = service, signatureValidation = true)
+            sharedPrefs.edit {
+                putStringSet("exposure_key_sets", emptySet())
+            }
+
+            val repository = createRepository(
+                api = api,
+                cdnService = service,
+                signatureValidation = true,
+                signatureValidator = ResponseSignatureValidator(createTrustManager())
+            )
 
             val result =
                 repository.processExposureKeySets(
@@ -530,13 +599,13 @@ class ExposureNotificationsRepositoryTest {
             mockWebServer.dispatcher = object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
                     return when (request.path) {
-                        "/v2/exposurekeyset/test" -> {
+                        "/v3/exposurekeyset/test" -> {
                             MockResponse().setResponseCode(500)
                         }
-                        "/v2/exposurekeyset/test2" -> {
+                        "/v3/exposurekeyset/test2" -> {
                             MockResponse().setBody("dummy_key_file")
                         }
-                        "/v2/riskcalculationparameters/config-params" -> MOCK_RISK_PARAMS_RESPONSE
+                        "/v3/riskcalculationparameters/config-params" -> MOCK_RISK_PARAMS_RESPONSE
 
                         else -> {
                             MockResponse().setResponseCode(404)
@@ -571,6 +640,10 @@ class ExposureNotificationsRepositoryTest {
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
 
+            sharedPrefs.edit {
+                putStringSet("exposure_key_sets", emptySet())
+            }
+
             val repository =
                 createRepository(api = api, cdnService = service, preferences = sharedPrefs)
 
@@ -586,10 +659,10 @@ class ExposureNotificationsRepositoryTest {
             val request2 = mockWebServer.takeRequest()
             val requests = listOf(request1, request2).sortedBy { it.path }
 
-            assertEquals("/v2/exposurekeyset/test", requests[0].path)
-            assertEquals("/v2/exposurekeyset/test2", requests[1].path)
+            assertEquals("/v3/exposurekeyset/test", requests[0].path)
+            assertEquals("/v3/exposurekeyset/test2", requests[1].path)
             assertEquals(
-                "/v2/riskcalculationparameters/config-params",
+                "/v3/riskcalculationparameters/config-params",
                 mockWebServer.takeRequest().path
             )
             assertTrue(processed.get())
@@ -714,15 +787,22 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
-                    Manifest(emptyList(), "riskParamId", "configId")
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                    Manifest(emptyList(), "", "appConfig")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
                     AppConfig(1, 5, 0.0)
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -748,6 +828,51 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
+    fun `processManifest fetches the latest resource bundle`() =
+        runBlocking {
+            val dateTime = "2020-06-20T10:15:30.00Z"
+            val called = AtomicBoolean(false)
+            val fakeService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                    Manifest(emptyList(), "", "appConfig", resourceBundleId = "bundle")
+
+                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
+                    AppConfig(1, 5, 0.0)
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): ResourceBundle {
+                    called.set(true)
+                    return ResourceBundle(emptyMap(), ResourceBundle.Guidance(10, emptyList()))
+                }
+            }
+
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+
+            val repository = createRepository(
+                api = object : FakeExposureNotificationApi() {
+                    override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                },
+                cdnService = fakeService,
+                preferences = sharedPrefs,
+                clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            )
+
+            repository.processManifest()
+            assertTrue(called.get())
+        }
+
+    @Test
     fun `processManifest stops processing when the app is disabled`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
@@ -756,15 +881,25 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                     Manifest(emptyList(), "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
                     AppConfig(1, 5, 0.0, coronaMelderDeactivated = "deactivated")
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): ResourceBundle {
+                    throw IllegalStateException()
+                }
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -851,15 +986,25 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                     Manifest(emptyList(), "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
                     AppConfig(BuildConfig.VERSION_CODE + 1, 5, 0.0)
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -902,15 +1047,25 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                     Manifest(emptyList(), "riskParamId", "configId")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
                     AppConfig(0, 5, 0.0)
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
             }
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -957,16 +1112,27 @@ class ExposureNotificationsRepositoryTest {
                         throw NotImplementedError()
                     }
 
-                    override suspend fun getManifest(cacheHeader: String?): Manifest = Manifest(
-                        listOf(), "risk", "config"
-                    )
+                    override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                        Manifest(
+                            listOf(), "risk", "config"
+                        )
 
                     override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                         throw NotImplementedError()
                     }
 
-                    override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    override suspend fun getAppConfig(
+                        id: String,
+                        cacheStrategy: CacheStrategy?
+                    ): AppConfig =
                         AppConfig()
+
+                    override suspend fun getResourceBundle(
+                        id: String,
+                        cacheStrategy: CacheStrategy?
+                    ): ResourceBundle {
+                        throw java.lang.IllegalStateException()
+                    }
                 },
                 scheduler = object : BackgroundWorkScheduler {
                     override fun schedule(intervalMinutes: Int) {
@@ -1019,7 +1185,7 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(cacheHeader: String?): Manifest {
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest {
                 throw NotImplementedError()
             }
 
@@ -1027,8 +1193,18 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+            override suspend fun getAppConfig(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): AppConfig =
                 AppConfig(1, 5, 0.0)
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle {
+                throw java.lang.IllegalStateException()
+            }
         }
 
         val context = ApplicationProvider.getApplicationContext<Application>()
@@ -1045,7 +1221,61 @@ class ExposureNotificationsRepositoryTest {
             clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
-        assertTrue(repository.keyProcessingOverdue)
+        runBlocking {
+            assertTrue(repository.keyProcessingOverdue())
+        }
+    }
+
+    @Test
+    fun `keyProcessingOverdue returns false if last successful time of key processing is more than 24 hours in the past but enabledNotificationsDateTime isn't`() {
+        val notificationsEnabledDateTime = "2020-06-21T10:10:30.00Z"
+        val lastSyncDateTime = "2020-06-20T10:15:30.00Z"
+        val dateTime = "2020-06-21T10:16:30.00Z"
+        val fakeService = object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getAppConfig(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): AppConfig =
+                AppConfig(1, 5, 0.0)
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle {
+                throw java.lang.IllegalStateException()
+            }
+        }
+
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+
+        sharedPrefs.edit {
+            putLong("last_keys_processed", Instant.parse(lastSyncDateTime).toEpochMilli())
+            putLong("notifications_enabled_timestamp", Instant.parse(notificationsEnabledDateTime).toEpochMilli())
+        }
+
+        val repository = createRepository(
+            context = context,
+            preferences = sharedPrefs,
+            cdnService = fakeService,
+            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        )
+
+        runBlocking {
+            assertFalse(repository.keyProcessingOverdue())
+        }
     }
 
     @Test
@@ -1056,7 +1286,7 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getManifest(cacheHeader: String?): Manifest {
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest {
                 throw NotImplementedError()
             }
 
@@ -1064,8 +1294,18 @@ class ExposureNotificationsRepositoryTest {
                 throw NotImplementedError()
             }
 
-            override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+            override suspend fun getAppConfig(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): AppConfig =
                 AppConfig(1, 5, 0.0)
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle {
+                throw java.lang.IllegalStateException()
+            }
         }
 
         val repository = createRepository(
@@ -1073,7 +1313,9 @@ class ExposureNotificationsRepositoryTest {
             clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
-        assertFalse(repository.keyProcessingOverdue)
+        runBlocking {
+            assertFalse(repository.keyProcessingOverdue())
+        }
     }
 
     @Test
@@ -1348,15 +1590,25 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                     Manifest(listOf(), "risk", "config")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
                     AppConfig()
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
             },
             scheduler = object : BackgroundWorkScheduler {
                 override fun schedule(intervalMinutes: Int) {
@@ -1413,15 +1665,25 @@ class ExposureNotificationsRepositoryTest {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getManifest(cacheHeader: String?): Manifest =
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                     Manifest(listOf(), "risk", "config")
 
                 override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                     throw NotImplementedError()
                 }
 
-                override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
                     AppConfig()
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
             },
             scheduler = object : BackgroundWorkScheduler {
                 override fun schedule(intervalMinutes: Int) {
@@ -1479,15 +1741,25 @@ class ExposureNotificationsRepositoryTest {
                         throw NotImplementedError()
                     }
 
-                    override suspend fun getManifest(cacheHeader: String?): Manifest =
+                    override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                         Manifest(listOf(), "risk", "config")
 
                     override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
                         throw NotImplementedError()
                     }
 
-                    override suspend fun getAppConfig(id: String, cacheHeader: String?): AppConfig =
+                    override suspend fun getAppConfig(
+                        id: String,
+                        cacheStrategy: CacheStrategy?
+                    ): AppConfig =
                         AppConfig()
+
+                    override suspend fun getResourceBundle(
+                        id: String,
+                        cacheStrategy: CacheStrategy?
+                    ): ResourceBundle {
+                        throw java.lang.IllegalStateException()
+                    }
                 },
                 scheduler = object : BackgroundWorkScheduler {
                     override fun schedule(intervalMinutes: Int) {
@@ -1510,7 +1782,7 @@ class ExposureNotificationsRepositoryTest {
         val clock =
             Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("Europe/Amsterdam"))
 
-        val exposureDate = LocalDate.now(clock).minusDays(2)
+        val exposureDate = LocalDate.now(clock).minusDays(36)
         preferences.edit {
             putLong("last_token_exposure_date", exposureDate.toEpochDay())
             putString("last_token_id", "dummy")
@@ -1520,13 +1792,93 @@ class ExposureNotificationsRepositoryTest {
 
         val daysSinceLastExposure = repository.getDaysSinceLastExposure()
 
-        assertEquals(2, daysSinceLastExposure)
+        assertEquals(36, daysSinceLastExposure)
     }
 
     @Test
     fun `getDaysSinceLastExposure returns null when no exposure is reported`() = runBlocking {
         val repository = createRepository()
         assertNull(repository.getDaysSinceLastExposure())
+    }
+
+    @Test
+    fun `rescheduleJobs schedules jobs when previously scheduled`() = runBlocking {
+        val preferences = context.getSharedPreferences("repository_test", 0)
+        preferences.edit {
+            putLong("notifications_enabled_timestamp", 0)
+        }
+
+        val cancelled = AtomicBoolean(false)
+        val scheduled = AtomicBoolean(false)
+
+        val scheduler: BackgroundWorkScheduler = object : BackgroundWorkScheduler {
+            override fun schedule(intervalMinutes: Int) {
+                scheduled.set(true)
+            }
+
+            override fun cancel() {
+                cancelled.set(true)
+            }
+        }
+        val appConfigManager = AppConfigManager(object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw IllegalStateException()
+            }
+
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest = Manifest(
+                emptyList(), "", "appconfig"
+            )
+
+            override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+                throw IllegalStateException()
+            }
+
+            override suspend fun getAppConfig(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): AppConfig = AppConfig(updatePeriodMinutes = 10)
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle {
+                throw IllegalStateException()
+            }
+        })
+        val repository = createRepository(
+            preferences = preferences,
+            scheduler = scheduler,
+            appConfigManager = appConfigManager
+        )
+
+        repository.rescheduleBackgroundJobs()
+
+        assertTrue(cancelled.get())
+        assertTrue(scheduled.get())
+    }
+
+    @Test
+    fun `rescheduleJobs skips scheduling jobs when not previously scheduled`() = runBlocking {
+        val preferences = context.getSharedPreferences("repository_test", 0)
+
+        val cancelled = AtomicBoolean(false)
+        val scheduled = AtomicBoolean(false)
+
+        val scheduler: BackgroundWorkScheduler = object : BackgroundWorkScheduler {
+            override fun schedule(intervalMinutes: Int) {
+                scheduled.set(true)
+            }
+
+            override fun cancel() {
+                cancelled.set(true)
+            }
+        }
+        val repository = createRepository(preferences = preferences, scheduler = scheduler)
+
+        repository.rescheduleBackgroundJobs()
+
+        assertFalse(cancelled.get())
+        assertFalse(scheduled.get())
     }
 
     private fun createRepository(
@@ -1545,6 +1897,7 @@ class ExposureNotificationsRepositoryTest {
         clock: Clock = Clock.systemDefaultZone(),
         lifecycleOwner: LifecycleOwner = TestLifecycleOwner(Lifecycle.State.STARTED),
         signatureValidation: Boolean = false,
+        signatureValidator: ResponseSignatureValidator = ResponseSignatureValidator(),
         scheduler: BackgroundWorkScheduler = fakeScheduler,
         appConfigManager: AppConfigManager = AppConfigManager(cdnService)
     ): ExposureNotificationsRepository {
@@ -1552,16 +1905,27 @@ class ExposureNotificationsRepositoryTest {
             context,
             api,
             cdnService,
-            preferences,
+            AsyncSharedPreferences { preferences },
             scheduler,
             appLifecycleManager,
             statusCache,
             appConfigManager,
             clock,
             lifecycleOwner = lifecycleOwner,
-            signatureValidation = signatureValidation
+            signatureValidation = signatureValidation,
+            signatureValidator = signatureValidator
         )
     }
+
+    private fun createTrustManager() = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()).apply {
+        val keyStore = KeyStore.getInstance(KeyStore.getDefaultType())
+        // root key is on the device
+        keyStore.load(
+            ExposureNotificationsRepositoryTest::class.java.getResourceAsStream("/nl-root.jks"),
+            "test".toCharArray()
+        )
+        init(keyStore)
+    }.trustManagers[0] as X509TrustManager
 }
 
 private class TestLifecycleOwner(private val state: Lifecycle.State) : LifecycleOwner {

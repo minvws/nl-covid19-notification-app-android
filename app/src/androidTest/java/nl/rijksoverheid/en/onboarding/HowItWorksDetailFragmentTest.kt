@@ -7,12 +7,16 @@
 package nl.rijksoverheid.en.onboarding
 
 import android.content.Context
+import android.net.Uri
+import android.provider.Settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
@@ -23,18 +27,23 @@ import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION
+import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
+import nl.rijksoverheid.en.settings.SettingsRepository
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
 import okhttp3.ResponseBody
-import org.junit.Assert
+import org.junit.After
+import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -55,26 +64,35 @@ class HowItWorksDetailFragmentTest : BaseInstrumentationTest() {
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
     private val configPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0)
+    private val settingsPreferences = context
+        .getSharedPreferences("${BuildConfig.APPLICATION_ID}.settings", 0)
     private val service = object : CdnService {
         override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
             throw NotImplementedError()
         }
 
-        override suspend fun getManifest(cacheHeader: String?): Manifest =
+        override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
             Manifest(emptyList(), "", "appConfig")
 
         override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
             throw NotImplementedError()
         }
 
-        override suspend fun getAppConfig(id: String, cacheHeader: String?) =
+        override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
             AppConfig(1, 10, 0.0)
+
+        override suspend fun getResourceBundle(
+            id: String,
+            cacheStrategy: CacheStrategy?
+        ): ResourceBundle {
+            throw IllegalStateException()
+        }
     }
     private val repository = ExposureNotificationsRepository(
         context,
         FakeExposureNotificationApi(),
         service,
-        notificationsPreferences,
+        AsyncSharedPreferences { notificationsPreferences },
         object : BackgroundWorkScheduler {
             override fun schedule(intervalMinutes: Int) {
             }
@@ -86,11 +104,26 @@ class HowItWorksDetailFragmentTest : BaseInstrumentationTest() {
         StatusCache(notificationsPreferences),
         AppConfigManager(service)
     )
-    private val viewModel = ExposureNotificationsViewModel(repository)
+
+    private val settingsRepository = SettingsRepository(
+        context, nl.rijksoverheid.en.settings.Settings(context, settingsPreferences)
+    )
+
+    private val viewModel = ExposureNotificationsViewModel(repository, settingsRepository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return viewModel as T
         }
+    }
+
+    @Before
+    fun setup() {
+        Intents.init()
+    }
+
+    @After
+    fun tearDown() {
+        Intents.release()
     }
 
     @Test
@@ -111,10 +144,8 @@ class HowItWorksDetailFragmentTest : BaseInstrumentationTest() {
         ) {
             Espresso.onView(ViewMatchers.withId(R.id.button)).perform(ViewActions.click())
 
-            Assert.assertEquals(
-                "Request permission with success opens the share screen",
-                R.id.nav_share, navController.currentDestination?.id
-            )
+            Intents.intended(IntentMatchers.hasAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS))
+            Intents.intended(IntentMatchers.hasData(Uri.parse("package:${BuildConfig.APPLICATION_ID}")))
         }
     }
 }

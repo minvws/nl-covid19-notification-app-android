@@ -14,6 +14,7 @@ import nl.rijksoverheid.en.about.FAQItemId.ANONYMOUS
 import nl.rijksoverheid.en.about.FAQItemId.BLUETOOTH
 import nl.rijksoverheid.en.about.FAQItemId.DELETION
 import nl.rijksoverheid.en.about.FAQItemId.INTEROPERABILITY
+import nl.rijksoverheid.en.about.FAQItemId.INTEROP_COUNTRIES
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION
 import nl.rijksoverheid.en.about.FAQItemId.LOCATION_PERMISSION
 import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION
@@ -45,10 +46,14 @@ enum class FAQItemId(@StringRes val label: Int) {
     DELETION(R.string.faq_deletion),
     LOCATION_PERMISSION(R.string.faq_location_permission),
     TECHNICAL(R.string.faq_technical),
-    ONBOARDING(R.string.about_onboarding_title)
+    ONBOARDING(R.string.about_onboarding_title),
+    INTEROP_COUNTRIES(R.string.faq_interop_countries)
 }
 
-class FAQDetailSections(private val openSettings: () -> Unit = {}) {
+class FAQDetailSections(
+    private val openAndroidSettings: () -> Unit = {},
+    private val openAppSettings: () -> Unit = {}
+) {
     fun getSection(faqItemId: FAQItemId) = when (faqItemId) {
         REASON -> Section(
             listOf(
@@ -104,7 +109,7 @@ class FAQDetailSections(private val openSettings: () -> Unit = {}) {
                 ParagraphItem(R.string.faq_pause_paragraph_1),
                 ParagraphItem(R.string.faq_pause_paragraph_2),
                 ParagraphItem(R.string.faq_pause_paragraph_3),
-                ButtonItem(R.string.faq_deletion_button, openSettings)
+                ButtonItem(R.string.faq_deletion_button, openAppSettings)
             )
         )
         INTEROPERABILITY -> Section(
@@ -119,7 +124,7 @@ class FAQDetailSections(private val openSettings: () -> Unit = {}) {
             listOf(
                 HeaderItem(R.string.faq_deletion),
                 ParagraphItem(R.string.faq_deletion_paragraph_1),
-                ButtonItem(R.string.faq_deletion_button, openSettings)
+                ButtonItem(R.string.faq_deletion_button, openAndroidSettings)
             )
         )
         LOCATION_PERMISSION -> Section(
@@ -181,5 +186,7 @@ class FAQDetailSections(private val openSettings: () -> Unit = {}) {
                 FAQTechnicalExplanationItem()
             )
         )
+        INTEROP_COUNTRIES ->
+            throw IllegalArgumentException("INTEROP_COUNTRIES should be opened as an external web page.")
     }
 }

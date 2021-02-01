@@ -6,6 +6,8 @@
  */
 package nl.rijksoverheid.en.about
 
+import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -33,6 +35,7 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
         adapter.add(AboutSection())
     }
 
+    @SuppressLint("StringFormatInvalid") // for overridden urls in fy language
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -63,12 +66,18 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
                 is HelpdeskItem -> {
-                    startActivity(
-                        Intent(Intent.ACTION_DIAL).apply {
-                            val phoneNumber = getString(R.string.helpdesk_phone_number)
-                            data = Uri.parse("tel:$phoneNumber")
-                        }
-                    )
+                    val phoneNumber = getString(R.string.helpdesk_phone_number)
+                    try {
+                        startActivity(
+                            Intent(Intent.ACTION_DIAL).apply {
+                                data = Uri.parse("tel:$phoneNumber")
+                            }
+                        )
+                    } catch (e: ActivityNotFoundException) {
+                        findNavController().navigateCatchingErrors(
+                            AboutFragmentDirections.actionPhoneCallNotSupportedDialog(phoneNumber)
+                        )
+                    }
                 }
                 is ReviewItem -> {
                     val intent = Intent(Intent.ACTION_VIEW).apply {

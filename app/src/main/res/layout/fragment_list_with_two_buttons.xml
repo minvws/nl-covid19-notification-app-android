@@ -64,7 +64,7 @@
                     style="@style/Widget.App.Button.Secondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="@string/phone_number" />
+                    tools:text="@string/request_test_phone_number" />
 
                 <Button
                     android:id="@+id/button_2"

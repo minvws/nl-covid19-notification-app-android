@@ -82,6 +82,7 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:$moshi_version") {
         exclude group: "org.jetbrains.kotlin", module: "kotlin-reflect"
     }
+    implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
     implementation "com.jakewharton.timber:timber:$timber_version"
@@ -89,5 +90,6 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "androidx.test:core:$androidx_test_core_version"
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
+    testImplementation "com.squareup.okhttp3:okhttp-tls:$okhttp3_version"
     testImplementation "org.robolectric:robolectric:$robolectric_version"
 }

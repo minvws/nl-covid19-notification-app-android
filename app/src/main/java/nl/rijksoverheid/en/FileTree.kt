@@ -38,7 +38,7 @@ class FileTree(directory: File?) : Timber.DebugTree() {
         val logTimeStamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.ROOT)
             .format(Date())
         writer?.apply {
-            appendln("$logTimeStamp/$tag: $message")
+            appendLine("$logTimeStamp/$tag: $message")
             flush()
         }
     }

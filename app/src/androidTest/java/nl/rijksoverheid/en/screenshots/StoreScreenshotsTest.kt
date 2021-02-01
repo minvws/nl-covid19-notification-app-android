@@ -33,18 +33,25 @@ import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.StatusResult
+import nl.rijksoverheid.en.factory.createAppConfigManager
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.labtest.LabTestFragment
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.requesttest.RequestTestFragment
+import nl.rijksoverheid.en.requesttest.RequestTestFragmentArgs
+import nl.rijksoverheid.en.settings.Settings
+import nl.rijksoverheid.en.settings.SettingsRepository
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.status.StatusFragment
 import nl.rijksoverheid.en.status.StatusViewModel
@@ -74,6 +81,8 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
     private val configPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0)
+    private val settingsPreferences = context
+        .getSharedPreferences("${BuildConfig.APPLICATION_ID}.settings", 0)
 
     @Rule @JvmField
     val localeTestRule = LocaleTestRule()
@@ -106,15 +115,22 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
             throw NotImplementedError()
         }
 
-        override suspend fun getManifest(cacheHeader: String?): Manifest =
+        override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
             Manifest(emptyList(), "", "appConfig")
 
         override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
             throw NotImplementedError()
         }
 
-        override suspend fun getAppConfig(id: String, cacheHeader: String?) =
+        override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
             AppConfig(1, 10, 0.0)
+
+        override suspend fun getResourceBundle(
+            id: String,
+            cacheStrategy: CacheStrategy?
+        ): ResourceBundle {
+            throw IllegalStateException()
+        }
     }
 
     private val repository = ExposureNotificationsRepository(
@@ -123,7 +139,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
             override suspend fun getStatus(): StatusResult = StatusResult.Enabled
         },
         service,
-        notificationsPreferences,
+        AsyncSharedPreferences { notificationsPreferences },
         object : BackgroundWorkScheduler {
             override fun schedule(intervalMinutes: Int) {
             }
@@ -136,16 +152,22 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         AppConfigManager(service),
         clock = clock
     )
+    private val settingsRepository = SettingsRepository(
+        context, Settings(context, settingsPreferences)
+    )
+
     private val statusViewModel = StatusViewModel(
         OnboardingRepository(
             sharedPreferences = configPreferences,
             googlePlayServicesUpToDateChecker = { true }
-        ),
+        ).apply { setHasSeenLatestTerms() },
         repository,
         NotificationsRepository(context, clock),
+        settingsRepository,
+        createAppConfigManager(context),
         clock
     )
-    private val viewModel = ExposureNotificationsViewModel(repository)
+    private val viewModel = ExposureNotificationsViewModel(repository, settingsRepository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return viewModel as T
@@ -177,7 +199,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
             R.style.AppTheme,
             activityViewModelFactory
         ) {
-            onView(withId(R.id.status_image))
+            onView(withId(R.id.status_animated_image))
             Thread.sleep(5000)
             capture().setName("status_screen").process()
         }
@@ -209,7 +231,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
             R.style.AppTheme,
             activityViewModelFactory
         ) {
-            onView(withId(R.id.status_image))
+            onView(withId(R.id.status_animated_image))
             Thread.sleep(5000)
             capture().setName("status_screen_red").process()
         }
@@ -238,7 +260,10 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
     fun takeRequestScreenshot() {
         val navController = TestNavHostController(context).apply {
             setGraph(R.navigation.nav_main)
-            setCurrentDestination(R.id.requestTestFragment)
+            setCurrentDestination(
+                R.id.requestTestFragment,
+                RequestTestFragmentArgs(context.getString(R.string.request_test_phone_number)).toBundle()
+            )
         }
 
         withFragment(

@@ -54,6 +54,14 @@ sealed class StatusActionItem(
         override fun isSameAs(other: Item<*>) = other is About
     }
 
+    object Settings : StatusActionItem(
+        R.drawable.ic_settings,
+        R.string.status_info_settings_title,
+        R.string.status_info_settings_subtitle
+    ) {
+        override fun isSameAs(other: Item<*>): Boolean = other is Settings
+    }
+
     object Share : StatusActionItem(
         R.drawable.ic_share,
         R.string.status_info_share_title,

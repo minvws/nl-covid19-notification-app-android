@@ -7,6 +7,9 @@
 package nl.rijksoverheid.en.labtest
 
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.graphics.Rect
@@ -19,6 +22,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
+import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
@@ -27,6 +31,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItemId
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import timber.log.Timber
 
 private const val RC_REQUEST_UPLOAD_CONSENT = 1
@@ -37,7 +42,8 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
     private val section = LabTestSection(
         retry = { labViewModel.retry() },
         upload = { labViewModel.upload() },
-        requestConsent = { viewModel.requestEnableNotifications() }
+        requestConsent = { viewModel.requestEnableNotifications() },
+        copy = ::copyToClipboard
     )
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
 
@@ -73,7 +79,7 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
         binding.content.adapter = adapter
 
         adapter.setOnItemClickListener { _, _ ->
-            findNavController().navigate(
+            findNavController().navigateCatchingErrors(
                 LabTestFragmentDirections.actionHowItWorks(FAQItemId.UPLOAD_KEYS),
                 FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
             )
@@ -112,6 +118,15 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
             )
         } catch (ex: Exception) {
             Timber.e(ex, "Error requesting consent")
+        }
+    }
+
+    private fun copyToClipboard(key: String) {
+        view?.let {
+            val clipboard = it.context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager ?: return
+            val clip = ClipData.newPlainText(getString(R.string.lab_test_copy_key_to_clipboard), key.replace("-", ""))
+            clipboard.setPrimaryClip(clip)
+            Snackbar.make(it, R.string.lab_test_copy_key_to_clipboard, Snackbar.LENGTH_LONG).show()
         }
     }
 

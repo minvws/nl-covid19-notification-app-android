@@ -12,6 +12,7 @@ import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
 import nl.rijksoverheid.en.factory.createLabTestRepository
+import nl.rijksoverheid.en.factory.createSettingsRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 
 class EnWorkerFactory : WorkerFactory() {
@@ -31,7 +32,8 @@ class EnWorkerFactory : WorkerFactory() {
                 appContext,
                 workerParameters,
                 createExposureNotificationsRepository(appContext),
-                NotificationsRepository(appContext)
+                NotificationsRepository(appContext),
+                createSettingsRepository(appContext)
             )
             ExposureNotificationJob::class.java.name -> ExposureNotificationJob(
                 appContext,

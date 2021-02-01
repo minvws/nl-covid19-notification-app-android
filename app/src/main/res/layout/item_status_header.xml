@@ -51,19 +51,21 @@
             app:show="@{viewState.showIllustration}" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/status_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/status_animated_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="center"
+            app:imageResource="@{viewState.icon}"
             app:contentDescriptionRes="@{viewState.iconContentDescription}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/clouds"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:optional_animation="@{viewState.icon}" />
+            app:optional_animation="@{viewState.animatedIcon}" />
 
         <TextView
-            android:id="@+id/status_text"
+            android:id="@+id/status_headline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -74,11 +76,11 @@
             android:textAppearance="?attr/textAppearanceHeadline5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/status_image"
+            app:layout_constraintTop_toBottomOf="@id/status_animated_image"
             tools:text="@string/status_no_exposure_detected_headline" />
 
         <TextView
-            android:id="@+id/status_subtitle"
+            android:id="@+id/status_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -90,14 +92,14 @@
             android:translationZ="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/status_text"
+            app:layout_constraintTop_toBottomOf="@id/status_headline"
             tools:text="@string/status_no_exposure_detected_description" />
 
         <Space
             android:id="@+id/illustration_top"
             android:layout_width="0dp"
             android:layout_height="32dp"
-            app:layout_constraintBottom_toBottomOf="@id/status_subtitle"
+            app:layout_constraintBottom_toBottomOf="@id/status_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -124,7 +126,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/status_subtitle">
+            app:layout_constraintTop_toBottomOf="@id/status_description">
 
             <Button
                 android:id="@+id/disabled_enable"

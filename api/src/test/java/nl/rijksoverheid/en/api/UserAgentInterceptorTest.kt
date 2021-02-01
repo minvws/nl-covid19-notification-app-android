@@ -19,6 +19,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import org.robolectric.util.ReflectionHelpers
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
@@ -41,6 +42,29 @@ class UserAgentInterceptorTest {
         val appVersionCode = 71407
         val expectedUserAgent =
             "CoronaMelder/$appVersionCode (${Build.MANUFACTURER} ${Build.MODEL}) Android (${Build.VERSION.SDK_INT})"
+        val expectedResponse = "Test"
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(UserAgentInterceptor(appVersionCode))
+            .build()
+
+        mockWebServer.enqueue(MockResponse().setBody(expectedResponse))
+
+        val request: Request = Request.Builder().url(mockWebServer.url("/").toUrl()).build()
+        val result = client.newCall(request).execute().body
+
+        assertNotNull(result)
+        assertEquals(expectedResponse, result?.string())
+        assertEquals(expectedUserAgent, mockWebServer.takeRequest().getHeader("User-Agent"))
+    }
+
+    @Test
+    fun `Check if non ascii characters are stripped from user-agent`() {
+        ReflectionHelpers.setStaticField(Build::class.java, "MODEL", "MODEL-Ë")
+
+        val appVersionCode = 71407
+        val expectedUserAgent =
+            "CoronaMelder/$appVersionCode (${Build.MANUFACTURER} MODEL-) Android (${Build.VERSION.SDK_INT})"
         val expectedResponse = "Test"
 
         val client = OkHttpClient.Builder()

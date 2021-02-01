@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.status
 
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
+import java.time.LocalDateTime
 
 class StatusSection : Section() {
 
@@ -19,23 +20,32 @@ class StatusSection : Section() {
         setHideWhenEmpty(true)
     }
     private val errorItems = mutableListOf<Item<*>>()
+    private val pausedGroup = Section().apply {
+        setHideWhenEmpty(true)
+    }
+    private val infoGroup = Section().apply {
+        setHideWhenEmpty(true)
+    }
+    var pausedItem: StatusPausedItem? = null
+        set(value) {
+            if (value?.viewState != field?.viewState) {
+                field = value
+                pausedGroup.update(listOfNotNull(value))
+            }
+        }
+    var infoItem: StatusInfoItem? = null
+        set(value) {
+            field = value
+            infoGroup.update(listOfNotNull(value))
+        }
+    var lastKeysProcessed: LocalDateTime? = null
+        set(value) {
+            field = value
+            setFooter(StatusFooterItem(value))
+        }
 
     init {
-        addAll(
-            listOf(
-                headerGroup, errorGroup,
-                Section(
-                    listOf(
-                        StatusActionItem.About,
-                        StatusActionItem.Share,
-                        StatusActionItem.GenericNotification,
-                        StatusActionItem.RequestTest,
-                        StatusActionItem.LabTest
-                    )
-                )
-            )
-        )
-        setFooter(StatusFooterItem())
+        setPlaceholder(LoadingItem())
     }
 
     fun updateErrorState(
@@ -50,6 +60,7 @@ class StatusSection : Section() {
             }
             errorGroup.update(errorItems)
         }
+        ensureInitialized()
     }
 
     fun showBatteryOptimisationsError(action: () -> Unit) {
@@ -81,6 +92,28 @@ class StatusSection : Section() {
                     )
                 )
             )
+        }
+        ensureInitialized()
+    }
+
+    private fun ensureInitialized() {
+        if (isEmpty) {
+            addAll(
+                listOf(
+                    headerGroup, pausedGroup, errorGroup, infoGroup,
+                    Section(
+                        listOf(
+                            StatusActionItem.About,
+                            StatusActionItem.Settings,
+                            StatusActionItem.GenericNotification,
+                            StatusActionItem.RequestTest,
+                            StatusActionItem.Share,
+                            StatusActionItem.LabTest
+                        )
+                    )
+                )
+            )
+            setFooter(StatusFooterItem(lastKeysProcessed))
         }
     }
 }

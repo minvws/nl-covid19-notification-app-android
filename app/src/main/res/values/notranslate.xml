@@ -7,10 +7,11 @@
   -->
 
 <resources>
-    <string name="phone_number" translatable="false">0800–1202</string>
+    <string name="request_test_phone_number" translatable="false">0800–1202</string>
     <string name="helpdesk_phone_number" translatable="false">0800–1280</string>
     <string name="exposure_date_format" translatable="false">EEEE d MMMM</string>
     <string name="exposure_date_short_format" translatable="false">d MMMM</string>
+    <string name="date_time_format" translatable="false">d MMMM HH:mm</string>
     <string name="github_url" translatable="false">https://github.com/minvws/nl-covid19-notification-app-android</string>
     <string name="play_store_url" translatable="false">https://play.google.com/store/apps/details?id=nl.rijksoverheid.en</string>
     <string name="privacy_policy_url" translatable="false">https://coronamelder.nl/%1$s/privacy-in-app</string>
@@ -18,7 +19,9 @@
     <string name="share_url" translatable="false">https://coronamelder.nl/app</string>
     <string name="end_of_life_url" translatable="false">https://coronamelder.nl/</string>
     <string name="colofon_url" translatable="false">https://coronamelder.nl/%1$s/colofon-in-app</string>
-    <string name="test_url" translatable="false">https://coronatest.nl</string>
+    <string name="test_url" translatable="false">https://coronatest.nl/en</string>
+    <string name="interop_url" translatable="false">https://coronamelder.nl/%1$s/operabiliteit</string>
+    <string name="interop_countries_url" translatable="false">https://coronamelder.nl/%1$s/faq/13-gebruik-app-uit-ander-land/</string>
     <string name="debug_channel_name" translatable="false">Debug menu</string>
     <string name="debug_channel_description" translatable="false">Various debug options</string>
     <string name="debug_notification_title" translatable="false">Debug options</string>

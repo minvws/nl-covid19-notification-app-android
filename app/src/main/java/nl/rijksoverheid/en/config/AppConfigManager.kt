@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.config
 
+import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import retrofit2.HttpException
@@ -42,8 +43,8 @@ class AppConfigManager(private val cdnService: CdnService) {
      */
     suspend fun getCachedConfigOrDefault(): AppConfig = getConfigOrDefault {
         cdnService.getAppConfig(
-            cdnService.getManifest("only-if-cached,max-stale=${Int.MAX_VALUE}").appConfigId,
-            "only-if-cached,max-stale=${Int.MAX_VALUE}"
+            cdnService.getManifest(CacheStrategy.CACHE_ONLY).appConfigId,
+            CacheStrategy.CACHE_ONLY
         )
     }
 }

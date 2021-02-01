@@ -11,15 +11,16 @@ import android.text.format.DateFormat
 import nl.rijksoverheid.en.R
 import java.time.Clock
 import java.time.LocalDate
-import java.time.Period
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.Locale
 
 /**
  * Creates formatted string that represents the number of days ago of this date.
  */
 fun LocalDate.formatDaysSince(context: Context, clock: Clock = Clock.systemDefaultZone()): String {
-    val daysSince = Period.between(this, LocalDate.now(clock)).days
+    val daysSince = ChronoUnit.DAYS.between(this, LocalDate.now(clock)).toInt()
     return if (daysSince == 0) context.resources.getString(R.string.today) else
         context.resources.getQuantityString(R.plurals.days_ago, daysSince, daysSince)
 }
@@ -44,6 +45,18 @@ fun LocalDate.formatExposureDateShort(context: Context): String =
         DateFormat.getBestDateTimePattern(
             Locale(context.getString(R.string.app_language)),
             context.getString(R.string.exposure_date_short_format)
+        ),
+        Locale(context.getString(R.string.app_language))
+    ).format(this)
+
+/**
+ * Formats the dateTime using the correct locale.
+ */
+fun LocalDateTime.formatDateTime(context: Context): String =
+    DateTimeFormatter.ofPattern(
+        DateFormat.getBestDateTimePattern(
+            Locale(context.getString(R.string.app_language)),
+            context.getString(R.string.date_time_format)
         ),
         Locale(context.getString(R.string.app_language))
     ).format(this)

@@ -17,7 +17,6 @@ import android.location.LocationManager
 import android.util.Base64
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
-import androidx.core.content.edit
 import androidx.core.location.LocationManagerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -50,6 +49,7 @@ import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.lifecyle.asFlow
+import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
 import nl.rijksoverheid.en.status.StatusCache
@@ -67,7 +67,7 @@ import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
-import java.time.Period
+import java.time.temporal.ChronoUnit
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
@@ -76,6 +76,7 @@ import nl.rijksoverheid.en.api.BuildConfig as ApiBuildConfig
 private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
+private const val KEY_NOTIFICATIONS_ENABLED_TIMESTAMP = "notifications_enabled_timestamp"
 private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
 private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
 private const val KEY_MIN_RISK_SCORE = "min_risk_score"
@@ -84,39 +85,44 @@ class ExposureNotificationsRepository(
     private val context: Context,
     private val exposureNotificationsApi: ExposureNotificationApi,
     private val api: CdnService,
-    private val preferences: SharedPreferences,
+    private val preferences: AsyncSharedPreferences,
     private val manifestWorkerScheduler: BackgroundWorkScheduler,
     private val appLifecycleManager: AppLifecycleManager,
     private val statusCache: StatusCache,
     private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone(),
     private val signatureValidation: Boolean = ApiBuildConfig.FEATURE_RESPONSE_SIGNATURES,
+    private val signatureValidator: ResponseSignatureValidator = ResponseSignatureValidator(),
     lifecycleOwner: LifecycleOwner = ProcessLifecycleOwner.get()
 ) {
     companion object {
         const val DEBUG_TOKEN = "TEST-TOKEN"
     }
 
-    val keyProcessingOverdue: Boolean
-        get() {
-            val timestamp = preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0)
-            return if (timestamp > 0) {
-                Duration.between(Instant.ofEpochMilli(timestamp), clock.instant())
-                    .toMinutes() > KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
-            } else {
-                false
-            }
+    suspend fun keyProcessingOverdue(): Boolean {
+        val notificationsEnabledTimestamp = preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0)
+        val lastKeysProcessedTimestamp = preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0)
+        return if (maxOf(notificationsEnabledTimestamp, lastKeysProcessedTimestamp) > 0) {
+            !(
+                Duration.between(Instant.ofEpochMilli(lastKeysProcessedTimestamp), clock.instant())
+                    .toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES ||
+                    Duration.between(Instant.ofEpochMilli(notificationsEnabledTimestamp), clock.instant())
+                    .toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
+                )
+        } else {
+            false
         }
+    }
 
     suspend fun requestEnableNotifications(): EnableNotificationsResult {
         val result = exposureNotificationsApi.requestEnableNotifications()
         if (result == EnableNotificationsResult.Enabled) {
             preferences.edit {
                 // reset the timer
-                putLong(KEY_LAST_KEYS_PROCESSED, clock.millis())
+                putLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, clock.millis())
             }
-            val interval = appConfigManager.getCachedConfigOrDefault().updatePeriodMinutes
-            manifestWorkerScheduler.schedule(interval)
+
+            scheduleBackgroundJobs()
 
             if (isBluetoothEnabled() && isLocationPreconditionSatisfied()) {
                 statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
@@ -127,10 +133,24 @@ class ExposureNotificationsRepository(
         return result
     }
 
-    fun resetLastKeysProcessed() {
+    private suspend fun scheduleBackgroundJobs() {
+        val interval = appConfigManager.getCachedConfigOrDefault().updatePeriodMinutes
+        manifestWorkerScheduler.schedule(interval)
+    }
+
+    suspend fun rescheduleBackgroundJobs() {
+        // use as a proxy for background work being enabled
+        if (preferences.contains(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP)) {
+            Timber.d("Rescheduling background jobs")
+            manifestWorkerScheduler.cancel()
+            scheduleBackgroundJobs()
+        }
+    }
+
+    suspend fun resetNotificationsEnabledTimestamp() {
         preferences.edit {
             // reset the timer
-            putLong(KEY_LAST_KEYS_PROCESSED, clock.millis())
+            putLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, clock.millis())
         }
     }
 
@@ -142,7 +162,7 @@ class ExposureNotificationsRepository(
     suspend fun requestDisableNotifications(): DisableNotificationsResult {
         manifestWorkerScheduler.cancel()
         preferences.edit {
-            remove(KEY_LAST_KEYS_PROCESSED)
+            remove(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP)
         }
         val result = exposureNotificationsApi.disableNotifications()
         if (result == DisableNotificationsResult.Disabled) {
@@ -243,7 +263,14 @@ class ExposureNotificationsRepository(
             return ProcessExposureKeysResult.Success
         }
 
-        val processedSets = preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())!!
+        // if the key is missing, then this is our first run
+        if (!preferences.contains(KEY_EXPOSURE_KEY_SETS)) {
+            Timber.d("Skipping processing of initial key set")
+            updateProcessedExposureKeySets(manifest.exposureKeysSetIds.toSet(), manifest)
+            return ProcessExposureKeysResult.Success
+        }
+
+        val processedSets = preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())
         val updates = manifest.exposureKeysSetIds.toMutableSet().apply {
             removeAll(processedSets)
         }
@@ -321,10 +348,10 @@ class ExposureNotificationsRepository(
      * @param manifest the manifest
      */
     @WorkerThread
-    private fun updateProcessedExposureKeySets(processed: Set<String>, manifest: Manifest) {
+    private suspend fun updateProcessedExposureKeySets(processed: Set<String>, manifest: Manifest) {
         // the ids we have previously processed + the newly processed ids
         val currentProcessedIds =
-            preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet())!!.toMutableSet().apply {
+            preferences.getStringSet(KEY_EXPOSURE_KEY_SETS, emptySet()).toMutableSet().apply {
                 addAll(processed)
             }
         // store the set of ids that are in the manifest and are processed
@@ -403,7 +430,6 @@ class ExposureNotificationsRepository(
             } while (true)
         }
         return if (signatureValidation) {
-            val validator = ResponseSignatureValidator()
             var valid = false
             if (signature != null) {
                 ZipInputStream(FileInputStream(file)).use {
@@ -411,7 +437,7 @@ class ExposureNotificationsRepository(
                         val entry = it.nextEntry ?: break
                         if (entry.name == "export.bin") {
                             try {
-                                validator.verifySignature(it, signature!!)
+                                signatureValidator.verifySignature(it, signature!!)
                                 valid = true
                             } catch (ex: SignatureValidationException) {
                                 Timber.e("File for $id did not pass signature validation")
@@ -452,6 +478,15 @@ class ExposureNotificationsRepository(
                     return@withContext ProcessManifestResult.Disabled
                 }
 
+                try {
+                    // warm up the cache
+                    manifest.resourceBundleId?.let {
+                        api.getResourceBundle(it)
+                    }
+                } catch (ex: Exception) {
+                    Timber.w(ex, "Could not fetch resource bundle")
+                }
+
                 val result = processExposureKeySets(manifest)
                 Timber.d("Processing keys result = $result")
 
@@ -479,6 +514,8 @@ class ExposureNotificationsRepository(
                 }
             }
 
+        val preferences = preferences.getPreferences()
+
         preferences.registerOnSharedPreferenceChangeListener(listener)
 
         offer(preferences.getString(KEY_LAST_TOKEN_ID, null))
@@ -496,9 +533,28 @@ class ExposureNotificationsRepository(
                 }
             }
 
+        val preferences = preferences.getPreferences()
         preferences.registerOnSharedPreferenceChangeListener(listener)
 
         offer(preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0))
+
+        awaitClose {
+            preferences.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
+
+    fun notificationsEnabledTimestamp(): Flow<Long?> = callbackFlow {
+        val listener =
+            SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+                if (key == KEY_NOTIFICATIONS_ENABLED_TIMESTAMP) {
+                    offer(sharedPreferences.getLong(key, 0))
+                }
+            }
+
+        val preferences = preferences.getPreferences()
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+
+        offer(preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0))
 
         awaitClose {
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
@@ -520,7 +576,7 @@ class ExposureNotificationsRepository(
         }
     }
 
-    fun resetExposures() {
+    suspend fun resetExposures() {
         preferences.edit {
             // Use putString instead of remove, otherwise encrypted shared preferences don't call
             // an associated shared preferences listener.
@@ -532,7 +588,7 @@ class ExposureNotificationsRepository(
     suspend fun getDaysSinceLastExposure(): Int? {
         val date = getLastExposureDate().first()
         return date?.let {
-            Period.between(date, LocalDate.now(clock)).days
+            ChronoUnit.DAYS.between(date, LocalDate.now(clock)).toInt()
         }
     }
 

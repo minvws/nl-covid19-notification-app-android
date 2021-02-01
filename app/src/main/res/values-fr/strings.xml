@@ -58,18 +58,10 @@
     <string name="sync_issue_notification_title">Problème technique</string>
     <string name="sync_issue_notification_message">L\'application n\'a pas pu vérifier pendant 24 heures si les personnes que vous avez rencontrées se sont avérées avoir le Covid-19 par la suite.</string>
     <string name="post_notification_toolbar_title">Risque de contamination</string>
-    <string name="post_notification_header_1">Vous étiez à proximité de quelqu\'un qui a le Covid-19</string>
-    <string name="post_notification_paragraph_2">Vous étiez, le %2$s (%1$s), à proximité de quelqu\'un qui, par la suite, s\'est avéré avoir le Covid-19. Lors de cette situation, vous avez probablement couru un plus grand risque d’être contaminé(e). \n\nSi vous avez effectivement été contaminé(e), vous pouvez transmettre le virus aux personnes autour de vous, même si vous n\'avez aucun symptôme pour l\'instant.</string>
-    <string name="post_notification_header_3">Que pouvez-vous faire ?</string>
-    <string name="post_notification_list_4"><![CDATA[<ul><li>Restez chez vous jusqu\'au %1$s et faites très attention aux symptômes qui pourraient correspondre à ceux du Covid-19</li>,<li>Vous avez des (légers) symptômes qui correspondent à ceux du Covid-19 ? Faites un test de dépistage et restez chez vous jusqu\'au %1$s</li><li>inclus. Vous avez de graves symptômes comme une forte fièvre ou des difficultés à respirer ? Ou vous faites partie d\'un groupe à risques et vous avez de la fièvre ? Appelez d\'abord votre médecin traitant</li></ul>]]></string>
-    <string name="post_notification_header_6">Faites un test de dépistage du Covid-19</string>
-    <string name="post_notification_paragraph_7">Même si vous n\'avez aucun symptôme, car sans symptôme, vous pouvez quand même transmettre le Covid-19 et contaminer les personnes autour de vous.</string>
-    <string name="post_notification_paragraph_8">"Faites le test gratuitement. Il ne dure pas longtemps et vous pouvez généralement fixer un rendez-vous rapidement. Le résultat est connu dans les 48 heures. Restez chez vous jusqu'à la communication du résultat."</string>
-    <string name="post_notification_paragraph_9">Appelez gratuitement le <b>%1$s</b> pour demander à faire un test de dépistage du Covid-19.</string>
     <string name="post_notification_message">Gardez votre numéro national (BSN) à portée de main. Celui-ci figure sur votre passeport ou carte d\'identité.</string>
     <string name="post_notification_button">Demandez à faire un test de dépistage du Covid-19</string>
     <string name="generic_notification_toolbar_title">Recevoir une notification</string>
-    <string name="generic_notification_header_1">Que contient une notification ?</string>
+    <string name="generic_notification_header_1">Comment reconnaître une notification ?</string>
     <string name="generic_notification_paragraph_2">L\'application envoie une notification si vous avez été au moins pendant 15 minutes à proximité de quelqu\'un qui, par la suite, s\'est avéré avoir le Covid-19.</string>
     <string name="generic_notification_paragraph_4">La notification s\'affiche dans vos notifications, tout comme les messages des autres applications. La notification a le symbole de CoronaMelder.\nAvez-vous reçu une notification ? Ouvrez alors CoronaMelder. Vous y lirez ce que vous devez faire.</string>
     <string name="generic_notification_alt_text_6">Écran rouge avec sonnette d\'alarme qui indique qu\'une action est maintenant nécessaire</string>
@@ -93,12 +85,12 @@
     <string name="status_dialog_remove_exposure_message">Êtes-vous sûr(e) de vouloir supprimer cette notification? Vous ne retrouverez plus cette date dans l’application. Retenez-la donc bien.</string>
     <string name="status_dialog_remove_exposure_confirm">Supprimer</string>
     <string name="status_dialog_remove_exposure_cancel">Désactiver</string>
-    <string name="status_info_about_title">Des questions à propos de l\'application ?</string>
+    <string name="status_info_about_title">Questions à propos de l\'application</string>
     <string name="status_info_about_subtitle">Découvrez le fonctionnement de l\'application et ce qu\'elle signifie pour votre vie privée</string>
     <string name="status_info_share_title">Inviter vos proches à utiliser l\'application</string>
     <string name="status_info_share_subtitle">Partagez l\'application avec vos proches pour stopper ensemble le Covid-19</string>
-    <string name="status_info_notification_title">Que contient une notification ?</string>
-    <string name="status_info_notification_subtitle">Lisez ce que vous pouvez faire après avoir été en contact avec quelqu\'un qui a le Covid-19</string>
+    <string name="status_info_notification_title">Comment reconnaître une notification ?</string>
+    <string name="status_info_notification_subtitle">Découvrez à quoi ressemble une notification et ce que vous pouvez faire après en avoir reçu une.</string>
     <string name="status_info_test_title">Demander à faire un test de dépistage du Covid-19</string>
     <string name="status_info_test_subtitle">Découvrez le plus vite possible si vous êtes contaminé(e)</string>
     <string name="status_info_lab_title">Partager le code GGD</string>
@@ -149,8 +141,8 @@
     <string name="faq_technical_toolbar_title">Explication technique</string>
     <string name="faq_technical_header_1">1. L\'application crée un code personnel pour chaque téléphone</string>
     <string name="faq_technical_paragraph_2">Ce code ne contient pas d\'informations sur vous ni sur votre téléphone. Le code est entièrement aléatoire et change tous les quarts d\'heure.</string>
-    <string name="faq_technical_header_3">2. Les téléphones partagent leurs codes s\'ils sont proches les uns des autres</string>
-    <string name="faq_technical_paragraph_4">La personne que vous rencontrez utilise également l\'application ? Alors vos téléphones échangent leurs codes via le Bluetooth Low Energy. L\'application sait quels étaient les téléphones proches les uns des autres. L\'application ne sait pas à qui appartiennent les téléphones ni où vous étiez.</string>
+    <string name="faq_technical_header_3">2. Les téléphones partagent des codes s\'ils sont proches les uns des autres</string>
+    <string name="faq_technical_paragraph_4">La personne que vous rencontrez utilise également l\'application ? Alors vos téléphones échangent des codes via le Bluetooth Low Energy. L\'application sait ainsi quels étaient les téléphones proches les uns des autres. L\'application ne sait pas à qui appartiennent les téléphones ni où vous étiez.</string>
     <string name="faq_technical_header_5">3. Si une personne a le Covid-19,  elle peut placer ses codes sur une liste</string>
     <string name="faq_technical_paragraph_6">Cette liste contient uniquement les codes des personnes contaminées. Pour ajouter les codes, une personne contaminée doit d\'abord communiquer un code GGD au GGD. Il est donc toujours certain que les codes ajoutés appartiennent vraiment à quelqu\'un qui a le Covid-19. Tous les codes de plus de 14 jours sont automatiquement supprimés de la liste.</string>
     <string name="faq_technical_header_7">4. Chaque téléphone contrôle si les codes de la liste ont été rencontrés plus tôt</string>
@@ -207,9 +199,6 @@
     <string name="cd_status_exposed">Cercle rouge avec sonnette d\'alarme qui indique qu\'une action est nécessaire</string>
     <string name="cd_error_box">Avertissement</string>
     <string name="cd_info_box">Important</string>
-    <string name="faq_test_phase">Que veut dire version test et analyse ?</string>
-    <string name="footer_test_phase">Version test et analyse %1$s (%2$s)</string>
-    <string name="footer_test_phase_read_more">En savoir plus</string>
     <string name="onboarding_privacy_policy_headline">Comment CoronaMelder utilise vos données</string>
     <string name="onboarding_privacy_policy_paragraph"><![CDATA[Dans la <a href=""> déclaration de protection de la vie privée</a>, vous verrez comment CoronaMelder utilise vos données. Voici les points essentiels :]]></string>
     <string name="onboarding_privacy_policy_check_1">Votre application diffuse des données Bluetooth cryptées.</string>
@@ -218,28 +207,17 @@
     <string name="onboarding_privacy_policy_check_4">Vous pouvez à tout moment supprimer les données de votre téléphone.</string>
     <string name="onboarding_privacy_policy_consent_label">J\'ai lu la déclaration de protection de la vie privée et j\'ai compris comment CoronaMelder utilise mes données</string>
     <string name="lab_test_how_does_it_work">Comment ça fonctionne ?</string>
-    <string name="faq_notification_message">Que contient une notification ?</string>
+    <string name="faq_notification_message">Comment reconnaître une notification ?</string>
     <string name="faq_pause">Puis-je mettre l\'application en pause ?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Oui, vous pouvez le faire en désactivant votre Bluetooth. Pour ce faire, allez à  <strong>Configurations > Connexions >Bluetooth</strong>. Si vous désactivez le Bluetooth, l\'application n\'échangera plus de codes. Vous recevrez ensuite un rappel automatique toutes les 24 heures pour réactiver l\'application.]]></string>
-    <string name="faq_pause_paragraph_2">"Si vous voulez que votre Bluetooth reste activé, vous pouvez aussi mettre l'application en pause en désactivant provisoirement &lt;strong&gt;Utiliser les notifications d'exposition&lt;/strong&gt;. Pour ce faire, utilisez le bouton ci-dessous. Dans ce cas aussi, vous recevez un rappel automatique toutes les 24 heures pour réactiver l'application.
-"</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Oui, vous pouvez le faire en désactivant votre Bluetooth. Pour ce faire, allez à  <strong>Configurations > Connexions >Bluetooth</strong>. Si vous désactivez le Bluetooth, l\'application n\'échangera plus de codes. Votre téléphone vous envoie ensuite une notification pour réactiver l\'application.]]></string>
+    <string name="faq_pause_paragraph_2">Si vous voulez que votre Bluetooth reste activé, vous pouvez aussi mettre l\'application en pause en désactivant provisoirement &lt;strong&gt;Utiliser les notifications d\'exposition&lt;/strong&gt;. Pour ce faire, utilisez le bouton ci-dessous. Dans ce cas, vous recevez après un certain temps une notification pour réactiver l\'application.</string>
     <string name="faq_pause_paragraph_3">Il n\'est toutefois pas recommandé de mettre l\'application en pause car vous risquez d\'oublier de la réactiver. Vous pouvez par contre mettre l\'application en pause dans des situations particulières. Par exemple si vous êtes à proximité de patients qui ont (probablement) le Covid-19, mais que vous portez bien toutes vos protections médicales.</string>
     <string name="faq_interoperability">Est-ce que CoronaMelder fonctionne aussi avec des applications d’autres pays ?</string>
-    <string name="faq_interoperability_paragraph_1">Hélas pas encore, mais nous travaillons activement pour que ce soit possible. CoronaMelder pourra alors aussi échanger des codes avec certaines applications d\'autres pays. Par exemple l\'application allemande.</string>
-    <string name="faq_interoperability_paragraph_2">Si, en plus de CoronaMelder, vous installez l\'application allemande Corona-Warn, votre téléphone vous indiquera qu\'1 seule application peut être activée à la fois. L\'application que vous choisissez est la seule application qui contrôle vos rencontres à ce moment-là. Si vous voulez le faire dans plusieurs pays, vous devez changer d\'application vous-même. Cette application peut alors vous envoyer des notifications. Si vous changez d\'application 1 fois par jour, les deux applications contrôlent vos rencontres. Vous ne ratez donc rien.</string>
-    <string name="faq_interoperability_paragraph_3">Dans le futur, vous pourrez probablement continuer à utiliser l\'application de votre pays et vous ne devrez plus changer tous les jours.</string>
+    <string name="faq_interoperability_paragraph_1">CoronaMelder collabore avec une série d\'applications d\'autres pays européens. Y compris l\'Allemagne, l\'Irlande et l\'Italie.</string>
+    <string name="faq_interoperability_paragraph_2">Supposez que vous avez été proche pendant un certain temps d\'un utilisateur de l\'application allemande Corona-Warn. Cette personne est testée en Allemagne et elle s\'avère avoir le Coronavirus. Si cette personne partage ses codes avec le GGD allemand, CoronaMelder vous enverra une notification. C\'est la même chose dans le sens inverse. Comme les applications du coronavirus collaborent les unes avec les autres, vous ne devez activer qu\'une seule application.</string>
+    <string name="faq_interoperability_paragraph_3">À partir du 30 novembre 2020, CoronaMelder contrôlera tous les jours les codes des utilisateurs des différents pays. L\'application utilisera donc plus de données mobiles qu\'auparavant.   Dans l\'écran principal de vos &lt;strong&gt;Configurations&lt;/strong&gt;, vous pouvez définir que l\'application ne contrôle votre proximité avec quelqu\'un qui a le coronavirus que par le biais du WiFi.</string>
     <string name="cross_links_header">Lire aussi</string>
     <string name="request_test_header_5">Demander à faire un test de dépistage du Covid-19</string>
-    <string name="post_notification_guidance_follow_ggd">Au téléphone, le GGD vous donne d\'autres conseils que ceux de l\'application ? Suivez alors les conseils du GGD.</string>
-    <string name="post_notification_stay_home_header">Restez chez vous jusqu\'au %1$s</string>
-    <string name="post_notification_stay_home_list"><![CDATA[<ul><li>Faites faire vos courses par d\'autres personnes. Si ce n\'est vraiment pas possible et que vous n\'avez aucun symptôme, vous pouvez sortir pour faire vos courses. Veillez à maintenir une distance d\'1,5 mètre et ne touchez personne.</li><li>Vous pouvez vous installer au jardin ou sur le balcon.</li><li>Les écoliers de moins de 18 ans peuvent aller à l\'école et/ou faire du sport.</li></ul>
-]]></string>
-    <string name="post_notification_no_visitors_header">Ne recevez personne.</string>
-    <string name="post_notification_no_visitors_list"><![CDATA[<ul><li>Seules les personnes qui habitent avec vous peuvent se trouver à la maison avec vous. Restez toutefois éloignés les uns des autres et gardez une distance d\'1,5 mètre. Donc pas de câlins, ni de baisers ou de rapports sexuels.</li></ul>]]></string>
-    <string name="post_notification_medical_help_list"><![CDATA[<ul><li>N\'allez pas chez le médecin ni à l’hôpital, mais appelez d\'abord votre médecin traitant. Dites-lui que vous avez été en contact avec quelqu\'un qui a le Covid-19.</li><li>votre médecin ou une autre assistance médicale peut passer chez vous.</li></ul>]]></string>
-    <string name="post_notification_medical_help_header">Besoin d\'une assistance médicale ?</string>
-    <string name="post_notification_after_stay_home_header">Après le %1$s</string>
-    <string name="post_notification_after_stay_home_paragraph">Si vous n\'avez pas de symptôme jusqu\'au %1$s, il n\'est plus nécessaire de rester chez vous. Continuez toutefois à suivre les règles générales de lutte contre la diffusion du Covid-19.</string>
     <string name="generic_notification_advice_stay_home">Restez en tous cas chez vous jusqu\'à ce que vous soyez certain(e) de ne pas avoir le Covid-19. Vous évitez ainsi de contaminer sans le savoir ceux qui vous entourent.</string>
     <string name="generic_notification_exposure_summaries">"Vous recevez aussi parfois des notifications qui vous indiquent que votre téléphone effectue des contrôles COVID-19. Bon à savoir : généralement, ce n'est rien de grave."</string>
     <string name="generic_notification_header_3">À quoi ressemble une notification ?</string>
@@ -248,7 +226,7 @@
     <string name="generic_notification_sample_notification_content_description">Exemple d\'une notification</string>
     <string name="onboarding_enable_headline">Activez CoronaMelder</string>
     <string name="onboarding_enable_description">CoronaMelder ne peut vous avertir que si vous autorisez l\'application à :&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Enregistrer les rencontres avec les autres utilisateurs de l\'application&lt;/li&gt;&lt;li&gt;et en désactivant l\'optimisation de la batterie pour utiliser seulement cette application (pas nécessaire)&lt;/li&gt;&lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder ne peut vous avertir que si vous autorisez l\'application à : <br/><br/><ul><li> Enregistrer les rencontres avec d\'autres utilisateurs de l\'application</li><li>Activer vos paramètres de localisation (CoronaMelder ne connaît pas votre position)</li><li></li>Désactiver l\'optimisation de la batterie uniquement pour cette application (pas nécessaire)</ul>]]></string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder ne peut vous avertir que si vous autorisez l\'application à : <br/><br/><ul><li> Enregistrer les rencontres avec d\'autres utilisateurs de l\'application</li><li>Activer vos paramètres de localisation (CoronaMelder ne connaît pas votre position)</li><li>Désactiver l\'optimisation de la batterie uniquement pour cette application (pas nécessaire)</li></ul>]]></string>
     <string name="location_services_required_title">Paramètres de localisation</string>
     <string name="location_services_required_headline">L\'application ne fonctionne que si les paramètres de localisation sont activés.</string>
     <string name="location_services_required_description">Certaines applications utilisent Bluetooth pour déterminer votre position. Par conséquent, cela fait partie des paramètres de localisation. CoronaMelder a besoin du Bluetooth pour fonctionner, mais n\'a jamais accès à votre position.</string>
@@ -265,4 +243,50 @@
     <string name="status_error_action_disable_battery_optimisation">Résoudre le problème</string>
     <string name="update_app_headline">Vous avez une ancienne version de CoronaMelder</string>
     <string name="update_app_description">Mettez à jour l\'application sur votre téléphone pour garantir le bon fonctionnement de CoronaMelder.</string>
+    <string name="status_info_settings_title">Paramètres</string>
+    <string name="status_info_settings_subtitle">Mettre l\'application en pause et désactiver les données mobiles</string>
+    <string name="settings_wifi_only_title">Ne contrôler les codes que par le biais du WiFi</string>
+    <string name="settings_wifi_only_summary">CoronaMelder contrôle plusieurs fois par jour si vous avez été proche de quelqu\'un qui a le coronavirus. Si vous désactivez vos données mobiles, l\'application ne le fait plus que si vous utilisez le WiFi. Vos rencontres sont également enregistrées si vous n\'avez pas de connexion à Internet.</string>
+    <string name="faq_interop_countries">Avec quelles applications étrangères collabore CoronaMelder?</string>
+    <string name="status_info_interop_announcement_message">À partir du 30 novembre, CoronaMelder fonctionnera avec des applications coronavirus d\'autres pays.</string>
+    <string name="status_info_action_more_info">Plus d\'informations</string>
+    <string name="status_info_action_close">Fermer</string>
+    <string name="phone_call_not_supported_dialog_title">Vous ne pouvez pas appeler de cet appareil</string>
+    <string name="phone_call_not_supported_dialog_message">Prenez votre téléphone et appelez %1$s</string>
+    <string name="phone_call_not_supported_dialog_close">J\'ai compris</string>
+    <!--Status screen footer text-->
+    <string name="status_last_keys_processed">CoronaMelder enregistre en permanence les rencontres. L\'application vérifie aussi toutes les deux heures si quelqu\'un que vous avez rencontré était contagieux à ce moment-là. Vous recevez une notification si c\'était le cas. La dernière vérification a été faite le %1$s</string>
+    <!--Status screen footer text, when no keys has been processed.-->
+    <string name="status_no_keys_processed">CoronaMelder enregistre en permanence les rencontres. L\'application vérifie aussi toutes les deux heures si quelqu\'un que vous avez rencontré était contagieux à ce moment-là. Vous recevez une notification si c\'était le cas.</string>
+    <string name="settings_pause_app_title">Mettre l\'application en pause</string>
+    <string name="settings_pause_app_description">Si vous mettez l\'application en pause, vos rencontres ne sont provisoirement pas enregistrées. Vous ne pouvez pas non plus recevoir de notification si vous avez été à proximité de quelqu\'un qui s\'avère avoir le Covid-19 par la suite. Dès la fin de la pause, vous recevez une notification pour réactiver l\'application.</string>
+    <string name="settings_pause_action_enable">Mettre l\'application en pause</string>
+    <string name="settings_pause_action_disable">Activer l\'application</string>
+    <string name="reminder_channel_name">Rappels</string>
+    <string name="reminder_channel_description">Rappels lorsque vous avez mis l\'application en pause</string>
+    <string name="app_inactive_paused_title">Pause terminée</string>
+    <string name="app_inactive_paused_message">Attention : l\'application n\'est pas encore activée. Vous devez la réactivez vous-même dans l\'application.</string>
+    <string name="status_paused_headline">L\'application est mise en pause</string>
+    <string name="paused_en_api_description"><![CDATA[Dans <b>%1$s</b>, vous recevrez une notification pour réactiver l\'application]]></string>
+    <string name="paused_en_api_duration_reached">L\'application n\'est pas encore activée. Vous devez la réactiver vous-même.</string>
+    <string name="pause_confirmation_title">Êtes-vous sûr(e) de vouloir mettre l\'application en pause?</string>
+    <string name="pause_confirmation_description">Pendant la pause, l\'application n\'enregistre provisoirement pas les rencontres avec les autres utilisateurs de l\'application. Vous ne recevez pas non plus de notification si vous avez été à proximité de quelqu\'un qui s\'avère avoir le Covid-19 par la suite.\n\nNe mettez l\'application en pause que dans les situations où votre téléphone se trouve près d\'autres téléphones mais qu\'il n\'y a pas de risque de contamination. Par exemple en raison de l\'utilisation des dispositifs de protection médicaux.</string>
+    <string name="pause_confirmation_accept_button">Oui, mettre en pause</string>
+    <string name="pause_confirmation_decline_button">Non, ne pas mettre en pause</string>
+    <string name="skip_confirmation_checkbox">Ne plus afficher cet écran</string>
+    <string name="cd_status_paused">Icône de pause gris qui indique que l\'application est mise en pause</string>
+    <string name="duration_format_hour">%1$d heure(s)</string>
+    <string name="duration_format_hours">%1$d heure(s)</string>
+    <string name="duration_format_hour_and_minute">%1$d heure(s) %2$d minute</string>
+    <string name="duration_format_hour_and_minutes">%1$d heure(s) %2$d minutes</string>
+    <string name="duration_format_hours_and_minute">%1$d heure(s) %2$d minute</string>
+    <string name="duration_format_hours_and_minutes">%1$d heure(s) %2$d minutes</string>
+    <string name="duration_format_minute">%1$d minute</string>
+    <string name="duration_format_minutes">%1$d minutes</string>
+    <string name="lab_test_copy_key_to_clipboard">Code GGD copié</string>
+    <string name="status_paused_duration_reached_headline">Pause terminée</string>
+    <plurals name="pause_duration_hours_option_plurals">
+        <item quantity="one">Mettre en pause pendant %d heure(s)</item>
+        <item quantity="other">Mettre en pause pendant %d heure(s)</item>
+    </plurals>
 </resources>

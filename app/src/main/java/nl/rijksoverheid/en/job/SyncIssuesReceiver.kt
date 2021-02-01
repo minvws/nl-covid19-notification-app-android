@@ -12,6 +12,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
@@ -21,8 +25,20 @@ class SyncIssuesReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         Timber.d("onReceive")
         val repository = createExposureNotificationsRepository(context)
-        if (repository.keyProcessingOverdue) {
-            NotificationsRepository(context).showSyncIssuesNotification()
+        val async = goAsync()
+        GlobalScope.launch {
+            try {
+                // prevent ANRs when this takes too long
+                withTimeout(8000) {
+                    if (repository.keyProcessingOverdue()) {
+                        NotificationsRepository(context).showSyncIssuesNotification()
+                    }
+                }
+            } catch (ex: TimeoutCancellationException) {
+                Timber.w(ex, "Timeout while checking for overdue keys")
+            } finally {
+                async.finish()
+            }
         }
     }
 

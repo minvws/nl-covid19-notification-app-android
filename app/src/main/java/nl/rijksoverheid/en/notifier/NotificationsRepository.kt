@@ -38,6 +38,8 @@ private const val APP_UPDATE_NOTIFICATION_CHANNEL_ID = "update_notifications"
 private const val APP_UPDATE_NOTIFICATION_ID = 3
 private const val UPLOAD_KEYS_FAILED_ID = 4
 private const val APP_INACTIVE_NOTIFICATION_ID = 5
+private const val REMINDER_NOTIFICATION_CHANNEL_ID = "reminders"
+private const val PAUSED_REMINDER_NOTIFICATION_ID = 6
 
 class NotificationsRepository(
     private val context: Context,
@@ -79,6 +81,11 @@ class NotificationsRepository(
             APP_UPDATE_NOTIFICATION_CHANNEL_ID,
             R.string.update_channel_name,
             R.string.update_channel_description
+        )
+        createNotificationChannel(
+            REMINDER_NOTIFICATION_CHANNEL_ID,
+            R.string.reminder_channel_name,
+            R.string.reminder_channel_description
         )
     }
 
@@ -183,6 +190,22 @@ class NotificationsRepository(
         NotificationManagerCompat.from(context).cancel(APP_INACTIVE_NOTIFICATION_ID)
     }
 
+    fun showAppPausedReminder() {
+        showNotification(
+            PAUSED_REMINDER_NOTIFICATION_ID,
+            createNotification(
+                REMINDER_NOTIFICATION_CHANNEL_ID,
+                R.string.app_inactive_paused_title,
+                R.string.app_inactive_paused_message,
+                false
+            ).setPriority(NotificationCompat.PRIORITY_DEFAULT).setOngoing(true).build()
+        )
+    }
+
+    fun clearAppPausedNotification() {
+        NotificationManagerCompat.from(context).cancel(PAUSED_REMINDER_NOTIFICATION_ID)
+    }
+
     private fun showNotification(id: Int, notification: Notification) {
         NotificationManagerCompat.from(context).notify(id, notification)
     }
@@ -212,13 +235,15 @@ class NotificationsRepository(
     private fun createNotification(
         channelId: String,
         @StringRes title: Int,
-        @StringRes message: Int
-    ) = createNotification(channelId, title, context.getString(message))
+        @StringRes message: Int,
+        autoCancel: Boolean = true
+    ) = createNotification(channelId, title, context.getString(message), autoCancel)
 
     private fun createNotification(
         channel: String,
         @StringRes title: Int,
-        message: String
+        message: String,
+        autoCancel: Boolean = true
     ): NotificationCompat.Builder {
         val pendingIntent = NavDeepLinkBuilder(context).setGraph(R.navigation.nav_main)
             .setDestination(R.id.main_nav).createPendingIntent()
@@ -233,6 +258,6 @@ class NotificationsRepository(
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setOnlyAlertOnce(true)
-            .setAutoCancel(true)
+            .setAutoCancel(autoCancel)
     }
 }

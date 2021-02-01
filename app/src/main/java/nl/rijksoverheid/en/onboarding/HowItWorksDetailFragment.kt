@@ -6,10 +6,12 @@
  */
 package nl.rijksoverheid.en.onboarding
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -27,7 +29,12 @@ import nl.rijksoverheid.en.about.FAQItemDecoration
 import nl.rijksoverheid.en.about.FAQItemId
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
+import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
+import timber.log.Timber
+
+private const val RC_DISABLE_BATTERY_OPTIMIZATIONS = 1
 
 private val crossLinks = mapOf(
     FAQItemId.REASON to listOf(FAQItemId.LOCATION, FAQItemId.NOTIFICATION_MESSAGE),
@@ -54,6 +61,7 @@ private val crossLinks = mapOf(
 
 class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
+    private val onboardingViewModel: OnboardingViewModel by viewModels()
 
     private val args: HowItWorksDetailFragmentArgs by navArgs()
 
@@ -63,7 +71,7 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
         super.onCreate(savedInstanceState)
         adapter.add(
             FAQDetailSections(
-                openSettings = {
+                openAndroidSettings = {
                     startActivity(Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS))
                 }
             ).getSection(args.faqItemId)
@@ -116,13 +124,37 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
         }
         viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
-                findNavController().navigate(
+                requestDisableBatteryOptimizationsAndContinue()
+            }
+        }
+
+        onboardingViewModel.continueOnboarding.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                findNavController().navigateCatchingErrors(
                     HowItWorksDetailFragmentDirections.actionNext(),
                     FragmentNavigatorExtras(
                         binding.appbar to binding.appbar.transitionName
                     )
                 )
             }
+        )
+    }
+
+    private fun requestDisableBatteryOptimizationsAndContinue() {
+        try {
+            requestDisableBatteryOptimizations(RC_DISABLE_BATTERY_OPTIMIZATIONS)
+        } catch (ex: ActivityNotFoundException) {
+            // ignore
+            Timber.e(ex)
+            onboardingViewModel.continueOnboarding()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_DISABLE_BATTERY_OPTIMIZATIONS) {
+            onboardingViewModel.continueOnboarding()
         }
     }
 }

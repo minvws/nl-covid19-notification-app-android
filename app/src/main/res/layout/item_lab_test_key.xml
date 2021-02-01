@@ -43,19 +43,23 @@
             android:visibility="invisible"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/key_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="56dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/message_box_background"
-            android:backgroundTint="@color/gray_lighter"
+            android:background="@drawable/gray_box_selector"
+            android:clickable="@{viewState.showCode}"
+            android:focusable="@{viewState.showCode}"
             android:minHeight="110dp"
             android:padding="16dp"
+            app:markAsButtonForAccessibility="@{true}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

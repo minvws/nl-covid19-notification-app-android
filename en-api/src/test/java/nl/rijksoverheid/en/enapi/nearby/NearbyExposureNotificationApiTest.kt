@@ -19,13 +19,16 @@ import com.google.android.gms.common.api.Status
 import com.google.android.gms.common.api.internal.ApiKey
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DailySummary
+import com.google.android.gms.nearby.exposurenotification.DiagnosisKeyFileProvider
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureInformation
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
+import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatus
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.google.android.gms.nearby.exposurenotification.ExposureWindow
+import com.google.android.gms.nearby.exposurenotification.PackageConfiguration
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -597,6 +600,9 @@ class NearbyExposureNotificationApiTest {
         override fun provideDiagnosisKeys(files: List<File>): Task<Void> =
             Tasks.forException(IllegalStateException())
 
+        override fun provideDiagnosisKeys(provider: DiagnosisKeyFileProvider): Task<Void> =
+            Tasks.forException(java.lang.IllegalStateException())
+
         override fun deviceSupportsLocationlessScanning(): Boolean {
             throw NotImplementedError()
         }
@@ -641,6 +647,12 @@ class NearbyExposureNotificationApiTest {
             Tasks.forException(IllegalStateException())
 
         override fun getExposureWindows(token: String?): Task<MutableList<ExposureWindow>> =
+            Tasks.forException(IllegalStateException())
+
+        override fun getStatus(): Task<MutableSet<ExposureNotificationStatus>> =
+            Tasks.forException(IllegalStateException())
+
+        override fun getPackageConfiguration(): Task<PackageConfiguration> =
             Tasks.forException(IllegalStateException())
     }
 }
