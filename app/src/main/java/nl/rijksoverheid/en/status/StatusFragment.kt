@@ -249,7 +249,7 @@ class StatusFragment @JvmOverloads constructor(
     }
 
     private fun navigateToPostNotification(epochDay: Long) =
-        findNavController().navigate(StatusFragmentDirections.actionPostNotification(epochDay))
+        findNavController().navigateCatchingErrors(StatusFragmentDirections.actionPostNotification(epochDay))
 
     private fun navigateToNotificationSettings() {
         try {
@@ -272,15 +272,19 @@ class StatusFragment @JvmOverloads constructor(
     }
 
     private fun showRemoveNotificationConfirmationDialog(formattedDate: String) {
-        findNavController().navigate(
-            StatusFragmentDirections.actionRemoveExposedMessage(formattedDate)
-        )
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
-            RemoveExposedMessageDialogFragment.REMOVE_EXPOSED_MESSAGE_RESULT
-        )?.observe(viewLifecycleOwner) {
-            if (it) {
-                statusViewModel.removeExposure()
+        try {
+            findNavController().navigate(
+                StatusFragmentDirections.actionRemoveExposedMessage(formattedDate)
+            )
+            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+                RemoveExposedMessageDialogFragment.REMOVE_EXPOSED_MESSAGE_RESULT
+            )?.observe(viewLifecycleOwner) {
+                if (it) {
+                    statusViewModel.removeExposure()
+                }
             }
+        } catch (ex: IllegalArgumentException) {
+            Timber.w(ex, "Error while navigating")
         }
     }
 
