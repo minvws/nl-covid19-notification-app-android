@@ -244,7 +244,7 @@
     <string name="update_app_headline">Je hebt een verouderde versie van CoronaMelder</string>
     <string name="update_app_description">Update de app op je telefoon om te zorgen dat CoronaMelder goed blijft werken.</string>
     <string name="status_info_settings_title">Instellingen</string>
-    <string name="status_info_settings_subtitle">App pauzeren en mobiele data uitzetten</string>
+    <string name="status_info_settings_subtitle">App pauzeren en mobiele data instellen</string>
     <string name="settings_wifi_only_title">Alleen codes controleren via wifi</string>
     <string name="settings_wifi_only_summary">CoronaMelder controleert een paar keer per dag of je in de buurt bent geweest van iemand met corona. Als je mobiele data uitzet, doet de app dit alleen nog als je wifi gebruikt. Je ontmoetingen worden ook bijgehouden als je geen internetverbinding hebt.</string>
     <string name="faq_interop_countries">Met welke buitenlandse apps werkt CoronaMelder samen?</string>
@@ -274,7 +274,7 @@
     <string name="pause_confirmation_accept_button">Ja, pauzeer</string>
     <string name="pause_confirmation_decline_button">Nee, pauzeer niet</string>
     <string name="skip_confirmation_checkbox">Dit scherm niet meer tonen</string>
-    <string name="cd_status_paused">Grijs pauze-icoon dat aangeeft dat de app gepauzeerd is</string>
+    <string name="cd_status_paused">Grijs rondje met pauzeteken dat aangeeft dat de app gepauzeerd is</string>
     <string name="duration_format_hours_and_minutes">%1$s en %2$s</string>
     <string name="lab_test_copy_key_to_clipboard">GGD-sleutel gekopieerd</string>
     <string name="status_paused_duration_reached_headline">Zet de app weer aan</string>

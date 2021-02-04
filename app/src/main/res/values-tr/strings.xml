@@ -209,9 +209,9 @@
     <string name="lab_test_how_does_it_work">Bu nasıl çalışıyor?</string>
     <string name="faq_notification_message">Bildirimi nasıl tanırım?</string>
     <string name="faq_pause">Uygulamayı duraklatabilir miyim?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Evet, bunu Bluetooth\'unuzu kapatarak yapabilirsiniz. Bunu <strong> Ayarlar>Bağlantılar>Bluetooth</strong>aracılığıyla yaparsınız. Bluetooth\'u kapatırsanız, uygulama artık kod değişimi yapmayacaktır. Ardından, uygulamayı tekrar açmak için telefonunuzdan hemen bir bildirim alacaksınız.]]></string>
-    <string name="faq_pause_paragraph_2">Bluetooth\'u açık bırakmak istiyorsanız, &lt;strong&gt; Maruz kalma uyarılarını kullan &lt;/strong&gt; \'ı geçici olarak devre dışı bırakarak da uygulamayı duraklatabilirsiniz. Bunu aşağıdaki buton aracılığıyla yaparsınız. Bir süre sonra uygulamayı tekrar açmak için bir bildirim alacaksınız.</string>
-    <string name="faq_pause_paragraph_3">Ancak, çoğunlukla uygulamayı duraklatmanız önerilmez. Çünkü tekrar açmayı unutabilirsiniz. Uygulamayı belirli anlarda duraklatabilirsiniz. Örneğin, (potansiyel) Korona hastalarına yaklaştığınızda ve uygun medikal  ekipman giydiğinizden eminseniz.</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Evet, uygulamayı geçici olarak duraklatabilirsiniz. Bunu ana ​​ekranda<strong> Ayarlar> Uygulamayı duraklat </strong> ile yapabilirsiniz. Uygulamayı duraklatırsanız, karşılaşmalarınız geçici olarak izlenmeyecektir. Daha sonra Korona olduğu ortaya çıkan birinin yakınında bulunduysanız da bildirim almazsınız.]]></string>
+    <string name="faq_pause_paragraph_2">Duraklatma bittiğinde, uygulamayı tekrar açmanız için derhal bilgilendirileceksiniz. Uygulamayı açtıktan sonra, uygulamayı duraklatmadan önceki karşılaşmalar ile ilgili bildirimler almaya devam edebilirsiniz.</string>
+    <string name="faq_pause_paragraph_3">Tekrar açmayı unutabileceğiniz için uygulamayı duraklatmanız genelde önerilmez. Özel durumlarda uygulamayı duraklatabilirsiniz. Örneğin, tıbbi koruyucu ekipman giydiğinizden emin olup da (muhtemel) Korona hastalarına yaklaştığınızda.</string>
     <string name="faq_interoperability">CoronaMelder diğer ülkelerdeki uygulamalarla da çalışıyor mu?</string>
     <string name="faq_interoperability_paragraph_1">CoronaMelder, aralarında Almanya, İrlanda ve İtalya’nın bulunduğu Avrupa ülkelerinden bir dizi uygulamayla birlikte çalışır.</string>
     <string name="faq_interoperability_paragraph_2">Uzun bir süredir Alman Corona-Warn-App kullanıcısının yakınında bulunduğunuzu varsayalım. Bu kişi Almanya\'da test edildi ve Korona olduğu anlaşıldı. Bu kişi kodlarını Alman GGD ile paylaşırsa, CoronaMelder aracılığıyla bir bildirim alacaksınız. Aynı şey tam tersi için de geçerli. Korona uygulamaları birlikte çalıştığından, yalnızca bir uygulamanızın açık olması yeterlidir.</string>
@@ -244,7 +244,7 @@
     <string name="update_app_headline">CoronaMelder\'ın eski bir sürümüne sahipsiniz</string>
     <string name="update_app_description">CoronaMelder\'in düzgün çalışmasını sağlamak için telefonunuzdaki uygulamayı güncelleyin.</string>
     <string name="status_info_settings_title">Ayarlar</string>
-    <string name="status_info_settings_subtitle">Uygulamayı duraklatın ve mobil verileri kapatın</string>
+    <string name="status_info_settings_subtitle">Uygulamayı duraklatın ve mobil verileri ayarlayın</string>
     <string name="settings_wifi_only_title">Kodları yalnızca WiFi üzerinden kontrol edin</string>
     <string name="settings_wifi_only_summary">CoronaMelder, günde birkaç kez Korona olan birinin yakınında bulunmuş olup olmadığınızı kontrol eder. Mobil verileri kapatırsanız, uygulama bunu yalnızca WiFi kullandığınızda yapacaktır. Buluşmalarınız internet bağlantınız olmasa bile takip edilir.</string>
     <string name="faq_interop_countries">CoronaMelder hangi yabancı uygulamalarla çalışıyor?</string>
@@ -264,29 +264,30 @@
     <string name="settings_pause_action_disable">Uygulamayı açın</string>
     <string name="reminder_channel_name">Hatırlatmalar</string>
     <string name="reminder_channel_description">Uygulamayı duraklattığınızda hatırlatmalar</string>
-    <string name="app_inactive_paused_title">Duraklatma sona erdi</string>
-    <string name="app_inactive_paused_message">Dikkat: uygulama henüz aktif değil. Uygulamayı kendiniz tekrar açmanız gerekiyor.</string>
+    <string name="app_inactive_paused_title">CoronaMelder\'ı tekrar açın</string>
+    <string name="app_inactive_paused_message">Dikkat: uygulama henüz aktif değil. Bunu uygulamada kendiniz açmanız gerekiyor.</string>
     <string name="status_paused_headline">Uygulama duraklatıldı</string>
-    <string name="paused_en_api_description"><![CDATA[Uygulamayı yeniden etkinleştirmeniz için <b>%1$s</b> içinde bir bildirim alacaksınız]]></string>
-    <string name="paused_en_api_duration_reached">Uygulama henüz aktif değil. Bunu kendiniz tekrar açmanız gerekiyor.</string>
+    <string name="paused_en_api_description"><![CDATA[Uygulamayı yeniden etkinleştirmeniz için <b>%1$s</b> içinde bir bildirim alacaksınız.]]></string>
+    <string name="paused_en_api_duration_reached">CoronaMelder henüz aktif değil. Bunu kendiniz açmanız gerekiyor.</string>
     <string name="pause_confirmation_title">Uygulamayı duraklatmak istediğinizden emin misiniz?</string>
     <string name="pause_confirmation_description">Uygulama, duraklatma sırasında diğer uygulama kullanıcılarıyla olan karşılaşmaları geçici olarak izlemez. Ayrıca, daha sonra korona olduğu ortaya çıkan birinin yakınında bulunmuş olursanız bildirim almazsınız.\n\nTelefonunuzu sadece diğer kişilerin telefonlarına yakın olduğunuzda, ama enfeksiyon ihtimali olmadığı durumlarda duraklatın. Örneğin, tıbbi koruyucu ekipman kullanarak.</string>
     <string name="pause_confirmation_accept_button">Evet, duraklat</string>
     <string name="pause_confirmation_decline_button">Hayır, duraklama</string>
     <string name="skip_confirmation_checkbox">Bu ekranı artık gösterme</string>
-    <string name="cd_status_paused">Uygulamanın duraklatıldığını gösteren gri duraklatma simgesi</string>
-    <string name="duration_format_hour">%1$d saat</string>
-    <string name="duration_format_hours">%1$d saat</string>
-    <string name="duration_format_hour_and_minute">%1$d saat %2$d dakika</string>
-    <string name="duration_format_hour_and_minutes">%1$d saat %2$d dakika</string>
-    <string name="duration_format_hours_and_minute">%1$d saat %2$d dakika</string>
-    <string name="duration_format_hours_and_minutes">%1$s %2$s</string>
-    <string name="duration_format_minute">%1$d dakika</string>
-    <string name="duration_format_minutes">%1$d dakika</string>
+    <string name="cd_status_paused">Uygulamanın duraklatıldığını belirten duraklama işaretli gri daire</string>
+    <string name="duration_format_hours_and_minutes">%1$s ve %2$s</string>
     <string name="lab_test_copy_key_to_clipboard">GGD anahtarı kopyalandı</string>
-    <string name="status_paused_duration_reached_headline">Duraklatma sona erdi</string>
+    <string name="status_paused_duration_reached_headline">Uygulamayı tekrar aç</string>
     <plurals name="pause_duration_hours_option_plurals">
-        <item quantity="one">%d saat duraklat</item>
-        <item quantity="other">%d saat duraklat</item>
+        <item quantity="one">%d saat için duraklat</item>
+        <item quantity="other">%d saat için duraklat</item>
+    </plurals>
+    <plurals name="duration_hours_plurals">
+        <item quantity="one">%d saat</item>
+        <item quantity="other">%d saat</item>
+    </plurals>
+    <plurals name="duration_minutes_plurals">
+        <item quantity="one">%d dakika</item>
+        <item quantity="other">%d dakika</item>
     </plurals>
 </resources>

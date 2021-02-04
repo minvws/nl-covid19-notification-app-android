@@ -7,7 +7,7 @@ apply plugin: "com.osacky.fladle"
 apply plugin: 'com.google.firebase.appdistribution'
 apply plugin: 'ru.cian.huawei-publish'
 
-version = "1.2.2"
+version = "1.2.3"
 def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 78961
 archivesBaseName = "covid-notificatie-v${version}-${buildVersionCode}"
 
