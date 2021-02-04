@@ -19,13 +19,7 @@ fun Settings.PausedState.Paused.formatDuration(context: Context): CharSequence {
 
         val (durationHours, durationMinutes) = durationHoursAndMinutes()
         val formattedDuration = when {
-            durationHours > 0 && durationMinutes > 0 -> {
-                context.getString(
-                    R.string.duration_format_hours_and_minutes,
-                    formattedHours(durationHours, context),
-                    formattedMinutes(durationMinutes, context)
-                )
-            }
+            durationHours > 0 && durationMinutes > 0 -> formattedHoursAndMinutes(durationHours, durationMinutes, context)
             durationHours > 0 -> formattedHours(durationHours, context)
             durationMinutes > 0 -> formattedMinutes(durationMinutes, context)
             else -> return context.getString(R.string.paused_en_api_duration_reached)
@@ -56,8 +50,15 @@ fun Settings.PausedState.Paused.durationHoursAndMinutes(): Pair<Long, Long> {
     } else Pair(0, 0)
 }
 
-private fun formattedHours(hours: Long, context: Context)
-    = context.resources.getQuantityString(R.plurals.duration_hours_plurals, hours.toInt(), hours)
+private fun formattedHoursAndMinutes(hours: Long, minutes: Long, context: Context) =
+    context.getString(
+        R.string.duration_format_hours_and_minutes,
+        formattedHours(hours, context),
+        formattedMinutes(minutes, context)
+    )
 
-private fun formattedMinutes(minutes: Long, context: Context)
-    = context.resources.getQuantityString(R.plurals.duration_minutes_plurals, minutes.toInt(), minutes)
+private fun formattedHours(hours: Long, context: Context) =
+    context.resources.getQuantityString(R.plurals.duration_hours_plurals, hours.toInt(), hours)
+
+private fun formattedMinutes(minutes: Long, context: Context) =
+    context.resources.getQuantityString(R.plurals.duration_minutes_plurals, minutes.toInt(), minutes)
