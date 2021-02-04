@@ -211,9 +211,9 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="lab_test_how_does_it_work">¿Cómo funciona?</string>
     <string name="faq_notification_message">¿Qué aspecto tiene una notificación?</string>
     <string name="faq_pause">¿Puedo pausar la app?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Sí, puedes hacer esto desactivando Bluetooth. Ve a <strong>Ajustes > Conexiones inalámbricas y redes > Bluetooth</strong>. Si desactivas Bluetooth, la app dejará de compartir códigos y recibirás inmediatamente una notificación del teléfono para que vuelvas a activar la app.]]></string>
-    <string name="faq_pause_paragraph_2">Si quieres dejar activado Bluetooth, también puedes pausar la app desactivando temporalmente &lt;strong&gt;Utilizar notificaciones de exposición&lt;/strong&gt;. Utiliza el botón aquí abajo para pausarla. Después de un rato, recibirás una notificación para volver a activar la app.</string>
-    <string name="faq_pause_paragraph_3">Aun así, no se recomienda pausar la app, ya que quizá se te olvide volver a activarla. Puedes pausar la app en situaciones determinadas, como, por ejemplo, si vas a estar cerca de posibles pacientes con coronavirus pero estás seguro de que llevas un equipo de protección individual.</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Sí, puedes pausar temporalmente la app. En la página de inicio, selecciona <strong>Ajustes > Pausar la app </strong>. Si pones en pausa la app, dejará de registrar temporalmente los encuentros. Tampoco recibirás notificaciones si has estado cerca de alguien que más tarde resultó tener coronavirus.]]></string>
+    <string name="faq_pause_paragraph_2">Una vez pasado el periodo de pausa, recibirás directamente una notificación para volver a activar la app. Cuando hayas activado la app, puede que recibas notificaciones de encuentros que ocurrieron antes de que pausaras la app.</string>
+    <string name="faq_pause_paragraph_3">No se recomienda pausar la app, ya que quizá se te olvide volver a activarla. Puedes pausar la app en situaciones determinadas, como, por ejemplo, si vas a estar cerca de posibles pacientes con coronavirus pero estás seguro de que llevas puesto un equipo de protección individual.</string>
     <string name="faq_interoperability">¿CoronaMelder funciona con apps de otros países?</string>
     <string name="faq_interoperability_paragraph_1">CoronaMelder está cooperando con algunas apps de otros países europeos, como Italia, Irlanda y Alemania.</string>
     <string name="faq_interoperability_paragraph_2">Por ejemplo,  imagínate que has estado cerca de un usuario de la app alemana Corona-Warn-App durante mucho tiempo. Esta persona se hace un test en Alemania y resulta que tiene el coronavirus. Si esta persona comparte sus códigos con el servicio de salud alemán, entonces recibirás una notificación mediante CoronaMelder, y viceversa. Las apps colaboran entre sí, así que solo necesitas descargarte una.</string>
@@ -246,7 +246,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="update_app_headline">Estás usando una versión obsoleta de CoronaMelder</string>
     <string name="update_app_description">Actualiza CoronaMelder en tu teléfono para asegurar su buen funcionamiento.</string>
     <string name="status_info_settings_title">Ajustes</string>
-    <string name="status_info_settings_subtitle">Pausar la app y desactivar los datos móviles</string>
+    <string name="status_info_settings_subtitle">Pausar la app y ajustar los datos móviles</string>
     <string name="settings_wifi_only_title">Controlar códigos solo mediante wifi</string>
     <string name="settings_wifi_only_summary">CoronaMelder comprueba un par de veces al día si has estado cerca de alguien con coronavirus. Si desactivas tus datos, la app solo funcionará si utilizas wifi. Se seguirán registrando tus encuentros incluso si no tienes conexión a internet.</string>
     <string name="faq_interop_countries">¿Con qué apps extranjeras colabora CoronaMelder?</string>
@@ -266,29 +266,30 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="settings_pause_action_disable">Activar la app</string>
     <string name="reminder_channel_name">Recordatorios</string>
     <string name="reminder_channel_description">Recordatorio cuando has pausado la app</string>
-    <string name="app_inactive_paused_title">Se dejó de pausar la app</string>
+    <string name="app_inactive_paused_title">Volver a activar CoronaMelder</string>
     <string name="app_inactive_paused_message">Atención: la app aún no está activada. Tienes que activarla tú mismo en la app.</string>
     <string name="status_paused_headline">La app está en pausa</string>
-    <string name="paused_en_api_description"><![CDATA[Recibirás en <b>%1$s</b> una notificación para volver a activar la app]]></string>
-    <string name="paused_en_api_duration_reached">La app todavía no está activada. Debes volver a activarla tú mismo.</string>
+    <string name="paused_en_api_description"><![CDATA[Recibirás en <b>%1$s</b> una notificación para volver a activar la app.]]></string>
+    <string name="paused_en_api_duration_reached">La app todavía no está activada. Debes activarla tú mismo.</string>
     <string name="pause_confirmation_title">¿Estás seguro/a de que quieres pausar la app?</string>
     <string name="pause_confirmation_description">Mientras está en pausa, la app dejará de registrar temporalmente los encuentros con otros usuarios de la app. Tampoco recibirás una notificación si una persona con la que tuviste contacto resultó tener coronavirus.\n\nPausa la app solo en situaciones en las que los teléfonos están cerca pero no hay riesgo de contacto como, por ejemplo, al usar equipos de protección médicos.</string>
     <string name="pause_confirmation_accept_button">Sí, pausarla</string>
     <string name="pause_confirmation_decline_button">No, no pausarla</string>
     <string name="skip_confirmation_checkbox">No volver a mostrar esta pantalla</string>
-    <string name="cd_status_paused">Icono de pausa gris que indica que la app está en pausa</string>
-    <string name="duration_format_hour">%1$d horas</string>
-    <string name="duration_format_hours">%1$d horas</string>
-    <string name="duration_format_hour_and_minute">%1$d horas %2$d minutos</string>
-    <string name="duration_format_hour_and_minutes">%1$d horas %2$d minutos</string>
-    <string name="duration_format_hours_and_minute">%1$d horas %2$d minutos</string>
-    <string name="duration_format_hours_and_minutes">%1$d horas %2$d minutos</string>
-    <string name="duration_format_minute">%1$d minuto</string>
-    <string name="duration_format_minutes">%1$d minutos</string>
+    <string name="cd_status_paused">Círculo gris con símbolo de pausa que indica que la app está pausada</string>
+    <string name="duration_format_hours_and_minutes">%1$s y %2$s</string>
     <string name="lab_test_copy_key_to_clipboard">Copiada la clave GGD</string>
-    <string name="status_paused_duration_reached_headline">Se dejó de pausar la app</string>
+    <string name="status_paused_duration_reached_headline">Volver a activar la app</string>
     <plurals name="pause_duration_hours_option_plurals">
-        <item quantity="one">Pausar durante %d horas</item>
+        <item quantity="one">Pausar durante %d hora</item>
         <item quantity="other">Pausar durante %d horas</item>
+    </plurals>
+    <plurals name="duration_hours_plurals">
+        <item quantity="one">%d hora</item>
+        <item quantity="other">%d horas</item>
+    </plurals>
+    <plurals name="duration_minutes_plurals">
+        <item quantity="one">%d minuto</item>
+        <item quantity="other">%d minutos</item>
     </plurals>
 </resources>

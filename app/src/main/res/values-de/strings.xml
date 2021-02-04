@@ -209,9 +209,9 @@
     <string name="lab_test_how_does_it_work">Wie funktioniert das?</string>
     <string name="faq_notification_message">Wie erkenne ich eine Nachricht?</string>
     <string name="faq_pause">Kann ich die App anhalten?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Ja, das geht, wenn man Bluetooth deaktiviert. Dies geht über <strong>Einstellungen > Verbindungen > Bluetooth</strong>. Wenn Sie Bluetooth deaktivieren, tauscht die App keine Codes mehr aus. Ihr Telefon teilt Ihnen dann sofort mit, dass Sie die App wieder aktivieren sollen.]]></string>
-    <string name="faq_pause_paragraph_2">Möchten Sie Bluetooth eingeschaltet lassen? Sie können die App auch anhalten, indem Sie  &lt;strong&gt;Covid-19-Kontakt-Benachrichtigungen verwenden&lt;/strong&gt; vorübergehend deaktivieren. Sie können dies mithilfe der nachstehenden Schaltfläche tun. Sie erhalten nach einer Weile eine Nachricht zur erneuten Aktivierung der App.</string>
-    <string name="faq_pause_paragraph_3">Es ist jedoch in der Regel nicht ratsam, die App anzuhalten, da Sie vergessen könnten, sie wieder einzuschalten. Sie können die App jedoch in besonderen Situationen anhalten. Zum Beispiel, wenn Sie in die Nähe von (möglichen) Corona-Patienten kommen, aber sicher sind, dass Sie medizinische Schutzausrüstung tragen.</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Ja, Sie können die App vorübergehend anhalten. Wählen Sie dazu im Startbildschirm <strong>Einstellungen > App anhalten</strong>. Wenn Sie die App anhalten, werden Ihre Begegnungen vorübergehend nicht registriert. Sie erhalten auch keine Nachricht, wenn Sie in der Nähe einer Person waren, bei der später Corona festgestellt wurde.]]></string>
+    <string name="faq_pause_paragraph_2">Ist die Pause vorbei, erhalten Sie sofort die Nachricht, die App wieder zu aktivieren. Nach der Aktivierung der App können Sie noch Nachrichten über Begegnungen von vor der Pause erhalten.</string>
+    <string name="faq_pause_paragraph_3">Es ist meistens nicht ratsam, die App anzuhalten, da Sie vielleicht vergessen, sie wieder zu aktivieren. Sie können die App jedoch in besonderen Situationen anhalten. Zum Beispiel, wenn Sie in die Nähe von (möglichen) Corona-Patienten kommen, aber sicher sind, dass Sie medizinische Schutzausrüstung tragen.</string>
     <string name="faq_interoperability">Funktioniert CoronaMelder auch mit Apps aus anderen Ländern?</string>
     <string name="faq_interoperability_paragraph_1">CoronaMelder arbeitet mit einigen Apps aus anderen europäischen Ländern zusammen. Zum Beispiel mit Deutschland, Irland und Italien.</string>
     <string name="faq_interoperability_paragraph_2">Angenommen, Sie waren längere Zeit in der Nähe eines Nutzers der deutschen Corona-Warn-App. Diese Person wird in Deutschland getestet. Es stellt sich heraus, dass sie Corona hat. Wenn diese Person ihre Codes mit der deutschen Gesundheitsbehörde teilt, bekommen Sie über CoronaMelder eine Nachricht. Umgekehrt gilt dasselbe. Da die Corona-Apps miteinander zusammenarbeiten, müssen Sie nur 1 App aktiviert haben.</string>
@@ -245,7 +245,7 @@
     <string name="update_app_headline">Sie haben eine veraltete Version von CoronaMelder</string>
     <string name="update_app_description">Aktualisieren Sie die App auf Ihrem Telefon, damit CoronaMelder weiterhin gut funktioniert.</string>
     <string name="status_info_settings_title">Einstellungen</string>
-    <string name="status_info_settings_subtitle">App anhalten und mobile Daten deaktivieren</string>
+    <string name="status_info_settings_subtitle">App anhalten und mobile Daten einrichten</string>
     <string name="settings_wifi_only_title">Nur Codes über WLAN kontrollieren</string>
     <string name="settings_wifi_only_summary">CoronaMelder kontrolliert mehrmals pro Tag, ob Sie in der Nähe einer Person mit Corona waren. Wenn Sie mobile Daten deaktivieren, kontrolliert die App nur noch, wenn Sie WLAN nutzen. Ihre Begegnungen werden auch registriert, wenn Sie keine Internetverbindung haben.</string>
     <string name="faq_interop_countries">Mit welchen ausländischen Apps arbeitet CoronaMelder zusammen?</string>
@@ -265,29 +265,30 @@
     <string name="settings_pause_action_disable">App aktivieren</string>
     <string name="reminder_channel_name">Erinnerungen</string>
     <string name="reminder_channel_description">Erinnerunngen, wenn Sie die App angehalten haben</string>
-    <string name="app_inactive_paused_title">Pause vorbei</string>
-    <string name="app_inactive_paused_message">Achtung: Die App ist noch nicht aktiv. Sie müssen sie selbst wieder in der App aktivieren.</string>
+    <string name="app_inactive_paused_title">CoronaMelder wieder aktivieren</string>
+    <string name="app_inactive_paused_message">Achtung: Die App ist noch nicht aktiv. Sie müssen sie selbst in der App aktivieren.</string>
     <string name="status_paused_headline">Die App wurde angehalten.</string>
     <string name="paused_en_api_description"><![CDATA[Sie erhalten in <b>%1$s</b> eine Meldung, um die App wieder zu aktivieren.]]></string>
-    <string name="paused_en_api_duration_reached">Die App ist noch nicht aktiv. Sie müssen sie selbst wieder aktivieren.</string>
+    <string name="paused_en_api_duration_reached">CoronaMelder ist noch nicht aktiv. Sie müssen die App selbst aktivieren.</string>
     <string name="pause_confirmation_title">Sind Sie sicher, dass die App angehalten werden soll?</string>
     <string name="pause_confirmation_description">Die App registriert während der Pause vorübergehend keine Begegnungen mit anderen App-Benutzern. Sie erhalten auch keine Nachricht, wenn Sie in der Nähe einer Person waren, bei der später Corona festgestellt wurde.\n\nHalten Sie nur dann die App an, wenn Ihr Telefon in die Nähe von Telefonen anderer Personen kommt, aber keine Ansteckungsgefahr besteht. Zum Beispiel, weil medizinische Schutzausrüstung verwendet wird.</string>
     <string name="pause_confirmation_accept_button">Ja, anhalten</string>
     <string name="pause_confirmation_decline_button">Nein, nicht anhalten</string>
     <string name="skip_confirmation_checkbox">Dieses Fenster nicht mehr anzeigen</string>
-    <string name="cd_status_paused">Graues Pause-Symbol, das anzeigt, dass die App angehalten wurde</string>
-    <string name="duration_format_hour">%1$d Stunde(n)</string>
-    <string name="duration_format_hours">%1$d Stunde(n)</string>
-    <string name="duration_format_hour_and_minute">%1$d Stunde(n) %2$d Minute</string>
-    <string name="duration_format_hour_and_minutes">%1$d Stunde(n) %2$d Minuten</string>
-    <string name="duration_format_hours_and_minute">%1$d Stunde(n) %2$d Minute</string>
-    <string name="duration_format_hours_and_minutes">%1$d Stunde(n) %2$d Minute(n)</string>
-    <string name="duration_format_minute">%1$d Minute</string>
-    <string name="duration_format_minutes">%1$d Minuten</string>
+    <string name="cd_status_paused">Grauer Kreis mit Pausezeichen gibt an, dass die App angehalten wurde</string>
+    <string name="duration_format_hours_and_minutes">%1$s und %2$s</string>
     <string name="lab_test_copy_key_to_clipboard">GGD-Schlüssel kopiert</string>
-    <string name="status_paused_duration_reached_headline">Pause vorbei</string>
+    <string name="status_paused_duration_reached_headline">App wieder aktivieren</string>
     <plurals name="pause_duration_hours_option_plurals">
-        <item quantity="one">%d Stunde(n) anhalten</item>
-        <item quantity="other">%d Stunde(n) anhalten</item>
+        <item quantity="one">%d Stunde anhalten</item>
+        <item quantity="other">%d Stunden anhalten</item>
+    </plurals>
+    <plurals name="duration_hours_plurals">
+        <item quantity="one">%d Stunde</item>
+        <item quantity="other">%d Stunden</item>
+    </plurals>
+    <plurals name="duration_minutes_plurals">
+        <item quantity="one">%d Minute</item>
+        <item quantity="other">%d Minuten</item>
     </plurals>
 </resources>

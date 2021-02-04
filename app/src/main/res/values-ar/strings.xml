@@ -215,9 +215,10 @@
     <string name="lab_test_how_does_it_work">كيف يعمل هذا؟</string>
     <string name="faq_notification_message">كيف أتعرف على الإشعار؟</string>
     <string name="faq_pause">هل يمكنني إيقاف التطبيق مؤقتًا؟</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[نعم، يمكنك القيام بذلك عن طريق إيقاف تشغيل البلوتوث. يمكنك القيام بذلك من خلال الانتقال إلى <strong> الإعدادات> الاتصالات> البلوتوث </ strong>. إذا قمت بإيقاف تشغيل البلوتوث، فلن يقوم التطبيق بتبادل الرموز بعد الآن. ستتلقى فورًا إشعارًا من هاتفك لإعادة تشغيل التطبيق.]]></string>
-    <string name="faq_pause_paragraph_2">إذا كنت تريد ترك البلوتوث قيد التشغيل، فيمكنك أيضًا إيقاف التطبيق مؤقتًا عن طريق إيقاف&lt;strong&gt; استخدام تنبيهات التعرض للإصابة&lt;/strong&gt; مؤقتًا. يمكنك القيام بذلك من خلال الزر أدناه. بعد فترة، ستتلقى إشعارًا لإعادة تشغيل التطبيق.</string>
-    <string name="faq_pause_paragraph_3">إلا أنه لا يُنصح عادةً بإيقاف التطبيق مؤقتًا لأنك قد تنسى إعادة تشغيله. يمكنك إيقاف التطبيق مؤقتًا في حالات خاصة. إذا اقتربت من مرضى كورونا (محتملين) على سبيل المثال، لكنك متأكد من أنك ترتدي معدات الوقاية الطبية اللازمة.</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[نعم، يمكنك إيقاف التطبيق مؤقتًا. يمكنك القيام بذلك من الصفحة الرئيسية من خلال <strong> الإعدادات> إيقاف التطبيق مؤقتًا </ strong>. إذا قمت بإيقاف التطبيق مؤقتًا، فلن يتم تعقب أثر المخالطات مؤقتًا. لا يمكنك أيضًا تلقي إشعار إذا كنت مع شخص تبين لاحقًا أنه مصاب بكورونا.]]></string>
+    <string name="faq_pause_paragraph_2">عند انتهاء الإيقاف المؤقت، سيتم إخطارك على الفور لإعادة تشغيل التطبيق. بعد تشغيل التطبيق، لا يزال بإمكانك تلقي إشعارات المخالطات قبل إيقاف التطبيق مؤقتًا.</string>
+    <string name="faq_pause_paragraph_3">"لا يُنصح عادةً بإيقاف التطبيق مؤقتًا لأنك قد تنسى إعادة تشغيله. يمكنك إيقاف التطبيق مؤقتًا في حالات خاصة. إذا اقتربت من مرضى كورونا (محتملين) على سبيل المثال، لكنك متأكد من أنك ترتدي معدات الوقاية الطبية اللازمة.
+"</string>
     <string name="faq_interoperability">هل يعمل CoronaMelder أيضًا مع تطبيقات من دول أخرى؟</string>
     <string name="faq_interoperability_paragraph_1">يعمل CoronaMelder مع عدد من التطبيقات من دول أوروبية أخرى. من بين هذه الدول ألمانيا وأيرلندا وإيطاليا.</string>
     <string name="faq_interoperability_paragraph_2">لنفرض أنك كنت على مقربة من أحد مستخدمي تطبيق Corona-Warn-App الألماني لفترة طويلة. تم اختبار هذا الشخص في ألمانيا وتبين أنه مصاب بكورونا. إذا شارك هذا الشخص الرموز الخاصة به مع الـ GGD الألماني، فستتلقى إشعارًا عبر CoronaMelder. وعكس الشيء ينطبق أيضًا. نظرًا لأن تطبيقات كورونا تعمل معًا، فأنت تحتاج فقط إلى تشغيل تطبيق واحد.</string>
@@ -250,7 +251,7 @@
     <string name="update_app_headline">إصدار CoronaMelder هذا أصبح قديمًا.</string>
     <string name="update_app_description">حدّث التطبيق في هاتفك لكي يستمر في العمل بشكل صحيح.</string>
     <string name="status_info_settings_title">الإعدادات</string>
-    <string name="status_info_settings_subtitle">اضبط إعداداتك واستخدم خدمة تجوال البيانات</string>
+    <string name="status_info_settings_subtitle">إيقاف التطبيق مؤقتًا وضبط خدمة تجوال البيانات</string>
     <string name="settings_wifi_only_title">تحقق فقط من الرموز عبرالـ WiFi</string>
     <string name="settings_wifi_only_summary">يتحقق CoronaMelder عدة مرات في اليوم ما إذا كنت على مقربة من شخص مصاب بكورونا. إذا قمت بإيقاف تجوال البيانات، فسيقوم التطبيق بذلك فقط عند استخدام الـ WiFi. يتم تتبع الاحتكاك كذلك إذا لم يكن لديك اتصال بالإنترنت.</string>
     <string name="faq_interop_countries">ما هي التطبيقات الأجنبية التي يعمل معها CoronaMelder؟</string>
@@ -271,33 +272,42 @@
     <string name="settings_pause_action_disable">تشغيل التطبيق</string>
     <string name="reminder_channel_name">تذكير</string>
     <string name="reminder_channel_description">تذكير عندما قمت بإيقاف التطبيق مؤقتًا</string>
-    <string name="app_inactive_paused_title">انتهى الإيقاف المؤقت</string>
-    <string name="app_inactive_paused_message">" انتبه: التطبيق غير نشط بعد. يجب عليك تشغيله مرة أخرى في التطبيق."</string>
+    <string name="app_inactive_paused_title">قم بتشغيل CoronaMelder من جديد</string>
+    <string name="app_inactive_paused_message">انتبه: التطبيق غير نشط بعد. يجب عليك تشغيله مرة أخرى بنفسك.</string>
     <string name="status_paused_headline">تم إيقاف التطبيق مؤقتًا</string>
     <string name="paused_en_api_description"><![CDATA[سوف تتلقى إشعارًا بعد <b>%1$s</b> لتشغيل التطبيق من جديد]]></string>
-    <string name="paused_en_api_duration_reached">التطبيق غير نشط بعد. يجب عليك تشغيله مرة أخرى بنفسك.</string>
+    <string name="paused_en_api_duration_reached">"التطبيق غير نشط بعد. يجب عليك تشغيله مرة أخرى بنفسك. "</string>
     <string name="pause_confirmation_title">هل أنت متأكد من أنك تريد إيقاف التطبيق مؤقتًا؟</string>
     <string name="pause_confirmation_description">لا يتتبع التطبيق المصادفات مع مستخدمي التطبيق الآخرين أثناء الإيقاف المؤقت. لا يمكنك أيضًا تلقي إشعار إذا كنت مع شخص تبين لاحقًا أنه مصاب بكورونا. \n\nقم بالإيقاف المؤقت فقط في الحالات التي يكون فيها هاتفك على مقربة من هواتف الآخرين لكن لم تكن عرضه للإصابة. بسبب استخدام معدات الوقاية الطبية على سبيل المثال.</string>
     <string name="pause_confirmation_accept_button">نعم، قم بإيقاف التطبيق مؤقتًا</string>
     <string name="pause_confirmation_decline_button">كلا، لا تقم بإيقاف التشغيل مؤقتًا</string>
     <string name="skip_confirmation_checkbox">لا تقم بإظهار هذه الشاشة مرة أخرى</string>
-    <string name="cd_status_paused">رمز إيقاف مؤقت رمادي اللون يشير إلى أنه تم إيقاف التطبيق مؤقتًا</string>
-    <string name="duration_format_hour">%1$d ساعات</string>
-    <string name="duration_format_hours">%1$d ساعات</string>
-    <string name="duration_format_hour_and_minute">الساعة %1$d الدقيقة %2$d</string>
-    <string name="duration_format_hour_and_minutes">الساعة %1$d الدقيقة %2$d</string>
-    <string name="duration_format_hours_and_minute">الساعة %1$d الدقيقة %2$d</string>
-    <string name="duration_format_hours_and_minutes">الساعة %1$d الدقيقة %2$d</string>
-    <string name="duration_format_minute">%1$d دقيقة</string>
-    <string name="duration_format_minutes">%1$d دقيقة</string>
+    <string name="cd_status_paused">دائرة رمادية اللون عليها رمز الإيقاف  يشير إلى أنه تم إيقاف التطبيق مؤقتًا</string>
+    <string name="duration_format_hours_and_minutes">الساعة %1$s و%2$s</string>
     <string name="lab_test_copy_key_to_clipboard">تم نسخ رمز الـ GGD</string>
-    <string name="status_paused_duration_reached_headline">انتهى الإيقاف المؤقت</string>
+    <string name="status_paused_duration_reached_headline">قم بتشغيل التطبيق مرة أخرة</string>
     <plurals name="pause_duration_hours_option_plurals">
-        <item quantity="one">قم بالإيقاف المؤقت لمدة %d ساعات</item>
-        <item quantity="other">قم بالإيقاف المؤقت لمدة %d ساعات</item>
-        <item quantity="few">قم بالإيقاف المؤقت لمدة %d ساعات</item>
-        <item quantity="many">قم بالإيقاف المؤقت لمدة %d ساعات</item>
-        <item quantity="two">قم بالإيقاف المؤقت لمدة %d ساعات</item>
-        <item quantity="zero">قم بالإيقاف المؤقت لمدة %d ساعات</item>
+        <item quantity="one">الإيقاف مؤقتًا لمدة %d ساعة</item>
+        <item quantity="other">الإيقاف مؤقتًا لمدة %d ساعات</item>
+        <item quantity="few">الإيقاف مؤقتًا لمدة %d ساعات</item>
+        <item quantity="many">الإيقاف مؤقتًا لمدة %d ساعات</item>
+        <item quantity="two">الإيقاف مؤقتًا لمدة %d ساعات</item>
+        <item quantity="zero">الإيقاف مؤقتًا لمدة %d ساعات</item>
+    </plurals>
+    <plurals name="duration_hours_plurals">
+        <item quantity="one">%d ساعة</item>
+        <item quantity="other">%d ساعات</item>
+        <item quantity="few">%d ساعات</item>
+        <item quantity="many">%d ساعات</item>
+        <item quantity="two">%d ساعات</item>
+        <item quantity="zero">صفر</item>
+    </plurals>
+    <plurals name="duration_minutes_plurals">
+        <item quantity="one">%d دقيقة</item>
+        <item quantity="other">%d دقائق</item>
+        <item quantity="few">%d دقائق</item>
+        <item quantity="many">%d دقائق</item>
+        <item quantity="two">%d دقائق</item>
+        <item quantity="zero">%d دقائق</item>
     </plurals>
 </resources>

@@ -211,9 +211,9 @@
     <string name="lab_test_how_does_it_work">Jak to działa?</string>
     <string name="faq_notification_message">Jak rozpoznać powiadomienie?</string>
     <string name="faq_pause">Can I pause the app?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Tak, możesz to zrobić poprzez wyłączenie swojego Bluetooth. Należy przejść do <strong>Ustawienia > Połączenia > Bluetooth</strong>. Po wyłączeniu Bluetooth, aplikacja nie wymienia już żadnych kodów. Twój telefon natychmiast wyśle powiadomienie przypominające o ponownym włączeniu aplikacji.]]></string>
-    <string name="faq_pause_paragraph_2">Jeśli chciałbyś pozostawić włączony Bluetooth, możesz również wstrzymać aplikację poprzez tymczasowe wyłączenie &lt;strong&gt;Powiadomień o ekspozycji&lt;/strong&gt;. Możesz to zrobić klikając poniższy przycisk. Po chwili otrzymasz powiadomienie przypominające o ponownym włączeniu aplikacji.</string>
-    <string name="faq_pause_paragraph_3">Nie zaleca się jednak wstrzymywania aplikacji, ponieważ możesz zapomnieć o jej ponownym uruchomieniu. Aplikację można wstrzymać w szczególnych przypadkach. Na przykład jeśli znajdujesz się w pobliżu (potencjalnych) pacjentów z koronawirusem, jednak jesteś pewien, że masz na sobie środki ochronne do celów medycznych.</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Tak, możesz tymczasowo wstrzymać aplikację. Możesz to zrobić na ekranie startowym, wchodząc w <strong>Ustawienia > Połączenia > Wstrzymanie aplikacji</strong>. Jeśli wstrzymasz aplikację, spotkania tymczasowo nie będą monitorowane. Nie otrzymasz także powiadomienia, jeśli znajdowałeś się w pobliżu osoby, u której wykryto koronawirusa.]]></string>
+    <string name="faq_pause_paragraph_2">Gdy okres wstrzymania dobiegnie końca, natychmiast otrzymasz powiadomienie przypominające o ponownym włączeniu aplikacji. Po włączeniu aplikacji możesz otrzymać powiadomienia dotyczące spotkań sprzed jej wstrzymania.</string>
+    <string name="faq_pause_paragraph_3">Nie zaleca się wstrzymywania aplikacji, ponieważ możesz zapomnieć o jej ponownym uruchomieniu. Aplikację można wstrzymać w szczególnych przypadkach. Na przykład jeśli znajdujesz się w pobliżu (potencjalnych) pacjentów z koronawirusem, jednak jesteś pewien, że masz na sobie środki ochronne do celów medycznych.</string>
     <string name="faq_interoperability">Czy CoronaMelder współpracuje również z aplikacjami z innych krajów?</string>
     <string name="faq_interoperability_paragraph_1">CoronaMelder współpracuje z kilkoma aplikacjami z innych krajów europejskich m.in. z Niemiec, Irlandii i Włoch.</string>
     <string name="faq_interoperability_paragraph_2">Przypuśćmy, że przez dłuższy czas znajdowałeś się w pobliżu użytkownika niemieckiej Corona-Warn-App. Osoba ta wykonała w Niemczech test na obecność koronawirusa i uzyskała pozytywny wynik. Jeśli przekaże swoje kody niemieckiemu GGD, otrzymasz powiadomienie z CoronaMelder. Działa to tak samo w drugą stronę. Ponieważ aplikacje dotyczące koronawirusa współpracują ze sobą, wystarczy, abyś aktywował jedną aplikację.</string>
@@ -246,7 +246,7 @@
     <string name="update_app_headline">Posiadasz nieaktualną wersję alpikacji CoronaMelder</string>
     <string name="update_app_description">Zaktualizuj aplikację w swoim telefonie, aby zapewnić CoronaMelder poprawne działanie.</string>
     <string name="status_info_settings_title">Ustawienia</string>
-    <string name="status_info_settings_subtitle">Wstrzymaj aplikację i wyłącz dane komórkowe</string>
+    <string name="status_info_settings_subtitle">Wstrzymaj aplikację i zarządzaj danymi komórkowymi</string>
     <string name="settings_wifi_only_title">Sprawdzanie kodów tylko przy połączeniu wi-fi</string>
     <string name="settings_wifi_only_summary">CoronaMelder sprawdza kilka razy dziennie, czy znajdowałeś się w pobliżu zarażonej osoby. Jeśli wyłączysz dane komórkowe, aplikacja będzie to robić przy połączeniu wi-fi. Spotkania są kontrolowane również, gdy nie masz połączenia internetowego.</string>
     <string name="faq_interop_countries">Z którymi zagranicznymi aplikacjami współpracuje CoronaMelder?</string>
@@ -266,31 +266,36 @@
     <string name="settings_pause_action_disable">Włącz aplikację</string>
     <string name="reminder_channel_name">Przypomnienia</string>
     <string name="reminder_channel_description">Przypomnienia w przypadku wstrzymania aplikacji</string>
-    <string name="app_inactive_paused_title">Wstrzymanie dobiegło końca</string>
-    <string name="app_inactive_paused_message">Uwaga: aplikacja nie jest jeszcze aktwna. Musisz samodzielnie ją ponownie włączyć w aplikacji.</string>
+    <string name="app_inactive_paused_title">Ponownie włącz CoronaMelder</string>
+    <string name="app_inactive_paused_message">Uwaga: aplikacja nie jest jeszcze aktywna. Musisz samodzielnie ją włączyć w aplikacji.</string>
     <string name="status_paused_headline">Aplikacja jest wstrzymana.</string>
     <string name="paused_en_api_description"><![CDATA[Za <b>%1$s</b> otrzymasz powiadomienie przypominające o ponownym włączeniu aplikacji.]]></string>
-    <string name="paused_en_api_duration_reached">Aplikacja nie jest jeszcze aktwna. Musisz samodzielnie ją ponownie włączyć w aplikacji.</string>
+    <string name="paused_en_api_duration_reached">Aplikacja CoronaMelder nie jest jeszcze aktwna. Musisz samodzielnie ją włączyć.</string>
     <string name="pause_confirmation_title">Jesteś pewien, że chcesz wstrzymać aplikację?</string>
     <string name="pause_confirmation_description">Podczas, gdy aplikacja jest wstrzymana, spotkania z innymi użytkownikami aplikacji nie są tymczasowo monitorowane. Nie będziesz także otrzymywał powiadomień, jeśli u osoby, w pobliżu której się znajdowałeś, wykryto koronawirusa.\n\n\nWstrzymuj aplikacje wyłącznie w sytuacjach, kiedy Twój telefon znajduje się w pobliżu telefonów innych osób, jednak nie ma możliwości zarażenia się. Na przykład dzięki użyciu środków ochronnych do celów medycznych.</string>
     <string name="pause_confirmation_accept_button">Tak, wstrzymuję</string>
     <string name="pause_confirmation_decline_button">Nie, nie wstrzymuję</string>
     <string name="skip_confirmation_checkbox">Nie pokazuj tego ekranu ponownie</string>
-    <string name="cd_status_paused">Szara ikona wstrzymania wskazuje, że aplikacja jest wstrzymana</string>
-    <string name="duration_format_hour">%1$d godzin(ę/y)</string>
-    <string name="duration_format_hours">%1$d godzin(ę/y)</string>
-    <string name="duration_format_hour_and_minute">%1$d godzin(ę/y) %2$d minutę</string>
-    <string name="duration_format_hour_and_minutes">%1$d godzin(ę/y) %2$d minut(y)</string>
-    <string name="duration_format_hours_and_minute">%1$d godzin(ę/y) %2$d minutę</string>
-    <string name="duration_format_hours_and_minutes">%1$d godzin(ę/y) %2$d minut(y)</string>
-    <string name="duration_format_minute">%1$d minutę</string>
-    <string name="duration_format_minutes">%1$d minut(y)</string>
+    <string name="cd_status_paused">Szare kółko z symbolem pauzy wskazuje, że aplikacja jest wstrzymana</string>
+    <string name="duration_format_hours_and_minutes">%1$s i %2$s</string>
     <string name="lab_test_copy_key_to_clipboard">Skopiowano klucz GGD</string>
-    <string name="status_paused_duration_reached_headline">Wstrzymanie dobiegło końca</string>
+    <string name="status_paused_duration_reached_headline">Ponownie włącz aplikację</string>
     <plurals name="pause_duration_hours_option_plurals">
-        <item quantity="one">Wstrzymaj na %d godzin(ę/y)</item>
-        <item quantity="other">Wstrzymaj na %d godzin(ę/y)</item>
-        <item quantity="few">Wstrzymaj na %d godzin(ę/y)</item>
-        <item quantity="many">Wstrzymaj na %d godzin(ę/y)</item>
+        <item quantity="one">Wstrzymaj na %d godzinę</item>
+        <item quantity="other">Wstrzymaj na %d godzin</item>
+        <item quantity="few">Wstrzymaj na %d godziny</item>
+        <item quantity="many">Wstrzymaj na %d godzin</item>
+    </plurals>
+    <plurals name="duration_hours_plurals">
+        <item quantity="one">%d godzina</item>
+        <item quantity="other">%d godzin</item>
+        <item quantity="few">%d godziny</item>
+        <item quantity="many">%d godzin</item>
+    </plurals>
+    <plurals name="duration_minutes_plurals">
+        <item quantity="one">%d minuta</item>
+        <item quantity="other">%d minut</item>
+        <item quantity="few">%d minuty</item>
+        <item quantity="many">%d minut</item>
     </plurals>
 </resources>

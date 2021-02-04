@@ -211,9 +211,9 @@
     <string name="lab_test_how_does_it_work">Cum funcționează?</string>
     <string name="faq_notification_message">Cum arată o notificare?</string>
     <string name="faq_pause">Pot pune aplicația pe pauză?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Da, este posibil dezactivând semnalul Bluetooth. Faceți acest lucru prin <strong>Setări> Conexiuni >Bluetooth</strong>. Dacă dezactivați Bluetooth, aplicația nu va mai face schimb de coduri. Veți primi imediat după aceasta o notificare pentru a reactiva aplicația.]]></string>
-    <string name="faq_pause_paragraph_2">Dacă doriți să lăsați Bluetooth activat, puteți să puneți aplicația în pauză dezactivând temporar &lt;strong&gt;Notificări de expunere&lt;/strong&gt; . Puteți face acest lucru apăsând pe butonul de mai jos. După ceva timp veți primi o notificare pentru a reactiva aplicația.</string>
-    <string name="faq_pause_paragraph_3">Totuși, de cele mai multe ori, nu este recomandat să dezactivați temporar aplicația deoarece s-ar putea să uitați să o activați. Puteți dezactiva temporar aplicația în anumite situații, de exemplu, dacă vă aflați în apropierea unor (posibili) pacienți infectați cu coronavirus  dar sunteți sigur că purtați mijloace de protecție.</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Da, puteți dezactiva temporar aplicația. Faceți acest lucru prin <strong>Setări> Pauză aplicație</strong>. Dacă întrerupeți aplicația, nu se mai ține evidența întâlnirilor dvs. De asemenea, nu veți mai primi notificări dacă ați fost în apropierea unei persoane care mai târziu se dovedește a fi infectată cu coronavirus.]]></string>
+    <string name="faq_pause_paragraph_2">Când pauza s-a terminat, veți primi imediat o notificare pentru a reactiva aplicația. După ce ați activat aplicația, e posibil să primiți notificări cu privire la întâlnirile dinainte de a fi pus aplicația în pauză.</string>
+    <string name="faq_pause_paragraph_3">Nu este recomandat să dezactivați temporar aplicația deoarece s-ar putea să uitați să o activați. Puteți dezactiva temporar aplicația în situații speciale, de exemplu, dacă vă aflați în apropierea unor (posibili) pacienți infectați cu coronavirus dar sunteți sigur că purtați mijloace de protecție medicale.</string>
     <string name="faq_interoperability">Colaborează CoronaMelder și cu aplicații din alte tări?</string>
     <string name="faq_interoperability_paragraph_1">CoronaMelder colaborează cu aplicații din alte țări europene, printre care Germania, Irlanda și Italia.</string>
     <string name="faq_interoperability_paragraph_2">Să presupunem că ați fost pentru un timp mai îndelungat în apropierea unui utilizator al aplicației germane Corona-Warn-App. Această persoană este testată în Germania și reiese că este infectată cu coronavirus. Dacă acea persoană împărtășește codurile ei cu GGD-ul german (Serviciul Municipal de Sănătate), atunci veți primi prin CoronaMelder o notificare. Și invers este valabil acest lucru. Deoarece aplicațiile pentru depistare coronavirus colaborează, este suficient să aveți activată doar una dintre aplicații.</string>
@@ -246,7 +246,7 @@
     <string name="update_app_headline">Aveți o versiune veche a aplicației CoronaMelder</string>
     <string name="update_app_description">Actualizați aplicația pe telefonul dvs. pentru ca CoronaMelder să funcționeze corect în continuare.</string>
     <string name="status_info_settings_title">Configurări</string>
-    <string name="status_info_settings_subtitle">Întrerupeți aplicația și dezactivați datele celulare</string>
+    <string name="status_info_settings_subtitle">Dezactivați temporar aplicația și activați datele celulare</string>
     <string name="settings_wifi_only_title">Controlare de coduri doar prin wifi</string>
     <string name="settings_wifi_only_summary">CoronaMelder controlează de câteva ori pe zi dacă v-ați aflat în apropierea unei persoane infectată cu coronavirus. Dacă dezactivați datele celulare, aplicația va face acest lucru doar daca folosiți wifi. Întâlnirile sunt urmărite chiar dacă nu aveți legătură la internet.</string>
     <string name="faq_interop_countries">Cu ce alte aplicații străine colaborează CoronaMelder?</string>
@@ -266,30 +266,33 @@
     <string name="settings_pause_action_disable">Activarea aplicației</string>
     <string name="reminder_channel_name">Memento</string>
     <string name="reminder_channel_description">Memento-uri când ați întrerupt aplicația</string>
-    <string name="app_inactive_paused_title">Întrerupere terminată</string>
-    <string name="app_inactive_paused_message">Atenție: aplicația încă nu este activă. Trebuie să o reactivați în aplicație.</string>
+    <string name="app_inactive_paused_title">Reactivați CoronaMelder</string>
+    <string name="app_inactive_paused_message">Atenție: aplicația nu este activă. Trebuie să o reactivați în aplicație.</string>
     <string name="status_paused_headline">Aplicația este întreruptă</string>
-    <string name="paused_en_api_description"><![CDATA[Primiți o notificare peste <b>%1$s</b> pentru a reactiva aplicația]]></string>
-    <string name="paused_en_api_duration_reached">Aplicația încă nu este activă. Trebuie să o reactivați.</string>
+    <string name="paused_en_api_description"><![CDATA[Primiți o notificare peste <b>%1$s</b> pentru a reactiva aplicația.]]></string>
+    <string name="paused_en_api_duration_reached">CoronaMelder nu este activă. Trebuie să o reactivați.</string>
     <string name="pause_confirmation_title">Sunteți sigur că doriți să întrerupeți aplicația?</string>
     <string name="pause_confirmation_description">În timpul întreruperii, aplicația nu ține evidența întâlnirilor cu alți utilizatori ai aplicației. De asemenea, nu puteți primi nicio notificare  daca v-ați aflat în apropierea unei persoane care mai târziu se dovedește a fi infectată cu coronavirus. \n\n\nÎntrerupeți aplicația doar în situațiile în care telefonul dvs. se află în apropierea altora, dar nu există riscul infectării, de exemplu, când folosiți materiale medicale de protecție.</string>
     <string name="pause_confirmation_accept_button">Da, întrerupeți</string>
     <string name="pause_confirmation_decline_button">Nu, nu întrerupeți</string>
     <string name="skip_confirmation_checkbox">Nu mai afișați acest ecran</string>
-    <string name="cd_status_paused">Pictogram pauză gri care arată că aplicația este întreruptă</string>
-    <string name="duration_format_hour">%1$d oră/e</string>
-    <string name="duration_format_hours">%1$d oră/e</string>
-    <string name="duration_format_hour_and_minute">%1$d oră/e %2$d minut</string>
-    <string name="duration_format_hour_and_minutes">%1$d oră/e %2$d minute</string>
-    <string name="duration_format_hours_and_minute">%1$d oră/e %2$d minut</string>
-    <string name="duration_format_hours_and_minutes">%1$d oră/e %2$d minute</string>
-    <string name="duration_format_minute">%1$d minut</string>
-    <string name="duration_format_minutes">%1$d minute</string>
+    <string name="cd_status_paused">Cerc gri cu pictogramă \"pauză\" care arată că aplicația este dezactivată temporar</string>
+    <string name="duration_format_hours_and_minutes">%1$s și %2$s</string>
     <string name="lab_test_copy_key_to_clipboard">Cheia GGD copiată</string>
-    <string name="status_paused_duration_reached_headline">Întreruperea e terminată</string>
+    <string name="status_paused_duration_reached_headline">Reactivați aplicația</string>
     <plurals name="pause_duration_hours_option_plurals">
-        <item quantity="one">Întrerupeți pentru %d ore</item>
+        <item quantity="one">Întrerupeți pentru %d oră</item>
         <item quantity="other">Întrerupeți pentru %d ore</item>
         <item quantity="few">Întrerupeți pentru %d ore</item>
+    </plurals>
+    <plurals name="duration_hours_plurals">
+        <item quantity="one">%d oră</item>
+        <item quantity="other">%d ore</item>
+        <item quantity="few">%d ore</item>
+    </plurals>
+    <plurals name="duration_minutes_plurals">
+        <item quantity="one">%d minut</item>
+        <item quantity="other">%d minute</item>
+        <item quantity="few">%d minute</item>
     </plurals>
 </resources>

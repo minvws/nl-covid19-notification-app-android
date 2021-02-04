@@ -209,9 +209,9 @@
     <string name="lab_test_how_does_it_work">Hoe wurket dat?</string>
     <string name="faq_notification_message">Wêr kin ik in melding oan werkenne?</string>
     <string name="faq_pause">Kin ik de app ûnderbrekke?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Ja dat kin troch dyn bluetooth út te setten. Dat dochst fia <strong>Instellingen > Verbindingen > Bluetooth</strong>. Ast dyn bluetooth útsetst, wikselet de app gjin koades mear út. Do krigest dêrnei daliks in melding fan dyn telefoan om de app wer oan te setten.]]></string>
-    <string name="faq_pause_paragraph_2">Ast de bluetooth oanstean litte wolst, kinst de app ek ûnderbrekke troch &lt;strong&gt;Blootstellingsmeldingen gebruiken&lt;/strong&gt; tydlik út te setten. Dat dochst mei de knop hjirûnder. Do krigest nei in skoftke in melding om de app wer oan te setten.</string>
-    <string name="faq_pause_paragraph_3">Dochs is it meastal net oan te rieden om de app te ûnderbrekken, omdatst mooglik ferjitst om \'m wer oan te setten. Do kinst de app wol yn bysûndere situaasjes ûnderbrekke. Bygelyks ast yn \'e buert komst fan (mooglike) koroanapasjinten, mar der wis fan bist datst medyske beskermingsmiddels draachst.</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Ja, do kinst de app tydlik op pauze sette. Dat dochst op it startskerm fia <strong>Ynstellings > App pauzearje </strong>. Ast de app op pauze setst, wurde dyn moetings tydlik net byhâlden. Ek kinst gjin melding krije ast by immen yn \'e buert west hast dy\'t letter koroana blykt ta hawwen.]]></string>
+    <string name="faq_pause_paragraph_2">As de pauze ôfrûn is, krigest daliks in melding om de app wer oan te setten. Neidatst de app oanset hast, kinst noch meldings krije fan moetings foardatst de app op pauze settest.</string>
+    <string name="faq_pause_paragraph_3">It is meastal net oan te rieden om de app op pauze te setten, omdatst mooglik ferjitst om \'m wer oan te setten. Do kinst de app yn bysûndere situaasjes wol op pauze sette. Bygelyks ast yn \'e buert komst fan (mooglike) koroanapasjinten, mar der wis fan bist datst medyske beskermingsmiddels draachst.</string>
     <string name="faq_interoperability">Wurket Coronamelder ek gear mei apps út oare lannen?</string>
     <string name="faq_interoperability_paragraph_1">CoronaMelder wurket gear mei in tal apps út oare Europeeske lannen. Under oare Dútslân, Ierlân en Italië</string>
     <string name="faq_interoperability_paragraph_2">Stel, do hast in langer skoft yn \'e buert west by in brûker fan de Dútske Corona-Warn-Ap. Dy persoan wurdt yn Dútslân test en it docht bliken dat hy/sy koroana hat. As dy persoan syn/har koades mei de Dútske GGD dielt, dan krigesto fia CoronaMelder in melding. Oarsom jildt itselde. Omdat de koroana-apps ûnderling gearwurkje, hoechst dus mar ien app oanstean te hawwen.</string>
@@ -244,7 +244,7 @@
     <string name="update_app_headline">Do hast in ferâldere fersy fan CoronaMelder</string>
     <string name="update_app_description">Update de app op dyn telefoan om te soargjen dat CoronaMelder goed wurket.</string>
     <string name="status_info_settings_title">Ynstellingen</string>
-    <string name="status_info_settings_subtitle">App pauzearje en mobile data útsette</string>
+    <string name="status_info_settings_subtitle">App pauzearje en mobile data ynstelle</string>
     <string name="settings_wifi_only_title">Allinne koades kontrolearje fia wifi</string>
     <string name="settings_wifi_only_summary">CoronaMelder kontrolearret in pear kear deis oftst yn de buert west hast fan immen mei koroana. Ast dyn mobile data útsetst, docht de app dat allinne noch ast wifi brûkst. Dyn moetings wurde ek byhâlden ast gjin ynternetferbining hast.</string>
     <string name="faq_interop_countries">Mei hokker bûtenlânske apps wurket CoronaMelder gear?</string>
@@ -264,29 +264,30 @@
     <string name="settings_pause_action_disable">App oansette</string>
     <string name="reminder_channel_name">Yn it sin bringers</string>
     <string name="reminder_channel_description">Yn it sin bringers ast de app op pauze set hast</string>
-    <string name="app_inactive_paused_title">Pauze ôfrûn</string>
-    <string name="app_inactive_paused_message">Tink derom: de app is noch net aktyf. Do moatst dy yn de app sels wer oansette.</string>
+    <string name="app_inactive_paused_title">Set CoronaMelder wer oan</string>
+    <string name="app_inactive_paused_message">Tink derom: de app is noch net aktyf. Do moatst dy yn de app sels oansette.</string>
     <string name="status_paused_headline">De app stiet op pauze</string>
-    <string name="paused_en_api_description"><![CDATA[Do krigest oer <b>%1$s</b> in melding om de app wer oan te setten]]></string>
-    <string name="paused_en_api_duration_reached">De app is noch net aktyf. Do moatst dy sels wer oansette.</string>
+    <string name="paused_en_api_description"><![CDATA[Do krigest oer <b>%1$s</b> in melding om de app wer oan te setten.]]></string>
+    <string name="paused_en_api_duration_reached">CoronaMelder is noch net aktyf. Do moatst dy sels oansette.</string>
     <string name="pause_confirmation_title">Bist der wis fan datst de app op pauze sette wolst?</string>
     <string name="pause_confirmation_description">As de app op pauze stiet hâldt de app tydlik gjin moetings mei oare app-brûkers by. Ek kinst gjin melding krije ast by immen yn \'e buert west hast dy\'t letter koroana blykt te hawwen.\n\nSet de app allinne op pauze yn situaasjes dat dyn telefoan ticht by telefoans fan oaren komt, mar der gjin kâns op besmetting is. Bygelyks troch it brûken fan medyske beskermingsmiddels.</string>
     <string name="pause_confirmation_accept_button">Ja, set op pauze</string>
     <string name="pause_confirmation_decline_button">Nee, set net op pauze</string>
     <string name="skip_confirmation_checkbox">Dit skerm net mear sjen litte</string>
-    <string name="cd_status_paused">Griis pauze-ikoan dat oanjout dat de app op pauze stiet</string>
-    <string name="duration_format_hour">%1$d oere</string>
-    <string name="duration_format_hours">%1$d oeren</string>
-    <string name="duration_format_hour_and_minute">%1$d oere %2$d minút</string>
-    <string name="duration_format_hour_and_minutes">%1$d oere %2$d minuten</string>
-    <string name="duration_format_hours_and_minute">%1$d oeren %2$d minút</string>
-    <string name="duration_format_hours_and_minutes">%1$d oeren %2$d minuten</string>
-    <string name="duration_format_minute">%1$d minút</string>
-    <string name="duration_format_minutes">%1$d minuten</string>
+    <string name="cd_status_paused">Griis rûntsje mei pauzeteken dat oanjout dat de app op pauze stiet</string>
+    <string name="duration_format_hours_and_minutes">%1$s en %2$s</string>
     <string name="lab_test_copy_key_to_clipboard">GGD-kaai kopiearre</string>
-    <string name="status_paused_duration_reached_headline">De pauze is ôfrûn</string>
+    <string name="status_paused_duration_reached_headline">Set de app wer oan</string>
     <plurals name="pause_duration_hours_option_plurals">
-        <item quantity="one">Set foar %d oeren op pauze</item>
-        <item quantity="other">Set foar %d oeren op pauze</item>
+        <item quantity="one">Pauzearje foar %d oere</item>
+        <item quantity="other">Pauzearje foar %d oeren</item>
+    </plurals>
+    <plurals name="duration_hours_plurals">
+        <item quantity="one">%d oere</item>
+        <item quantity="other">%d oeren</item>
+    </plurals>
+    <plurals name="duration_minutes_plurals">
+        <item quantity="one">%d minút</item>
+        <item quantity="other">%d minuten</item>
     </plurals>
 </resources>
