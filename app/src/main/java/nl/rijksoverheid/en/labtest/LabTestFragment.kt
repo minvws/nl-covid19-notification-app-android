@@ -31,6 +31,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItemId
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import timber.log.Timber
 
 private const val RC_REQUEST_UPLOAD_CONSENT = 1
@@ -78,7 +79,7 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
         binding.content.adapter = adapter
 
         adapter.setOnItemClickListener { _, _ ->
-            findNavController().navigate(
+            findNavController().navigateCatchingErrors(
                 LabTestFragmentDirections.actionHowItWorks(FAQItemId.UPLOAD_KEYS),
                 FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
             )

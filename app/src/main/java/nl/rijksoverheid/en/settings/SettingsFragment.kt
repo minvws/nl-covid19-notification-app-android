@@ -7,7 +7,6 @@
 package nl.rijksoverheid.en.settings
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -21,15 +20,15 @@ import nl.rijksoverheid.en.databinding.FragmentSettingsBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.getBackStackEntryObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.PausedStateTimer
 import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
     private val settingsViewModel: SettingsViewModel by viewModels()
 
-    private var pausedDurationTimer: CountDownTimer? = null
+    private var pausedDurationTimer: PausedStateTimer? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,23 +69,24 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             val now = LocalDateTime.now()
             if (it is Settings.PausedState.Paused && it.pausedUntil.isAfter(now)) {
                 pausedDurationTimer?.cancel()
-                pausedDurationTimer = object : CountDownTimer(now.until(it.pausedUntil, ChronoUnit.MILLIS), 5000) {
-                    override fun onTick(p0: Long) {
-                        binding.viewModel = settingsViewModel
-                    }
-                    override fun onFinish() {
-                        binding.viewModel = settingsViewModel
-                    }
-                }.start()
+                pausedDurationTimer = PausedStateTimer(it) {
+                    binding.viewModel = settingsViewModel
+                }
+                pausedDurationTimer?.startTimer()
             } else if (it !is Settings.PausedState.Paused && pausedDurationTimer != null) {
-                pausedDurationTimer?.cancel()
+                pausedDurationTimer?.cancelTimer()
                 pausedDurationTimer = null
             }
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        pausedDurationTimer?.startTimer()
+    }
+
     override fun onPause() {
-        pausedDurationTimer?.cancel()
+        pausedDurationTimer?.cancelTimer()
         pausedDurationTimer = null
         super.onPause()
     }

@@ -46,6 +46,7 @@ import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
+import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.OkHttpClient
@@ -69,6 +70,7 @@ import retrofit2.Response
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.security.KeyStore
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDate
@@ -78,6 +80,8 @@ import java.util.concurrent.atomic.AtomicReference
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
+import javax.net.ssl.TrustManagerFactory
+import javax.net.ssl.X509TrustManager
 
 private val MOCK_RISK_PARAMS_RESPONSE = MockResponse().setBody(
     """
@@ -506,7 +510,8 @@ class ExposureNotificationsRepositoryTest {
                 api = api,
                 cdnService = service,
                 preferences = sharedPrefs,
-                signatureValidation = true
+                signatureValidation = true,
+                signatureValidator = ResponseSignatureValidator(createTrustManager())
             )
 
             val result =
@@ -563,8 +568,12 @@ class ExposureNotificationsRepositoryTest {
                 putStringSet("exposure_key_sets", emptySet())
             }
 
-            val repository =
-                createRepository(api = api, cdnService = service, signatureValidation = true)
+            val repository = createRepository(
+                api = api,
+                cdnService = service,
+                signatureValidation = true,
+                signatureValidator = ResponseSignatureValidator(createTrustManager())
+            )
 
             val result =
                 repository.processExposureKeySets(
@@ -1888,6 +1897,7 @@ class ExposureNotificationsRepositoryTest {
         clock: Clock = Clock.systemDefaultZone(),
         lifecycleOwner: LifecycleOwner = TestLifecycleOwner(Lifecycle.State.STARTED),
         signatureValidation: Boolean = false,
+        signatureValidator: ResponseSignatureValidator = ResponseSignatureValidator(),
         scheduler: BackgroundWorkScheduler = fakeScheduler,
         appConfigManager: AppConfigManager = AppConfigManager(cdnService)
     ): ExposureNotificationsRepository {
@@ -1902,9 +1912,20 @@ class ExposureNotificationsRepositoryTest {
             appConfigManager,
             clock,
             lifecycleOwner = lifecycleOwner,
-            signatureValidation = signatureValidation
+            signatureValidation = signatureValidation,
+            signatureValidator = signatureValidator
         )
     }
+
+    private fun createTrustManager() = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()).apply {
+        val keyStore = KeyStore.getInstance(KeyStore.getDefaultType())
+        // root key is on the device
+        keyStore.load(
+            ExposureNotificationsRepositoryTest::class.java.getResourceAsStream("/nl-root.jks"),
+            "test".toCharArray()
+        )
+        init(keyStore)
+    }.trustManagers[0] as X509TrustManager
 }
 
 private class TestLifecycleOwner(private val state: Lifecycle.State) : LifecycleOwner {

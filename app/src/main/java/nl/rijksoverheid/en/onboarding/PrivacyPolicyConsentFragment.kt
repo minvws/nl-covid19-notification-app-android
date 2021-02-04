@@ -24,6 +24,7 @@ import androidx.transition.TransitionInflater
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentPrivacyPolicyConsentBinding
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
 class PrivacyPolicyConsentFragment : BaseFragment(R.layout.fragment_privacy_policy_consent) {
     private val onboardingViewModel: OnboardingViewModel by viewModels()
@@ -47,7 +48,7 @@ class PrivacyPolicyConsentFragment : BaseFragment(R.layout.fragment_privacy_poli
         binding.onboardingViewModel = onboardingViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.nextButtonClickListener = View.OnClickListener {
-            findNavController().navigate(
+            findNavController().navigateCatchingErrors(
                 PrivacyPolicyConsentFragmentDirections.actionNext(),
                 FragmentNavigatorExtras(
                     binding.appbar to binding.appbar.transitionName
