@@ -14,7 +14,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.location.LocationManager
-import android.util.Base64
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import androidx.core.location.LocationManagerCompat
@@ -47,6 +46,7 @@ import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
+import nl.rijksoverheid.en.enapi.nearby.RiskModel
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
@@ -62,17 +62,18 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
-import java.security.SecureRandom
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 import nl.rijksoverheid.en.api.BuildConfig as ApiBuildConfig
 
+@Deprecated("KEY_LAST_TOKEN_ID isn't being used anymore except for removing it from preferences")
 private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
@@ -317,8 +318,7 @@ class ExposureNotificationsRepository(
 
         val result = exposureNotificationsApi.provideDiagnosisKeys(
             validFiles.map { it.file!! },
-            configuration,
-            createToken()
+            configuration
         )
         return when (result) {
             is DiagnosisKeysResult.Success -> {
@@ -361,12 +361,6 @@ class ExposureNotificationsRepository(
                 currentProcessedIds.intersect(manifest.exposureKeysSetIds)
             )
         }
-    }
-
-    private fun createToken(): String {
-        val bytes = ByteArray(32)
-        SecureRandom().nextBytes(bytes)
-        return Base64.encodeToString(bytes, 0)
     }
 
     private suspend fun getConfigurationFromManifest(manifest: Manifest): ExposureConfiguration {
@@ -506,25 +500,6 @@ class ExposureNotificationsRepository(
         }
     }
 
-    private fun exposureToken(): Flow<String?> = callbackFlow {
-        val listener =
-            SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-                if (key == KEY_LAST_TOKEN_ID) {
-                    offer(sharedPreferences.getString(key, null))
-                }
-            }
-
-        val preferences = preferences.getPreferences()
-
-        preferences.registerOnSharedPreferenceChangeListener(listener)
-
-        offer(preferences.getString(KEY_LAST_TOKEN_ID, null))
-
-        awaitClose {
-            preferences.unregisterOnSharedPreferenceChangeListener(listener)
-        }
-    }
-
     fun lastKeyProcessed(): Flow<Long?> = callbackFlow {
         val listener =
             SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
@@ -566,12 +541,31 @@ class ExposureNotificationsRepository(
      * @return true if exposures are reported, false otherwise
      */
     fun getLastExposureDate(): Flow<LocalDate?> {
-        return exposureToken().distinctUntilChanged().map {
-            val timestamp = preferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L)
-            if (timestamp > 0) {
+        fun getSharedPrefsLongAsLocalDate(sharedPreferences: SharedPreferences, key: String): LocalDate? {
+            val timestamp = sharedPreferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L)
+            return if (timestamp > 0) {
                 LocalDate.ofEpochDay(timestamp)
             } else {
                 null
+            }
+        }
+
+        return callbackFlow {
+            val listener =
+                SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+                    if (key == KEY_LAST_TOKEN_EXPOSURE_DATE) {
+                        offer(getSharedPrefsLongAsLocalDate(sharedPreferences, key))
+                    }
+                }
+
+            val preferences = preferences.getPreferences()
+
+            preferences.registerOnSharedPreferenceChangeListener(listener)
+
+            offer(getSharedPrefsLongAsLocalDate(preferences, KEY_LAST_TOKEN_EXPOSURE_DATE))
+
+            awaitClose {
+                preferences.unregisterOnSharedPreferenceChangeListener(listener)
             }
         }
     }
@@ -592,38 +586,59 @@ class ExposureNotificationsRepository(
         }
     }
 
-    suspend fun addExposure(token: String): AddExposureResult {
-        val testToken = BuildConfig.FEATURE_DEBUG_NOTIFICATION && token == DEBUG_TOKEN
-        val summary = exposureNotificationsApi.getSummary(token)
+    suspend fun addExposure(testExposure: Boolean = false): AddExposureResult {
+        Timber.d("New exposure detected")
 
-        Timber.d("New exposure for token $token with summary $summary")
+        val summaries = exposureNotificationsApi.getDailySummaries()
+        val sumRiskScores = exposureNotificationsApi.getDailyRiskScores(RiskModel.ScoreType.SUM)
+        val maxRiskScores = exposureNotificationsApi.getDailyRiskScores(RiskModel.ScoreType.MAX)
 
-        val currentDaysSinceLastExposure = preferences.getString(KEY_LAST_TOKEN_ID, null)
-            ?.let { exposureNotificationsApi.getSummary(it)?.daysSinceLastExposure }
-        val newDaysSinceLastExposure = if (testToken) {
-            5 // TODO make dynamic from debug screen
-        } else {
-            summary?.daysSinceLastExposure
+        if (BuildConfig.DEBUG) {
+            summaries?.forEach {
+                Timber.d("DailySummaryData: ${it.summaryData}")
+            }
+            var sumRiskScoresInfo = "Manual calculated SumScores: "
+            sumRiskScores.forEach {
+                sumRiskScoresInfo += "{daysSinceEpoch:${it.key}, scoreSum:${it.value}}, "
+            }
+            Timber.d(sumRiskScoresInfo)
+            var maxRiskScoresInfo = "Manual calculated MaxScores: "
+            maxRiskScores.forEach {
+                maxRiskScoresInfo += "{daysSinceEpoch:${it.key}, maximumScore:${it.value}}, "
+            }
+            Timber.d(maxRiskScoresInfo)
         }
 
         val minRiskScore = preferences.getInt(KEY_MIN_RISK_SCORE, 0)
+        val riskySummaries = summaries?.filter {
+            it.summaryData.maximumScore > minRiskScore
+        }
 
-        if (!testToken && (summary?.matchedKeyCount ?: 0 == 0 || summary?.maximumRiskScore ?: 0 < minRiskScore)) {
+        val currentDaysSinceEpoch = if (preferences.contains(KEY_LAST_TOKEN_EXPOSURE_DATE)) {
+            preferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, -1)
+        } else {
+            null
+        }
+
+        val newDaysSinceEpoch = if (testExposure) {
+            LocalDate.now(clock).minusDays(5).toEpochDay()
+        } else {
+            riskySummaries?.maxByOrNull { it.daysSinceEpoch }?.daysSinceEpoch?.toLong()
+        }
+
+        if (!testExposure && riskySummaries.isNullOrEmpty()) {
             Timber.d("Exposure has no matches or does not meet required risk score")
             return AddExposureResult.Processed
         }
 
-        return if (newDaysSinceLastExposure != null &&
-            (currentDaysSinceLastExposure == null || newDaysSinceLastExposure < currentDaysSinceLastExposure)
+        return if (newDaysSinceEpoch != null &&
+            (currentDaysSinceEpoch == null || newDaysSinceEpoch > currentDaysSinceEpoch)
         ) {
+            val nowSinceEpoch = LocalDate.now(ZoneId.of("UTC")).toEpochDay()
+            val newDaysSinceLastExposure = (nowSinceEpoch - newDaysSinceEpoch).toInt()
             // save new exposure
             preferences.edit {
-                putString(KEY_LAST_TOKEN_ID, token)
-                putLong(
-                    KEY_LAST_TOKEN_EXPOSURE_DATE,
-                    LocalDate.now(clock)
-                        .minusDays(newDaysSinceLastExposure.toLong()).toEpochDay()
-                )
+                putLong(KEY_LAST_TOKEN_EXPOSURE_DATE, newDaysSinceEpoch)
             }
             AddExposureResult.Notify(newDaysSinceLastExposure)
         } else {

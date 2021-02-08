@@ -16,7 +16,7 @@ import nl.rijksoverheid.en.AddExposureResult
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 
-private const val KEY_TOKEN = "token"
+private const val KEY_TEST_EXPOSURE = "test_exposure"
 
 class ExposureNotificationJob(
     context: Context,
@@ -26,8 +26,8 @@ class ExposureNotificationJob(
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        val token = inputData.getString(KEY_TOKEN)!!
-        val result = repository.addExposure(token)
+        val testExposure = inputData.getBoolean(KEY_TEST_EXPOSURE, false)
+        val result = repository.addExposure(testExposure)
         if (result is AddExposureResult.Notify) {
             notificationsRepository.showExposureNotification(result.daysSinceExposure)
             RemindExposureNotificationWorker.schedule(applicationContext)
@@ -36,11 +36,11 @@ class ExposureNotificationJob(
     }
 
     companion object {
-        fun showNotification(context: Context, token: String) {
+        fun showNotification(context: Context, testExposure: Boolean) {
             val request = OneTimeWorkRequestBuilder<ExposureNotificationJob>()
                 .setInputData(
                     Data.Builder()
-                        .putString(KEY_TOKEN, token)
+                        .putBoolean(KEY_TEST_EXPOSURE, testExposure)
                         .build()
                 ).build()
 

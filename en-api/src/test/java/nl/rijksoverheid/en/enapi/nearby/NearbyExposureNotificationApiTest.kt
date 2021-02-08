@@ -462,7 +462,6 @@ class NearbyExposureNotificationApiTest {
         val status = api.provideDiagnosisKeys(
             listOf(file),
             ExposureConfiguration.ExposureConfigurationBuilder().build(),
-            "test"
         )
 
         // THEN
@@ -494,7 +493,6 @@ class NearbyExposureNotificationApiTest {
                 val status = api.provideDiagnosisKeys(
                     listOf(file),
                     ExposureConfiguration.ExposureConfigurationBuilder().build(),
-                    "test"
                 )
 
                 // THEN
@@ -530,7 +528,6 @@ class NearbyExposureNotificationApiTest {
                 val status = api.provideDiagnosisKeys(
                     listOf(file),
                     ExposureConfiguration.ExposureConfigurationBuilder().build(),
-                    "test"
                 )
 
                 // THEN

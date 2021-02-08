@@ -12,6 +12,8 @@ import android.content.Intent
 import androidx.annotation.Keep
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
+import com.google.android.gms.nearby.exposurenotification.DailySummary
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
@@ -178,21 +180,27 @@ class NearbyExposureNotificationApi(
      *
      * @param files the list of files to process. The files will be deleted after processing
      * @param configuration the configuration to use for matching
-     * @param token token that will be returned as [ExposureNotificationClient.EXTRA_TOKEN] when a match occurs
      * @return the result
      */
     override suspend fun provideDiagnosisKeys(
         files: List<File>,
         configuration: ExposureConfiguration,
-        token: String
     ): DiagnosisKeysResult {
         persistExposureConfiguration(configuration)
         return suspendCoroutine { c ->
-            // TODO keep compatible with v1 if we can
+            val daysToInfectiousness = mutableMapOf<Int, Int>()
+            for (i in -14..14) {
+                when (i) {
+                    in -5..-3 -> daysToInfectiousness[i] = Infectiousness.STANDARD
+                    in -2..5 -> daysToInfectiousness[i] = Infectiousness.HIGH
+                    in 6..10 -> daysToInfectiousness[i] = Infectiousness.STANDARD
+                    else -> daysToInfectiousness[i] = Infectiousness.NONE
+                }
+            }
             client.setDiagnosisKeysDataMapping(
                 DiagnosisKeysDataMapping.DiagnosisKeysDataMappingBuilder()
                     //TODO set this to the correct mapping if days_since_onset is supplied
-                    .setDaysSinceOnsetToInfectiousness(emptyMap())
+                    .setDaysSinceOnsetToInfectiousness(daysToInfectiousness)
                     .setReportTypeWhenMissing(ReportType.CONFIRMED_TEST)
                     .setInfectiousnessWhenDaysSinceOnsetMissing(Infectiousness.STANDARD).build()
             ).continueWith {
@@ -250,12 +258,39 @@ class NearbyExposureNotificationApi(
         }
     }
 
+    @Suppress("BlockingMethodInNonBlockingContext")
+    private suspend fun loadDailySummariesConfig() = withContext(Dispatchers.IO) {
+        FileInputStream(File(context.filesDir, "exposure_config")).use {
+            //val persisted =
+            //    moshi.adapter(PersistedConfig::class.java).fromJson(Okio.buffer(Okio.source(it)))
+            //        ?: throw IllegalStateException("config not persisted")
+            //TODO replace with our risk params
+            DailySummariesConfig.DailySummariesConfigBuilder()
+                // Don't filter based on ExposureWindow scores.
+                .setMinimumWindowScore(0.0)
+                // Include exposures for only the last 10 days.
+                .setDaysSinceExposureThreshold(10)
+                // Upweight attenuations indicating very close exposures.
+                // Downweight attenuations where distance is less certain.
+                .setAttenuationBuckets(listOf(56, 62, 70), listOf(1.0, 1.0, 0.3, 0.0))
+                // Double High Infectiousness weight and drop when none
+                .setInfectiousnessWeight(Infectiousness.STANDARD, 1.0)
+                .setInfectiousnessWeight(Infectiousness.HIGH, 2.0)
+                // Include all report types.
+                .setReportTypeWeight(ReportType.CONFIRMED_CLINICAL_DIAGNOSIS, 1.0)
+                .setReportTypeWeight(ReportType.CONFIRMED_TEST, 1.0)
+                .setReportTypeWeight(ReportType.SELF_REPORT, 1.0)
+                .build()
+        }
+    }
+
     /**
      * Get the [ExposureSummary] by token
      * @param token the token passed to [provideDiagnosisKeys] and from [ExposureNotificationClient.EXTRA_TOKEN]
      * @return the summary or null if there's no match or an error occurred
      */
-    override suspend fun getSummary(token: String): ExposureSummary? {
+    @Deprecated("Should be replaced by getDailySummaries")
+    suspend fun getSummary(token: String): ExposureSummary? {
         return if (token == ExposureNotificationClient.TOKEN_A) {
             val windows = getExposureWindows()
             LegacyRiskModel(
@@ -274,6 +309,30 @@ class NearbyExposureNotificationApi(
                 }
             }
         }
+    }
+
+    /**
+     * Get the [ExposureSummary] by token
+     * @return a list of DailySummary objects corresponding to the last 14 days of exposure data or null if there's no match or an error occurred
+     */
+    override suspend fun getDailySummaries(): List<DailySummary>? {
+        val config = loadDailySummariesConfig()
+        return suspendCoroutine { c ->
+            client.getDailySummaries(config).addOnSuccessListener {
+                c.resume(it)
+            }.addOnFailureListener {
+                Timber.e(it, "Error getting DailySummaries")
+                // TODO determine if we want bubble up errors here; this is used
+                // when processing the notification and at that point the API should never return
+                // null. If it does or throws an error, all we can do is retry or give up
+                c.resume(null)
+            }
+        }
+    }
+
+    override suspend fun getDailyRiskScores(scoreType: RiskModel.ScoreType): Map<Long, Double> {
+        return RiskModel(loadDailySummariesConfig())
+            .getDailyRiskScores(getExposureWindows(), scoreType)
     }
 
     private suspend fun getExposureWindows(): List<ExposureWindow> = suspendCoroutine { c ->

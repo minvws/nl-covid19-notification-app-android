@@ -10,15 +10,21 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
+import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.job.ExposureNotificationJob
 import timber.log.Timber
 
 class ExposureNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == ExposureNotificationClient.ACTION_EXPOSURE_STATE_UPDATED) {
-            val token = intent.getStringExtra(ExposureNotificationClient.EXTRA_TOKEN)
-                ?: ExposureNotificationClient.TOKEN_A
-            ExposureNotificationJob.showNotification(context, token)
+            @Suppress("DEPRECATION")
+            val testExposure = intent.getStringExtra(ExposureNotificationClient.EXTRA_TOKEN)?.let {
+                val isDebugToken = it == ExposureNotificationsRepository.DEBUG_TOKEN
+                if (!isDebugToken)
+                    Timber.w("Received unexpected token (should only be used in v1 of EN framework")
+                isDebugToken
+            } ?: false
+            ExposureNotificationJob.showNotification(context, testExposure)
         } else if (intent.action == ExposureNotificationClient.ACTION_EXPOSURE_NOT_FOUND) {
             Timber.d("No exposure new detected")
         }
