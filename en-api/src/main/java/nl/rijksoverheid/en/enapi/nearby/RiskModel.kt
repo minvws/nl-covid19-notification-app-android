@@ -21,15 +21,15 @@ class RiskModel(private val config: DailySummariesConfig) {
         val perDayScore = mutableMapOf<Long, Double>()
         windows.forEach { window ->
             val date = window.dateMillisSinceEpoch
-            perDayScore[date] = when(scoreType) {
-                ScoreType.SUM -> perDayScore.getOrElse(date, { 0.0 }) + getWindowScore(window)
-                ScoreType.MAX -> max(perDayScore.getOrElse(date, { 0.0 }), getWindowScore(window))
+            val windowScore = getWindowScore(window)
+            if (windowScore >= config.minimumWindowScore) {
+                perDayScore[date] = when (scoreType) {
+                    ScoreType.SUM -> perDayScore.getOrElse(date, { 0.0 }) + windowScore
+                    ScoreType.MAX -> max(perDayScore.getOrElse(date, { 0.0 }), windowScore)
+                }
             }
         }
-
-        return perDayScore.filterValues {
-            it >= config.minimumWindowScore
-        }
+        return perDayScore
     }
 
     /**
