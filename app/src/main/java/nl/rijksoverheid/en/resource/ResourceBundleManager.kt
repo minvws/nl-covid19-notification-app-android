@@ -28,13 +28,11 @@ class ResourceBundleManager(
     private var resourceBundle: ResourceBundle? = null
 
     private suspend fun loadResourceBundle(): ResourceBundle {
-        val bundle = if (resourceBundle == null) {
-            getResourceBundleFromCacheOrNetwork() ?: loadDefaultResourceBundle()
-        } else {
-            resourceBundle
+        return resourceBundle ?: run {
+            val bundle = getResourceBundleFromCacheOrNetwork() ?: loadDefaultResourceBundle()
+            resourceBundle = bundle
+            bundle
         }
-        this.resourceBundle = bundle
-        return bundle!!
     }
 
     private fun loadDefaultResourceBundle(): ResourceBundle {
