@@ -6,10 +6,13 @@
  */
 package nl.rijksoverheid.en.items
 
+import android.net.Uri
 import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import android.text.style.TextAppearanceSpan
 import android.text.style.URLSpan
 import android.view.View
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.text.getSpans
 import androidx.core.view.ViewCompat
 import com.xwray.groupie.Item
@@ -24,6 +27,7 @@ class ResourceBundleParagraphItem(
 
     override fun bind(viewBinding: ItemParagraphBinding, position: Int) {
         ViewCompat.enableAccessibleClickableSpanSupport(viewBinding.content)
+        viewBinding.content.movementMethod = LinkMovementMethod.getInstance()
         viewBinding.text = fromHtmlWithCustomReplacements(
             viewBinding.root.context,
             text.replace("\n", "<br/>")
@@ -34,7 +38,7 @@ class ResourceBundleParagraphItem(
                 setSpan(
                     object : URLSpan(it.url) {
                         override fun onClick(widget: View) {
-                            viewBinding.root.performClick()
+                            CustomTabsIntent.Builder().build().launchUrl(widget.context, Uri.parse(url))
                         }
                     },
                     start,
@@ -42,7 +46,10 @@ class ResourceBundleParagraphItem(
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 setSpan(
-                    TextAppearanceSpan(viewBinding.root.context, R.style.TextAppearance_App_Link),
+                    TextAppearanceSpan(
+                        viewBinding.root.context,
+                        R.style.TextAppearance_App_Link
+                    ),
                     start,
                     end,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
