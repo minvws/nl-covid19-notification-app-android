@@ -9,35 +9,22 @@ package nl.rijksoverheid.en.enapi.nearby
 
 import android.content.Context
 import android.content.Intent
-import androidx.annotation.Keep
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DailySummary
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
-import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes
-import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.google.android.gms.nearby.exposurenotification.ExposureWindow
-import com.google.android.gms.nearby.exposurenotification.Infectiousness
-import com.google.android.gms.nearby.exposurenotification.ReportType
-import com.squareup.moshi.JsonClass
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
-import okio.Okio
 import timber.log.Timber
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -49,8 +36,6 @@ class NearbyExposureNotificationApi(
     private val client: ExposureNotificationClient
 ) :
     ExposureNotificationApi {
-
-    private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
     /**
      * Get the status of the exposure notifications api
@@ -179,30 +164,16 @@ class NearbyExposureNotificationApi(
      * Provide the diagnostics keys for exposure notifications matching
      *
      * @param files the list of files to process. The files will be deleted after processing
-     * @param configuration the configuration to use for matching
+     * @param diagnosisKeysDataMapping
      * @return the result
      */
     override suspend fun provideDiagnosisKeys(
         files: List<File>,
-        configuration: ExposureConfiguration,
+        diagnosisKeysDataMapping: DiagnosisKeysDataMapping,
     ): DiagnosisKeysResult {
-        persistExposureConfiguration(configuration)
         return suspendCoroutine { c ->
-            val daysToInfectiousness = mutableMapOf<Int, Int>()
-            for (i in -14..14) {
-                when (i) {
-                    in -5..-3 -> daysToInfectiousness[i] = Infectiousness.STANDARD
-                    in -2..5 -> daysToInfectiousness[i] = Infectiousness.HIGH
-                    in 6..10 -> daysToInfectiousness[i] = Infectiousness.STANDARD
-                    else -> daysToInfectiousness[i] = Infectiousness.NONE
-                }
-            }
             client.setDiagnosisKeysDataMapping(
-                DiagnosisKeysDataMapping.DiagnosisKeysDataMappingBuilder()
-                    //TODO set this to the correct mapping if days_since_onset is supplied
-                    .setDaysSinceOnsetToInfectiousness(daysToInfectiousness)
-                    .setReportTypeWhenMissing(ReportType.CONFIRMED_TEST)
-                    .setInfectiousnessWhenDaysSinceOnsetMissing(Infectiousness.STANDARD).build()
+                diagnosisKeysDataMapping
             ).continueWith {
                 client.provideDiagnosisKeys(files).apply {
                     addOnSuccessListener {
@@ -226,97 +197,11 @@ class NearbyExposureNotificationApi(
         }
     }
 
-    @Suppress("BlockingMethodInNonBlockingContext")
-    private suspend fun persistExposureConfiguration(config: ExposureConfiguration) =
-        withContext(Dispatchers.IO) {
-            val persistedConfig = PersistedConfig(
-                config.daysSinceLastExposureScores.toList(),
-                config.transmissionRiskScores.toList(),
-                config.minimumRiskScore,
-                config.durationScores.toList(),
-                config.attenuationScores.toList()
-            )
-            FileOutputStream(File(context.filesDir, "exposure_config")).use {
-                val sink = Okio.buffer(Okio.sink(it))
-                moshi.adapter(PersistedConfig::class.java).toJson(sink, persistedConfig)
-                sink.flush()
-            }
-        }
-
-    @Suppress("BlockingMethodInNonBlockingContext")
-    private suspend fun loadExposureConfiguration() = withContext(Dispatchers.IO) {
-        FileInputStream(File(context.filesDir, "exposure_config")).use {
-            val persisted =
-                moshi.adapter(PersistedConfig::class.java).fromJson(Okio.buffer(Okio.source(it)))
-                    ?: throw IllegalStateException("config not persisted")
-            ExposureConfiguration.ExposureConfigurationBuilder()
-                .setDurationScores(*persisted.durationScores.toIntArray())
-                .setTransmissionRiskScores(*persisted.transmissionRiskScores.toIntArray())
-                .setMinimumRiskScore(persisted.minimumRiskScore)
-                .setDaysSinceLastExposureScores(*persisted.daysSinceLastExposureScores.toIntArray())
-                .setAttenuationScores(*persisted.attenuationScores.toIntArray()).build()
-        }
-    }
-
-    @Suppress("BlockingMethodInNonBlockingContext")
-    private suspend fun loadDailySummariesConfig() = withContext(Dispatchers.IO) {
-        FileInputStream(File(context.filesDir, "exposure_config")).use {
-            //val persisted =
-            //    moshi.adapter(PersistedConfig::class.java).fromJson(Okio.buffer(Okio.source(it)))
-            //        ?: throw IllegalStateException("config not persisted")
-            //TODO replace with our risk params
-            DailySummariesConfig.DailySummariesConfigBuilder()
-                // Don't filter based on ExposureWindow scores.
-                .setMinimumWindowScore(0.0)
-                // Include exposures for only the last 10 days.
-                .setDaysSinceExposureThreshold(10)
-                // Upweight attenuations indicating very close exposures.
-                // Downweight attenuations where distance is less certain.
-                .setAttenuationBuckets(listOf(56, 62, 70), listOf(1.0, 1.0, 0.3, 0.0))
-                // Double High Infectiousness weight and drop when none
-                .setInfectiousnessWeight(Infectiousness.STANDARD, 1.0)
-                .setInfectiousnessWeight(Infectiousness.HIGH, 2.0)
-                // Include all report types.
-                .setReportTypeWeight(ReportType.CONFIRMED_CLINICAL_DIAGNOSIS, 1.0)
-                .setReportTypeWeight(ReportType.CONFIRMED_TEST, 1.0)
-                .setReportTypeWeight(ReportType.SELF_REPORT, 1.0)
-                .build()
-        }
-    }
-
     /**
-     * Get the [ExposureSummary] by token
-     * @param token the token passed to [provideDiagnosisKeys] and from [ExposureNotificationClient.EXTRA_TOKEN]
-     * @return the summary or null if there's no match or an error occurred
-     */
-    @Deprecated("Should be replaced by getDailySummaries")
-    suspend fun getSummary(token: String): ExposureSummary? {
-        return if (token == ExposureNotificationClient.TOKEN_A) {
-            val windows = getExposureWindows()
-            LegacyRiskModel(
-                loadExposureConfiguration()
-            ).getSummary(windows)
-        } else {
-            suspendCoroutine { c ->
-                client.getExposureSummary(token).addOnSuccessListener {
-                    c.resume(it)
-                }.addOnFailureListener {
-                    Timber.e(it, "Error getting ExposureSummary")
-                    // TODO determine if we want bubble up errors here; this is used
-                    // when processing the notification and at that point the API should never return
-                    // null. If it does or throws an error, all we can do is retry or give up
-                    c.resume(null)
-                }
-            }
-        }
-    }
-
-    /**
-     * Get the [ExposureSummary] by token
+     * Get the [DailySummary]s
      * @return a list of DailySummary objects corresponding to the last 14 days of exposure data or null if there's no match or an error occurred
      */
-    override suspend fun getDailySummaries(): List<DailySummary>? {
-        val config = loadDailySummariesConfig()
+    override suspend fun getDailySummaries(config: DailySummariesConfig): List<DailySummary>? {
         return suspendCoroutine { c ->
             client.getDailySummaries(config).addOnSuccessListener {
                 c.resume(it)
@@ -330,8 +215,8 @@ class NearbyExposureNotificationApi(
         }
     }
 
-    override suspend fun getDailyRiskScores(scoreType: RiskModel.ScoreType): Map<Long, Double> {
-        return RiskModel(loadDailySummariesConfig())
+    override suspend fun getDailyRiskScores(config: DailySummariesConfig, scoreType: RiskModel.ScoreType): Map<Long, Double> {
+        return RiskModel(config)
             .getDailyRiskScores(getExposureWindows(), scoreType)
     }
 
@@ -372,12 +257,3 @@ private fun ApiException.getMostSpecificStatusCode(): Int {
     return statusCode
 }
 
-@JsonClass(generateAdapter = true)
-@Keep
-internal class PersistedConfig(
-    val daysSinceLastExposureScores: List<Int>,
-    val transmissionRiskScores: List<Int>,
-    val minimumRiskScore: Int,
-    val durationScores: List<Int>,
-    val attenuationScores: List<Int>
-)

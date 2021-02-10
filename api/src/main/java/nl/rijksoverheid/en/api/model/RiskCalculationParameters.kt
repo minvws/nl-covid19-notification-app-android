@@ -11,10 +11,12 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class RiskCalculationParameters(
-    @Json(name = "minimumRiskScore") val minimumRiskScore: Int,
-    @Json(name = "attenuationScores") val attenuationScores: List<Int>,
-    @Json(name = "daysSinceLastExposureScores") val daysSinceLastExposureScores: List<Int>,
-    @Json(name = "durationScores") val durationScores: List<Int>,
-    @Json(name = "transmissionRiskScores") val transmissionRiskScores: List<Int>,
-    @Json(name = "durationAtAttenuationThresholds") val durationAtAttenuationThresholds: List<Int>
+    @Json(name = "reportTypeWeights") val reportTypeWeights: List<Double>,
+    @Json(name = "infectiousnessWeights") val infectiousnessWeights: List<Double>,
+    @Json(name = "attenuationBucketThresholdDb") val attenuationBucketThresholdDb: List<Int>,
+    @Json(name = "attenuationBucketWeights") val attenuationBucketWeights: List<Double>,
+    @Json(name = "daysSinceExposureThreshold") val daysSinceExposureThreshold: Int,
+    @Json(name = "minimumWindowScore") val minimumWindowScore: Double,
+    @Json(name = "minimumRiskScore") val minimumRiskScore: Double,
+    @Json(name = "daysSinceOnsetToInfectiousness") val daysSinceOnsetToInfectiousness: List<Int>
 )

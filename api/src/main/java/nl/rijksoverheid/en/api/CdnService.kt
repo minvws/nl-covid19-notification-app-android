@@ -33,7 +33,10 @@ interface CdnService {
 
     @GET("v3/riskcalculationparameters/{id}")
     @SignedResponse
-    suspend fun getRiskCalculationParameters(@Path("id") id: String): RiskCalculationParameters
+    suspend fun getRiskCalculationParameters(
+        @Path("id") id: String,
+        @Tag cacheStrategy: CacheStrategy? = null
+    ): RiskCalculationParameters
 
     @GET("v3/appconfig/{id}")
     @SignedResponse

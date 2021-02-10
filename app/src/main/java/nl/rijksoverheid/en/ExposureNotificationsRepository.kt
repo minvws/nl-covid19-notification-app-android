@@ -20,7 +20,10 @@ import androidx.core.location.LocationManagerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
+import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
+import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
+import com.google.android.gms.nearby.exposurenotification.Infectiousness
+import com.google.android.gms.nearby.exposurenotification.ReportType
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -36,9 +39,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
+import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
@@ -304,7 +309,7 @@ class ExposureNotificationsRepository(
         }
 
         val configuration = try {
-            getConfigurationFromManifest(manifest)
+            api.getRiskCalculationParameters(manifest.riskCalculationParametersId)
         } catch (ex: IOException) {
             Timber.e(ex, "Error fetching configuration")
             return ProcessExposureKeysResult.Error(ex)
@@ -312,13 +317,9 @@ class ExposureNotificationsRepository(
 
         Timber.d("Processing ${validFiles.size} files")
 
-        preferences.edit {
-            putInt(KEY_MIN_RISK_SCORE, configuration.minimumRiskScore)
-        }
-
         val result = exposureNotificationsApi.provideDiagnosisKeys(
             validFiles.map { it.file!! },
-            configuration
+            getDiagnosisKeysMapping(configuration)
         )
         return when (result) {
             is DiagnosisKeysResult.Success -> {
@@ -363,17 +364,33 @@ class ExposureNotificationsRepository(
         }
     }
 
-    private suspend fun getConfigurationFromManifest(manifest: Manifest): ExposureConfiguration {
-        val riskCalculationParameters =
-            api.getRiskCalculationParameters(manifest.riskCalculationParametersId)
-        return ExposureConfiguration.ExposureConfigurationBuilder()
-            .setDurationAtAttenuationThresholds(*riskCalculationParameters.durationAtAttenuationThresholds.toIntArray())
-            .setMinimumRiskScore(riskCalculationParameters.minimumRiskScore)
-            .setTransmissionRiskScores(*riskCalculationParameters.transmissionRiskScores.toIntArray())
-            .setDurationScores(*riskCalculationParameters.durationScores.toIntArray())
-            .setAttenuationScores(*riskCalculationParameters.attenuationScores.toIntArray())
-            .setDaysSinceLastExposureScores(*riskCalculationParameters.daysSinceLastExposureScores.toIntArray())
-            .build()
+    private fun getDailySummariesConfig(riskCalculationParameters: RiskCalculationParameters): DailySummariesConfig {
+        return DailySummariesConfig.DailySummariesConfigBuilder()
+            .setMinimumWindowScore(riskCalculationParameters.minimumWindowScore)
+            .setDaysSinceExposureThreshold(riskCalculationParameters.daysSinceExposureThreshold)
+            .setAttenuationBuckets(
+                riskCalculationParameters.attenuationBucketThresholdDb,
+                riskCalculationParameters.attenuationBucketWeights
+            ).apply {
+                riskCalculationParameters.infectiousnessWeights.forEachIndexed { infectiousness, weight ->
+                    setInfectiousnessWeight(infectiousness, weight)
+                }
+                riskCalculationParameters.reportTypeWeights.forEachIndexed { reportType, weight ->
+                    setReportTypeWeight(reportType, weight)
+                }
+            }.build()
+    }
+
+    private fun getDiagnosisKeysMapping(riskCalculationParameters: RiskCalculationParameters) : DiagnosisKeysDataMapping {
+        val daysToInfectiousness = riskCalculationParameters.daysSinceOnsetToInfectiousness.mapIndexed { index, infectiousness ->
+            val day = index - 14
+            day to infectiousness
+        }.toMap()
+
+        return DiagnosisKeysDataMapping.DiagnosisKeysDataMappingBuilder()
+            .setDaysSinceOnsetToInfectiousness(daysToInfectiousness)
+            .setReportTypeWhenMissing(ReportType.CONFIRMED_TEST)
+            .setInfectiousnessWhenDaysSinceOnsetMissing(Infectiousness.STANDARD).build()
     }
 
     private suspend fun writeExposureKeyFile(
@@ -589,9 +606,11 @@ class ExposureNotificationsRepository(
     suspend fun addExposure(testExposure: Boolean = false): AddExposureResult {
         Timber.d("New exposure detected")
 
-        val summaries = exposureNotificationsApi.getDailySummaries()
-        val sumRiskScores = exposureNotificationsApi.getDailyRiskScores(RiskModel.ScoreType.SUM)
-        val maxRiskScores = exposureNotificationsApi.getDailyRiskScores(RiskModel.ScoreType.MAX)
+        val riskCalculationParameters = getCachedRiskCalculationParameters()
+        val dailySummariesConfig = getDailySummariesConfig(riskCalculationParameters)
+        val summaries = exposureNotificationsApi.getDailySummaries(dailySummariesConfig)
+        val sumRiskScores = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig, RiskModel.ScoreType.SUM)
+        val maxRiskScores = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig, RiskModel.ScoreType.MAX)
 
         if (BuildConfig.DEBUG) {
             summaries?.forEach {
@@ -609,7 +628,7 @@ class ExposureNotificationsRepository(
             Timber.d(maxRiskScoresInfo)
         }
 
-        val minRiskScore = preferences.getInt(KEY_MIN_RISK_SCORE, 0)
+        val minRiskScore = riskCalculationParameters.minimumRiskScore
         val riskySummaries = summaries?.filter {
             it.summaryData.maximumScore > minRiskScore
         }
@@ -644,6 +663,13 @@ class ExposureNotificationsRepository(
         } else {
             AddExposureResult.Processed
         }
+    }
+
+    suspend fun getCachedRiskCalculationParameters(): RiskCalculationParameters {
+        return api.getRiskCalculationParameters(
+            api.getManifest(CacheStrategy.CACHE_ONLY).riskCalculationParametersId,
+            CacheStrategy.CACHE_ONLY
+        )
     }
 }
 

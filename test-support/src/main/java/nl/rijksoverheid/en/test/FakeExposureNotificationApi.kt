@@ -6,7 +6,9 @@
  */
 package nl.rijksoverheid.en.test
 
+import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DailySummary
+import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
@@ -35,12 +37,15 @@ open class FakeExposureNotificationApi :
 
     override suspend fun provideDiagnosisKeys(
         files: List<File>,
-        configuration: ExposureConfiguration,
+        diagnosisKeysDataMapping: DiagnosisKeysDataMapping
     ): DiagnosisKeysResult = DiagnosisKeysResult.Success
 
-    override suspend fun getDailySummaries(): List<DailySummary>? = null
+    override suspend fun getDailySummaries(config: DailySummariesConfig): List<DailySummary>? = null
 
-    override suspend fun getDailyRiskScores(scoreType: RiskModel.ScoreType): Map<Long, Double> {
+    override suspend fun getDailyRiskScores(
+        config: DailySummariesConfig,
+        scoreType: RiskModel.ScoreType)
+    : Map<Long, Double> {
         TODO("Not yet implemented")
     }
 
