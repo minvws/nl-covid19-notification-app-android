@@ -655,5 +655,11 @@ class NearbyExposureNotificationApiTest {
 
         override fun getPackageConfiguration(): Task<PackageConfiguration> =
             Tasks.forException(IllegalStateException())
+
+        override fun requestPreAuthorizedTemporaryExposureKeyHistory(): Task<Void> =
+            Tasks.forException(IllegalStateException())
+
+        override fun requestPreAuthorizedTemporaryExposureKeyRelease(): Task<Void> =
+            Tasks.forException(IllegalStateException())
     }
 }
