@@ -54,12 +54,6 @@ import retrofit2.Response
 @RunWith(AndroidJUnit4::class)
 class HowItWorksFragmentTest : BaseInstrumentationTest() {
 
-    companion object {
-        @ClassRule
-        @JvmField
-        val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
-    }
-
     @Before
     fun setup() {
         Intents.init()

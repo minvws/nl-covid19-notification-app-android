@@ -48,19 +48,15 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.ClassRule
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import retrofit2.Response
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 
 @Suppress("UNCHECKED_CAST")
 @RunWith(AndroidJUnit4::class)
 class EnableApiFragmentTest : BaseInstrumentationTest() {
-
-    companion object {
-        @ClassRule
-        @JvmField
-        val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
-    }
 
     @Before
     fun setup() {

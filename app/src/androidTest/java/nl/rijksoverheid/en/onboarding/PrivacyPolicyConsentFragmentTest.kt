@@ -31,12 +31,6 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class PrivacyPolicyConsentFragmentTest : BaseInstrumentationTest() {
 
-    companion object {
-        @ClassRule
-        @JvmField
-        val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
-    }
-
     @Test
     fun testPrivacyPolicyConsentClickingContainer() {
         val context = ApplicationProvider.getApplicationContext<Context>()

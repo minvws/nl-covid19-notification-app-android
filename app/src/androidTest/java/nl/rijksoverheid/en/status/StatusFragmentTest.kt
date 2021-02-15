@@ -64,11 +64,6 @@ import java.time.temporal.TemporalUnit
 @Suppress("UNCHECKED_CAST")
 @RunWith(AndroidJUnit4::class)
 class StatusFragmentTest : BaseInstrumentationTest() {
-    companion object {
-        @ClassRule
-        @JvmField
-        val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
-    }
 
     private lateinit var preferencesFactory: suspend () -> SharedPreferences
 

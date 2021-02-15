@@ -6,4 +6,15 @@
  */
 package nl.rijksoverheid.en
 
-abstract class BaseInstrumentationTest
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
+import org.junit.Rule
+
+abstract class BaseInstrumentationTest {
+
+    @get:Rule
+    val disableAnimationsRule = DisableAnimationsRule()
+
+    @get:Rule
+    val taskExecutorRule = InstantTaskExecutorRule()
+}

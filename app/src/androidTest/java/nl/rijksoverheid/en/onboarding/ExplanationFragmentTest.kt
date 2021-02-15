@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.onboarding
 
 import android.content.Context
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -24,17 +25,12 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.test.withFragment
 import org.junit.Assert.assertEquals
 import org.junit.ClassRule
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class ExplanationFragmentTest : BaseInstrumentationTest() {
-
-    companion object {
-        @ClassRule
-        @JvmField
-        val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
-    }
 
     @Test
     fun testExplanationStep1To2() {

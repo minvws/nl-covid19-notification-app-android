@@ -53,12 +53,6 @@ import retrofit2.Response
 @RunWith(AndroidJUnit4::class)
 class HowItWorksDetailFragmentTest : BaseInstrumentationTest() {
 
-    companion object {
-        @ClassRule
-        @JvmField
-        val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
-    }
-
     private val context = ApplicationProvider.getApplicationContext<Context>()
     private val notificationsPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
