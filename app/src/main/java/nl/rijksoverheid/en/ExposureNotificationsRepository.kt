@@ -85,7 +85,6 @@ private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
 private const val KEY_NOTIFICATIONS_ENABLED_TIMESTAMP = "notifications_enabled_timestamp"
 private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
 private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
-private const val KEY_MIN_RISK_SCORE = "min_risk_score"
 
 class ExposureNotificationsRepository(
     private val context: Context,
