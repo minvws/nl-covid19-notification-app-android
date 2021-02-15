@@ -9,8 +9,6 @@ package nl.rijksoverheid.en.test
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DailySummary
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
-import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
-import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
@@ -44,10 +42,11 @@ open class FakeExposureNotificationApi :
 
     override suspend fun getDailyRiskScores(
         config: DailySummariesConfig,
-        scoreType: RiskModel.ScoreType)
-    : Map<Long, Double> {
-        TODO("Not yet implemented")
-    }
+        scoreType: RiskModel.ScoreType
+    ):
+        Map<Long, Double> {
+            TODO("Not yet implemented")
+        }
 
     override fun deviceSupportsLocationlessScanning(): Boolean = false
 }

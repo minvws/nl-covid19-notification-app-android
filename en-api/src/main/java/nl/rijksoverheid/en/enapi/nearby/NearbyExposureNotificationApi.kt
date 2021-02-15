@@ -1,9 +1,8 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
 package nl.rijksoverheid.en.enapi.nearby
 
@@ -224,6 +223,8 @@ class NearbyExposureNotificationApi(
         client.exposureWindows.addOnSuccessListener {
             c.resume(it)
         }.addOnFailureListener {
+            Timber.e(it, "Error getting ExposureWindows")
+            // TODO determine if we want bubble up errors here.
             c.resume(emptyList())
         }
     }
@@ -256,4 +257,3 @@ private fun ApiException.getMostSpecificStatusCode(): Int {
     }
     return statusCode
 }
-

@@ -23,7 +23,6 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.Infectiousness
-import com.google.android.gms.nearby.exposurenotification.ReportType
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -373,7 +372,9 @@ class ExposureNotificationsRepository(
                 riskCalculationParameters.attenuationBucketWeights
             ).apply {
                 riskCalculationParameters.infectiousnessWeights.forEachIndexed { infectiousness, weight ->
-                    setInfectiousnessWeight(infectiousness, weight)
+                    // Skip the value for Infectiousness.NONE, this will trigger a (IllegalArgumentException: Incorrect value of infectiousness)
+                    if (infectiousness != Infectiousness.NONE)
+                        setInfectiousnessWeight(infectiousness, weight)
                 }
                 riskCalculationParameters.reportTypeWeights.forEachIndexed { reportType, weight ->
                     setReportTypeWeight(reportType, weight)
@@ -381,16 +382,16 @@ class ExposureNotificationsRepository(
             }.build()
     }
 
-    private fun getDiagnosisKeysMapping(riskCalculationParameters: RiskCalculationParameters) : DiagnosisKeysDataMapping {
-        val daysToInfectiousness = riskCalculationParameters.daysSinceOnsetToInfectiousness.mapIndexed { index, infectiousness ->
-            val day = index - 14
-            day to infectiousness
+    private fun getDiagnosisKeysMapping(riskCalculationParameters: RiskCalculationParameters): DiagnosisKeysDataMapping {
+        val daysToInfectiousness = riskCalculationParameters.daysSinceOnsetToInfectiousness.map {
+            it.daysSinceOnsetOfSymptoms to it.infectiousness
         }.toMap()
 
         return DiagnosisKeysDataMapping.DiagnosisKeysDataMappingBuilder()
             .setDaysSinceOnsetToInfectiousness(daysToInfectiousness)
-            .setReportTypeWhenMissing(ReportType.CONFIRMED_TEST)
-            .setInfectiousnessWhenDaysSinceOnsetMissing(Infectiousness.STANDARD).build()
+            .setReportTypeWhenMissing(riskCalculationParameters.reportTypeWhenMissing)
+            .setInfectiousnessWhenDaysSinceOnsetMissing(riskCalculationParameters.infectiousnessWhenDaysSinceOnsetMissing)
+            .build()
     }
 
     private suspend fun writeExposureKeyFile(

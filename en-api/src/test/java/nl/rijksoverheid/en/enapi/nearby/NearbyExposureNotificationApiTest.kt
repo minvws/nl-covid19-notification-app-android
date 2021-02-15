@@ -28,7 +28,10 @@ import com.google.android.gms.nearby.exposurenotification.ExposureNotificationSt
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes
 import com.google.android.gms.nearby.exposurenotification.ExposureSummary
 import com.google.android.gms.nearby.exposurenotification.ExposureWindow
+import com.google.android.gms.nearby.exposurenotification.Infectiousness
 import com.google.android.gms.nearby.exposurenotification.PackageConfiguration
+import com.google.android.gms.nearby.exposurenotification.ReportType
+import com.google.android.gms.nearby.exposurenotification.ScanInstance
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -40,7 +43,6 @@ import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -52,6 +54,8 @@ import org.robolectric.annotation.Config
 import org.robolectric.shadow.api.Shadow
 import org.robolectric.shadows.ShadowPackageManager
 import java.io.File
+import java.time.LocalDate
+import java.time.ZoneId
 
 private val FAKE_SETTINGS_COMPONENT =
     ComponentName("com.example", "com.example.FakeSettingsActivity")
@@ -61,6 +65,22 @@ private val FAKE_SETTINGS_COMPONENT =
 class NearbyExposureNotificationApiTest {
 
     private lateinit var context: Context
+
+    private val dailySummariesConfig = DailySummariesConfig.DailySummariesConfigBuilder()
+        .setMinimumWindowScore(0.0)
+        .setDaysSinceExposureThreshold(10)
+        .setAttenuationBuckets(listOf(56, 62, 70), listOf(1.0, 1.0, 0.3, 0.0))
+        .setInfectiousnessWeight(Infectiousness.STANDARD, 1.0)
+        .setInfectiousnessWeight(Infectiousness.HIGH, 2.0)
+        .setReportTypeWeight(ReportType.CONFIRMED_CLINICAL_DIAGNOSIS, 1.0)
+        .setReportTypeWeight(ReportType.CONFIRMED_TEST, 1.0)
+        .setReportTypeWeight(ReportType.SELF_REPORT, 1.0)
+        .build()
+
+    private val diagnosisKeysDataMapping = DiagnosisKeysDataMapping.DiagnosisKeysDataMappingBuilder()
+        .setDaysSinceOnsetToInfectiousness((-14..14).map { it to Infectiousness.STANDARD }.toMap())
+        .setReportTypeWhenMissing(ReportType.CONFIRMED_TEST)
+        .setInfectiousnessWhenDaysSinceOnsetMissing(Infectiousness.STANDARD).build()
 
     @Before
     fun setup() {
@@ -445,14 +465,10 @@ class NearbyExposureNotificationApiTest {
                 context,
                 object :
                     FakeExposureNotificationsClient() {
-                    override fun provideDiagnosisKeys(
-                        files: List<File>,
-                        config: ExposureConfiguration,
-                        token: String
-                    ): Task<Void> {
-                        if (token != "test") {
-                            throw AssertionError("Incorrect token: $token")
-                        }
+                    override fun provideDiagnosisKeys(files: List<File>): Task<Void> {
+                        return Tasks.forResult(null)
+                    }
+                    override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping?): Task<Void> {
                         return Tasks.forResult(null)
                     }
                 }
@@ -461,7 +477,7 @@ class NearbyExposureNotificationApiTest {
         // WHEN
         val status = api.provideDiagnosisKeys(
             listOf(file),
-            ExposureConfiguration.ExposureConfigurationBuilder().build(),
+            diagnosisKeysDataMapping,
         )
 
         // THEN
@@ -480,11 +496,12 @@ class NearbyExposureNotificationApiTest {
                     context,
                     object :
                         FakeExposureNotificationsClient() {
-                        override fun provideDiagnosisKeys(
-                            files: List<File>,
-                            config: ExposureConfiguration,
-                            token: String
-                        ): Task<Void> = Tasks.forException(exception)
+                        override fun provideDiagnosisKeys(files: List<File>): Task<Void> {
+                            return Tasks.forException(exception)
+                        }
+                        override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping?): Task<Void> {
+                            return Tasks.forResult(null)
+                        }
                     }
                 )
 
@@ -492,7 +509,7 @@ class NearbyExposureNotificationApiTest {
                 // WHEN
                 val status = api.provideDiagnosisKeys(
                     listOf(file),
-                    ExposureConfiguration.ExposureConfigurationBuilder().build(),
+                    diagnosisKeysDataMapping,
                 )
 
                 // THEN
@@ -515,11 +532,12 @@ class NearbyExposureNotificationApiTest {
                     context,
                     object :
                         FakeExposureNotificationsClient() {
-                        override fun provideDiagnosisKeys(
-                            files: List<File>,
-                            config: ExposureConfiguration,
-                            token: String
-                        ): Task<Void> = Tasks.forException(exception)
+                        override fun provideDiagnosisKeys(files: List<File>): Task<Void> {
+                            return Tasks.forException(exception)
+                        }
+                        override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping?): Task<Void> {
+                            return Tasks.forResult(null)
+                        }
                     }
                 )
 
@@ -527,7 +545,7 @@ class NearbyExposureNotificationApiTest {
                 // WHEN
                 val status = api.provideDiagnosisKeys(
                     listOf(file),
-                    ExposureConfiguration.ExposureConfigurationBuilder().build(),
+                    diagnosisKeysDataMapping,
                 )
 
                 // THEN
@@ -539,38 +557,80 @@ class NearbyExposureNotificationApiTest {
         }
 
     @Test
-    fun `getSummary returns the ExposureSummary`() = runBlocking {
+    fun `getDailyRiskScores MAX returns the MAX daily risk scores`() = runBlocking {
         // GIVEN
-        val summary = ExposureSummary.ExposureSummaryBuilder().build()
-        val api =
-            NearbyExposureNotificationApi(
-                context,
-                object :
-                    FakeExposureNotificationsClient() {
-                    override fun getExposureSummary(token: String): Task<ExposureSummary> {
-                        if (token != "test") {
-                            throw AssertionError("Incorrect token: $token")
-                        }
-                        return Tasks.forResult(summary)
-                    }
+        val date = LocalDate.now()
+        val exposureWindows = mutableListOf(
+            ExposureWindow.Builder().setDateMillisSinceEpoch(
+                date.atStartOfDay(ZoneId.of("UTC"))
+                    .toInstant()
+                    .toEpochMilli()
+            ).setInfectiousness(Infectiousness.STANDARD)
+                .setScanInstances(
+                    listOf(
+                        ScanInstance.Builder()
+                            .setSecondsSinceLastScan(600)
+                            .setTypicalAttenuationDb(80).build()
+                    )
+                ).build()
+        )
+        val api = NearbyExposureNotificationApi(
+            context,
+            object : FakeExposureNotificationsClient() {
+                override fun getExposureWindows(): Task<MutableList<ExposureWindow>> {
+                    return Tasks.forResult(exposureWindows)
                 }
-            )
+            }
+        )
 
         // WHEN
-        val result = api.getSummary("test")
+        val result = api.getDailyRiskScores(dailySummariesConfig, RiskModel.ScoreType.MAX)
 
-        assertEquals(summary, result)
+        assertEquals(RiskModel(dailySummariesConfig).getDailyRiskScores(exposureWindows, RiskModel.ScoreType.MAX), result)
     }
 
     @Test
-    fun `getSummary with error returns null`() = runBlocking {
+    fun `getDailyRiskScores SUM returns the SUM daily risk scores`() = runBlocking {
+        // GIVEN
+        val date = LocalDate.now()
+        val exposureWindows = mutableListOf(
+            ExposureWindow.Builder().setDateMillisSinceEpoch(
+                date.atStartOfDay(ZoneId.of("UTC"))
+                    .toInstant()
+                    .toEpochMilli()
+            ).setInfectiousness(Infectiousness.STANDARD)
+                .setScanInstances(
+                    listOf(
+                        ScanInstance.Builder()
+                            .setSecondsSinceLastScan(600)
+                            .setTypicalAttenuationDb(80).build()
+                    )
+                ).build()
+        )
+        val api = NearbyExposureNotificationApi(
+            context,
+            object : FakeExposureNotificationsClient() {
+                override fun getExposureWindows(): Task<MutableList<ExposureWindow>> {
+                    return Tasks.forResult(exposureWindows)
+                }
+            }
+        )
+
+        // WHEN
+        val result = api.getDailyRiskScores(dailySummariesConfig, RiskModel.ScoreType.SUM)
+
+        assertEquals(RiskModel(dailySummariesConfig).getDailyRiskScores(exposureWindows, RiskModel.ScoreType.SUM), result)
+    }
+
+    @Test
+    fun `getDailyRiskScores with error returns an empty map`() = runBlocking {
         // GIVEN
         val api =
             NearbyExposureNotificationApi(
                 context,
                 object :
                     FakeExposureNotificationsClient() {
-                    override fun getExposureSummary(token: String): Task<ExposureSummary> =
+                    override fun getExposureWindows(): Task<MutableList<ExposureWindow>> =
                         Tasks.forException(
                             ApiException(
                                 Status.RESULT_INTERNAL_ERROR
@@ -580,14 +640,15 @@ class NearbyExposureNotificationApiTest {
             )
 
         // WHEN
-        val result = api.getSummary("test")
+        val result = api.getDailyRiskScores(dailySummariesConfig, RiskModel.ScoreType.SUM)
 
-        assertNull(result)
+        assertEquals(emptyMap<Long, Double>(), result)
     }
 
     private abstract class FakeExposureNotificationsClient : ExposureNotificationClient {
         override fun isEnabled(): Task<Boolean> = Tasks.forException(IllegalStateException())
 
+        @Suppress("DEPRECATION")
         override fun provideDiagnosisKeys(
             files: List<File>,
             config: ExposureConfiguration,

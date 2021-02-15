@@ -359,7 +359,10 @@ class ResourceBundleManagerTest {
             return Manifest(emptyList(), "", "", "rb")
         }
 
-        override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+        override suspend fun getRiskCalculationParameters(
+            id: String,
+            cacheStrategy: CacheStrategy?
+        ): RiskCalculationParameters {
             throw IllegalStateException()
         }
 
