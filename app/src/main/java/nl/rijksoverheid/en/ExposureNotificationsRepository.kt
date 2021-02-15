@@ -43,6 +43,7 @@ import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
+import nl.rijksoverheid.en.api.model.WindowCalculationType
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
@@ -368,7 +369,7 @@ class ExposureNotificationsRepository(
             .setMinimumWindowScore(riskCalculationParameters.minimumWindowScore)
             .setDaysSinceExposureThreshold(riskCalculationParameters.daysSinceExposureThreshold)
             .setAttenuationBuckets(
-                riskCalculationParameters.attenuationBucketThresholdDb,
+                riskCalculationParameters.attenuationBucketThresholds,
                 riskCalculationParameters.attenuationBucketWeights
             ).apply {
                 riskCalculationParameters.infectiousnessWeights.forEachIndexed { infectiousness, weight ->
@@ -609,29 +610,20 @@ class ExposureNotificationsRepository(
 
         val riskCalculationParameters = getCachedRiskCalculationParameters()
         val dailySummariesConfig = getDailySummariesConfig(riskCalculationParameters)
-        val summaries = exposureNotificationsApi.getDailySummaries(dailySummariesConfig)
-        val sumRiskScores = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig, RiskModel.ScoreType.SUM)
-        val maxRiskScores = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig, RiskModel.ScoreType.MAX)
-
-        if (BuildConfig.DEBUG) {
-            summaries?.forEach {
-                Timber.d("DailySummaryData: ${it.summaryData}")
-            }
-            var sumRiskScoresInfo = "Manual calculated SumScores: "
-            sumRiskScores.forEach {
-                sumRiskScoresInfo += "{daysSinceEpoch:${it.key}, scoreSum:${it.value}}, "
-            }
-            Timber.d(sumRiskScoresInfo)
-            var maxRiskScoresInfo = "Manual calculated MaxScores: "
-            maxRiskScores.forEach {
-                maxRiskScoresInfo += "{daysSinceEpoch:${it.key}, maximumScore:${it.value}}, "
-            }
-            Timber.d(maxRiskScoresInfo)
+        val scoreType = when (riskCalculationParameters.windowCalculationType) {
+            WindowCalculationType.MAX -> RiskModel.ScoreType.MAX
+            WindowCalculationType.SUM -> RiskModel.ScoreType.SUM
+        }
+        val riskScores = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig, scoreType).filter {
+            it.value > riskCalculationParameters.minimumRiskScore
         }
 
-        val minRiskScore = riskCalculationParameters.minimumRiskScore
-        val riskySummaries = summaries?.filter {
-            it.summaryData.maximumScore > minRiskScore
+        if (BuildConfig.DEBUG) {
+            var riskScoresInfo = "Calculated risk scores (windowCalculationType: ${riskCalculationParameters.windowCalculationType.name})"
+            riskScores.forEach {
+                riskScoresInfo += "{daysSinceEpoch:${it.key}, maximumScore:${it.value}}, "
+            }
+            Timber.d(riskScoresInfo)
         }
 
         val currentDaysSinceEpoch = if (preferences.contains(KEY_LAST_TOKEN_EXPOSURE_DATE)) {
@@ -643,10 +635,10 @@ class ExposureNotificationsRepository(
         val newDaysSinceEpoch = if (testExposure) {
             LocalDate.now(clock).minusDays(5).toEpochDay()
         } else {
-            riskySummaries?.maxByOrNull { it.daysSinceEpoch }?.daysSinceEpoch?.toLong()
+            riskScores.maxByOrNull { it.key }?.key
         }
 
-        if (!testExposure && riskySummaries.isNullOrEmpty()) {
+        if (!testExposure && riskScores.isNullOrEmpty()) {
             Timber.d("Exposure has no matches or does not meet required risk score")
             return AddExposureResult.Processed
         }
@@ -666,10 +658,10 @@ class ExposureNotificationsRepository(
         }
     }
 
-    suspend fun getCachedRiskCalculationParameters(): RiskCalculationParameters {
+    private suspend fun getCachedRiskCalculationParameters(): RiskCalculationParameters {
         return api.getRiskCalculationParameters(
-            api.getManifest(CacheStrategy.CACHE_ONLY).riskCalculationParametersId,
-            CacheStrategy.CACHE_ONLY
+            api.getManifest(CacheStrategy.CACHE_FIRST).riskCalculationParametersId,
+            CacheStrategy.CACHE_FIRST
         )
     }
 }

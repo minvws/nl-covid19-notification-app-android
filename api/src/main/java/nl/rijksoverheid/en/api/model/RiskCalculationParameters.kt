@@ -13,7 +13,7 @@ import com.squareup.moshi.JsonClass
 data class RiskCalculationParameters(
     @Json(name = "reportTypeWeights") val reportTypeWeights: List<Double>,
     @Json(name = "infectiousnessWeights") val infectiousnessWeights: List<Double>,
-    @Json(name = "attenuationBucketThresholds") val attenuationBucketThresholdDb: List<Int>,
+    @Json(name = "attenuationBucketThresholds") val attenuationBucketThresholds: List<Int>,
     @Json(name = "attenuationBucketWeights") val attenuationBucketWeights: List<Double>,
     @Json(name = "daysSinceExposureThreshold") val daysSinceExposureThreshold: Int,
     @Json(name = "minimumWindowScore") val minimumWindowScore: Double,
@@ -21,7 +21,7 @@ data class RiskCalculationParameters(
     @Json(name = "daysSinceOnsetToInfectiousness") val daysSinceOnsetToInfectiousness: List<DaySinceOnsetToInfectiousness>,
     @Json(name = "infectiousnessWhenDaysSinceOnsetMissing") val infectiousnessWhenDaysSinceOnsetMissing: Int,
     @Json(name = "reportTypeWhenMissing") val reportTypeWhenMissing: Int,
-    @Json(name = "windowCalculationType") val windowCalculationType: Int
+    @Json(name = "windowCalculationType") val windowCalculationType: WindowCalculationType
 )
 
 @JsonClass(generateAdapter = true)
@@ -29,3 +29,12 @@ data class DaySinceOnsetToInfectiousness(
     @Json(name = "daysSinceOnsetOfSymptoms") val daysSinceOnsetOfSymptoms: Int,
     @Json(name = "infectiousness") val infectiousness: Int
 )
+
+enum class WindowCalculationType(val value: Int) {
+    MAX(0),
+    SUM(1);
+
+    companion object {
+        fun getByValue(value: Int) = values().firstOrNull { it.value == value }
+    }
+}

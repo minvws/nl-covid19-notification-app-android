@@ -19,11 +19,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.test.core.app.ApplicationProvider
+import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.Infectiousness
 import com.google.android.gms.nearby.exposurenotification.ReportType
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
@@ -36,6 +38,7 @@ import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
+import nl.rijksoverheid.en.api.model.WindowCalculationType
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
@@ -43,6 +46,7 @@ import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
+import nl.rijksoverheid.en.enapi.nearby.RiskModel
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
@@ -658,26 +662,64 @@ class ExposureNotificationsRepositoryTest {
             )
         }
 
-    // TODO fix addExposure unit tests
-/*
     @Test
     fun `addExposure adds exposure and returns Notify`() = runBlocking {
-        val dateTime = "2020-06-20T10:15:30.00Z"
+        val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
         val api = object : FakeExposureNotificationApi() {
-            override suspend fun getSummary(token: String) =
-                if (token == "sample-token") {
-                    ExposureSummary.ExposureSummaryBuilder().setDaysSinceLastExposure(4)
-                        .setMatchedKeyCount(1).build()
-                } else null
+            override suspend fun getDailyRiskScores(
+                config: DailySummariesConfig,
+                scoreType: RiskModel.ScoreType
+            ): Map<Long, Double> {
+                return mapOf(LocalDate.now(clock).minusDays(4).toEpochDay() to 2.0)
+            }
+        }
+
+        val fakeService = object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                Manifest(emptyList(), "test-params", "")
+
+            override suspend fun getRiskCalculationParameters(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): RiskCalculationParameters {
+                return RiskCalculationParameters(
+                    emptyList(),
+                    emptyList(),
+                    listOf(56, 62, 70),
+                    listOf(1.0, 1.0, 1.0, 0.0),
+                    0,
+                    0.0,
+                    1.0,
+                    emptyList(),
+                    Infectiousness.STANDARD,
+                    ReportType.CONFIRMED_TEST,
+                    WindowCalculationType.SUM
+                )
+            }
+
+            override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
+                throw NotImplementedError()
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle {
+                throw java.lang.IllegalStateException()
+            }
         }
 
         val repository = createRepository(
             api = api,
-            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            clock = clock,
+            cdnService = fakeService
         )
 
-        val result = repository.addExposure("sample-token")
+        val result = repository.addExposure()
 
         assertTrue(result is AddExposureResult.Notify)
         assertEquals(
@@ -688,28 +730,68 @@ class ExposureNotificationsRepositoryTest {
 
     @Test
     fun `addExposure while newer exposure exists keeps newer exposure`() = runBlocking {
-        val dateTime = "2020-06-20T10:15:30.00Z"
+        val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
         val api = object : FakeExposureNotificationApi() {
-            override suspend fun getSummary(token: String) =
-                when (token) {
-                    "sample-token-old" ->
-                        ExposureSummary.ExposureSummaryBuilder()
-                            .setDaysSinceLastExposure(8).setMatchedKeyCount(1).build()
-                    "sample-token-new" ->
-                        ExposureSummary.ExposureSummaryBuilder()
-                            .setDaysSinceLastExposure(4).setMatchedKeyCount(1).build()
-                    else -> null
-                }
+            val getDailyRiskScoresResults = listOf(
+                mapOf(LocalDate.now(clock).minusDays(8).toEpochDay() to 2.0),
+                mapOf(LocalDate.now(clock).minusDays(4).toEpochDay() to 2.0)
+            ).iterator()
+
+            override suspend fun getDailyRiskScores(
+                config: DailySummariesConfig,
+                scoreType: RiskModel.ScoreType
+            ): Map<Long, Double> {
+                return getDailyRiskScoresResults.next()
+            }
+        }
+
+        val fakeService = object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                Manifest(emptyList(), "test-params", "")
+
+            override suspend fun getRiskCalculationParameters(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): RiskCalculationParameters {
+                return RiskCalculationParameters(
+                    emptyList(),
+                    emptyList(),
+                    listOf(56, 62, 70),
+                    listOf(1.0, 1.0, 1.0, 0.0),
+                    0,
+                    0.0,
+                    1.0,
+                    emptyList(),
+                    Infectiousness.STANDARD,
+                    ReportType.CONFIRMED_TEST,
+                    WindowCalculationType.SUM
+                )
+            }
+
+            override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
+                throw NotImplementedError()
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle {
+                throw java.lang.IllegalStateException()
+            }
         }
 
         val repository = createRepository(
             api = api,
-            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            clock = clock,
+            cdnService = fakeService
         )
 
-        repository.addExposure("sample-token-new")
-        repository.addExposure("sample-token-old")
+        repository.addExposure()
+        repository.addExposure()
 
         assertEquals(
             LocalDate.of(2020, 6, 20).minusDays(4),
@@ -722,48 +804,125 @@ class ExposureNotificationsRepositoryTest {
         val dateTime = "2020-06-20T10:15:30.00Z"
 
         val api = object : FakeExposureNotificationApi() {
-            override suspend fun getSummary(token: String) =
-                ExposureSummary.ExposureSummaryBuilder().setMatchedKeyCount(0).build()
+            override suspend fun getDailyRiskScores(
+                config: DailySummariesConfig,
+                scoreType: RiskModel.ScoreType
+            ): Map<Long, Double> {
+                return emptyMap()
+            }
+        }
+
+        val fakeService = object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                Manifest(emptyList(), "test-params", "")
+
+            override suspend fun getRiskCalculationParameters(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): RiskCalculationParameters {
+                return RiskCalculationParameters(
+                    emptyList(),
+                    emptyList(),
+                    listOf(56, 62, 70),
+                    listOf(1.0, 1.0, 1.0, 0.0),
+                    0,
+                    0.0,
+                    1.0,
+                    emptyList(),
+                    Infectiousness.STANDARD,
+                    ReportType.CONFIRMED_TEST,
+                    WindowCalculationType.SUM
+                )
+            }
+
+            override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
+                throw NotImplementedError()
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle {
+                throw java.lang.IllegalStateException()
+            }
         }
 
         val repository = createRepository(
             api = api,
-            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC")),
+            cdnService = fakeService
         )
 
-        repository.addExposure("sample-token-new")
+        repository.addExposure()
 
         assertEquals(null, repository.getLastExposureDate().first())
     }
 
     @Test
     fun `addExposure with max risk score below threshold is ignored`() = runBlocking {
-        val dateTime = "2020-06-20T10:15:30.00Z"
+        val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
         val api = object : FakeExposureNotificationApi() {
-            override suspend fun getSummary(token: String) =
-                ExposureSummary.ExposureSummaryBuilder().setMatchedKeyCount(1)
-                    .setMaximumRiskScore(1).build()
+            override suspend fun getDailyRiskScores(
+                config: DailySummariesConfig,
+                scoreType: RiskModel.ScoreType
+            ): Map<Long, Double> {
+                return mapOf(LocalDate.now(clock).minusDays(4).toEpochDay() to 2.0)
+            }
         }
 
-        val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
-            .getSharedPreferences("repository_test", 0)
+        val fakeService = object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
 
-        sharedPrefs.edit {
-            putInt("min_risk_score", 10)
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                Manifest(emptyList(), "test-params", "")
+
+            override suspend fun getRiskCalculationParameters(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): RiskCalculationParameters {
+                return RiskCalculationParameters(
+                    emptyList(),
+                    emptyList(),
+                    listOf(56, 62, 70),
+                    listOf(1.0, 1.0, 1.0, 0.0),
+                    0,
+                    0.0,
+                    10.0,
+                    emptyList(),
+                    Infectiousness.STANDARD,
+                    ReportType.CONFIRMED_TEST,
+                    WindowCalculationType.SUM
+                )
+            }
+
+            override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
+                throw NotImplementedError()
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle {
+                throw java.lang.IllegalStateException()
+            }
         }
 
         val repository = createRepository(
             api = api,
-            preferences = sharedPrefs,
-            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            clock = clock,
+            cdnService = fakeService
         )
 
-        repository.addExposure("sample-token-new")
+        repository.addExposure()
 
         assertEquals(null, repository.getLastExposureDate().first())
     }
-*/
+
     @Test
     fun `processManifest marks the timestamp of last successful time the keys have been processed and returns Success`() =
         runBlocking {

@@ -43,10 +43,7 @@ open class FakeExposureNotificationApi :
     override suspend fun getDailyRiskScores(
         config: DailySummariesConfig,
         scoreType: RiskModel.ScoreType
-    ):
-        Map<Long, Double> {
-            TODO("Not yet implemented")
-        }
+    ): Map<Long, Double> = emptyMap()
 
     override fun deviceSupportsLocationlessScanning(): Boolean = false
 }

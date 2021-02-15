@@ -297,5 +297,4 @@ class RiskModelTest {
         Assert.assertEquals(1, riskScores.size)
         Assert.assertEquals(210.0, riskScores[daysSinceEpoch])
     }
-
 }
