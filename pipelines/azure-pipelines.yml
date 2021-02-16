@@ -1,6 +1,7 @@
 name: '$(Date:yyyyMMdd)$(Rev:.r)-$(BuildID)'
 trigger:
   - master
+  - release/*
 
 variables:
   - name: GRADLE_USER_HOME
@@ -79,6 +80,6 @@ stages:
             displayName: 'Publish results on build summary'
             inputs:
               pollingTimeoutSec: '300'
-          # Run this step only on master
-          - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/master') }}:
+          # Run distribution on the master and release/ branches only          
+          - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')) }}:
             - template: distribute.yml
