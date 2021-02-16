@@ -250,8 +250,6 @@
     <string name="settings_wifi_only_title">Controlare de coduri doar prin wifi</string>
     <string name="settings_wifi_only_summary">CoronaMelder controlează de câteva ori pe zi dacă v-ați aflat în apropierea unei persoane infectată cu coronavirus. Dacă dezactivați datele celulare, aplicația va face acest lucru doar daca folosiți wifi. Întâlnirile sunt urmărite chiar dacă nu aveți legătură la internet.</string>
     <string name="faq_interop_countries">Cu ce alte aplicații străine colaborează CoronaMelder?</string>
-    <string name="status_info_action_more_info">Mai multe informații</string>
-    <string name="status_info_action_close">Închideți</string>
     <string name="phone_call_not_supported_dialog_title">Nu puteți efectua un apel de la acest aparat</string>
     <string name="phone_call_not_supported_dialog_message">Luați telefonul și sunați la %1$s</string>
     <string name="phone_call_not_supported_dialog_close">Am înțeles</string>

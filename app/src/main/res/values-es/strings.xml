@@ -250,8 +250,6 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="settings_wifi_only_title">Controlar códigos solo mediante wifi</string>
     <string name="settings_wifi_only_summary">CoronaMelder comprueba un par de veces al día si has estado cerca de alguien con coronavirus. Si desactivas tus datos, la app solo funcionará si utilizas wifi. Se seguirán registrando tus encuentros incluso si no tienes conexión a internet.</string>
     <string name="faq_interop_countries">¿Con qué apps extranjeras colabora CoronaMelder?</string>
-    <string name="status_info_action_more_info">Más información</string>
-    <string name="status_info_action_close">Cerrar</string>
     <string name="phone_call_not_supported_dialog_title">No puedes llamar con este dispositivo</string>
     <string name="phone_call_not_supported_dialog_message">Toma el teléfono y llama al %1$s</string>
     <string name="phone_call_not_supported_dialog_close">Lo entiendo</string>

@@ -248,8 +248,6 @@
     <string name="settings_wifi_only_title">Kodları yalnızca WiFi üzerinden kontrol edin</string>
     <string name="settings_wifi_only_summary">CoronaMelder, günde birkaç kez Korona olan birinin yakınında bulunmuş olup olmadığınızı kontrol eder. Mobil verileri kapatırsanız, uygulama bunu yalnızca WiFi kullandığınızda yapacaktır. Buluşmalarınız internet bağlantınız olmasa bile takip edilir.</string>
     <string name="faq_interop_countries">CoronaMelder hangi yabancı uygulamalarla çalışıyor?</string>
-    <string name="status_info_action_more_info">Daha fazla bilgi</string>
-    <string name="status_info_action_close">Kapat</string>
     <string name="phone_call_not_supported_dialog_title">Bu cihaz üzerinden arama yapamazsınız</string>
     <string name="phone_call_not_supported_dialog_message">Telefonunuzu alın ve %1$s\'i arayın</string>
     <string name="phone_call_not_supported_dialog_close">Anladım</string>
