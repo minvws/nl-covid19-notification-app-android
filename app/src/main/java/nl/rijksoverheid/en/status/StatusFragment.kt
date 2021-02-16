@@ -118,23 +118,6 @@ class StatusFragment @JvmOverloads constructor(
         }
 
         statusViewModel.hasSeenLatestTerms.observe(viewLifecycleOwner) {
-            section.infoItem = if (!it)
-                StatusInfoItem(
-                    R.string.status_info_interop_announcement_message,
-                    actionMoreInfo = {
-                        val uri = Uri.parse(
-                            getString(
-                                R.string.interop_url,
-                                getString(R.string.app_language)
-                            )
-                        )
-                        CustomTabsIntent.Builder().build().launchUrl(requireContext(), uri)
-                    },
-                    actionClose = {
-                        statusViewModel.setHasSeenLatestTerms()
-                    }
-                )
-            else null
         }
 
         statusViewModel.pausedState.observe(viewLifecycleOwner) {

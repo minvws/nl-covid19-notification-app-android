@@ -248,7 +248,6 @@
     <string name="settings_wifi_only_title">Allinne koades kontrolearje fia wifi</string>
     <string name="settings_wifi_only_summary">CoronaMelder kontrolearret in pear kear deis oftst yn de buert west hast fan immen mei koroana. Ast dyn mobile data útsetst, docht de app dat allinne noch ast wifi brûkst. Dyn moetings wurde ek byhâlden ast gjin ynternetferbining hast.</string>
     <string name="faq_interop_countries">Mei hokker bûtenlânske apps wurket CoronaMelder gear?</string>
-    <string name="status_info_interop_announcement_message">CoronaMelder wurket fan 30 novimber ôf gear mei koroana-apps út oare Europeeske lannen.</string>
     <string name="status_info_action_more_info">Mear ynformaasje</string>
     <string name="status_info_action_close">Slute</string>
     <string name="phone_call_not_supported_dialog_title">Do kinst net belje fia dit apparaat</string>

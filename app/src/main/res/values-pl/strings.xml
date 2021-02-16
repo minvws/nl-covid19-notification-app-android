@@ -250,7 +250,6 @@
     <string name="settings_wifi_only_title">Sprawdzanie kodów tylko przy połączeniu wi-fi</string>
     <string name="settings_wifi_only_summary">CoronaMelder sprawdza kilka razy dziennie, czy znajdowałeś się w pobliżu zarażonej osoby. Jeśli wyłączysz dane komórkowe, aplikacja będzie to robić przy połączeniu wi-fi. Spotkania są kontrolowane również, gdy nie masz połączenia internetowego.</string>
     <string name="faq_interop_countries">Z którymi zagranicznymi aplikacjami współpracuje CoronaMelder?</string>
-    <string name="status_info_interop_announcement_message">Od 30 listopada CoronaMelder współpracuje z aplikacjami dotyczącymi koronawirusa z innych krajów europejskich.</string>
     <string name="status_info_action_more_info">Więcej informacji</string>
     <string name="status_info_action_close">Zamknij</string>
     <string name="phone_call_not_supported_dialog_title">Z tego urządzenia nie można wykonywać połączeń telefonicznych</string>

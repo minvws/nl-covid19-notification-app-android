@@ -248,7 +248,6 @@
     <string name="settings_wifi_only_title">Ne contrôler les codes que par le biais du WiFi</string>
     <string name="settings_wifi_only_summary">CoronaMelder contrôle plusieurs fois par jour si vous avez été proche de quelqu\'un qui a le coronavirus. Si vous désactivez vos données mobiles, l\'application ne le fait plus que si vous utilisez le WiFi. Vos rencontres sont également enregistrées si vous n\'avez pas de connexion à Internet.</string>
     <string name="faq_interop_countries">Avec quelles applications étrangères collabore CoronaMelder?</string>
-    <string name="status_info_interop_announcement_message">À partir du 30 novembre, CoronaMelder fonctionnera avec des applications coronavirus d\'autres pays.</string>
     <string name="status_info_action_more_info">Plus d\'informations</string>
     <string name="status_info_action_close">Fermer</string>
     <string name="phone_call_not_supported_dialog_title">Vous ne pouvez pas appeler de cet appareil</string>
