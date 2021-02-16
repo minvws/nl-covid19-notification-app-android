@@ -209,6 +209,8 @@ dependencies {
     implementation "com.xwray:groupie:$groupie_version"
     implementation "com.xwray:groupie-viewbinding:$groupie_version"
 
+    implementation "dev.chrisbanes.insetter:insetter:$insetter_version"
+
     testImplementation project(":test-support")
     testImplementation "junit:junit:$junit_version"
     testImplementation "androidx.arch.core:core-testing:$arch_core_version"
