@@ -14,8 +14,8 @@ buildscript {
     ext.androidx_work_version = "2.5.0"
     ext.coroutines_version = "1.4.2"
     ext.kotlin_version = '1.4.30'
-    ext.play_services_base_version = "17.3.0"
-    ext.play_services_tasks_version = "17.1.0"
+    ext.play_services_base_version = "17.6.0"
+    ext.play_services_tasks_version = "17.2.1"
     //3rd-party dependency versions
     ext.groupie_version = "2.8.1"
     ext.jdk15to18_version = "1.66"
