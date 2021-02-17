@@ -248,9 +248,6 @@
     <string name="settings_wifi_only_title">Проверка на кодове само посредством wifi</string>
     <string name="settings_wifi_only_summary">CoronaMelder проверява няколко пъти на ден дали си бил близо до някого с коронавирус. Ако изключиш мобилните данни, приложението ще прави проверка само ако ползваш wifi. Срещите ти продължават да се следят, ако при теб липсва интернет връзка.</string>
     <string name="faq_interop_countries">Заедно с кои чуждестранни приложения работи CoronaMelder?</string>
-    <string name="status_info_interop_announcement_message">"От 30.11 CoronaMelder работи заедно с приложения за коронавируса от други европейски държави. "</string>
-    <string name="status_info_action_more_info">Повече информация</string>
-    <string name="status_info_action_close">Затваряне</string>
     <string name="phone_call_not_supported_dialog_title">Не е възможно обаждане от това устройство</string>
     <string name="phone_call_not_supported_dialog_message">Вземи телефона си и се обади на  %1$s</string>
     <string name="phone_call_not_supported_dialog_close">Разбирам</string>

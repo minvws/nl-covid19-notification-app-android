@@ -248,9 +248,6 @@
     <string name="settings_wifi_only_title">Alleen codes controleren via wifi</string>
     <string name="settings_wifi_only_summary">CoronaMelder controleert een paar keer per dag of je in de buurt bent geweest van iemand met corona. Als je mobiele data uitzet, doet de app dit alleen nog als je wifi gebruikt. Je ontmoetingen worden ook bijgehouden als je geen internetverbinding hebt.</string>
     <string name="faq_interop_countries">Met welke buitenlandse apps werkt CoronaMelder samen?</string>
-    <string name="status_info_interop_announcement_message">CoronaMelder werkt vanaf 30 november samen met corona-apps uit andere Europese landen.</string>
-    <string name="status_info_action_more_info">Meer informatie</string>
-    <string name="status_info_action_close">Sluiten</string>
     <string name="phone_call_not_supported_dialog_title">Je kunt niet bellen via dit apparaat</string>
     <string name="phone_call_not_supported_dialog_message">Pak je telefoon en bel %1$s</string>
     <string name="phone_call_not_supported_dialog_close">Ik snap het</string>

@@ -255,9 +255,6 @@
     <string name="settings_wifi_only_title">تحقق فقط من الرموز عبرالـ WiFi</string>
     <string name="settings_wifi_only_summary">يتحقق CoronaMelder عدة مرات في اليوم ما إذا كنت على مقربة من شخص مصاب بكورونا. إذا قمت بإيقاف تجوال البيانات، فسيقوم التطبيق بذلك فقط عند استخدام الـ WiFi. يتم تتبع الاحتكاك كذلك إذا لم يكن لديك اتصال بالإنترنت.</string>
     <string name="faq_interop_countries">ما هي التطبيقات الأجنبية التي يعمل معها CoronaMelder؟</string>
-    <string name="status_info_interop_announcement_message">اعتبارًا من 30 نوفمبر/تشرين الثاني سيعمل CoronaMelder مع تطبيقات كورونا من دول أوروبية أخرى.</string>
-    <string name="status_info_action_more_info">المزيد من المعلومات</string>
-    <string name="status_info_action_close">إغلاق</string>
     <string name="phone_call_not_supported_dialog_title">لا يمكنك الاتصال هاتفيًا من خلال هذا الجهاز</string>
     <string name="phone_call_not_supported_dialog_message">"اتصل هاتفيًا على الرقم %1$s "</string>
     <string name="phone_call_not_supported_dialog_close">أفهم ذلك</string>

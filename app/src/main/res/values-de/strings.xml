@@ -249,9 +249,6 @@
     <string name="settings_wifi_only_title">Nur Codes über WLAN kontrollieren</string>
     <string name="settings_wifi_only_summary">CoronaMelder kontrolliert mehrmals pro Tag, ob Sie in der Nähe einer Person mit Corona waren. Wenn Sie mobile Daten deaktivieren, kontrolliert die App nur noch, wenn Sie WLAN nutzen. Ihre Begegnungen werden auch registriert, wenn Sie keine Internetverbindung haben.</string>
     <string name="faq_interop_countries">Mit welchen ausländischen Apps arbeitet CoronaMelder zusammen?</string>
-    <string name="status_info_interop_announcement_message">CoronaMelder arbeitet ab 30. November mit Corona-Apps aus anderen europäischen Ländern zusammen.</string>
-    <string name="status_info_action_more_info">Mehr Informationen</string>
-    <string name="status_info_action_close">Schließen</string>
     <string name="phone_call_not_supported_dialog_title">Sie können mit diesem Gerät nicht anrufen.</string>
     <string name="phone_call_not_supported_dialog_message">Nehmen Sie Ihr Telefon und rufen Sie %1$s an.</string>
     <string name="phone_call_not_supported_dialog_close">Ich verstehe</string>

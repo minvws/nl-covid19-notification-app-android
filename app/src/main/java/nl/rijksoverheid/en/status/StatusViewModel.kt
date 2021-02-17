@@ -79,9 +79,6 @@ class StatusViewModel(
         )
     }.asLiveData(viewModelScope.coroutineContext)
 
-    val hasSeenLatestTerms = onboardingRepository.hasSeenLatestTerms()
-        .asLiveData(viewModelScope.coroutineContext)
-
     val pausedState: LiveData<Settings.PausedState> = settingsRepository.exposureNotificationsPausedState()
         .asLiveData(viewModelScope.coroutineContext)
 
@@ -145,10 +142,6 @@ class StatusViewModel(
             exposureNotificationsRepository.resetNotificationsEnabledTimestamp()
             exposureNotificationsRepository.rescheduleBackgroundJobs()
         }
-    }
-
-    fun setHasSeenLatestTerms() {
-        onboardingRepository.setHasSeenLatestTerms()
     }
 
     sealed class HeaderState {
