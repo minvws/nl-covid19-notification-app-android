@@ -16,23 +16,22 @@ class RiskModel(private val config: DailySummariesConfig) {
      * Gets the daily list of risk scores from the given exposure windows.
      */
     fun getDailyRiskScores(windows: List<ExposureWindow>): List<DailyRiskScores> {
-        val perDayMaxScore = mutableMapOf<Long, Double>()
-        val perDaySummedScore = mutableMapOf<Long, Double>()
+        val perDayScore = mutableMapOf<Long, DailyRiskScores>()
         windows.forEach { window ->
             val daysSinceEpoch = window.dateMillisSinceEpoch / (1000 * 60 * 60 * 24)
             val windowScore = getWindowScore(window)
             if (windowScore >= config.minimumWindowScore) {
-                perDayMaxScore[daysSinceEpoch] = max(perDayMaxScore.getOrElse(daysSinceEpoch, { 0.0 }), windowScore)
-                perDaySummedScore[daysSinceEpoch] = perDaySummedScore.getOrElse(daysSinceEpoch, { 0.0 }) + windowScore
+                val dailyRiskScores = perDayScore.getOrElse(daysSinceEpoch) {
+                    DailyRiskScores(daysSinceEpoch, 0.0, 0.0)
+                }
+                perDayScore[daysSinceEpoch] = dailyRiskScores.copy(
+                    maximumScore = max(dailyRiskScores.maximumScore, windowScore),
+                    scoreSum = dailyRiskScores.scoreSum + windowScore
+                )
             }
         }
-        return perDaySummedScore.keys.map {
-            DailyRiskScores(
-                daysSinceEpoch = it,
-                maximumScore = perDayMaxScore[it] ?: 0.0,
-                scoreSum = perDaySummedScore[it] ?: 0.0
-            )
-        }
+
+        return perDayScore.values.toList()
     }
 
     /**
