@@ -17,25 +17,17 @@ import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
 import nl.rijksoverheid.en.BaseInstrumentationTest
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.test.withFragment
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
-import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @Suppress("UNCHECKED_CAST")
 @RunWith(AndroidJUnit4::class)
 class PrivacyPolicyConsentFragmentTest : BaseInstrumentationTest() {
-
-    companion object {
-        @ClassRule
-        @JvmField
-        val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
-    }
 
     @Test
     fun testPrivacyPolicyConsentClickingContainer() {

@@ -19,38 +19,9 @@ fun Settings.PausedState.Paused.formatDuration(context: Context): CharSequence {
 
         val (durationHours, durationMinutes) = durationHoursAndMinutes()
         val formattedDuration = when {
-            durationHours > 1L && durationMinutes > 1L -> context.getString(
-                R.string.duration_format_hours_and_minutes,
-                durationHours, durationMinutes
-            )
-            durationHours == 1L && durationMinutes > 1L -> context.getString(
-                R.string.duration_format_hour_and_minutes,
-                durationHours, durationMinutes
-            )
-            durationHours > 1L && durationMinutes == 1L -> context.getString(
-                R.string.duration_format_hours_and_minute,
-                durationHours, durationMinutes
-            )
-            durationHours == 1L && durationMinutes == 1L -> context.getString(
-                R.string.duration_format_hour_and_minute,
-                durationHours, durationMinutes
-            )
-            durationHours > 1L -> context.getString(
-                R.string.duration_format_hours,
-                durationHours
-            )
-            durationHours == 1L -> context.getString(
-                R.string.duration_format_hour,
-                durationHours
-            )
-            durationMinutes > 1L -> context.getString(
-                R.string.duration_format_minutes,
-                durationMinutes
-            )
-            durationMinutes == 1L -> context.getString(
-                R.string.duration_format_minute,
-                durationMinutes
-            )
+            durationHours > 0 && durationMinutes > 0 -> formattedHoursAndMinutes(durationHours, durationMinutes, context)
+            durationHours > 0 -> formattedHours(durationHours, context)
+            durationMinutes > 0 -> formattedMinutes(durationMinutes, context)
             else -> return context.getString(R.string.paused_en_api_duration_reached)
         }
 
@@ -78,3 +49,16 @@ fun Settings.PausedState.Paused.durationHoursAndMinutes(): Pair<Long, Long> {
         Pair(durationHours, durationMinutes)
     } else Pair(0, 0)
 }
+
+private fun formattedHoursAndMinutes(hours: Long, minutes: Long, context: Context) =
+    context.getString(
+        R.string.duration_format_hours_and_minutes,
+        formattedHours(hours, context),
+        formattedMinutes(minutes, context)
+    )
+
+private fun formattedHours(hours: Long, context: Context) =
+    context.resources.getQuantityString(R.plurals.duration_hours_plurals, hours.toInt(), hours)
+
+private fun formattedMinutes(minutes: Long, context: Context) =
+    context.resources.getQuantityString(R.plurals.duration_minutes_plurals, minutes.toInt(), minutes)

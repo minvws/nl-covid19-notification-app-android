@@ -18,23 +18,15 @@ import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
 import nl.rijksoverheid.en.BaseInstrumentationTest
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.test.withFragment
 import org.junit.Assert.assertEquals
-import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class ExplanationFragmentTest : BaseInstrumentationTest() {
-
-    companion object {
-        @ClassRule
-        @JvmField
-        val disableAnimationsRule: DisableAnimationsRule = DisableAnimationsRule()
-    }
 
     @Test
     fun testExplanationStep1To2() {

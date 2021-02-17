@@ -2,20 +2,20 @@
 
 buildscript {
     //androidx/google dependency versions
-    ext.androidx_activity_version = "1.1.0"
-    ext.androidx_appcompat_version = "1.3.0-alpha01"
+    ext.androidx_activity_version = "1.2.0"
+    ext.androidx_appcompat_version = "1.3.0-beta01"
     ext.androidx_core_version = "1.3.2"
     ext.androidx_espresso_version = "3.3.0"
-    ext.androidx_fragment_version = "1.2.5"
-    ext.androidx_lifecycle_version = "2.2.0"
-    ext.androidx_nav_version = "2.3.1"
+    ext.androidx_fragment_version = "1.3.0"
+    ext.androidx_lifecycle_version = "2.3.0"
+    ext.androidx_nav_version = "2.3.3"
     ext.androidx_test_core_version = "1.3.0"
     ext.androidx_test_ext_junit_version = "1.1.2"
-    ext.androidx_work_version = "2.5.0-rc01"
-    ext.coroutines_version = "1.3.9"
-    ext.kotlin_version = '1.4.20'
-    ext.play_services_base_version = "17.3.0"
-    ext.play_services_tasks_version = "17.1.0"
+    ext.androidx_work_version = "2.5.0"
+    ext.coroutines_version = "1.4.2"
+    ext.kotlin_version = '1.4.30'
+    ext.play_services_base_version = "17.6.0"
+    ext.play_services_tasks_version = "17.2.1"
     //3rd-party dependency versions
     ext.groupie_version = "2.8.1"
     ext.jdk15to18_version = "1.66"
@@ -26,6 +26,8 @@ buildscript {
     ext.retrofit_version = "2.9.0"
     ext.robolectric_version = "4.3.1"
     ext.timber_version = "4.7.1"
+    ext.arch_core_version = "2.1.0"
+    ext.insetter_version = "0.5.0"
 
     repositories {
         google {
@@ -52,7 +54,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:4.1.2'
         classpath "com.osacky.flank.gradle:fladle:0.11.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:5.6.1"

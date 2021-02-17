@@ -210,7 +210,7 @@
     <string name="faq_notification_message">How do I recognize a notification?</string>
     <string name="faq_pause">Can I pause the app?</string>
     <string name="faq_pause_paragraph_1"><![CDATA[Yes, you can temporarily pause the app. Do this through <strong>Settings > Pause the app</strong>. If you pause the app, your encounters are temporarily not tracked. You also won\'t get a notification if you\'ve been near someone who later turns out to have corona.]]></string>
-    <string name="faq_pause_paragraph_2">When the pause is over, you immediately get a notification to turn the app on again. After you\'ve turned on the app again, it\'s possible that you receive notifications of encounters that happened before you paused the app.</string>
+    <string name="faq_pause_paragraph_2">When the pause is over, you immediately get a notification to turn the app on again. After you\'ve turned on the app again, it\'s possible that you receive notifications of encounters that happened before you paused the app. </string>
     <string name="faq_pause_paragraph_3">It\'s mostly not recommended to pause the app. Because you might forget to turn it on again. You can pause the app in certain moments. For example, when you\'re near (potential) corona patients and you\'re wearing the appropriate medical protection.</string>
     <string name="faq_interoperability">Does CoronaMelder work with apps from other countries?</string>
     <string name="faq_interoperability_paragraph_1">CoronaMelder works with various apps from other Europeans countries. Like the German, Irish, and Italian apps.</string>
@@ -245,13 +245,10 @@
     <string name="update_app_headline">You have an outdated version of CoronaMelder</string>
     <string name="update_app_description">Update the app on your phone to make sure CoronaMelder keeps working correctly.</string>
     <string name="status_info_settings_title">Settings</string>
-    <string name="status_info_settings_subtitle">Pause app and turn off mobile data</string>
+    <string name="status_info_settings_subtitle">Pause app and manage mobile data</string>
     <string name="settings_wifi_only_title">Only check codes with WiFi</string>
     <string name="settings_wifi_only_summary">CoronaMelder checks a few times a day if you\'ve been near someone who has corona. If you turn off your mobile data, the app will only do so if you\'re using WiFi. Your encounters are also tracked if you don\'t have an internet connection.</string>
     <string name="faq_interop_countries">Which apps from other countries does CoronaMelder work with?</string>
-    <string name="status_info_interop_announcement_message">"CoronaMelder will work with corona apps from other European countries from November 30th onwards. "</string>
-    <string name="status_info_action_more_info">More information</string>
-    <string name="status_info_action_close">Close</string>
     <string name="phone_call_not_supported_dialog_title">You can\'t make phone calls with this device</string>
     <string name="phone_call_not_supported_dialog_message">Get your phone and call %1$s</string>
     <string name="phone_call_not_supported_dialog_close">I understand</string>
@@ -275,19 +272,20 @@
     <string name="pause_confirmation_accept_button">Yes, pause</string>
     <string name="pause_confirmation_decline_button">No, don\'t pause</string>
     <string name="skip_confirmation_checkbox">Don\'t show this screen again</string>
-    <string name="cd_status_paused">Grey pause icon showing the app is paused</string>
-    <string name="duration_format_hour">%1$d hour</string>
-    <string name="duration_format_hours">%1$d hours</string>
-    <string name="duration_format_hour_and_minute">%1$d hour %2$d minute</string>
-    <string name="duration_format_hour_and_minutes">%1$d hour %2$d minutes</string>
-    <string name="duration_format_hours_and_minute">%1$d hours %2$d minute</string>
-    <string name="duration_format_hours_and_minutes">%1$d hours %2$d minutes</string>
-    <string name="duration_format_minute">%1$d minute</string>
-    <string name="duration_format_minutes">%1$d minutes</string>
+    <string name="cd_status_paused">Grey circle with pause icon indicating that the app is paused</string>
+    <string name="duration_format_hours_and_minutes">%1$s and %2$s</string>
     <string name="lab_test_copy_key_to_clipboard">GGD key copied</string>
     <string name="status_paused_duration_reached_headline">Turn the app on again</string>
     <plurals name="pause_duration_hours_option_plurals">
         <item quantity="one">Pause for %d hour</item>
         <item quantity="other">Pause for %d hours</item>
+    </plurals>
+    <plurals name="duration_hours_plurals">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="duration_minutes_plurals">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
     </plurals>
 </resources>

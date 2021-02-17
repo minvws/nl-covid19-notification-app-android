@@ -20,7 +20,6 @@
     <string name="end_of_life_url" translatable="false">https://coronamelder.nl/</string>
     <string name="colofon_url" translatable="false">https://coronamelder.nl/%1$s/colofon-in-app</string>
     <string name="test_url" translatable="false">https://coronatest.nl/en</string>
-    <string name="interop_url" translatable="false">https://coronamelder.nl/%1$s/operabiliteit</string>
     <string name="interop_countries_url" translatable="false">https://coronamelder.nl/%1$s/faq/13-gebruik-app-uit-ander-land/</string>
     <string name="debug_channel_name" translatable="false">Debug menu</string>
     <string name="debug_channel_description" translatable="false">Various debug options</string>

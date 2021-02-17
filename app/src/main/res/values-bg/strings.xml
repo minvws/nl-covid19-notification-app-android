@@ -209,9 +209,9 @@
     <string name="lab_test_how_does_it_work">Как работи?</string>
     <string name="faq_notification_message">Как да разпозная известие?</string>
     <string name="faq_pause">Мога ли да спра приложението на пауза?</string>
-    <string name="faq_pause_paragraph_1"><![CDATA[Да, можеш да го направиш, като изключиш Bluetooth. Това става през<strong>Настройки > Връзки >Bluetooth</strong>. Ако изключиш Bluetooth, приложението вече няма да обменя кодове. След това телефонът ти ще ти изпрати известие за повторно включване на приложението.]]></string>
-    <string name="faq_pause_paragraph_2">Ако искаш Bluetooth да остане включен, можеш да спреш приложението на пауза, като временно изключиш &lt;strong&gt;Използване на известия за контакти&lt;/strong&gt;. Това се прави чрез бутона по-долу. След време ще получиш известие за повторно включване на приложението.</string>
-    <string name="faq_pause_paragraph_3">Все пак в повечето случаи не е препоръчително приложението да се поставя на пауза, защото може да забравиш да го включиш отново. В особени ситуации може обаче да поставиш приложението на пауза. Например ако попаднеш в близост до (възможни) пациенти с коронавирус, но знаеш със сигурност, че носиш медицински предпазни средства.</string>
+    <string name="faq_pause_paragraph_1"><![CDATA[Да, можеш да поставиш приложението временно на пауза. Това става в началния прозорец през <strong>Настройки > Поставяне на приложението на пауза</strong>. Когато поставиш приложението на пауза, срещите ти временно не се проследяват. Няма да получаваш и известия, когато си бил близо до някого, който по-късно се e оказал с коронавирус.]]></string>
+    <string name="faq_pause_paragraph_2">Ако паузата е приключила, веднага получаваш известие да включиш приложението отново. След като включиш приложението, можеш да получаваш известия за срещи отпреди поставянето на пауза.</string>
+    <string name="faq_pause_paragraph_3">В повечето случаи не е препоръчително да поставяш приложението на пауза, тъй като после можеш да забравиш да го включиш отново. Можеш да поставяш обаче на пауза в извънредни ситуации. Например ако се намираш близо до (евентуални) пациенти с коронавирус, но си сигурен, че се ползват медицински предпазни средства.</string>
     <string name="faq_interoperability">Работи ли CoronaMelder и заедно с приложения от други държави?</string>
     <string name="faq_interoperability_paragraph_1">CoronaMelder работи заедно с няколко приложения от други европейски държави, между които Германия, Ирландия и Италия.</string>
     <string name="faq_interoperability_paragraph_2">Например: стоял си по-дълго време близо до потребител на германското приложение Corona-Warn-App. Този човек си е направил тест в Германия и се е оказал с коронавирус. Когато той обмени своите кодове с германската здравна инспекция, CoronaMelder ще ти изпрати известие. Същото важи и в обратния случай. Тъй като приложенията за коронавируса работят заедно едно с друго, е достатъчно при теб да е включено само едно от тях.</string>
@@ -244,13 +244,10 @@
     <string name="update_app_headline">Имаш стара версия на CoronaMelder</string>
     <string name="update_app_description">Актуализирай приложението на телефона си, за да може CoronaMelder да работи добре.</string>
     <string name="status_info_settings_title">Настройки</string>
-    <string name="status_info_settings_subtitle">Поставете приложението на пауза и изключете мобилните данни.</string>
+    <string name="status_info_settings_subtitle">Поставяне на приложението на пауза и настройване на мобилни данни</string>
     <string name="settings_wifi_only_title">Проверка на кодове само посредством wifi</string>
     <string name="settings_wifi_only_summary">CoronaMelder проверява няколко пъти на ден дали си бил близо до някого с коронавирус. Ако изключиш мобилните данни, приложението ще прави проверка само ако ползваш wifi. Срещите ти продължават да се следят, ако при теб липсва интернет връзка.</string>
     <string name="faq_interop_countries">Заедно с кои чуждестранни приложения работи CoronaMelder?</string>
-    <string name="status_info_interop_announcement_message">"От 30.11 CoronaMelder работи заедно с приложения за коронавируса от други европейски държави. "</string>
-    <string name="status_info_action_more_info">Повече информация</string>
-    <string name="status_info_action_close">Затваряне</string>
     <string name="phone_call_not_supported_dialog_title">Не е възможно обаждане от това устройство</string>
     <string name="phone_call_not_supported_dialog_message">Вземи телефона си и се обади на  %1$s</string>
     <string name="phone_call_not_supported_dialog_close">Разбирам</string>
@@ -264,29 +261,30 @@
     <string name="settings_pause_action_disable">Включване на приложението</string>
     <string name="reminder_channel_name">Напомняния</string>
     <string name="reminder_channel_description">Напомняния, когато си поставил приложението на пауза</string>
-    <string name="app_inactive_paused_title">Паузата изтече</string>
-    <string name="app_inactive_paused_message">Внимание: приложението още не е активно. Трябва да го включиш отново сам в приложението.</string>
+    <string name="app_inactive_paused_title">Включи CoronaMelder отново</string>
+    <string name="app_inactive_paused_message">Внимание: приложението все още не е активно. Трябва да го включиш сам в приложението.</string>
     <string name="status_paused_headline">Приложението е поставено на пауза</string>
-    <string name="paused_en_api_description"><![CDATA[След <b>%1$s</b> ще получиш известие, за да включиш отново приложението]]></string>
-    <string name="paused_en_api_duration_reached">Приложението все още не е активно. Трябва да го включиш сам.</string>
+    <string name="paused_en_api_description"><![CDATA[След <b>%1$s</b> ще получиш известие, за да включиш отново приложението.]]></string>
+    <string name="paused_en_api_duration_reached">CoronaMelder все още не е активно. Трябва да го включиш сам.</string>
     <string name="pause_confirmation_title">Сигурен ли си, че искаш да поставиш приложението на пауза?</string>
     <string name="pause_confirmation_description">По време на паузата приложението временно не събира данни за контакти с други потребители на приложението. Няма да получиш и известие, ако си бил близо до някого, който по-късно се окаже с коронавирус.\n\nПостави на пауза само в ситуации, в които телефонът ти е в близост до други телефони, но няма опасност от заразяване. Например поради използване на медицински предпазни средства.</string>
     <string name="pause_confirmation_accept_button">Да, постави на пауза</string>
     <string name="pause_confirmation_decline_button">Не, не поставяй на пауза</string>
     <string name="skip_confirmation_checkbox">Не показвай повече този екран</string>
-    <string name="cd_status_paused">Сива икона за пауза, която показва, че приложението е на пауза</string>
-    <string name="duration_format_hour">%1$d час(а)</string>
-    <string name="duration_format_hours">%1$d час(а)</string>
-    <string name="duration_format_hour_and_minute">%1$d час(а) %2$d минута</string>
-    <string name="duration_format_hour_and_minutes">%1$d час(а) %2$d минути</string>
-    <string name="duration_format_hours_and_minute">%1$d час(а) %2$d минута</string>
-    <string name="duration_format_hours_and_minutes">%1$d час(а) %2$d минути</string>
-    <string name="duration_format_minute">%1$d минута</string>
-    <string name="duration_format_minutes">%1$d минути</string>
+    <string name="cd_status_paused">Сиво кръгче със знак за пауза, което показва, че приложението е поставено на пауза</string>
+    <string name="duration_format_hours_and_minutes">%1$s и %2$s</string>
     <string name="lab_test_copy_key_to_clipboard">GGD-ключът е копиран</string>
-    <string name="status_paused_duration_reached_headline">Паузата изтече</string>
+    <string name="status_paused_duration_reached_headline">Включи приложението отново</string>
     <plurals name="pause_duration_hours_option_plurals">
-        <item quantity="one">Постави на пауза за %d час(а)</item>
-        <item quantity="other">Постави на пауза за %d час(а)</item>
+        <item quantity="one">Постави на пауза за %d час</item>
+        <item quantity="other">Постави на пауза за %d часа</item>
+    </plurals>
+    <plurals name="duration_hours_plurals">
+        <item quantity="one">%d час</item>
+        <item quantity="other">%d часа</item>
+    </plurals>
+    <plurals name="duration_minutes_plurals">
+        <item quantity="one">%d минута</item>
+        <item quantity="other">%d минути</item>
     </plurals>
 </resources>

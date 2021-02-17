@@ -23,20 +23,12 @@ class StatusSection : Section() {
     private val pausedGroup = Section().apply {
         setHideWhenEmpty(true)
     }
-    private val infoGroup = Section().apply {
-        setHideWhenEmpty(true)
-    }
     var pausedItem: StatusPausedItem? = null
         set(value) {
             if (value?.viewState != field?.viewState) {
                 field = value
                 pausedGroup.update(listOfNotNull(value))
             }
-        }
-    var infoItem: StatusInfoItem? = null
-        set(value) {
-            field = value
-            infoGroup.update(listOfNotNull(value))
         }
     var lastKeysProcessed: LocalDateTime? = null
         set(value) {
@@ -100,7 +92,7 @@ class StatusSection : Section() {
         if (isEmpty) {
             addAll(
                 listOf(
-                    headerGroup, pausedGroup, errorGroup, infoGroup,
+                    headerGroup, pausedGroup, errorGroup,
                     Section(
                         listOf(
                             StatusActionItem.About,
