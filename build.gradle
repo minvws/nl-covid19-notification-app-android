@@ -27,6 +27,7 @@ buildscript {
     ext.robolectric_version = "4.3.1"
     ext.timber_version = "4.7.1"
     ext.arch_core_version = "2.1.0"
+    ext.insetter_version = "0.5.0"
 
     repositories {
         google {
