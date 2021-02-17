@@ -160,7 +160,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         OnboardingRepository(
             sharedPreferences = configPreferences,
             googlePlayServicesUpToDateChecker = { true }
-        ).apply { setHasSeenLatestTerms() },
+        ),
         repository,
         NotificationsRepository(context, clock),
         settingsRepository,

@@ -12,12 +12,10 @@ import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.testing.TestNavHostController
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -133,7 +131,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         OnboardingRepository(
             sharedPreferences = configPreferences,
             googlePlayServicesUpToDateChecker = { true }
-        ).apply { setHasSeenLatestTerms() },
+        ),
         repository,
         NotificationsRepository(context, clock),
         settingsRepository,
@@ -222,37 +220,6 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             activityViewModelFactory
         ) {
             onView(withId(R.id.loading)).check(matches(isDisplayed()))
-        }
-    }
-
-    @Test
-    fun testInteropAnnouncementInfoState() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val navController = TestNavHostController(context).apply {
-            setGraph(R.navigation.nav_main)
-            setCurrentDestination(R.id.nav_status)
-        }
-
-        configPreferences.edit { remove("terms_version") }
-
-        withFragment(
-            StatusFragment(
-                factoryProducer = {
-                    object : ViewModelProvider.Factory {
-                        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                            return statusViewModel as T
-                        }
-                    }
-                }
-            ),
-            navController,
-            R.style.AppTheme,
-            activityViewModelFactory
-        ) {
-            // Scroll to the 3rd item (1 header item, 1 error item and the info item)
-            onView(withId(R.id.content))
-                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(3))
-            onView(withId(R.id.info_box_text)).check(matches(isDisplayed()))
         }
     }
 }
