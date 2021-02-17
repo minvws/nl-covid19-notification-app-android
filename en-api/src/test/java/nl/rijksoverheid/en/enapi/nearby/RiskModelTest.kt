@@ -11,7 +11,7 @@ import com.google.android.gms.nearby.exposurenotification.ExposureWindow
 import com.google.android.gms.nearby.exposurenotification.Infectiousness
 import com.google.android.gms.nearby.exposurenotification.ReportType
 import com.google.android.gms.nearby.exposurenotification.ScanInstance
-import org.junit.Assert
+import junit.framework.TestCase.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -51,16 +51,16 @@ class RiskModelTest {
                         )
                     )
                     .build()
-            ),
-            RiskModel.ScoreType.SUM
+            )
         )
 
-        Assert.assertEquals(1, riskScores.size)
-        Assert.assertEquals(1200.0, riskScores[daysSinceEpoch])
+        assertEquals(1, riskScores.size)
+        assertEquals(1200.0, riskScores.first { it.daysSinceEpoch == daysSinceEpoch }.scoreSum)
+        assertEquals(1200.0, riskScores.first { it.daysSinceEpoch == daysSinceEpoch }.maximumScore)
     }
 
     @Test
-    fun `getDailyRiskScores MAX returns highest risk score`() {
+    fun `getDailyRiskScores calculates max and summed risk score`() {
         val model = RiskModel(
             DailySummariesConfig.DailySummariesConfigBuilder()
                 .setMinimumWindowScore(0.0)
@@ -99,60 +99,12 @@ class RiskModelTest {
                         )
                     )
                     .build()
-            ),
-            RiskModel.ScoreType.MAX
+            )
         )
 
-        Assert.assertEquals(1, riskScores.size)
-        Assert.assertEquals(1200.0, riskScores[daysSinceEpoch])
-    }
-
-    @Test
-    fun `getDailyRiskScores SUM returns cumulative risk score`() {
-        val model = RiskModel(
-            DailySummariesConfig.DailySummariesConfigBuilder()
-                .setMinimumWindowScore(0.0)
-                .setDaysSinceExposureThreshold(10)
-                .setAttenuationBuckets(listOf(56, 62, 70), listOf(2.0, 1.0, 0.5, 0.0))
-                .setInfectiousnessWeight(Infectiousness.STANDARD, 1.0)
-                .setInfectiousnessWeight(Infectiousness.HIGH, 2.0)
-                .setReportTypeWeight(ReportType.CONFIRMED_CLINICAL_DIAGNOSIS, 1.0)
-                .setReportTypeWeight(ReportType.CONFIRMED_TEST, 1.0)
-                .setReportTypeWeight(ReportType.SELF_REPORT, 1.0)
-                .build()
-        )
-
-        val date = LocalDate.now()
-        val dateMillisSinceEpoch = date.atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli()
-        val daysSinceEpoch = dateMillisSinceEpoch / (1000 * 60 * 60 * 24)
-        val riskScores = model.getDailyRiskScores(
-            listOf(
-                ExposureWindow.Builder().setDateMillisSinceEpoch(dateMillisSinceEpoch)
-                    .setInfectiousness(Infectiousness.STANDARD)
-                    .setScanInstances(
-                        listOf(
-                            ScanInstance.Builder()
-                                .setSecondsSinceLastScan(600)
-                                .setTypicalAttenuationDb(54).build()
-                        )
-                    )
-                    .build(),
-                ExposureWindow.Builder().setDateMillisSinceEpoch(dateMillisSinceEpoch)
-                    .setInfectiousness(Infectiousness.STANDARD)
-                    .setScanInstances(
-                        listOf(
-                            ScanInstance.Builder()
-                                .setSecondsSinceLastScan(600)
-                                .setTypicalAttenuationDb(57).build()
-                        )
-                    )
-                    .build()
-            ),
-            RiskModel.ScoreType.SUM
-        )
-
-        Assert.assertEquals(1, riskScores.size)
-        Assert.assertEquals(1800.0, riskScores[daysSinceEpoch])
+        assertEquals(1, riskScores.size)
+        assertEquals(1800.0, riskScores.first { it.daysSinceEpoch == daysSinceEpoch }.scoreSum)
+        assertEquals(1200.0, riskScores.first { it.daysSinceEpoch == daysSinceEpoch }.maximumScore)
     }
 
     @Test
@@ -197,13 +149,14 @@ class RiskModelTest {
                         )
                     )
                     .build()
-            ),
-            RiskModel.ScoreType.SUM
+            )
         )
 
-        Assert.assertEquals(2, riskScores.size)
-        Assert.assertEquals(1200.0, riskScores[day1])
-        Assert.assertEquals(600.0, riskScores[day2])
+        assertEquals(2, riskScores.size)
+        assertEquals(1200.0, riskScores.first { it.daysSinceEpoch == day1 }.scoreSum)
+        assertEquals(1200.0, riskScores.first { it.daysSinceEpoch == day1 }.maximumScore)
+        assertEquals(600.0, riskScores.first { it.daysSinceEpoch == day2 }.scoreSum)
+        assertEquals(600.0, riskScores.first { it.daysSinceEpoch == day2 }.maximumScore)
     }
 
     @Test
@@ -246,12 +199,12 @@ class RiskModelTest {
                         )
                     )
                     .build()
-            ),
-            RiskModel.ScoreType.SUM
+            )
         )
 
-        Assert.assertEquals(1, riskScores.size)
-        Assert.assertEquals(1200.0, riskScores[daysSinceEpoch])
+        assertEquals(1, riskScores.size)
+        assertEquals(1200.0, riskScores.first { it.daysSinceEpoch == daysSinceEpoch }.scoreSum)
+        assertEquals(1200.0, riskScores.first { it.daysSinceEpoch == daysSinceEpoch }.maximumScore)
     }
 
     @Test
@@ -290,11 +243,11 @@ class RiskModelTest {
                         )
                     )
                     .build()
-            ),
-            RiskModel.ScoreType.SUM
+            )
         )
 
-        Assert.assertEquals(1, riskScores.size)
-        Assert.assertEquals(210.0, riskScores[daysSinceEpoch])
+        assertEquals(1, riskScores.size)
+        assertEquals(210.0, riskScores.first { it.daysSinceEpoch == daysSinceEpoch }.scoreSum)
+        assertEquals(210.0, riskScores.first { it.daysSinceEpoch == daysSinceEpoch }.maximumScore)
     }
 }

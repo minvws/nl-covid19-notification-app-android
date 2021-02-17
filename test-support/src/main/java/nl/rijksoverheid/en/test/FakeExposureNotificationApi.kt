@@ -15,7 +15,7 @@ import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
-import nl.rijksoverheid.en.enapi.nearby.RiskModel
+import nl.rijksoverheid.en.enapi.nearby.DailyRiskScores
 import java.io.File
 
 open class FakeExposureNotificationApi :
@@ -40,10 +40,7 @@ open class FakeExposureNotificationApi :
 
     override suspend fun getDailySummaries(config: DailySummariesConfig): List<DailySummary>? = null
 
-    override suspend fun getDailyRiskScores(
-        config: DailySummariesConfig,
-        scoreType: RiskModel.ScoreType
-    ): Map<Long, Double> = emptyMap()
+    override suspend fun getDailyRiskScores(config: DailySummariesConfig): List<DailyRiskScores> = emptyList()
 
     override fun deviceSupportsLocationlessScanning(): Boolean = false
 }

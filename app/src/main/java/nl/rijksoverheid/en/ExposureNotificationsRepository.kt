@@ -51,7 +51,6 @@ import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
-import nl.rijksoverheid.en.enapi.nearby.RiskModel
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
@@ -609,20 +608,14 @@ class ExposureNotificationsRepository(
 
         val riskCalculationParameters = getCachedRiskCalculationParameters()
         val dailySummariesConfig = getDailySummariesConfig(riskCalculationParameters)
-        val scoreType = when (riskCalculationParameters.windowCalculationType) {
-            WindowCalculationType.MAX -> RiskModel.ScoreType.MAX
-            WindowCalculationType.SUM -> RiskModel.ScoreType.SUM
-        }
-        val riskScores = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig, scoreType).filter {
-            it.value > riskCalculationParameters.minimumRiskScore
-        }
 
-        if (BuildConfig.DEBUG) {
-            var riskScoresInfo = "Calculated risk scores (windowCalculationType: ${riskCalculationParameters.windowCalculationType.name})"
-            riskScores.forEach {
-                riskScoresInfo += "{daysSinceEpoch:${it.key}, maximumScore:${it.value}}, "
+        Timber.d("Get daily risk scores")
+        val riskScores = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig).filter {
+            Timber.d(it.toString())
+            when (riskCalculationParameters.windowCalculationType) {
+                WindowCalculationType.SUM -> it.scoreSum > riskCalculationParameters.minimumRiskScore
+                WindowCalculationType.MAX -> it.maximumScore > riskCalculationParameters.minimumRiskScore
             }
-            Timber.d(riskScoresInfo)
         }
 
         val currentDaysSinceEpoch = if (preferences.contains(KEY_LAST_TOKEN_EXPOSURE_DATE)) {
@@ -634,7 +627,7 @@ class ExposureNotificationsRepository(
         val newDaysSinceEpoch = if (testExposure) {
             LocalDate.now(clock).minusDays(5).toEpochDay()
         } else {
-            riskScores.maxByOrNull { it.key }?.key
+            riskScores.maxByOrNull { it.daysSinceEpoch }?.daysSinceEpoch
         }
 
         if (!testExposure && riskScores.isNullOrEmpty()) {

@@ -46,7 +46,7 @@ import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
-import nl.rijksoverheid.en.enapi.nearby.RiskModel
+import nl.rijksoverheid.en.enapi.nearby.DailyRiskScores
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
@@ -668,10 +668,15 @@ class ExposureNotificationsRepositoryTest {
 
         val api = object : FakeExposureNotificationApi() {
             override suspend fun getDailyRiskScores(
-                config: DailySummariesConfig,
-                scoreType: RiskModel.ScoreType
-            ): Map<Long, Double> {
-                return mapOf(LocalDate.now(clock).minusDays(4).toEpochDay() to 2.0)
+                config: DailySummariesConfig
+            ): List<DailyRiskScores> {
+                return listOf(
+                    DailyRiskScores(
+                        LocalDate.now(clock).minusDays(4).toEpochDay(),
+                        2.0,
+                        2.0
+                    )
+                )
             }
         }
 
@@ -734,14 +739,25 @@ class ExposureNotificationsRepositoryTest {
 
         val api = object : FakeExposureNotificationApi() {
             val getDailyRiskScoresResults = listOf(
-                mapOf(LocalDate.now(clock).minusDays(8).toEpochDay() to 2.0),
-                mapOf(LocalDate.now(clock).minusDays(4).toEpochDay() to 2.0)
+                listOf(
+                    DailyRiskScores(
+                        LocalDate.now(clock).minusDays(8).toEpochDay(),
+                        2.0,
+                        2.0
+                    )
+                ),
+                listOf(
+                    DailyRiskScores(
+                        LocalDate.now(clock).minusDays(4).toEpochDay(),
+                        2.0,
+                        2.0
+                    )
+                )
             ).iterator()
 
             override suspend fun getDailyRiskScores(
-                config: DailySummariesConfig,
-                scoreType: RiskModel.ScoreType
-            ): Map<Long, Double> {
+                config: DailySummariesConfig
+            ): List<DailyRiskScores> {
                 return getDailyRiskScoresResults.next()
             }
         }
@@ -804,11 +820,8 @@ class ExposureNotificationsRepositoryTest {
         val dateTime = "2020-06-20T10:15:30.00Z"
 
         val api = object : FakeExposureNotificationApi() {
-            override suspend fun getDailyRiskScores(
-                config: DailySummariesConfig,
-                scoreType: RiskModel.ScoreType
-            ): Map<Long, Double> {
-                return emptyMap()
+            override suspend fun getDailyRiskScores(config: DailySummariesConfig): List<DailyRiskScores> {
+                return emptyList()
             }
         }
 
@@ -867,10 +880,15 @@ class ExposureNotificationsRepositoryTest {
 
         val api = object : FakeExposureNotificationApi() {
             override suspend fun getDailyRiskScores(
-                config: DailySummariesConfig,
-                scoreType: RiskModel.ScoreType
-            ): Map<Long, Double> {
-                return mapOf(LocalDate.now(clock).minusDays(4).toEpochDay() to 2.0)
+                config: DailySummariesConfig
+            ): List<DailyRiskScores> {
+                return listOf(
+                    DailyRiskScores(
+                        LocalDate.now(clock).minusDays(4).toEpochDay(),
+                        2.0,
+                        2.0
+                    )
+                )
             }
         }
 
@@ -1315,31 +1333,78 @@ class ExposureNotificationsRepositoryTest {
             assertFalse(cancelled.get())
         }
 
-/*
     @Test
-    fun `getLastExposureDate returns date added through addExposure and cancels notification`() =
+    fun `getLastExposureDate returns date added through addExposure`() =
         runBlocking {
-            val dateTime = "2020-06-20T10:15:30.00Z"
-            val clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+            val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
             val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
                 .getSharedPreferences("repository_test", 0)
 
             val api = object : FakeExposureNotificationApi() {
-                override suspend fun getSummary(token: String) =
-                    if (token == "sample-token") ExposureSummary.ExposureSummaryBuilder()
-                        .setDaysSinceLastExposure(4)
-                        .setMatchedKeyCount(1).build()
-                    else null
+                override suspend fun getDailyRiskScores(
+                    config: DailySummariesConfig
+                ): List<DailyRiskScores> {
+                    return listOf(
+                        DailyRiskScores(
+                            LocalDate.now(clock).minusDays(4).toEpochDay(),
+                            2.0,
+                            2.0
+                        )
+                    )
+                }
             }
 
-            val repository = createRepository(api = api, preferences = sharedPrefs, clock = clock)
-            repository.addExposure("sample-token")
+            val fakeService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                    Manifest(emptyList(), "test-params", "")
+
+                override suspend fun getRiskCalculationParameters(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): RiskCalculationParameters {
+                    return RiskCalculationParameters(
+                        emptyList(),
+                        emptyList(),
+                        listOf(56, 62, 70),
+                        listOf(1.0, 1.0, 1.0, 0.0),
+                        0,
+                        0.0,
+                        1.0,
+                        emptyList(),
+                        Infectiousness.STANDARD,
+                        ReportType.CONFIRMED_TEST,
+                        WindowCalculationType.SUM
+                    )
+                }
+
+                override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
+                    throw NotImplementedError()
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
+            }
+
+            val repository = createRepository(
+                api = api,
+                preferences = sharedPrefs,
+                clock = clock,
+                cdnService = fakeService
+            )
+
+            repository.addExposure()
 
             val result = repository.getLastExposureDate().first()
             assertEquals(LocalDate.now(clock).minusDays(4), result)
         }
-*/
 
     @Test
     fun `keyProcessingOverdue returns true if last successful time of key processing is more than 24 hours in the past`() {

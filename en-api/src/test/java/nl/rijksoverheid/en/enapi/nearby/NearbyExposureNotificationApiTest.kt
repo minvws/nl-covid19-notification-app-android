@@ -584,9 +584,9 @@ class NearbyExposureNotificationApiTest {
         )
 
         // WHEN
-        val result = api.getDailyRiskScores(dailySummariesConfig, RiskModel.ScoreType.MAX)
+        val result = api.getDailyRiskScores(dailySummariesConfig)
 
-        assertEquals(RiskModel(dailySummariesConfig).getDailyRiskScores(exposureWindows, RiskModel.ScoreType.MAX), result)
+        assertEquals(RiskModel(dailySummariesConfig).getDailyRiskScores(exposureWindows), result)
     }
 
     @Test
@@ -617,9 +617,9 @@ class NearbyExposureNotificationApiTest {
         )
 
         // WHEN
-        val result = api.getDailyRiskScores(dailySummariesConfig, RiskModel.ScoreType.SUM)
+        val result = api.getDailyRiskScores(dailySummariesConfig)
 
-        assertEquals(RiskModel(dailySummariesConfig).getDailyRiskScores(exposureWindows, RiskModel.ScoreType.SUM), result)
+        assertEquals(RiskModel(dailySummariesConfig).getDailyRiskScores(exposureWindows), result)
     }
 
     @Test
@@ -640,9 +640,9 @@ class NearbyExposureNotificationApiTest {
             )
 
         // WHEN
-        val result = api.getDailyRiskScores(dailySummariesConfig, RiskModel.ScoreType.SUM)
+        val result = api.getDailyRiskScores(dailySummariesConfig)
 
-        assertEquals(emptyMap<Long, Double>(), result)
+        assertEquals(emptyList<DailyRiskScores>(), result)
     }
 
     private abstract class FakeExposureNotificationsClient : ExposureNotificationClient {
@@ -689,6 +689,7 @@ class NearbyExposureNotificationApiTest {
             throw NotImplementedError()
         }
 
+        @Suppress("DEPRECATION")
         override fun getExposureSummary(token: String): Task<ExposureSummary> =
             Tasks.forException(IllegalStateException())
 
@@ -696,6 +697,7 @@ class NearbyExposureNotificationApiTest {
 
         override fun stop(): Task<Void> = Tasks.forException(IllegalStateException())
 
+        @Suppress("DEPRECATION")
         override fun getExposureInformation(token: String): Task<List<ExposureInformation>> =
             Tasks.forException(IllegalStateException())
 

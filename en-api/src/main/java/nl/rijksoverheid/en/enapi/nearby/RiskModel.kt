@@ -15,19 +15,24 @@ class RiskModel(private val config: DailySummariesConfig) {
     /**
      * Gets the daily list of risk scores from the given exposure windows.
      */
-    fun getDailyRiskScores(windows: List<ExposureWindow>, scoreType: ScoreType = ScoreType.MAX): Map<Long, Double> {
-        val perDayScore = mutableMapOf<Long, Double>()
+    fun getDailyRiskScores(windows: List<ExposureWindow>): List<DailyRiskScores> {
+        val perDayMaxScore = mutableMapOf<Long, Double>()
+        val perDaySummedScore = mutableMapOf<Long, Double>()
         windows.forEach { window ->
             val daysSinceEpoch = window.dateMillisSinceEpoch / (1000 * 60 * 60 * 24)
             val windowScore = getWindowScore(window)
             if (windowScore >= config.minimumWindowScore) {
-                perDayScore[daysSinceEpoch] = when (scoreType) {
-                    ScoreType.SUM -> perDayScore.getOrElse(daysSinceEpoch, { 0.0 }) + windowScore
-                    ScoreType.MAX -> max(perDayScore.getOrElse(daysSinceEpoch, { 0.0 }), windowScore)
-                }
+                perDayMaxScore[daysSinceEpoch] = max(perDayMaxScore.getOrElse(daysSinceEpoch, { 0.0 }), windowScore)
+                perDaySummedScore[daysSinceEpoch] = perDaySummedScore.getOrElse(daysSinceEpoch, { 0.0 }) + windowScore
             }
         }
-        return perDayScore
+        return perDaySummedScore.keys.map {
+            DailyRiskScores(
+                daysSinceEpoch = it,
+                maximumScore = perDayMaxScore[it] ?: 0.0,
+                scoreSum = perDaySummedScore[it] ?: 0.0
+            )
+        }
     }
 
     /**
@@ -60,10 +65,5 @@ class RiskModel(private val config: DailySummariesConfig) {
 
     private fun getInfectiousnessMultiplier(infectiousness: Int): Double {
         return config.infectiousnessWeights[infectiousness] ?: 0.0
-    }
-
-    enum class ScoreType {
-        SUM,
-        MAX
     }
 }

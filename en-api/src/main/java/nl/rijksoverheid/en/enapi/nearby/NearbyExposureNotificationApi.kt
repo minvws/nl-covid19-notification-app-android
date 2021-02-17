@@ -214,9 +214,8 @@ class NearbyExposureNotificationApi(
         }
     }
 
-    override suspend fun getDailyRiskScores(config: DailySummariesConfig, scoreType: RiskModel.ScoreType): Map<Long, Double> {
-        return RiskModel(config)
-            .getDailyRiskScores(getExposureWindows(), scoreType)
+    override suspend fun getDailyRiskScores(config: DailySummariesConfig): List<DailyRiskScores> {
+        return RiskModel(config).getDailyRiskScores(getExposureWindows())
     }
 
     private suspend fun getExposureWindows(): List<ExposureWindow> = suspendCoroutine { c ->
