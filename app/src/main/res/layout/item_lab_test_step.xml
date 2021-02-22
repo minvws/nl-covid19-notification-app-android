@@ -22,6 +22,7 @@
         android:layout_height="wrap_content">
 
         <View
+            android:id="@+id/top_line"
             android:layout_width="4dp"
             android:layout_height="0dp"
             android:background="@color/gray_lighter"
@@ -32,6 +33,7 @@
             app:show="@{viewState.showTopLine}" />
 
         <View
+            android:id="@+id/bottom_line"
             android:layout_width="4dp"
             android:layout_height="0dp"
             android:background="@color/gray_lighter"
@@ -55,7 +57,6 @@
             android:textAppearance="?attr/textAppearanceSubtitle1"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBaseline_toBaselineOf="@id/content"
-            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1" />
