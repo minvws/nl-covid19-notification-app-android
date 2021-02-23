@@ -104,6 +104,8 @@
     <string name="about_toolbar_title">Over de app</string>
     <string name="about_helpdesk_title">Andere vraag over de app?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Bel gratis 0800-1280</string>
+    <string name="about_website_link_title">Meer over de app</string>
+    <string name="about_website_link_subtitle">Ga naar coronamelder.nl</string>
     <string name="about_technical_explanation_title">Hoe werkt de app?</string>
     <string name="about_technical_explanation_subtitle">Bekijk de technische uitleg</string>
     <string name="about_onboarding_title">Wat doet CoronaMelder?</string>

@@ -40,6 +40,7 @@ class AboutSection : Section(
         FAQItem(INTEROPERABILITY)
     ) +
         listOf(
+            WebsiteLinkItem(),
             HelpdeskItem(),
             FAQHeaderItem(R.string.about_toolbar_title),
             ReviewItem(),
