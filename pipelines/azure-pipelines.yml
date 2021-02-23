@@ -2,6 +2,7 @@ name: '$(Date:yyyyMMdd)$(Rev:.r)-$(BuildID)'
 trigger:
   - master
   - release/*
+  - pentest/*
 
 variables:
   - name: GRADLE_USER_HOME
@@ -83,3 +84,5 @@ stages:
           # Run distribution on the master and release/ branches only          
           - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')) }}:
             - template: distribute.yml
+          - ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/pentest/') }}:
+              - template: pentest-build.yml
