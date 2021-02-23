@@ -110,7 +110,7 @@ class ProcessManifestWorkerTest {
                         appContext: Context,
                         workerClassName: String,
                         workerParameters: WorkerParameters
-                    ): ListenableWorker? {
+                    ): ListenableWorker {
                         return ProcessManifestWorker(
                             appContext,
                             workerParameters,

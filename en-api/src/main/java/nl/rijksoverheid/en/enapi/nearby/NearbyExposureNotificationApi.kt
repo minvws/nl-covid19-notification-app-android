@@ -11,15 +11,15 @@ import android.content.Intent
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
-import com.google.android.gms.nearby.exposurenotification.DailySummary
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes
-import com.google.android.gms.nearby.exposurenotification.ExposureWindow
+import nl.rijksoverheid.en.enapi.DailyRiskScoresResult
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.ExposureNotificationApi
+import nl.rijksoverheid.en.enapi.ExposureWindowsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import timber.log.Timber
@@ -196,35 +196,24 @@ class NearbyExposureNotificationApi(
         }
     }
 
-    /**
-     * Get the [DailySummary]s
-     * @return a list of DailySummary objects corresponding to the last 14 days of exposure data or null if there's no match or an error occurred
-     */
-    override suspend fun getDailySummaries(config: DailySummariesConfig): List<DailySummary>? {
-        return suspendCoroutine { c ->
-            client.getDailySummaries(config).addOnSuccessListener {
-                c.resume(it)
-            }.addOnFailureListener {
-                Timber.e(it, "Error getting DailySummaries")
-                // TODO determine if we want bubble up errors here; this is used
-                // when processing the notification and at that point the API should never return
-                // null. If it does or throws an error, all we can do is retry or give up
-                c.resume(null)
+    override suspend fun getDailyRiskScores(config: DailySummariesConfig): DailyRiskScoresResult {
+        return when (val exposureWindowResult = getExposureWindows()) {
+            is ExposureWindowsResult.Success -> {
+                val riskScores = RiskModel(config).getDailyRiskScores(exposureWindowResult.exposureWindows)
+                DailyRiskScoresResult.Success(riskScores)
             }
+            is ExposureWindowsResult.UnknownError -> DailyRiskScoresResult.UnknownError(exposureWindowResult.exception)
         }
     }
 
-    override suspend fun getDailyRiskScores(config: DailySummariesConfig): List<DailyRiskScores> {
-        return RiskModel(config).getDailyRiskScores(getExposureWindows())
-    }
-
-    private suspend fun getExposureWindows(): List<ExposureWindow> = suspendCoroutine { c ->
+    private suspend fun getExposureWindows(): ExposureWindowsResult = suspendCoroutine { c ->
         client.exposureWindows.addOnSuccessListener {
-            c.resume(it)
+            c.resume(
+                ExposureWindowsResult.Success(it)
+            )
         }.addOnFailureListener {
             Timber.e(it, "Error getting ExposureWindows")
-            // TODO determine if we want bubble up errors here.
-            c.resume(emptyList())
+            c.resume(ExposureWindowsResult.UnknownError(it))
         }
     }
 
