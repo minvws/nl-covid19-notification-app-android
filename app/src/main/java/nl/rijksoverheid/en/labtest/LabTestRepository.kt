@@ -99,10 +99,7 @@ class LabTestRepository(
                 val result = api.register(RegistrationRequest(), config.requestSize)
                 storeResult(result)
                 RegistrationResult.Success(result.labConfirmationId)
-            } catch (ex: HttpException) {
-                Timber.e(ex, "Error registering")
-                RegistrationResult.UnknownError
-            } catch (ex: IOException) {
+            } catch (ex: Exception) {
                 Timber.e(ex, "Error registering")
                 RegistrationResult.UnknownError
             }
