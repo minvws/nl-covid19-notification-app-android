@@ -206,6 +206,36 @@ class LabTestRepositoryTest {
         }
 
     @Test
+    fun `registerForUpload with invalid response propagates RegistrationResult UnknownError`() =
+        runBlocking {
+            mockWebServer.enqueue(MockResponse().setBody("{\"labConfirmationId\":,\"bucketId\":,\"confirmationKey\":,\"validity\":}"))
+            mockWebServer.start()
+
+            val prefs =
+                ApplicationProvider.getApplicationContext<Application>()
+                    .getSharedPreferences("test", 0)
+
+            val repository = LabTestRepository(
+                AsyncSharedPreferences { prefs },
+                FakeExposureNotificationApi(),
+                LabTestService.create(
+                    ApplicationProvider.getApplicationContext(),
+                    BuildConfig.VERSION_CODE,
+                    baseUrl = mockWebServer.url("/").toString()
+                ),
+                NOOP_SCHEDULER,
+                NOOP_DECOY_SCHEDULER,
+                appConfigManager,
+                clock
+            )
+
+            val result = repository.registerForUpload()
+
+            assertEquals(1, mockWebServer.requestCount)
+            assertTrue(result is RegistrationResult.UnknownError)
+        }
+
+    @Test
     fun `uploadDiagnosticKeysIfPending without pending upload does not make a request and returns Completed`() =
         runBlocking {
             mockWebServer.start()
