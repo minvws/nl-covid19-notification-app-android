@@ -17,8 +17,8 @@ import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 
 @Suppress("ConstantConditionIf")
-class EnApplication : Application(), Configuration.Provider {
-    private val notificationsRepository = NotificationsRepository(this)
+open class EnApplication : Application(), Configuration.Provider {
+    private val notificationsRepository by lazy { NotificationsRepository(this) }
 
     @SuppressLint("RestrictedApi") // for WM Logger api
     override fun onCreate() {
