@@ -43,7 +43,6 @@ import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
-import nl.rijksoverheid.en.api.model.WindowCalculationType
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
@@ -268,7 +267,7 @@ class ExposureNotificationsRepository(
         }
 
         // if the key is missing, then this is our first run
-        if (!preferences.contains(KEY_EXPOSURE_KEY_SETS)) {
+        if (!preferences.contains(KEY_EXPOSURE_KEY_SETS) && false) {
             Timber.d("Skipping processing of initial key set")
             updateProcessedExposureKeySets(manifest.exposureKeysSetIds.toSet(), manifest)
             return ProcessExposureKeysResult.Success
@@ -612,10 +611,7 @@ class ExposureNotificationsRepository(
         Timber.d("Get daily risk scores")
         val riskScores = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig).filter {
             Timber.d(it.toString())
-            when (riskCalculationParameters.windowCalculationType) {
-                WindowCalculationType.SUM -> it.scoreSum > riskCalculationParameters.minimumRiskScore
-                WindowCalculationType.MAX -> it.maximumScore > riskCalculationParameters.minimumRiskScore
-            }
+            it.scoreSum > riskCalculationParameters.minimumRiskScore
         }
 
         val currentDaysSinceEpoch = if (preferences.contains(KEY_LAST_TOKEN_EXPOSURE_DATE)) {

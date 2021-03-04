@@ -38,7 +38,6 @@ import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
-import nl.rijksoverheid.en.api.model.WindowCalculationType
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
@@ -130,8 +129,7 @@ private val MOCK_RISK_PARAMS_RESPONSE = MockResponse().setBody(
         "infectiousnessWeights": [0.0, 1.0, 2.0],
         "reportTypeWeights": [0.0, 1.0, 1.0, 0.0, 0.0, 0.0],
         "minimumRiskScore": 1.0,
-        "reportTypeWhenMissing": 1,
-        "windowCalculationType": 1
+        "reportTypeWhenMissing": 1
    }
     """.trimIndent()
 )
@@ -256,7 +254,7 @@ class ExposureNotificationsRepositoryTest {
         )
         assertEquals(2, mockWebServer.requestCount)
         assertEquals(ProcessExposureKeysResult.Success, result)
-        assertEquals("/v3/exposurekeyset/test", mockWebServer.takeRequest().path)
+        assertEquals("/v4/exposurekeyset/test", mockWebServer.takeRequest().path)
         assertEquals(setOf("test"), sharedPrefs.getStringSet("exposure_key_sets", emptySet()))
     }
 
@@ -305,9 +303,9 @@ class ExposureNotificationsRepositoryTest {
         assertEquals(2, mockWebServer.requestCount)
         assertEquals(ProcessExposureKeysResult.Success, result)
 
-        assertEquals("/v3/exposurekeyset/test2", mockWebServer.takeRequest().path)
+        assertEquals("/v4/exposurekeyset/test2", mockWebServer.takeRequest().path)
         assertEquals(
-            "/v3/riskcalculationparameters/config-params",
+            "/v4/riskcalculationparameters/config-params",
             mockWebServer.takeRequest().path
         )
 
@@ -588,13 +586,13 @@ class ExposureNotificationsRepositoryTest {
             mockWebServer.dispatcher = object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
                     return when (request.path) {
-                        "/v3/exposurekeyset/test" -> {
+                        "/v4/exposurekeyset/test" -> {
                             MockResponse().setResponseCode(500)
                         }
-                        "/v3/exposurekeyset/test2" -> {
+                        "/v4/exposurekeyset/test2" -> {
                             MockResponse().setBody("dummy_key_file")
                         }
-                        "/v3/riskcalculationparameters/config-params" -> MOCK_RISK_PARAMS_RESPONSE
+                        "/v4/riskcalculationparameters/config-params" -> MOCK_RISK_PARAMS_RESPONSE
 
                         else -> {
                             MockResponse().setResponseCode(404)
@@ -647,10 +645,10 @@ class ExposureNotificationsRepositoryTest {
             val request2 = mockWebServer.takeRequest()
             val requests = listOf(request1, request2).sortedBy { it.path }
 
-            assertEquals("/v3/exposurekeyset/test", requests[0].path)
-            assertEquals("/v3/exposurekeyset/test2", requests[1].path)
+            assertEquals("/v4/exposurekeyset/test", requests[0].path)
+            assertEquals("/v4/exposurekeyset/test2", requests[1].path)
             assertEquals(
-                "/v3/riskcalculationparameters/config-params",
+                "/v4/riskcalculationparameters/config-params",
                 mockWebServer.takeRequest().path
             )
             assertTrue(processed.get())
@@ -702,8 +700,7 @@ class ExposureNotificationsRepositoryTest {
                     1.0,
                     emptyList(),
                     Infectiousness.STANDARD,
-                    ReportType.CONFIRMED_TEST,
-                    WindowCalculationType.SUM
+                    ReportType.CONFIRMED_TEST
                 )
             }
 
@@ -784,8 +781,7 @@ class ExposureNotificationsRepositoryTest {
                     1.0,
                     emptyList(),
                     Infectiousness.STANDARD,
-                    ReportType.CONFIRMED_TEST,
-                    WindowCalculationType.SUM
+                    ReportType.CONFIRMED_TEST
                 )
             }
 
@@ -847,8 +843,7 @@ class ExposureNotificationsRepositoryTest {
                     1.0,
                     emptyList(),
                     Infectiousness.STANDARD,
-                    ReportType.CONFIRMED_TEST,
-                    WindowCalculationType.SUM
+                    ReportType.CONFIRMED_TEST
                 )
             }
 
@@ -914,8 +909,7 @@ class ExposureNotificationsRepositoryTest {
                     10.0,
                     emptyList(),
                     Infectiousness.STANDARD,
-                    ReportType.CONFIRMED_TEST,
-                    WindowCalculationType.SUM
+                    ReportType.CONFIRMED_TEST
                 )
             }
 
@@ -1377,8 +1371,7 @@ class ExposureNotificationsRepositoryTest {
                         1.0,
                         emptyList(),
                         Infectiousness.STANDARD,
-                        ReportType.CONFIRMED_TEST,
-                        WindowCalculationType.SUM
+                        ReportType.CONFIRMED_TEST
                     )
                 }
 

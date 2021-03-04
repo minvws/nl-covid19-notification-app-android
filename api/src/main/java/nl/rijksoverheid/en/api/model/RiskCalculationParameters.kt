@@ -20,8 +20,7 @@ data class RiskCalculationParameters(
     @Json(name = "minimumRiskScore") val minimumRiskScore: Double,
     @Json(name = "daysSinceOnsetToInfectiousness") val daysSinceOnsetToInfectiousness: List<DaySinceOnsetToInfectiousness>,
     @Json(name = "infectiousnessWhenDaysSinceOnsetMissing") val infectiousnessWhenDaysSinceOnsetMissing: Int,
-    @Json(name = "reportTypeWhenMissing") val reportTypeWhenMissing: Int,
-    @Json(name = "windowCalculationType") val windowCalculationType: WindowCalculationType
+    @Json(name = "reportTypeWhenMissing") val reportTypeWhenMissing: Int
 )
 
 @JsonClass(generateAdapter = true)
@@ -29,12 +28,3 @@ data class DaySinceOnsetToInfectiousness(
     @Json(name = "daysSinceOnsetOfSymptoms") val daysSinceOnsetOfSymptoms: Int,
     @Json(name = "infectiousness") val infectiousness: Int
 )
-
-enum class WindowCalculationType(val value: Int) {
-    MAX(0),
-    SUM(1);
-
-    companion object {
-        fun getByValue(value: Int) = values().firstOrNull { it.value == value }
-    }
-}
