@@ -99,6 +99,13 @@ android {
             buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "true"
             versionNameSuffix "-tst"
         }
+        pentest {
+            dimension "environment"
+            buildConfigField "boolean", "FEATURE_SECURE_SCREEN", "false"
+            buildConfigField "boolean", "FEATURE_LOGGING", "true"
+            buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "true"
+            versionNameSuffix "-pentest"
+        }
         acc {
             dimension "environment"
             buildConfigField "boolean", "FEATURE_LOGGING", "true"
