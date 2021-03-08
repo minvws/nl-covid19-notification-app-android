@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="faq_notification_paragraph_1">Sie erhalten eine Nachricht, wenn für Sie eine erhöhte Ansteckungsgefahr bestand. Das ist der Fall, wenn Sie mindestens 15 Minuten in der Nähe einer Person waren, bei der später Corona festgestellt wurde. Und natürlich nur, wenn diese Person auch die App benutzt.\n\nOb Sie eine Nachricht erhalten, hängt von der Stärke des Bluetooth-Signals ab. Und von der Dauer der Begegnung. \n\nFuhr jemand auf der Straße mit dem Rad vorbei? Dann bekommen Sie später keine Nachricht. Sie waren dicht beieinander, also war das Bluetooth-Signal stark. Aber die Begegnung war so kurz, dass die Ansteckungsgefahr sehr gering ist.\n\nSaßen Sie im Zug oder Büro dicht beieinander? Dann können Sie später eine Nachricht bekommen. Das Bluetooth-Signal war stark genug, und Sie waren längere Zeit nah beieinander.</string>
+    <string name="faq_notification_paragraph_1">Sie erhalten eine Nachricht, wenn für Sie eine erhöhte Ansteckungsgefahr bestand. Das ist der Fall, wenn Sie insgesamt mindestens 15 Minuten in der Nähe einer oder mehrerer Personen waren, bei der/denen später Corona festgestellt wurde. Und natürlich nur, wenn diese Person(en) auch die App benutzt/benutzen.\n\nOb Sie eine Nachricht erhalten, hängt von der Stärke des Bluetooth-Signals ab. Und von der Dauer der Begegnung. \n\nFuhr jemand auf der Straße mit dem Rad vorbei? Dann bekommen Sie später keine Nachricht. Sie waren dicht beieinander, also war das Bluetooth-Signal stark. Aber die Begegnung war so kurz, dass die Ansteckungsgefahr sehr gering ist.\n\nSaßen Sie im Zug oder Büro dicht beieinander? Dann können Sie später eine Nachricht bekommen. Das Bluetooth-Signal war stark genug, und Sie waren längere Zeit nah beieinander.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">de</string>
@@ -62,7 +62,7 @@
     <string name="post_notification_button">Coronatest anfordern</string>
     <string name="generic_notification_toolbar_title">Nachricht erhalten</string>
     <string name="generic_notification_header_1">Wie erkenne ich eine Nachricht?</string>
-    <string name="generic_notification_paragraph_2">Die App schickt eine Nachricht, wenn Sie mindestens 15 Minuten in der Nähe einer Person waren, bei der später Corona festgestellt wurde.</string>
+    <string name="generic_notification_paragraph_2">Die App schickt eine Nachricht, wenn Sie insgesamt mindestens 15 Minuten in der Nähe einer oder mehrerer Personen waren, bei der/denen später Corona festgestellt wurde.</string>
     <string name="generic_notification_paragraph_4">Die Nachricht erscheint bei Ihren Meldungen, wie Nachrichten aus den anderen Apps. Die Nachricht hat das Symbol des CoronaMelders. Haben Sie eine Nachricht erhalten? Öffnen Sie dann den CoronaMelder. Dort lesen Sie, was in diesem Fall zu tun ist.</string>
     <string name="generic_notification_alt_text_6">Ein roter Bildschirm mit Alarmglocke gibt an, dass jetzt eine Aktion erforderlich ist.</string>
     <string name="generic_notification_caption_7">Beispiel: So sieht die App aus, wenn Sie eine Nachricht erhalten haben.</string>
