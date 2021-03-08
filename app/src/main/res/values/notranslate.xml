@@ -16,6 +16,7 @@
     <string name="play_store_url" translatable="false">https://play.google.com/store/apps/details?id=nl.rijksoverheid.en</string>
     <string name="privacy_policy_url" translatable="false">https://coronamelder.nl/%1$s/privacy-in-app</string>
     <string name="accessibility_url" translatable="false">https://coronamelder.nl/%1$s/accessibility-in-app</string>
+    <string name="coronamelder_url" translatable="false">https://coronamelder.nl/%1$s</string>
     <string name="share_url" translatable="false">https://coronamelder.nl/app</string>
     <string name="end_of_life_url" translatable="false">https://coronamelder.nl/</string>
     <string name="colofon_url" translatable="false">https://coronamelder.nl/%1$s/colofon-in-app</string>
