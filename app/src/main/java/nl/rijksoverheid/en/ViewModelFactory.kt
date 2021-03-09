@@ -25,8 +25,8 @@ import nl.rijksoverheid.en.settings.PauseConfirmationViewModel
 import nl.rijksoverheid.en.settings.SettingsViewModel
 import nl.rijksoverheid.en.status.StatusViewModel
 
-class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
-    private val context = context.applicationContext
+open class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
+    protected val context: Context = context.applicationContext
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

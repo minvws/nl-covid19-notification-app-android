@@ -9,6 +9,7 @@ package nl.rijksoverheid.en
 import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.ViewModelProvider
 import androidx.work.Configuration
 import androidx.work.Logger
 import androidx.work.WorkManager
@@ -28,6 +29,8 @@ open class EnApplication : Application(), Configuration.Provider {
             Timber.plant(FileTree(getExternalFilesDir(null)))
             Timber.d("onCreate")
         }
+
+        instance = this
 
         WorkManager.initialize(this, workManagerConfiguration)
         if (BuildConfig.FEATURE_LOGGING) {
@@ -66,5 +69,14 @@ open class EnApplication : Application(), Configuration.Provider {
             setMinimumLoggingLevel(if (BuildConfig.FEATURE_LOGGING) Log.DEBUG else Log.ERROR)
             setWorkerFactory(EnWorkerFactory())
         }.build()
+    }
+
+    open fun getViewModelProviderFactory(): ViewModelProvider.Factory {
+        return ViewModelFactory(applicationContext)
+    }
+
+    companion object {
+        lateinit var instance: EnApplication
+            private set
     }
 }

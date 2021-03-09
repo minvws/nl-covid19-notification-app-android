@@ -25,14 +25,12 @@ class ResourceBundleManager(
     private val cdnService: CdnService,
     private val clock: Clock = Clock.systemDefaultZone()
 ) {
-    private var resourceBundle: ResourceBundle? = null
 
-    private suspend fun loadResourceBundle(): ResourceBundle {
-        return resourceBundle ?: run {
-            val bundle = getResourceBundleFromCacheOrNetwork() ?: loadDefaultResourceBundle()
-            resourceBundle = bundle
-            bundle
-        }
+    private suspend fun loadResourceBundle(useDefaultGuidance: Boolean): ResourceBundle {
+        return if (useDefaultGuidance)
+            loadDefaultResourceBundle()
+        else
+            getResourceBundleFromCacheOrNetwork() ?: loadDefaultResourceBundle()
     }
 
     private fun loadDefaultResourceBundle(): ResourceBundle {
@@ -52,8 +50,8 @@ class ResourceBundleManager(
         }
     }
 
-    suspend fun getExposureNotificationGuidance(exposureDate: LocalDate): List<ResourceBundle.Guidance.Element> {
-        val bundle = loadResourceBundle()
+    suspend fun getExposureNotificationGuidance(exposureDate: LocalDate, useDefaultGuidance: Boolean): List<ResourceBundle.Guidance.Element> {
+        val bundle = loadResourceBundle(useDefaultGuidance)
         val language = context.getString(R.string.app_language)
         val localeMap = bundle.resources[language]
         val fallback = bundle.resources[DEFAULT_LANGUAGE]

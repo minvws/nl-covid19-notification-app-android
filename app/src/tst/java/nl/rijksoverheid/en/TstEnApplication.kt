@@ -8,6 +8,7 @@
 
 package nl.rijksoverheid.en
 
+import androidx.lifecycle.ViewModelProvider
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.DividerModule
@@ -36,9 +37,9 @@ class TstEnApplication : EnApplication() {
             PaddingModule(),
             TextModule("General", TextModule.Type.SECTION_HEADER),
             SwitchModule(
-                text = "Local resource bundle",
+                text = "Use local guidance",
                 onValueChanged = {
-
+                    useDefaultGuidance = it
                 }
             ),
             DividerModule(),
@@ -46,5 +47,14 @@ class TstEnApplication : EnApplication() {
             KeylineOverlaySwitchModule(),
             DeviceInfoModule(),
         )
+    }
+
+    override fun getViewModelProviderFactory(): ViewModelProvider.Factory {
+        return TstViewModelFactory(this)
+    }
+
+    companion object {
+        var useDefaultGuidance: Boolean = false
+            private set
     }
 }

@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {
-        return ViewModelFactory(applicationContext)
+        return EnApplication.instance.getViewModelProviderFactory()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
