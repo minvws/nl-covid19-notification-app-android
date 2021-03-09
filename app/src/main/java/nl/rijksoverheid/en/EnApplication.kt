@@ -13,24 +13,24 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.work.Configuration
 import androidx.work.Logger
 import androidx.work.WorkManager
+import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.job.EnWorkerFactory
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 
 @Suppress("ConstantConditionIf")
-open class EnApplication : Application(), Configuration.Provider {
+class EnApplication : Application(), Configuration.Provider {
     private val notificationsRepository by lazy { NotificationsRepository(this) }
 
     @SuppressLint("RestrictedApi") // for WM Logger api
     override fun onCreate() {
         super.onCreate()
+        BeagleHelperImpl.initialize(this)
         if (BuildConfig.FEATURE_LOGGING) {
             Timber.plant(Timber.DebugTree())
             Timber.plant(FileTree(getExternalFilesDir(null)))
             Timber.d("onCreate")
         }
-
-        instance = this
 
         WorkManager.initialize(this, workManagerConfiguration)
         if (BuildConfig.FEATURE_LOGGING) {
@@ -69,14 +69,5 @@ open class EnApplication : Application(), Configuration.Provider {
             setMinimumLoggingLevel(if (BuildConfig.FEATURE_LOGGING) Log.DEBUG else Log.ERROR)
             setWorkerFactory(EnWorkerFactory())
         }.build()
-    }
-
-    open fun getViewModelProviderFactory(): ViewModelProvider.Factory {
-        return ViewModelFactory(applicationContext)
-    }
-
-    companion object {
-        lateinit var instance: EnApplication
-            private set
     }
 }

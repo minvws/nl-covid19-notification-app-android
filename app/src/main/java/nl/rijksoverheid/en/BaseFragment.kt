@@ -28,6 +28,6 @@ abstract class BaseFragment @JvmOverloads constructor(
     }
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {
-        return factoryProducer?.invoke() ?: EnApplication.instance.getViewModelProviderFactory()
+        return factoryProducer?.invoke() ?: ViewModelFactory(requireContext().applicationContext)
     }
 }
