@@ -16,15 +16,14 @@ import java.time.LocalDate
 
 class PostNotificationViewModel(
     private val resourceBundleManager: ResourceBundleManager,
-    private val appConfigManager: AppConfigManager,
-    private val useLocalGuidance: Boolean = false
+    private val appConfigManager: AppConfigManager
 ) : ViewModel() {
 
     private val exposureDate = MutableLiveData<LocalDate>()
 
     val guidance = exposureDate.switchMap {
         liveData {
-            emit(resourceBundleManager.getExposureNotificationGuidance(it, useLocalGuidance))
+            emit(resourceBundleManager.getExposureNotificationGuidance(it))
         }
     }
 

@@ -245,7 +245,8 @@ dependencies {
     androidTestImplementation "org.mockito:mockito-android:3.4.6"
     androidTestImplementation 'tools.fastlane:screengrab:2.0.0'
 
-    tstImplementation "com.github.pandulapeter.beagle:ui-drawer:2.5.1"
+    def beagleVersion = "2.5.1"
+    tstImplementation "com.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
 
     debugImplementation project(":test-support")
     debugImplementation "androidx.fragment:fragment-testing:$androidx_fragment_version"

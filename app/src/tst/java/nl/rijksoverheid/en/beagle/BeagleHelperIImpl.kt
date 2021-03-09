@@ -6,9 +6,9 @@
  *
  */
 
-package nl.rijksoverheid.en
+package nl.rijksoverheid.en.beagle
 
-import androidx.lifecycle.ViewModelProvider
+import android.app.Application
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.DividerModule
@@ -17,20 +17,19 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
 import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
+import nl.rijksoverheid.en.BuildConfig
+import nl.rijksoverheid.en.R
 
-class TstEnApplication : EnApplication() {
+object BeagleHelperImpl : BeagleHelper {
 
-    override fun onCreate() {
-        super.onCreate()
+    override var useDefaultGuidance: Boolean = false
+        private set
 
-        initBeagle()
-    }
-
-    private fun initBeagle() {
-        Beagle.initialize(this)
+    override fun initialize(application: Application) {
+        Beagle.initialize(application)
         Beagle.set(
             HeaderModule(
-                title = getString(R.string.app_name),
+                title = application.getString(R.string.app_name),
                 subtitle = BuildConfig.APPLICATION_ID,
                 text = "${BuildConfig.BUILD_TYPE} v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
             ),
@@ -47,14 +46,5 @@ class TstEnApplication : EnApplication() {
             KeylineOverlaySwitchModule(),
             DeviceInfoModule(),
         )
-    }
-
-    override fun getViewModelProviderFactory(): ViewModelProvider.Factory {
-        return TstViewModelFactory(this)
-    }
-
-    companion object {
-        var useDefaultGuidance: Boolean = false
-            private set
     }
 }

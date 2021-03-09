@@ -11,6 +11,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.ResourceBundle
+import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.formatExposureDateShort
@@ -23,10 +24,11 @@ private const val DEFAULT_LANGUAGE = "en"
 class ResourceBundleManager(
     private val context: Context,
     private val cdnService: CdnService,
-    private val clock: Clock = Clock.systemDefaultZone()
+    private val clock: Clock = Clock.systemDefaultZone(),
+    private val useDefaultGuidance: Boolean
 ) {
 
-    private suspend fun loadResourceBundle(useDefaultGuidance: Boolean): ResourceBundle {
+    private suspend fun loadResourceBundle(): ResourceBundle {
         return if (useDefaultGuidance)
             loadDefaultResourceBundle()
         else
@@ -50,8 +52,8 @@ class ResourceBundleManager(
         }
     }
 
-    suspend fun getExposureNotificationGuidance(exposureDate: LocalDate, useDefaultGuidance: Boolean): List<ResourceBundle.Guidance.Element> {
-        val bundle = loadResourceBundle(useDefaultGuidance)
+    suspend fun getExposureNotificationGuidance(exposureDate: LocalDate): List<ResourceBundle.Guidance.Element> {
+        val bundle = loadResourceBundle()
         val language = context.getString(R.string.app_language)
         val localeMap = bundle.resources[language]
         val fallback = bundle.resources[DEFAULT_LANGUAGE]
