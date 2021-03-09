@@ -267,7 +267,7 @@ class ExposureNotificationsRepository(
         }
 
         // if the key is missing, then this is our first run
-        if (!preferences.contains(KEY_EXPOSURE_KEY_SETS) && false) {
+        if (!preferences.contains(KEY_EXPOSURE_KEY_SETS)) {
             Timber.d("Skipping processing of initial key set")
             updateProcessedExposureKeySets(manifest.exposureKeysSetIds.toSet(), manifest)
             return ProcessExposureKeysResult.Success
