@@ -9,20 +9,23 @@ package nl.rijksoverheid.en
 import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.ViewModelProvider
 import androidx.work.Configuration
 import androidx.work.Logger
 import androidx.work.WorkManager
+import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.job.EnWorkerFactory
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 
 @Suppress("ConstantConditionIf")
 class EnApplication : Application(), Configuration.Provider {
-    private val notificationsRepository = NotificationsRepository(this)
+    private val notificationsRepository by lazy { NotificationsRepository(this) }
 
     @SuppressLint("RestrictedApi") // for WM Logger api
     override fun onCreate() {
         super.onCreate()
+        BeagleHelperImpl.initialize(this)
         if (BuildConfig.FEATURE_LOGGING) {
             Timber.plant(Timber.DebugTree())
             Timber.plant(FileTree(getExternalFilesDir(null)))

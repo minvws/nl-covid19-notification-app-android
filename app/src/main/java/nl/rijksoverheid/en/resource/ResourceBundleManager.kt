@@ -11,6 +11,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.ResourceBundle
+import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.formatExposureDateShort
@@ -23,16 +24,15 @@ private const val DEFAULT_LANGUAGE = "en"
 class ResourceBundleManager(
     private val context: Context,
     private val cdnService: CdnService,
-    private val clock: Clock = Clock.systemDefaultZone()
+    private val clock: Clock = Clock.systemDefaultZone(),
+    private val useDefaultGuidance: Boolean
 ) {
-    private var resourceBundle: ResourceBundle? = null
 
     private suspend fun loadResourceBundle(): ResourceBundle {
-        return resourceBundle ?: run {
-            val bundle = getResourceBundleFromCacheOrNetwork() ?: loadDefaultResourceBundle()
-            resourceBundle = bundle
-            bundle
-        }
+        return if (useDefaultGuidance)
+            loadDefaultResourceBundle()
+        else
+            getResourceBundleFromCacheOrNetwork() ?: loadDefaultResourceBundle()
     }
 
     private fun loadDefaultResourceBundle(): ResourceBundle {

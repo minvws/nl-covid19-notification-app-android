@@ -175,6 +175,12 @@ repositories {
             includeGroup "com.xwray"
         }
     }
+    maven {
+        url "https://jitpack.io"
+        content {
+            includeGroup "com.github.pandulapeter.beagle"
+        }
+    }
 }
 
 dependencies {
@@ -238,6 +244,9 @@ dependencies {
     androidTestImplementation 'com.vanniktech:junit4-android-integration-rules:0.3.0'
     androidTestImplementation "org.mockito:mockito-android:3.4.6"
     androidTestImplementation 'tools.fastlane:screengrab:2.0.0'
+
+    def beagleVersion = "2.5.1"
+    tstImplementation "com.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
 
     debugImplementation project(":test-support")
     debugImplementation "androidx.fragment:fragment-testing:$androidx_fragment_version"

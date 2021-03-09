@@ -17,8 +17,7 @@ import java.time.LocalDate
 class PostNotificationViewModel(
     private val resourceBundleManager: ResourceBundleManager,
     private val appConfigManager: AppConfigManager
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val exposureDate = MutableLiveData<LocalDate>()
 
