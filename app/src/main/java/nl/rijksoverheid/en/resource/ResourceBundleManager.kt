@@ -11,7 +11,6 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.ResourceBundle
-import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.formatExposureDateShort
