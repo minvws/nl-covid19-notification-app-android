@@ -9,7 +9,6 @@ package nl.rijksoverheid.en
 import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.ViewModelProvider
 import androidx.work.Configuration
 import androidx.work.Logger
 import androidx.work.WorkManager
