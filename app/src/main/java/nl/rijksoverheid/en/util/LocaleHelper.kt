@@ -9,6 +9,7 @@ package nl.rijksoverheid.en.util
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import androidx.core.os.ConfigurationCompat
 import androidx.core.os.LocaleListCompat
 import nl.rijksoverheid.en.settings.Settings
@@ -31,9 +32,11 @@ class LocaleHelper private constructor(application: Application, private val set
         get() = if (isAppSetToDutch) dutchLocale else systemLocale
 
     init {
-        application.registerActivityLifecycleCallbacks(ActivityCreatedCallback { activity ->
-            applyLocale(activity, localeToUse)
-        })
+        application.registerActivityLifecycleCallbacks(
+            ActivityCreatedCallback { activity ->
+                applyLocale(activity, localeToUse)
+            }
+        )
 
         application.registerComponentCallbacks(
             ConfigurationChangedCallback { configuration ->
@@ -55,19 +58,19 @@ class LocaleHelper private constructor(application: Application, private val set
     }
 
     private fun applyLocale(context: Context, locale: Locale) {
-        updateResources(context, locale)
+        updateResources(context.resources, locale)
         val appContext = context.applicationContext
         if (appContext !== context) {
-            updateResources(appContext, locale)
+            updateResources(appContext.resources, locale)
         }
     }
 
     @Suppress("DEPRECATION")
-    private fun updateResources(context: Context, locale: Locale) {
-        val currentLocale = LocaleListCompat.getDefault()[0]
+    private fun updateResources(resources: Resources, locale: Locale) {
+        val currentLocale = ConfigurationCompat.getLocales(resources.configuration)[0]
         if (currentLocale == locale) return
         Locale.setDefault(locale)
-        context.resources.apply {
+        resources.apply {
             val config = Configuration(configuration).apply {
                 setLocale(locale)
             }

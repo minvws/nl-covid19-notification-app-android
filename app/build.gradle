@@ -179,7 +179,6 @@ repositories {
         url "https://jitpack.io"
         content {
             includeGroup "com.github.pandulapeter.beagle"
-            includeGroup "com.github.YarikSOffice"
         }
     }
 }
