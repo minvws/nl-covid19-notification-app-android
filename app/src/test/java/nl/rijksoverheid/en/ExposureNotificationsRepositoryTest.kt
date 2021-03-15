@@ -35,6 +35,7 @@ import kotlinx.coroutines.yield
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
+import nl.rijksoverheid.en.api.model.DaySinceOnsetToInfectiousness
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
@@ -132,6 +133,51 @@ private val MOCK_RISK_PARAMS_RESPONSE = MockResponse().setBody(
         "reportTypeWhenMissing": 1
    }
     """.trimIndent()
+)
+
+private val MOCK_RISK_CALCULATION_PARAMS = RiskCalculationParameters(
+    reportTypeWeights = listOf(0.0, 1.0, 0.0, 0.0, 0.0, 0.0),
+    infectiousnessWeights = listOf(0.0, 1.0, 1.0),
+    attenuationBucketThresholds = listOf(56, 62, 70),
+    attenuationBucketWeights = listOf(1.0, 1.0, 1.0, 0.0),
+    daysSinceExposureThreshold = 0,
+    minimumWindowScore = 300.0,
+    minimumRiskScore = 900.0,
+    daysSinceOnsetToInfectiousness = listOf(
+        DaySinceOnsetToInfectiousness(-14, 0),
+        DaySinceOnsetToInfectiousness(-13, 0),
+        DaySinceOnsetToInfectiousness(-12, 0),
+        DaySinceOnsetToInfectiousness(-11, 0),
+        DaySinceOnsetToInfectiousness(-10, 0),
+        DaySinceOnsetToInfectiousness(-10, 0),
+        DaySinceOnsetToInfectiousness(-9, 0),
+        DaySinceOnsetToInfectiousness(-8, 0),
+        DaySinceOnsetToInfectiousness(-7, 0),
+        DaySinceOnsetToInfectiousness(-6, 0),
+        DaySinceOnsetToInfectiousness(-5, 0),
+        DaySinceOnsetToInfectiousness(-4, 0),
+        DaySinceOnsetToInfectiousness(-3, 0),
+        DaySinceOnsetToInfectiousness(-2, 1),
+        DaySinceOnsetToInfectiousness(-1, 1),
+        DaySinceOnsetToInfectiousness(0, 1),
+        DaySinceOnsetToInfectiousness(1, 1),
+        DaySinceOnsetToInfectiousness(2, 1),
+        DaySinceOnsetToInfectiousness(3, 1),
+        DaySinceOnsetToInfectiousness(4, 1),
+        DaySinceOnsetToInfectiousness(5, 1),
+        DaySinceOnsetToInfectiousness(6, 1),
+        DaySinceOnsetToInfectiousness(7, 1),
+        DaySinceOnsetToInfectiousness(8, 1),
+        DaySinceOnsetToInfectiousness(9, 1),
+        DaySinceOnsetToInfectiousness(10, 1),
+        DaySinceOnsetToInfectiousness(11, 1),
+        DaySinceOnsetToInfectiousness(12, 0),
+        DaySinceOnsetToInfectiousness(13, 0),
+        DaySinceOnsetToInfectiousness(14, 0),
+
+    ),
+    infectiousnessWhenDaysSinceOnsetMissing = Infectiousness.STANDARD,
+    reportTypeWhenMissing = ReportType.CONFIRMED_TEST
 )
 
 @RunWith(RobolectricTestRunner::class)
@@ -671,8 +717,8 @@ class ExposureNotificationsRepositoryTest {
                 return listOf(
                     DailyRiskScores(
                         LocalDate.now(clock).minusDays(4).toEpochDay(),
-                        2.0,
-                        2.0
+                        500.0,
+                        950.0
                     )
                 )
             }
@@ -690,18 +736,7 @@ class ExposureNotificationsRepositoryTest {
                 id: String,
                 cacheStrategy: CacheStrategy?
             ): RiskCalculationParameters {
-                return RiskCalculationParameters(
-                    emptyList(),
-                    emptyList(),
-                    listOf(56, 62, 70),
-                    listOf(1.0, 1.0, 1.0, 0.0),
-                    0,
-                    0.0,
-                    1.0,
-                    emptyList(),
-                    Infectiousness.STANDARD,
-                    ReportType.CONFIRMED_TEST
-                )
+                return MOCK_RISK_CALCULATION_PARAMS
             }
 
             override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
@@ -739,15 +774,15 @@ class ExposureNotificationsRepositoryTest {
                 listOf(
                     DailyRiskScores(
                         LocalDate.now(clock).minusDays(8).toEpochDay(),
-                        2.0,
-                        2.0
+                        500.0,
+                        950.0
                     )
                 ),
                 listOf(
                     DailyRiskScores(
                         LocalDate.now(clock).minusDays(4).toEpochDay(),
-                        2.0,
-                        2.0
+                        500.0,
+                        950.0
                     )
                 )
             ).iterator()
@@ -771,18 +806,7 @@ class ExposureNotificationsRepositoryTest {
                 id: String,
                 cacheStrategy: CacheStrategy?
             ): RiskCalculationParameters {
-                return RiskCalculationParameters(
-                    emptyList(),
-                    emptyList(),
-                    listOf(56, 62, 70),
-                    listOf(1.0, 1.0, 1.0, 0.0),
-                    0,
-                    0.0,
-                    1.0,
-                    emptyList(),
-                    Infectiousness.STANDARD,
-                    ReportType.CONFIRMED_TEST
-                )
+                return MOCK_RISK_CALCULATION_PARAMS
             }
 
             override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
@@ -833,18 +857,7 @@ class ExposureNotificationsRepositoryTest {
                 id: String,
                 cacheStrategy: CacheStrategy?
             ): RiskCalculationParameters {
-                return RiskCalculationParameters(
-                    emptyList(),
-                    emptyList(),
-                    listOf(56, 62, 70),
-                    listOf(1.0, 1.0, 1.0, 0.0),
-                    0,
-                    0.0,
-                    1.0,
-                    emptyList(),
-                    Infectiousness.STANDARD,
-                    ReportType.CONFIRMED_TEST
-                )
+                return MOCK_RISK_CALCULATION_PARAMS
             }
 
             override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
@@ -870,7 +883,7 @@ class ExposureNotificationsRepositoryTest {
     }
 
     @Test
-    fun `addExposure with max risk score below threshold is ignored`() = runBlocking {
+    fun `addExposure risk score below threshold is ignored`() = runBlocking {
         val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
         val api = object : FakeExposureNotificationApi() {
@@ -880,8 +893,8 @@ class ExposureNotificationsRepositoryTest {
                 return listOf(
                     DailyRiskScores(
                         LocalDate.now(clock).minusDays(4).toEpochDay(),
-                        2.0,
-                        2.0
+                        200.0,
+                        200.0
                     )
                 )
             }
@@ -899,18 +912,7 @@ class ExposureNotificationsRepositoryTest {
                 id: String,
                 cacheStrategy: CacheStrategy?
             ): RiskCalculationParameters {
-                return RiskCalculationParameters(
-                    emptyList(),
-                    emptyList(),
-                    listOf(56, 62, 70),
-                    listOf(1.0, 1.0, 1.0, 0.0),
-                    0,
-                    0.0,
-                    10.0,
-                    emptyList(),
-                    Infectiousness.STANDARD,
-                    ReportType.CONFIRMED_TEST
-                )
+                return MOCK_RISK_CALCULATION_PARAMS
             }
 
             override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
@@ -1342,8 +1344,8 @@ class ExposureNotificationsRepositoryTest {
                     return listOf(
                         DailyRiskScores(
                             LocalDate.now(clock).minusDays(4).toEpochDay(),
-                            2.0,
-                            2.0
+                            500.0,
+                            950.0
                         )
                     )
                 }
@@ -1361,18 +1363,7 @@ class ExposureNotificationsRepositoryTest {
                     id: String,
                     cacheStrategy: CacheStrategy?
                 ): RiskCalculationParameters {
-                    return RiskCalculationParameters(
-                        emptyList(),
-                        emptyList(),
-                        listOf(56, 62, 70),
-                        listOf(1.0, 1.0, 1.0, 0.0),
-                        0,
-                        0.0,
-                        1.0,
-                        emptyList(),
-                        Infectiousness.STANDARD,
-                        ReportType.CONFIRMED_TEST
-                    )
+                    return MOCK_RISK_CALCULATION_PARAMS
                 }
 
                 override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =

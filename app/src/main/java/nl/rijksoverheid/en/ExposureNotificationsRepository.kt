@@ -23,6 +23,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.Infectiousness
+import com.google.android.gms.nearby.exposurenotification.ReportType
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -375,7 +376,9 @@ class ExposureNotificationsRepository(
                         setInfectiousnessWeight(infectiousness, weight)
                 }
                 riskCalculationParameters.reportTypeWeights.forEachIndexed { reportType, weight ->
-                    setReportTypeWeight(reportType, weight)
+                    // Skip the value for ReportType.UNKNOWN and ReportType.REVOKED, this will trigger a (IllegalArgumentException: Incorrect value of ReportType)
+                    if (reportType != ReportType.UNKNOWN && reportType != ReportType.REVOKED)
+                        setReportTypeWeight(reportType, weight)
                 }
             }.build()
     }
