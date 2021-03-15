@@ -20,6 +20,7 @@ import nl.rijksoverheid.en.databinding.FragmentSettingsBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.getBackStackEntryObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.LocaleHelper
 import nl.rijksoverheid.en.util.PausedStateTimer
 import java.time.LocalDateTime
 
@@ -28,6 +29,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
     private val settingsViewModel: SettingsViewModel by viewModels()
 
+    private val localeHelper = LocaleHelper.getInstance()
+
     private var pausedDurationTimer: PausedStateTimer? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,6 +38,16 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         val binding = FragmentSettingsBinding.bind(view)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = settingsViewModel
+
+        binding.isSystemLanguageDutch = localeHelper.isSystemLanguageDutch
+        binding.useAppInDutchSwitch.isChecked = localeHelper.isAppSetToDutch
+        binding.useAppInDutchSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (localeHelper.useAppInDutch(isChecked, requireContext())) {
+                // Ensure current fragment is updated after changing language
+                parentFragmentManager.beginTransaction().detach(this).commitAllowingStateLoss()
+                parentFragmentManager.beginTransaction().attach(this).commitAllowingStateLoss()
+            }
+        }
 
         settingsViewModel.wifiOnlyChanged.observe(
             viewLifecycleOwner,

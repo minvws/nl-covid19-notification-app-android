@@ -15,6 +15,7 @@ import androidx.work.WorkManager
 import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.job.EnWorkerFactory
 import nl.rijksoverheid.en.notifier.NotificationsRepository
+import nl.rijksoverheid.en.util.LocaleHelper
 import timber.log.Timber
 
 @Suppress("ConstantConditionIf")
@@ -24,6 +25,7 @@ class EnApplication : Application(), Configuration.Provider {
     @SuppressLint("RestrictedApi") // for WM Logger api
     override fun onCreate() {
         super.onCreate()
+        LocaleHelper.initialize(this)
         BeagleHelperImpl.initialize(this)
         if (BuildConfig.FEATURE_LOGGING) {
             Timber.plant(Timber.DebugTree())
