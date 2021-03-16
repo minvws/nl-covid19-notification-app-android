@@ -371,13 +371,21 @@ class ExposureNotificationsRepository(
                 riskCalculationParameters.attenuationBucketWeights
             ).apply {
                 riskCalculationParameters.infectiousnessWeights.forEachIndexed { infectiousness, weight ->
+                    val invalidWeight = weight < 0.0 || weight > 2.5
+                    if (invalidWeight)
+                        Timber.w("Element value of infectiousnessWeights must between 0 ~ 2.5")
+
                     // Skip the value for Infectiousness.NONE, this will trigger a (IllegalArgumentException: Incorrect value of infectiousness)
-                    if (infectiousness != Infectiousness.NONE)
+                    if (infectiousness != Infectiousness.NONE && !invalidWeight)
                         setInfectiousnessWeight(infectiousness, weight)
                 }
                 riskCalculationParameters.reportTypeWeights.forEachIndexed { reportType, weight ->
+                    val invalidWeight = weight < 0.0 || weight > 2.5
+                    if (invalidWeight)
+                        Timber.w("Element value of reportTypeWeights must between 0 ~ 2.5")
+
                     // Skip the value for ReportType.UNKNOWN and ReportType.REVOKED, this will trigger a (IllegalArgumentException: Incorrect value of ReportType)
-                    if (reportType != ReportType.UNKNOWN && reportType != ReportType.REVOKED)
+                    if (reportType != ReportType.UNKNOWN && reportType != ReportType.REVOKED && !invalidWeight)
                         setReportTypeWeight(reportType, weight)
                 }
             }.build()
@@ -611,7 +619,6 @@ class ExposureNotificationsRepository(
         val riskCalculationParameters = getCachedRiskCalculationParameters()
         val dailySummariesConfig = getDailySummariesConfig(riskCalculationParameters)
 
-        Timber.d("Get daily risk scores")
         val riskScores = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig).filter {
             Timber.d(it.toString())
             it.scoreSum > riskCalculationParameters.minimumRiskScore

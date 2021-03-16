@@ -11,7 +11,6 @@ import android.content.Intent
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
-import com.google.android.gms.nearby.exposurenotification.DailySummary
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes
@@ -192,24 +191,6 @@ class NearbyExposureNotificationApi(
                         files.forEach { it.delete() }
                     }
                 }
-            }
-        }
-    }
-
-    /**
-     * Get the [DailySummary]s
-     * @return a list of DailySummary objects corresponding to the last 14 days of exposure data or null if there's no match or an error occurred
-     */
-    override suspend fun getDailySummaries(config: DailySummariesConfig): List<DailySummary>? {
-        return suspendCoroutine { c ->
-            client.getDailySummaries(config).addOnSuccessListener {
-                c.resume(it)
-            }.addOnFailureListener {
-                Timber.e(it, "Error getting DailySummaries")
-                // TODO determine if we want bubble up errors here; this is used
-                // when processing the notification and at that point the API should never return
-                // null. If it does or throws an error, all we can do is retry or give up
-                c.resume(null)
             }
         }
     }

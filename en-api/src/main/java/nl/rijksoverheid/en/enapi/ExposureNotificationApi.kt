@@ -7,7 +7,6 @@
 package nl.rijksoverheid.en.enapi
 
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
-import com.google.android.gms.nearby.exposurenotification.DailySummary
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import nl.rijksoverheid.en.enapi.nearby.DailyRiskScores
 import java.io.File
@@ -48,13 +47,6 @@ interface ExposureNotificationApi {
         files: List<File>,
         diagnosisKeysDataMapping: DiagnosisKeysDataMapping,
     ): DiagnosisKeysResult
-
-    /**
-     * Return a list of DailySummary objects corresponding to the last 14 days of exposure data or null if there's no match or an error occurred
-     * @param config which must contain the weights and thresholds to apply to the exposure data
-     * @return a list of [DailySummary]
-     */
-    suspend fun getDailySummaries(config: DailySummariesConfig): List<DailySummary>?
 
     /**
      * Return a list of DailyRiskScores objects corresponding to the last 14 days of exposure data or null if there's no match or an error occurred
