@@ -13,7 +13,7 @@ buildscript {
     ext.androidx_test_ext_junit_version = "1.1.2"
     ext.androidx_work_version = "2.5.0"
     ext.coroutines_version = "1.4.2"
-    ext.kotlin_version = '1.4.30'
+    ext.kotlin_version = '1.4.31'
     ext.play_services_base_version = "17.6.0"
     ext.play_services_tasks_version = "17.2.1"
     //3rd-party dependency versions
@@ -60,7 +60,7 @@ buildscript {
         classpath "com.diffplug.spotless:spotless-plugin-gradle:5.6.1"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$androidx_nav_version"
         classpath "com.github.triplet.gradle:play-publisher:2.8.0"
-        classpath 'com.google.firebase:firebase-appdistribution-gradle:2.0.1'
+        classpath 'com.google.firebase:firebase-appdistribution-gradle:2.1.0'
         classpath "ru.cian:huawei-publish-gradle-plugin:1.1.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
