@@ -135,6 +135,10 @@ android {
         releaseNotesFile = rootProject.file("app/src/main/play/release-notes/nl-NL/internal.txt")
         groups = "android-latest"
     }
+
+    kotlinOptions {
+        freeCompilerArgs += ["-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+    }
 }
 
 play {
