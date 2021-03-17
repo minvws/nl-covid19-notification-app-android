@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="faq_notification_paragraph_1">Otrzymasz powiadomienie, jeśli byłeś narażony na szczególne ryzyko zarażenia. Ma to miejsce, jeśli znajdowałeś się przez co najmniej 15 minut w pobliżu osoby, u której wykryto koronawirusa. I oczywiście wyłącznie, gdy ta osoba również używa tej aplikacji.\n\nTo czy otrzymasz powiadomienie zależy od siły sygnału Bluetooth oraz od czasu trwania kontaktu. Na ulicy przejeżdżał ktoś na rowerze? Nie otrzymasz później powiadomienia. Znajdowaliście się blisko siebie, więc sygnał Bluetooth był silny. Jednak kontakt był na tyle krótki, że ryzyko zarażenia jest bardzo małe.\n\nSiedziałeś obok kogoś w pociągu lub biurze? Zatem możesz otrzymać później powiadomienie. Sygnał Bluetooth był wystarczająco silny i znajdowaliście się przez dłuższy czas blisko siebie.</string>
+    <string name="faq_notification_paragraph_1">Otrzymasz powiadomienie, jeśli byłeś narażony na szczególne ryzyko zarażenia. Ma to miejsce, jeśli znajdowałeś się w sumie przez co najmniej 15 minut w pobliżu jednej lub więcej osób, u których wykryto koronawirusa. I oczywiście wyłącznie, gdy ta osoba również używa tej aplikacji.\n\nTo czy otrzymasz powiadomienie zależy od siły sygnału Bluetooth oraz od czasu trwania kontaktu. Na ulicy przejeżdżał ktoś na rowerze? Nie otrzymasz później powiadomienia. Znajdowaliście się blisko siebie, więc sygnał Bluetooth był silny. Jednak kontakt był na tyle krótki, że ryzyko zarażenia jest bardzo małe.\n\nSiedziałeś obok kogoś w pociągu lub biurze? Zatem możesz otrzymać później powiadomienie. Sygnał Bluetooth był wystarczająco silny i znajdowaliście się przez dłuższy czas blisko siebie.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">pl</string>
@@ -62,7 +62,7 @@
     <string name="post_notification_button">Poproś o test na koronawirusa</string>
     <string name="generic_notification_toolbar_title">Otrzymanie powiadomienia</string>
     <string name="generic_notification_header_1">Jak rozpoznać powiadomienie?</string>
-    <string name="generic_notification_paragraph_2">Aplikacja wysyła powiadomienie, jeśli znajdowałeś się przez co najmniej 15 minut w pobliżu osoby, u której potem wykryto koronawirusa.</string>
+    <string name="generic_notification_paragraph_2">Aplikacja wysyła powiadomienie, jeśli znajdowałeś się w sumie przez co najmniej 15 minut w pobliżu jednej lub więcej osób, u których potem wykryto koronawirusa.</string>
     <string name="generic_notification_paragraph_4">Powiadomienie pojawia się w notyfikacjach. Podobnie jak wiadomości od innych aplikacji. Powiadomienie posiada symbol CoronaMelder.\n\nOtrzymałeś powiadomienie? Otwórz CoronaMelder. Tam przeczytasz co możesz zrobić.</string>
     <string name="generic_notification_alt_text_6">Czerwony ekran z dzwonkiem alarmowym oznacza, że konieczne jest podjęcie działań</string>
     <string name="generic_notification_caption_7">Przykład: Tak wygląda aplikacja, gdy otrzymasz powiadomienie.</string>

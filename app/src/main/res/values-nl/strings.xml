@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="faq_notification_paragraph_1">Je krijgt een melding nadat je extra kans op besmetting hebt gelopen. Dit gebeurt als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben. En natuurlijk alleen als die persoon ook de app gebruikt.\n\nOf je een melding krijgt hangt af van de sterkte van het bluetoothsignaal. En van de duur van jullie contact.\n\nFietste er iemand voorbij op straat? Dan krijg je later geen melding. Jullie waren dicht bij elkaar, dus het bluetoothsignaal was sterk. Maar het contact duurde zo kort dat de kans op besmetting heel erg klein is.\n\nZat je dicht bij iemand in de trein of op kantoor? Dan kun je later wel een melding krijgen. Het bluetoothsignaal was sterk genoeg en jullie waren langere tijd dicht bij elkaar in de buurt.</string>
+    <string name="faq_notification_paragraph_1">Je krijgt een melding nadat je extra kans op besmetting hebt gelopen. Dit gebeurt als je in totaal minstens 15 minuten dicht bij een of meerdere personen bent geweest die later corona bleken te hebben. En natuurlijk alleen als die persoon ook de app gebruikt.\n\nOf je een melding krijgt hangt af van de sterkte van het bluetoothsignaal. En van de duur van jullie contact.\n\nFietste er iemand voorbij op straat? Dan krijg je later geen melding. Jullie waren dicht bij elkaar, dus het bluetoothsignaal was sterk. Maar het contact duurde zo kort dat de kans op besmetting heel erg klein is.\n\nZat je dicht bij iemand in de trein of op kantoor? Dan kun je later wel een melding krijgen. Het bluetoothsignaal was sterk genoeg en jullie waren langere tijd dicht bij elkaar in de buurt.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">nl</string>
@@ -62,7 +62,7 @@
     <string name="post_notification_button">Coronatest aanvragen</string>
     <string name="generic_notification_toolbar_title">Melding krijgen</string>
     <string name="generic_notification_header_1">Hoe herken ik een melding?</string>
-    <string name="generic_notification_paragraph_2">De app stuurt een melding als je minstens 15 minuten dicht bij iemand bent geweest die later corona blijkt te hebben.</string>
+    <string name="generic_notification_paragraph_2">De app stuurt een melding als je in totaal minstens 15 minuten dicht bij een of meerdere personen bent geweest die later corona bleken te hebben.</string>
     <string name="generic_notification_paragraph_4">De melding verschijnt bij je notificaties. Net als berichten van andere apps. De melding heeft het symbool van CoronaMelder.\n\nHeb je een melding ontvangen? Open dan CoronaMelder. Daar lees je wat je verder kunt doen.</string>
     <string name="generic_notification_alt_text_6">Rood scherm met alarmbel dat aangeeft dat er nu actie nodig is</string>
     <string name="generic_notification_caption_7">Voorbeeld: Zo ziet de app eruit als je een melding hebt ontvangen.</string>
