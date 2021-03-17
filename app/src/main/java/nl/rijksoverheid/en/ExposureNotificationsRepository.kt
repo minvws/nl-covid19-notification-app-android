@@ -568,7 +568,7 @@ class ExposureNotificationsRepository(
      * @return true if exposures are reported, false otherwise
      */
     fun getLastExposureDate(): Flow<LocalDate?> {
-        fun getSharedPrefsLongAsLocalDate(sharedPreferences: SharedPreferences, key: String): LocalDate? {
+        fun getSharedPrefsLongAsLocalDate(sharedPreferences: SharedPreferences): LocalDate? {
             val timestamp = sharedPreferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L)
             return if (timestamp > 0) {
                 LocalDate.ofEpochDay(timestamp)
@@ -581,7 +581,7 @@ class ExposureNotificationsRepository(
             val listener =
                 SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                     if (key == KEY_LAST_TOKEN_EXPOSURE_DATE) {
-                        offer(getSharedPrefsLongAsLocalDate(sharedPreferences, key))
+                        offer(getSharedPrefsLongAsLocalDate(sharedPreferences))
                     }
                 }
 
@@ -589,7 +589,7 @@ class ExposureNotificationsRepository(
 
             preferences.registerOnSharedPreferenceChangeListener(listener)
 
-            offer(getSharedPrefsLongAsLocalDate(preferences, KEY_LAST_TOKEN_EXPOSURE_DATE))
+            offer(getSharedPrefsLongAsLocalDate(preferences))
 
             awaitClose {
                 preferences.unregisterOnSharedPreferenceChangeListener(listener)
