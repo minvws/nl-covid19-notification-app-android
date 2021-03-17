@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -30,12 +31,10 @@ import nl.rijksoverheid.en.util.PausedStateTimer
 import nl.rijksoverheid.en.util.durationHoursAndMinutes
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.isIgnoringBatteryOptimizations
-import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
+import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 import timber.log.Timber
 import java.time.LocalDate
 import java.time.LocalDateTime
-
-private const val RC_DISABLE_BATTERY_OPTIMIZATIONS = 1
 
 class StatusFragment @JvmOverloads constructor(
     factoryProducer: (() -> ViewModelProvider.Factory)? = null
@@ -47,6 +46,13 @@ class StatusFragment @JvmOverloads constructor(
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
     private var pausedDurationTimer: PausedStateTimer? = null
+
+    private val disableBatteryOptimizationsResultRegistration =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+            if (requireContext().isIgnoringBatteryOptimizations()) {
+                section.removeBatteryOptimisationsError()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -144,9 +150,7 @@ class StatusFragment @JvmOverloads constructor(
         super.onResume()
         if (!requireContext().isIgnoringBatteryOptimizations()) {
             section.showBatteryOptimisationsError {
-                requestDisableBatteryOptimizations(
-                    RC_DISABLE_BATTERY_OPTIMIZATIONS
-                )
+                disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest()
             }
         }
 
@@ -156,15 +160,6 @@ class StatusFragment @JvmOverloads constructor(
     override fun onPause() {
         pausedDurationTimer?.cancelTimer()
         super.onPause()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_DISABLE_BATTERY_OPTIMIZATIONS) {
-            if (requireContext().isIgnoringBatteryOptimizations()) {
-                section.removeBatteryOptimisationsError()
-            }
-        }
     }
 
     private fun updateHeaderState(headerState: StatusViewModel.HeaderState) {

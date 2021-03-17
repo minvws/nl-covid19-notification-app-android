@@ -10,12 +10,13 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.Intent
 import android.content.IntentSender
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -34,8 +35,6 @@ import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import timber.log.Timber
 
-private const val RC_REQUEST_UPLOAD_CONSENT = 1
-
 class LabTestFragment : BaseFragment(R.layout.fragment_list) {
     private val labViewModel: LabTestViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
@@ -46,6 +45,11 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
         copy = ::copyToClipboard
     )
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
+
+    private val requestUploadConsent =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) labViewModel.upload()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,10 +117,7 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
 
     private fun requestConsent(intentSender: IntentSender) {
         try {
-            requireActivity().startIntentSenderFromFragment(
-                this, intentSender,
-                RC_REQUEST_UPLOAD_CONSENT, null, 0, 0, 0, null
-            )
+            requestUploadConsent.launch(IntentSenderRequest.Builder(intentSender).build())
         } catch (ex: Exception) {
             Timber.e(ex, "Error requesting consent")
         }
@@ -124,17 +125,15 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
 
     private fun copyToClipboard(key: String) {
         view?.let {
-            val clipboard = it.context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager ?: return
-            val clip = ClipData.newPlainText(getString(R.string.lab_test_copy_key_to_clipboard), key.replace("-", ""))
+            val clipboard =
+                it.context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+                    ?: return
+            val clip = ClipData.newPlainText(
+                getString(R.string.lab_test_copy_key_to_clipboard),
+                key.replace("-", "")
+            )
             clipboard.setPrimaryClip(clip)
             Snackbar.make(it, R.string.lab_test_copy_key_to_clipboard, Snackbar.LENGTH_LONG).show()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_REQUEST_UPLOAD_CONSENT && resultCode == Activity.RESULT_OK) {
-            labViewModel.upload()
         }
     }
 }

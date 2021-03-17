@@ -7,14 +7,16 @@
 package nl.rijksoverheid.en.util
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.PowerManager
 import android.provider.Settings
-import androidx.fragment.app.Fragment
+import androidx.activity.result.ActivityResultLauncher
 import nl.rijksoverheid.en.BuildConfig
+import timber.log.Timber
 
 @SuppressLint("BatteryLife")
 private val requestDisableBatteryOptimizationsIntent =
@@ -40,9 +42,12 @@ private fun supportsRequestDisableBatteryOptimisations(context: Context): Boolea
     ) != null
 }
 
-fun Fragment.requestDisableBatteryOptimizations(requestCode: Int) {
-    startActivityForResult(
-        requestDisableBatteryOptimizationsIntent,
-        requestCode
-    )
+fun ActivityResultLauncher<Intent>.launchDisableBatteryOptimizationsRequest(onActivityNotFound: () -> Unit = {}) {
+    try {
+        launch(requestDisableBatteryOptimizationsIntent)
+    } catch (ex: ActivityNotFoundException) {
+        // ignore
+        Timber.e(ex)
+        onActivityNotFound()
+    }
 }
