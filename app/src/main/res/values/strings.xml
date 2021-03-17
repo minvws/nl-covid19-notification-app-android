@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="faq_notification_paragraph_1">You get a notification if you have a higher risk of infection. This happens if you\'ve spent 15 minutes near someone who was later found to have coronavirus. But only if this person also uses the app, of course.\n\nWhether or not you get a notification depends on the strength of the Bluetooth signal and the duration of your encounter. Did someone cycle past you on the street? Then you won\'t get a notification later. Yes, the Bluetooth signal was strong because you were near each other. But only for a short time. So your risk of infection is very low.\n\nWere you near someone on the train or in the office? Then you could get a notification later. The Bluetooth signal was strong and you were near each other for a longer period of time.</string>
+    <string name="faq_notification_paragraph_1">You get a notification after you\'ve been exposed to a higher risk of infection. This happens if you\'ve spent at least 15 minutes near one or more people who were later found to have coronavirus. But only if they also use the app, of course.\n\nWhether or not you get a notification depends on the strength of the Bluetooth signal and the duration of your encounter. Did someone cycle past you on the street? Then you won\'t get a notification later. Yes, the Bluetooth signal was strong because you were near each other. But only for a short time. So your risk of infection is very low.\n\nWere you near someone on the train or in the office? Then you could get a notification later. The Bluetooth signal was strong and you were near each other for a longer period of time.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">en</string>
@@ -62,7 +62,7 @@
     <string name="post_notification_button">Request coronavirus test</string>
     <string name="generic_notification_toolbar_title">Getting a notification</string>
     <string name="generic_notification_header_1">How do I recognize a notification?</string>
-    <string name="generic_notification_paragraph_2">The app sends you a notification if you\'ve spent 15 minutes near someone who was later found to have coronavirus.</string>
+    <string name="generic_notification_paragraph_2">The app sends you a notification if you\'ve spent at least 15 minutes near one or more people who were later found to have coronavirus.</string>
     <string name="generic_notification_paragraph_4">Find the CoronaMelder message in your notifications. Where you also find messages from other apps. You can recognise the message by the CoronaMelder icon.\n\nDid you receive a notification? Open CoronaMelder. You\'ll find instructions on what to do in the app.</string>
     <string name="generic_notification_alt_text_6">Red screen with alarm bell that shows you need to take action immediately</string>
     <string name="generic_notification_caption_7">Example: This is how the app looks if you get a notification</string>

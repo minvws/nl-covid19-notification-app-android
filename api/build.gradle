@@ -55,6 +55,10 @@ android {
         tst {
             dimension "environment"
         }
+        pentest {
+            dimension "environment"
+            buildConfigField "boolean", "FEATURE_SSL_PINNING", "false"
+        }
         acc {
             dimension "environment"
             buildConfigField "String", "CDN_BASE_URL", "\"https://acceptatie.coronamelder-dist.nl/\""

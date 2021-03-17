@@ -23,6 +23,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.Infectiousness
+import com.google.android.gms.nearby.exposurenotification.ReportType
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -43,7 +44,6 @@ import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
-import nl.rijksoverheid.en.api.model.WindowCalculationType
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DailyRiskScoresResult
@@ -372,12 +372,22 @@ class ExposureNotificationsRepository(
                 riskCalculationParameters.attenuationBucketWeights
             ).apply {
                 riskCalculationParameters.infectiousnessWeights.forEachIndexed { infectiousness, weight ->
+                    val invalidWeight = weight < 0.0 || weight > 2.5
+                    if (invalidWeight)
+                        Timber.w("Element value of infectiousnessWeights must between 0 ~ 2.5")
+
                     // Skip the value for Infectiousness.NONE, this will trigger a (IllegalArgumentException: Incorrect value of infectiousness)
-                    if (infectiousness != Infectiousness.NONE)
+                    if (infectiousness != Infectiousness.NONE && !invalidWeight)
                         setInfectiousnessWeight(infectiousness, weight)
                 }
                 riskCalculationParameters.reportTypeWeights.forEachIndexed { reportType, weight ->
-                    setReportTypeWeight(reportType, weight)
+                    val invalidWeight = weight < 0.0 || weight > 2.5
+                    if (invalidWeight)
+                        Timber.w("Element value of reportTypeWeights must between 0 ~ 2.5")
+
+                    // Skip the value for ReportType.UNKNOWN and ReportType.REVOKED, this will trigger a (IllegalArgumentException: Incorrect value of ReportType)
+                    if (reportType != ReportType.UNKNOWN && reportType != ReportType.REVOKED && !invalidWeight)
+                        setReportTypeWeight(reportType, weight)
                 }
             }.build()
     }
@@ -610,17 +620,13 @@ class ExposureNotificationsRepository(
         val riskCalculationParameters = getCachedRiskCalculationParameters()
         val dailySummariesConfig = getDailySummariesConfig(riskCalculationParameters)
 
-        Timber.d("Get daily risk scores")
         val dailyRiskScoresResult = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig)
         if (dailyRiskScoresResult is DailyRiskScoresResult.UnknownError)
             return AddExposureResult.Error
 
         val riskScores = (dailyRiskScoresResult as? DailyRiskScoresResult.Success)?.dailyRiskScores?.filter {
             Timber.d(it.toString())
-            when (riskCalculationParameters.windowCalculationType) {
-                WindowCalculationType.SUM -> it.scoreSum > riskCalculationParameters.minimumRiskScore
-                WindowCalculationType.MAX -> it.maximumScore > riskCalculationParameters.minimumRiskScore
-            }
+            it.scoreSum > riskCalculationParameters.minimumRiskScore
         }
 
         val currentDaysSinceEpoch = if (preferences.contains(KEY_LAST_TOKEN_EXPOSURE_DATE)) {

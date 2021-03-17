@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         binding.root.applyInsetter {
             type(navigationBars = true) {
-                padding(bottom = true)
+                padding()
             }
         }
 

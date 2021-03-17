@@ -12,7 +12,6 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import nl.rijksoverheid.en.api.model.ResourceBundle
-import nl.rijksoverheid.en.api.typeconverter.WindowCalculationTypeConverter
 import okhttp3.Cache
 import okhttp3.CertificatePinner
 import okhttp3.ConnectionSpec
@@ -34,7 +33,6 @@ internal fun createMoshi() =
         )
         .add(Base64Adapter())
         .add(KotlinJsonAdapterFactory())
-        .add(WindowCalculationTypeConverter)
         .build()
 
 internal fun createOkHttpClient(context: Context, appVersionCode: Int): OkHttpClient {
