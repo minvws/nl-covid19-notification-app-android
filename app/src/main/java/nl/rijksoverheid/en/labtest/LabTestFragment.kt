@@ -92,8 +92,9 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
             viewLifecycleOwner,
             EventObserver {
                 when (it) {
-                    is LabTestViewModel.UploadResult.Success -> findNavController().navigate(
-                        LabTestFragmentDirections.actionLabTestDone(it.usedKey)
+                    is LabTestViewModel.UploadResult.Success -> findNavController().navigateCatchingErrors(
+                        LabTestFragmentDirections.actionLabTestDone(it.usedKey),
+                        FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                     )
                     is LabTestViewModel.UploadResult.RequestConsent -> requestConsent(it.resolution.intentSender)
                     LabTestViewModel.UploadResult.Error -> {

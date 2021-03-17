@@ -7,7 +7,6 @@
 package nl.rijksoverheid.en.test
 
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
-import com.google.android.gms.nearby.exposurenotification.DailySummary
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
@@ -37,8 +36,6 @@ open class FakeExposureNotificationApi :
         files: List<File>,
         diagnosisKeysDataMapping: DiagnosisKeysDataMapping
     ): DiagnosisKeysResult = DiagnosisKeysResult.Success
-
-    override suspend fun getDailySummaries(config: DailySummariesConfig): List<DailySummary>? = null
 
     override suspend fun getDailyRiskScores(config: DailySummariesConfig): List<DailyRiskScores> = emptyList()
 

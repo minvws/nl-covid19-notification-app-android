@@ -7,7 +7,7 @@ apply plugin: "com.osacky.fladle"
 apply plugin: 'com.google.firebase.appdistribution'
 apply plugin: 'ru.cian.huawei-publish'
 
-version = "1.3.0"
+version = "2.0.0"
 def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 78961
 archivesBaseName = "covid-notificatie-v${version}-${buildVersionCode}"
 
@@ -98,6 +98,13 @@ android {
             buildConfigField "boolean", "FEATURE_LOGGING", "true"
             buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "true"
             versionNameSuffix "-tst"
+        }
+        pentest {
+            dimension "environment"
+            buildConfigField "boolean", "FEATURE_SECURE_SCREEN", "false"
+            buildConfigField "boolean", "FEATURE_LOGGING", "true"
+            buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "true"
+            versionNameSuffix "-pentest"
         }
         acc {
             dimension "environment"

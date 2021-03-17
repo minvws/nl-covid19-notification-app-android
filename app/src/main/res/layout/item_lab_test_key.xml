@@ -41,7 +41,6 @@
             android:text="1"
             android:textAppearance="?attr/textAppearanceSubtitle1"
             android:visibility="invisible"
-            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText" />
