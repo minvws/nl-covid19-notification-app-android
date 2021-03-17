@@ -74,7 +74,10 @@ class LabTestRepositoryTest {
         override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
             Manifest(listOf(), "", "appconfig")
 
-        override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+        override suspend fun getRiskCalculationParameters(
+            id: String,
+            cacheStrategy: CacheStrategy?
+        ): RiskCalculationParameters {
             throw NotImplementedError()
         }
 

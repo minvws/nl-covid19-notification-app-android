@@ -14,14 +14,16 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.location.LocationManager
-import android.util.Base64
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import androidx.core.location.LocationManagerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
+import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
+import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
+import com.google.android.gms.nearby.exposurenotification.Infectiousness
+import com.google.android.gms.nearby.exposurenotification.ReportType
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -37,16 +39,18 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
+import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
+import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
+import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
-import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
@@ -62,24 +66,24 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
-import java.security.SecureRandom
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 import nl.rijksoverheid.en.api.BuildConfig as ApiBuildConfig
 
+@Deprecated("KEY_LAST_TOKEN_ID isn't being used anymore except for removing it from preferences")
 private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
 private const val KEY_NOTIFICATIONS_ENABLED_TIMESTAMP = "notifications_enabled_timestamp"
 private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
 private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
-private const val KEY_MIN_RISK_SCORE = "min_risk_score"
 
 class ExposureNotificationsRepository(
     private val context: Context,
@@ -303,7 +307,7 @@ class ExposureNotificationsRepository(
         }
 
         val configuration = try {
-            getConfigurationFromManifest(manifest)
+            api.getRiskCalculationParameters(manifest.riskCalculationParametersId)
         } catch (ex: IOException) {
             Timber.e(ex, "Error fetching configuration")
             return ProcessExposureKeysResult.Error(ex)
@@ -311,14 +315,9 @@ class ExposureNotificationsRepository(
 
         Timber.d("Processing ${validFiles.size} files")
 
-        preferences.edit {
-            putInt(KEY_MIN_RISK_SCORE, configuration.minimumRiskScore)
-        }
-
         val result = exposureNotificationsApi.provideDiagnosisKeys(
             validFiles.map { it.file!! },
-            configuration,
-            createToken()
+            getDiagnosisKeysMapping(configuration)
         )
         return when (result) {
             is DiagnosisKeysResult.Success -> {
@@ -363,22 +362,44 @@ class ExposureNotificationsRepository(
         }
     }
 
-    private fun createToken(): String {
-        val bytes = ByteArray(32)
-        SecureRandom().nextBytes(bytes)
-        return Base64.encodeToString(bytes, 0)
+    private fun getDailySummariesConfig(riskCalculationParameters: RiskCalculationParameters): DailySummariesConfig {
+        return DailySummariesConfig.DailySummariesConfigBuilder()
+            .setMinimumWindowScore(riskCalculationParameters.minimumWindowScore)
+            .setDaysSinceExposureThreshold(riskCalculationParameters.daysSinceExposureThreshold)
+            .setAttenuationBuckets(
+                riskCalculationParameters.attenuationBucketThresholds,
+                riskCalculationParameters.attenuationBucketWeights
+            ).apply {
+                riskCalculationParameters.infectiousnessWeights.forEachIndexed { infectiousness, weight ->
+                    val invalidWeight = weight < 0.0 || weight > 2.5
+                    if (invalidWeight)
+                        Timber.w("Element value of infectiousnessWeights must between 0 ~ 2.5")
+
+                    // Skip the value for Infectiousness.NONE, this will trigger a (IllegalArgumentException: Incorrect value of infectiousness)
+                    if (infectiousness != Infectiousness.NONE && !invalidWeight)
+                        setInfectiousnessWeight(infectiousness, weight)
+                }
+                riskCalculationParameters.reportTypeWeights.forEachIndexed { reportType, weight ->
+                    val invalidWeight = weight < 0.0 || weight > 2.5
+                    if (invalidWeight)
+                        Timber.w("Element value of reportTypeWeights must between 0 ~ 2.5")
+
+                    // Skip the value for ReportType.UNKNOWN and ReportType.REVOKED, this will trigger a (IllegalArgumentException: Incorrect value of ReportType)
+                    if (reportType != ReportType.UNKNOWN && reportType != ReportType.REVOKED && !invalidWeight)
+                        setReportTypeWeight(reportType, weight)
+                }
+            }.build()
     }
 
-    private suspend fun getConfigurationFromManifest(manifest: Manifest): ExposureConfiguration {
-        val riskCalculationParameters =
-            api.getRiskCalculationParameters(manifest.riskCalculationParametersId)
-        return ExposureConfiguration.ExposureConfigurationBuilder()
-            .setDurationAtAttenuationThresholds(*riskCalculationParameters.durationAtAttenuationThresholds.toIntArray())
-            .setMinimumRiskScore(riskCalculationParameters.minimumRiskScore)
-            .setTransmissionRiskScores(*riskCalculationParameters.transmissionRiskScores.toIntArray())
-            .setDurationScores(*riskCalculationParameters.durationScores.toIntArray())
-            .setAttenuationScores(*riskCalculationParameters.attenuationScores.toIntArray())
-            .setDaysSinceLastExposureScores(*riskCalculationParameters.daysSinceLastExposureScores.toIntArray())
+    private fun getDiagnosisKeysMapping(riskCalculationParameters: RiskCalculationParameters): DiagnosisKeysDataMapping {
+        val daysToInfectiousness = riskCalculationParameters.daysSinceOnsetToInfectiousness.map {
+            it.daysSinceOnsetOfSymptoms to it.infectiousness
+        }.toMap()
+
+        return DiagnosisKeysDataMapping.DiagnosisKeysDataMappingBuilder()
+            .setDaysSinceOnsetToInfectiousness(daysToInfectiousness)
+            .setReportTypeWhenMissing(riskCalculationParameters.reportTypeWhenMissing)
+            .setInfectiousnessWhenDaysSinceOnsetMissing(riskCalculationParameters.infectiousnessWhenDaysSinceOnsetMissing)
             .build()
     }
 
@@ -506,25 +527,6 @@ class ExposureNotificationsRepository(
         }
     }
 
-    private fun exposureToken(): Flow<String?> = callbackFlow {
-        val listener =
-            SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-                if (key == KEY_LAST_TOKEN_ID) {
-                    offer(sharedPreferences.getString(key, null))
-                }
-            }
-
-        val preferences = preferences.getPreferences()
-
-        preferences.registerOnSharedPreferenceChangeListener(listener)
-
-        offer(preferences.getString(KEY_LAST_TOKEN_ID, null))
-
-        awaitClose {
-            preferences.unregisterOnSharedPreferenceChangeListener(listener)
-        }
-    }
-
     fun lastKeyProcessed(): Flow<Long?> = callbackFlow {
         val listener =
             SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
@@ -566,12 +568,31 @@ class ExposureNotificationsRepository(
      * @return true if exposures are reported, false otherwise
      */
     fun getLastExposureDate(): Flow<LocalDate?> {
-        return exposureToken().distinctUntilChanged().map {
-            val timestamp = preferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L)
-            if (timestamp > 0) {
+        fun getSharedPrefsLongAsLocalDate(sharedPreferences: SharedPreferences, key: String): LocalDate? {
+            val timestamp = sharedPreferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L)
+            return if (timestamp > 0) {
                 LocalDate.ofEpochDay(timestamp)
             } else {
                 null
+            }
+        }
+
+        return callbackFlow {
+            val listener =
+                SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+                    if (key == KEY_LAST_TOKEN_EXPOSURE_DATE) {
+                        offer(getSharedPrefsLongAsLocalDate(sharedPreferences, key))
+                    }
+                }
+
+            val preferences = preferences.getPreferences()
+
+            preferences.registerOnSharedPreferenceChangeListener(listener)
+
+            offer(getSharedPrefsLongAsLocalDate(preferences, KEY_LAST_TOKEN_EXPOSURE_DATE))
+
+            awaitClose {
+                preferences.unregisterOnSharedPreferenceChangeListener(listener)
             }
         }
     }
@@ -592,43 +613,54 @@ class ExposureNotificationsRepository(
         }
     }
 
-    suspend fun addExposure(token: String): AddExposureResult {
-        val testToken = BuildConfig.FEATURE_DEBUG_NOTIFICATION && token == DEBUG_TOKEN
-        val summary = exposureNotificationsApi.getSummary(token)
+    suspend fun addExposure(testExposure: Boolean = false): AddExposureResult {
+        Timber.d("New exposure detected")
 
-        Timber.d("New exposure for token $token with summary $summary")
+        val riskCalculationParameters = getCachedRiskCalculationParameters()
+        val dailySummariesConfig = getDailySummariesConfig(riskCalculationParameters)
 
-        val currentDaysSinceLastExposure = preferences.getString(KEY_LAST_TOKEN_ID, null)
-            ?.let { exposureNotificationsApi.getSummary(it)?.daysSinceLastExposure }
-        val newDaysSinceLastExposure = if (testToken) {
-            5 // TODO make dynamic from debug screen
-        } else {
-            summary?.daysSinceLastExposure
+        val riskScores = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig).filter {
+            Timber.d(it.toString())
+            it.scoreSum > riskCalculationParameters.minimumRiskScore
         }
 
-        val minRiskScore = preferences.getInt(KEY_MIN_RISK_SCORE, 0)
+        val currentDaysSinceEpoch = if (preferences.contains(KEY_LAST_TOKEN_EXPOSURE_DATE)) {
+            preferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, -1)
+        } else {
+            null
+        }
 
-        if (!testToken && (summary?.matchedKeyCount ?: 0 == 0 || summary?.maximumRiskScore ?: 0 < minRiskScore)) {
+        val newDaysSinceEpoch = if (testExposure) {
+            LocalDate.now(clock).minusDays(5).toEpochDay()
+        } else {
+            riskScores.maxByOrNull { it.daysSinceEpoch }?.daysSinceEpoch
+        }
+
+        if (!testExposure && riskScores.isNullOrEmpty()) {
             Timber.d("Exposure has no matches or does not meet required risk score")
             return AddExposureResult.Processed
         }
 
-        return if (newDaysSinceLastExposure != null &&
-            (currentDaysSinceLastExposure == null || newDaysSinceLastExposure < currentDaysSinceLastExposure)
+        return if (newDaysSinceEpoch != null &&
+            (currentDaysSinceEpoch == null || newDaysSinceEpoch > currentDaysSinceEpoch)
         ) {
+            val nowSinceEpoch = LocalDate.now(ZoneId.of("UTC")).toEpochDay()
+            val newDaysSinceLastExposure = (nowSinceEpoch - newDaysSinceEpoch).toInt()
             // save new exposure
             preferences.edit {
-                putString(KEY_LAST_TOKEN_ID, token)
-                putLong(
-                    KEY_LAST_TOKEN_EXPOSURE_DATE,
-                    LocalDate.now(clock)
-                        .minusDays(newDaysSinceLastExposure.toLong()).toEpochDay()
-                )
+                putLong(KEY_LAST_TOKEN_EXPOSURE_DATE, newDaysSinceEpoch)
             }
             AddExposureResult.Notify(newDaysSinceLastExposure)
         } else {
             AddExposureResult.Processed
         }
+    }
+
+    private suspend fun getCachedRiskCalculationParameters(): RiskCalculationParameters {
+        return api.getRiskCalculationParameters(
+            api.getManifest(CacheStrategy.CACHE_FIRST).riskCalculationParametersId,
+            CacheStrategy.CACHE_FIRST
+        )
     }
 }
 

@@ -47,6 +47,7 @@ class DebugNotification(private val context: Context) {
         val intent = Intent(context, ExposureNotificationReceiver::class.java).apply {
             action = ExposureNotificationClient.ACTION_EXPOSURE_STATE_UPDATED
             putExtra(
+                @Suppress("DEPRECATION")
                 ExposureNotificationClient.EXTRA_TOKEN,
                 ExposureNotificationsRepository.DEBUG_TOKEN
             )

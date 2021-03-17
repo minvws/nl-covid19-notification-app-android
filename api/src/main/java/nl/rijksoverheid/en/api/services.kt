@@ -32,7 +32,8 @@ internal fun createMoshi() =
                 .withDefaultValue(ResourceBundle.Guidance.Element.Unknown)
         )
         .add(Base64Adapter())
-        .add(KotlinJsonAdapterFactory()).build()
+        .add(KotlinJsonAdapterFactory())
+        .build()
 
 internal fun createOkHttpClient(context: Context, appVersionCode: Int): OkHttpClient {
     return okHttpClient ?: OkHttpClient.Builder()

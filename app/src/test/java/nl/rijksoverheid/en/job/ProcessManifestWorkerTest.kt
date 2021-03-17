@@ -63,8 +63,12 @@ class ProcessManifestWorkerTest {
                 override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                     Manifest(listOf(), "risk", "config")
 
-                override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters =
+                override suspend fun getRiskCalculationParameters(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): RiskCalculationParameters {
                     throw NotImplementedError()
+                }
 
                 override suspend fun getAppConfig(
                     id: String,

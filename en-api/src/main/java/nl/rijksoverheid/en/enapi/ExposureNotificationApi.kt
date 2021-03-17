@@ -4,15 +4,11 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.enapi.nearby
+package nl.rijksoverheid.en.enapi
 
-import com.google.android.gms.nearby.exposurenotification.ExposureConfiguration
-import com.google.android.gms.nearby.exposurenotification.ExposureSummary
-import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
-import nl.rijksoverheid.en.enapi.DisableNotificationsResult
-import nl.rijksoverheid.en.enapi.EnableNotificationsResult
-import nl.rijksoverheid.en.enapi.StatusResult
-import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
+import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
+import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
+import nl.rijksoverheid.en.enapi.nearby.DailyRiskScores
 import java.io.File
 
 interface ExposureNotificationApi {
@@ -44,22 +40,20 @@ interface ExposureNotificationApi {
      * Provide the diagnostics keys for exposure notifications matching
      *
      * @param files the list of files to process. The files will be deleted when processing is successful
-     * @param configuration the configuration to use for matching
-     * @param token token that will be returned as [ExposureNotificationClient.EXTRA_TOKEN] when a match occurs
+     * @param diagnosisKeysDataMapping
      * @return the result
      */
     suspend fun provideDiagnosisKeys(
         files: List<File>,
-        configuration: ExposureConfiguration,
-        token: String
+        diagnosisKeysDataMapping: DiagnosisKeysDataMapping,
     ): DiagnosisKeysResult
 
     /**
-     * Get the [ExposureSummary] by token
-     * @param token the token passed to [provideDiagnosisKeys] and from [ExposureNotificationClient.EXTRA_TOKEN]
-     * @return the summary or null if there's no match or an error occurred
+     * Return a list of DailyRiskScores objects corresponding to the last 14 days of exposure data or null if there's no match or an error occurred
+     * @param config which must contain the weights and thresholds to apply to the exposure data
+     * @return a list of [DailyRiskScores]
      */
-    suspend fun getSummary(token: String): ExposureSummary?
+    suspend fun getDailyRiskScores(config: DailySummariesConfig): List<DailyRiskScores>
 
     /**
      * Return whether the device requires location services enabled for BLE scanning

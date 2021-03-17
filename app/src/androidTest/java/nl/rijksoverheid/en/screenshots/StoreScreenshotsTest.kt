@@ -118,7 +118,10 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
             Manifest(emptyList(), "", "appConfig")
 
-        override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+        override suspend fun getRiskCalculationParameters(
+            id: String,
+            cacheStrategy: CacheStrategy?
+        ): RiskCalculationParameters {
             throw NotImplementedError()
         }
 

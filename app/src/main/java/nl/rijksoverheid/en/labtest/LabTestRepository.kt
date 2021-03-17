@@ -19,9 +19,9 @@ import nl.rijksoverheid.en.api.model.PostKeysRequest
 import nl.rijksoverheid.en.api.model.Registration
 import nl.rijksoverheid.en.api.model.RegistrationRequest
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
-import nl.rijksoverheid.en.enapi.nearby.ExposureNotificationApi
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import retrofit2.HttpException
 import timber.log.Timber
