@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.applifecycle
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import androidx.core.content.edit
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
@@ -53,27 +54,28 @@ class AppLifecycleManager(
         suspendCoroutine { c ->
             val minimumVersionCode = preferences.getInt(KEY_MINIMUM_VERSION_CODE, 1)
             if (minimumVersionCode > currentVersionCode) {
-                val source = context.packageManager.getInstallerPackageName(context.packageName)
+                when (val source = getInstallPackageName()) {
+                    PLAY_STORE_PACKAGE_NAME -> {
+                        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
 
-                if (source == PLAY_STORE_PACKAGE_NAME) {
-                    val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-
-                    appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-                        if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-                            appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) ||
-                            appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
-                        ) {
-                            c.resume(UpdateState.InAppUpdate(appUpdateManager, appUpdateInfo))
-                        } else {
-                            // update might not be available for in-app update, for example for a staged roll out
-                            c.resume(UpdateState.UpToDate)
+                        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+                            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                                appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) ||
+                                appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
+                            ) {
+                                c.resume(UpdateState.InAppUpdate(appUpdateManager, appUpdateInfo))
+                            } else {
+                                // update might not be available for in-app update, for example for a staged roll out
+                                c.resume(UpdateState.UpToDate)
+                            }
+                        }.addOnFailureListener {
+                            Timber.e("Error requesting app update state")
+                            c.resume(UpdateState.Error(it))
                         }
-                    }.addOnFailureListener {
-                        Timber.e("Error requesting app update state")
-                        c.resume(UpdateState.Error(it))
                     }
-                } else {
-                    c.resume(UpdateState.UpdateRequired(source))
+                    else -> {
+                        c.resume(UpdateState.UpdateRequired(source))
+                    }
                 }
             } else {
                 c.resume(UpdateState.UpToDate)
@@ -91,5 +93,14 @@ class AppLifecycleManager(
         data class Error(val ex: Exception) : UpdateState()
 
         object UpToDate : UpdateState()
+    }
+
+    private fun getInstallPackageName(): String? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            context.packageManager.getInstallSourceInfo(context.packageName).installingPackageName
+        } else {
+            @Suppress("DEPRECATION")
+            context.packageManager.getInstallerPackageName(context.packageName)
+        }
     }
 }
