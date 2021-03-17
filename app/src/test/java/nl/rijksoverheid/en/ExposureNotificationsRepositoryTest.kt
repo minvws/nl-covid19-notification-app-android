@@ -19,6 +19,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.test.core.app.ApplicationProvider
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.Infectiousness
@@ -41,6 +43,7 @@ import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.enapi.DailyRiskScoresResult
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
@@ -713,12 +716,14 @@ class ExposureNotificationsRepositoryTest {
         val api = object : FakeExposureNotificationApi() {
             override suspend fun getDailyRiskScores(
                 config: DailySummariesConfig
-            ): List<DailyRiskScores> {
-                return listOf(
-                    DailyRiskScores(
-                        LocalDate.now(clock).minusDays(4).toEpochDay(),
-                        500.0,
-                        950.0
+            ): DailyRiskScoresResult {
+                return DailyRiskScoresResult.Success(
+                    listOf(
+                        DailyRiskScores(
+                            LocalDate.now(clock).minusDays(4).toEpochDay(),
+                            500.0,
+                            950.0
+                        )
                     )
                 )
             }
@@ -789,8 +794,8 @@ class ExposureNotificationsRepositoryTest {
 
             override suspend fun getDailyRiskScores(
                 config: DailySummariesConfig
-            ): List<DailyRiskScores> {
-                return getDailyRiskScoresResults.next()
+            ): DailyRiskScoresResult {
+                return DailyRiskScoresResult.Success(getDailyRiskScoresResults.next())
             }
         }
 
@@ -836,12 +841,12 @@ class ExposureNotificationsRepositoryTest {
     }
 
     @Test
-    fun `addExposure without matching keys is ignored`() = runBlocking {
+    fun `addExposure without exposure windows is ignored`() = runBlocking {
         val dateTime = "2020-06-20T10:15:30.00Z"
 
         val api = object : FakeExposureNotificationApi() {
-            override suspend fun getDailyRiskScores(config: DailySummariesConfig): List<DailyRiskScores> {
-                return emptyList()
+            override suspend fun getDailyRiskScores(config: DailySummariesConfig): DailyRiskScoresResult {
+                return DailyRiskScoresResult.Success(emptyList())
             }
         }
 
@@ -883,18 +888,64 @@ class ExposureNotificationsRepositoryTest {
     }
 
     @Test
+    fun `addExposure returns Error result when fetching risk scores fails`() = runBlocking {
+        val dateTime = "2020-06-20T10:15:30.00Z"
+
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getDailyRiskScores(config: DailySummariesConfig): DailyRiskScoresResult {
+                return DailyRiskScoresResult.UnknownError(ApiException(Status.RESULT_INTERNAL_ERROR))
+            }
+        }
+
+        val fakeService = object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                Manifest(emptyList(), "test-params", "")
+
+            override suspend fun getRiskCalculationParameters(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): RiskCalculationParameters {
+                return MOCK_RISK_CALCULATION_PARAMS
+            }
+
+            override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
+                throw NotImplementedError()
+
+            override suspend fun getResourceBundle(id: String, cacheStrategy: CacheStrategy?): ResourceBundle {
+                throw NotImplementedError()
+            }
+        }
+
+        val repository = createRepository(
+            api = api,
+            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC")),
+            cdnService = fakeService
+        )
+
+        val result = repository.addExposure()
+
+        assertEquals(AddExposureResult.Error, result)
+    }
+
+    @Test
     fun `addExposure risk score below threshold is ignored`() = runBlocking {
         val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
         val api = object : FakeExposureNotificationApi() {
             override suspend fun getDailyRiskScores(
                 config: DailySummariesConfig
-            ): List<DailyRiskScores> {
-                return listOf(
-                    DailyRiskScores(
-                        LocalDate.now(clock).minusDays(4).toEpochDay(),
-                        200.0,
-                        200.0
+            ): DailyRiskScoresResult {
+                return DailyRiskScoresResult.Success(
+                    listOf(
+                        DailyRiskScores(
+                            LocalDate.now(clock).minusDays(4).toEpochDay(),
+                            2.0,
+                            2.0
+                        )
                     )
                 )
             }
@@ -1340,12 +1391,14 @@ class ExposureNotificationsRepositoryTest {
             val api = object : FakeExposureNotificationApi() {
                 override suspend fun getDailyRiskScores(
                     config: DailySummariesConfig
-                ): List<DailyRiskScores> {
-                    return listOf(
-                        DailyRiskScores(
-                            LocalDate.now(clock).minusDays(4).toEpochDay(),
-                            500.0,
-                            950.0
+                ): DailyRiskScoresResult {
+                    return DailyRiskScoresResult.Success(
+                        listOf(
+                            DailyRiskScores(
+                                LocalDate.now(clock).minusDays(4).toEpochDay(),
+                                500.0,
+                                950.0
+                            )
                         )
                     )
                 }

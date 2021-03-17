@@ -8,7 +8,6 @@ package nl.rijksoverheid.en.enapi
 
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
-import nl.rijksoverheid.en.enapi.nearby.DailyRiskScores
 import java.io.File
 
 interface ExposureNotificationApi {
@@ -51,9 +50,9 @@ interface ExposureNotificationApi {
     /**
      * Return a list of DailyRiskScores objects corresponding to the last 14 days of exposure data or null if there's no match or an error occurred
      * @param config which must contain the weights and thresholds to apply to the exposure data
-     * @return a list of [DailyRiskScores]
+     * @return the result which can contain the risk scores or an exception
      */
-    suspend fun getDailyRiskScores(config: DailySummariesConfig): List<DailyRiskScores>
+    suspend fun getDailyRiskScores(config: DailySummariesConfig): DailyRiskScoresResult
 
     /**
      * Return whether the device requires location services enabled for BLE scanning

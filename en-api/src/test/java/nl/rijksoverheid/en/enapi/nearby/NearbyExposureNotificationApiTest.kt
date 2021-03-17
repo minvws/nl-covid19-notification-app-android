@@ -36,6 +36,7 @@ import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import kotlinx.coroutines.runBlocking
+import nl.rijksoverheid.en.enapi.DailyRiskScoresResult
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
@@ -586,7 +587,10 @@ class NearbyExposureNotificationApiTest {
         // WHEN
         val result = api.getDailyRiskScores(dailySummariesConfig)
 
-        assertEquals(RiskModel(dailySummariesConfig).getDailyRiskScores(exposureWindows), result)
+        assertEquals(
+            RiskModel(dailySummariesConfig).getDailyRiskScores(exposureWindows),
+            (result as DailyRiskScoresResult.Success).dailyRiskScores
+        )
     }
 
     @Test
@@ -619,30 +623,30 @@ class NearbyExposureNotificationApiTest {
         // WHEN
         val result = api.getDailyRiskScores(dailySummariesConfig)
 
-        assertEquals(RiskModel(dailySummariesConfig).getDailyRiskScores(exposureWindows), result)
+        assertEquals(
+            RiskModel(dailySummariesConfig).getDailyRiskScores(exposureWindows),
+            (result as DailyRiskScoresResult.Success).dailyRiskScores
+        )
     }
 
     @Test
     fun `getDailyRiskScores with error returns an empty map`() = runBlocking {
         // GIVEN
+        val error = ApiException(Status.RESULT_INTERNAL_ERROR)
         val api =
             NearbyExposureNotificationApi(
                 context,
                 object :
                     FakeExposureNotificationsClient() {
                     override fun getExposureWindows(): Task<MutableList<ExposureWindow>> =
-                        Tasks.forException(
-                            ApiException(
-                                Status.RESULT_INTERNAL_ERROR
-                            )
-                        )
+                        Tasks.forException(error)
                 }
             )
 
         // WHEN
         val result = api.getDailyRiskScores(dailySummariesConfig)
 
-        assertEquals(emptyList<DailyRiskScores>(), result)
+        assertEquals(DailyRiskScoresResult.UnknownError(error), result)
     }
 
     private abstract class FakeExposureNotificationsClient : ExposureNotificationClient {

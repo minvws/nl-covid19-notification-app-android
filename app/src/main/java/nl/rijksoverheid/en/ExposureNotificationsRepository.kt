@@ -46,6 +46,7 @@ import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.enapi.DailyRiskScoresResult
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
@@ -619,7 +620,11 @@ class ExposureNotificationsRepository(
         val riskCalculationParameters = getCachedRiskCalculationParameters()
         val dailySummariesConfig = getDailySummariesConfig(riskCalculationParameters)
 
-        val riskScores = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig).filter {
+        val dailyRiskScoresResult = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig)
+        if (dailyRiskScoresResult is DailyRiskScoresResult.UnknownError)
+            return AddExposureResult.Error
+
+        val riskScores = (dailyRiskScoresResult as? DailyRiskScoresResult.Success)?.dailyRiskScores?.filter {
             Timber.d(it.toString())
             it.scoreSum > riskCalculationParameters.minimumRiskScore
         }
@@ -633,7 +638,7 @@ class ExposureNotificationsRepository(
         val newDaysSinceEpoch = if (testExposure) {
             LocalDate.now(clock).minusDays(5).toEpochDay()
         } else {
-            riskScores.maxByOrNull { it.daysSinceEpoch }?.daysSinceEpoch
+            riskScores?.maxByOrNull { it.daysSinceEpoch }?.daysSinceEpoch
         }
 
         if (!testExposure && riskScores.isNullOrEmpty()) {
@@ -698,5 +703,6 @@ sealed class ProcessManifestResult {
 
 sealed class AddExposureResult {
     object Processed : AddExposureResult()
+    object Error : AddExposureResult()
     data class Notify(val daysSinceExposure: Int) : AddExposureResult()
 }

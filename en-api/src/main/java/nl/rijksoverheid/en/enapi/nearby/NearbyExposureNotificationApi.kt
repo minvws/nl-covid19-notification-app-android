@@ -14,11 +14,12 @@ import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes
-import com.google.android.gms.nearby.exposurenotification.ExposureWindow
+import nl.rijksoverheid.en.enapi.DailyRiskScoresResult
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
 import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.ExposureNotificationApi
+import nl.rijksoverheid.en.enapi.ExposureWindowsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import timber.log.Timber
@@ -195,17 +196,24 @@ class NearbyExposureNotificationApi(
         }
     }
 
-    override suspend fun getDailyRiskScores(config: DailySummariesConfig): List<DailyRiskScores> {
-        return RiskModel(config).getDailyRiskScores(getExposureWindows())
+    override suspend fun getDailyRiskScores(config: DailySummariesConfig): DailyRiskScoresResult {
+        return when (val exposureWindowResult = getExposureWindows()) {
+            is ExposureWindowsResult.Success -> {
+                val riskScores = RiskModel(config).getDailyRiskScores(exposureWindowResult.exposureWindows)
+                DailyRiskScoresResult.Success(riskScores)
+            }
+            is ExposureWindowsResult.UnknownError -> DailyRiskScoresResult.UnknownError(exposureWindowResult.exception)
+        }
     }
 
-    private suspend fun getExposureWindows(): List<ExposureWindow> = suspendCoroutine { c ->
+    private suspend fun getExposureWindows(): ExposureWindowsResult = suspendCoroutine { c ->
         client.exposureWindows.addOnSuccessListener {
-            c.resume(it)
+            c.resume(
+                ExposureWindowsResult.Success(it)
+            )
         }.addOnFailureListener {
             Timber.e(it, "Error getting ExposureWindows")
-            // TODO determine if we want bubble up errors here.
-            c.resume(emptyList())
+            c.resume(ExposureWindowsResult.UnknownError(it))
         }
     }
 
