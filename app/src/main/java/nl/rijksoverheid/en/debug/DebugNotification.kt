@@ -15,7 +15,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
-import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.notification.ExposureNotificationReceiver
 
@@ -46,11 +45,7 @@ class DebugNotification(private val context: Context) {
 
         val intent = Intent(context, ExposureNotificationReceiver::class.java).apply {
             action = ExposureNotificationClient.ACTION_EXPOSURE_STATE_UPDATED
-            putExtra(
-                @Suppress("DEPRECATION")
-                ExposureNotificationClient.EXTRA_TOKEN,
-                ExposureNotificationsRepository.DEBUG_TOKEN
-            )
+            putExtra(ExposureNotificationReceiver.KEY_IS_TEST_EXPOSURE, true)
         }
         val pendingIntent: PendingIntent =
             PendingIntent.getBroadcast(context, 0, intent, 0)
