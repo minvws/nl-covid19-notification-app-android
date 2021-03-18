@@ -81,6 +81,7 @@ import nl.rijksoverheid.en.api.BuildConfig as ApiBuildConfig
 @Deprecated("KEY_LAST_TOKEN_ID isn't being used anymore except for removing it from preferences")
 private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
+private const val KEY_LAST_NOTIFICATION_RECEIVED_DATE = "last_notification_received_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
 private const val KEY_NOTIFICATIONS_ENABLED_TIMESTAMP = "notifications_enabled_timestamp"
 private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
@@ -598,6 +599,15 @@ class ExposureNotificationsRepository(
         }
     }
 
+    suspend fun getLastNotificationReceivedDate(): LocalDate? {
+        val timestamp = preferences.getLong(KEY_LAST_NOTIFICATION_RECEIVED_DATE, 0L)
+        return if (timestamp > 0) {
+            LocalDate.ofEpochDay(timestamp)
+        } else {
+            null
+        }
+    }
+
     suspend fun resetExposures() {
         preferences.edit {
             // Use putString instead of remove, otherwise encrypted shared preferences don't call
@@ -654,6 +664,10 @@ class ExposureNotificationsRepository(
             // save new exposure
             preferences.edit {
                 putLong(KEY_LAST_TOKEN_EXPOSURE_DATE, newDaysSinceEpoch)
+                putLong(
+                    KEY_LAST_NOTIFICATION_RECEIVED_DATE,
+                    LocalDate.now(clock).toEpochDay()
+                )
             }
             AddExposureResult.Notify(newDaysSinceLastExposure)
         } else {

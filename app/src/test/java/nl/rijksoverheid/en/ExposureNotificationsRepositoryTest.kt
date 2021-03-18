@@ -1068,7 +1068,7 @@ class ExposureNotificationsRepositoryTest {
                     cacheStrategy: CacheStrategy?
                 ): ResourceBundle {
                     called.set(true)
-                    return ResourceBundle(emptyMap(), ResourceBundle.Guidance(10, emptyList()))
+                    return ResourceBundle(emptyMap(), ResourceBundle.Guidance(emptyList(), emptyList()))
                 }
             }
 

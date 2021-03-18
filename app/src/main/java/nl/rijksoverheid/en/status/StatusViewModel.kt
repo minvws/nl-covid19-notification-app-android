@@ -49,10 +49,11 @@ class StatusViewModel(
     }.flatMapLatest { (status, pausedState) ->
         exposureNotificationsRepository.getLastExposureDate()
             .map { date -> Triple(status, pausedState, date) }
-    }.map { (status, pausedState, date) ->
+    }.map { (status, pausedState, exposedDate) ->
         createHeaderState(
             status,
-            date,
+            exposedDate,
+            exposureNotificationsRepository.getLastNotificationReceivedDate(),
             exposureNotificationsRepository.keyProcessingOverdue(),
             pausedState
         )
@@ -99,12 +100,13 @@ class StatusViewModel(
 
     private fun createHeaderState(
         status: StatusResult,
-        date: LocalDate?,
+        exposedDate: LocalDate?,
+        notificationReceivedDate: LocalDate?,
         keyProcessingOverdue: Boolean,
         pausedState: Settings.PausedState
     ): HeaderState {
         return when {
-            date != null -> HeaderState.Exposed(date, clock, pausedState)
+            exposedDate != null -> HeaderState.Exposed(exposedDate, notificationReceivedDate, clock, pausedState)
             pausedState is Settings.PausedState.Paused -> HeaderState.Paused(pausedState)
             status !is StatusResult.Enabled -> HeaderState.Disabled
             keyProcessingOverdue -> HeaderState.SyncIssues
@@ -149,7 +151,7 @@ class StatusViewModel(
         object Disabled : HeaderState()
         object SyncIssues : HeaderState()
         data class Paused(val pauseState: Settings.PausedState.Paused, val durationHours: Long? = null, val durationMinutes: Long? = null) : HeaderState()
-        data class Exposed(val date: LocalDate, val clock: Clock, val pauseState: Settings.PausedState) : HeaderState()
+        data class Exposed(val date: LocalDate, val notificationReceivedDate: LocalDate?, val clock: Clock, val pauseState: Settings.PausedState) : HeaderState()
     }
 
     sealed class ErrorState {

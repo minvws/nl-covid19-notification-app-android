@@ -167,6 +167,9 @@
         <argument
             android:name="epochDayOfLastExposure"
             app:argType="long" />
+        <argument
+            android:name="epochDayOfNotificationReceived"
+            app:argType="long" />
         <action
             android:id="@+id/action_phone_call_not_supported_dialog"
             app:destination="@id/nav_phone_call_not_supported_dialog" />

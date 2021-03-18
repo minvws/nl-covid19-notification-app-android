@@ -193,7 +193,12 @@ class StatusFragment @JvmOverloads constructor(
             is StatusViewModel.HeaderState.Exposed -> {
                 section.updateHeader(
                     headerState = headerState,
-                    primaryAction = { navigateToPostNotification(headerState.date.toEpochDay()) },
+                    primaryAction = {
+                        navigateToPostNotification(
+                            headerState.date.toEpochDay(),
+                            headerState.notificationReceivedDate?.toEpochDay() ?: 0L
+                        )
+                    },
                     secondaryAction = {
                         showRemoveNotificationConfirmationDialog(
                             headerState.date.formatExposureDate(requireContext())
@@ -228,8 +233,13 @@ class StatusFragment @JvmOverloads constructor(
         }
     }
 
-    private fun navigateToPostNotification(epochDay: Long) =
-        findNavController().navigateCatchingErrors(StatusFragmentDirections.actionPostNotification(epochDay))
+    private fun navigateToPostNotification(epochDayOfLastExposure: Long, epochDayOfNotificationReceived: Long) =
+        findNavController().navigateCatchingErrors(
+            StatusFragmentDirections.actionPostNotification(
+                epochDayOfLastExposure,
+                epochDayOfNotificationReceived
+            )
+        )
 
     private fun navigateToNotificationSettings() {
         try {
