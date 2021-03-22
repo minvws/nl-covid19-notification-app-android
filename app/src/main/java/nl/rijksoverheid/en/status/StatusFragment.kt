@@ -32,6 +32,7 @@ import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.isIgnoringBatteryOptimizations
 import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
 import timber.log.Timber
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 private const val RC_DISABLE_BATTERY_OPTIMIZATIONS = 1
@@ -195,8 +196,8 @@ class StatusFragment @JvmOverloads constructor(
                     headerState = headerState,
                     primaryAction = {
                         navigateToPostNotification(
-                            headerState.date.toEpochDay(),
-                            headerState.notificationReceivedDate?.toEpochDay() ?: 0L
+                            headerState.date,
+                            headerState.notificationReceivedDate
                         )
                     },
                     secondaryAction = {
@@ -233,11 +234,11 @@ class StatusFragment @JvmOverloads constructor(
         }
     }
 
-    private fun navigateToPostNotification(epochDayOfLastExposure: Long, epochDayOfNotificationReceived: Long) =
+    private fun navigateToPostNotification(epochDayOfLastExposure: LocalDate, notificationReceivedLocalDate: LocalDate?) =
         findNavController().navigateCatchingErrors(
             StatusFragmentDirections.actionPostNotification(
                 epochDayOfLastExposure,
-                epochDayOfNotificationReceived
+                notificationReceivedLocalDate
             )
         )
 

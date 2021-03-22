@@ -113,7 +113,7 @@ class NotificationsRepository(
             .setDestination(R.id.nav_post_notification)
             .setArguments(
                 Bundle().apply {
-                    putLong("epochDayOfLastExposure", dateOfLastExposure.toEpochDay())
+                    putSerializable("epochDayOfLastExposure", dateOfLastExposure)
                 }
             ).createPendingIntent()
         val message = context.getString(
