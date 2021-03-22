@@ -382,7 +382,7 @@ class ResourceBundleManagerTest {
             )
         )
 
-        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
+        val resourceBundleManager = ResourceBundleManager(context, service)
 
         val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now(), null)
 
@@ -427,7 +427,7 @@ class ResourceBundleManagerTest {
             )
         )
 
-        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
+        val resourceBundleManager = ResourceBundleManager(context, service)
 
         val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now().minusDays(4), LocalDate.now())
 
@@ -472,7 +472,7 @@ class ResourceBundleManagerTest {
             )
         )
 
-        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
+        val resourceBundleManager = ResourceBundleManager(context, service)
 
         val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now().minusDays(12), LocalDate.now())
 
@@ -517,7 +517,7 @@ class ResourceBundleManagerTest {
             )
         )
 
-        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
+        val resourceBundleManager = ResourceBundleManager(context, service)
 
         val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now(), LocalDate.now())
 

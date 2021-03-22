@@ -156,7 +156,43 @@
     }
   },
   "guidance": {
-    "quarantineDays": 10,
+    "layoutByRelativeExposureDay": [
+      {
+        "exposureDaysLowerBoundary": 0,
+        "layout": [
+          {
+            "title": "exposure_notification_title",
+            "body": "exposure_notification_body",
+            "type": "paragraph"
+          },
+          {
+            "title": "next_steps_title",
+            "body": "next_steps_body",
+            "type": "paragraph"
+          },
+          {
+            "title": "stay_home_title",
+            "body": "stay_home_body",
+            "type": "paragraph"
+          },
+          {
+            "title": "medical_help_title",
+            "body": "medical_help_body",
+            "type": "paragraph"
+          },
+          {
+            "title": "test_negative_title",
+            "body": "test_negative_body",
+            "type": "paragraph"
+          },
+          {
+            "title": "symptoms_title",
+            "body": "symptoms_body",
+            "type": "paragraph"
+          }
+        ]
+      }
+    ],
     "layout": [
       {
         "title": "exposure_notification_title",
