@@ -12,6 +12,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import kotlinx.coroutines.flow.first
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import java.util.concurrent.TimeUnit
@@ -26,12 +27,13 @@ class RemindExposureNotificationWorker(
     private val notificationsRepository: NotificationsRepository
 ) : CoroutineWorker(context, workerParameters) {
     override suspend fun doWork(): Result {
-        val exposure = exposureNotificationsRepository.getDaysSinceLastExposure()
-        if (exposure != null) {
-            notificationsRepository.showExposureNotification(exposure, true)
-        } else {
-            cancel(applicationContext)
-        }
+        exposureNotificationsRepository.getLastExposureDate().first()?.let { lastExposureDate ->
+            notificationsRepository.showExposureNotification(
+                lastExposureDate,
+                exposureNotificationsRepository.getLastNotificationReceivedDate(),
+                true
+            )
+        } ?: cancel(applicationContext)
         return Result.success()
     }
 
