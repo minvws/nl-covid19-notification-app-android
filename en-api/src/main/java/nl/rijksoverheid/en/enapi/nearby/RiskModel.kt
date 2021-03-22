@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.enapi.nearby
 
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.ExposureWindow
+import timber.log.Timber
 import kotlin.math.max
 
 class RiskModel(private val config: DailySummariesConfig) {
@@ -20,6 +21,7 @@ class RiskModel(private val config: DailySummariesConfig) {
         windows.forEach { window ->
             val daysSinceEpoch = window.dateMillisSinceEpoch / (1000 * 60 * 60 * 24)
             val windowScore = getWindowScore(window)
+            Timber.d("ExposureWindow=$window, WindowScore=$windowScore, DaysSinceEpoch=$daysSinceEpoch")
             if (windowScore >= config.minimumWindowScore) {
                 val dailyRiskScores = perDayScore.getOrElse(daysSinceEpoch) {
                     DailyRiskScores(daysSinceEpoch, 0.0, 0.0)
