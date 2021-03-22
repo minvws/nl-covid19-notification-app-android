@@ -104,6 +104,8 @@
     <string name="about_toolbar_title">Despre aplicație</string>
     <string name="about_helpdesk_title">Altă întrebare despre aplicație?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Sunați gratuit la 0800-1280</string>
+    <string name="about_website_link_title">Mai multe informații despre aplicație</string>
+    <string name="about_website_link_subtitle">Accesați coronamelder.nl</string>
     <string name="about_technical_explanation_title">Cum funcționează aplicația?</string>
     <string name="about_technical_explanation_subtitle">Citiți explicația tehnică</string>
     <string name="about_onboarding_title">Ce face CoronaMelder?</string>
@@ -227,8 +229,8 @@
     <string name="request_test_paragraph_3">Rezultatele vor fi cunoscute în 48 de ore. Stați acasă până primiți rezultatului.</string>
     <string name="generic_notification_sample_notification_content_description">Exemplu de notificație</string>
     <string name="onboarding_enable_headline">Activați CoronaMelder</string>
-    <string name="onboarding_enable_description">CoronaMelder vă poate trimite avertismente doar dacă dați aplicației autorizația de a:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt; Ține evidența întâlnirilor cu alți utilizatori ai aplicației&lt;/li&gt;&lt;li&gt;Dezactiva optimizarea bateriei doar pentru această aplicație (nu este necesar)&lt;/li&gt;&lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder vă poate trimite avertismente doar dacă dați aplicației autorizația de a:<br/><br/><ul><li> Ține evidența întâlnirilor cu alți utilizatori ai aplicației</li><li>Activa setările locației dvs. (CoronaMelder nu vă cunoaște locația)</li><li>Dezactiva optimizarea bateriei doar pentru această aplicație (nu este necesar)</li></ul>]]></string>
+    <string name="onboarding_enable_description">CoronaMelder are nevoie de autorizație pentru:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt; A ține evidența întâlnirilor cu alți utilizatori ai aplicației&lt;/li&gt;&lt;li&gt;A dezactiva optimizarea bateriei doar pentru această aplicație (pentru funcționarea optimă a aplicației)&lt;/li&gt;&lt;/ul&gt;</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder are nevoie de autorizație pentru:<br/><br/><ul><li> A ține evidența întâlnirilor cu alți utilizatori ai aplicației</li><li>A activa setările locației dvs. (CoronaMelder nu vă cunoaște locația)</li><li>A dezactiva optimizarea bateriei doar pentru această aplicație (pentru funcționarea optimă a aplicației)</li></ul>]]></string>
     <string name="location_services_required_title">Configurări de locație</string>
     <string name="location_services_required_headline">Aplicația funcționează doar dacă configurările locației sunt activate</string>
     <string name="location_services_required_description">Unele aplicații folosesc bluetooth pentru a vă stabili locația. De aceea acesta face parte din setările locației. CoronaMelder are nevoie de bluetooth pentru a funcționa dar nu are niciodată acces la locația dvs.</string>
@@ -292,4 +294,15 @@
         <item quantity="other">%d minute</item>
         <item quantity="few">%d minute</item>
     </plurals>
+    <string name="status_partly_active_headline">Aplicația este parțial activă</string>
+    <string name="status_error_sync_issues_wifi_only"><![CDATA[Aplicația nu are conexiune la internet. Din această cauză,  timp de 24 de ore, aplicația <b>nu</b> a putut controla dacă personele întâlnite s-au dovedit mai târziu a fi infectate  cu coronavirus. Aplicația ține <b>încă</b> evidența întâlnirilor. <br/><br/><b>Conectați-vă la Wifi sau activați datele celulare pentru a permite aplicației să le folosească.</b>]]></string>
+    <string name="enable_internet_title">Conectare la internet</string>
+    <string name="enable_internet_description">Aplicația are nevoie de conexiune la internet pentru a putea controla dacă persoanele întâlnite s-au dovedit a fi infectate cu coronavirus.\n\n\nConectați-vă la wifi sau dezactivați în configurările aplicației opțiunea \"Controlare coduri doar prin wifi\".</string>
+    <string name="enable_internet_open_settings_button">Accesați Configurări</string>
+    <string name="enable_internet_footer">Aplicația încă nu este activă după aceasta? Atunci, probabil, este o problemă tehnică. În acest moment nu puteți face nimic în legătură cu acest lucru.</string>
+    <string name="settings_use_nl_language_title">Folosirea aplicației în neerlandeză</string>
+    <string name="settings_use_nl_language_summary">Aparatul dumneavoastră nu este setat în limba neerlandeză. Dacă preferați să folosiți CoronaMelder în neerlandeză, puteți să schimbați limba aici.</string>
+    <string name="status_error_bluetooth"><![CDATA[Semnalul Bluetooth este dezactivat. Din această cauză aplicația <b>nu</b> ține evidența noilor întâlniri. Aplicația controlează <b>încă</b> dacă persoanele  întâlnite mai devreme se dovedesc a fi infectate cu coronavirus.]]></string>
+    <string name="status_error_bluetooth_card">Semnalul Bluetooth este dezactivat. Aplicația nu poate ține evidența întâlnirilor.</string>
+    <string name="status_error_bluetooth_action">Activare Bluetooth</string>
 </resources>

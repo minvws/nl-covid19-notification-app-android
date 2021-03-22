@@ -15,6 +15,10 @@
         <variable
             name="viewModel"
             type="nl.rijksoverheid.en.settings.SettingsViewModel" />
+
+        <variable
+            name="isSystemLanguageDutch"
+            type="Boolean" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -93,7 +97,6 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/pause_description" />
 
-
                     <View
                         android:layout_marginTop="24dp"
                         android:background="@color/divider"
@@ -125,14 +128,59 @@
                         tools:targetApi="p" />
 
                     <TextView
+                        android:id="@+id/wifi_only_summary"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:paddingStart="16dp"
-                        android:paddingEnd="112dp"
+                        android:paddingEnd="74dp"
                         app:layout_constraintTop_toBottomOf="@id/wifi_only_switch"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:text="@string/settings_wifi_only_summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <View
+                        android:layout_marginTop="24dp"
+                        android:background="@color/divider"
+                        app:layout_constraintTop_toBottomOf="@id/wifi_only_summary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:id="@+id/wifi_only_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/use_app_in_dutch_switch"
+                        app:switchPadding="20dp"
+                        app:show="@{!isSystemLanguageDutch}"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:accessibilityHeading="true"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintTop_toBottomOf="@id/wifi_only_divider"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/settings_use_nl_language_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="0dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        tools:targetApi="p" />
+
+                    <TextView
+                        android:id="@+id/use_app_inn_dutch_summary"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        app:show="@{!isSystemLanguageDutch}"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="74dp"
+                        app:layout_constraintTop_toBottomOf="@id/use_app_in_dutch_switch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/settings_use_nl_language_summary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 

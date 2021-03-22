@@ -104,6 +104,8 @@
     <string name="about_toolbar_title">O aplikacji</string>
     <string name="about_helpdesk_title">Masz inne pytanie dotyczące aplikacji?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Zadzwoń pod bezpłatny numer 0800-1280</string>
+    <string name="about_website_link_title">Więcej o aplikacji</string>
+    <string name="about_website_link_subtitle">Przejdź na stronę coronamelder.nl</string>
     <string name="about_technical_explanation_title">Jak działa aplikacja?</string>
     <string name="about_technical_explanation_subtitle">Zobacz objaśnienie techniczne</string>
     <string name="about_onboarding_title">Do czego służy CoronaMelder?</string>
@@ -227,8 +229,8 @@
     <string name="request_test_paragraph_3">Wyniki są znane w ciągu 48 godzin. Pozostań w domu do momentu poznania wyników.</string>
     <string name="generic_notification_sample_notification_content_description">Przykład notyfikacji</string>
     <string name="onboarding_enable_headline">Włącz CoronaMelder</string>
-    <string name="onboarding_enable_description">CoronaMelder może Cię ostrzegać wyłącznie, jeśli wyrazisz zgodę na:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Śledzenie spotkań z innymi użytkownikami aplikacji&lt;/li&gt;&lt;li&gt;Wyłączenie optymalizacji baterii wyłącznie dla tej aplikacji (nie jest to konieczne)&lt;/li&gt;&lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder może Cię ostrzegać wyłącznie, jeśli wyrazisz zgodę na: <br/><br/><ul><li>Śledzenie spotkań z innymi użytkownikami aplikacji</li><li>Włączenie ustawień lokalizacji (CoronaMelder nie wie, gdzie się znajdujesz)</li><li>Wyłączenie optymalizacji baterii wyłącznie dla tej aplikacji (nie jest to konieczne)</li></ul>]]></string>
+    <string name="onboarding_enable_description">CoronaMelder wymaga wyrażenia zgody na:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Śledzenie spotkań z innymi użytkownikami aplikacji&lt;/li&gt;&lt;li&gt;Wyłączenie optymalizacji baterii wyłącznie dla tej aplikacji (dla maksymalnej wydajności aplikacji)&lt;/li&gt;&lt;/ul&gt;</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder wymaga wyrażenia zgody na: <br/><br/><ul><li>Śledzenie spotkań z innymi użytkownikami aplikacji</li><li>Włączenie ustawień lokalizacji (CoronaMelder nie wie, gdzie się znajdujesz)</li><li>Wyłączenie optymalizacji baterii wyłącznie dla tej aplikacji (dla maksymalnej wydajności aplikacji)</li></ul>]]></string>
     <string name="location_services_required_title">Ustawienia lokalizacji</string>
     <string name="location_services_required_headline">Aplikacja działa wyłącznie, gdy włączone są ustawienia lokalizacji</string>
     <string name="location_services_required_description">Niektóre aplikacje używają Bluetooth do określenia lokalizacji. Dlatego stanowi on część ustawień lokalizacji. CoronaMelder potrzebuje Bluetooth do działania, jednak nigdy nie ma dostępu do Twojej lokalizacji.</string>
@@ -295,4 +297,15 @@
         <item quantity="few">%d minuty</item>
         <item quantity="many">%d minut</item>
     </plurals>
+    <string name="status_partly_active_headline">Aplikacja jest częściowo aktywna</string>
+    <string name="status_error_sync_issues_wifi_only"><![CDATA[Aplikacja nie ma dostępu do internetu. Z tego powodu w ciągu 24 godzin <b>nie<b> mogła skontrolować, czy wykryto koronwirusa u osób, które spotkałeś. Aplikacja <b>wciąż</b> jeszcze monitoruje twoje spotkania.<br/><br/><b>Włącz wi-fi lub zezwól aplikacji na korzystanie z danych komórkowych.</b>]]></string>
+    <string name="enable_internet_title">Nawiąż połączenie internetowe</string>
+    <string name="enable_internet_description">Aplikacja wymaga połączenia internetowego, aby móc kontrolować, czy wykryto koronawirusa u osób, które spotkałeś.\n\n\nWłącz wi-fi lub wyłącz „Sprawdzanie kodów tylko przy połączeniu wi-fi\" w ustawieniach aplikacji.</string>
+    <string name="enable_internet_open_settings_button">Otwórz Ustawienia</string>
+    <string name="enable_internet_footer">Aplikacja wciąż nie jest w pełni aktywna? Prawdopodobnie jest to problem techniczny. W tym momencie nie możesz nic na to poradzić.</string>
+    <string name="settings_use_nl_language_title">Korzystaj z aplikacji w języku niderlandzkim</string>
+    <string name="settings_use_nl_language_summary">Twoje urządzenie nie jest zaprogramowane w języku niderlandzkim. Jeśli wolisz korzystać z aplikacji CoronaMelder w języku niderlandzkim, w tym miejscu możesz zmienić ustawienia.</string>
+    <string name="status_error_bluetooth"><![CDATA[Bluetooth jest wyłączony. W związku z tym aplikacja <b>nie</b> monitoruje nowych spotkań. Aplikacja <b>wciąż</b> jeszcze kontroluje, czy wykryto koronawirusa u osób, które spotkałeś wcześniej.]]></string>
+    <string name="status_error_bluetooth_card">Bluetooth jest wyłączony. Aplikacja nie może monitorować żadnych nowych spotkań.</string>
+    <string name="status_error_bluetooth_action">Włącz Bluetooth</string>
 </resources>

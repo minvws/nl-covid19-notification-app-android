@@ -53,7 +53,7 @@ class ResourceBundleManagerTest {
             )
         )
 
-        val resourceBundleManager = ResourceBundleManager(context, service)
+        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
 
         val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now())
 
@@ -84,7 +84,7 @@ class ResourceBundleManagerTest {
             )
         )
 
-        val resourceBundleManager = ResourceBundleManager(context, service)
+        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
         val date = LocalDate.of(2020, 11, 2)
 
         val result = resourceBundleManager.getExposureNotificationGuidance(date)
@@ -109,7 +109,7 @@ class ResourceBundleManagerTest {
                 )
             )
 
-            val resourceBundleManager = ResourceBundleManager(context, service)
+            val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
             val date = LocalDate.of(2020, 11, 2)
 
             val result = resourceBundleManager.getExposureNotificationGuidance(date)
@@ -133,7 +133,7 @@ class ResourceBundleManagerTest {
             )
         )
 
-        val resourceBundleManager = ResourceBundleManager(context, service)
+        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
         val date = LocalDate.of(2020, 11, 2)
 
         val result = resourceBundleManager.getExposureNotificationGuidance(date)
@@ -158,7 +158,7 @@ class ResourceBundleManagerTest {
                 )
             )
 
-            val resourceBundleManager = ResourceBundleManager(context, service)
+            val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
             val date = LocalDate.of(2020, 11, 2)
 
             val result = resourceBundleManager.getExposureNotificationGuidance(date)
@@ -186,7 +186,7 @@ class ResourceBundleManagerTest {
             LocalDate.of(2020, 11, 3).atStartOfDay().toInstant(ZoneOffset.UTC),
             ZoneId.of("UTC")
         )
-        val resourceBundleManager = ResourceBundleManager(context, service, clock)
+        val resourceBundleManager = ResourceBundleManager(context, service, clock, false)
         val date = LocalDate.of(2020, 11, 2)
 
         val result = resourceBundleManager.getExposureNotificationGuidance(date)
@@ -211,7 +211,7 @@ class ResourceBundleManagerTest {
                 )
             )
 
-            val resourceBundleManager = ResourceBundleManager(context, service)
+            val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
             val date = LocalDate.of(2020, 11, 2)
 
             val result = resourceBundleManager.getExposureNotificationGuidance(date)
@@ -235,7 +235,7 @@ class ResourceBundleManagerTest {
             )
         )
 
-        val resourceBundleManager = ResourceBundleManager(context, service)
+        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
 
         val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now())
         val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
@@ -260,7 +260,7 @@ class ResourceBundleManagerTest {
             )
         )
 
-        val resourceBundleManager = ResourceBundleManager(context, service)
+        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
 
         val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now())
         val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
@@ -287,7 +287,7 @@ class ResourceBundleManagerTest {
                 )
             )
 
-            val resourceBundleManager = ResourceBundleManager(context, service)
+            val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
 
             val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now())
             val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
@@ -311,7 +311,7 @@ class ResourceBundleManagerTest {
                 )
             )
 
-            val resourceBundleManager = ResourceBundleManager(context, service)
+            val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
 
             val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now())
             val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
@@ -341,7 +341,7 @@ class ResourceBundleManagerTest {
                 )
             )
 
-            val resourceBundleManager = ResourceBundleManager(context, service)
+            val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
 
             val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now())
             val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
