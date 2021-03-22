@@ -35,7 +35,7 @@ class PostNotificationFragment : BaseFragment(R.layout.fragment_list_with_button
         super.onCreate(savedInstanceState)
 
         viewModel.setExposureNotificationGuidanceArgs(
-            args.epochDayOfLastExposure,
+            args.lastExposureLocalDate,
             args.notificationReceivedLocalDate
         )
     }

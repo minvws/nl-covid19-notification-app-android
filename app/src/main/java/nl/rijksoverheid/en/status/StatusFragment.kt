@@ -234,10 +234,10 @@ class StatusFragment @JvmOverloads constructor(
         }
     }
 
-    private fun navigateToPostNotification(epochDayOfLastExposure: LocalDate, notificationReceivedLocalDate: LocalDate?) =
+    private fun navigateToPostNotification(lastExposureLocalDate: LocalDate, notificationReceivedLocalDate: LocalDate?) =
         findNavController().navigateCatchingErrors(
             StatusFragmentDirections.actionPostNotification(
-                epochDayOfLastExposure,
+                lastExposureLocalDate,
                 notificationReceivedLocalDate
             )
         )
