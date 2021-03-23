@@ -32,7 +32,7 @@ class ExposureNotificationJob(
         val testExposure = inputData.getBoolean(KEY_TEST_EXPOSURE, false)
         return when (val result = repository.addExposure(testExposure)) {
             is AddExposureResult.Notify -> {
-                notificationsRepository.showExposureNotification(result.daysSinceExposure)
+                notificationsRepository.showExposureNotification(result.dateOfLastExposure, result.notificationReceivedDate)
                 RemindExposureNotificationWorker.schedule(applicationContext)
                 Result.success()
             }
