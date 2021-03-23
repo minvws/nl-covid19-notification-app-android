@@ -71,7 +71,6 @@ import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
-import java.time.temporal.ChronoUnit
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
@@ -613,13 +612,6 @@ class ExposureNotificationsRepository(
             // an associated shared preferences listener.
             putString(KEY_LAST_TOKEN_ID, null)
             putString(KEY_LAST_TOKEN_EXPOSURE_DATE, null)
-        }
-    }
-
-    suspend fun getDaysSinceLastExposure(): Int? {
-        val date = getLastExposureDate().first()
-        return date?.let {
-            ChronoUnit.DAYS.between(date, LocalDate.now(clock)).toInt()
         }
     }
 

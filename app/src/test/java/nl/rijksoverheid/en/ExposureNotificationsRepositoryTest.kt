@@ -77,7 +77,6 @@ import retrofit2.Response
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.lang.IllegalArgumentException
 import java.security.KeyStore
 import java.time.Clock
 import java.time.Instant
@@ -2062,28 +2061,9 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
-    fun `getDaysSinceLastExposure returns days when an exposure is reported`() = runBlocking {
-        val preferences = context.getSharedPreferences("repository_test", 0)
-        val clock =
-            Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("Europe/Amsterdam"))
-
-        val exposureDate = LocalDate.now(clock).minusDays(36)
-        preferences.edit {
-            putLong("last_token_exposure_date", exposureDate.toEpochDay())
-            putString("last_token_id", "dummy")
-        }
-
-        val repository = createRepository(preferences = preferences, clock = clock)
-
-        val daysSinceLastExposure = repository.getDaysSinceLastExposure()
-
-        assertEquals(36, daysSinceLastExposure)
-    }
-
-    @Test
-    fun `getDaysSinceLastExposure returns null when no exposure is reported`() = runBlocking {
+    fun `getLastExposureDate returns null when no exposure is reported`() = runBlocking {
         val repository = createRepository()
-        assertNull(repository.getDaysSinceLastExposure())
+        assertNull(repository.getLastExposureDate().first())
     }
 
     @Test
