@@ -104,6 +104,8 @@
     <string name="about_toolbar_title">Oer de app</string>
     <string name="about_helpdesk_title">Oare fraach oer de app?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Belje fergees 0800-1280</string>
+    <string name="about_website_link_title">Mear oer de app</string>
+    <string name="about_website_link_subtitle">Gean nei coronamelder.nl</string>
     <string name="about_technical_explanation_title">Hoe wurket de app?</string>
     <string name="about_technical_explanation_subtitle">Besjoch de technyske útlis</string>
     <string name="about_onboarding_title">Wat docht CoronaMelder</string>
@@ -225,8 +227,8 @@
     <string name="request_test_paragraph_3">De útslach is binnen 48 oeren bekend. Bliuw thús oant datst de útslach wist.</string>
     <string name="generic_notification_sample_notification_content_description">Foarbyld fan in notifikaasje</string>
     <string name="onboarding_enable_headline">Set CoronaMelder oan</string>
-    <string name="onboarding_enable_description">CoronaMelder kin dy allinne warskôgje ast de app tastimming joust om:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Moetings mei oare app-brûkers by te hâlden&lt;/li&gt;&lt;li&gt;Batterij-optimalisaasje foar allinne dizze app út te setten (net needsaaklik)&lt;/li&gt;&lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kin dy allinne warskôgje ast de app tastimming joust om: <br/><br/><ul><li>Moetings mei oare app-brûkers by te hâlden</li><li>Dyn lokaasjeynstellingen oan te setten (CoronaMelder wit dyn lokaasje net)</li><li>Batterij-optimalisaasje foar allinne dizze app út te setten (net needsaaklik)</li></ul>]]></string>
+    <string name="onboarding_enable_description">CoronaMelder hat tastimming nedich om:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Moetings mei oare app-brûkers by te hâlden&lt;/li&gt;&lt;li&gt;Batterij-optimalisaasje foar allinne dizze app út te setten (foar de bêste wurking fan de app)&lt;/li&gt;&lt;/ul&gt;</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder hat tastimming nedich om: <br/><br/><ul><li>Moetings mei oare app-brûkers by te hâlden</li><li>Dyn lokaasjeynstellingen oan te setten (CoronaMelder wit dyn lokaasje net)</li><li>Batterij-optimalisaasje foar allinne dizze app út te setten (foar de bêste wurking fan de app)</li></ul>]]></string>
     <string name="location_services_required_title">Lokaasjeynstellingen</string>
     <string name="location_services_required_headline">De app wurket allinne as dyn lokaasjeynstellingen oansteane</string>
     <string name="location_services_required_description">Guon apps brûke bluetooth om dyn lokaasje fêst te stellen. Dêrom is dit ûnderdiel fan lokaasjeynstellingen. CoronaMelder hat bluetooth nedich om te wurkjen, mar hat nea tagong ta dyn lokaasje.</string>
@@ -287,4 +289,15 @@
         <item quantity="one">%d minút</item>
         <item quantity="other">%d minuten</item>
     </plurals>
+    <string name="status_partly_active_headline">De app is foar in part aktyf</string>
+    <string name="status_error_sync_issues_wifi_only"><![CDATA[De app hat gjin ferbining mei ynternet. Dêrtroch koe de app 24 oeren <b>net</b> kontrolearje oft de minsken dy\'tst moete hast letter koroana blieken te hawwen. De app hâldt noch <b>wol</b> dyn moetings by. <br/><br/><b>Gean op wifi of set it mobyl brûken fan data troch de app oan.</b>]]></string>
+    <string name="enable_internet_title">Ynternetferbining meitsje</string>
+    <string name="enable_internet_description">De app hat ynternetferbining nedich om kontrolearje te kinnen oft de minsken dy\'tst moete hast letter koroana blieken te hawwen.\n\nGean op wifi of set \'Allinne koades kontrolearje fia wifi\' yn de ynstellingen fan de app út.</string>
+    <string name="enable_internet_open_settings_button">Iepen ynstellingen</string>
+    <string name="enable_internet_footer">Is de app hjirnei noch hieltyd net hielendal aktyf? Dan is it nei alle gedachten in technysk probleem. Dêr kinst op it stuit sels neat oan dwaan.</string>
+    <string name="settings_use_nl_language_title">App yn it Nederlânsk brûke</string>
+    <string name="settings_use_nl_language_summary">Dyn tastel stiet net yn it Nederlânsk ynsteld. Ast CoronaMelder leaver yn it Nederlânsk brûkst, dan kinst dat hjir oansette.</string>
+    <string name="status_error_bluetooth"><![CDATA[Dyn bluetooth stiet út. De app hâldt dêrom <b>gjin</b> nije moetings by. De app kontrolearret noch <b>wol</b> oft de minsken dy\'tst earder moete hast koroana blike te hawwen.]]></string>
+    <string name="status_error_bluetooth_card">Dyn bluetooth stiet út. De app kin gjin nije moetings byhâlde.</string>
+    <string name="status_error_bluetooth_action">Bluetooth oansette</string>
 </resources>

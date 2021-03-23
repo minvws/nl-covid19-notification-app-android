@@ -105,6 +105,8 @@
     <string name="about_toolbar_title">حوْل التطبيق</string>
     <string name="about_helpdesk_title">سؤال آخر عن التطبيق؟</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">اتصل بالمجان برقم 1280 - 0800</string>
+    <string name="about_website_link_title">للمزيد من المعلومات حول التطبيق</string>
+    <string name="about_website_link_subtitle">راجع موقع Coronamelder.nl</string>
     <string name="about_technical_explanation_title">كيف يعمل التطبيق؟</string>
     <string name="about_technical_explanation_subtitle">راجع الشرح التقني</string>
     <string name="about_onboarding_title">ما الذي يفعله CoronaMelder؟</string>
@@ -232,8 +234,8 @@
     <string name="request_test_paragraph_3">ستعرف النتيجة في غضون 48 ساعة. إبق في المنزل حتى تعرف النتيجة.</string>
     <string name="generic_notification_sample_notification_content_description">مثال على الإشعار</string>
     <string name="onboarding_enable_headline">قم بتشغيل CoronaMelder</string>
-    <string name="onboarding_enable_description">يمكن لـ CoronaMelder تحذيرك فقط إذا منحت التطبيق إذنًا لـ: &lt;br/&gt;&lt;br/&gt;&lt;ul&gt; &lt;li&gt; تتبع المصادفات مع مستخدمي التطبيق الآخرين&lt;/li&gt;&lt;li&gt; إيقاف تشغيل تحسين البطارية لهذا التطبيق فقط (ليس ضروريًا) &lt;/li&gt; &lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[يمكن لـ CoronaMelder تحذيرك فقط إذا منحت التطبيق الإذن لـ: <br/><br/><ul><li> تتبع المصادفات مع مستخدمي التطبيق الآخرين</li><li> شغّل إعدادات موقعك (لا يعرف CoronaMelder موقعك الجغرافي) </li><li> أوقف تشغيل تحسين البطارية لهذا التطبيق فقط (ليس ضروريًا) </li></ul>]]></string>
+    <string name="onboarding_enable_description">يحتاج CoronaMelder إلى إذن لـ: &lt;br/&gt;&lt;br/&gt;&lt;ul&gt; &lt;li&gt; تتبع المخالطات مع مستخدمي التطبيق الآخرين&lt;/li&gt;&lt;li&gt; إيقاف تشغيل تحسين البطارية لهذا التطبيق فقط (للحصول على أداء أفضل للتطبيق) &lt;/li&gt; &lt;/ul&gt;</string>
+    <string name="onboarding_enable_description_location"><![CDATA[يحتاج CoronaMelder إلى إذن لـ: <br/><br/><ul> <li> تتبع المخالطات مع مستخدمي التطبيق الآخرين </li><li> تشغيل إعدادات موقعك (لا يعرف CoronaMelder موقعك الجغرافي) </li><li> إيقاف تشغيل تحسين البطارية لهذا التطبيق فقط (للحصول على أداء أفضل للتطبيق) </li> </ul>]]></string>
     <string name="location_services_required_title">إعدادات الموقع الجغرافي</string>
     <string name="location_services_required_headline">التطبيق يعمل فقط إذا قمت بتشغيل إعدادات موقعك الجغرافي</string>
     <string name="location_services_required_description">تستخدم بعض التطبيقات البلوتوث لتحديد موقعك الجغرافي. وبالتالي، هذا جزء من إعدادات الموقع. يحتاج CoronaMelder إلى تقنية البلوتوث ليعمل، ولكن لا يمكنه الوصول إلى موقعك الجغرافي على الإطلاق.</string>
@@ -307,4 +309,15 @@
         <item quantity="two">%d دقائق</item>
         <item quantity="zero">%d دقائق</item>
     </plurals>
+    <string name="status_partly_active_headline">التطبيق نشط جزئيًا</string>
+    <string name="status_error_sync_issues_wifi_only"><![CDATA[التطبيق غير متصل بشبكة الإنترنت. ونتيجة لذلك <b>لم</b>  يتمكن التطبيق لمدة 24 ساعة من التحقق مما إذا كان الأشخاص الذين قابلتهم لاحقًا مصابين بكورونا. <b>سيتعقب</b> التطبيق المخالطات التي قمت بها.<br/><br/><b> اتصل بشبكة الـ Wi-Fi أو شغَل التطبيق للسماح باستخدام خدمة تجوال البيانات.</ b>]]></string>
+    <string name="enable_internet_title">اتصل بالإنترنت</string>
+    <string name="enable_internet_description">يحتاج التطبيق إلى الاتصال بالإنترنت للتحقق مما إذا كان الأشخاص الذين قابلتهم لاحقًا مصابين بكورونا.\n\nاتصل بـالـ WiFi أو أوقف \"التحقق من الرموز فقط عبرالـ WiFi \"  في إعدادات التطبيق.</string>
+    <string name="enable_internet_open_settings_button">فتح الإعدادات</string>
+    <string name="enable_internet_footer">هل  لا يزال التطبيق غير نشط بشكل كامل؟ ربما هناك مشكلة فنية. لا يمكنك فعل أي شيء حيال هذا بنفسك في الوقت الراهن.</string>
+    <string name="settings_use_nl_language_title">استخدم التطبيق باللغة الهولندية</string>
+    <string name="settings_use_nl_language_summary">لم يتم ضبط جهازك باللغة الهولندية. إذا كنت تفضّل استخدام CoronaMelder باللغة الهولندية، فيمكنك تشغيله هنا.</string>
+    <string name="status_error_bluetooth"><![CDATA[البلوتوث غير مشغّل. وبالتالي فإن التطبيق <b>لا</ b> يستطيع تتبع أي مخالطات جديدة. سيقوم التطبيق <b> بفحص</ b> ما إذا كان الأشخاص الذين قابلتهم من قبل مصابين بكورونا.]]></string>
+    <string name="status_error_bluetooth_card">"البلوتوث غير مشغّل. وبالتالي فإن التطبيق لا يستطيع تتبع أي مخالطات جديدة. "</string>
+    <string name="status_error_bluetooth_action">تشغيل البلوتوث</string>
 </resources>

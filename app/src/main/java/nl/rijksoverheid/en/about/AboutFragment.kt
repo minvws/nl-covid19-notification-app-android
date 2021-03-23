@@ -65,6 +65,15 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
                     AboutFragmentDirections.actionAboutDetail(item.id),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
+                is WebsiteLinkItem -> {
+                    val url = Uri.parse(
+                        getString(
+                            R.string.coronamelder_url,
+                            getString(R.string.app_language)
+                        )
+                    )
+                    CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
+                }
                 is HelpdeskItem -> {
                     val phoneNumber = getString(R.string.helpdesk_phone_number)
                     try {

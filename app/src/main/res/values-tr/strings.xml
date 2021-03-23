@@ -104,6 +104,8 @@
     <string name="about_toolbar_title">Uygulama hakkında</string>
     <string name="about_helpdesk_title">Uygulama ile ilgili başka sorunuz mu var?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">0800-1280\'i ücretsiz olarak arayın</string>
+    <string name="about_website_link_title">Uygulama hakkında daha fazla bilgi</string>
+    <string name="about_website_link_subtitle">coronamelder.nl\'e gidin</string>
     <string name="about_technical_explanation_title">Uygulama nasıl çalışır?</string>
     <string name="about_technical_explanation_subtitle">Teknik açıklamayı görüntüleyin</string>
     <string name="about_onboarding_title">CoronaMelder ne yapar?</string>
@@ -225,8 +227,8 @@
     <string name="request_test_paragraph_3">Sonuçlar 48 saat içinde belli olur. Sonucu öğrenene kadar evde kalın.</string>
     <string name="generic_notification_sample_notification_content_description">Bir bildirim örneği</string>
     <string name="onboarding_enable_headline">CoronaMelder\'ı açın</string>
-    <string name="onboarding_enable_description">CoronaMelder, yalnızca uygulamaya aşağıdakiler için izin verirseniz sizi uyarabilir: &lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Diğer uygulama kullanıcılarıyla buluşmaları takip etme&lt;/li&gt;&lt;li&gt;Yalnızca bu uygulama için pil optimizasyonunu kapatmak (gerekli değil)&lt;/li&gt;&lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder, ancak uygulamaya aşağıdakiler için izin verdiğiniz takdirde sizi bilgilendirebilir:<br/><br/><ul><li> Diğer uygulama kullanıcılarıyla buluşmaları takip etmek için</li><li>Konum ayarlarınızı açmak için (CoronaMelder konumunuzu bilmiyor) </li><li>Pil optimizasyonunu yalnızca bu uygulamaya kapatmak için (gerekli değildir)</li></ul>]]></string>
+    <string name="onboarding_enable_description">CoronaMelder&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Diğer uygulama kullanıcılarıyla buluşmaları takip etmek için &lt;/li&gt;&lt;li&gt;Yalnızca bu uygulama için pil optimizasyonunu kapatmak için (uygulamanın en iyi şekilde çalışması için)&lt;/li&gt;&lt;/ul&gt; sizden izin ister.</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder<br/><br/><ul><li> Diğer uygulama kullanıcılarıyla buluşmaları takip etmek için</li><li>Konum ayarlarınızı açmak için (CoronaMelder konumunuzu bilmiyor) </li><li>Pil optimizasyonunu yalnızca bu uygulamaya kapatmak için (uygulamanın en iyi şekilde çalışması için)</li></ul> sizden izin ister.]]></string>
     <string name="location_services_required_title">Konum ayarları</string>
     <string name="location_services_required_headline">Uygulama yalnızca konum ayarlarınız açıksa çalışır</string>
     <string name="location_services_required_description">Bazı uygulamalar konumunuzu belirlemek için bluetooth kullanır. Dolayısıyla bu, konum ayarlarının bir parçasıdır. CoronaMelder\'ın çalışması için bluetooth\'a ihtiyacı vardır, ancak konumunuza asla erişemez.</string>
@@ -287,4 +289,15 @@
         <item quantity="one">%d dakika</item>
         <item quantity="other">%d dakika</item>
     </plurals>
+    <string name="status_partly_active_headline">Uygulama kısmen etkin</string>
+    <string name="status_error_sync_issues_wifi_only"><![CDATA[Uygulama internete bağlı değil. Sonuç olarak, uygulama daha sonra karşılaştığınız kişilerin Korona geçirip geçirmediğini 24 saat boyunca <b> kontrol edemedi </b>. Uygulama, karşılaşmalarınızı <b>takip edecektir</b>. <br/><br/><b>Kablosuz ağa bağlanın veya uygulamanın mobil verileri kullanmasını sağlayın.</b>]]></string>
+    <string name="enable_internet_title">İnternet bağlantısı kurun</string>
+    <string name="enable_internet_description">Karşılaştığınız kişilerin sonradan Korona\'ya yakalanıp yakalanmadığını kontrol edebilmek için uygulamanın bir internet bağlantısına ihtiyacı var.\n\nUygulama ayarlarında WiFi\'ye bağlanın veya \"Kodları yalnızca WiFi üzerinden kontrol et\" seçeneğini kapatın.</string>
+    <string name="enable_internet_open_settings_button">Ayarları açın</string>
+    <string name="enable_internet_footer">Uygulama bu işlemden sonra hala tam olarak aktif değil mi? O halde bu muhtemelen teknik bir sorundur. Şu anda bu konuda hiçbir şey yapamazsınız.</string>
+    <string name="settings_use_nl_language_title">Uygulamayı Hollandaca dilinde kullanın</string>
+    <string name="settings_use_nl_language_summary">Cihazınız Hollandaca dilinde ayarlanmamış. CoronaMelder\'ı Hollandaca kullanmayı tercih ederseniz, buradan etkinleştirebilirsiniz.</string>
+    <string name="status_error_bluetooth"><![CDATA[Bluetooth\'unuz kapalı. Bu nedenle uygulama yeni karşılaşmaları <b>takip etmez</b>. Uygulama daha önce karşılaştığınız kişilerde Korona olup olmadığını hala <b>kontrol eder</b>.]]></string>
+    <string name="status_error_bluetooth_card">Bluetooth\'unuz kapalı. Uygulama yeni karşılaşmaları takip edemez.</string>
+    <string name="status_error_bluetooth_action">Bluetooth\'u açın</string>
 </resources>

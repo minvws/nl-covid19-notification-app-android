@@ -20,6 +20,7 @@ private const val KEY_WIFI_ONLY = "wifi_only"
 private const val KEY_PAUSED = "paused"
 private const val KEY_PAUSED_UNTIL = "paused_until"
 private const val KEY_PAUSE_CONFIRMATION = "paused_confirmation"
+private const val KEY_APP_LANGUAGE_DUTCH = "app_language_dutch"
 
 /**
  * Thin wrapper around the default app preferences
@@ -72,6 +73,10 @@ class Settings(
             remove(KEY_PAUSED_UNTIL)
         }
     }
+
+    var isAppSetToDutch: Boolean
+        get() = preferences.getBoolean(KEY_APP_LANGUAGE_DUTCH, false)
+        set(value) = preferences.edit { putBoolean(KEY_APP_LANGUAGE_DUTCH, value) }
 
     fun observeChanges(): Flow<Settings> = callbackFlow {
         val listener =
