@@ -558,43 +558,7 @@ class NearbyExposureNotificationApiTest {
         }
 
     @Test
-    fun `getDailyRiskScores MAX returns the MAX daily risk scores`() = runBlocking {
-        // GIVEN
-        val date = LocalDate.now()
-        val exposureWindows = mutableListOf(
-            ExposureWindow.Builder().setDateMillisSinceEpoch(
-                date.atStartOfDay(ZoneId.of("UTC"))
-                    .toInstant()
-                    .toEpochMilli()
-            ).setInfectiousness(Infectiousness.STANDARD)
-                .setScanInstances(
-                    listOf(
-                        ScanInstance.Builder()
-                            .setSecondsSinceLastScan(600)
-                            .setTypicalAttenuationDb(80).build()
-                    )
-                ).build()
-        )
-        val api = NearbyExposureNotificationApi(
-            context,
-            object : FakeExposureNotificationsClient() {
-                override fun getExposureWindows(): Task<MutableList<ExposureWindow>> {
-                    return Tasks.forResult(exposureWindows)
-                }
-            }
-        )
-
-        // WHEN
-        val result = api.getDailyRiskScores(dailySummariesConfig)
-
-        assertEquals(
-            RiskModel(dailySummariesConfig).getDailyRiskScores(exposureWindows),
-            (result as DailyRiskScoresResult.Success).dailyRiskScores
-        )
-    }
-
-    @Test
-    fun `getDailyRiskScores SUM returns the SUM daily risk scores`() = runBlocking {
+    fun `NearbyExposureNotificationApi getDailyRiskScores returns DailyRiskScores based on the exposureWindows`() = runBlocking {
         // GIVEN
         val date = LocalDate.now()
         val exposureWindows = mutableListOf(
