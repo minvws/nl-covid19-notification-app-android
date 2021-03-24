@@ -104,6 +104,8 @@
     <string name="about_toolbar_title">À propos de l\'application</string>
     <string name="about_helpdesk_title">Vous avez d\'autres questions sur l\'application ?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Appelez gratuitement le 0800-1280</string>
+    <string name="about_website_link_title">En savoir plus sur l\'application</string>
+    <string name="about_website_link_subtitle">Consultez coronamelder.nl</string>
     <string name="about_technical_explanation_title">Comment fonctionne l\'application ?</string>
     <string name="about_technical_explanation_subtitle">Consultez l\'explication technique</string>
     <string name="about_onboarding_title">Que fait CoronaMelder ?</string>
@@ -225,8 +227,8 @@
     <string name="request_test_paragraph_3">Le résultat est connu dans les 48 heures. Restez chez vous jusqu\'à la communication du résultat.</string>
     <string name="generic_notification_sample_notification_content_description">Exemple d\'une notification</string>
     <string name="onboarding_enable_headline">Activez CoronaMelder</string>
-    <string name="onboarding_enable_description">CoronaMelder ne peut vous avertir que si vous autorisez l\'application à :&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Enregistrer les rencontres avec les autres utilisateurs de l\'application&lt;/li&gt;&lt;li&gt;et en désactivant l\'optimisation de la batterie pour utiliser seulement cette application (pas nécessaire)&lt;/li&gt;&lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder ne peut vous avertir que si vous autorisez l\'application à : <br/><br/><ul><li> Enregistrer les rencontres avec d\'autres utilisateurs de l\'application</li><li>Activer vos paramètres de localisation (CoronaMelder ne connaît pas votre position)</li><li>Désactiver l\'optimisation de la batterie uniquement pour cette application (pas nécessaire)</li></ul>]]></string>
+    <string name="onboarding_enable_description">CoronaMelder a besoin d\'une autorisation pour :&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Enregistrer les rencontres avec les autres utilisateurs de l\'application&lt;/li&gt;&lt;li&gt;Désactiver l\'optimisation de la batterie uniquement pour cette application (pour un meilleur fonctionnement de l\'application)&lt;/li&gt;&lt;/ul&gt;</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder a besoin d\'une autorisation pour : <br/><br/><ul><li> Enregistrer les rencontres avec d\'autres utilisateurs de l\'application</li><li>Activer vos paramètres de localisation (CoronaMelder ne connaît pas votre position)</li><li>Désactiver l\'optimisation de la batterie uniquement pour cette application (pour un meilleur fonctionnement de l\'application)</li></ul>]]></string>
     <string name="location_services_required_title">Paramètres de localisation</string>
     <string name="location_services_required_headline">L\'application ne fonctionne que si les paramètres de localisation sont activés.</string>
     <string name="location_services_required_description">Certaines applications utilisent Bluetooth pour déterminer votre position. Par conséquent, cela fait partie des paramètres de localisation. CoronaMelder a besoin du Bluetooth pour fonctionner, mais n\'a jamais accès à votre position.</string>
@@ -287,4 +289,15 @@
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
+    <string name="status_partly_active_headline">L\'application est partiellement activée.</string>
+    <string name="status_error_sync_issues_wifi_only"><![CDATA[L\'application n\'a pas de connexion à Internet. Voilà pourquoi l\'application n\'a <b>pas</b>pu contrôler pendant 24 heures si les personnes que vous avez rencontrées se sont par la suite avérées avoir le Covid-19. L\'application enregistre toutefois <b>bien</b> vos rencontres.<br/><br/><b>Connectez-vous au Wifi ou indiquez que l\'application peut utiliser les données mobiles.</b>]]></string>
+    <string name="enable_internet_title">Établir une connexion à Internet</string>
+    <string name="enable_internet_description">L\'application a besoin d\'une connexion à Internet pour pouvoir contrôler si les personnes que vous avez rencontrées s\'avèrent par la suite avoir le Covid-19.\n\nConnectez-vous au Wifi ou désactivez « Ne contrôler les codes que via Wifi » dans les paramètres de l\'application.</string>
+    <string name="enable_internet_open_settings_button">Ouvrir les paramètres</string>
+    <string name="enable_internet_footer">L\'application n\'est toujours pas complètement activée ? Il y a probablement un problème technique. Vous ne pouvez alors rien faire vous-même.</string>
+    <string name="settings_use_nl_language_title">Utiliser l\'application en néerlandais</string>
+    <string name="settings_use_nl_language_summary">Votre appareil n\'est pas configuré en néerlandais. Si vous préférez utiliser CoronaMelder en néerlandais, vous pouvez le définir ici.</string>
+    <string name="status_error_bluetooth"><![CDATA[Votre Bluetooth est désactivé. L\'application n\'enregistre donc <b>pas</b> les nouvelles rencontres. L\'application contrôle toutefois <b>bien</b> si les personnes que vous avez rencontrées plus tôt s\'avèrent avoir le Covid-19.]]></string>
+    <string name="status_error_bluetooth_card">Votre Bluetooth est désactivé. L\'application ne peut pas enregistrer les nouvelles rencontres.</string>
+    <string name="status_error_bluetooth_action">Activer le Bluetooth</string>
 </resources>

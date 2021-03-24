@@ -104,6 +104,8 @@
     <string name="about_toolbar_title">About the app</string>
     <string name="about_helpdesk_title">Other questions about the app?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Call 0800-1280</string>
+    <string name="about_website_link_title">More about the app</string>
+    <string name="about_website_link_subtitle">Go to coronamelder.nl</string>
     <string name="about_technical_explanation_title">How does the app work?</string>
     <string name="about_technical_explanation_subtitle">Check the technical explanation</string>
     <string name="about_onboarding_title">What does CoronaMelder do?</string>
@@ -215,7 +217,7 @@
     <string name="faq_interoperability">Does CoronaMelder work with apps from other countries?</string>
     <string name="faq_interoperability_paragraph_1">CoronaMelder works with various apps from other Europeans countries. Like the German, Irish, and Italian apps.</string>
     <string name="faq_interoperability_paragraph_2">Imagine you\'ve been near a user of the German Corona-Warn-App for an extended period of time. This person is later tested in Germany and turns out to have corona. If this person shares their codes with the German GGD, you will get a notification through CoronaMelder. This also goes the other way around. Because the corona apps work together, you only need to have one app turned on.</string>
-    <string name="faq_interoperability_paragraph_3">From November 30th 2020, CoronaMelder will check the codes of users from other countries every day. Because of this, the app will use more mobile data than before. You can set the app to only check with WiFi if you\'ve been near someone who has corona. Do this through &lt;strong&gt;Settings&lt;/strong&gt; on the main screen.</string>
+    <string name="faq_interoperability_paragraph_3">From November 30th 2020, CoronaMelder will check the codes of users from other countries every day. Because of this, the app will use more mobile data than before. You can set the app to only check with Wi-Fi if you\'ve been near someone who has corona. Do this through &lt;strong&gt;Settings&lt;/strong&gt; on the main screen.</string>
     <string name="cross_links_header">Also read</string>
     <string name="request_test_header_5">Get tested for coronavirus</string>
     <string name="generic_notification_advice_stay_home">In any case, stay home until you know for sure you don\'t have the coronavirus. So you’ll prevent unknowingly infecting others.</string>
@@ -225,8 +227,8 @@
     <string name="request_test_paragraph_3">You get the results within 48 hours. In the meantime stay home.</string>
     <string name="generic_notification_sample_notification_content_description">Example notification</string>
     <string name="onboarding_enable_headline">Turn on CoronaMelder</string>
-    <string name="onboarding_enable_description">CoronaMelder can only warn you when you give the app permission to:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt; Track encounters with other app users&lt;/li&gt;&lt;li&gt;Turn off battery optimisation for only this app (not mandatory)&lt;/li&gt;&lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder can only warn you when you give the app permission to:<br/><br/><ul><li> Track encounters with other app users</li><li>Turn on your location settings (CoronaMelder doesn\'t know your location)</li><li>Turn off battery optimisation for only this app (not mandatory)</li></ul>]]></string>
+    <string name="onboarding_enable_description">CoronaMelder needs permission to:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt; Track encounters with other app users&lt;/li&gt;&lt;li&gt;Turn off battery optimisation for only this app (so the app works best)&lt;/li&gt;&lt;/ul&gt;</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder needs permission to:<br/><br/><ul><li> Track encounters with other app users</li><li>Turn on your location settings (CoronaMelder doesn\'t know your location)</li><li>Turn off battery optimisation for only this app (so the app works best)</li></ul>]]></string>
     <string name="location_services_required_title">Location settings</string>
     <string name="location_services_required_headline">The app only works when your location settings are turned on</string>
     <string name="location_services_required_description">Some apps use Bluetooth to determine your location. That\'s why it\'s part of your location settings. CoronaMelder requires Bluetooth to work, but it never knows your location.</string>
@@ -246,8 +248,8 @@
     <string name="update_app_description">Update the app on your phone to make sure CoronaMelder keeps working correctly.</string>
     <string name="status_info_settings_title">Settings</string>
     <string name="status_info_settings_subtitle">Pause app and manage mobile data</string>
-    <string name="settings_wifi_only_title">Only check codes with WiFi</string>
-    <string name="settings_wifi_only_summary">CoronaMelder checks a few times a day if you\'ve been near someone who has corona. If you turn off your mobile data, the app will only do so if you\'re using WiFi. Your encounters are also tracked if you don\'t have an internet connection.</string>
+    <string name="settings_wifi_only_title">Only check codes with Wi-Fi</string>
+    <string name="settings_wifi_only_summary">CoronaMelder checks a few times a day if you\'ve been near someone who has corona. If you turn off your mobile data, the app will only do so if you\'re using Wi-Fi. Your encounters are also tracked if you don\'t have an internet connection.</string>
     <string name="faq_interop_countries">Which apps from other countries does CoronaMelder work with?</string>
     <string name="phone_call_not_supported_dialog_title">You can\'t make phone calls with this device</string>
     <string name="phone_call_not_supported_dialog_message">Get your phone and call %1$s</string>
@@ -288,4 +290,15 @@
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
+    <string name="status_partly_active_headline">The app is partially active</string>
+    <string name="status_error_sync_issues_wifi_only"><![CDATA[The app isn\'t connected to the internet. As a result, for 24 hours, the app <b>could not</b> check if people you\'ve encountered later turned out to have coronavirus. However, the app <b>does</b> still track your encounters. <br/><br/><b>Connect to Wi-Fi or turn on the setting that allows the app to use mobile data.</b>]]></string>
+    <string name="enable_internet_title">Connect to the internet</string>
+    <string name="enable_internet_description">The app needs an internet connection to check if people you\'ve encountered later turned out to have coronavirus.\n\nConnect to Wi-Fi or turn off \'Only check codes with Wi-Fi\' in the app settings.</string>
+    <string name="enable_internet_open_settings_button">Open Settings</string>
+    <string name="enable_internet_footer">Is the app still not completely active? Then it\'s probably a technical issue. At this time, there\'s nothing you can do.</string>
+    <string name="settings_use_nl_language_title">Use the app in Dutch</string>
+    <string name="settings_use_nl_language_summary">Your phone isn\'t set to Dutch. If you prefer using CoronaMelder in Dutch, you can switch here.</string>
+    <string name="status_error_bluetooth"><![CDATA[Bluetooth is turned off. Therefore, the app <b>does not</b> track any new encounters. The app <b>does</b> still check if people you\'ve encountered later turn out to have coronavirus.]]></string>
+    <string name="status_error_bluetooth_card">Bluetooth is turned off. The app can\'t track any new encounters.</string>
+    <string name="status_error_bluetooth_action">Turn on Bluetooth</string>
 </resources>

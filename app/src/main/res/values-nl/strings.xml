@@ -104,6 +104,8 @@
     <string name="about_toolbar_title">Over de app</string>
     <string name="about_helpdesk_title">Andere vraag over de app?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Bel gratis 0800-1280</string>
+    <string name="about_website_link_title">Meer over de app</string>
+    <string name="about_website_link_subtitle">Ga naar coronamelder.nl</string>
     <string name="about_technical_explanation_title">Hoe werkt de app?</string>
     <string name="about_technical_explanation_subtitle">Bekijk de technische uitleg</string>
     <string name="about_onboarding_title">Wat doet CoronaMelder?</string>
@@ -225,8 +227,8 @@
     <string name="request_test_paragraph_3">De uitslag is binnen 48 uur bekend. Blijf thuis tot je de uitslag weet.</string>
     <string name="generic_notification_sample_notification_content_description">Voorbeeld van een notificatie</string>
     <string name="onboarding_enable_headline">Zet CoronaMelder aan</string>
-    <string name="onboarding_enable_description">CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Ontmoetingen met andere app-gebruikers bij te houden&lt;/li&gt;&lt;li&gt;Batterij-optimalisatie voor alleen deze app uit te zetten (niet noodzakelijk)&lt;/li&gt;&lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder kan je alleen waarschuwen als je de app toestemming geeft om: <br/><br/><ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li><li>Batterij-optimalisatie voor alleen deze app uit te zetten (niet noodzakelijk)</li></ul>]]></string>
+    <string name="onboarding_enable_description">CoronaMelder heeft toestemming nodig om:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Ontmoetingen met andere app-gebruikers bij te houden&lt;/li&gt;&lt;li&gt;Batterij-optimalisatie voor alleen deze app uit te zetten (voor beste werking app)&lt;/li&gt;&lt;/ul&gt;</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder heeft toestemming nodig om:<br/><br/><ul><li>Ontmoetingen met andere app-gebruikers bij te houden</li><li>Je locatie-instellingen aan te zetten (CoronaMelder weet je locatie niet)</li><li>Batterij-optimalisatie voor alleen deze app uit te zetten (voor beste werking app)</li></ul>]]></string>
     <string name="location_services_required_title">Locatie-instellingen</string>
     <string name="location_services_required_headline">De app werkt alleen als je locatie-instellingen aanstaan</string>
     <string name="location_services_required_description">Sommige apps gebruiken bluetooth om je locatie te bepalen. Daarom is dit onderdeel van locatie-instellingen. CoronaMelder heeft bluetooth nodig om te werken, maar heeft nooit toegang tot je locatie.</string>
@@ -287,4 +289,15 @@
         <item quantity="one">%d minuut</item>
         <item quantity="other">%d minuten</item>
     </plurals>
+    <string name="status_partly_active_headline">De app is deels actief</string>
+    <string name="status_error_sync_issues_wifi_only"><![CDATA[De app heeft geen verbinding met internet. Daardoor kon de app 24 uur <b>niet</b> controleren of de mensen die jij hebt ontmoet later corona bleken te hebben. De app houdt nog <b>wel</b> je ontmoetingen bij.<br/><br/><b>Ga op wifi of zet aan dat de app mobiele data mag gebruiken.</b>]]></string>
+    <string name="enable_internet_title">Internetverbinding maken</string>
+    <string name="enable_internet_description">De app heeft internetverbinding nodig om te kunnen controleren of de mensen die jij hebt ontmoet later corona bleken te hebben.\n\nGa op wifi of zet ‘Alleen codes controleren via wifi’ uit in de instellingen van de app.</string>
+    <string name="enable_internet_open_settings_button">Open Instellingen</string>
+    <string name="enable_internet_footer">Is de app hierna nog steeds niet helemaal actief? Dan is het waarschijnlijk een technisch probleem. Hier kun jij op dit moment zelf niets aan doen.</string>
+    <string name="settings_use_nl_language_title">App in het Nederlands gebruiken</string>
+    <string name="settings_use_nl_language_summary">Je toestel staat niet in het Nederlands ingesteld. Als je CoronaMelder liever in het Nederlands gebruikt, dan kun je dat hier aanzetten.</string>
+    <string name="status_error_bluetooth"><![CDATA[Je bluetooth staat uit. De app houdt daarom <b>geen</b> nieuwe ontmoetingen bij. De app controleert nog <b>wel</b> of de mensen die je eerder hebt ontmoet corona blijken te hebben.]]></string>
+    <string name="status_error_bluetooth_card">Je bluetooth staat uit. De app kan geen nieuwe ontmoetingen bijhouden.</string>
+    <string name="status_error_bluetooth_action">Bluetooth aanzetten</string>
 </resources>

@@ -105,6 +105,8 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="about_toolbar_title">Sobre la app</string>
     <string name="about_helpdesk_title">¿Tienes más preguntas sobre la app?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Llama gratis al 0800-1280</string>
+    <string name="about_website_link_title">Más información sobre la app</string>
+    <string name="about_website_link_subtitle">Visita coronamelder.nl</string>
     <string name="about_technical_explanation_title">¿Cómo funciona la app?</string>
     <string name="about_technical_explanation_subtitle">Consulta la explicación técnica</string>
     <string name="about_onboarding_title">¿Qué hace CoronaMelder?</string>
@@ -227,8 +229,8 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="request_test_paragraph_3">Hazte un test gratis. No tarda mucho en hacerse y normalmente puedes concertar la cita rápidamente. Recibirás los resultados en 48 horas. Quédate en casa hasta que sepas los resultados.</string>
     <string name="generic_notification_sample_notification_content_description">Ejemplo de una notificación</string>
     <string name="onboarding_enable_headline">Activar CoronaMelder</string>
-    <string name="onboarding_enable_description">CoronaMelder solo puede avisarte si permites a la app:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Registrar los encuentros con otros usuarios de la app&lt;/li&gt;&lt;li&gt; Desactivar el modo ahorro de batería para esta app (no es necesario).&lt;/li&gt;&lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder solo puede avisarte si permites a la app:<br/><br/><ul><li>Registrar encuentros con otros usuarios de la app</li><li>Activar tus ajustes de localización (CoronaMelder no sabe tu localización)</li><li>Desactivar el modo ahorro de batería para esta app (no es necesario).</li></ul>]]></string>
+    <string name="onboarding_enable_description">CoronaMelder solo puede avisarte si permites a la app:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Registrar los encuentros con otros usuarios de la app&lt;/li&gt;&lt;li&gt; Desactivar el modo ahorro de batería solo para esta app (para un funcionamiento óptimo).&lt;/li&gt;&lt;/ul&gt;</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder solo puede avisarte si permites a la app:<br/><br/><ul><li>Registrar encuentros con otros usuarios de la app</li><li>Activar tus ajustes de localización (CoronaMelder no sabe tu localización)</li><li>Desactivar el modo ahorro de batería solo para esta app (para un funcionamiento óptimo).</li></ul>]]></string>
     <string name="location_services_required_title">Ajustes de localización</string>
     <string name="location_services_required_headline">La app solo funciona si tienes activados tus ajustes de localización</string>
     <string name="location_services_required_description">Algunas apps utilizan Bluetooth para determinar tu localización. Por eso, forma parte de tus ajustes de localización. CoronaMelder necesita Bluetooth para funcionar, pero nunca tiene acceso a tu localización.</string>
@@ -289,4 +291,15 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
         <item quantity="one">%d minuto</item>
         <item quantity="other">%d minutos</item>
     </plurals>
+    <string name="status_partly_active_headline">La app está parcialmente activada</string>
+    <string name="status_error_sync_issues_wifi_only"><![CDATA[La app no tiene conexión a internet, por lo que <b>no</b> ha podido controlar durante 24 horas si las personas con las que te has encontrado resultaron tener coronavirus. Aun así, la app <b>sigue</b> registrando tus encuentros.<br/><br/><b>Conéctate al wifi o permite que la app utilice datos móviles.</b>]]></string>
+    <string name="enable_internet_title">Conectarse a internet</string>
+    <string name="enable_internet_description">La app necesita una conexión a internet para poder controlar si las personas con las que te has encontrado resultaron tener coronavirus.\n\nConéctate al wifi o desactiva \"Controlar códigos solo mediante wifi\" en los ajustes de la app.</string>
+    <string name="enable_internet_open_settings_button">Abrir ajustes</string>
+    <string name="enable_internet_footer">¿Después de todo esto la app aún no está totalmente activada? Entonces es probable que sea un problema técnico. En estos momentos no puedes hacer nada para arreglarlo.</string>
+    <string name="settings_use_nl_language_title">Utilizar la app en neerlandés</string>
+    <string name="settings_use_nl_language_summary">Tu dispositivo no está puesto en el idioma neerlandés. Si prefieres usar la app en neerlandés, puedes activarlo aquí.</string>
+    <string name="status_error_bluetooth"><![CDATA[Tu Bluetooth está desactivado, por lo que la app no registrará <b>ningún</b> encuentro nuevo. La app <b>sigue</b> controlando si las personas con las que te has encontrado resultan tener coronavirus.]]></string>
+    <string name="status_error_bluetooth_card">Tu Bluetooth está desactivado. Esta app no puede registrar nuevos encuentros.</string>
+    <string name="status_error_bluetooth_action">Activar Bluetooth</string>
 </resources>

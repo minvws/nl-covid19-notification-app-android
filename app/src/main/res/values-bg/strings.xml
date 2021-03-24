@@ -104,6 +104,8 @@
     <string name="about_toolbar_title">Относно приложението</string>
     <string name="about_helpdesk_title">Друг въпрос относно приложението?</string>
     <string name="about_helpdesk_subtitle" tools:ignore="TypographyDashes">Обади се на безплатен номер 0800-1280</string>
+    <string name="about_website_link_title">Повече за приложението</string>
+    <string name="about_website_link_subtitle">Отиди на coronamelder.nl</string>
     <string name="about_technical_explanation_title">Как работи приложението?</string>
     <string name="about_technical_explanation_subtitle">Виж техническото обяснение</string>
     <string name="about_onboarding_title">Какво прави CoronaMelder?</string>
@@ -225,8 +227,8 @@
     <string name="request_test_paragraph_3">Направи си безплатен тест. Не отнема много време, а и в повечето случаи бързо може да си запишеш час. Резултатът става известен в рамките на 48 часа. Остани си вкъщи, докато научиш резултата.</string>
     <string name="generic_notification_sample_notification_content_description">Пример за уведомление</string>
     <string name="onboarding_enable_headline">Включи CoronaMelder</string>
-    <string name="onboarding_enable_description">CoronaMelder може да те предупреждава единствено ако дадеш разрешение на приложението да:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt; Следи за срещи с други потребители на приложението.&lt;/li&gt;&lt;li&gt;Изключи оптимизиране на батерията само за това приложение (не е задължително)&lt;/li&gt;&lt;/ul&gt;</string>
-    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder може да те предупреждава единствено ако дадеш разрешение на приложението:<br/><br/><ul><li>Да следи за срещи с други потребители на приложението</li><li>Да включи настройките за местоположение (CoronaMelder не знае местоположението ти)</li><li>Да изключи оптимизиране на батерията само за това приложение (не е задължително)</li></ul>]]></string>
+    <string name="onboarding_enable_description">CoronaMelder се нуждае от позволение, за да:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Следи за срещи с други потребители на приложението&lt;/li&gt;&lt;li&gt;Изключи оптимизиране на батерията само за това приложение (за най-добра работа на приложението)&lt;/li&gt;&lt;/ul&gt;</string>
+    <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder се нуждае от позволение, за да:<br/><br/><ul><li>Следи за срещи с други потребители на приложението</li><li>Включи настройките за местоположение (CoronaMelder не знае местоположението ти)</li><li>Изключи оптимизиране на батерията само за това приложение (за най-добра работа на приложението)</li></ul>]]></string>
     <string name="location_services_required_title">Настройки за местоположение</string>
     <string name="location_services_required_headline">Приложението работи единствено ако настройките ти за местоположение са включени</string>
     <string name="location_services_required_description">Някои приложения използват bluetooth, за да определят местоположението ти. Ето защо това е част от настройките за местоположение. За да работи, CoronaMelder се нуждае от bluetooth, но никога няма достъп до местоположението ти.</string>
@@ -287,4 +289,15 @@
         <item quantity="one">%d минута</item>
         <item quantity="other">%d минути</item>
     </plurals>
+    <string name="status_partly_active_headline">Приложението е частично активно</string>
+    <string name="status_error_sync_issues_wifi_only"><![CDATA[Приложението няма връзка с интернет. Затова приложението 24 часа <b>не</b> можеше да проверява дали хората, които си срещнал, са се оказали заразени с коронавирус. Приложението <b>обаче</b> продължава да проследява твоите срещи.<br/><br/><b>Премини на wifi или настрой приложението да използва мобилни данни.</b>]]></string>
+    <string name="enable_internet_title">Създаване на интернет връзка</string>
+    <string name="enable_internet_description">Приложението се нуждае от интернет връзка, за да проверява дали хората, които си срещнал, по-късно са се оказали заразени с коронавирус.\n\nПремини на wifi или изключи ‘Проверка само на кодове чрез wifi’ в настройките на приложението.\n</string>
+    <string name="enable_internet_open_settings_button">Отваряне на настройки</string>
+    <string name="enable_internet_footer">"Приложението все още не е напълно активно? Вероятно е възникнал технически проблем. Към момента самият ти не можеш да направиш нищо повече. "</string>
+    <string name="settings_use_nl_language_title">Използване на приложението на нидерландски език</string>
+    <string name="settings_use_nl_language_summary">Апаратът ти не е настроен на нидерландски език. Ако предпочиташ да използваш CoronaMelder на нидерландски език, можеш да включиш това тук.</string>
+    <string name="status_error_bluetooth"><![CDATA[Bluetooth e изключен. Така приложението <b>не</b> следи за нови срещи. То <b>обаче</b> проверява дали хората, които си срещнал по-рано, са се оказали заразени с коронавирус.]]></string>
+    <string name="status_error_bluetooth_card">Твоят bluetooth e изключен. Приложението не може да следи срещите ти.</string>
+    <string name="status_error_bluetooth_action">Включване на bluetooth</string>
 </resources>
