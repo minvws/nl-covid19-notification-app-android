@@ -14,7 +14,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.notification.ExposureNotificationReceiver
 
@@ -44,8 +43,7 @@ class DebugNotification(private val context: Context) {
         createNotificationChannel()
 
         val intent = Intent(context, ExposureNotificationReceiver::class.java).apply {
-            action = ExposureNotificationClient.ACTION_EXPOSURE_STATE_UPDATED
-            putExtra(ExposureNotificationReceiver.KEY_IS_TEST_EXPOSURE, true)
+            action = ACTION_TEST_EXPOSURE
         }
         val pendingIntent: PendingIntent =
             PendingIntent.getBroadcast(context, 0, intent, 0)
@@ -61,5 +59,9 @@ class DebugNotification(private val context: Context) {
             )
 
         NotificationManagerCompat.from(context).notify(ID_DEBUG_PUSH_NOTIFICATION, builder.build())
+    }
+
+    companion object {
+        const val ACTION_TEST_EXPOSURE = "nl.rijksoverheid.en.debug.DebugNotification.ACTION_TEST_EXPOSURE"
     }
 }

@@ -10,20 +10,25 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
+import nl.rijksoverheid.en.BuildConfig
+import nl.rijksoverheid.en.debug.DebugNotification
 import nl.rijksoverheid.en.job.ExposureNotificationJob
 import timber.log.Timber
 
 class ExposureNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == ExposureNotificationClient.ACTION_EXPOSURE_STATE_UPDATED) {
-            val testExposure = intent.getBooleanExtra(KEY_IS_TEST_EXPOSURE, false)
-            ExposureNotificationJob.showNotification(context, testExposure)
-        } else if (intent.action == ExposureNotificationClient.ACTION_EXPOSURE_NOT_FOUND) {
-            Timber.d("No exposure new detected")
+        when (intent.action) {
+            ExposureNotificationClient.ACTION_EXPOSURE_STATE_UPDATED -> {
+                ExposureNotificationJob.showNotification(context, false)
+            }
+            ExposureNotificationClient.ACTION_EXPOSURE_NOT_FOUND -> {
+                Timber.d("No exposure new detected")
+            }
+            DebugNotification.ACTION_TEST_EXPOSURE -> {
+                if (BuildConfig.FEATURE_DEBUG_NOTIFICATION) {
+                    ExposureNotificationJob.showNotification(context, true)
+                }
+            }
         }
-    }
-
-    companion object {
-        const val KEY_IS_TEST_EXPOSURE = "is_test_exposure"
     }
 }
