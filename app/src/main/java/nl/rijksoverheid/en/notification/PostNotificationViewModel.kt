@@ -19,18 +19,25 @@ class PostNotificationViewModel(
     private val appConfigManager: AppConfigManager
 ) : ViewModel() {
 
-    private val exposureDate = MutableLiveData<LocalDate>()
+    private val exposureNotificationGuidanceArgs = MutableLiveData<ExposureNotificationGuidanceArgs>()
 
-    val guidance = exposureDate.switchMap {
+    val guidance = exposureNotificationGuidanceArgs.switchMap {
         liveData {
-            emit(resourceBundleManager.getExposureNotificationGuidance(it))
+            emit(resourceBundleManager.getExposureNotificationGuidance(it.exposureDate, it.notificationReceivedDate))
         }
     }
 
     suspend fun getAppointmentPhoneNumber() =
         appConfigManager.getCachedConfigOrDefault().appointmentPhoneNumber
 
-    fun setExposureDate(exposureDate: LocalDate) {
-        this.exposureDate.value = exposureDate
+    fun setExposureNotificationGuidanceArgs(exposureDate: LocalDate, notificationReceivedDate: LocalDate?) {
+        this.exposureNotificationGuidanceArgs.value = ExposureNotificationGuidanceArgs(
+            exposureDate, notificationReceivedDate
+        )
     }
+
+    private class ExposureNotificationGuidanceArgs(
+        val exposureDate: LocalDate,
+        val notificationReceivedDate: LocalDate?
+    )
 }

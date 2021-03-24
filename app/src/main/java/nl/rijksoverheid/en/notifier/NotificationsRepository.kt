@@ -104,21 +104,19 @@ class NotificationsRepository(
         NotificationManagerCompat.from(context).cancel(SYNC_ISSUES_NOTIFICATION_ID)
     }
 
-    fun showExposureNotification(daysSinceLastExposure: Int, reminder: Boolean = false) {
-        val dateOfLastExposure = LocalDate.now(clock)
-            .minusDays(daysSinceLastExposure.toLong())
-
+    fun showExposureNotification(lastExposureDate: LocalDate, notificationReceivedDate: LocalDate?, reminder: Boolean = false) {
         val pendingIntent = NavDeepLinkBuilder(context)
             .setGraph(R.navigation.nav_main)
             .setDestination(R.id.nav_post_notification)
             .setArguments(
                 Bundle().apply {
-                    putLong("epochDayOfLastExposure", dateOfLastExposure.toEpochDay())
+                    putSerializable("lastExposureLocalDate", lastExposureDate)
+                    putSerializable("notificationReceivedLocalDate", notificationReceivedDate)
                 }
             ).createPendingIntent()
         val message = context.getString(
             R.string.notification_message,
-            dateOfLastExposure.formatDaysSince(context, clock)
+            lastExposureDate.formatDaysSince(context, clock)
         )
         val builder = createNotification(
             EXPOSURE_NOTIFICATION_CHANNEL_ID,

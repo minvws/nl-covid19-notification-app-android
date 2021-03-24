@@ -20,8 +20,7 @@ class ResourceBundle(
 ) {
     @JsonClass(generateAdapter = true)
     class Guidance(
-        @Deprecated("Removed in v3 endpoint. Kept for compatibility will be removed in a future release")
-        @Json(name = "quarantineDays") val quarantineDays: Int = 10,
+        val layoutByRelativeExposureDay: List<RelativeExposureDayLayout> = emptyList(),
         val layout: List<Element>
     ) {
         sealed class Element {
@@ -29,6 +28,13 @@ class ResourceBundle(
             class Paragraph(val title: String, val body: String) : Element()
             object Unknown : Element()
         }
+
+        @JsonClass(generateAdapter = true)
+        class RelativeExposureDayLayout(
+            val exposureDaysLowerBoundary: Int? = null,
+            val exposureDaysUpperBoundary: Int? = null,
+            val layout: List<Element>
+        )
     }
 
     companion object {

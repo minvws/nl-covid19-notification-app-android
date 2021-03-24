@@ -26,7 +26,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.io.File
-import java.nio.charset.Charset
 import java.security.cert.X509Certificate
 
 @RunWith(RobolectricTestRunner::class)
@@ -142,7 +141,6 @@ class CorruptedCacheInterceptorTest {
         }
 
         val file = tmpDir.listFiles()!!.first { it.name != "journal" && it.name.endsWith(".0") }
-        val content = file.readBytes().toString(Charset.defaultCharset())
         file.writeText(
             """
                     $url

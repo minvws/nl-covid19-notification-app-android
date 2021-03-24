@@ -165,8 +165,13 @@
         android:label="PostNotificationFragment"
         tools:layout="@layout/fragment_list">
         <argument
-            android:name="epochDayOfLastExposure"
-            app:argType="long" />
+            android:name="lastExposureLocalDate"
+            app:argType="java.time.LocalDate" />
+        <argument
+            android:name="notificationReceivedLocalDate"
+            app:argType="java.time.LocalDate"
+            android:defaultValue="@null"
+            app:nullable="true" />
         <action
             android:id="@+id/action_phone_call_not_supported_dialog"
             app:destination="@id/nav_phone_call_not_supported_dialog" />

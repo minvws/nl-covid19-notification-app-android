@@ -71,8 +71,6 @@ import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
-import java.time.temporal.ChronoUnit
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
@@ -81,6 +79,7 @@ import nl.rijksoverheid.en.api.BuildConfig as ApiBuildConfig
 @Deprecated("KEY_LAST_TOKEN_ID isn't being used anymore except for removing it from preferences")
 private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
+private const val KEY_LAST_NOTIFICATION_RECEIVED_DATE = "last_notification_received_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
 private const val KEY_NOTIFICATIONS_ENABLED_TIMESTAMP = "notifications_enabled_timestamp"
 private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
@@ -177,7 +176,7 @@ class ExposureNotificationsRepository(
     }
 
     private val refreshOnStart = lifecycleOwner.asFlow().filter { it == Lifecycle.State.STARTED }
-        .map { Unit }.onStart { emit(Unit) }
+        .map { }.onStart { emit(Unit) }
 
     // Triggers on subscribe and any changes to bluetooth / location permission state
     private val preconditionsChanged = callbackFlow<Unit> {
@@ -598,19 +597,21 @@ class ExposureNotificationsRepository(
         }
     }
 
+    suspend fun getLastNotificationReceivedDate(): LocalDate? {
+        val timestamp = preferences.getLong(KEY_LAST_NOTIFICATION_RECEIVED_DATE, 0L)
+        return if (timestamp > 0) {
+            LocalDate.ofEpochDay(timestamp)
+        } else {
+            null
+        }
+    }
+
     suspend fun resetExposures() {
         preferences.edit {
             // Use putString instead of remove, otherwise encrypted shared preferences don't call
             // an associated shared preferences listener.
             putString(KEY_LAST_TOKEN_ID, null)
             putString(KEY_LAST_TOKEN_EXPOSURE_DATE, null)
-        }
-    }
-
-    suspend fun getDaysSinceLastExposure(): Int? {
-        val date = getLastExposureDate().first()
-        return date?.let {
-            ChronoUnit.DAYS.between(date, LocalDate.now(clock)).toInt()
         }
     }
 
@@ -629,33 +630,32 @@ class ExposureNotificationsRepository(
             it.scoreSum > riskCalculationParameters.minimumRiskScore
         }
 
-        val currentDaysSinceEpoch = if (preferences.contains(KEY_LAST_TOKEN_EXPOSURE_DATE)) {
-            preferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, -1)
-        } else {
-            null
-        }
-
-        val newDaysSinceEpoch = if (testExposure) {
-            LocalDate.now(clock).minusDays(5).toEpochDay()
-        } else {
-            riskScores?.maxByOrNull { it.daysSinceEpoch }?.daysSinceEpoch
-        }
-
         if (!testExposure && riskScores.isNullOrEmpty()) {
             Timber.d("Exposure has no matches or does not meet required risk score")
             return AddExposureResult.Processed
         }
 
-        return if (newDaysSinceEpoch != null &&
-            (currentDaysSinceEpoch == null || newDaysSinceEpoch > currentDaysSinceEpoch)
-        ) {
-            val nowSinceEpoch = LocalDate.now(ZoneId.of("UTC")).toEpochDay()
-            val newDaysSinceLastExposure = (nowSinceEpoch - newDaysSinceEpoch).toInt()
+        val newExposureDate = if (testExposure) {
+            LocalDate.now(clock).minusDays(5)
+        } else {
+            riskScores?.maxOfOrNull { it.daysSinceEpoch }?.let { LocalDate.ofEpochDay(it) }
+        } ?: return AddExposureResult.Processed
+
+        val currentExposureDate: LocalDate? = getLastExposureDate().first()
+
+        return if (currentExposureDate == null || newExposureDate.isAfter(currentExposureDate)) {
+            val newNotificationReceivedDate = LocalDate.now(clock)
             // save new exposure
             preferences.edit {
-                putLong(KEY_LAST_TOKEN_EXPOSURE_DATE, newDaysSinceEpoch)
+                putLong(KEY_LAST_TOKEN_EXPOSURE_DATE, newExposureDate.toEpochDay())
+                putLong(
+                    KEY_LAST_NOTIFICATION_RECEIVED_DATE, newNotificationReceivedDate.toEpochDay()
+                )
             }
-            AddExposureResult.Notify(newDaysSinceLastExposure)
+            AddExposureResult.Notify(
+                newExposureDate,
+                newNotificationReceivedDate
+            )
         } else {
             AddExposureResult.Processed
         }
@@ -704,5 +704,6 @@ sealed class ProcessManifestResult {
 sealed class AddExposureResult {
     object Processed : AddExposureResult()
     object Error : AddExposureResult()
-    data class Notify(val daysSinceExposure: Int) : AddExposureResult()
+    data class Notify(val dateOfLastExposure: LocalDate, val notificationReceivedDate: LocalDate) :
+        AddExposureResult()
 }

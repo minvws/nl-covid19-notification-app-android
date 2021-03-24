@@ -35,7 +35,7 @@ class ExposureNotificationJob(
         Timber.d("Add exposure result is $result")
         return when (result) {
             is AddExposureResult.Notify -> {
-                notificationsRepository.showExposureNotification(result.daysSinceExposure)
+                notificationsRepository.showExposureNotification(result.dateOfLastExposure, result.notificationReceivedDate)
                 RemindExposureNotificationWorker.schedule(applicationContext)
                 Result.success()
             }
