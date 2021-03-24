@@ -48,6 +48,13 @@ android {
         }
     }
 
+    lintOptions {
+        // Disable InvalidFragmentVersionForActivityResult for now due to false positives.
+        // See https://issuetracker.google.com/issues/182388985#comment9
+        // Re-enable after updating to next androidx.activity:activity-ktx version
+        disable 'InvalidFragmentVersionForActivityResult'
+    }
+
     packagingOptions {
         exclude 'kotlin/**'
         exclude '**/*.kotlin_metadata'
