@@ -216,7 +216,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         }
 
         notificationsPreferences.edit(commit = true) {
-            putString("last_token_id", ExposureNotificationsRepository.DEBUG_TOKEN)
+            putLong("last_notification_received_date", LocalDate.now(clock).toEpochDay())
             putLong("last_token_exposure_date", LocalDate.now(clock).minusDays(2).toEpochDay())
         }
 

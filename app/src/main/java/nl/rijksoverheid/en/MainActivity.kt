@@ -7,13 +7,15 @@
 package nl.rijksoverheid.en
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.model.AppUpdateType
 import dev.chrisbanes.insetter.applyInsetter
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
@@ -26,9 +28,8 @@ import nl.rijksoverheid.en.debug.DebugNotification
 import nl.rijksoverheid.en.job.RemindExposureNotificationWorker
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.notifier.NotificationsRepository
+import timber.log.Timber
 
-private const val RC_REQUEST_CONSENT = 1
-private const val RC_UPDATE_APP = 2
 private const val TAG_GENERIC_ERROR = "generic_error"
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +37,11 @@ class MainActivity : AppCompatActivity() {
     private val appLifecycleViewModel: AppLifecycleViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
+
+    private val requestConsent =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) viewModel.requestEnableNotifications()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,13 +59,8 @@ class MainActivity : AppCompatActivity() {
             EventObserver {
                 when (it) {
                     is ExposureNotificationsViewModel.NotificationsStatusResult.ConsentRequired -> {
-                        startIntentSenderForResult(
-                            it.intent.intentSender,
-                            RC_REQUEST_CONSENT,
-                            null,
-                            0,
-                            0,
-                            0
+                        requestConsent.launch(
+                            IntentSenderRequest.Builder(it.intent.intentSender).build()
                         )
                     }
                     is ExposureNotificationsViewModel.NotificationsStatusResult.Unavailable,
@@ -81,12 +82,15 @@ class MainActivity : AppCompatActivity() {
                 when (it) {
                     is AppLifecycleViewModel.AppLifecycleStatus.Update -> {
                         if (it.update is AppLifecycleManager.UpdateState.InAppUpdate) {
-                            it.update.appUpdateManager.startUpdateFlowForResult(
+                            it.update.appUpdateManager.startUpdateFlow(
                                 it.update.appUpdateInfo,
-                                AppUpdateType.IMMEDIATE,
-                                this,
-                                RC_UPDATE_APP
-                            )
+                                this, AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
+                            ).addOnCompleteListener { task ->
+                                Timber.d("App update result: ${task.result}")
+                                if (task.result != Activity.RESULT_OK) {
+                                    finish()
+                                }
+                            }
                         } else {
                             val installerPackageName =
                                 (it.update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
@@ -139,16 +143,5 @@ class MainActivity : AppCompatActivity() {
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {
         return ViewModelFactory(applicationContext)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_REQUEST_CONSENT && resultCode == Activity.RESULT_OK) {
-            viewModel.requestEnableNotifications()
-        }
-        // If user canceled the forced update, do not allow them to use the app
-        if (requestCode == RC_UPDATE_APP && resultCode != Activity.RESULT_OK) {
-            finish()
-        }
     }
 }

@@ -76,8 +76,6 @@ import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 import nl.rijksoverheid.en.api.BuildConfig as ApiBuildConfig
 
-@Deprecated("KEY_LAST_TOKEN_ID isn't being used anymore except for removing it from preferences")
-private const val KEY_LAST_TOKEN_ID = "last_token_id"
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
 private const val KEY_LAST_NOTIFICATION_RECEIVED_DATE = "last_notification_received_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
@@ -99,9 +97,6 @@ class ExposureNotificationsRepository(
     private val signatureValidator: ResponseSignatureValidator = ResponseSignatureValidator(),
     lifecycleOwner: LifecycleOwner = ProcessLifecycleOwner.get()
 ) {
-    companion object {
-        const val DEBUG_TOKEN = "TEST-TOKEN"
-    }
 
     suspend fun keyProcessingOverdue(): Boolean {
         val notificationsEnabledTimestamp = preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0)
@@ -568,7 +563,7 @@ class ExposureNotificationsRepository(
      * @return true if exposures are reported, false otherwise
      */
     fun getLastExposureDate(): Flow<LocalDate?> {
-        fun getSharedPrefsLongAsLocalDate(sharedPreferences: SharedPreferences, key: String): LocalDate? {
+        fun getSharedPrefsLongAsLocalDate(sharedPreferences: SharedPreferences): LocalDate? {
             val timestamp = sharedPreferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L)
             return if (timestamp > 0) {
                 LocalDate.ofEpochDay(timestamp)
@@ -581,7 +576,7 @@ class ExposureNotificationsRepository(
             val listener =
                 SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                     if (key == KEY_LAST_TOKEN_EXPOSURE_DATE) {
-                        offer(getSharedPrefsLongAsLocalDate(sharedPreferences, key))
+                        offer(getSharedPrefsLongAsLocalDate(sharedPreferences))
                     }
                 }
 
@@ -589,7 +584,7 @@ class ExposureNotificationsRepository(
 
             preferences.registerOnSharedPreferenceChangeListener(listener)
 
-            offer(getSharedPrefsLongAsLocalDate(preferences, KEY_LAST_TOKEN_EXPOSURE_DATE))
+            offer(getSharedPrefsLongAsLocalDate(preferences))
 
             awaitClose {
                 preferences.unregisterOnSharedPreferenceChangeListener(listener)
@@ -610,7 +605,6 @@ class ExposureNotificationsRepository(
         preferences.edit {
             // Use putString instead of remove, otherwise encrypted shared preferences don't call
             // an associated shared preferences listener.
-            putString(KEY_LAST_TOKEN_ID, null)
             putString(KEY_LAST_TOKEN_EXPOSURE_DATE, null)
         }
     }
