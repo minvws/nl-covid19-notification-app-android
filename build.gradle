@@ -22,10 +22,10 @@ buildscript {
     ext.jdk15to18_version = "1.66"
     ext.junit_version = "4.13.2"
     ext.moshi_version = "1.11.0"
-    ext.mockitokotlin_version = "2.2.0"
+    ext.mockitokotlin_version = "2.2.11"
     ext.okhttp3_version = "4.9.0"
     ext.retrofit_version = "2.9.0"
-    ext.robolectric_version = "4.3.1"
+    ext.robolectric_version = "4.5.1"
     ext.timber_version = "4.7.1"
     ext.insetter_version = "0.5.0"
 
