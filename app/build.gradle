@@ -241,8 +241,8 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "androidx.arch.core:core-testing:$arch_core_version"
     testImplementation "androidx.work:work-testing:$androidx_work_version"
-    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitokotlin_version")
-    testImplementation("org.mockito:mockito-core:$mockito_version")
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitokotlin_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
     testImplementation "org.robolectric:robolectric:$robolectric_version"
