@@ -241,9 +241,8 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "androidx.arch.core:core-testing:$arch_core_version"
     testImplementation "androidx.work:work-testing:$androidx_work_version"
-    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitokotlin_version") {
-        exclude group: 'org.mockito', module: 'mockito-core'
-    }
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitokotlin_version")
+    testImplementation("org.mockito:mockito-core:$mockito_version")
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
     testImplementation "org.robolectric:robolectric:$robolectric_version"
@@ -257,7 +256,7 @@ dependencies {
     androidTestImplementation 'com.bartoszlipinski:disable-animations-rule:2.0.0'
     androidTestImplementation "org.mockito.kotlin:mockito-kotlin:$mockitokotlin_version"
     androidTestImplementation 'com.vanniktech:junit4-android-integration-rules:0.3.0'
-    androidTestImplementation "org.mockito:mockito-android:3.8.0"
+    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
     androidTestImplementation 'tools.fastlane:screengrab:2.0.0'
 
     def beagleVersion = "2.5.1"
