@@ -10,8 +10,8 @@ import android.app.Application
 
 object BeagleHelperImpl : BeagleHelper {
 
-    override var useDefaultGuidance: Boolean = false
-        private set
+    override val useDefaultGuidance: Boolean = false
+    override val testExposureDaysAgo: Int = 5
 
     override fun initialize(application: Application) {
         // no-op

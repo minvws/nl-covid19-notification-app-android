@@ -45,6 +45,7 @@ import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
+import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DailyRiskScoresResult
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
@@ -630,7 +631,7 @@ class ExposureNotificationsRepository(
         }
 
         val newExposureDate = if (testExposure) {
-            LocalDate.now(clock).minusDays(5)
+            LocalDate.now(clock).minusDays(BeagleHelperImpl.testExposureDaysAgo.toLong())
         } else {
             riskScores?.maxOfOrNull { it.daysSinceEpoch }?.let { LocalDate.ofEpochDay(it) }
         } ?: return AddExposureResult.Processed
