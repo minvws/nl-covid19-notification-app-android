@@ -1741,7 +1741,7 @@ class ExposureNotificationsRepositoryTest {
         context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
 
         assertEquals(
-            listOf(StatusResult.Enabled, StatusResult.InvalidPreconditions),
+            listOf(StatusResult.Enabled, StatusResult.LocationPreconditionNotSatisfied),
             result.await()
         )
     }
@@ -1777,7 +1777,7 @@ class ExposureNotificationsRepositoryTest {
         context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
 
         assertEquals(
-            listOf(StatusResult.Enabled, StatusResult.InvalidPreconditions),
+            listOf(StatusResult.Enabled, StatusResult.BluetoothDisabled),
             result.await()
         )
     }
@@ -1912,7 +1912,7 @@ class ExposureNotificationsRepositoryTest {
         assertEquals(
             listOf(
                 StatusResult.Disabled,
-                StatusResult.InvalidPreconditions
+                StatusResult.BluetoothDisabled
             ),
             result.await()
         )
