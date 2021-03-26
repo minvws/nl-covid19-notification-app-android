@@ -107,8 +107,8 @@ class ExposureNotificationsRepository(
                 Duration.between(Instant.ofEpochMilli(lastKeysProcessedTimestamp), clock.instant())
                     .toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES ||
                     Duration.between(
-                        Instant.ofEpochMilli(notificationsEnabledTimestamp), clock.instant()
-                    ).toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
+                    Instant.ofEpochMilli(notificationsEnabledTimestamp), clock.instant()
+                ).toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
                 )
         } else {
             false
@@ -264,8 +264,8 @@ class ExposureNotificationsRepository(
     fun isLocationPreconditionSatisfied(): Boolean {
         return exposureNotificationsApi.deviceSupportsLocationlessScanning() ||
             context.getSystemService(LocationManager::class.java)?.let {
-                LocationManagerCompat.isLocationEnabled(it)
-            } ?: true
+            LocationManagerCompat.isLocationEnabled(it)
+        } ?: true
     }
 
     /**
