@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.bluetooth.BluetoothAdapter
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -120,7 +121,8 @@ class StatusFragment @JvmOverloads constructor(
                 StatusViewModel.ErrorState.None -> section.updateErrorState(it)
                 StatusViewModel.ErrorState.SyncIssues -> section.updateErrorState(it) { statusViewModel.resetErrorState() }
                 StatusViewModel.ErrorState.NotificationsDisabled -> section.updateErrorState(it) { navigateToNotificationSettings() }
-                is StatusViewModel.ErrorState.ConsentRequired -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
+                StatusViewModel.ErrorState.BluetoothDisabled -> section.updateErrorState(it) { requestEnableBluetooth() }
+                StatusViewModel.ErrorState.ConsentRequired -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
             }
         }
 
@@ -166,6 +168,10 @@ class StatusFragment @JvmOverloads constructor(
         when (headerState) {
             StatusViewModel.HeaderState.Active -> section.updateHeader(
                 headerState = headerState
+            )
+            is StatusViewModel.HeaderState.BluetoothDisabled -> section.updateHeader(
+                headerState = headerState,
+                primaryAction = ::requestEnableBluetooth
             )
             is StatusViewModel.HeaderState.Disabled -> section.updateHeader(
                 headerState = headerState,
@@ -229,7 +235,12 @@ class StatusFragment @JvmOverloads constructor(
         }
     }
 
-    private fun navigateToPostNotification(lastExposureLocalDate: LocalDate, notificationReceivedLocalDate: LocalDate?) =
+    private fun requestEnableBluetooth() = startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+
+    private fun navigateToPostNotification(
+        lastExposureLocalDate: LocalDate,
+        notificationReceivedLocalDate: LocalDate?
+    ) =
         findNavController().navigateCatchingErrors(
             StatusFragmentDirections.actionPostNotification(
                 lastExposureLocalDate,

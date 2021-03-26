@@ -18,9 +18,14 @@ sealed class StatusResult {
     object Disabled : StatusResult()
 
     /**
-     * Exposure notifications API is enabled, but Bluetooth or Location is disabled
+     * Exposure notifications API is enabled, but Bluetooth is disabled
      */
-    object InvalidPreconditions : StatusResult()
+    object BluetoothDisabled : StatusResult()
+
+    /**
+     * Exposure notifications API is enabled, but Location precondition is not satisfied
+     */
+    object LocationPreconditionNotSatisfied : StatusResult()
 
     /**
      * Exposure notifications API is not available
