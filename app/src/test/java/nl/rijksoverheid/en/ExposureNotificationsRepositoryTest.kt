@@ -175,7 +175,7 @@ private val MOCK_RISK_CALCULATION_PARAMS = RiskCalculationParameters(
         DaySinceOnsetToInfectiousness(13, 0),
         DaySinceOnsetToInfectiousness(14, 0),
 
-        ),
+    ),
     infectiousnessWhenDaysSinceOnsetMissing = Infectiousness.STANDARD,
     reportTypeWhenMissing = ReportType.CONFIRMED_TEST
 )
@@ -293,8 +293,10 @@ class ExposureNotificationsRepositoryTest {
 
         assertEquals(
             DiagnosisKeysDataMapping.DiagnosisKeysDataMappingBuilder()
-                .setDaysSinceOnsetToInfectiousness((-14..14).map { it to Infectiousness.STANDARD }
-                    .toMap())
+                .setDaysSinceOnsetToInfectiousness(
+                    (-14..14).map { it to Infectiousness.STANDARD }
+                        .toMap()
+                )
                 .setReportTypeWhenMissing(ReportType.CONFIRMED_TEST)
                 .setInfectiousnessWhenDaysSinceOnsetMissing(Infectiousness.STANDARD).build(),
             config.get()
