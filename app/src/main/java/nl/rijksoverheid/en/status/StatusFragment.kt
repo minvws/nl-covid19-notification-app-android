@@ -172,6 +172,10 @@ class StatusFragment @JvmOverloads constructor(
                 headerState = headerState,
                 primaryAction = ::resetAndRequestEnableNotifications
             )
+            is StatusViewModel.HeaderState.LocationDisabled -> section.updateHeader(
+                headerState = headerState,
+                primaryAction = ::requestEnableLocationServices
+            )
             is StatusViewModel.HeaderState.Disabled -> section.updateHeader(
                 headerState = headerState,
                 primaryAction = ::resetAndRequestEnableNotifications
@@ -227,11 +231,11 @@ class StatusFragment @JvmOverloads constructor(
     }
 
     private fun resetAndRequestEnableNotifications() {
-        if (viewModel.locationPreconditionSatisfied) {
-            viewModel.requestEnableNotificationsForcingConsent()
-        } else {
-            findNavController().navigateCatchingErrors(StatusFragmentDirections.actionEnableLocationServices())
-        }
+        viewModel.requestEnableNotificationsForcingConsent()
+    }
+
+    private fun requestEnableLocationServices() {
+        findNavController().navigateCatchingErrors(StatusFragmentDirections.actionEnableLocationServices())
     }
 
     private fun navigateToPostNotification(

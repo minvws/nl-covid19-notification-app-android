@@ -109,6 +109,7 @@ class StatusViewModel(
             lastExposureDate != null -> HeaderState.Exposed(lastExposureDate, notificationReceivedDate, clock, pausedState)
             pausedState is Settings.PausedState.Paused -> HeaderState.Paused(pausedState)
             status is StatusResult.BluetoothDisabled -> HeaderState.BluetoothDisabled
+            status is StatusResult.LocationPreconditionNotSatisfied -> HeaderState.LocationDisabled
             status !is StatusResult.Enabled -> HeaderState.Disabled
             keyProcessingOverdue -> HeaderState.SyncIssues
             else -> HeaderState.Active
@@ -126,6 +127,9 @@ class StatusViewModel(
         return when {
             status == StatusResult.BluetoothDisabled && !isPaused && lastExposureDate != null -> {
                 ErrorState.BluetoothDisabled
+            }
+            status == StatusResult.LocationPreconditionNotSatisfied && !isPaused && lastExposureDate != null -> {
+                ErrorState.LocationDisabled
             }
             status != StatusResult.Enabled && !isPaused && lastExposureDate != null -> {
                 ErrorState.ConsentRequired
@@ -156,6 +160,7 @@ class StatusViewModel(
     sealed class HeaderState {
         object Active : HeaderState()
         object BluetoothDisabled : HeaderState()
+        object LocationDisabled: HeaderState()
         object Disabled : HeaderState()
         object SyncIssues : HeaderState()
         data class Paused(val pauseState: Settings.PausedState.Paused, val durationHours: Long? = null, val durationMinutes: Long? = null) : HeaderState()
@@ -165,6 +170,7 @@ class StatusViewModel(
     sealed class ErrorState {
         object None : ErrorState()
         object BluetoothDisabled : ErrorState()
+        object LocationDisabled : ErrorState()
         object ConsentRequired : ErrorState()
         object NotificationsDisabled : ErrorState()
         object SyncIssues : ErrorState()

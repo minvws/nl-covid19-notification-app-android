@@ -21,6 +21,11 @@ class StatusErrorItem(
                 ErrorViewState(R.string.status_error_bluetooth_action, action) {
                 override fun getMessage(context: Context) = context.getString(R.string.status_error_bluetooth_card)
             }
+        StatusViewModel.ErrorState.LocationDisabled ->
+            object :
+                ErrorViewState(R.string.status_error_location_action, action) {
+                override fun getMessage(context: Context) = context.getString(R.string.status_error_location_card)
+            }
         StatusViewModel.ErrorState.ConsentRequired ->
             object :
                 ErrorViewState(R.string.status_error_action_consent, action) {

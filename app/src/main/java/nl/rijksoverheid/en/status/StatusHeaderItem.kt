@@ -67,6 +67,18 @@ class StatusHeaderItem(
                 override fun getDescription(context: Context) =
                     fromHtmlWithCustomReplacements(context, context.getString(R.string.status_error_bluetooth))
             }
+        StatusViewModel.HeaderState.LocationDisabled ->
+            object : HeaderViewState(
+                R.drawable.gradient_status_disabled,
+                R.string.cd_status_disabled,
+                R.string.status_partly_active_headline,
+                animatedIcon = R.raw.status_inactive,
+                enableActionLabel = R.string.status_error_location_action,
+                enableAction = primaryAction
+            ) {
+                override fun getDescription(context: Context) =
+                    fromHtmlWithCustomReplacements(context, context.getString(R.string.status_error_location))
+            }
         StatusViewModel.HeaderState.Disabled ->
             object : HeaderViewState(
                 R.drawable.gradient_status_disabled,
