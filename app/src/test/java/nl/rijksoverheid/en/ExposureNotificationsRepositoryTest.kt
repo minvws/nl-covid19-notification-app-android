@@ -1841,7 +1841,7 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
-    fun `requestEnableNotifications updates statusCache to InvalidPreconditions when bluetooth is disabled`() = runBlockingTest {
+    fun `requestEnableNotifications updates statusCache to BluetoothDisabled when bluetooth is disabled`() = runBlockingTest {
         val api = object : FakeExposureNotificationApi() {
             override suspend fun getStatus() = StatusResult.Enabled
             override suspend fun requestEnableNotifications(): EnableNotificationsResult {
@@ -1915,6 +1915,85 @@ class ExposureNotificationsRepositoryTest {
                 StatusResult.BluetoothDisabled
             ),
             result.await()
+        )
+    }
+
+    @Test
+    fun `requestEnableNotifications updates statusCache to LocationPreconditionNotSatisfied when location is disabled`() = runBlockingTest {
+        val api = object : FakeExposureNotificationApi() {
+            override suspend fun getStatus() = StatusResult.Enabled
+            override suspend fun requestEnableNotifications(): EnableNotificationsResult {
+                return EnableNotificationsResult.Enabled
+            }
+            override suspend fun disableNotifications(): DisableNotificationsResult {
+                return DisableNotificationsResult.Disabled
+            }
+        }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+        val statusCache = StatusCache(sharedPrefs)
+
+        val repository = createRepository(
+            context = context,
+            api = api,
+            preferences = sharedPrefs,
+            statusCache = statusCache,
+            cdnService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                    Manifest(listOf(), "risk", "config")
+
+                override suspend fun getRiskCalculationParameters(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
+                    AppConfig()
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
+            },
+            scheduler = object : BackgroundWorkScheduler {
+                override fun schedule(intervalMinutes: Int) {
+                }
+
+                override fun cancel() {
+                    throw AssertionError()
+                }
+            }
+        )
+
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(false)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, false)
+        }
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+
+        val result = async { repository.getStatus().take(2).toList() }
+        yield()
+
+        repository.requestEnableNotificationsForcingConsent()
+
+        val results = result.await()
+        assertEquals(
+            listOf(
+                StatusResult.Disabled,
+                StatusResult.LocationPreconditionNotSatisfied
+            ),
+            results
         )
     }
 
