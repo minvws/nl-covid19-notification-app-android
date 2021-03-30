@@ -7,7 +7,6 @@
 package nl.rijksoverheid.en
 
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -100,14 +99,16 @@ class ExposureNotificationsRepository(
 ) {
 
     suspend fun keyProcessingOverdue(): Boolean {
-        val notificationsEnabledTimestamp = preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0)
+        val notificationsEnabledTimestamp =
+            preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0)
         val lastKeysProcessedTimestamp = preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0)
         return if (maxOf(notificationsEnabledTimestamp, lastKeysProcessedTimestamp) > 0) {
             !(
                 Duration.between(Instant.ofEpochMilli(lastKeysProcessedTimestamp), clock.instant())
                     .toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES ||
-                    Duration.between(Instant.ofEpochMilli(notificationsEnabledTimestamp), clock.instant())
-                    .toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
+                    Duration.between(
+                    Instant.ofEpochMilli(notificationsEnabledTimestamp), clock.instant()
+                ).toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
                 )
         } else {
             false
@@ -124,10 +125,16 @@ class ExposureNotificationsRepository(
 
             scheduleBackgroundJobs()
 
-            if (isBluetoothEnabled() && isLocationPreconditionSatisfied()) {
-                statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
-            } else {
-                statusCache.updateCachedStatus(StatusCache.CachedStatus.INVALID_PRECONDITIONS)
+            when {
+                !isBluetoothEnabled() -> {
+                    statusCache.updateCachedStatus(StatusCache.CachedStatus.BLUETOOTH_DISABLED)
+                }
+                !isLocationPreconditionSatisfied() -> {
+                    statusCache.updateCachedStatus(StatusCache.CachedStatus.LOCATION_PRECONDITION_NOT_SATISFIED)
+                }
+                else -> {
+                    statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+                }
             }
         }
         return result
@@ -209,9 +216,10 @@ class ExposureNotificationsRepository(
             emit(
                 when (it) {
                     StatusCache.CachedStatus.ENABLED -> StatusResult.Enabled
-                    StatusCache.CachedStatus.INVALID_PRECONDITIONS -> StatusResult.InvalidPreconditions
                     StatusCache.CachedStatus.DISABLED -> StatusResult.Disabled
                     StatusCache.CachedStatus.NONE -> StatusResult.Disabled
+                    StatusCache.CachedStatus.BLUETOOTH_DISABLED -> StatusResult.BluetoothDisabled
+                    StatusCache.CachedStatus.LOCATION_PRECONDITION_NOT_SATISFIED -> StatusResult.LocationPreconditionNotSatisfied
                 }
             )
             // Asynchronously emit the up to date status
@@ -220,26 +228,33 @@ class ExposureNotificationsRepository(
     }.distinctUntilChanged()
 
     suspend fun getCurrentStatus(): StatusResult {
-        val result = exposureNotificationsApi.getStatus()
-        return if (result == StatusResult.Enabled) {
-            if (isBluetoothEnabled() && isLocationPreconditionSatisfied()) {
-                statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
-                StatusResult.Enabled
-            } else {
-                statusCache.updateCachedStatus(StatusCache.CachedStatus.INVALID_PRECONDITIONS)
-                StatusResult.InvalidPreconditions
+        return when (val apiStatus = exposureNotificationsApi.getStatus()) {
+            StatusResult.Enabled -> {
+                when {
+                    !isBluetoothEnabled() -> {
+                        statusCache.updateCachedStatus(StatusCache.CachedStatus.BLUETOOTH_DISABLED)
+                        StatusResult.BluetoothDisabled
+                    }
+                    !isLocationPreconditionSatisfied() -> {
+                        statusCache.updateCachedStatus(StatusCache.CachedStatus.LOCATION_PRECONDITION_NOT_SATISFIED)
+                        StatusResult.LocationPreconditionNotSatisfied
+                    }
+                    else -> {
+                        statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+                        StatusResult.Enabled
+                    }
+                }
             }
-        } else {
-            if (result == StatusResult.Disabled) {
+            StatusResult.Disabled -> {
                 statusCache.updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+                apiStatus
             }
-            result
+            else -> apiStatus
         }
     }
 
     private fun isBluetoothEnabled(): Boolean {
-        val manager = context.getSystemService(BluetoothManager::class.java) ?: return false
-        return manager.adapter.isEnabled
+        return BluetoothAdapter.getDefaultAdapter()?.isEnabled ?: false
     }
 
     /**
@@ -247,9 +262,10 @@ class ExposureNotificationsRepository(
      * @return false if location is not enabled, true if the [LocationManager] service is null or if running on Android R and up
      */
     fun isLocationPreconditionSatisfied(): Boolean {
-        return context.getSystemService(LocationManager::class.java)
-            ?.let { LocationManagerCompat.isLocationEnabled(it) || exposureNotificationsApi.deviceSupportsLocationlessScanning() }
-            ?: true
+        return exposureNotificationsApi.deviceSupportsLocationlessScanning() ||
+            context.getSystemService(LocationManager::class.java)?.let {
+            LocationManagerCompat.isLocationEnabled(it)
+        } ?: true
     }
 
     /**
@@ -616,14 +632,16 @@ class ExposureNotificationsRepository(
         val riskCalculationParameters = getCachedRiskCalculationParameters()
         val dailySummariesConfig = getDailySummariesConfig(riskCalculationParameters)
 
-        val dailyRiskScoresResult = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig)
+        val dailyRiskScoresResult =
+            exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig)
         if (dailyRiskScoresResult is DailyRiskScoresResult.UnknownError)
             return AddExposureResult.Error
 
-        val riskScores = (dailyRiskScoresResult as? DailyRiskScoresResult.Success)?.dailyRiskScores?.filter {
-            Timber.d(it.toString())
-            it.scoreSum > riskCalculationParameters.minimumRiskScore
-        }
+        val riskScores =
+            (dailyRiskScoresResult as? DailyRiskScoresResult.Success)?.dailyRiskScores?.filter {
+                Timber.d(it.toString())
+                it.scoreSum > riskCalculationParameters.minimumRiskScore
+            }
 
         if (!testExposure && riskScores.isNullOrEmpty()) {
             Timber.d("Exposure has no matches or does not meet required risk score")
