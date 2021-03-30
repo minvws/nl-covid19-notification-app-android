@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="faq_notification_paragraph_1">Do krigest in melding neidatst ekstra kâns op besmetting rûn hast. Dat bart ast yn totaal op syn minst 15 minuten ticht by ien of mear persoanen west hast dy\'t letter koroana blieken te hawwen. En fansels allinne as dy persoan de app ek brûkt.\n\nAst in melding krigest hinget ôf fan de sterkte fan it bluetoothsinjaal. En fan de doer fan jimme kontakt.\n\nFytste der immen op strjitte foarby? Dan krigest letter gjin melding. Jimme wiene ticht byinoar, dus it bluetoothsinjaal wie sterk. Mar it kontakt wie sa koart dat de kâns op besmetting hiel lyts is.\n\nSietst ticht by immen yn de trein of op kantoar? Dan kinst letter wol in melding krije. It bluetoothsinjaal wie sterk genôch en jimme wiene in langer skoft tichteby inoar yn \'e buert.</string>
+    <string name="faq_notification_paragraph_1">Do krigest in melding neidatst ekstra kâns op besmetting rûn hast. Dat bart ast op in dei op syn minst 15 minuten yn \'e buert west hast fan immen mei koroana. Dat kin ien persoan wêze, mar ek meardere persoanen. Ek moat de oare persoan krekt as do de app brûke.\n\nOftst in melding krigest hinget ôf fan de sterkte fan it bluetoothsinjaal. En fan de doer fan jimme kontakt.\n\nFytste der immen op strjitte foarby? Dan krigest letter gjin melding. Jimme wiene ticht byinoar, dus it bluetoothsinjaal wie sterk. Mar it kontakt wie sa koart dat de kâns op besmetting hiel lyts is.\n\nSietst ticht by immen yn de trein of op kantoar? Dan kinst letter wol in melding krije. It bluetoothsinjaal wie sterk genôch en jimme wiene in langer skoft ticht byinoar yn \'e buert.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">fy</string>
@@ -62,7 +62,7 @@
     <string name="post_notification_button">Koroanatest oanfreegje</string>
     <string name="generic_notification_toolbar_title">Melding krije</string>
     <string name="generic_notification_header_1">Wêr kin ik in melding oan werkenne?</string>
-    <string name="generic_notification_paragraph_2">De app stjoert in melding ast yn totaal op syn minst 15 minuten tichteby ien ofmeardere persoanen west hast dy\'t letter koroana blieken te hawwen.</string>
+    <string name="generic_notification_paragraph_2">De app stjoert in melding ast  op in dei op syn minst 15 minuten yn \'e buert west hast fan immen mei koroana. Dat kin ien persoan wêze, mar ek meardere persoanen.</string>
     <string name="generic_notification_paragraph_4">De melding ferskynt by dyn notifikaasjes. Krekt as berjochten fan oare apps. De melding hat it symboal fan CoronaMelder.\n\nHast in melding krige? Iepenje dan CoronaMelder. Dêr lêst watst fierder dwaan kinst.</string>
     <string name="generic_notification_alt_text_6">Read skerm mei alarmbel dat oanjout dat der no aksje nedich is.</string>
     <string name="generic_notification_caption_7">Foarbyld: Sa sjocht de app derút ast in melding krige hast.</string>
@@ -300,4 +300,7 @@
     <string name="status_error_bluetooth"><![CDATA[Dyn bluetooth stiet út. De app hâldt dêrom <b>gjin</b> nije moetings by. De app kontrolearret noch <b>wol</b> oft de minsken dy\'tst earder moete hast koroana blike te hawwen.]]></string>
     <string name="status_error_bluetooth_card">Dyn bluetooth stiet út. De app kin gjin nije moetings byhâlde.</string>
     <string name="status_error_bluetooth_action">Bluetooth oansette</string>
+    <string name="status_error_location"><![CDATA[Dyn lokaasjeynstellings steane út. De app hâldt dêrom <b>gjin</b> nije moetings by. De app kontrolearret noch <b>wol</b> oft de minsken dy\'tsto earder moete hast koroana blike te hawwen.]]></string>
+    <string name="status_error_location_card">Dyn lokaasjeynstellings steane út. De app kin gjin nije moetings byhâlde.</string>
+    <string name="status_error_location_action">Lokaasje oansette</string>
 </resources>
