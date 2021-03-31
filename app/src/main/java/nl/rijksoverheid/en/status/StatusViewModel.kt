@@ -160,7 +160,7 @@ class StatusViewModel(
     sealed class HeaderState {
         object Active : HeaderState()
         object BluetoothDisabled : HeaderState()
-        object LocationDisabled: HeaderState()
+        object LocationDisabled : HeaderState()
         object Disabled : HeaderState()
         object SyncIssues : HeaderState()
         data class Paused(val pauseState: Settings.PausedState.Paused, val durationHours: Long? = null, val durationMinutes: Long? = null) : HeaderState()
