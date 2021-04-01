@@ -109,7 +109,7 @@ class FAQDetailSections(
                 ParagraphItem(R.string.faq_pause_paragraph_1),
                 ParagraphItem(R.string.faq_pause_paragraph_2),
                 ParagraphItem(R.string.faq_pause_paragraph_3),
-                ButtonItem(R.string.faq_app_settings_button, openAppSettings)
+                ButtonItem(R.string.faq_settings_button, openAppSettings)
             )
         )
         INTEROPERABILITY -> Section(
@@ -124,7 +124,7 @@ class FAQDetailSections(
             listOf(
                 HeaderItem(R.string.faq_deletion),
                 ParagraphItem(R.string.faq_deletion_paragraph_1),
-                ButtonItem(R.string.faq_app_settings_button, openAndroidSettings)
+                ButtonItem(R.string.faq_settings_button, openAndroidSettings)
             )
         )
         LOCATION_PERMISSION -> Section(
