@@ -126,11 +126,11 @@ class ExposureNotificationsRepository(
             scheduleBackgroundJobs()
 
             when {
-                !isBluetoothEnabled() -> {
-                    statusCache.updateCachedStatus(StatusCache.CachedStatus.BLUETOOTH_DISABLED)
-                }
                 !isLocationPreconditionSatisfied() -> {
                     statusCache.updateCachedStatus(StatusCache.CachedStatus.LOCATION_PRECONDITION_NOT_SATISFIED)
+                }
+                !isBluetoothEnabled() -> {
+                    statusCache.updateCachedStatus(StatusCache.CachedStatus.BLUETOOTH_DISABLED)
                 }
                 else -> {
                     statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
@@ -231,13 +231,13 @@ class ExposureNotificationsRepository(
         return when (val apiStatus = exposureNotificationsApi.getStatus()) {
             StatusResult.Enabled -> {
                 when {
-                    !isBluetoothEnabled() -> {
-                        statusCache.updateCachedStatus(StatusCache.CachedStatus.BLUETOOTH_DISABLED)
-                        StatusResult.BluetoothDisabled
-                    }
                     !isLocationPreconditionSatisfied() -> {
                         statusCache.updateCachedStatus(StatusCache.CachedStatus.LOCATION_PRECONDITION_NOT_SATISFIED)
                         StatusResult.LocationPreconditionNotSatisfied
+                    }
+                    !isBluetoothEnabled() -> {
+                        statusCache.updateCachedStatus(StatusCache.CachedStatus.BLUETOOTH_DISABLED)
+                        StatusResult.BluetoothDisabled
                     }
                     else -> {
                         statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)

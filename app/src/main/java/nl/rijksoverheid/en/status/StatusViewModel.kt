@@ -108,8 +108,8 @@ class StatusViewModel(
         return when {
             lastExposureDate != null -> HeaderState.Exposed(lastExposureDate, notificationReceivedDate, clock, pausedState)
             pausedState is Settings.PausedState.Paused -> HeaderState.Paused(pausedState)
-            status is StatusResult.BluetoothDisabled -> HeaderState.BluetoothDisabled
             status is StatusResult.LocationPreconditionNotSatisfied -> HeaderState.LocationDisabled
+            status is StatusResult.BluetoothDisabled -> HeaderState.BluetoothDisabled
             status !is StatusResult.Enabled -> HeaderState.Disabled
             keyProcessingOverdue -> HeaderState.SyncIssues
             else -> HeaderState.Active
@@ -125,11 +125,11 @@ class StatusViewModel(
     ): ErrorState {
         val isPaused = pausedState is Settings.PausedState.Paused
         return when {
-            status == StatusResult.BluetoothDisabled && !isPaused && lastExposureDate != null -> {
-                ErrorState.BluetoothDisabled
-            }
             status == StatusResult.LocationPreconditionNotSatisfied && !isPaused && lastExposureDate != null -> {
                 ErrorState.LocationDisabled
+            }
+            status == StatusResult.BluetoothDisabled && !isPaused && lastExposureDate != null -> {
+                ErrorState.BluetoothDisabled
             }
             status != StatusResult.Enabled && !isPaused && lastExposureDate != null -> {
                 ErrorState.ConsentRequired
