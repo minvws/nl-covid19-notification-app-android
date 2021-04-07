@@ -93,7 +93,7 @@
       "about_this_notification_body": "Bu bildirimi {NotificationReceivedDate} tarihinde aldınız. Bir kişinin GGD ile birlikte raporu gönderdiği an ile sizin raporu aldığınız an arasında normalde en fazla 8 saat vardır. Uygulamayı duraklattığınızda bu süre daha uzun olabilir.",
       "exposure_notification_body_exposure_days_11_x": "{ExposureDate} ({ExposureDaysAgo}) tarihinde enfekte olmuş olabilirsiniz. O gün Korona olan bir veya daha fazla kişinin yakındaydınız. Bu toplamda en az 15 dakika sürdü.",
       "next_steps_body_exposure_days_x_3": "<ul><li>Mümkün olan en kısa sürede bir Korona testi yapıtırın. Enfekte olduğunuz tespit edilirse, GGD ile birlikte hemen önlem alabilirsiniz.</li><li>{ExposureDate+5}'den evvel test edilebilir misiniz? {ExposureDate+5} tarihinde veya sonrasında tekrar test ettirmek için bir randevu alın. Bazen bir testin enfekte olduğunuzu ölçmesi birkaç gün sürebilir.</li><li>Bu nedenle, {ExposureDate+5} tarihinde veya sonrasında yapılan test sizde Korona olmadığını gösterene kadar evde kalın.</li><li>Test yaptıramadınız mı? {ExposureDate+10} tarihine kadar evde kalın. Semptomunuz yoksa tekrar dışarı çıkabilirsiniz.</li><li>Yüksek ateşiniz mi var veya nefes almakta güçlük çekme gibi ciddi şikayetleriniz mi var? Veya risk grubunda dahil olup da ateşiniz mi var? Önce doktorunuzu arayın.</li></ul>\n<b>GGD size telefonda uygulamayadan farklı tavsiyelerde mi bulunuyor? O durumda GGD'nin tavsiyelerine uyun.</b>",
-      "next_steps_body_exposure_days_4_10": "<ul><li> Korona testi için {ExposureDate + 5} tarihinde veya sonrasında randevu alın. Test sizde Korona olmadığını mı gösteriyor? O zaman tekrar dışarı çıkabilirsiniz.</li><li> Test yaptıramıyor musunuz? {ExposureDate + 10} tarihine kadar evde kalın. Hiç şikayetiniz yoksa tekrar dışarı çıkabilirsiniz.</li><li> Yüksek ateş veya nefes almada güçlük gibi ciddi şikayetleriniz mi var? Veya risk grubunda mısınız ve ateşiniz mi var? Önce doktorunuzu arayın.</li></ul>\n<b>GGD size telefonda uygulamadan farklı tavsiyeler mi veriyor? O durumda GGD'nin tavsiyelerine uyun.</b>",
+      "next_steps_body_exposure_days_4_10": "<ul><li> Korona testi için {ExposureDate+5} tarihinde veya sonrasında randevu alın. Test sizde Korona olmadığını mı gösteriyor? O zaman tekrar dışarı çıkabilirsiniz.</li><li> Test yaptıramıyor musunuz? {ExposureDate+10} tarihine kadar evde kalın. Hiç şikayetiniz yoksa tekrar dışarı çıkabilirsiniz.</li><li> Yüksek ateş veya nefes almada güçlük gibi ciddi şikayetleriniz mi var? Veya risk grubunda mısınız ve ateşiniz mi var? Önce doktorunuzu arayın.</li></ul>\n<b>GGD size telefonda uygulamadan farklı tavsiyeler mi veriyor? O durumda GGD'nin tavsiyelerine uyun.</b>",
       "next_steps_body_exposure_days_11_x": "<ul><li> Enfekte olan kişiyle temas 10 günden daha uzun bir süre önceydi. Bu yüzden (hafif) şikayetleriniz yoksa dışarı çıkabilirsiniz. </li><li> Şu anda şikayetleriniz mi var? O zaman mümkün olan en kısa sürede test yaptırın.</li></ul>\n<b>GGD size telefonda uygulamadan farklı tavsiyeler mi veriyor? O durumda GGD'nin tavsiyelerine uyun.</b>",
       "next_steps_title_exposure_days_11_x": "Dışarı çıkabilirsiniz",
       "exposure_notification_body_v1_legacy": "{ExposureDate} ({ExposureDaysAgo}) tarihinde enfekte olmuş olabilirsiniz. O gün Korona olan birinin en az 15 dakika yakınında bulundunuz.  \n\nGerçekten enfekte olursanız, virüsü başkalarına bulaştırabilirsiniz. Şimdilik kendinizi hasta hissetmeseniz bile. Bu nedenle evde kalın ve test yaptırın.",
@@ -136,7 +136,7 @@
       "about_this_notification_title": "Despre această notificare",
       "about_this_notification_body": "Ați primit această notificare pe {NotificationReceivedDate}. De obicei, sunt maxim de 8 ore între momentul în care cineva trimite raportul la GGD și momentul în care dumneavoastră primiți notificarea. Dacă ați întrerupt aplicația atunci poate dura mai mult.",
       "exposure_notification_body_exposure_days_11_x": "Pe {ExposureDate} ({ExposureDaysAgo}) este posibil să vă fi infectat. În acea zi ați fost aproape de una sau mai multe persoane infectate cu coroanavirus. Contactul a durat în total cel puțin 15 minute.",
-      "next_steps_body_exposure_days_x_3": "<ul><li>Faceți cât mai curând posibil un test COVID-19. Dacă reiese  că sunteți infectat, GGD va discuta cu dumneavoastră despre măsurile necesare.</li><li>Faceți imediat o programare pentru a vă testa din nou pe sau după {ExposureDate + 5}. Uneori poate dura câteva zile până când un test poate măsura că sunteți infectat. </li><li>Rămâneți acasă până când testul făcut pe sau după {ExposureDate+5} confirmă că nu sunteți infectat.</li><li>Nu puteți face test? Rămâneți în casă până pe  {ExposureDate+10}, incluiv. După această dată aveți voie să ieșiți din casă dacă nu aveți simptome.</li><li>Dacă aveți simptome grave cum ar fi febră mare sau dificultate în a respira sau dacă faceți parte dintr-un grup de risc și faceți febră, sunați la doctorul de familie.</li></ul>\n\n<b>Dacă GGD vă dă alte sfaturi decât cele din aplicație atunci urmați sfaturile de la GGD.</b>",
+      "next_steps_body_exposure_days_x_3": "<ul><li>Faceți cât mai curând posibil un test COVID-19. Dacă reiese  că sunteți infectat, GGD va discuta cu dumneavoastră despre măsurile necesare.</li><li>Faceți imediat o programare pentru a vă testa din nou pe sau după {ExposureDate+5}. Uneori poate dura câteva zile până când un test poate măsura că sunteți infectat. </li><li>Rămâneți acasă până când testul făcut pe sau după {ExposureDate+5} confirmă că nu sunteți infectat.</li><li>Nu puteți face test? Rămâneți în casă până pe  {ExposureDate+10}, incluiv. După această dată aveți voie să ieșiți din casă dacă nu aveți simptome.</li><li>Dacă aveți simptome grave cum ar fi febră mare sau dificultate în a respira sau dacă faceți parte dintr-un grup de risc și faceți febră, sunați la doctorul de familie.</li></ul>\n\n<b>Dacă GGD vă dă alte sfaturi decât cele din aplicație atunci urmați sfaturile de la GGD.</b>",
       "next_steps_body_exposure_days_4_10": "<ul><li>Faceți o programare pentru testul COVID-19 pe data sau după {ExposureDate+5}. Dacă testul confirmă că nu sunteți infectat cu coronavirus atunci puteți ieși din casă.</li><li>Nu puteți face test? Rămâneți în casă până pe {ExposureDate+10}. După această dată aveți voie să ieșiți din casă dacă nu aveți simptome.</li><li>Dacă aveți simptome grave cum ar fi febră mare sau dificultate în a respira sau dacă faceți parte dintr-un grup de risc și faceți febră, sunați la doctorul de familie.</li></ul>\n\n<b>Dacă GGD vă dă alte sfaturi decât cele din aplicație atunci urmați sfaturile de la GGD.</b>",
       "next_steps_body_exposure_days_11_x": "<ul><li>Contactul cu persoana infectată a fost acum mai bine de 10 zile. De aceea aveți voie să ieșiți din casă, cu excepția cazului când prezentați simptome (ușoare).</li><li>Dacă aveți acum simptome, atunci testați-vă cât de repede posibil.</li></ul>\n\n <b>Dacă GGD vă dă alte sfaturi decât cele din aplicație, atunci urmați sfaturile de la GGD.</b>",
       "next_steps_title_exposure_days_11_x": "Aveți voie să ieșiți din casă.",
@@ -245,52 +245,49 @@
   },
   "guidance": {
     "quarantineDays": 10,
-    "layoutByRelativeExposureDay": [
-      {
-        "exposureDaysLowerBoundary": 0,
-        "exposureDaysUpperBoundary": 3,
-        "layout": [
-          {
-            "title": "exposure_notification_title",
-            "body": "exposure_notification_body",
-            "type": "paragraph"
-          },
-          {
-            "title": "next_steps_title",
-            "body": "next_steps_body_exposure_days_x_3",
-            "type": "paragraph"
-          },
-          {
-            "title": "stay_home_title",
-            "body": "stay_home_body",
-            "type": "paragraph"
-          },
-          {
-            "title": "medical_help_title",
-            "body": "medical_help_body",
-            "type": "paragraph"
-          },
-          {
-            "title": "test_negative_title",
-            "body": "test_negative_body",
-            "type": "paragraph"
-          },
-          {
-            "title": "symptoms_title",
-            "body": "symptoms_body",
-            "type": "paragraph"
-          }
-        ]
+    "layoutByRelativeExposureDay": [{
+      "exposureDaysLowerBoundary": 0,
+      "exposureDaysUpperBoundary": 3,
+      "layout": [{
+        "title": "exposure_notification_title",
+        "body": "exposure_notification_body",
+        "type": "paragraph"
       },
+        {
+          "title": "next_steps_title",
+          "body": "next_steps_body_exposure_days_x_3",
+          "type": "paragraph"
+        },
+        {
+          "title": "stay_home_title",
+          "body": "stay_home_body",
+          "type": "paragraph"
+        },
+        {
+          "title": "medical_help_title",
+          "body": "medical_help_body",
+          "type": "paragraph"
+        },
+        {
+          "title": "test_negative_title",
+          "body": "test_negative_body",
+          "type": "paragraph"
+        },
+        {
+          "title": "symptoms_title",
+          "body": "symptoms_body",
+          "type": "paragraph"
+        }
+      ]
+    },
       {
         "exposureDaysLowerBoundary": 4,
         "exposureDaysUpperBoundary": 10,
-        "layout": [
-          {
-            "title": "exposure_notification_title",
-            "body": "exposure_notification_body",
-            "type": "paragraph"
-          },
+        "layout": [{
+          "title": "exposure_notification_title",
+          "body": "exposure_notification_body",
+          "type": "paragraph"
+        },
           {
             "title": "next_steps_title",
             "body": "next_steps_body_exposure_days_4_10",
@@ -320,12 +317,11 @@
       },
       {
         "exposureDaysLowerBoundary": 11,
-        "layout": [
-          {
-            "title": "exposure_notification_title",
-            "body": "exposure_notification_body_exposure_days_11_x",
-            "type": "paragraph"
-          },
+        "layout": [{
+          "title": "exposure_notification_title",
+          "body": "exposure_notification_body_exposure_days_11_x",
+          "type": "paragraph"
+        },
           {
             "title": "next_steps_title_exposure_days_11_x",
             "body": "next_steps_body_exposure_days_11_x",
@@ -344,12 +340,11 @@
         ]
       }
     ],
-    "layout": [
-      {
-        "title": "exposure_notification_title",
-        "body": "exposure_notification_body_v1_legacy",
-        "type": "paragraph"
-      },
+    "layout": [{
+      "title": "exposure_notification_title",
+      "body": "exposure_notification_body_v1_legacy",
+      "type": "paragraph"
+    },
       {
         "title": "next_steps_title",
         "body": "next_steps_body",
