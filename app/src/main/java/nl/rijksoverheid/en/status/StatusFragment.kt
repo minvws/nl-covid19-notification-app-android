@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.bluetooth.BluetoothAdapter
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -118,9 +119,11 @@ class StatusFragment @JvmOverloads constructor(
         statusViewModel.errorState.observe(viewLifecycleOwner) {
             when (it) {
                 StatusViewModel.ErrorState.None -> section.updateErrorState(it)
+                StatusViewModel.ErrorState.SyncIssuesWifiOnly -> section.updateErrorState(it) { navigateToInternetRequiredFragment() }
                 StatusViewModel.ErrorState.SyncIssues -> section.updateErrorState(it) { statusViewModel.resetErrorState() }
                 StatusViewModel.ErrorState.NotificationsDisabled -> section.updateErrorState(it) { navigateToNotificationSettings() }
-                StatusViewModel.ErrorState.BluetoothDisabled -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
+                StatusViewModel.ErrorState.LocationDisabled -> section.updateErrorState(it) { requestEnableLocationServices() }
+                StatusViewModel.ErrorState.BluetoothDisabled -> section.updateErrorState(it) { requestEnableBluetooth() }
                 StatusViewModel.ErrorState.ConsentRequired -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
             }
         }
@@ -170,7 +173,7 @@ class StatusFragment @JvmOverloads constructor(
             )
             is StatusViewModel.HeaderState.BluetoothDisabled -> section.updateHeader(
                 headerState = headerState,
-                primaryAction = ::resetAndRequestEnableNotifications
+                primaryAction = ::requestEnableBluetooth
             )
             is StatusViewModel.HeaderState.LocationDisabled -> section.updateHeader(
                 headerState = headerState,
@@ -183,6 +186,10 @@ class StatusFragment @JvmOverloads constructor(
             is StatusViewModel.HeaderState.SyncIssues -> section.updateHeader(
                 headerState = headerState,
                 primaryAction = statusViewModel::resetErrorState
+            )
+            is StatusViewModel.HeaderState.SyncIssuesWifiOnly -> section.updateHeader(
+                headerState = headerState,
+                primaryAction = ::navigateToInternetRequiredFragment
             )
             is StatusViewModel.HeaderState.Paused -> {
                 val (durationHours, durationMinutes) = headerState.pauseState.durationHoursAndMinutes()
@@ -236,6 +243,12 @@ class StatusFragment @JvmOverloads constructor(
 
     private fun requestEnableLocationServices() {
         findNavController().navigateCatchingErrors(StatusFragmentDirections.actionEnableLocationServices())
+    }
+
+    private fun requestEnableBluetooth() = startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+
+    private fun navigateToInternetRequiredFragment() {
+        findNavController().navigateCatchingErrors(StatusFragmentDirections.actionNavInternetRequired())
     }
 
     private fun navigateToPostNotification(

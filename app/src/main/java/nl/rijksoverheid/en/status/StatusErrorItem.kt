@@ -34,17 +34,23 @@ class StatusErrorItem(
                     context.getString(R.string.app_name)
                 )
             }
-        StatusViewModel.ErrorState.NotificationsDisabled ->
+        StatusViewModel.ErrorState.SyncIssuesWifiOnly ->
             object :
-                ErrorViewState(R.string.status_error_action_notifications_disabled, action) {
+                ErrorViewState(R.string.status_error_action_disable_battery_optimisation, action) {
                 override fun getMessage(context: Context) =
-                    context.getString(R.string.status_error_notifications_disabled)
+                    context.getString(R.string.sync_issue_notification_message)
             }
         StatusViewModel.ErrorState.SyncIssues ->
             object :
                 ErrorViewState(R.string.status_error_action_sync_issues, action) {
                 override fun getMessage(context: Context) =
                     context.getString(R.string.status_error_sync_issues)
+            }
+        StatusViewModel.ErrorState.NotificationsDisabled ->
+            object :
+                ErrorViewState(R.string.status_error_action_notifications_disabled, action) {
+                override fun getMessage(context: Context) =
+                    context.getString(R.string.status_error_notifications_disabled)
             }
         StatusViewModel.ErrorState.None -> null
     }

@@ -94,13 +94,24 @@ class StatusHeaderItem(
         StatusViewModel.HeaderState.SyncIssues ->
             object : HeaderViewState(
                 R.drawable.gradient_status_disabled,
-                R.string.cd_status_disabled,
+                R.string.status_partly_active_headline,
                 R.string.status_disabled_headline,
                 animatedIcon = R.raw.status_inactive,
                 enableActionLabel = R.string.status_error_action_sync_issues,
                 enableAction = primaryAction
             ) {
                 override fun getDescription(context: Context) = context.getString(R.string.status_error_sync_issues)
+            }
+        StatusViewModel.HeaderState.SyncIssuesWifiOnly ->
+            object : HeaderViewState(
+                R.drawable.gradient_status_disabled,
+                R.string.status_partly_active_headline,
+                R.string.status_partly_active_headline,
+                animatedIcon = R.raw.status_inactive,
+                enableActionLabel = R.string.status_error_action_disable_battery_optimisation,
+                enableAction = primaryAction
+            ) {
+                override fun getDescription(context: Context) = fromHtmlWithCustomReplacements(context, context.getString(R.string.status_error_sync_issues_wifi_only))
             }
         is StatusViewModel.HeaderState.Paused ->
             object : HeaderViewState(

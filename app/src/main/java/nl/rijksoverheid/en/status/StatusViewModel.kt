@@ -55,6 +55,7 @@ class StatusViewModel(
             exposedDate,
             exposureNotificationsRepository.getLastNotificationReceivedDate(),
             exposureNotificationsRepository.keyProcessingOverdue(),
+            settingsRepository.wifiOnly,
             pausedState
         )
     }.onEach {
@@ -76,12 +77,14 @@ class StatusViewModel(
             lastExposureDate,
             exposureNotificationsEnabled,
             exposureNotificationsRepository.keyProcessingOverdue(),
+            settingsRepository.wifiOnly,
             pausedState
         )
     }.asLiveData(viewModelScope.coroutineContext)
 
-    val pausedState: LiveData<Settings.PausedState> = settingsRepository.exposureNotificationsPausedState()
-        .asLiveData(viewModelScope.coroutineContext)
+    val pausedState: LiveData<Settings.PausedState> =
+        settingsRepository.exposureNotificationsPausedState()
+            .asLiveData(viewModelScope.coroutineContext)
 
     val lastKeysProcessed = exposureNotificationsRepository.lastKeyProcessed()
         .map {
@@ -103,15 +106,23 @@ class StatusViewModel(
         lastExposureDate: LocalDate?,
         notificationReceivedDate: LocalDate?,
         keyProcessingOverdue: Boolean,
+        isWifiOnlyOn: Boolean,
         pausedState: Settings.PausedState
     ): HeaderState {
         return when {
-            lastExposureDate != null -> HeaderState.Exposed(lastExposureDate, notificationReceivedDate, clock, pausedState)
+            lastExposureDate != null -> HeaderState.Exposed(
+                lastExposureDate,
+                notificationReceivedDate,
+                clock,
+                pausedState
+            )
             pausedState is Settings.PausedState.Paused -> HeaderState.Paused(pausedState)
+            status is StatusResult.Disabled -> HeaderState.Disabled
             status is StatusResult.LocationPreconditionNotSatisfied -> HeaderState.LocationDisabled
             status is StatusResult.BluetoothDisabled -> HeaderState.BluetoothDisabled
+            keyProcessingOverdue && isWifiOnlyOn -> HeaderState.SyncIssuesWifiOnly
+            keyProcessingOverdue && !isWifiOnlyOn -> HeaderState.SyncIssues
             status !is StatusResult.Enabled -> HeaderState.Disabled
-            keyProcessingOverdue -> HeaderState.SyncIssues
             else -> HeaderState.Active
         }
     }
@@ -121,25 +132,18 @@ class StatusViewModel(
         lastExposureDate: LocalDate?,
         exposureNotificationsEnabled: Boolean,
         keyProcessingOverdue: Boolean,
+        isWifiOnlyOn: Boolean,
         pausedState: Settings.PausedState
     ): ErrorState {
         val isPaused = pausedState is Settings.PausedState.Paused
         return when {
-            status == StatusResult.LocationPreconditionNotSatisfied && !isPaused && lastExposureDate != null -> {
-                ErrorState.LocationDisabled
-            }
-            status == StatusResult.BluetoothDisabled && !isPaused && lastExposureDate != null -> {
-                ErrorState.BluetoothDisabled
-            }
-            status != StatusResult.Enabled && !isPaused && lastExposureDate != null -> {
-                ErrorState.ConsentRequired
-            }
-            !exposureNotificationsEnabled -> {
-                ErrorState.NotificationsDisabled
-            }
-            lastExposureDate != null && keyProcessingOverdue && !isPaused -> {
-                ErrorState.SyncIssues
-            }
+            lastExposureDate != null && !isPaused && status == StatusResult.Disabled -> ErrorState.ConsentRequired
+            lastExposureDate != null && !isPaused && status == StatusResult.LocationPreconditionNotSatisfied -> ErrorState.LocationDisabled
+            lastExposureDate != null && !isPaused && status == StatusResult.BluetoothDisabled -> ErrorState.BluetoothDisabled
+            lastExposureDate != null && !isPaused && status != StatusResult.Enabled -> ErrorState.ConsentRequired
+            !exposureNotificationsEnabled -> ErrorState.NotificationsDisabled
+            lastExposureDate != null && !isPaused && keyProcessingOverdue && isWifiOnlyOn -> ErrorState.SyncIssuesWifiOnly
+            lastExposureDate != null && !isPaused && keyProcessingOverdue && !isWifiOnlyOn -> ErrorState.SyncIssues
             else -> ErrorState.None
         }
     }
@@ -163,8 +167,19 @@ class StatusViewModel(
         object LocationDisabled : HeaderState()
         object Disabled : HeaderState()
         object SyncIssues : HeaderState()
-        data class Paused(val pauseState: Settings.PausedState.Paused, val durationHours: Long? = null, val durationMinutes: Long? = null) : HeaderState()
-        data class Exposed(val date: LocalDate, val notificationReceivedDate: LocalDate?, val clock: Clock, val pauseState: Settings.PausedState) : HeaderState()
+        object SyncIssuesWifiOnly : HeaderState()
+        data class Paused(
+            val pauseState: Settings.PausedState.Paused,
+            val durationHours: Long? = null,
+            val durationMinutes: Long? = null
+        ) : HeaderState()
+
+        data class Exposed(
+            val date: LocalDate,
+            val notificationReceivedDate: LocalDate?,
+            val clock: Clock,
+            val pauseState: Settings.PausedState
+        ) : HeaderState()
     }
 
     sealed class ErrorState {
@@ -174,5 +189,6 @@ class StatusViewModel(
         object ConsentRequired : ErrorState()
         object NotificationsDisabled : ErrorState()
         object SyncIssues : ErrorState()
+        object SyncIssuesWifiOnly : ErrorState()
     }
 }
