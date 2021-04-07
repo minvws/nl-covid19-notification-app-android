@@ -95,7 +95,7 @@ class StatusHeaderItem(
             object : HeaderViewState(
                 R.drawable.gradient_status_disabled,
                 R.string.status_partly_active_headline,
-                R.string.status_disabled_headline,
+                R.string.status_partly_active_headline,
                 animatedIcon = R.raw.status_inactive,
                 enableActionLabel = R.string.status_error_action_sync_issues,
                 enableAction = primaryAction
