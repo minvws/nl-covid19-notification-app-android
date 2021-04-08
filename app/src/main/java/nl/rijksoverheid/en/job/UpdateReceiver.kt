@@ -9,11 +9,23 @@ package nl.rijksoverheid.en.job
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import nl.rijksoverheid.en.BuildConfig
+import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
 
 /**
- * Dummy receiver to get the opportunity to wake the app when an update is installed
+ * App Update Receiver
  */
 class UpdateReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+
+        // Reschedule background jobs when updating to 2.0.0 to make sure CleanupWorker gets scheduled
+        if (intent.action == Intent.ACTION_MY_PACKAGE_REPLACED && BuildConfig.VERSION_NAME == "2.0.0") {
+            val exposureNotificationsRepository = createExposureNotificationsRepository(context)
+            GlobalScope.launch {
+                exposureNotificationsRepository.rescheduleBackgroundJobs()
+            }
+        }
     }
 }

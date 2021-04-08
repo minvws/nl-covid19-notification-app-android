@@ -23,6 +23,7 @@ import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.nearby.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.job.CheckConnectionWorker
+import nl.rijksoverheid.en.job.CleanupWorker
 import nl.rijksoverheid.en.job.DecoyWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorker
 import nl.rijksoverheid.en.job.ScheduleDecoyWorker
@@ -66,6 +67,7 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
                 ProcessManifestWorker.queue(context, intervalMinutes)
                 CheckConnectionWorker.queue(context)
                 ScheduleDecoyWorker.queue(context)
+                CleanupWorker.queue(context)
             }
 
             override fun cancel() {
@@ -73,6 +75,7 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
                 CheckConnectionWorker.cancel(context)
                 ScheduleDecoyWorker.cancel(context)
                 DecoyWorker.cancel(context)
+                CleanupWorker.cancel(context)
             }
         },
         createAppLifecycleManager(context),
