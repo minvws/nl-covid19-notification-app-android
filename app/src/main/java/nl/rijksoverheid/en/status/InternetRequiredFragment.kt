@@ -22,10 +22,6 @@ class InternetRequiredFragment :
 
         val binding = FragmentInternetRequiredBinding.bind(view)
 
-        binding.toolbar.apply {
-            setNavigationIcon(R.drawable.ic_close)
-        }
-
         binding.openSettingsClickListener = View.OnClickListener {
             findNavController().navigateCatchingErrors(InternetRequiredFragmentDirections.actionShowSettings())
         }

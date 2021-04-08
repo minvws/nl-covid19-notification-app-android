@@ -119,6 +119,7 @@ class ExposureNotificationsViewModel(
     fun rescheduleBackgroundJobs() {
         viewModelScope.launch {
             repository.rescheduleBackgroundJobs()
+            if (repository.keyProcessingOverdue()) repository.resetNotificationsEnabledTimestamp()
         }
     }
 
