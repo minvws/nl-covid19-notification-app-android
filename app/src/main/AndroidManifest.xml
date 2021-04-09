@@ -33,7 +33,7 @@
         <receiver android:name=".notifier.DismissReminderReceiver" />
         <receiver android:name=".job.SyncIssuesReceiver" />
 
-        <receiver android:name=".job.UpdateReceiver">
+        <receiver android:name=".update.UpdateReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
