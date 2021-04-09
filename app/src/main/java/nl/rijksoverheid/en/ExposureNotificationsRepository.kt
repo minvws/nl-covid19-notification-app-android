@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -77,11 +76,13 @@ import java.util.zip.ZipOutputStream
 import nl.rijksoverheid.en.api.BuildConfig as ApiBuildConfig
 
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
+private const val KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE = "previously_known_exposure_date"
 private const val KEY_LAST_NOTIFICATION_RECEIVED_DATE = "last_notification_received_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
 private const val KEY_NOTIFICATIONS_ENABLED_TIMESTAMP = "notifications_enabled_timestamp"
 private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
 private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
+private const val PREVIOUSLY_KNOWN_EXPOSURE_DATE_EXPIRATION_DAYS = 14L
 
 class ExposureNotificationsRepository(
     private val context: Context,
@@ -580,20 +581,11 @@ class ExposureNotificationsRepository(
      * @return true if exposures are reported, false otherwise
      */
     fun getLastExposureDate(): Flow<LocalDate?> {
-        fun getSharedPrefsLongAsLocalDate(sharedPreferences: SharedPreferences): LocalDate? {
-            val timestamp = sharedPreferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L)
-            return if (timestamp > 0) {
-                LocalDate.ofEpochDay(timestamp)
-            } else {
-                null
-            }
-        }
-
         return callbackFlow {
             val listener =
                 SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                     if (key == KEY_LAST_TOKEN_EXPOSURE_DATE) {
-                        offer(getSharedPrefsLongAsLocalDate(sharedPreferences))
+                        offer(getSharedPrefsLongAsLocalDate(sharedPreferences, KEY_LAST_TOKEN_EXPOSURE_DATE))
                     }
                 }
 
@@ -601,7 +593,7 @@ class ExposureNotificationsRepository(
 
             preferences.registerOnSharedPreferenceChangeListener(listener)
 
-            offer(getSharedPrefsLongAsLocalDate(preferences))
+            offer(getSharedPrefsLongAsLocalDate(preferences, KEY_LAST_TOKEN_EXPOSURE_DATE))
 
             awaitClose {
                 preferences.unregisterOnSharedPreferenceChangeListener(listener)
@@ -610,7 +602,15 @@ class ExposureNotificationsRepository(
     }
 
     suspend fun getLastNotificationReceivedDate(): LocalDate? {
-        val timestamp = preferences.getLong(KEY_LAST_NOTIFICATION_RECEIVED_DATE, 0L)
+        return getSharedPrefsLongAsLocalDate(preferences.getPreferences(), KEY_LAST_NOTIFICATION_RECEIVED_DATE)
+    }
+
+    suspend fun getPreviouslyKnownExposureDate(): LocalDate? {
+        return getSharedPrefsLongAsLocalDate(preferences.getPreferences(), KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE)
+    }
+
+    private fun getSharedPrefsLongAsLocalDate(sharedPreferences: SharedPreferences, sharedPreferenceKey: String): LocalDate? {
+        val timestamp = sharedPreferences.getLong(sharedPreferenceKey, 0L)
         return if (timestamp > 0) {
             LocalDate.ofEpochDay(timestamp)
         } else {
@@ -623,6 +623,22 @@ class ExposureNotificationsRepository(
             // Use putString instead of remove, otherwise encrypted shared preferences don't call
             // an associated shared preferences listener.
             putString(KEY_LAST_TOKEN_EXPOSURE_DATE, null)
+        }
+    }
+
+    /**
+     * Removes previously known expiration date from sharedPreferences when older than 14 days
+     */
+    suspend fun cleanupPreviouslyKnownExposures() {
+        val previouslyKnownExposureExpirationDate = getPreviouslyKnownExposureDate() ?: return
+        val fourteenDaysAgo =
+            LocalDate.now(clock).minusDays(PREVIOUSLY_KNOWN_EXPOSURE_DATE_EXPIRATION_DAYS)
+        if (previouslyKnownExposureExpirationDate.isBefore(LocalDate.now(clock))) {
+            if (previouslyKnownExposureExpirationDate.isBefore(fourteenDaysAgo)) {
+                preferences.edit {
+                    putString(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE, null)
+                }
+            }
         }
     }
 
@@ -654,13 +670,15 @@ class ExposureNotificationsRepository(
             riskScores?.maxOfOrNull { it.daysSinceEpoch }?.let { LocalDate.ofEpochDay(it) }
         } ?: return AddExposureResult.Processed
 
-        val currentExposureDate: LocalDate? = getLastExposureDate().first()
+        val previouslyKnownExposureDate: LocalDate? = getPreviouslyKnownExposureDate()
 
-        return if (currentExposureDate == null || newExposureDate.isAfter(currentExposureDate)) {
+        return if (previouslyKnownExposureDate == null || newExposureDate.isAfter(previouslyKnownExposureDate)) {
             val newNotificationReceivedDate = LocalDate.now(clock)
+            val newExposureEpochDay = newExposureDate.toEpochDay()
             // save new exposure
             preferences.edit {
-                putLong(KEY_LAST_TOKEN_EXPOSURE_DATE, newExposureDate.toEpochDay())
+                putLong(KEY_LAST_TOKEN_EXPOSURE_DATE, newExposureEpochDay)
+                putLong(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE, newExposureEpochDay)
                 putLong(
                     KEY_LAST_NOTIFICATION_RECEIVED_DATE, newNotificationReceivedDate.toEpochDay()
                 )
