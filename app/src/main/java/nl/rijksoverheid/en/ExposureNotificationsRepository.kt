@@ -631,11 +631,13 @@ class ExposureNotificationsRepository(
      */
     suspend fun cleanupPreviouslyKnownExposures() {
         val previouslyKnownExposureExpirationDate = getPreviouslyKnownExposureDate() ?: return
-        val fourteenDaysAgo = LocalDate.now(clock).minusDays(PREVIOUSLY_KNOWN_EXPOSURE_DATE_EXPIRATION_DAYS)
-
-        if (previouslyKnownExposureExpirationDate.isBefore(fourteenDaysAgo)) {
-            preferences.edit {
-                putString(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE, null)
+        val fourteenDaysAgo =
+            LocalDate.now(clock).minusDays(PREVIOUSLY_KNOWN_EXPOSURE_DATE_EXPIRATION_DAYS)
+        if (previouslyKnownExposureExpirationDate.isBefore(LocalDate.now(clock))) {
+            if (previouslyKnownExposureExpirationDate.isBefore(fourteenDaysAgo)) {
+                preferences.edit {
+                    putString(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE, null)
+                }
             }
         }
     }
