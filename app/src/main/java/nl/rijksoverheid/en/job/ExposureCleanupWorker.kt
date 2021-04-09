@@ -16,9 +16,7 @@ import nl.rijksoverheid.en.ExposureNotificationsRepository
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-private const val WORKER_ID = "cleanup"
-
-class CleanupWorker(
+class ExposureCleanupWorker(
     context: Context,
     params: WorkerParameters,
     private val repository: ExposureNotificationsRepository,
@@ -27,19 +25,20 @@ class CleanupWorker(
     override suspend fun doWork(): Result {
         Timber.d("Cleanup outdated previously known expiration dates")
         // try / catch this to be sure the worker always returns success and keeps being scheduled
-        val result = kotlin.runCatching {
+        try {
             repository.cleanupPreviouslyKnownExposures()
-        }
-        result.exceptionOrNull()?.let {
-            Timber.w(it, "Unexpected error occurred")
+        } catch (e: Exception) {
+            Timber.w(e, "Unexpected error occurred")
+            return Result.failure()
         }
         return Result.success()
     }
 
     companion object {
+        private const val WORKER_ID = "exposure_cleanup"
+
         fun queue(context: Context) {
-            val request = PeriodicWorkRequestBuilder<CleanupWorker>(1, TimeUnit.DAYS)
-                .setInitialDelay(5, TimeUnit.MINUTES).build()
+            val request = PeriodicWorkRequestBuilder<ExposureCleanupWorker>(1, TimeUnit.DAYS).build()
 
             WorkManager.getInstance(context)
                 .enqueueUniquePeriodicWork(

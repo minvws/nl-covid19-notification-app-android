@@ -630,10 +630,10 @@ class ExposureNotificationsRepository(
      * Removes previously known expiration date from sharedPreferences when older than 14 days
      */
     suspend fun cleanupPreviouslyKnownExposures() {
-        val previouslyKnownExposureExpirationDate = getPreviouslyKnownExposureDate()
-            ?.plusDays(PREVIOUSLY_KNOWN_EXPOSURE_DATE_EXPIRATION_DAYS) ?: return
+        val previouslyKnownExposureExpirationDate = getPreviouslyKnownExposureDate() ?: return
+        val fourteenDaysAgo = LocalDate.now(clock).minusDays(PREVIOUSLY_KNOWN_EXPOSURE_DATE_EXPIRATION_DAYS)
 
-        if (previouslyKnownExposureExpirationDate.isBefore(LocalDate.now(clock))) {
+        if (previouslyKnownExposureExpirationDate.isBefore(fourteenDaysAgo)) {
             preferences.edit {
                 putString(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE, null)
             }

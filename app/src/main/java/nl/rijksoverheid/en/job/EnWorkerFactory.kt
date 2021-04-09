@@ -62,7 +62,7 @@ class EnWorkerFactory : WorkerFactory() {
                 createExposureNotificationsRepository(appContext),
                 NotificationsRepository(appContext)
             )
-            CleanupWorker::class.java.name -> CleanupWorker(
+            ExposureCleanupWorker::class.java.name -> ExposureCleanupWorker(
                 appContext,
                 workerParameters,
                 createExposureNotificationsRepository(appContext)
