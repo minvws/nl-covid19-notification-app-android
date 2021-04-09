@@ -9,10 +9,8 @@ package nl.rijksoverheid.en.update
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.BuildConfig
-import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
+import nl.rijksoverheid.en.job.ExposureCleanupWorker
 
 /**
  * App Update Receiver
@@ -26,11 +24,7 @@ class UpdateReceiver : BroadcastReceiver() {
             when {
                 BuildConfig.VERSION_CODE > VERSION_CODE_1_3_0 && // Current version code is higher than that of 1.3.0
                     updatePrefs.lastVersionUpdated <= VERSION_CODE_1_3_0 // Version the user is updating from is 1.3.0 or lower.
-                -> {
-                    GlobalScope.launch {
-                        createExposureNotificationsRepository(context).rescheduleBackgroundJobs()
-                    }
-                }
+                -> ExposureCleanupWorker.queue(context)
             }
             // This intent is only received once, so update updatePrefs.lastVersionUpdated to current version code.
             updatePrefs.lastVersionUpdated = BuildConfig.VERSION_CODE

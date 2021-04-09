@@ -75,7 +75,6 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
                 CheckConnectionWorker.cancel(context)
                 ScheduleDecoyWorker.cancel(context)
                 DecoyWorker.cancel(context)
-                ExposureCleanupWorker.cancel(context)
             }
         },
         createAppLifecycleManager(context),
