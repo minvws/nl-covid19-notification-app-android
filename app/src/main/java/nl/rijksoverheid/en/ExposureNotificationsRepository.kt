@@ -674,11 +674,11 @@ class ExposureNotificationsRepository(
 
         return if (previouslyKnownExposureDate == null || newExposureDate.isAfter(previouslyKnownExposureDate)) {
             val newNotificationReceivedDate = LocalDate.now(clock)
-            val newsExposureEpochDay = newExposureDate.toEpochDay()
+            val newExposureEpochDay = newExposureDate.toEpochDay()
             // save new exposure
             preferences.edit {
-                putLong(KEY_LAST_TOKEN_EXPOSURE_DATE, newsExposureEpochDay)
-                putLong(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE, newsExposureEpochDay)
+                putLong(KEY_LAST_TOKEN_EXPOSURE_DATE, newExposureEpochDay)
+                putLong(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE, newExposureEpochDay)
                 putLong(
                     KEY_LAST_NOTIFICATION_RECEIVED_DATE, newNotificationReceivedDate.toEpochDay()
                 )
