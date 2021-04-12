@@ -43,7 +43,7 @@ class ExposureCleanupWorker(
             WorkManager.getInstance(context)
                 .enqueueUniquePeriodicWork(
                     WORKER_ID,
-                    ExistingPeriodicWorkPolicy.REPLACE,
+                    ExistingPeriodicWorkPolicy.KEEP,
                     request
                 )
         }
