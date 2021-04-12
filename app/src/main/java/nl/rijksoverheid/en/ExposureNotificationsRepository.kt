@@ -155,7 +155,7 @@ class ExposureNotificationsRepository(
     }
 
     suspend fun resetNotificationsEnabledTimestamp() {
-        preferences.edit {
+        preferences.edit(commit = true) {
             // reset the timer
             putLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, clock.millis())
         }
