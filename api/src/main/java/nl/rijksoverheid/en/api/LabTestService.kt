@@ -18,7 +18,7 @@ import retrofit2.http.POST
 import retrofit2.http.Tag
 
 interface LabTestService {
-    @POST("v1/register")
+    @POST("v2/register")
     @PaddedRequest
     suspend fun register(@Body request: RegistrationRequest, @Tag sizes: RequestSize): Registration
 
