@@ -27,4 +27,5 @@
     <string name="debug_notification_title" translatable="false">Debug options</string>
     <string name="debug_notification_trigger_exposure_notification" translatable="false">Trigger notificatie</string>
     <string name="location_services_required_enable" translatable="false">@string/onboarding_consent_request</string>
+    <string name="format_lab_test_key" translatable="false">%1$s-%2$s-%3$s</string>
 </resources>
