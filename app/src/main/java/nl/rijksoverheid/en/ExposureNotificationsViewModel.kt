@@ -37,9 +37,10 @@ class ExposureNotificationsViewModel(
 
     val notificationState: LiveData<NotificationsState> = repository.getStatus().map { result ->
         when (result) {
-            is StatusResult.Enabled -> NotificationsState.Enabled
-            is StatusResult.Disabled -> NotificationsState.Disabled
-            is StatusResult.InvalidPreconditions -> NotificationsState.InvalidPreconditions
+            StatusResult.Enabled -> NotificationsState.Enabled
+            StatusResult.Disabled -> NotificationsState.Disabled
+            StatusResult.BluetoothDisabled -> NotificationsState.BluetoothDisabled
+            StatusResult.LocationPreconditionNotSatisfied -> NotificationsState.LocationPreconditionNotSatisfied
             is StatusResult.Unavailable -> NotificationsState.Unavailable
             is StatusResult.UnknownError -> {
                 Timber.d(result.exception, "Unknown error while getting status")
@@ -123,7 +124,8 @@ class ExposureNotificationsViewModel(
 
     sealed class NotificationsState {
         object Enabled : NotificationsState()
-        object InvalidPreconditions : NotificationsState()
+        object BluetoothDisabled : NotificationsState()
+        object LocationPreconditionNotSatisfied : NotificationsState()
         object Disabled : NotificationsState()
         object Unavailable : NotificationsState()
     }

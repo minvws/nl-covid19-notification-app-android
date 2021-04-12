@@ -8,7 +8,7 @@ apply plugin: 'com.google.firebase.appdistribution'
 apply plugin: 'ru.cian.huawei-publish'
 
 version = "2.0.0"
-def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 78961
+def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 92080
 archivesBaseName = "covid-notificatie-v${version}-${buildVersionCode}"
 
 

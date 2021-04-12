@@ -7,7 +7,6 @@
 package nl.rijksoverheid.en
 
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -32,7 +31,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -78,11 +76,13 @@ import java.util.zip.ZipOutputStream
 import nl.rijksoverheid.en.api.BuildConfig as ApiBuildConfig
 
 private const val KEY_LAST_TOKEN_EXPOSURE_DATE = "last_token_exposure_date"
+private const val KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE = "previously_known_exposure_date"
 private const val KEY_LAST_NOTIFICATION_RECEIVED_DATE = "last_notification_received_date"
 private const val KEY_EXPOSURE_KEY_SETS = "exposure_key_sets"
 private const val KEY_NOTIFICATIONS_ENABLED_TIMESTAMP = "notifications_enabled_timestamp"
 private const val KEY_LAST_KEYS_PROCESSED = "last_keys_processed"
 private const val KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES = 24 * 60
+private const val PREVIOUSLY_KNOWN_EXPOSURE_DATE_EXPIRATION_DAYS = 14L
 
 class ExposureNotificationsRepository(
     private val context: Context,
@@ -100,14 +100,16 @@ class ExposureNotificationsRepository(
 ) {
 
     suspend fun keyProcessingOverdue(): Boolean {
-        val notificationsEnabledTimestamp = preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0)
+        val notificationsEnabledTimestamp =
+            preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0)
         val lastKeysProcessedTimestamp = preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0)
         return if (maxOf(notificationsEnabledTimestamp, lastKeysProcessedTimestamp) > 0) {
             !(
                 Duration.between(Instant.ofEpochMilli(lastKeysProcessedTimestamp), clock.instant())
                     .toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES ||
-                    Duration.between(Instant.ofEpochMilli(notificationsEnabledTimestamp), clock.instant())
-                    .toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
+                    Duration.between(
+                    Instant.ofEpochMilli(notificationsEnabledTimestamp), clock.instant()
+                ).toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
                 )
         } else {
             false
@@ -124,10 +126,16 @@ class ExposureNotificationsRepository(
 
             scheduleBackgroundJobs()
 
-            if (isBluetoothEnabled() && isLocationPreconditionSatisfied()) {
-                statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
-            } else {
-                statusCache.updateCachedStatus(StatusCache.CachedStatus.INVALID_PRECONDITIONS)
+            when {
+                !isBluetoothEnabled() -> {
+                    statusCache.updateCachedStatus(StatusCache.CachedStatus.BLUETOOTH_DISABLED)
+                }
+                !isLocationPreconditionSatisfied() -> {
+                    statusCache.updateCachedStatus(StatusCache.CachedStatus.LOCATION_PRECONDITION_NOT_SATISFIED)
+                }
+                else -> {
+                    statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+                }
             }
         }
         return result
@@ -209,9 +217,10 @@ class ExposureNotificationsRepository(
             emit(
                 when (it) {
                     StatusCache.CachedStatus.ENABLED -> StatusResult.Enabled
-                    StatusCache.CachedStatus.INVALID_PRECONDITIONS -> StatusResult.InvalidPreconditions
                     StatusCache.CachedStatus.DISABLED -> StatusResult.Disabled
                     StatusCache.CachedStatus.NONE -> StatusResult.Disabled
+                    StatusCache.CachedStatus.BLUETOOTH_DISABLED -> StatusResult.BluetoothDisabled
+                    StatusCache.CachedStatus.LOCATION_PRECONDITION_NOT_SATISFIED -> StatusResult.LocationPreconditionNotSatisfied
                 }
             )
             // Asynchronously emit the up to date status
@@ -220,26 +229,33 @@ class ExposureNotificationsRepository(
     }.distinctUntilChanged()
 
     suspend fun getCurrentStatus(): StatusResult {
-        val result = exposureNotificationsApi.getStatus()
-        return if (result == StatusResult.Enabled) {
-            if (isBluetoothEnabled() && isLocationPreconditionSatisfied()) {
-                statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
-                StatusResult.Enabled
-            } else {
-                statusCache.updateCachedStatus(StatusCache.CachedStatus.INVALID_PRECONDITIONS)
-                StatusResult.InvalidPreconditions
+        return when (val apiStatus = exposureNotificationsApi.getStatus()) {
+            StatusResult.Enabled -> {
+                when {
+                    !isBluetoothEnabled() -> {
+                        statusCache.updateCachedStatus(StatusCache.CachedStatus.BLUETOOTH_DISABLED)
+                        StatusResult.BluetoothDisabled
+                    }
+                    !isLocationPreconditionSatisfied() -> {
+                        statusCache.updateCachedStatus(StatusCache.CachedStatus.LOCATION_PRECONDITION_NOT_SATISFIED)
+                        StatusResult.LocationPreconditionNotSatisfied
+                    }
+                    else -> {
+                        statusCache.updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+                        StatusResult.Enabled
+                    }
+                }
             }
-        } else {
-            if (result == StatusResult.Disabled) {
+            StatusResult.Disabled -> {
                 statusCache.updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+                apiStatus
             }
-            result
+            else -> apiStatus
         }
     }
 
     private fun isBluetoothEnabled(): Boolean {
-        val manager = context.getSystemService(BluetoothManager::class.java) ?: return false
-        return manager.adapter.isEnabled
+        return BluetoothAdapter.getDefaultAdapter()?.isEnabled ?: false
     }
 
     /**
@@ -247,9 +263,10 @@ class ExposureNotificationsRepository(
      * @return false if location is not enabled, true if the [LocationManager] service is null or if running on Android R and up
      */
     fun isLocationPreconditionSatisfied(): Boolean {
-        return context.getSystemService(LocationManager::class.java)
-            ?.let { LocationManagerCompat.isLocationEnabled(it) || exposureNotificationsApi.deviceSupportsLocationlessScanning() }
-            ?: true
+        return exposureNotificationsApi.deviceSupportsLocationlessScanning() ||
+            context.getSystemService(LocationManager::class.java)?.let {
+            LocationManagerCompat.isLocationEnabled(it)
+        } ?: true
     }
 
     /**
@@ -564,20 +581,11 @@ class ExposureNotificationsRepository(
      * @return true if exposures are reported, false otherwise
      */
     fun getLastExposureDate(): Flow<LocalDate?> {
-        fun getSharedPrefsLongAsLocalDate(sharedPreferences: SharedPreferences): LocalDate? {
-            val timestamp = sharedPreferences.getLong(KEY_LAST_TOKEN_EXPOSURE_DATE, 0L)
-            return if (timestamp > 0) {
-                LocalDate.ofEpochDay(timestamp)
-            } else {
-                null
-            }
-        }
-
         return callbackFlow {
             val listener =
                 SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                     if (key == KEY_LAST_TOKEN_EXPOSURE_DATE) {
-                        offer(getSharedPrefsLongAsLocalDate(sharedPreferences))
+                        offer(getSharedPrefsLongAsLocalDate(sharedPreferences, KEY_LAST_TOKEN_EXPOSURE_DATE))
                     }
                 }
 
@@ -585,7 +593,7 @@ class ExposureNotificationsRepository(
 
             preferences.registerOnSharedPreferenceChangeListener(listener)
 
-            offer(getSharedPrefsLongAsLocalDate(preferences))
+            offer(getSharedPrefsLongAsLocalDate(preferences, KEY_LAST_TOKEN_EXPOSURE_DATE))
 
             awaitClose {
                 preferences.unregisterOnSharedPreferenceChangeListener(listener)
@@ -594,7 +602,15 @@ class ExposureNotificationsRepository(
     }
 
     suspend fun getLastNotificationReceivedDate(): LocalDate? {
-        val timestamp = preferences.getLong(KEY_LAST_NOTIFICATION_RECEIVED_DATE, 0L)
+        return getSharedPrefsLongAsLocalDate(preferences.getPreferences(), KEY_LAST_NOTIFICATION_RECEIVED_DATE)
+    }
+
+    suspend fun getPreviouslyKnownExposureDate(): LocalDate? {
+        return getSharedPrefsLongAsLocalDate(preferences.getPreferences(), KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE)
+    }
+
+    private fun getSharedPrefsLongAsLocalDate(sharedPreferences: SharedPreferences, sharedPreferenceKey: String): LocalDate? {
+        val timestamp = sharedPreferences.getLong(sharedPreferenceKey, 0L)
         return if (timestamp > 0) {
             LocalDate.ofEpochDay(timestamp)
         } else {
@@ -610,20 +626,38 @@ class ExposureNotificationsRepository(
         }
     }
 
+    /**
+     * Removes previously known expiration date from sharedPreferences when older than 14 days
+     */
+    suspend fun cleanupPreviouslyKnownExposures() {
+        val previouslyKnownExposureExpirationDate = getPreviouslyKnownExposureDate() ?: return
+        val fourteenDaysAgo =
+            LocalDate.now(clock).minusDays(PREVIOUSLY_KNOWN_EXPOSURE_DATE_EXPIRATION_DAYS)
+        if (previouslyKnownExposureExpirationDate.isBefore(LocalDate.now(clock))) {
+            if (previouslyKnownExposureExpirationDate.isBefore(fourteenDaysAgo)) {
+                preferences.edit {
+                    putString(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE, null)
+                }
+            }
+        }
+    }
+
     suspend fun addExposure(testExposure: Boolean = false): AddExposureResult {
         Timber.d("New exposure detected")
 
         val riskCalculationParameters = getCachedRiskCalculationParameters()
         val dailySummariesConfig = getDailySummariesConfig(riskCalculationParameters)
 
-        val dailyRiskScoresResult = exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig)
+        val dailyRiskScoresResult =
+            exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig)
         if (dailyRiskScoresResult is DailyRiskScoresResult.UnknownError)
             return AddExposureResult.Error
 
-        val riskScores = (dailyRiskScoresResult as? DailyRiskScoresResult.Success)?.dailyRiskScores?.filter {
-            Timber.d(it.toString())
-            it.scoreSum > riskCalculationParameters.minimumRiskScore
-        }
+        val riskScores =
+            (dailyRiskScoresResult as? DailyRiskScoresResult.Success)?.dailyRiskScores?.filter {
+                Timber.d(it.toString())
+                it.scoreSum > riskCalculationParameters.minimumRiskScore
+            }
 
         if (!testExposure && riskScores.isNullOrEmpty()) {
             Timber.d("Exposure has no matches or does not meet required risk score")
@@ -636,13 +670,15 @@ class ExposureNotificationsRepository(
             riskScores?.maxOfOrNull { it.daysSinceEpoch }?.let { LocalDate.ofEpochDay(it) }
         } ?: return AddExposureResult.Processed
 
-        val currentExposureDate: LocalDate? = getLastExposureDate().first()
+        val previouslyKnownExposureDate: LocalDate? = getPreviouslyKnownExposureDate()
 
-        return if (currentExposureDate == null || newExposureDate.isAfter(currentExposureDate)) {
+        return if (previouslyKnownExposureDate == null || newExposureDate.isAfter(previouslyKnownExposureDate)) {
             val newNotificationReceivedDate = LocalDate.now(clock)
+            val newExposureEpochDay = newExposureDate.toEpochDay()
             // save new exposure
             preferences.edit {
-                putLong(KEY_LAST_TOKEN_EXPOSURE_DATE, newExposureDate.toEpochDay())
+                putLong(KEY_LAST_TOKEN_EXPOSURE_DATE, newExposureEpochDay)
+                putLong(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE, newExposureEpochDay)
                 putLong(
                     KEY_LAST_NOTIFICATION_RECEIVED_DATE, newNotificationReceivedDate.toEpochDay()
                 )

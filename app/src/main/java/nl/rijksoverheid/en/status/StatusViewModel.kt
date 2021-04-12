@@ -70,13 +70,13 @@ class StatusViewModel(
         settingsRepository.exposureNotificationsPausedState(),
         exposureNotificationsRepository.getLastExposureDate(),
         notificationsRepository.exposureNotificationsEnabled(),
-    ) { statusResult, pausedState, localDate, exposureNotificationsEnabled ->
+    ) { statusResult, pausedState, lastExposureDate, exposureNotificationsEnabled ->
         createErrorState(
             statusResult,
-            pausedState,
-            localDate,
+            lastExposureDate,
             exposureNotificationsEnabled,
-            exposureNotificationsRepository.keyProcessingOverdue()
+            exposureNotificationsRepository.keyProcessingOverdue(),
+            pausedState
         )
     }.asLiveData(viewModelScope.coroutineContext)
 
@@ -100,14 +100,15 @@ class StatusViewModel(
 
     private fun createHeaderState(
         status: StatusResult,
-        exposedDate: LocalDate?,
+        lastExposureDate: LocalDate?,
         notificationReceivedDate: LocalDate?,
         keyProcessingOverdue: Boolean,
         pausedState: Settings.PausedState
     ): HeaderState {
         return when {
-            exposedDate != null -> HeaderState.Exposed(exposedDate, notificationReceivedDate, clock, pausedState)
+            lastExposureDate != null -> HeaderState.Exposed(lastExposureDate, notificationReceivedDate, clock, pausedState)
             pausedState is Settings.PausedState.Paused -> HeaderState.Paused(pausedState)
+            status is StatusResult.BluetoothDisabled -> HeaderState.BluetoothDisabled
             status !is StatusResult.Enabled -> HeaderState.Disabled
             keyProcessingOverdue -> HeaderState.SyncIssues
             else -> HeaderState.Active
@@ -116,20 +117,26 @@ class StatusViewModel(
 
     private fun createErrorState(
         status: StatusResult,
-        pauseState: Settings.PausedState,
-        date: LocalDate?,
+        lastExposureDate: LocalDate?,
         exposureNotificationsEnabled: Boolean,
-        keyProcessingOverdue: Boolean
+        keyProcessingOverdue: Boolean,
+        pausedState: Settings.PausedState
     ): ErrorState {
-        val isPaused = pauseState is Settings.PausedState.Paused
-        return if (status != StatusResult.Enabled && !isPaused && date != null) {
-            ErrorState.ConsentRequired
-        } else if (!exposureNotificationsEnabled) {
-            ErrorState.NotificationsDisabled
-        } else if (date != null && keyProcessingOverdue && !isPaused) {
-            ErrorState.SyncIssues
-        } else {
-            ErrorState.None
+        val isPaused = pausedState is Settings.PausedState.Paused
+        return when {
+            status == StatusResult.BluetoothDisabled && !isPaused && lastExposureDate != null -> {
+                ErrorState.BluetoothDisabled
+            }
+            status != StatusResult.Enabled && !isPaused && lastExposureDate != null -> {
+                ErrorState.ConsentRequired
+            }
+            !exposureNotificationsEnabled -> {
+                ErrorState.NotificationsDisabled
+            }
+            lastExposureDate != null && keyProcessingOverdue && !isPaused -> {
+                ErrorState.SyncIssues
+            }
+            else -> ErrorState.None
         }
     }
 
@@ -148,6 +155,7 @@ class StatusViewModel(
 
     sealed class HeaderState {
         object Active : HeaderState()
+        object BluetoothDisabled : HeaderState()
         object Disabled : HeaderState()
         object SyncIssues : HeaderState()
         data class Paused(val pauseState: Settings.PausedState.Paused, val durationHours: Long? = null, val durationMinutes: Long? = null) : HeaderState()
@@ -156,6 +164,7 @@ class StatusViewModel(
 
     sealed class ErrorState {
         object None : ErrorState()
+        object BluetoothDisabled : ErrorState()
         object ConsentRequired : ErrorState()
         object NotificationsDisabled : ErrorState()
         object SyncIssues : ErrorState()

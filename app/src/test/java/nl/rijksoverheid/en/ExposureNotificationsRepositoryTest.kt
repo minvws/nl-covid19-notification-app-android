@@ -1450,6 +1450,148 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
+    fun `cleanupPreviouslyKnownExposureDate removes old previouslyKnownExposureDate added through addExposure`() =
+        runBlocking {
+            val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
+
+            val sharedPrefs = ApplicationProvider.getApplicationContext<Application>()
+                .getSharedPreferences("repository_test", 0)
+
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun getDailyRiskScores(
+                    config: DailySummariesConfig
+                ): DailyRiskScoresResult {
+                    return DailyRiskScoresResult.Success(
+                        listOf(
+                            DailyRiskScores(
+                                LocalDate.now(clock).minusDays(15).toEpochDay(),
+                                500.0,
+                                950.0
+                            )
+                        )
+                    )
+                }
+            }
+
+            val fakeService = object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                    Manifest(emptyList(), "test-params", "")
+
+                override suspend fun getRiskCalculationParameters(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): RiskCalculationParameters {
+                    return MOCK_RISK_CALCULATION_PARAMS
+                }
+
+                override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
+                    throw NotImplementedError()
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
+            }
+
+            val repository = createRepository(
+                api = api,
+                preferences = sharedPrefs,
+                clock = clock,
+                cdnService = fakeService
+            )
+
+            // Verify previouslyKnownExposureDate was added
+            repository.addExposure()
+            assertEquals(LocalDate.now(clock).minusDays(15), repository.getPreviouslyKnownExposureDate())
+
+            // Verify previouslyKnownExposureDate was removed
+            repository.cleanupPreviouslyKnownExposures()
+            assertEquals(null, repository.getPreviouslyKnownExposureDate())
+        }
+
+    @Test
+    fun `addExposure won't trigger on deleted known exposures`() = runBlocking {
+        val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
+
+        val api = object : FakeExposureNotificationApi() {
+            val getDailyRiskScoresResults = listOf(
+                listOf(
+                    DailyRiskScores(
+                        LocalDate.now(clock).minusDays(8).toEpochDay(),
+                        500.0,
+                        950.0
+                    )
+                ),
+                listOf(
+                    DailyRiskScores(
+                        LocalDate.now(clock).minusDays(8).toEpochDay(),
+                        500.0,
+                        950.0
+                    ),
+                    DailyRiskScores(
+                        LocalDate.now(clock).minusDays(4).toEpochDay(),
+                        100.0,
+                        100.0
+                    )
+                )
+            ).iterator()
+
+            override suspend fun getDailyRiskScores(
+                config: DailySummariesConfig
+            ): DailyRiskScoresResult {
+                return DailyRiskScoresResult.Success(getDailyRiskScoresResults.next())
+            }
+        }
+
+        val fakeService = object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                throw NotImplementedError()
+            }
+
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                Manifest(emptyList(), "test-params", "")
+
+            override suspend fun getRiskCalculationParameters(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): RiskCalculationParameters {
+                return MOCK_RISK_CALCULATION_PARAMS
+            }
+
+            override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
+                throw NotImplementedError()
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle {
+                throw java.lang.IllegalStateException()
+            }
+        }
+
+        val repository = createRepository(
+            api = api,
+            clock = clock,
+            cdnService = fakeService
+        )
+
+        repository.addExposure()
+        repository.resetExposures()
+
+        val result = repository.addExposure()
+        assertEquals(
+            AddExposureResult.Processed,
+            result
+        )
+    }
+
+    @Test
     fun `keyProcessingOverdue returns true if last successful time of key processing is more than 24 hours in the past`() {
         val lastSyncDateTime = "2020-06-20T10:15:30.00Z"
         val dateTime = "2020-06-21T10:16:30.00Z"
@@ -1745,7 +1887,7 @@ class ExposureNotificationsRepositoryTest {
         context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
         assertEquals(
             repository.getStatus().take(2).toList(),
-            listOf(StatusResult.Enabled, StatusResult.InvalidPreconditions)
+            listOf(StatusResult.Enabled, StatusResult.LocationPreconditionNotSatisfied)
         )
     }
 
@@ -1776,8 +1918,8 @@ class ExposureNotificationsRepositoryTest {
         context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
 
         assertEquals(
-            listOf(StatusResult.Enabled, StatusResult.InvalidPreconditions),
-            repository.getStatus().take(2).toList()
+            repository.getStatus().take(2).toList(),
+            listOf(StatusResult.Enabled, StatusResult.BluetoothDisabled)
         )
     }
 
@@ -1910,7 +2052,7 @@ class ExposureNotificationsRepositoryTest {
             assertEquals(
                 listOf(
                     StatusResult.Disabled,
-                    StatusResult.InvalidPreconditions
+                    StatusResult.BluetoothDisabled
                 ),
                 result
             )
