@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="faq_notification_paragraph_1">Recibirás una notificación cuando hayas corrido riesgo de contagio. Esto ocurre si has estado al menos 15 minutos en total cerca de una o más personas que más tarde resultaron tener coronavirus, siempre y cuando utilicen también la app.\n\nRecibirás una notificación, o no, dependiendo de la fuerza de la señal de Bluetooth y de la duración del contacto con la otra persona.\n\n¿Te ha pasado alguien en bicicleta? Entonces no recibirás ninguna notificación. Estuvisteis cerca el uno del otro, así que la señal de Bluetooth fue fuerte, pero el contacto fue tan corto que la posibilidad de contagio es muy pequeña.\n\n¿Has estado sentado cerca de alguien en el tren o en la oficina? Entonces puede que recibas una notificación más tarde. La señal de Bluetooth fue lo suficientemente fuerte y el contacto fue prolongado.</string>
+    <string name="faq_notification_paragraph_1">Recibirás una notificación cuando hayas corrido riesgo de contagio. Esto ocurre si has estado al menos 15 minutos en un solo día cerca de alguien que más tarde resultó tener coronavirus. Puede ser solo una persona o varias, siempre y cuando utilicen también la app.\n\nRecibirás una notificación, o no, dependiendo de la fuerza de la señal de Bluetooth y de la duración del contacto con la otra persona.\n\n¿Te ha pasado alguien en bicicleta? Entonces no recibirás ninguna notificación. Estuvisteis cerca el uno del otro, así que la señal de Bluetooth fue fuerte, pero el contacto fue tan corto que la posibilidad de contagio es muy pequeña.\n\n¿Has estado sentado cerca de alguien en el tren o en la oficina? Entonces puede que recibas una notificación más tarde. La señal de Bluetooth fue lo suficientemente fuerte y el contacto fue prolongado.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">es</string>
@@ -63,7 +63,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="post_notification_button">Solicitar un test</string>
     <string name="generic_notification_toolbar_title">He recibido una notificación</string>
     <string name="generic_notification_header_1">¿Qué aspecto tiene una notificación?</string>
-    <string name="generic_notification_paragraph_2">La app te enviará una notificación si has estado al menos 15 minutos en total cerca de una o más personas que más tarde resultaron tener coronavirus.</string>
+    <string name="generic_notification_paragraph_2">La app te enviará una notificación si has estado al menos 15 minutos en un solo día cerca de alguien que más tarde resultó tener coronavirus. Puede ser solo una persona o también varias.</string>
     <string name="generic_notification_paragraph_4">La notificación aparece en el panel de notificaciones, como hacen los mensajes de otras apps. La notificación tiene el símbolo de CoronaMelder.\n\n¿Has recibido una notificación? Abre CoronaMelder y lee lo que tienes que hacer.</string>
     <string name="generic_notification_alt_text_6">Pantalla roja con campana de alerta que indica que hay que reaccionar urgentemente</string>
     <string name="generic_notification_caption_7">Ejemplo: La app cuando recibes una notificación</string>
@@ -302,4 +302,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="status_error_bluetooth"><![CDATA[Tu Bluetooth está desactivado, por lo que la app no registrará <b>ningún</b> encuentro nuevo. La app <b>sigue</b> controlando si las personas con las que te has encontrado resultan tener coronavirus.]]></string>
     <string name="status_error_bluetooth_card">Tu Bluetooth está desactivado. Esta app no puede registrar nuevos encuentros.</string>
     <string name="status_error_bluetooth_action">Activar Bluetooth</string>
+    <string name="status_error_location"><![CDATA[Tus ajustes de localización están desactivados, por lo que la app no registrará <b>ningún</b> encuentro nuevo. La app <b>sigue</b> controlando si las personas con las que te has encontrado resultan tener coronavirus.]]></string>
+    <string name="status_error_location_card">Tus ajustes de localización están desactivados. La app no puede registrar nuevos encuentros.</string>
+    <string name="status_error_location_action">Activar localización</string>
 </resources>

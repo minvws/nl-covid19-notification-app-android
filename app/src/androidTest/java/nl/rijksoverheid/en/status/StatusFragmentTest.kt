@@ -182,7 +182,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             activityViewModelFactory
         ) {
             onView(withId(R.id.status_headline))
-                .check(matches(withText(R.string.status_disabled_headline)))
+                .check(matches(withText(R.string.status_partly_active_headline)))
 
             onView(withId(R.id.status_description))
                 .check(matches(withText(R.string.status_error_sync_issues)))
