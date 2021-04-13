@@ -40,7 +40,8 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
                 createAppConfigManager(context)
             ) as T
             OnboardingViewModel::class.java -> OnboardingViewModel(
-                createOnboardingRepository(context)
+                createOnboardingRepository(context),
+                createExposureNotificationsRepository(context)
             ) as T
             StatusViewModel::class.java -> StatusViewModel(
                 createOnboardingRepository(context),

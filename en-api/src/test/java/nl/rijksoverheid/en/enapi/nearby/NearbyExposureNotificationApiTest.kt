@@ -33,6 +33,7 @@ import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
+import nl.rijksoverheid.en.enapi.UpdateToDateResult
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertSame
@@ -603,4 +604,65 @@ class NearbyExposureNotificationApiTest {
 
         assertEquals(DailyRiskScoresResult.UnknownError(error), result)
     }
+
+    @Test
+    fun `isExposureNotificationApiUpToDate return UpToDate when version is 1Pt6`() = runBlocking {
+        // GIVEN
+        val api =
+            NearbyExposureNotificationApi(
+                context,
+                object :
+                    FakeExposureNotificationsClient() {
+                    override fun getVersion(): Task<Long> {
+                        return Tasks.forResult(16000000L)
+                    }
+                }
+            )
+
+        // WHEN
+        val result = api.isExposureNotificationApiUpToDate()
+
+        assertEquals(UpdateToDateResult.UpToDate, result)
+    }
+
+    @Test
+    fun `isExposureNotificationApiUpToDate return RequiresAnUpdate when api return API_NOT_CONNECTED`() = runBlocking {
+        // GIVEN
+        val api =
+            NearbyExposureNotificationApi(
+                context,
+                object :
+                    FakeExposureNotificationsClient() {
+                    override fun getVersion(): Task<Long> {
+                        return Tasks.forException(ApiException(Status(CommonStatusCodes.API_NOT_CONNECTED)))
+                    }
+                }
+            )
+
+        // WHEN
+        val result = api.isExposureNotificationApiUpToDate()
+
+        assertEquals(UpdateToDateResult.RequiresAnUpdate, result)
+    }
+
+    @Test
+    fun `isExposureNotificationApiUpToDate returns UnknownError when version cannot be parsed`() = runBlocking {
+        // GIVEN
+        val api =
+            NearbyExposureNotificationApi(
+                context,
+                object :
+                    FakeExposureNotificationsClient() {
+                    override fun getVersion(): Task<Long> {
+                        return Tasks.forResult(0L)
+                    }
+                }
+            )
+
+        // WHEN
+        val result = api.isExposureNotificationApiUpToDate()
+
+        assert(result is UpdateToDateResult.UnknownError)
+    }
+
 }

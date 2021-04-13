@@ -15,6 +15,7 @@ import nl.rijksoverheid.en.enapi.EnableNotificationsResult
 import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
+import nl.rijksoverheid.en.enapi.UpdateToDateResult
 import java.io.File
 
 open class FakeExposureNotificationApi :
@@ -41,4 +42,7 @@ open class FakeExposureNotificationApi :
         DailyRiskScoresResult.Success(emptyList())
 
     override fun deviceSupportsLocationlessScanning(): Boolean = false
+
+    override suspend fun isExposureNotificationApiUpToDate(): UpdateToDateResult =
+        UpdateToDateResult.UpToDate
 }

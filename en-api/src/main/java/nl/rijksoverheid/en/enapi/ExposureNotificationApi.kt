@@ -59,4 +59,10 @@ interface ExposureNotificationApi {
      * @return true if location services do not need to be enabled, false otherwise
      */
     fun deviceSupportsLocationlessScanning(): Boolean
+
+    /**
+     * Check if the installed version of ExposureNotification API is at least the required version
+     * @return the result which can be UpToDate, RequiresAnUpdate or UnknownError
+     */
+    suspend fun isExposureNotificationApiUpToDate(): UpdateToDateResult
 }
