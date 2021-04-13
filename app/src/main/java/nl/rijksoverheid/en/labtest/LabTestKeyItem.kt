@@ -25,7 +25,7 @@ class LabTestKeyItem(private val keyState: KeyState, private val copy: (String) 
         val keyPart1 = key?.substring(0..2)
         val keyPart2 = key?.substring(3..4)
         val keyPart3 = key?.substring(5..6)
-        val keyContentDescription = key?.toLowerCase(Locale.ROOT)?.replace("-", "")
+        val keyContentDescription = key?.toLowerCase(Locale.ROOT)
     }
 
     private val viewState = ViewState(
