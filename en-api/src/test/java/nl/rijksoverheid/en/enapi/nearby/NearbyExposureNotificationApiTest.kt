@@ -664,5 +664,4 @@ class NearbyExposureNotificationApiTest {
 
         assert(result is UpdateToDateResult.UnknownError)
     }
-
 }

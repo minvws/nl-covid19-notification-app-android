@@ -257,7 +257,7 @@ class NearbyExposureNotificationApi(
     }
 
     companion object {
-        const val MINIMUM_EN_VERSION = 16 //V1.6
+        const val MINIMUM_EN_VERSION = 16 // V1.6
     }
 }
 
