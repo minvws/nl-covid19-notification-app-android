@@ -148,6 +148,11 @@ class StatusFragment @JvmOverloads constructor(
         statusViewModel.lastKeysProcessed.observe(viewLifecycleOwner) {
             section.lastKeysProcessed = it
         }
+
+        statusViewModel.exposureNotificationApiUpdateRequired.observe(viewLifecycleOwner) { requireAnUpdate ->
+            if (requireAnUpdate)
+                findNavController().navigateCatchingErrors(StatusFragmentDirections.actionUpdatePlayServices())
+        }
     }
 
     override fun onResume() {

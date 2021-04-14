@@ -49,17 +49,16 @@ class GooglePlayServicesUpdateRequiredFragment :
         binding.next.setOnClickListener {
             openPlayStore()
         }
+
+        viewModel.isExposureNotificationApiUpToDate.observe(viewLifecycleOwner) { upToDate ->
+            if (upToDate)
+                findNavController().popBackStack()
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        checkPlayServicesInstalled()
-    }
-
-    private fun checkPlayServicesInstalled() {
-        if (viewModel.isGooglePlayServicesUpToDate()) {
-            findNavController().popBackStack()
-        }
+        viewModel.refreshExposureNotificationApiUpToDate()
     }
 
     private fun openPlayStore() {

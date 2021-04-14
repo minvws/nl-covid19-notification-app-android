@@ -9,6 +9,7 @@ package nl.rijksoverheid.en.status
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -93,6 +94,10 @@ class StatusViewModel(
             else
                 null
         }.asLiveData(viewModelScope.coroutineContext)
+
+    val exposureNotificationApiUpdateRequired = liveData {
+        emit(exposureNotificationsRepository.isExposureNotificationApiUpdateRequired())
+    }
 
     suspend fun getAppointmentPhoneNumber() =
         appConfigManager.getCachedConfigOrDefault().appointmentPhoneNumber
