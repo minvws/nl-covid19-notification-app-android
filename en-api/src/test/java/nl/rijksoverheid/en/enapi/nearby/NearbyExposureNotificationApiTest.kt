@@ -43,17 +43,21 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
+import org.robolectric.annotation.LooperMode
 import org.robolectric.shadow.api.Shadow
 import org.robolectric.shadows.ShadowPackageManager
 import java.io.File
 import java.time.LocalDate
 import java.time.ZoneId
 
+
+@Suppress("DEPRECATION")
+@LooperMode(LooperMode.Mode.LEGACY)
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
 class NearbyExposureNotificationApiTest {
 
-    private val FAKE_SETTINGS_COMPONENT =
+    private val fakeSettingsComponent =
         ComponentName("com.example", "com.example.FakeSettingsActivity")
 
     private lateinit var context: Context
@@ -82,16 +86,16 @@ class NearbyExposureNotificationApiTest {
                 .packageManager
         )
 
-        spm.addActivityIfNotPresent(FAKE_SETTINGS_COMPONENT)
+        spm.addActivityIfNotPresent(fakeSettingsComponent)
         spm.addIntentFilterForActivity(
-            FAKE_SETTINGS_COMPONENT,
+            fakeSettingsComponent,
             IntentFilter(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS)
         )
     }
 
     private fun removeEmulatedExposureNotificationApi() {
         val spm = shadowOf(context.packageManager)
-        spm.clearIntentFilterForActivity(FAKE_SETTINGS_COMPONENT)
+        spm.clearIntentFilterForActivity(fakeSettingsComponent)
     }
 
     @Test
@@ -125,7 +129,9 @@ class NearbyExposureNotificationApiTest {
                 context,
                 object :
                     FakeExposureNotificationsClient() {
-                    override fun isEnabled(): Task<Boolean> = Tasks.forResult(true)
+                    override fun isEnabled(): Task<Boolean> =
+                        Tasks.forResult(true)
+
                 }
             )
 
