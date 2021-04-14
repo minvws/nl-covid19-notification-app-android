@@ -22,6 +22,7 @@ import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.ExposureWindowsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
+import nl.rijksoverheid.en.enapi.UpdateToDateResult
 import timber.log.Timber
 import java.io.File
 import kotlin.coroutines.resume
@@ -199,10 +200,13 @@ class NearbyExposureNotificationApi(
     override suspend fun getDailyRiskScores(config: DailySummariesConfig): DailyRiskScoresResult {
         return when (val exposureWindowResult = getExposureWindows()) {
             is ExposureWindowsResult.Success -> {
-                val riskScores = RiskModel(config).getDailyRiskScores(exposureWindowResult.exposureWindows)
+                val riskScores =
+                    RiskModel(config).getDailyRiskScores(exposureWindowResult.exposureWindows)
                 DailyRiskScoresResult.Success(riskScores)
             }
-            is ExposureWindowsResult.UnknownError -> DailyRiskScoresResult.UnknownError(exposureWindowResult.exception)
+            is ExposureWindowsResult.UnknownError -> DailyRiskScoresResult.UnknownError(
+                exposureWindowResult.exception
+            )
         }
     }
 
@@ -226,6 +230,34 @@ class NearbyExposureNotificationApi(
 
     override fun deviceSupportsLocationlessScanning(): Boolean {
         return client.deviceSupportsLocationlessScanning()
+    }
+
+    override suspend fun isExposureNotificationApiUpToDate(): UpdateToDateResult = suspendCoroutine { c ->
+        // version was added in 1.6, when using this method before 1.6 will result in an [ApiException] with status [CommonStatusCodes.API_NOT_CONNECTED]
+        client.version.addOnSuccessListener {
+            try {
+                // Parse version as string, extract first 2 chars to get the en module version, then
+                // convert back to a long for easy comparison.
+                if (it.toString().substring(0, 2).toLong() >= MINIMUM_EN_VERSION)
+                    c.resume(UpdateToDateResult.UpToDate)
+                else
+                    c.resume(UpdateToDateResult.RequiresAnUpdate)
+            } catch (e: Exception) {
+                Timber.e(e, "Unable to parse version")
+                c.resume(UpdateToDateResult.UnknownError(e))
+            }
+        }.addOnFailureListener {
+            Timber.e(it, "Error getting version of ExposureNotificationApi")
+
+            if ((it as? ApiException)?.statusCode == CommonStatusCodes.API_NOT_CONNECTED)
+                c.resume(UpdateToDateResult.RequiresAnUpdate)
+            else
+                c.resume(UpdateToDateResult.UnknownError(it))
+        }
+    }
+
+    companion object {
+        const val MINIMUM_EN_VERSION = 16 // V1.6
     }
 }
 

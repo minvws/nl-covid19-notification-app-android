@@ -91,6 +91,14 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
+            android:id="@+id/action_nav_internet_required"
+            app:destination="@id/nav_internet_required"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
 
     <fragment
@@ -146,6 +154,22 @@
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_internet_required"
+        android:name="nl.rijksoverheid.en.status.InternetRequiredFragment"
+        tools:layout="@layout/fragment_internet_required">
+
+        <action
+            android:id="@+id/action_show_settings"
+            app:destination="@id/nav_settings"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popUpTo="@id/nav_status"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/nav_location_services_required_faq"
