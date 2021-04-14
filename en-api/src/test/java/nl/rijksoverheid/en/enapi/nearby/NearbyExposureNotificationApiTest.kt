@@ -51,7 +51,6 @@ import java.io.File
 import java.time.LocalDate
 import java.time.ZoneId
 
-
 @Suppress("DEPRECATION")
 @LooperMode(LooperMode.Mode.LEGACY)
 @RunWith(RobolectricTestRunner::class)
@@ -132,7 +131,6 @@ class NearbyExposureNotificationApiTest {
                     FakeExposureNotificationsClient() {
                     override fun isEnabled(): Task<Boolean> =
                         Tasks.forResult(true)
-
                 }
             )
 
