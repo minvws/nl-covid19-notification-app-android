@@ -10,7 +10,6 @@ import com.xwray.groupie.Group
 import com.xwray.groupie.Section
 import nl.rijksoverheid.en.ExposureNotificationsViewModel.NotificationsState
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.items.ButtonItem
 import nl.rijksoverheid.en.items.ErrorBoxItem
 import nl.rijksoverheid.en.items.IllustrationItem
 import nl.rijksoverheid.en.items.ParagraphItem
@@ -18,12 +17,13 @@ import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
 
 class LabTestSection(
     private val retry: () -> Unit,
-    private val upload: () -> Unit,
     private val requestConsent: () -> Unit,
     private val copy: (String) -> Unit
 ) : Section() {
-    private var keyState: KeyState = KeyState.Loading
-    private var notificationsState: NotificationsState = NotificationsState.Enabled
+    var keyState: KeyState = KeyState.Loading
+        private set
+    var notificationsState: NotificationsState = NotificationsState.Enabled
+        private set
 
     fun update(keyState: KeyState) {
         this.keyState = keyState
@@ -44,16 +44,6 @@ class LabTestSection(
                 LabTestKeyItem(keyState, copy, retry),
                 LabTestStepItem(R.string.lab_test_step_2, 2),
                 LabTestStepItem(R.string.lab_test_step_3, 3, isLastElement = true),
-                ButtonItem(
-                    text = R.string.lab_test_button,
-                    buttonClickListener = upload,
-                    enabled = keyState is KeyState.Success &&
-                        notificationsState in listOf(
-                        NotificationsState.Enabled,
-                        NotificationsState.BluetoothDisabled,
-                        NotificationsState.LocationPreconditionNotSatisfied
-                    )
-                )
             ).apply {
                 if (notificationsState is NotificationsState.Disabled || notificationsState is NotificationsState.Unavailable) {
                     add(

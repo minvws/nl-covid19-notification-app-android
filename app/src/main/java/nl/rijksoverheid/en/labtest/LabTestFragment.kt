@@ -30,17 +30,16 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItemId
-import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import timber.log.Timber
 
-class LabTestFragment : BaseFragment(R.layout.fragment_list) {
+class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val labViewModel: LabTestViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
     private val section = LabTestSection(
         retry = { labViewModel.retry() },
-        upload = { labViewModel.upload() },
         requestConsent = { viewModel.requestEnableNotifications() },
         copy = ::copyToClipboard
     )
@@ -61,7 +60,7 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentListBinding.bind(view)
+        val binding = FragmentListWithButtonBinding.bind(view)
 
         binding.toolbar.apply {
             setTitle(R.string.lab_test_toolbar_title)
@@ -89,8 +88,14 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
             )
         }
 
-        labViewModel.keyState.observe(viewLifecycleOwner) { keyState -> section.update(keyState) }
-        viewModel.notificationState.observe(viewLifecycleOwner) { state -> section.update(state) }
+        labViewModel.keyState.observe(viewLifecycleOwner) { keyState ->
+            section.update(keyState)
+            binding.button.isEnabled = getContinueButtonEnabledState(keyState, section.notificationsState)
+        }
+        viewModel.notificationState.observe(viewLifecycleOwner) { notificationsState ->
+            section.update(notificationsState)
+            binding.button.isEnabled = getContinueButtonEnabledState(section.keyState, notificationsState)
+        }
 
         labViewModel.uploadResult.observe(
             viewLifecycleOwner,
@@ -108,11 +113,31 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list) {
                 }
             }
         )
+
+        binding.button.apply {
+            setText(R.string.lab_test_button)
+            setOnClickListener {
+                labViewModel.upload()
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
         labViewModel.retry()
+    }
+
+    private fun getContinueButtonEnabledState(
+        keyState: LabTestViewModel.KeyState,
+        notificationsState: ExposureNotificationsViewModel.NotificationsState
+    ): Boolean {
+
+        return keyState is LabTestViewModel.KeyState.Success &&
+            notificationsState in listOf(
+            ExposureNotificationsViewModel.NotificationsState.Enabled,
+            ExposureNotificationsViewModel.NotificationsState.BluetoothDisabled,
+            ExposureNotificationsViewModel.NotificationsState.LocationPreconditionNotSatisfied
+        )
     }
 
     private fun requestConsent(intentSender: IntentSender) {
