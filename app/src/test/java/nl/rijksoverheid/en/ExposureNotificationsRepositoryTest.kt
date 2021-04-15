@@ -25,15 +25,12 @@ import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.Infectiousness
 import com.google.android.gms.nearby.exposurenotification.ReportType
-import com.nhaarman.mockitokotlin2.mock
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.yield
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
@@ -71,6 +68,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.mock
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import retrofit2.Response
@@ -295,7 +293,10 @@ class ExposureNotificationsRepositoryTest {
 
         assertEquals(
             DiagnosisKeysDataMapping.DiagnosisKeysDataMappingBuilder()
-                .setDaysSinceOnsetToInfectiousness((-14..14).map { it to Infectiousness.STANDARD }.toMap())
+                .setDaysSinceOnsetToInfectiousness(
+                    (-14..14).map { it to Infectiousness.STANDARD }
+                        .toMap()
+                )
                 .setReportTypeWhenMissing(ReportType.CONFIRMED_TEST)
                 .setInfectiousnessWhenDaysSinceOnsetMissing(Infectiousness.STANDARD).build(),
             config.get()
@@ -914,7 +915,10 @@ class ExposureNotificationsRepositoryTest {
             override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
                 throw NotImplementedError()
 
-            override suspend fun getResourceBundle(id: String, cacheStrategy: CacheStrategy?): ResourceBundle {
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle {
                 throw NotImplementedError()
             }
         }
@@ -1067,7 +1071,10 @@ class ExposureNotificationsRepositoryTest {
                     cacheStrategy: CacheStrategy?
                 ): ResourceBundle {
                     called.set(true)
-                    return ResourceBundle(emptyMap(), ResourceBundle.Guidance(emptyList(), emptyList()))
+                    return ResourceBundle(
+                        emptyMap(),
+                        ResourceBundle.Guidance(emptyList(), emptyList())
+                    )
                 }
             }
 
@@ -1677,7 +1684,10 @@ class ExposureNotificationsRepositoryTest {
 
         sharedPrefs.edit {
             putLong("last_keys_processed", Instant.parse(lastSyncDateTime).toEpochMilli())
-            putLong("notifications_enabled_timestamp", Instant.parse(notificationsEnabledDateTime).toEpochMilli())
+            putLong(
+                "notifications_enabled_timestamp",
+                Instant.parse(notificationsEnabledDateTime).toEpochMilli()
+            )
         }
 
         val repository = createRepository(
@@ -1813,12 +1823,19 @@ class ExposureNotificationsRepositoryTest {
     @Test
     fun `getStatus emits when cache changes`() = runBlockingTest {
         val api = object : FakeExposureNotificationApi() {
-            override suspend fun getStatus() = StatusResult.Enabled
+            override suspend fun getStatus(): StatusResult {
+                return StatusResult.Enabled
+            }
         }
         val context = ApplicationProvider.getApplicationContext<Application>()
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
         val statusCache = StatusCache(sharedPrefs).apply {
-            updateCachedStatus(StatusCache.CachedStatus.ENABLED)
+            updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+        }
+        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+            setLocationEnabled(true)
+            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
         }
 
         val repository = createRepository(
@@ -1828,24 +1845,14 @@ class ExposureNotificationsRepositoryTest {
             statusCache = statusCache
         )
 
-        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
-        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
-            setLocationEnabled(true)
-            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
-        }
-
-        val result = async { repository.getStatus().take(3).toList() }
-        yield()
-
         statusCache.updateCachedStatus(StatusCache.CachedStatus.DISABLED)
-
         assertEquals(
             listOf(
-                StatusResult.Enabled,
                 StatusResult.Disabled,
-                StatusResult.Enabled
+                StatusResult.Enabled,
+                StatusResult.Disabled
             ),
-            result.await()
+            repository.getStatus().take(3).toList()
         )
     }
 
@@ -1873,18 +1880,14 @@ class ExposureNotificationsRepositoryTest {
             setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
         }
 
-        val result = async { repository.getStatus().take(2).toList() }
-        yield()
-
         shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
             setLocationEnabled(false)
             setProviderEnabled(LocationManager.NETWORK_PROVIDER, false)
         }
         context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
-
         assertEquals(
-            listOf(StatusResult.Enabled, StatusResult.LocationPreconditionNotSatisfied),
-            result.await()
+            repository.getStatus().take(2).toList(),
+            listOf(StatusResult.Enabled, StatusResult.LocationPreconditionNotSatisfied)
         )
     }
 
@@ -1911,16 +1914,12 @@ class ExposureNotificationsRepositoryTest {
             setLocationEnabled(true)
             setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
         }
-
-        val result = async { repository.getStatus().take(2).toList() }
-        yield()
-
         (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.disable()
         context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
 
         assertEquals(
-            listOf(StatusResult.Enabled, StatusResult.BluetoothDisabled),
-            result.await()
+            repository.getStatus().take(2).toList(),
+            listOf(StatusResult.Enabled, StatusResult.BluetoothDisabled)
         )
     }
 
@@ -1944,13 +1943,12 @@ class ExposureNotificationsRepositoryTest {
             setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
         }
 
-        val result = async { repository.getStatus().take(2).toList() }
-        yield()
+        val result = repository.getStatus().take(2).toList()
 
         (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.disable()
         context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
 
-        assertEquals(listOf(StatusResult.Enabled, StatusResult.Unavailable(5)), result.await())
+        assertEquals(listOf(StatusResult.Enabled, StatusResult.Unavailable(5)), result)
         assertEquals(StatusCache.CachedStatus.ENABLED, statusCache.getCachedStatus().first())
     }
 
@@ -1973,171 +1971,170 @@ class ExposureNotificationsRepositoryTest {
             val repository =
                 createRepository(context, api, preferences = sharedPrefs, statusCache = statusCache)
 
-            val result = async { repository.getStatus().take(2).toList() }
-            yield()
+            val result = repository.getStatus().take(2).toList()
 
             (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.disable()
             context.sendBroadcast(Intent(LocationManager.MODE_CHANGED_ACTION))
 
-            assertEquals(listOf(StatusResult.Disabled, StatusResult.Enabled), result.await())
+            assertEquals(listOf(StatusResult.Disabled, StatusResult.Enabled), result)
         }
 
     @Test
-    fun `requestEnableNotifications updates statusCache to BluetoothDisabled when bluetooth is disabled`() = runBlockingTest {
-        val api = object : FakeExposureNotificationApi() {
-            override suspend fun getStatus() = StatusResult.Enabled
-            override suspend fun requestEnableNotifications(): EnableNotificationsResult {
-                return EnableNotificationsResult.Enabled
+    fun `requestEnableNotifications updates statusCache to BluetoothDisabled when bluetooth is disabled`() =
+        runBlockingTest {
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus() = StatusResult.Enabled
+                override suspend fun requestEnableNotifications(): EnableNotificationsResult {
+                    return EnableNotificationsResult.Enabled
+                }
+                override suspend fun disableNotifications(): DisableNotificationsResult {
+                    return DisableNotificationsResult.Disabled
+                }
             }
-            override suspend fun disableNotifications(): DisableNotificationsResult {
-                return DisableNotificationsResult.Disabled
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+            val statusCache = StatusCache(sharedPrefs)
+
+            val repository = createRepository(
+                context = context,
+                api = api,
+                preferences = sharedPrefs,
+                statusCache = statusCache,
+                cdnService = object : CdnService {
+                    override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                        throw NotImplementedError()
+                    }
+
+                    override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                        Manifest(listOf(), "risk", "config")
+
+                    override suspend fun getRiskCalculationParameters(
+                        id: String,
+                        cacheStrategy: CacheStrategy?
+                    ): RiskCalculationParameters {
+                        throw NotImplementedError()
+                    }
+
+                    override suspend fun getAppConfig(
+                        id: String,
+                        cacheStrategy: CacheStrategy?
+                    ): AppConfig =
+                        AppConfig()
+
+                    override suspend fun getResourceBundle(
+                        id: String,
+                        cacheStrategy: CacheStrategy?
+                    ): ResourceBundle {
+                        throw java.lang.IllegalStateException()
+                    }
+                },
+                scheduler = object : BackgroundWorkScheduler {
+                    override fun schedule(intervalMinutes: Int) {
+                    }
+
+                    override fun cancel() {
+                        throw AssertionError()
+                    }
+                }
+            )
+
+            (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.disable()
+            shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+                setLocationEnabled(true)
+                setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
             }
+
+            val result = repository.getStatus().take(2).toList()
+
+            repository.requestEnableNotificationsForcingConsent()
+
+            assertEquals(
+                listOf(
+                    StatusResult.Disabled,
+                    StatusResult.BluetoothDisabled
+                ),
+                result
+            )
         }
-        val context = ApplicationProvider.getApplicationContext<Application>()
-        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-        val statusCache = StatusCache(sharedPrefs)
-
-        val repository = createRepository(
-            context = context,
-            api = api,
-            preferences = sharedPrefs,
-            statusCache = statusCache,
-            cdnService = object : CdnService {
-                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
-                    Manifest(listOf(), "risk", "config")
-
-                override suspend fun getRiskCalculationParameters(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): RiskCalculationParameters {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getAppConfig(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): AppConfig =
-                    AppConfig()
-
-                override suspend fun getResourceBundle(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): ResourceBundle {
-                    throw java.lang.IllegalStateException()
-                }
-            },
-            scheduler = object : BackgroundWorkScheduler {
-                override fun schedule(intervalMinutes: Int) {
-                }
-
-                override fun cancel() {
-                    throw AssertionError()
-                }
-            }
-        )
-
-        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.disable()
-        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
-            setLocationEnabled(true)
-            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
-        }
-
-        val result = async { repository.getStatus().take(2).toList() }
-        yield()
-
-        repository.requestEnableNotificationsForcingConsent()
-
-        assertEquals(
-            listOf(
-                StatusResult.Disabled,
-                StatusResult.BluetoothDisabled
-            ),
-            result.await()
-        )
-    }
 
     @Test
-    fun `requestEnableNotifications updates statusCache to LocationPreconditionNotSatisfied when location is disabled`() = runBlockingTest {
-        val api = object : FakeExposureNotificationApi() {
-            override suspend fun getStatus() = StatusResult.Enabled
-            override suspend fun requestEnableNotifications(): EnableNotificationsResult {
-                return EnableNotificationsResult.Enabled
+    fun `requestEnableNotifications updates statusCache to LocationPreconditionNotSatisfied when location is disabled`() =
+        runBlockingTest {
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus() = StatusResult.Enabled
+                override suspend fun requestEnableNotifications(): EnableNotificationsResult {
+                    return EnableNotificationsResult.Enabled
+                }
+                override suspend fun disableNotifications(): DisableNotificationsResult {
+                    return DisableNotificationsResult.Disabled
+                }
             }
-            override suspend fun disableNotifications(): DisableNotificationsResult {
-                return DisableNotificationsResult.Disabled
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+            val statusCache = StatusCache(sharedPrefs)
+
+            val repository = createRepository(
+                context = context,
+                api = api,
+                preferences = sharedPrefs,
+                statusCache = statusCache,
+                cdnService = object : CdnService {
+                    override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                        throw NotImplementedError()
+                    }
+
+                    override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                        Manifest(listOf(), "risk", "config")
+
+                    override suspend fun getRiskCalculationParameters(
+                        id: String,
+                        cacheStrategy: CacheStrategy?
+                    ): RiskCalculationParameters {
+                        throw NotImplementedError()
+                    }
+
+                    override suspend fun getAppConfig(
+                        id: String,
+                        cacheStrategy: CacheStrategy?
+                    ): AppConfig =
+                        AppConfig()
+
+                    override suspend fun getResourceBundle(
+                        id: String,
+                        cacheStrategy: CacheStrategy?
+                    ): ResourceBundle {
+                        throw java.lang.IllegalStateException()
+                    }
+                },
+                scheduler = object : BackgroundWorkScheduler {
+                    override fun schedule(intervalMinutes: Int) {
+                    }
+
+                    override fun cancel() {
+                        throw AssertionError()
+                    }
+                }
+            )
+
+            shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+                setLocationEnabled(false)
+                setProviderEnabled(LocationManager.NETWORK_PROVIDER, false)
             }
+            (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+
+            val result = repository.getStatus().take(2).toList()
+
+            repository.requestEnableNotificationsForcingConsent()
+
+            val results = result
+            assertEquals(
+                listOf(
+                    StatusResult.Disabled,
+                    StatusResult.LocationPreconditionNotSatisfied
+                ),
+                results
+            )
         }
-        val context = ApplicationProvider.getApplicationContext<Application>()
-        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-        val statusCache = StatusCache(sharedPrefs)
-
-        val repository = createRepository(
-            context = context,
-            api = api,
-            preferences = sharedPrefs,
-            statusCache = statusCache,
-            cdnService = object : CdnService {
-                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
-                    Manifest(listOf(), "risk", "config")
-
-                override suspend fun getRiskCalculationParameters(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): RiskCalculationParameters {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getAppConfig(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): AppConfig =
-                    AppConfig()
-
-                override suspend fun getResourceBundle(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): ResourceBundle {
-                    throw java.lang.IllegalStateException()
-                }
-            },
-            scheduler = object : BackgroundWorkScheduler {
-                override fun schedule(intervalMinutes: Int) {
-                }
-
-                override fun cancel() {
-                    throw AssertionError()
-                }
-            }
-        )
-
-        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
-            setLocationEnabled(false)
-            setProviderEnabled(LocationManager.NETWORK_PROVIDER, false)
-        }
-        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
-
-        val result = async { repository.getStatus().take(2).toList() }
-        yield()
-
-        repository.requestEnableNotificationsForcingConsent()
-
-        val results = result.await()
-        assertEquals(
-            listOf(
-                StatusResult.Disabled,
-                StatusResult.LocationPreconditionNotSatisfied
-            ),
-            results
-        )
-    }
 
     @Test
     fun `requestEnableNotifications updates statusCache to Enabled when preconditions are correct`() = runBlockingTest {
@@ -2203,8 +2200,7 @@ class ExposureNotificationsRepositoryTest {
             setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
         }
 
-        val result = async { repository.getStatus().take(2).toList() }
-        yield()
+        val result = repository.getStatus().take(2).toList()
 
         repository.requestEnableNotificationsForcingConsent()
 
@@ -2213,7 +2209,7 @@ class ExposureNotificationsRepositoryTest {
                 StatusResult.Disabled,
                 StatusResult.Enabled
             ),
-            result.await()
+            result
         )
     }
 
@@ -2406,15 +2402,16 @@ class ExposureNotificationsRepositoryTest {
         )
     }
 
-    private fun createTrustManager() = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()).apply {
-        val keyStore = KeyStore.getInstance(KeyStore.getDefaultType())
-        // root key is on the device
-        keyStore.load(
-            ExposureNotificationsRepositoryTest::class.java.getResourceAsStream("/nl-root.jks"),
-            "test".toCharArray()
-        )
-        init(keyStore)
-    }.trustManagers[0] as X509TrustManager
+    private fun createTrustManager() =
+        TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()).apply {
+            val keyStore = KeyStore.getInstance(KeyStore.getDefaultType())
+            // root key is on the device
+            keyStore.load(
+                ExposureNotificationsRepositoryTest::class.java.getResourceAsStream("/nl-root.jks"),
+                "test".toCharArray()
+            )
+            init(keyStore)
+        }.trustManagers[0] as X509TrustManager
 }
 
 private class TestLifecycleOwner(private val state: Lifecycle.State) : LifecycleOwner {

@@ -14,10 +14,8 @@ import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.android.play.core.ktx.requestAppUpdateInfo
 import nl.rijksoverheid.en.BuildConfig
-import timber.log.Timber
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 private const val KEY_MINIMUM_VERSION_CODE = "minimum_version_code"
 private const val PLAY_STORE_PACKAGE_NAME = "com.android.vending"
@@ -30,6 +28,9 @@ class AppLifecycleManager(
     private val onShowAppUpdateNotification: () -> Unit
 ) {
 
+    private val minimumVersionCode: Int
+        get() = preferences.getInt(KEY_MINIMUM_VERSION_CODE, 0)
+
     /**
      * Saves the minimum version of the app so it can be checked on app open.
      * Sends a push notification if this app's version is outdated if [notify] is true
@@ -37,7 +38,7 @@ class AppLifecycleManager(
      * @param notify whether to show a notification to the user
      */
     fun verifyMinimumVersion(minimumVersionCode: Int, notify: Boolean) {
-        if (minimumVersionCode != preferences.getInt(KEY_MINIMUM_VERSION_CODE, 0)) {
+        if (minimumVersionCode != this.minimumVersionCode) {
             preferences.edit {
                 putInt(KEY_MINIMUM_VERSION_CODE, minimumVersionCode)
             }
@@ -50,37 +51,27 @@ class AppLifecycleManager(
     /**
      * Checks if a forced update is necessary and if so returns the manager and info to force the update.
      */
-    suspend fun getUpdateState(): UpdateState =
-        suspendCoroutine { c ->
-            val minimumVersionCode = preferences.getInt(KEY_MINIMUM_VERSION_CODE, 1)
-            if (minimumVersionCode > currentVersionCode) {
-                when (val source = getInstallPackageName()) {
-                    PLAY_STORE_PACKAGE_NAME -> {
-                        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-
-                        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-                            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-                                appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) ||
-                                appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
-                            ) {
-                                c.resume(UpdateState.InAppUpdate(appUpdateManager, appUpdateInfo))
-                            } else {
-                                // update might not be available for in-app update, for example for a staged roll out
-                                c.resume(UpdateState.UpToDate)
-                            }
-                        }.addOnFailureListener {
-                            Timber.e("Error requesting app update state")
-                            c.resume(UpdateState.Error(it))
-                        }
-                    }
-                    else -> {
-                        c.resume(UpdateState.UpdateRequired(source))
+    suspend fun getUpdateState(): UpdateState {
+        return if (minimumVersionCode > currentVersionCode) {
+            when (val source = getInstallPackageName()) {
+                PLAY_STORE_PACKAGE_NAME -> {
+                    val appUpdateInfo = appUpdateManager.requestAppUpdateInfo()
+                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) ||
+                        appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
+                    ) {
+                        UpdateState.InAppUpdate(appUpdateManager, appUpdateInfo)
+                    } else {
+                        // update might not be available for in-app update, for example for a staged roll out
+                        UpdateState.UpToDate
                     }
                 }
-            } else {
-                c.resume(UpdateState.UpToDate)
+                else -> UpdateState.UpdateRequired(source)
             }
+        } else {
+            UpdateState.UpToDate
         }
+    }
 
     sealed class UpdateState {
         data class InAppUpdate(
