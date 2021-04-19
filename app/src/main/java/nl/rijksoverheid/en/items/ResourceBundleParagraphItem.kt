@@ -26,13 +26,12 @@ class ResourceBundleParagraphItem(
     override fun getLayout() = R.layout.item_paragraph
 
     override fun bind(viewBinding: ItemParagraphBinding, position: Int) {
-        ViewCompat.enableAccessibleClickableSpanSupport(viewBinding.content)
-        viewBinding.content.movementMethod = LinkMovementMethod.getInstance()
         viewBinding.text = fromHtmlWithCustomReplacements(
             viewBinding.root.context,
             text.replace("\n", "<br/>")
         ).apply {
-            getSpans<URLSpan>().forEach {
+            val urlSpans = getSpans<URLSpan>()
+            urlSpans.forEach {
                 val start = getSpanStart(it)
                 val end = getSpanEnd(it)
                 setSpan(
@@ -55,6 +54,11 @@ class ResourceBundleParagraphItem(
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 removeSpan(it)
+            }
+
+            if (urlSpans.any()) {
+                ViewCompat.enableAccessibleClickableSpanSupport(viewBinding.content)
+                viewBinding.content.movementMethod = LinkMovementMethod.getInstance()
             }
         }
     }
