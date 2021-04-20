@@ -45,12 +45,15 @@ stages:
               SonarCloud: 'CIBG SonarCloud'
               organization: cibg
               scannerMode: 'Other'
+              extraProperties: |
+                sonar.junit.reportPaths = build/test-results/testDevDebugUnitTest/, build/test-results/testDevDebugUnitTest/
+                sonar.coverage.jacoco.xmlReportPaths = $(System.DefaultWorkingDirectory)/api/build/reports/jacoco/testDevDebugUnitTestCoverage/testDevDebugUnitTestCoverage.xml, $(System.DefaultWorkingDirectory)/app/build/reports/jacoco/testDevDebugUnitTestCoverage/testDevDebugUnitTestCoverage.xml, $(System.DefaultWorkingDirectory)/en-api/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml, $(System.DefaultWorkingDirectory)/signing/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml
           - task: Gradle@2
             displayName: Build and test
             inputs:
               gradleWrapperFile: gradlew
               options: $(GRADLE_OPTIONS)
-              tasks: 'app:assemDevDebug app:assemDevDebugAndroidTest testDevDebug testDebug app:lintDevDebug'
+              tasks: 'app:assemDevDebug app:assemDevDebugAndroidTest testDevDebugUnitTestCoverage testDebugUnitTestCoverage app:lintDevDebug'
               publishJUnitResults: true
               testResultsFiles: '**/TEST-*.xml'
               testRunTitle: Unit tests
