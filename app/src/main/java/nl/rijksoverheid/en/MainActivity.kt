@@ -80,33 +80,10 @@ class MainActivity : AppCompatActivity() {
             this,
             EventObserver {
                 when (it) {
-                    is AppLifecycleViewModel.AppLifecycleStatus.Update -> {
-                        if (it.update is AppLifecycleManager.UpdateState.InAppUpdate) {
-                            it.update.appUpdateManager.startUpdateFlow(
-                                it.update.appUpdateInfo,
-                                this, AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
-                            ).addOnCompleteListener { task ->
-                                Timber.d("App update result: ${task.result}")
-                                if (task.result != Activity.RESULT_OK) {
-                                    finish()
-                                }
-                            }
-                        } else {
-                            val installerPackageName =
-                                (it.update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
-                            findNavController(R.id.nav_host_fragment).navigate(
-                                AppUpdateRequiredFragmentDirections.actionAppUpdateRequired(
-                                    installerPackageName
-                                )
-                            )
-                        }
-                    }
-                    AppLifecycleViewModel.AppLifecycleStatus.EndOfLife -> {
-                        viewModel.disableExposureNotifications()
-                        findNavController(R.id.nav_host_fragment).navigate(
-                            EndOfLifeFragmentDirections.actionEndOfLife()
-                        )
-                    }
+                    is AppLifecycleViewModel.AppLifecycleStatus.Update ->
+                        handleUpdateState(it.update)
+                    AppLifecycleViewModel.AppLifecycleStatus.EndOfLife ->
+                        handleEndOfLifeState()
                 }
             }
         )
@@ -114,6 +91,35 @@ class MainActivity : AppCompatActivity() {
         if (BuildConfig.FEATURE_DEBUG_NOTIFICATION) {
             DebugNotification(this).show()
         }
+    }
+
+    private fun handleUpdateState(update: AppLifecycleManager.UpdateState) {
+        if (update is AppLifecycleManager.UpdateState.InAppUpdate) {
+            update.appUpdateManager.startUpdateFlow(
+                update.appUpdateInfo,
+                this, AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
+            ).addOnCompleteListener { task ->
+                Timber.d("App update result: ${task.result}")
+                if (task.result != Activity.RESULT_OK) {
+                    finish()
+                }
+            }
+        } else {
+            val installerPackageName =
+                (update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
+            findNavController(R.id.nav_host_fragment).navigate(
+                AppUpdateRequiredFragmentDirections.actionAppUpdateRequired(
+                    installerPackageName
+                )
+            )
+        }
+    }
+
+    private fun handleEndOfLifeState() {
+        viewModel.disableExposureNotifications()
+        findNavController(R.id.nav_host_fragment).navigate(
+            EndOfLifeFragmentDirections.actionEndOfLife()
+        )
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
