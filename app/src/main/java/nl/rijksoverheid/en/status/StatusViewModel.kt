@@ -123,8 +123,12 @@ class StatusViewModel(
             )
             pausedState is Settings.PausedState.Paused -> HeaderState.Paused(pausedState)
             status is StatusResult.Disabled -> HeaderState.Disabled
-            status is StatusResult.LocationPreconditionNotSatisfied -> HeaderState.LocationDisabled
-            status is StatusResult.BluetoothDisabled -> HeaderState.BluetoothDisabled
+            status is StatusResult.LocationPreconditionNotSatisfied -> {
+                if (keyProcessingOverdue) HeaderState.Disabled else HeaderState.LocationDisabled
+            }
+            status is StatusResult.BluetoothDisabled -> {
+                if (keyProcessingOverdue) HeaderState.Disabled else HeaderState.BluetoothDisabled
+            }
             keyProcessingOverdue && isWifiOnlyOn -> HeaderState.SyncIssuesWifiOnly
             keyProcessingOverdue && !isWifiOnlyOn -> HeaderState.SyncIssues
             status !is StatusResult.Enabled -> HeaderState.Disabled
@@ -143,8 +147,12 @@ class StatusViewModel(
         val isPaused = pausedState is Settings.PausedState.Paused
         return when {
             lastExposureDate != null && !isPaused && status == StatusResult.Disabled -> ErrorState.ConsentRequired
-            lastExposureDate != null && !isPaused && status == StatusResult.LocationPreconditionNotSatisfied -> ErrorState.LocationDisabled
-            lastExposureDate != null && !isPaused && status == StatusResult.BluetoothDisabled -> ErrorState.BluetoothDisabled
+            lastExposureDate != null && !isPaused && status == StatusResult.LocationPreconditionNotSatisfied -> {
+                if (keyProcessingOverdue) ErrorState.ConsentRequired else ErrorState.LocationDisabled
+            }
+            lastExposureDate != null && !isPaused && status == StatusResult.BluetoothDisabled -> {
+                if (keyProcessingOverdue) ErrorState.ConsentRequired else ErrorState.BluetoothDisabled
+            }
             lastExposureDate != null && !isPaused && status != StatusResult.Enabled -> ErrorState.ConsentRequired
             !exposureNotificationsEnabled -> ErrorState.NotificationsDisabled
             lastExposureDate != null && !isPaused && keyProcessingOverdue && isWifiOnlyOn -> ErrorState.SyncIssuesWifiOnly
