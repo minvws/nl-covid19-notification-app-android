@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply from: rootProject.file("jacoco.gradle")
 
 ext.cdnEndpoint = ext.has("cdnEndpoint") ? ext.cdnEndpoint : "http://localhost/"
 ext.apiEndpoint = ext.has("apiEndpoint") ? ext.apiEndpoint : "http://localhost/"
