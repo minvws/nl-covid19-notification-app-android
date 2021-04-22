@@ -189,11 +189,11 @@
         android:label="PostNotificationFragment"
         tools:layout="@layout/fragment_list">
         <argument
-            android:name="lastExposureLocalDate"
-            app:argType="java.time.LocalDate" />
+            android:name="lastExposureLocalDateString"
+            app:argType="string" />
         <argument
-            android:name="notificationReceivedLocalDate"
-            app:argType="java.time.LocalDate"
+            android:name="notificationReceivedLocalDateString"
+            app:argType="string"
             android:defaultValue="@null"
             app:nullable="true" />
         <action
