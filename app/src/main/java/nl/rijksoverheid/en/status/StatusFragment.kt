@@ -262,8 +262,8 @@ class StatusFragment @JvmOverloads constructor(
     ) =
         findNavController().navigateCatchingErrors(
             StatusFragmentDirections.actionPostNotification(
-                lastExposureLocalDate,
-                notificationReceivedLocalDate
+                lastExposureLocalDate.toString(),
+                notificationReceivedLocalDate.toString()
             )
         )
 

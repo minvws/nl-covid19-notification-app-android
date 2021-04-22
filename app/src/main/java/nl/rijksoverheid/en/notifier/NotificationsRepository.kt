@@ -110,8 +110,8 @@ class NotificationsRepository(
             .setDestination(R.id.nav_post_notification)
             .setArguments(
                 Bundle().apply {
-                    putSerializable("lastExposureLocalDate", lastExposureDate)
-                    putSerializable("notificationReceivedLocalDate", notificationReceivedDate)
+                    putSerializable("lastExposureLocalDateString", lastExposureDate.toString())
+                    putSerializable("notificationReceivedLocalDateString", notificationReceivedDate.toString())
                 }
             ).createPendingIntent()
         val message = context.getString(

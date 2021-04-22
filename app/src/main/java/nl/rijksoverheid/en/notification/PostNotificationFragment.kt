@@ -21,6 +21,7 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import java.time.LocalDate
 
 class PostNotificationFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val args: PostNotificationFragmentArgs by navArgs()
@@ -35,8 +36,8 @@ class PostNotificationFragment : BaseFragment(R.layout.fragment_list_with_button
         super.onCreate(savedInstanceState)
 
         viewModel.setExposureNotificationGuidanceArgs(
-            args.lastExposureLocalDate,
-            args.notificationReceivedLocalDate
+            LocalDate.parse(args.lastExposureLocalDateString),
+            LocalDate.parse(args.notificationReceivedLocalDateString)
         )
     }
 
