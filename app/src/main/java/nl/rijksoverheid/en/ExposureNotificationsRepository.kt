@@ -385,24 +385,32 @@ class ExposureNotificationsRepository(
                 riskCalculationParameters.attenuationBucketWeights
             ).apply {
                 riskCalculationParameters.infectiousnessWeights.forEachIndexed { infectiousness, weight ->
-                    val invalidWeight = weight < 0.0 || weight > 2.5
-                    if (invalidWeight)
-                        Timber.w("Element value of infectiousnessWeights must between 0 ~ 2.5")
-
-                    // Skip the value for Infectiousness.NONE, this will trigger a (IllegalArgumentException: Incorrect value of infectiousness)
-                    if (infectiousness != Infectiousness.NONE && !invalidWeight)
+                    if (isValidInfectiousnessWeight(infectiousness, weight))
                         setInfectiousnessWeight(infectiousness, weight)
                 }
                 riskCalculationParameters.reportTypeWeights.forEachIndexed { reportType, weight ->
-                    val invalidWeight = weight < 0.0 || weight > 2.5
-                    if (invalidWeight)
-                        Timber.w("Element value of reportTypeWeights must between 0 ~ 2.5")
-
-                    // Skip the value for ReportType.UNKNOWN and ReportType.REVOKED, this will trigger a (IllegalArgumentException: Incorrect value of ReportType)
-                    if (reportType != ReportType.UNKNOWN && reportType != ReportType.REVOKED && !invalidWeight)
+                    if (isValidReportTypeWeight(reportType, weight))
                         setReportTypeWeight(reportType, weight)
                 }
             }.build()
+    }
+
+    private fun isValidInfectiousnessWeight(infectiousness: Int, weight: Double): Boolean {
+        val invalidWeight = weight < 0.0 || weight > 2.5
+        if (invalidWeight)
+            Timber.w("Element value of infectiousnessWeights must between 0 ~ 2.5")
+
+        // Infectiousness.NONE will trigger a (IllegalArgumentException: Incorrect value of infectiousness)
+        return infectiousness != Infectiousness.NONE && !invalidWeight
+    }
+
+    private fun isValidReportTypeWeight(reportType: Int, weight: Double): Boolean {
+        val invalidWeight = weight < 0.0 || weight > 2.5
+        if (invalidWeight)
+            Timber.w("Element value of reportTypeWeights must between 0 ~ 2.5")
+
+        // ReportType.UNKNOWN and ReportType.REVOKED will trigger a (IllegalArgumentException: Incorrect value of ReportType)
+        return reportType != ReportType.UNKNOWN && reportType != ReportType.REVOKED && !invalidWeight
     }
 
     private fun getDiagnosisKeysMapping(riskCalculationParameters: RiskCalculationParameters): DiagnosisKeysDataMapping {
@@ -631,14 +639,12 @@ class ExposureNotificationsRepository(
      * Removes previously known expiration date from sharedPreferences when older than 14 days
      */
     suspend fun cleanupPreviouslyKnownExposures() {
-        val previouslyKnownExposureExpirationDate = getPreviouslyKnownExposureDate() ?: return
+        val previouslyKnownExposureDate = getPreviouslyKnownExposureDate() ?: return
         val fourteenDaysAgo =
             LocalDate.now(clock).minusDays(PREVIOUSLY_KNOWN_EXPOSURE_DATE_EXPIRATION_DAYS)
-        if (previouslyKnownExposureExpirationDate.isBefore(LocalDate.now(clock))) {
-            if (previouslyKnownExposureExpirationDate.isBefore(fourteenDaysAgo)) {
-                preferences.edit {
-                    putString(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE, null)
-                }
+        if (previouslyKnownExposureDate.isBefore(fourteenDaysAgo)) {
+            preferences.edit {
+                putString(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE, null)
             }
         }
     }
