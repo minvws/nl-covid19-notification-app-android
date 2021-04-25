@@ -35,6 +35,13 @@ class ExposureNotificationsViewModel(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
+    init {
+        // Always clear previous exposures on app launch.
+        viewModelScope.launch {
+            repository.cleanupPreviouslyKnownExposures()
+        }
+    }
+
     val notificationState: LiveData<NotificationsState> = repository.getStatus().map { result ->
         when (result) {
             StatusResult.Enabled -> NotificationsState.Enabled
