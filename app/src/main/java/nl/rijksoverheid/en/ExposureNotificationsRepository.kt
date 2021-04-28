@@ -618,6 +618,24 @@ class ExposureNotificationsRepository(
         return getSharedPrefsLongAsLocalDate(preferences.getPreferences(), KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE)
     }
 
+    fun previouslyKnownExposureDate(): Flow<LocalDate?> = callbackFlow {
+        val listener =
+            SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+                if (key == KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE) {
+                    offer(getSharedPrefsLongAsLocalDate(sharedPreferences, KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE))
+                }
+            }
+
+        val preferences = preferences.getPreferences()
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+
+        offer(getSharedPrefsLongAsLocalDate(preferences, KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE))
+
+        awaitClose {
+            preferences.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
+
     private fun getSharedPrefsLongAsLocalDate(sharedPreferences: SharedPreferences, sharedPreferenceKey: String): LocalDate? {
         val timestamp = sharedPreferences.getLong(sharedPreferenceKey, 0L)
         return if (timestamp > 0) {
