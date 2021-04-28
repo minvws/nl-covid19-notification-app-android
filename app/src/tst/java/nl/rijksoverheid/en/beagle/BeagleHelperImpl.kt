@@ -78,8 +78,9 @@ object BeagleHelperImpl : BeagleHelper {
             ),
             TextModule(
                 "Previous exposure date: ${
-                    previouslyKnownExposureDate?.format(DateTimeFormatter.ISO_LOCAL_DATE) ?: "none"
-                }", TextModule.Type.NORMAL
+                previouslyKnownExposureDate?.format(DateTimeFormatter.ISO_LOCAL_DATE) ?: "none"
+                }",
+                TextModule.Type.NORMAL
             ),
             DividerModule(),
             TextModule("Other", TextModule.Type.SECTION_HEADER),
