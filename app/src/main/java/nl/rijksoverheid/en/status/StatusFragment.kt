@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.bluetooth.BluetoothAdapter
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -13,6 +14,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -30,11 +32,10 @@ import nl.rijksoverheid.en.util.PausedStateTimer
 import nl.rijksoverheid.en.util.durationHoursAndMinutes
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.isIgnoringBatteryOptimizations
-import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
+import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 import timber.log.Timber
+import java.time.LocalDate
 import java.time.LocalDateTime
-
-private const val RC_DISABLE_BATTERY_OPTIMIZATIONS = 1
 
 class StatusFragment @JvmOverloads constructor(
     factoryProducer: (() -> ViewModelProvider.Factory)? = null
@@ -46,6 +47,13 @@ class StatusFragment @JvmOverloads constructor(
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
     private var pausedDurationTimer: PausedStateTimer? = null
+
+    private val disableBatteryOptimizationsResultRegistration =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+            if (requireContext().isIgnoringBatteryOptimizations()) {
+                section.removeBatteryOptimisationsError()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,9 +119,12 @@ class StatusFragment @JvmOverloads constructor(
         statusViewModel.errorState.observe(viewLifecycleOwner) {
             when (it) {
                 StatusViewModel.ErrorState.None -> section.updateErrorState(it)
+                StatusViewModel.ErrorState.SyncIssuesWifiOnly -> section.updateErrorState(it) { navigateToInternetRequiredFragment() }
                 StatusViewModel.ErrorState.SyncIssues -> section.updateErrorState(it) { statusViewModel.resetErrorState() }
                 StatusViewModel.ErrorState.NotificationsDisabled -> section.updateErrorState(it) { navigateToNotificationSettings() }
-                is StatusViewModel.ErrorState.ConsentRequired -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
+                StatusViewModel.ErrorState.LocationDisabled -> section.updateErrorState(it) { requestEnableLocationServices() }
+                StatusViewModel.ErrorState.BluetoothDisabled -> section.updateErrorState(it) { requestEnableBluetooth() }
+                StatusViewModel.ErrorState.ConsentRequired -> section.updateErrorState(it) { resetAndRequestEnableNotifications() }
             }
         }
 
@@ -137,15 +148,18 @@ class StatusFragment @JvmOverloads constructor(
         statusViewModel.lastKeysProcessed.observe(viewLifecycleOwner) {
             section.lastKeysProcessed = it
         }
+
+        statusViewModel.exposureNotificationApiUpdateRequired.observe(viewLifecycleOwner) { requireAnUpdate ->
+            if (requireAnUpdate)
+                findNavController().navigateCatchingErrors(StatusFragmentDirections.actionUpdatePlayServices())
+        }
     }
 
     override fun onResume() {
         super.onResume()
         if (!requireContext().isIgnoringBatteryOptimizations()) {
             section.showBatteryOptimisationsError {
-                requestDisableBatteryOptimizations(
-                    RC_DISABLE_BATTERY_OPTIMIZATIONS
-                )
+                disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest()
             }
         }
 
@@ -157,19 +171,18 @@ class StatusFragment @JvmOverloads constructor(
         super.onPause()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_DISABLE_BATTERY_OPTIMIZATIONS) {
-            if (requireContext().isIgnoringBatteryOptimizations()) {
-                section.removeBatteryOptimisationsError()
-            }
-        }
-    }
-
     private fun updateHeaderState(headerState: StatusViewModel.HeaderState) {
         when (headerState) {
             StatusViewModel.HeaderState.Active -> section.updateHeader(
                 headerState = headerState
+            )
+            is StatusViewModel.HeaderState.BluetoothDisabled -> section.updateHeader(
+                headerState = headerState,
+                primaryAction = ::requestEnableBluetooth
+            )
+            is StatusViewModel.HeaderState.LocationDisabled -> section.updateHeader(
+                headerState = headerState,
+                primaryAction = ::requestEnableLocationServices
             )
             is StatusViewModel.HeaderState.Disabled -> section.updateHeader(
                 headerState = headerState,
@@ -178,6 +191,10 @@ class StatusFragment @JvmOverloads constructor(
             is StatusViewModel.HeaderState.SyncIssues -> section.updateHeader(
                 headerState = headerState,
                 primaryAction = statusViewModel::resetErrorState
+            )
+            is StatusViewModel.HeaderState.SyncIssuesWifiOnly -> section.updateHeader(
+                headerState = headerState,
+                primaryAction = ::navigateToInternetRequiredFragment
             )
             is StatusViewModel.HeaderState.Paused -> {
                 val (durationHours, durationMinutes) = headerState.pauseState.durationHoursAndMinutes()
@@ -193,7 +210,12 @@ class StatusFragment @JvmOverloads constructor(
             is StatusViewModel.HeaderState.Exposed -> {
                 section.updateHeader(
                     headerState = headerState,
-                    primaryAction = { navigateToPostNotification(headerState.date.toEpochDay()) },
+                    primaryAction = {
+                        navigateToPostNotification(
+                            headerState.date,
+                            headerState.notificationReceivedDate
+                        )
+                    },
                     secondaryAction = {
                         showRemoveNotificationConfirmationDialog(
                             headerState.date.formatExposureDate(requireContext())
@@ -221,15 +243,29 @@ class StatusFragment @JvmOverloads constructor(
     }
 
     private fun resetAndRequestEnableNotifications() {
-        if (viewModel.locationPreconditionSatisfied) {
-            viewModel.requestEnableNotificationsForcingConsent()
-        } else {
-            findNavController().navigateCatchingErrors(StatusFragmentDirections.actionEnableLocationServices())
-        }
+        viewModel.requestEnableNotificationsForcingConsent()
     }
 
-    private fun navigateToPostNotification(epochDay: Long) =
-        findNavController().navigateCatchingErrors(StatusFragmentDirections.actionPostNotification(epochDay))
+    private fun requestEnableLocationServices() {
+        findNavController().navigateCatchingErrors(StatusFragmentDirections.actionEnableLocationServices())
+    }
+
+    private fun requestEnableBluetooth() = startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+
+    private fun navigateToInternetRequiredFragment() {
+        findNavController().navigateCatchingErrors(StatusFragmentDirections.actionNavInternetRequired())
+    }
+
+    private fun navigateToPostNotification(
+        lastExposureLocalDate: LocalDate,
+        notificationReceivedLocalDate: LocalDate?
+    ) =
+        findNavController().navigateCatchingErrors(
+            StatusFragmentDirections.actionPostNotification(
+                lastExposureLocalDate.toString(),
+                notificationReceivedLocalDate.toString()
+            )
+        )
 
     private fun navigateToNotificationSettings() {
         try {

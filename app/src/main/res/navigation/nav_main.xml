@@ -91,6 +91,14 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
+            android:id="@+id/action_nav_internet_required"
+            app:destination="@id/nav_internet_required"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
 
     <fragment
@@ -148,6 +156,22 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_internet_required"
+        android:name="nl.rijksoverheid.en.status.InternetRequiredFragment"
+        tools:layout="@layout/fragment_internet_required">
+
+        <action
+            android:id="@+id/action_show_settings"
+            app:destination="@id/nav_settings"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popUpTo="@id/nav_status"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+
+
+    <fragment
         android:id="@+id/nav_location_services_required_faq"
         android:name="nl.rijksoverheid.en.status.LocationServicesRequiredFAQFragment"
         tools:layout="@layout/fragment_list_with_button" />
@@ -165,8 +189,13 @@
         android:label="PostNotificationFragment"
         tools:layout="@layout/fragment_list">
         <argument
-            android:name="epochDayOfLastExposure"
-            app:argType="long" />
+            android:name="lastExposureLocalDateString"
+            app:argType="string" />
+        <argument
+            android:name="notificationReceivedLocalDateString"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
         <action
             android:id="@+id/action_phone_call_not_supported_dialog"
             app:destination="@id/nav_phone_call_not_supported_dialog" />

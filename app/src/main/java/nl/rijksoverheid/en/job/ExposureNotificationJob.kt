@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.job
 
 import android.content.Context
+import androidx.work.BackoffPolicy
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
@@ -15,8 +16,11 @@ import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.AddExposureResult
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
+import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
-private const val KEY_TOKEN = "token"
+private const val KEY_TEST_EXPOSURE = "test_exposure"
+private const val MAX_RUN_ATTEMPTS = 10
 
 class ExposureNotificationJob(
     context: Context,
@@ -26,23 +30,35 @@ class ExposureNotificationJob(
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        val token = inputData.getString(KEY_TOKEN)!!
-        val result = repository.addExposure(token)
-        if (result is AddExposureResult.Notify) {
-            notificationsRepository.showExposureNotification(result.daysSinceExposure)
-            RemindExposureNotificationWorker.schedule(applicationContext)
+        val testExposure = inputData.getBoolean(KEY_TEST_EXPOSURE, false)
+        val result = repository.addExposure(testExposure)
+        Timber.d("Add exposure result is $result")
+        return when (result) {
+            is AddExposureResult.Notify -> {
+                notificationsRepository.showExposureNotification(result.dateOfLastExposure, result.notificationReceivedDate)
+                RemindExposureNotificationWorker.schedule(applicationContext)
+                Result.success()
+            }
+            is AddExposureResult.Processed -> Result.success()
+            is AddExposureResult.Error -> {
+                if (runAttemptCount + 1 < MAX_RUN_ATTEMPTS)
+                    Result.retry()
+                else
+                    Result.failure()
+            }
         }
-        return Result.success()
     }
 
     companion object {
-        fun showNotification(context: Context, token: String) {
+        fun showNotification(context: Context, testExposure: Boolean) {
             val request = OneTimeWorkRequestBuilder<ExposureNotificationJob>()
                 .setInputData(
                     Data.Builder()
-                        .putString(KEY_TOKEN, token)
+                        .putBoolean(KEY_TEST_EXPOSURE, testExposure)
                         .build()
-                ).build()
+                )
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
+                .build()
 
             WorkManager.getInstance(context).enqueue(request)
         }

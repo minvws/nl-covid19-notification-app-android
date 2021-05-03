@@ -118,7 +118,10 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
             Manifest(emptyList(), "", "appConfig")
 
-        override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+        override suspend fun getRiskCalculationParameters(
+            id: String,
+            cacheStrategy: CacheStrategy?
+        ): RiskCalculationParameters {
             throw NotImplementedError()
         }
 
@@ -213,7 +216,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         }
 
         notificationsPreferences.edit(commit = true) {
-            putString("last_token_id", ExposureNotificationsRepository.DEBUG_TOKEN)
+            putLong("last_notification_received_date", LocalDate.now(clock).toEpochDay())
             putLong("last_token_exposure_date", LocalDate.now(clock).minusDays(2).toEpochDay())
         }
 

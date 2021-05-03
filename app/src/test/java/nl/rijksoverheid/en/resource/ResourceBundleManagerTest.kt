@@ -43,19 +43,20 @@ class ResourceBundleManagerTest {
 
     @Test
     fun `getExposureNotificationGuidance replaces escaped new lines`() = runBlocking {
+        val layout = listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
         val service = FakeResourceBundleCdnService(
             ResourceBundle(
                 mapOf("en" to mapOf("test_key" to "value with a new line\nand with an escaped newline \\\ntoo")),
                 ResourceBundle.Guidance(
-                    5,
-                    listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                    listOf(ResourceBundle.Guidance.RelativeExposureDayLayout(null, null, layout)),
+                    emptyList()
                 )
             )
         )
 
         val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
 
-        val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now())
+        val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now(), LocalDate.now())
 
         val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
         assertEquals(
@@ -74,12 +75,13 @@ class ResourceBundleManagerTest {
 
     @Test
     fun `getExposureNotificationGuidance replaces ExposureDate place holder`() = runBlocking {
+        val layout = listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
         val service = FakeResourceBundleCdnService(
             ResourceBundle(
                 mapOf("en" to mapOf("test_key" to "value with a {ExposureDate}")),
                 ResourceBundle.Guidance(
-                    5,
-                    listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                    listOf(ResourceBundle.Guidance.RelativeExposureDayLayout(null, null, layout)),
+                    emptyList()
                 )
             )
         )
@@ -87,7 +89,7 @@ class ResourceBundleManagerTest {
         val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
         val date = LocalDate.of(2020, 11, 2)
 
-        val result = resourceBundleManager.getExposureNotificationGuidance(date)
+        val result = resourceBundleManager.getExposureNotificationGuidance(date, LocalDate.now())
         val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
 
         val formattedDate = date.formatExposureDate(context)
@@ -99,12 +101,13 @@ class ResourceBundleManagerTest {
     @Test
     fun `getExposureNotificationGuidance replaces ExposureDate place holder with offset`() =
         runBlocking {
+            val layout = listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
             val service = FakeResourceBundleCdnService(
                 ResourceBundle(
                     mapOf("en" to mapOf("test_key" to "value with a {ExposureDate+2}")),
                     ResourceBundle.Guidance(
-                        5,
-                        listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                        listOf(ResourceBundle.Guidance.RelativeExposureDayLayout(null, null, layout)),
+                        emptyList()
                     )
                 )
             )
@@ -112,7 +115,7 @@ class ResourceBundleManagerTest {
             val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
             val date = LocalDate.of(2020, 11, 2)
 
-            val result = resourceBundleManager.getExposureNotificationGuidance(date)
+            val result = resourceBundleManager.getExposureNotificationGuidance(date, LocalDate.now())
             val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
 
             val formattedDate = date.plusDays(2).formatExposureDate(context)
@@ -123,12 +126,13 @@ class ResourceBundleManagerTest {
 
     @Test
     fun `getExposureNotificationGuidance replaces ExposureDateShort place holder`() = runBlocking {
+        val layout = listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
         val service = FakeResourceBundleCdnService(
             ResourceBundle(
                 mapOf("en" to mapOf("test_key" to "value with a {ExposureDateShort}")),
                 ResourceBundle.Guidance(
-                    5,
-                    listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                    listOf(ResourceBundle.Guidance.RelativeExposureDayLayout(null, null, layout)),
+                    emptyList()
                 )
             )
         )
@@ -136,7 +140,7 @@ class ResourceBundleManagerTest {
         val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
         val date = LocalDate.of(2020, 11, 2)
 
-        val result = resourceBundleManager.getExposureNotificationGuidance(date)
+        val result = resourceBundleManager.getExposureNotificationGuidance(date, LocalDate.now())
         val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
 
         val formattedDate = date.formatExposureDateShort(context)
@@ -148,12 +152,13 @@ class ResourceBundleManagerTest {
     @Test
     fun `getExposureNotificationGuidance replaces ExposureDateShort place holder with offset`() =
         runBlocking {
+            val layout = listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
             val service = FakeResourceBundleCdnService(
                 ResourceBundle(
                     mapOf("en" to mapOf("test_key" to "value with a {ExposureDateShort+5}")),
                     ResourceBundle.Guidance(
-                        5,
-                        listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                        listOf(ResourceBundle.Guidance.RelativeExposureDayLayout(null, null, layout)),
+                        emptyList()
                     )
                 )
             )
@@ -161,7 +166,7 @@ class ResourceBundleManagerTest {
             val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
             val date = LocalDate.of(2020, 11, 2)
 
-            val result = resourceBundleManager.getExposureNotificationGuidance(date)
+            val result = resourceBundleManager.getExposureNotificationGuidance(date, LocalDate.now())
             val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
 
             val formattedDate = date.plusDays(5).formatExposureDateShort(context)
@@ -172,12 +177,13 @@ class ResourceBundleManagerTest {
 
     @Test
     fun `getExposureNotificationGuidance replaces ExposureDaysAgo place holder`() = runBlocking {
+        val layout = listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
         val service = FakeResourceBundleCdnService(
             ResourceBundle(
                 mapOf("en" to mapOf("test_key" to "value with a {ExposureDaysAgo}")),
                 ResourceBundle.Guidance(
-                    5,
-                    listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                    listOf(ResourceBundle.Guidance.RelativeExposureDayLayout(null, null, layout)),
+                    emptyList()
                 )
             )
         )
@@ -189,7 +195,7 @@ class ResourceBundleManagerTest {
         val resourceBundleManager = ResourceBundleManager(context, service, clock, false)
         val date = LocalDate.of(2020, 11, 2)
 
-        val result = resourceBundleManager.getExposureNotificationGuidance(date)
+        val result = resourceBundleManager.getExposureNotificationGuidance(date, LocalDate.now())
         val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
 
         val daysAgo = date.formatDaysSince(context, clock)
@@ -199,14 +205,15 @@ class ResourceBundleManagerTest {
     }
 
     @Test
-    fun `getExposureNotificationGuidance replaces StayHomeUntilDate place holder based on quarantine days`() =
+    fun `getExposureNotificationGuidance replaces NotificationReceivedDate place holder`() =
         runBlocking {
+            val layout = listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
             val service = FakeResourceBundleCdnService(
                 ResourceBundle(
-                    mapOf("en" to mapOf("test_key" to "value with a {StayHomeUntilDate}")),
+                    mapOf("en" to mapOf("test_key" to "value with a {NotificationReceivedDate}")),
                     ResourceBundle.Guidance(
-                        5,
-                        listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                        listOf(ResourceBundle.Guidance.RelativeExposureDayLayout(null, null, layout)),
+                        emptyList()
                     )
                 )
             )
@@ -214,30 +221,31 @@ class ResourceBundleManagerTest {
             val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
             val date = LocalDate.of(2020, 11, 2)
 
-            val result = resourceBundleManager.getExposureNotificationGuidance(date)
+            val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now(), date)
             val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
 
-            val stayAtHomeDate = date.plusDays(5).formatExposureDateShort(context)
+            val notificationReceivedDate = date.formatExposureDate(context)
 
-            assertEquals("value with a $stayAtHomeDate", paragraph.title)
-            assertEquals("value with a $stayAtHomeDate", paragraph.body)
+            assertEquals("value with a $notificationReceivedDate", paragraph.title)
+            assertEquals("value with a $notificationReceivedDate", paragraph.body)
         }
 
     @Test
     fun `getExposureNotificationGuidance with missing keys falls back to key`() = runBlocking {
+        val layout = listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "missing_key"))
         val service = FakeResourceBundleCdnService(
             ResourceBundle(
                 mapOf("en" to mapOf("test_key" to "a test value")),
                 ResourceBundle.Guidance(
-                    5,
-                    listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "missing_key"))
+                    listOf(ResourceBundle.Guidance.RelativeExposureDayLayout(null, null, layout)),
+                    emptyList()
                 )
             )
         )
 
         val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
 
-        val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now())
+        val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now(), LocalDate.now())
         val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
 
         assertEquals("a test value", paragraph.title)
@@ -247,6 +255,7 @@ class ResourceBundleManagerTest {
     @Test
     @Config(qualifiers = "nl")
     fun `getExposureNotificationGuidance with uses correct locale`() = runBlocking {
+        val layout = listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
         val service = FakeResourceBundleCdnService(
             ResourceBundle(
                 mapOf(
@@ -254,15 +263,15 @@ class ResourceBundleManagerTest {
                     "nl" to mapOf("test_key" to "test waarde")
                 ),
                 ResourceBundle.Guidance(
-                    5,
-                    listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                    listOf(ResourceBundle.Guidance.RelativeExposureDayLayout(null, null, layout)),
+                    emptyList()
                 )
             )
         )
 
         val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
 
-        val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now())
+        val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now(), LocalDate.now())
         val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
 
         assertEquals("test waarde", paragraph.title)
@@ -273,6 +282,7 @@ class ResourceBundleManagerTest {
     @Config(qualifiers = "ru") // we don't support russian
     fun `getExposureNotificationGuidance with unsupported app language falls back to en`() =
         runBlocking {
+            val layout = listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
             // even though the bundle contains Russian, the app should fallback to English
             val service = FakeResourceBundleCdnService(
                 ResourceBundle(
@@ -281,15 +291,15 @@ class ResourceBundleManagerTest {
                         "ru" to mapOf("test_key" to "russian value")
                     ),
                     ResourceBundle.Guidance(
-                        5,
-                        listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                        listOf(ResourceBundle.Guidance.RelativeExposureDayLayout(null, null, layout)),
+                        emptyList()
                     )
                 )
             )
 
             val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
 
-            val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now())
+            val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now(), LocalDate.now())
             val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
 
             assertEquals("a test value", paragraph.title)
@@ -300,20 +310,20 @@ class ResourceBundleManagerTest {
     @Config(qualifiers = "nl")
     fun `getExposureNotificationGuidance with missing app language falls back to en`() =
         runBlocking {
-            // even though the bundle contains Russian, the app should fallback to English
+            val layout = listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
             val service = FakeResourceBundleCdnService(
                 ResourceBundle(
                     mapOf("en" to mapOf("test_key" to "a test value")),
                     ResourceBundle.Guidance(
-                        5,
-                        listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "test_key"))
+                        listOf(ResourceBundle.Guidance.RelativeExposureDayLayout(null, null, layout)),
+                        emptyList()
                     )
                 )
             )
 
             val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
 
-            val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now())
+            val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now(), LocalDate.now())
             val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
 
             assertEquals("a test value", paragraph.title)
@@ -324,7 +334,7 @@ class ResourceBundleManagerTest {
     @Config(qualifiers = "nl")
     fun `getExposureNotificationGuidance with missing key in app language falls back to en value`() =
         runBlocking {
-            // even though the bundle contains Russian, the app should fallback to English
+            val layout = listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "second_key"))
             val service = FakeResourceBundleCdnService(
                 ResourceBundle(
                     mapOf(
@@ -335,20 +345,192 @@ class ResourceBundleManagerTest {
                         "nl" to mapOf("test_key" to "test waarde")
                     ),
                     ResourceBundle.Guidance(
-                        5,
-                        listOf(ResourceBundle.Guidance.Element.Paragraph("test_key", "second_key"))
+                        listOf(ResourceBundle.Guidance.RelativeExposureDayLayout(null, null, layout)),
+                        emptyList()
                     )
                 )
             )
 
             val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
 
-            val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now())
+            val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now(), LocalDate.now())
             val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
 
             assertEquals("test waarde", paragraph.title)
             assertEquals("second value", paragraph.body)
         }
+
+    @Test
+    fun `getExposureNotificationGuidance fallback to non relative exposure day layout when notificationReceivedDate is missing`() = runBlocking {
+        val service = FakeResourceBundleCdnService(
+            ResourceBundle(
+                mapOf(
+                    "en" to mapOf(
+                        "relative_layout_key" to "incorrect layout",
+                        "non_relative_layout_key" to "correct layout"
+                    )
+                ),
+                ResourceBundle.Guidance(
+                    listOf(
+                        ResourceBundle.Guidance.RelativeExposureDayLayout(
+                            null, null,
+                            listOf(ResourceBundle.Guidance.Element.Paragraph("relative_layout_key", "relative_layout_key"))
+                        )
+                    ),
+                    listOf(ResourceBundle.Guidance.Element.Paragraph("non_relative_layout_key", "non_relative_layout_key"))
+                )
+            )
+        )
+
+        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
+
+        val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now(), null)
+
+        val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
+        assertEquals(
+            "correct layout",
+            paragraph.title
+        )
+        assertEquals(
+            "correct layout",
+            paragraph.body
+        )
+    }
+
+    @Test
+    fun `getExposureNotificationGuidance get correct layout based on lower and upper boundary`() = runBlocking {
+        val service = FakeResourceBundleCdnService(
+            ResourceBundle(
+                mapOf(
+                    "en" to mapOf(
+                        "incorrect_key" to "incorrect layout",
+                        "correct_key" to "correct layout"
+                    )
+                ),
+                ResourceBundle.Guidance(
+                    listOf(
+                        ResourceBundle.Guidance.RelativeExposureDayLayout(
+                            null, 3,
+                            listOf(ResourceBundle.Guidance.Element.Paragraph("incorrect_key", "incorrect_key"))
+                        ),
+                        ResourceBundle.Guidance.RelativeExposureDayLayout(
+                            4, 10,
+                            listOf(ResourceBundle.Guidance.Element.Paragraph("correct_key", "correct_key"))
+                        ),
+                        ResourceBundle.Guidance.RelativeExposureDayLayout(
+                            11, null,
+                            listOf(ResourceBundle.Guidance.Element.Paragraph("incorrect_key", "incorrect_key"))
+                        ),
+                    ),
+                    emptyList()
+                )
+            )
+        )
+
+        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
+
+        val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now().minusDays(4), LocalDate.now())
+
+        val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
+        assertEquals(
+            "correct layout",
+            paragraph.title
+        )
+        assertEquals(
+            "correct layout",
+            paragraph.body
+        )
+    }
+
+    @Test
+    fun `getExposureNotificationGuidance get correct layout when only lower boundary is set`() = runBlocking {
+        val service = FakeResourceBundleCdnService(
+            ResourceBundle(
+                mapOf(
+                    "en" to mapOf(
+                        "incorrect_key" to "incorrect layout",
+                        "correct_key" to "correct layout"
+                    )
+                ),
+                ResourceBundle.Guidance(
+                    listOf(
+                        ResourceBundle.Guidance.RelativeExposureDayLayout(
+                            null, 3,
+                            listOf(ResourceBundle.Guidance.Element.Paragraph("incorrect_key", "incorrect_key"))
+                        ),
+                        ResourceBundle.Guidance.RelativeExposureDayLayout(
+                            4, 10,
+                            listOf(ResourceBundle.Guidance.Element.Paragraph("icorrect_key", "icorrect_key"))
+                        ),
+                        ResourceBundle.Guidance.RelativeExposureDayLayout(
+                            11, null,
+                            listOf(ResourceBundle.Guidance.Element.Paragraph("correct_key", "correct_key"))
+                        ),
+                    ),
+                    emptyList()
+                )
+            )
+        )
+
+        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
+
+        val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now().minusDays(12), LocalDate.now())
+
+        val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
+        assertEquals(
+            "correct layout",
+            paragraph.title
+        )
+        assertEquals(
+            "correct layout",
+            paragraph.body
+        )
+    }
+
+    @Test
+    fun `getExposureNotificationGuidance get correct layout when only upper boundary is set`() = runBlocking {
+        val service = FakeResourceBundleCdnService(
+            ResourceBundle(
+                mapOf(
+                    "en" to mapOf(
+                        "incorrect_key" to "incorrect layout",
+                        "correct_key" to "correct layout"
+                    )
+                ),
+                ResourceBundle.Guidance(
+                    listOf(
+                        ResourceBundle.Guidance.RelativeExposureDayLayout(
+                            null, 3,
+                            listOf(ResourceBundle.Guidance.Element.Paragraph("correct_key", "correct_key"))
+                        ),
+                        ResourceBundle.Guidance.RelativeExposureDayLayout(
+                            4, 10,
+                            listOf(ResourceBundle.Guidance.Element.Paragraph("icorrect_key", "icorrect_key"))
+                        ),
+                        ResourceBundle.Guidance.RelativeExposureDayLayout(
+                            11, null,
+                            listOf(ResourceBundle.Guidance.Element.Paragraph("incorrect_key", "incorrect_key"))
+                        ),
+                    ),
+                    emptyList()
+                )
+            )
+        )
+
+        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
+
+        val result = resourceBundleManager.getExposureNotificationGuidance(LocalDate.now(), LocalDate.now())
+
+        val paragraph = result[0] as ResourceBundle.Guidance.Element.Paragraph
+        assertEquals(
+            "correct layout",
+            paragraph.title
+        )
+        assertEquals(
+            "correct layout",
+            paragraph.body
+        )
+    }
 
     private class FakeResourceBundleCdnService(val resourceBundle: ResourceBundle) : CdnService {
         override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
@@ -359,7 +541,10 @@ class ResourceBundleManagerTest {
             return Manifest(emptyList(), "", "", "rb")
         }
 
-        override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+        override suspend fun getRiskCalculationParameters(
+            id: String,
+            cacheStrategy: CacheStrategy?
+        ): RiskCalculationParameters {
             throw IllegalStateException()
         }
 

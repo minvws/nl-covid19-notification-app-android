@@ -11,6 +11,7 @@ import android.app.Application
 interface BeagleHelper {
 
     val useDefaultGuidance: Boolean
+    val testExposureDaysAgo: Int
 
     fun initialize(application: Application)
 }

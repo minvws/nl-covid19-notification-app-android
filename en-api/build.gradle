@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply from: rootProject.file("jacoco.gradle")
 
 android {
 
@@ -42,6 +44,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-tasks:$play_services_tasks_version"
 
     implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation "androidx.core:core-ktx:$androidx_core_version"
 
     testImplementation "junit:junit:$junit_version"
     testImplementation "androidx.test:core:$androidx_test_core_version"

@@ -34,7 +34,11 @@ class PostNotificationFragment : BaseFragment(R.layout.fragment_list_with_button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.setExposureDate(LocalDate.ofEpochDay(args.epochDayOfLastExposure))
+
+        viewModel.setExposureNotificationGuidanceArgs(
+            LocalDate.parse(args.lastExposureLocalDateString),
+            LocalDate.parse(args.notificationReceivedLocalDateString)
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

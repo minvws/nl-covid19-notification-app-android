@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="faq_notification_paragraph_1">Veți primi notificări după ce ați fost expus unui risc mare de infectare. Acest lucru se întâmplă dacă ați fost cel puțin 15 minute aproape de cineva care ulterior se dovedește a fi infectat cu coronavirus. Bineînțeles, notificările pot fi trimise doar dacă și acea persoană folosește aplicația. \n\nPrimirea unei notificări depinde de puterea semnalului bluetooth și de durata contactului. \n\nA trecut cineva cu bicicleta pe lângă dvs.? Atunci nu veți primi o notificare. Ați fost aproape unul de altul, deci semnalul Bluetooth a fost puternic, dar durata contactului a fost așa de scurtă încât riscul de infectare este foarte mic. \n\nAți stat aproape de cineva în tren sau la birou? Atunci puteți primi notificări. Semnalul Bluetooth a fost puternic și ați fost aproape unul de celălalt mult timp.</string>
+    <string name="faq_notification_paragraph_1">Veți primi notificări după ce ați fost expus unui risc mare de infectare. Acest lucru se întâmplă dacă ați fost cel puțin 15 minute aproape de o persoană infectată cu coronavirus. Poate fi vorba de una sau mai multe persoane. De asemenea, cealaltă persoană trebuie și ea să folosească aplicația. \n\nPrimirea unei notificări depinde de puterea semnalului bluetooth și de durata contactului. \n\nA trecut cineva cu bicicleta pe lângă dvs.? Atunci nu veți primi o notificare ulterior. Ați fost aproape unul de altul, deci semnalul Bluetooth a fost puternic, dar durata contactului a fost așa de scurtă încât riscul de infectare este foarte mic. \n\nAți stat aproape de cineva în tren sau la birou? Atunci este posibil să primiți notificări. Semnalul Bluetooth a fost puternic și ați fost unul în apropierea celuilalt pentru un timp mai lung.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">ro</string>
@@ -62,7 +62,7 @@
     <string name="post_notification_button">Solicitați testul pentru coronavirus</string>
     <string name="generic_notification_toolbar_title">Primire de notificare</string>
     <string name="generic_notification_header_1">Cum recunosc o notificare?</string>
-    <string name="generic_notification_paragraph_2">Aplicația trimite o notificare dacă ați fost cel puțin 15 minute în apropierea unei persoane care se dovedește ulterior a fi infectată cu coronavirus.</string>
+    <string name="generic_notification_paragraph_2">Aplicația trimite o notificare dacă într-o zi ați fost cel puțin 15 minute în apropierea unei persoane infectată cu coronavirus. Poate fi vorba de una sau mai multe persoane.</string>
     <string name="generic_notification_paragraph_4">Mesajul apare la notificări, la fel ca mesajele altor aplicații. Mesajul are simbolul aplicației CoronaMelder.\n\nAți primit o notificare? Atunci deschideți CoronaMelder. Veți citi în aplicație ce puteți face mai departe.</string>
     <string name="generic_notification_alt_text_6">Cerc roșu cu clopoțel de alarmă care indică faptul că o acțiune este  necesară acum</string>
     <string name="generic_notification_caption_7">Exemplu: așa arată aplicația în momentul în care ați primit o notificare</string>
@@ -305,4 +305,7 @@
     <string name="status_error_bluetooth"><![CDATA[Semnalul Bluetooth este dezactivat. Din această cauză aplicația <b>nu</b> ține evidența noilor întâlniri. Aplicația controlează <b>încă</b> dacă persoanele  întâlnite mai devreme se dovedesc a fi infectate cu coronavirus.]]></string>
     <string name="status_error_bluetooth_card">Semnalul Bluetooth este dezactivat. Aplicația nu poate ține evidența întâlnirilor.</string>
     <string name="status_error_bluetooth_action">Activare Bluetooth</string>
+    <string name="status_error_location"><![CDATA[Setările de locație sunt dezactivate. Din această cauză aplicația <b>nu</b> ține evidența întâlnirilor. Aplicația <b>continuă</b> să verifice dacă persoanele întâlnite anterior se dovedesc a fi infectate cu coronavirus.]]></string>
+    <string name="status_error_location_card">Setările de locație sunt dezactivate. Aplicația nu poate ține evidența noilor întâlniri.</string>
+    <string name="status_error_location_action">Activare locație.</string>
 </resources>

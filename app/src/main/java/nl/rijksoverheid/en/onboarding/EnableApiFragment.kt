@@ -6,10 +6,9 @@
  */
 package nl.rijksoverheid.en.onboarding
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -22,14 +21,14 @@ import nl.rijksoverheid.en.databinding.FragmentEnableApiBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
-import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
-import timber.log.Timber
-
-private const val RC_REQUEST_DISABLE_BATTERY_OPTIMIZATIONS = 1
+import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 
 class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
     private val onboardingViewModel: OnboardingViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
+
+    private val disableBatteryOptimizationsResultRegistration =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { onboardingViewModel.continueOnboarding() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +56,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
 
         viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
-                requestDisableBatteryOptimizationsAndContinue()
+                disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest { onboardingViewModel.continueOnboarding() }
             }
         }
 
@@ -69,7 +68,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
                     SkipConsentConfirmationDialogFragment.SKIP_CONSENT_RESULT
                 )?.observe(viewLifecycleOwner) { skip ->
                     if (skip) {
-                        requestDisableBatteryOptimizationsAndContinue()
+                        disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest { onboardingViewModel.continueOnboarding() }
                     } else {
                         viewModel.requestEnableNotificationsForcingConsent()
                     }
@@ -88,22 +87,5 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
                 )
             }
         )
-    }
-
-    private fun requestDisableBatteryOptimizationsAndContinue() {
-        try {
-            requestDisableBatteryOptimizations(RC_REQUEST_DISABLE_BATTERY_OPTIMIZATIONS)
-        } catch (ex: ActivityNotFoundException) {
-            // ignore
-            Timber.e(ex)
-            onboardingViewModel.continueOnboarding()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_REQUEST_DISABLE_BATTERY_OPTIMIZATIONS) {
-            onboardingViewModel.continueOnboarding()
-        }
     }
 }

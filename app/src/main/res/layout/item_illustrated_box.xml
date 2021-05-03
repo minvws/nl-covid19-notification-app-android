@@ -19,13 +19,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         app:markAsButtonForAccessibility="@{true}"
-        android:foreground="?attr/selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:background="@drawable/message_box_background"
+        android:background="@drawable/selectable_message_box_background"
         android:backgroundTint="@{viewState.backgroundTint}"
         tools:backgroundTint="@color/gray_lighter">
 

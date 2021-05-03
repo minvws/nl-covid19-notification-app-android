@@ -17,6 +17,7 @@ import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatDuration
 import nl.rijksoverheid.en.util.formatExposureDate
+import nl.rijksoverheid.en.util.fromHtmlWithCustomReplacements
 import java.time.LocalDateTime
 
 class StatusHeaderItem(
@@ -54,6 +55,64 @@ class StatusHeaderItem(
                 override fun getDescription(context: Context) =
                     context.getString(R.string.status_no_exposure_detected_description)
             }
+        StatusViewModel.HeaderState.BluetoothDisabled ->
+            object : HeaderViewState(
+                R.drawable.gradient_status_disabled,
+                R.string.cd_status_disabled,
+                R.string.status_partly_active_headline,
+                animatedIcon = R.raw.status_inactive,
+                enableActionLabel = R.string.status_error_bluetooth_action,
+                enableAction = primaryAction
+            ) {
+                override fun getDescription(context: Context) =
+                    fromHtmlWithCustomReplacements(context, context.getString(R.string.status_error_bluetooth))
+            }
+        StatusViewModel.HeaderState.LocationDisabled ->
+            object : HeaderViewState(
+                R.drawable.gradient_status_disabled,
+                R.string.cd_status_disabled,
+                R.string.status_partly_active_headline,
+                animatedIcon = R.raw.status_inactive,
+                enableActionLabel = R.string.status_error_location_action,
+                enableAction = primaryAction
+            ) {
+                override fun getDescription(context: Context) =
+                    fromHtmlWithCustomReplacements(context, context.getString(R.string.status_error_location))
+            }
+        StatusViewModel.HeaderState.Disabled ->
+            object : HeaderViewState(
+                R.drawable.gradient_status_disabled,
+                R.string.cd_status_disabled,
+                R.string.status_disabled_headline,
+                animatedIcon = R.raw.status_inactive,
+                enableActionLabel = R.string.status_en_api_disabled_enable,
+                enableAction = primaryAction
+            ) {
+                override fun getDescription(context: Context) =
+                    context.getString(R.string.status_en_api_disabled_description, context.getString(R.string.app_name))
+            }
+        StatusViewModel.HeaderState.SyncIssues ->
+            object : HeaderViewState(
+                R.drawable.gradient_status_disabled,
+                R.string.status_partly_active_headline,
+                R.string.status_partly_active_headline,
+                animatedIcon = R.raw.status_inactive,
+                enableActionLabel = R.string.status_error_action_sync_issues,
+                enableAction = primaryAction
+            ) {
+                override fun getDescription(context: Context) = context.getString(R.string.status_error_sync_issues)
+            }
+        StatusViewModel.HeaderState.SyncIssuesWifiOnly ->
+            object : HeaderViewState(
+                R.drawable.gradient_status_disabled,
+                R.string.status_partly_active_headline,
+                R.string.status_partly_active_headline,
+                animatedIcon = R.raw.status_inactive,
+                enableActionLabel = R.string.status_error_action_disable_battery_optimisation,
+                enableAction = primaryAction
+            ) {
+                override fun getDescription(context: Context) = fromHtmlWithCustomReplacements(context, context.getString(R.string.status_error_sync_issues_wifi_only))
+            }
         is StatusViewModel.HeaderState.Paused ->
             object : HeaderViewState(
                 R.drawable.gradient_status_paused,
@@ -68,29 +127,6 @@ class StatusHeaderItem(
             ) {
                 override fun getDescription(context: Context) =
                     headerState.pauseState.formatDuration(context)
-            }
-        is StatusViewModel.HeaderState.Disabled ->
-            object : HeaderViewState(
-                R.drawable.gradient_status_disabled,
-                R.string.cd_status_disabled,
-                R.string.status_disabled_headline,
-                animatedIcon = R.raw.status_inactive,
-                enableActionLabel = R.string.status_en_api_disabled_enable,
-                enableAction = primaryAction
-            ) {
-                override fun getDescription(context: Context) =
-                    context.getString(R.string.status_en_api_disabled_description, context.getString(R.string.app_name))
-            }
-        is StatusViewModel.HeaderState.SyncIssues ->
-            object : HeaderViewState(
-                R.drawable.gradient_status_disabled,
-                R.string.cd_status_disabled,
-                R.string.status_disabled_headline,
-                animatedIcon = R.raw.status_inactive,
-                enableActionLabel = R.string.status_error_action_sync_issues,
-                enableAction = primaryAction
-            ) {
-                override fun getDescription(context: Context) = context.getString(R.string.status_error_sync_issues)
             }
         is StatusViewModel.HeaderState.Exposed ->
             object : HeaderViewState(

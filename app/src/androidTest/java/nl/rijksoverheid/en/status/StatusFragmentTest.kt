@@ -61,7 +61,7 @@ import java.time.temporal.TemporalUnit
 @RunWith(AndroidJUnit4::class)
 class StatusFragmentTest : BaseInstrumentationTest() {
 
-    private lateinit var preferencesFactory: suspend () -> SharedPreferences
+    private var preferencesFactory: suspend () -> SharedPreferences = { notificationsPreferences }
 
     private val clock = object : Clock() {
         var instant = Instant.parse("2020-06-20T10:15:30.00Z")
@@ -89,7 +89,10 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
             Manifest(emptyList(), "", "appConfig")
 
-        override suspend fun getRiskCalculationParameters(id: String): RiskCalculationParameters {
+        override suspend fun getRiskCalculationParameters(
+            id: String,
+            cacheStrategy: CacheStrategy?
+        ): RiskCalculationParameters {
             throw NotImplementedError()
         }
 
@@ -104,50 +107,62 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         }
     }
 
-    private val repository = ExposureNotificationsRepository(
-        context,
-        object : FakeExposureNotificationApi() {
-            override suspend fun getStatus(): StatusResult = StatusResult.Enabled
-        },
-        service,
-        AsyncSharedPreferences { preferencesFactory() },
-        object : BackgroundWorkScheduler {
-            override fun schedule(intervalMinutes: Int) {
-            }
+    private val repository by lazy {
+        ExposureNotificationsRepository(
+            context,
+            object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = StatusResult.Enabled
+                override fun deviceSupportsLocationlessScanning(): Boolean = true
+            },
+            service,
+            AsyncSharedPreferences { preferencesFactory() },
+            object : BackgroundWorkScheduler {
+                override fun schedule(intervalMinutes: Int) {
+                }
 
-            override fun cancel() {
-            }
-        },
-        AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)) {},
-        StatusCache(notificationsPreferences),
-        AppConfigManager(service),
-        clock = clock
-    )
-    private val settingsRepository = SettingsRepository(
-        context, Settings(context, settingsPreferences)
-    )
+                override fun cancel() {
+                }
+            },
+            AppLifecycleManager(
+                context,
+                configPreferences,
+                AppUpdateManagerFactory.create(context)
+            ) {},
+            StatusCache(notificationsPreferences),
+            AppConfigManager(service),
+            clock = clock
+        )
+    }
+    private val settingsRepository by lazy {
+        SettingsRepository(
+            context, Settings(context, settingsPreferences)
+        )
+    }
 
-    private val statusViewModel = StatusViewModel(
-        OnboardingRepository(
-            sharedPreferences = configPreferences,
-            googlePlayServicesUpToDateChecker = { true }
-        ),
-        repository,
-        NotificationsRepository(context, clock),
-        settingsRepository,
-        createAppConfigManager(context),
-        clock
-    )
-    private val viewModel = ExposureNotificationsViewModel(repository, settingsRepository)
-    private val activityViewModelFactory = object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return viewModel as T
+    private val statusViewModel by lazy {
+        StatusViewModel(
+            OnboardingRepository(
+                sharedPreferences = configPreferences,
+                googlePlayServicesUpToDateChecker = { true }
+            ),
+            repository,
+            NotificationsRepository(context, clock),
+            settingsRepository,
+            createAppConfigManager(context),
+            clock
+        )
+    }
+    private val viewModel by lazy { ExposureNotificationsViewModel(repository, settingsRepository) }
+    private val activityViewModelFactory by lazy {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return viewModel as T
+            }
         }
     }
 
     @Before
     fun setup() {
-        preferencesFactory = { notificationsPreferences }
         notificationsPreferences.edit {
             clear()
         }
@@ -179,7 +194,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             activityViewModelFactory
         ) {
             onView(withId(R.id.status_headline))
-                .check(matches(withText(R.string.status_disabled_headline)))
+                .check(matches(withText(R.string.status_partly_active_headline)))
 
             onView(withId(R.id.status_description))
                 .check(matches(withText(R.string.status_error_sync_issues)))

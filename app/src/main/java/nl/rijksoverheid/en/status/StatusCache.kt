@@ -13,12 +13,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
-private const val KEY_CACHED_STATUS = "cached_status"
+private const val KEY_CACHED_STATUS_NAME = "cached_status_name"
 
 open class StatusCache(private val preferences: SharedPreferences) {
 
     fun updateCachedStatus(cachedStatus: CachedStatus) = preferences.edit {
-        putInt(KEY_CACHED_STATUS, cachedStatus.ordinal)
+        putString(KEY_CACHED_STATUS_NAME, cachedStatus.name)
     }
 
     fun getCachedStatus(): Flow<CachedStatus> = callbackFlow<CachedStatus> {
@@ -27,7 +27,7 @@ open class StatusCache(private val preferences: SharedPreferences) {
         // Emit cached value whenever it changes
         val listener =
             SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-                if (key == KEY_CACHED_STATUS) {
+                if (key == KEY_CACHED_STATUS_NAME) {
                     offer(getCachedStatusFromPreferences(sharedPreferences))
                 }
             }
@@ -39,9 +39,15 @@ open class StatusCache(private val preferences: SharedPreferences) {
     }.distinctUntilChanged()
 
     private fun getCachedStatusFromPreferences(preferences: SharedPreferences): CachedStatus {
-        val cachedStatus = preferences.getInt(KEY_CACHED_STATUS, CachedStatus.NONE.ordinal)
-        return CachedStatus.values()[cachedStatus]
+        val cachedStatusName = preferences.getString(KEY_CACHED_STATUS_NAME, CachedStatus.NONE.name)
+        return CachedStatus.valueOf(cachedStatusName ?: CachedStatus.NONE.name)
     }
 
-    enum class CachedStatus { ENABLED, INVALID_PRECONDITIONS, DISABLED, NONE }
+    enum class CachedStatus {
+        ENABLED,
+        BLUETOOTH_DISABLED,
+        LOCATION_PRECONDITION_NOT_SATISFIED,
+        DISABLED,
+        NONE
+    }
 }

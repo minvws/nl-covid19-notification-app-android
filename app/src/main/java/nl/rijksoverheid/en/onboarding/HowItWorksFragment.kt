@@ -6,10 +6,9 @@
  */
 package nl.rijksoverheid.en.onboarding
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -26,16 +25,16 @@ import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
-import nl.rijksoverheid.en.util.requestDisableBatteryOptimizations
-import timber.log.Timber
-
-private const val RC_DISABLE_BATTERY_OPTIMIZATIONS = 1
+import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 
 class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
     private val onboardingViewModel: OnboardingViewModel by viewModels()
 
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(HowItWorksSection()) }
+
+    private val disableBatteryOptimizationsResultRegistration =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { onboardingViewModel.continueOnboarding() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +77,7 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
 
         viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
-                requestDisableBatteryOptimizationsAndContinue()
+                disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest { onboardingViewModel.continueOnboarding() }
             }
         }
 
@@ -93,22 +92,5 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
                 )
             }
         )
-    }
-
-    private fun requestDisableBatteryOptimizationsAndContinue() {
-        try {
-            requestDisableBatteryOptimizations(RC_DISABLE_BATTERY_OPTIMIZATIONS)
-        } catch (ex: ActivityNotFoundException) {
-            // ignore
-            Timber.e(ex)
-            onboardingViewModel.continueOnboarding()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_DISABLE_BATTERY_OPTIMIZATIONS) {
-            onboardingViewModel.continueOnboarding()
-        }
     }
 }

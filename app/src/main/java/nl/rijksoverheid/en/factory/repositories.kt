@@ -20,10 +20,11 @@ import nl.rijksoverheid.en.api.LabTestService
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.config.AppConfigManager
-import nl.rijksoverheid.en.enapi.NearbyExposureNotificationApi
+import nl.rijksoverheid.en.enapi.nearby.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.job.CheckConnectionWorker
 import nl.rijksoverheid.en.job.DecoyWorker
+import nl.rijksoverheid.en.job.ExposureCleanupWorker
 import nl.rijksoverheid.en.job.ProcessManifestWorker
 import nl.rijksoverheid.en.job.ScheduleDecoyWorker
 import nl.rijksoverheid.en.job.UploadDiagnosisKeysJob
@@ -55,7 +56,10 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
 
     return ExposureNotificationsRepository(
         context,
-        NearbyExposureNotificationApi(context, Nearby.getExposureNotificationClient(context)),
+        NearbyExposureNotificationApi(
+            context,
+            Nearby.getExposureNotificationClient(context)
+        ),
         service,
         createSecurePreferences(context),
         object : BackgroundWorkScheduler {
@@ -63,6 +67,7 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
                 ProcessManifestWorker.queue(context, intervalMinutes)
                 CheckConnectionWorker.queue(context)
                 ScheduleDecoyWorker.queue(context)
+                ExposureCleanupWorker.queue(context)
             }
 
             override fun cancel() {

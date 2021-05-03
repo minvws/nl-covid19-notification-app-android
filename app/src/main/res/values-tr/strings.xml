@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="faq_notification_paragraph_1">Ekstra bir enfeksiyon riskine maruz kaldıktan sonra bir bildirim alırsınız. Bunu en az 15 dakika boyunca Korona olduğu ortaya çıkan birine yakın olduğunuz durumda olur. Ve tabii ki ancak bu kişi de uygulamayı kullanıyorsa. \n\nBildirim alıp almayacağınız Bluetooth sinyalinin gücüne ve iletişim sürenize bağlıdır.\n\nBirisi sokakta bisikletle yanınızdan mı geçti? O zaman sonrasında size bildirim gelmez. Birbirine çok yakındınız, Bluetooth sinyali onun için güçlüydü. Ancak temas o kadar kısa sürdü ki, daha fazla enfeksiyon riski oluşmadı.\n\nTrende ya da ofiste birinin yakınında mıydınız? O zaman sonrasında bir bildirim alabilirsiniz. Bluetooth sinyali yeterince güçlüydü ve uzun süre birbirinize yakındınız.</string>
+    <string name="faq_notification_paragraph_1">Ekstra bir enfeksiyon riskine maruz kaldıktan sonra bir bildirim alırsınız. Bu en az 15 dakika boyunca Korona olduğu sonradan ortaya çıkan birine veya birden fazla kişiye yakın olduğunuz durumda olur. Bu bir kişi olabilir, aynı zamanda birkaç kişi de olabilir.Ve tabii ki ancak bu kişi de uygulamayı kullanıyorsa.\n\nBildirim alıp almayacağınız Bluetooth sinyalinin gücüne ve iletişim sürenize bağlıdır.\n\nBirisi sokakta bisikletle yanınızdan mı geçti? O zaman sonrasında size bildirim gelmez. Birbirine çok yakındınız, Bluetooth sinyali onun için güçlüydü. Ancak temas o kadar kısa sürdü ki, daha fazla enfeksiyon riski oluşmadı.\n\nTrende ya da ofiste birinin yakınında mıydınız? O zaman sonrasında bir bildirim alabilirsiniz. Bluetooth sinyali yeterince güçlüydü ve uzun süre birbirinize yakındınız.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
     <string name="app_language">Türkçe</string>
@@ -62,7 +62,7 @@
     <string name="post_notification_button">Korona testi talep edin</string>
     <string name="generic_notification_toolbar_title">Bildirim almak</string>
     <string name="generic_notification_header_1">Bildirimi nasıl tanırım?</string>
-    <string name="generic_notification_paragraph_2">Daha sonra Korona olduğu ortaya çıkan birinin yakınında en az 15 dakika boyunca bulunduysanız, uygulama size bir bildirim gönderir.</string>
+    <string name="generic_notification_paragraph_2">Korona olduğu sonradan ortaya çıkan birinin veya birden fazla kişinin yakınında en az 15 dakika boyunca bulunduysanız, uygulama size bir bildirim gönderir.Bu bir kişi olabilir, aynı zamanda birkaç kişi de olabilir.Bu bir kişi olabilir, aynı zamanda birkaç kişi de olabilir.</string>
     <string name="generic_notification_paragraph_4">Bildirim, bildirimlerinizle birlikte görünecektir. Tıpkı diğer uygulamalardan gelen mesajlar gibi. Bildirimde CoronaMelder\'ın sembolü mevcuttur.\n\nBir bildirim mi aldınız? O zaman CoronaMelder\'ı açın. Sonrasında ne yapabileceğinizi orada okuyabilirsiniz.</string>
     <string name="generic_notification_alt_text_6">Hemen harekete geçmeniz gerektiğini gösteren alarm zili ile kırmızı ekran</string>
     <string name="generic_notification_caption_7">Örnek: Bildirim aldığınızda uygulama bu şekilde görünür</string>
@@ -300,4 +300,7 @@
     <string name="status_error_bluetooth"><![CDATA[Bluetooth\'unuz kapalı. Bu nedenle uygulama yeni karşılaşmaları <b>takip etmez</b>. Uygulama daha önce karşılaştığınız kişilerde Korona olup olmadığını hala <b>kontrol eder</b>.]]></string>
     <string name="status_error_bluetooth_card">Bluetooth\'unuz kapalı. Uygulama yeni karşılaşmaları takip edemez.</string>
     <string name="status_error_bluetooth_action">Bluetooth\'u açın</string>
+    <string name="status_error_location"><![CDATA[Konum ayarlarınız kapalı. Bu nedenle uygulama, yeni karşılaşmaları <b> tutmaz </b>. Uygulama, daha önce tanıştığınız kişilerde Korona olup olmadığını<b>kontrol eder</b>.]]></string>
+    <string name="status_error_location_card">Konum ayarlarınız kapalı. Uygulama yeni karşılaşmaları takip edemez.</string>
+    <string name="status_error_location_action">Konumu açmak</string>
 </resources>

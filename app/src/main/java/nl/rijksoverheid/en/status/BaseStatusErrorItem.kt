@@ -21,7 +21,7 @@ abstract class BaseStatusErrorItem : BaseBindableItem<ItemStatusErrorBinding>() 
         abstract fun getMessage(context: Context): String
     }
 
-    abstract val viewState: ErrorViewState
+    abstract val viewState: ErrorViewState?
 
     override fun bind(viewBinding: ItemStatusErrorBinding, position: Int) {
         viewBinding.viewState = viewState

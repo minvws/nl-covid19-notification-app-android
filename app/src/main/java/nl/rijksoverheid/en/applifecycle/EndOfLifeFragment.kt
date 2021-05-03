@@ -20,8 +20,10 @@ class EndOfLifeFragment : BaseFragment(R.layout.fragment_end_of_life) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentEndOfLifeBinding.bind(view)
         binding.next.setOnClickListener {
-            CustomTabsIntent.Builder().build()
-                .launchUrl(requireContext(), Uri.parse(getString(R.string.end_of_life_url)))
+            CustomTabsIntent.Builder().build().launchUrl(
+                requireContext(),
+                Uri.parse(getString(R.string.coronamelder_url, getString(R.string.app_language)))
+            )
         }
     }
 }

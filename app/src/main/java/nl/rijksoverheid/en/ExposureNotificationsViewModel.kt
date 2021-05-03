@@ -35,11 +35,19 @@ class ExposureNotificationsViewModel(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
+    init {
+        // Always clear previous exposures on app launch.
+        viewModelScope.launch {
+            repository.cleanupPreviouslyKnownExposures()
+        }
+    }
+
     val notificationState: LiveData<NotificationsState> = repository.getStatus().map { result ->
         when (result) {
-            is StatusResult.Enabled -> NotificationsState.Enabled
-            is StatusResult.Disabled -> NotificationsState.Disabled
-            is StatusResult.InvalidPreconditions -> NotificationsState.InvalidPreconditions
+            StatusResult.Enabled -> NotificationsState.Enabled
+            StatusResult.Disabled -> NotificationsState.Disabled
+            StatusResult.BluetoothDisabled -> NotificationsState.BluetoothDisabled
+            StatusResult.LocationPreconditionNotSatisfied -> NotificationsState.LocationPreconditionNotSatisfied
             is StatusResult.Unavailable -> NotificationsState.Unavailable
             is StatusResult.UnknownError -> {
                 Timber.d(result.exception, "Unknown error while getting status")
@@ -117,13 +125,15 @@ class ExposureNotificationsViewModel(
 
     fun rescheduleBackgroundJobs() {
         viewModelScope.launch {
+            if (repository.keyProcessingOverdue()) repository.resetNotificationsEnabledTimestamp()
             repository.rescheduleBackgroundJobs()
         }
     }
 
     sealed class NotificationsState {
         object Enabled : NotificationsState()
-        object InvalidPreconditions : NotificationsState()
+        object BluetoothDisabled : NotificationsState()
+        object LocationPreconditionNotSatisfied : NotificationsState()
         object Disabled : NotificationsState()
         object Unavailable : NotificationsState()
     }
