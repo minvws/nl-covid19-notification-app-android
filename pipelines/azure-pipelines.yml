@@ -37,7 +37,7 @@ stages:
               gradleOptions: $(GRADLE_JVM_OPTIONS)
               options: $(GRADLE_OPTIONS)
               publishJUnitResults: false
-              tasks: spotlessCheck
+              tasks: 'spotlessCheck --warning-mode=fail'
               steps:
           - task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
             displayName: 'Prepare analysis on SonarCloud'
@@ -53,7 +53,7 @@ stages:
             inputs:
               gradleWrapperFile: gradlew
               options: $(GRADLE_OPTIONS)
-              tasks: 'app:assemDevDebug app:assemDevDebugAndroidTest testDevDebugUnitTestCoverage testDebugUnitTestCoverage app:lintDevDebug'
+              tasks: 'app:assemDevDebug app:assemDevDebugAndroidTest testDevDebugUnitTestCoverage testDebugUnitTestCoverage app:lintDevDebug --warning-mode=fail'
               publishJUnitResults: true
               testResultsFiles: '**/TEST-*.xml'
               testRunTitle: Unit tests
