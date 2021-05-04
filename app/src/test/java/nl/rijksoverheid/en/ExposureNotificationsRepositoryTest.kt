@@ -850,31 +850,10 @@ class ExposureNotificationsRepositoryTest {
             }
         }
 
-        val fakeService = object : CdnService {
-            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
-                Manifest(emptyList(), "test-params", "")
-
-            override suspend fun getRiskCalculationParameters(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): RiskCalculationParameters {
-                return MOCK_RISK_CALCULATION_PARAMS
-            }
-
-            override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
-                throw NotImplementedError()
-
-            override suspend fun getResourceBundle(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): ResourceBundle {
-                throw java.lang.IllegalStateException()
-            }
-        }
+        val fakeService = createFakeCdnService(
+            getManifest = { Manifest(emptyList(), "test-params", "") },
+            getRiskCalculationParameters = { _, _ -> MOCK_RISK_CALCULATION_PARAMS }
+        )
 
         val repository = createRepository(
             api = api,
@@ -897,31 +876,10 @@ class ExposureNotificationsRepositoryTest {
             }
         }
 
-        val fakeService = object : CdnService {
-            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
-                Manifest(emptyList(), "test-params", "")
-
-            override suspend fun getRiskCalculationParameters(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): RiskCalculationParameters {
-                return MOCK_RISK_CALCULATION_PARAMS
-            }
-
-            override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
-                throw NotImplementedError()
-
-            override suspend fun getResourceBundle(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): ResourceBundle {
-                throw NotImplementedError()
-            }
-        }
+        val fakeService = createFakeCdnService(
+            getManifest = { Manifest(emptyList(), "test-params", "") },
+            getRiskCalculationParameters = { _, _ -> MOCK_RISK_CALCULATION_PARAMS }
+        )
 
         val repository = createRepository(
             api = api,
@@ -954,31 +912,10 @@ class ExposureNotificationsRepositoryTest {
             }
         }
 
-        val fakeService = object : CdnService {
-            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
-                Manifest(emptyList(), "test-params", "")
-
-            override suspend fun getRiskCalculationParameters(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): RiskCalculationParameters {
-                return MOCK_RISK_CALCULATION_PARAMS
-            }
-
-            override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
-                throw NotImplementedError()
-
-            override suspend fun getResourceBundle(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): ResourceBundle {
-                throw java.lang.IllegalStateException()
-            }
-        }
+        val fakeService = createFakeCdnService(
+            getManifest = { Manifest(emptyList(), "test-params", "") },
+            getRiskCalculationParameters = { _, _ -> MOCK_RISK_CALCULATION_PARAMS }
+        )
 
         val repository = createRepository(
             api = api,
@@ -995,31 +932,11 @@ class ExposureNotificationsRepositoryTest {
     fun `processManifest marks the timestamp of last successful time the keys have been processed and returns Success`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
-            val fakeService = object : CdnService {
-                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                    throw NotImplementedError()
-                }
 
-                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
-                    Manifest(emptyList(), "", "appConfig")
-
-                override suspend fun getRiskCalculationParameters(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): RiskCalculationParameters {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
-                    AppConfig(1, 5, 0.0)
-
-                override suspend fun getResourceBundle(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): ResourceBundle {
-                    throw java.lang.IllegalStateException()
-                }
-            }
+            val fakeService = createFakeCdnService(
+                getManifest = { Manifest(emptyList(), "", "appConfig") },
+                getAppConfig = { _, _ -> AppConfig(1, 5, 0.0) }
+            )
 
             val context = ApplicationProvider.getApplicationContext<Application>()
             val sharedPrefs = context.getSharedPreferences("repository_test", 0)
@@ -1048,35 +965,18 @@ class ExposureNotificationsRepositoryTest {
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
             val called = AtomicBoolean(false)
-            val fakeService = object : CdnService {
-                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                    throw NotImplementedError()
-                }
 
-                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
-                    Manifest(emptyList(), "", "appConfig", resourceBundleId = "bundle")
-
-                override suspend fun getRiskCalculationParameters(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): RiskCalculationParameters {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
-                    AppConfig(1, 5, 0.0)
-
-                override suspend fun getResourceBundle(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): ResourceBundle {
+            val fakeService = createFakeCdnService(
+                getManifest = { Manifest(emptyList(), "", "appConfig", resourceBundleId = "bundle") },
+                getAppConfig = { _, _ -> AppConfig(1, 5, 0.0) },
+                getResourceBundle = { _, _ ->
                     called.set(true)
-                    return ResourceBundle(
+                    ResourceBundle(
                         emptyMap(),
                         ResourceBundle.Guidance(emptyList(), emptyList())
                     )
                 }
-            }
+            )
 
             val context = ApplicationProvider.getApplicationContext<Application>()
             val sharedPrefs = context.getSharedPreferences("repository_test", 0)
@@ -1098,34 +998,15 @@ class ExposureNotificationsRepositoryTest {
     fun `processManifest stops processing when the app is disabled`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
-            val fakeService = object : CdnService {
-                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                    throw NotImplementedError()
-                }
 
-                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+            val fakeService = createFakeCdnService(
+                getManifest = {
                     Manifest(emptyList(), "riskParamId", "configId")
-
-                override suspend fun getRiskCalculationParameters(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): RiskCalculationParameters {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getAppConfig(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): AppConfig =
+                },
+                getAppConfig = { _, _ ->
                     AppConfig(1, 5, 0.0, coronaMelderDeactivated = "deactivated")
-
-                override suspend fun getResourceBundle(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): ResourceBundle {
-                    throw IllegalStateException()
-                }
-            }
+                },
+            )
 
             val context = ApplicationProvider.getApplicationContext<Application>()
             val sharedPrefs = context.getSharedPreferences("repository_test", 0)
@@ -1206,34 +1087,15 @@ class ExposureNotificationsRepositoryTest {
     fun `processManifest shows a notification when the app version is outdated and returns Success`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
-            val fakeService = object : CdnService {
-                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                    throw NotImplementedError()
-                }
 
-                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+            val fakeService = createFakeCdnService(
+                getManifest = {
                     Manifest(emptyList(), "riskParamId", "configId")
-
-                override suspend fun getRiskCalculationParameters(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): RiskCalculationParameters {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getAppConfig(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): AppConfig =
+                },
+                getAppConfig = { _, _ ->
                     AppConfig(BuildConfig.VERSION_CODE + 1, 5, 0.0)
-
-                override suspend fun getResourceBundle(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): ResourceBundle {
-                    throw java.lang.IllegalStateException()
-                }
-            }
+                },
+            )
 
             val context = ApplicationProvider.getApplicationContext<Application>()
 
@@ -1270,34 +1132,15 @@ class ExposureNotificationsRepositoryTest {
     fun `processManifest shows no notification when the app version is not outdated and returns Success`() =
         runBlocking {
             val dateTime = "2020-06-20T10:15:30.00Z"
-            val fakeService = object : CdnService {
-                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                    throw NotImplementedError()
-                }
 
-                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+            val fakeService = createFakeCdnService(
+                getManifest = {
                     Manifest(emptyList(), "riskParamId", "configId")
-
-                override suspend fun getRiskCalculationParameters(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): RiskCalculationParameters {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getAppConfig(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): AppConfig =
+                },
+                getAppConfig = { _, _ ->
                     AppConfig(0, 5, 0.0)
-
-                override suspend fun getResourceBundle(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): ResourceBundle {
-                    throw java.lang.IllegalStateException()
-                }
-            }
+                },
+            )
 
             val context = ApplicationProvider.getApplicationContext<Application>()
             val sharedPrefs = context.getSharedPreferences("repository_test", 0)
@@ -1410,31 +1253,12 @@ class ExposureNotificationsRepositoryTest {
                 }
             }
 
-            val fakeService = object : CdnService {
-                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+            val fakeService = createFakeCdnService(
+                getManifest = {
                     Manifest(emptyList(), "test-params", "")
-
-                override suspend fun getRiskCalculationParameters(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): RiskCalculationParameters {
-                    return MOCK_RISK_CALCULATION_PARAMS
-                }
-
-                override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
-                    throw NotImplementedError()
-
-                override suspend fun getResourceBundle(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): ResourceBundle {
-                    throw java.lang.IllegalStateException()
-                }
-            }
+                },
+                getRiskCalculationParameters = { _, _ -> MOCK_RISK_CALCULATION_PARAMS }
+            )
 
             val repository = createRepository(
                 api = api,
@@ -1473,31 +1297,12 @@ class ExposureNotificationsRepositoryTest {
                 }
             }
 
-            val fakeService = object : CdnService {
-                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+            val fakeService = createFakeCdnService(
+                getManifest = {
                     Manifest(emptyList(), "test-params", "")
-
-                override suspend fun getRiskCalculationParameters(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): RiskCalculationParameters {
-                    return MOCK_RISK_CALCULATION_PARAMS
-                }
-
-                override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
-                    throw NotImplementedError()
-
-                override suspend fun getResourceBundle(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): ResourceBundle {
-                    throw java.lang.IllegalStateException()
-                }
-            }
+                },
+                getRiskCalculationParameters = { _, _ -> MOCK_RISK_CALCULATION_PARAMS }
+            )
 
             val repository = createRepository(
                 api = api,
@@ -1549,31 +1354,12 @@ class ExposureNotificationsRepositoryTest {
             }
         }
 
-        val fakeService = object : CdnService {
-            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+        val fakeService = createFakeCdnService(
+            getManifest = {
                 Manifest(emptyList(), "test-params", "")
-
-            override suspend fun getRiskCalculationParameters(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): RiskCalculationParameters {
-                return MOCK_RISK_CALCULATION_PARAMS
-            }
-
-            override suspend fun getAppConfig(id: String, cacheStrategy: CacheStrategy?) =
-                throw NotImplementedError()
-
-            override suspend fun getResourceBundle(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): ResourceBundle {
-                throw java.lang.IllegalStateException()
-            }
-        }
+            },
+            getRiskCalculationParameters = { _, _ -> MOCK_RISK_CALCULATION_PARAMS }
+        )
 
         val repository = createRepository(
             api = api,
@@ -1593,49 +1379,24 @@ class ExposureNotificationsRepositoryTest {
 
     @Test
     fun `keyProcessingOverdue returns true if last successful time of key processing is more than 24 hours in the past`() {
+        val notificationsEnabledDateTime = "2020-06-20T10:10:30.00Z"
         val lastSyncDateTime = "2020-06-20T10:15:30.00Z"
         val dateTime = "2020-06-21T10:16:30.00Z"
-        val fakeService = object : CdnService {
-            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getRiskCalculationParameters(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): RiskCalculationParameters {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getAppConfig(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): AppConfig =
-                AppConfig(1, 5, 0.0)
-
-            override suspend fun getResourceBundle(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): ResourceBundle {
-                throw java.lang.IllegalStateException()
-            }
-        }
-
         val context = ApplicationProvider.getApplicationContext<Application>()
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
         sharedPrefs.edit {
             putLong("last_keys_processed", Instant.parse(lastSyncDateTime).toEpochMilli())
+            putLong(
+                "notifications_enabled_timestamp",
+                Instant.parse(notificationsEnabledDateTime).toEpochMilli()
+            )
         }
 
         val repository = createRepository(
             context = context,
             preferences = sharedPrefs,
-            cdnService = fakeService,
+            cdnService = createFakeCdnService(),
             clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -1649,35 +1410,6 @@ class ExposureNotificationsRepositoryTest {
         val notificationsEnabledDateTime = "2020-06-21T10:10:30.00Z"
         val lastSyncDateTime = "2020-06-20T10:15:30.00Z"
         val dateTime = "2020-06-21T10:16:30.00Z"
-        val fakeService = object : CdnService {
-            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getRiskCalculationParameters(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): RiskCalculationParameters {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getAppConfig(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): AppConfig =
-                AppConfig(1, 5, 0.0)
-
-            override suspend fun getResourceBundle(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): ResourceBundle {
-                throw java.lang.IllegalStateException()
-            }
-        }
 
         val context = ApplicationProvider.getApplicationContext<Application>()
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
@@ -1693,7 +1425,7 @@ class ExposureNotificationsRepositoryTest {
         val repository = createRepository(
             context = context,
             preferences = sharedPrefs,
-            cdnService = fakeService,
+            cdnService = createFakeCdnService(),
             clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -1703,40 +1435,38 @@ class ExposureNotificationsRepositoryTest {
     }
 
     @Test
-    fun `keyProcessingOverdue returns false if no timestamp is stored`() {
-        val dateTime = "2020-06-21T10:15:30.00Z"
-        val fakeService = object : CdnService {
-            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                throw NotImplementedError()
-            }
+    fun `keyProcessingOverdue returns true when notifications is enabled but never succeeded to process keys`() {
+        val notificationsEnabledDateTime = "2020-06-01T10:10:30.00Z"
+        val dateTime = "2020-06-21T10:16:30.00Z"
 
-            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest {
-                throw NotImplementedError()
-            }
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
 
-            override suspend fun getRiskCalculationParameters(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): RiskCalculationParameters {
-                throw NotImplementedError()
-            }
-
-            override suspend fun getAppConfig(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): AppConfig =
-                AppConfig(1, 5, 0.0)
-
-            override suspend fun getResourceBundle(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): ResourceBundle {
-                throw java.lang.IllegalStateException()
-            }
+        sharedPrefs.edit {
+            putLong(
+                "notifications_enabled_timestamp",
+                Instant.parse(notificationsEnabledDateTime).toEpochMilli()
+            )
         }
 
         val repository = createRepository(
-            cdnService = fakeService,
+            context = context,
+            preferences = sharedPrefs,
+            cdnService = createFakeCdnService(),
+            clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
+        )
+
+        runBlocking {
+            assertTrue(repository.keyProcessingOverdue())
+        }
+    }
+
+    @Test
+    fun `keyProcessingOverdue returns false if no timestamp is stored`() {
+        val dateTime = "2020-06-21T10:15:30.00Z"
+
+        val repository = createRepository(
+            cdnService = createFakeCdnService(),
             clock = Clock.fixed(Instant.parse(dateTime), ZoneId.of("UTC"))
         )
 
@@ -1995,39 +1725,17 @@ class ExposureNotificationsRepositoryTest {
             val sharedPrefs = context.getSharedPreferences("repository_test", 0)
             val statusCache = StatusCache(sharedPrefs)
 
+            val fakeCdnService = createFakeCdnService(
+                getManifest = { Manifest(emptyList(), "risk", "config") },
+                getAppConfig = { _, _ -> AppConfig() }
+            )
+
             val repository = createRepository(
                 context = context,
                 api = api,
                 preferences = sharedPrefs,
                 statusCache = statusCache,
-                cdnService = object : CdnService {
-                    override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                        throw NotImplementedError()
-                    }
-
-                    override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
-                        Manifest(listOf(), "risk", "config")
-
-                    override suspend fun getRiskCalculationParameters(
-                        id: String,
-                        cacheStrategy: CacheStrategy?
-                    ): RiskCalculationParameters {
-                        throw NotImplementedError()
-                    }
-
-                    override suspend fun getAppConfig(
-                        id: String,
-                        cacheStrategy: CacheStrategy?
-                    ): AppConfig =
-                        AppConfig()
-
-                    override suspend fun getResourceBundle(
-                        id: String,
-                        cacheStrategy: CacheStrategy?
-                    ): ResourceBundle {
-                        throw java.lang.IllegalStateException()
-                    }
-                },
+                cdnService = fakeCdnService,
                 scheduler = object : BackgroundWorkScheduler {
                     override fun schedule(intervalMinutes: Int) {
                     }
@@ -2072,40 +1780,17 @@ class ExposureNotificationsRepositoryTest {
             val context = ApplicationProvider.getApplicationContext<Application>()
             val sharedPrefs = context.getSharedPreferences("repository_test", 0)
             val statusCache = StatusCache(sharedPrefs)
+            val fakeCdnService = createFakeCdnService(
+                getManifest = { Manifest(emptyList(), "risk", "config") },
+                getAppConfig = { _, _ -> AppConfig() }
+            )
 
             val repository = createRepository(
                 context = context,
                 api = api,
                 preferences = sharedPrefs,
                 statusCache = statusCache,
-                cdnService = object : CdnService {
-                    override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                        throw NotImplementedError()
-                    }
-
-                    override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
-                        Manifest(listOf(), "risk", "config")
-
-                    override suspend fun getRiskCalculationParameters(
-                        id: String,
-                        cacheStrategy: CacheStrategy?
-                    ): RiskCalculationParameters {
-                        throw NotImplementedError()
-                    }
-
-                    override suspend fun getAppConfig(
-                        id: String,
-                        cacheStrategy: CacheStrategy?
-                    ): AppConfig =
-                        AppConfig()
-
-                    override suspend fun getResourceBundle(
-                        id: String,
-                        cacheStrategy: CacheStrategy?
-                    ): ResourceBundle {
-                        throw java.lang.IllegalStateException()
-                    }
-                },
+                cdnService = fakeCdnService,
                 scheduler = object : BackgroundWorkScheduler {
                     override fun schedule(intervalMinutes: Int) {
                     }
@@ -2150,40 +1835,17 @@ class ExposureNotificationsRepositoryTest {
         val context = ApplicationProvider.getApplicationContext<Application>()
         val sharedPrefs = context.getSharedPreferences("repository_test", 0)
         val statusCache = StatusCache(sharedPrefs)
+        val fakeCdnService = createFakeCdnService(
+            getManifest = { Manifest(emptyList(), "risk", "config") },
+            getAppConfig = { _, _ -> AppConfig() }
+        )
 
         val repository = createRepository(
             context = context,
             api = api,
             preferences = sharedPrefs,
             statusCache = statusCache,
-            cdnService = object : CdnService {
-                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
-                    Manifest(listOf(), "risk", "config")
-
-                override suspend fun getRiskCalculationParameters(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): RiskCalculationParameters {
-                    throw NotImplementedError()
-                }
-
-                override suspend fun getAppConfig(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): AppConfig =
-                    AppConfig()
-
-                override suspend fun getResourceBundle(
-                    id: String,
-                    cacheStrategy: CacheStrategy?
-                ): ResourceBundle {
-                    throw java.lang.IllegalStateException()
-                }
-            },
+            cdnService = fakeCdnService,
             scheduler = object : BackgroundWorkScheduler {
                 override fun schedule(intervalMinutes: Int) {
                 }
@@ -2232,36 +1894,14 @@ class ExposureNotificationsRepositoryTest {
                 }
             }
 
+            val fakeCdnService = createFakeCdnService(
+                getManifest = { Manifest(emptyList(), "risk", "config") },
+                getAppConfig = { _, _ -> AppConfig() }
+            )
+
             val repository = createRepository(
                 api = api,
-                cdnService = object : CdnService {
-                    override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                        throw NotImplementedError()
-                    }
-
-                    override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
-                        Manifest(listOf(), "risk", "config")
-
-                    override suspend fun getRiskCalculationParameters(
-                        id: String,
-                        cacheStrategy: CacheStrategy?
-                    ): RiskCalculationParameters {
-                        throw NotImplementedError()
-                    }
-
-                    override suspend fun getAppConfig(
-                        id: String,
-                        cacheStrategy: CacheStrategy?
-                    ): AppConfig =
-                        AppConfig()
-
-                    override suspend fun getResourceBundle(
-                        id: String,
-                        cacheStrategy: CacheStrategy?
-                    ): ResourceBundle {
-                        throw java.lang.IllegalStateException()
-                    }
-                },
+                cdnService = fakeCdnService,
                 scheduler = object : BackgroundWorkScheduler {
                     override fun schedule(intervalMinutes: Int) {
                     }
@@ -2302,34 +1942,13 @@ class ExposureNotificationsRepositoryTest {
                 cancelled.set(true)
             }
         }
-        val appConfigManager = AppConfigManager(object : CdnService {
-            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
-                throw IllegalStateException()
-            }
 
-            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest = Manifest(
-                emptyList(), "", "appconfig"
-            )
+        val fakeCdnService = createFakeCdnService(
+            getManifest = { Manifest(emptyList(), "", "appconfig") },
+            getAppConfig = { _, _ -> AppConfig(updatePeriodMinutes = 10) }
+        )
 
-            override suspend fun getRiskCalculationParameters(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): RiskCalculationParameters {
-                throw IllegalArgumentException()
-            }
-
-            override suspend fun getAppConfig(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): AppConfig = AppConfig(updatePeriodMinutes = 10)
-
-            override suspend fun getResourceBundle(
-                id: String,
-                cacheStrategy: CacheStrategy?
-            ): ResourceBundle {
-                throw IllegalStateException()
-            }
-        })
+        val appConfigManager = AppConfigManager(fakeCdnService)
         val repository = createRepository(
             preferences = preferences,
             scheduler = scheduler,
@@ -2400,6 +2019,39 @@ class ExposureNotificationsRepositoryTest {
             signatureValidation = signatureValidation,
             signatureValidator = signatureValidator
         )
+    }
+
+    private fun createFakeCdnService(
+        getExposureKeySetFile: (String) -> Response<ResponseBody> = { throw NotImplementedError() },
+        getManifest: (CacheStrategy?) -> Manifest = { throw NotImplementedError() },
+        getRiskCalculationParameters: (String, CacheStrategy?) -> RiskCalculationParameters = { _, _ -> throw NotImplementedError() },
+        getAppConfig: (String, CacheStrategy?) -> AppConfig = { _, _ -> throw NotImplementedError() },
+        getResourceBundle: (String, CacheStrategy?) -> ResourceBundle = { _, _ -> throw NotImplementedError() },
+    ): CdnService {
+        return object : CdnService {
+            override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                return getExposureKeySetFile(id)
+            }
+
+            override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest {
+                return getManifest(cacheStrategy)
+            }
+
+            override suspend fun getRiskCalculationParameters(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): RiskCalculationParameters = getRiskCalculationParameters(id, cacheStrategy)
+
+            override suspend fun getAppConfig(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): AppConfig = getAppConfig(id, cacheStrategy)
+
+            override suspend fun getResourceBundle(
+                id: String,
+                cacheStrategy: CacheStrategy?
+            ): ResourceBundle = getResourceBundle(id, cacheStrategy)
+        }
     }
 
     private fun createTrustManager() =

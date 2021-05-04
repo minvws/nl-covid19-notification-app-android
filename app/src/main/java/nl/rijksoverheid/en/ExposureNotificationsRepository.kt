@@ -104,17 +104,27 @@ class ExposureNotificationsRepository(
         val notificationsEnabledTimestamp =
             preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0)
         val lastKeysProcessedTimestamp = preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0)
-        return if (maxOf(notificationsEnabledTimestamp, lastKeysProcessedTimestamp) > 0) {
-            !(
-                Duration.between(Instant.ofEpochMilli(lastKeysProcessedTimestamp), clock.instant())
-                    .toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES ||
-                    Duration.between(
-                    Instant.ofEpochMilli(notificationsEnabledTimestamp), clock.instant()
-                ).toMinutes() < KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
+
+        val notificationsEnabledDuration = Duration.between(
+            Instant.ofEpochMilli(notificationsEnabledTimestamp),
+            clock.instant()
+        ).toMinutes()
+        val lastKeysProcessedDuration = Duration.between(
+            Instant.ofEpochMilli(lastKeysProcessedTimestamp),
+            clock.instant()
+        ).toMinutes()
+
+        // Check if notificationsEnabled is at least 24 hours ago
+        // and lastKeysProcessed is also more than 24 hours ago or 0
+        return notificationsEnabledTimestamp > 0 &&
+            notificationsEnabledDuration >= KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES &&
+            (
+                lastKeysProcessedTimestamp == 0L ||
+                    (
+                        lastKeysProcessedTimestamp > 0L &&
+                            lastKeysProcessedDuration >= KEY_PROCESSING_OVERDUE_THRESHOLD_MINUTES
+                        )
                 )
-        } else {
-            false
-        }
     }
 
     suspend fun requestEnableNotifications(): EnableNotificationsResult {
