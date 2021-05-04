@@ -21,7 +21,8 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Check for code formatting violations
-        run: ./gradlew spotlessCheck
+        run: ./gradlew spotlessCheck --warning-mode=fail
 
       - name: Build app
-        run: ./gradlew app:assemDevDebug testDevDebug testDebug app:lintDevDebug
+        run: ./gradlew app:assemDevDebug testDevDebugUnitTest testDebugUnitTest app:lintDevDebug  --warning-mode=fail
+
