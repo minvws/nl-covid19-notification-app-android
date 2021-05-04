@@ -49,11 +49,22 @@ stages:
                 sonar.junit.reportPaths = build/test-results/testDevDebugUnitTest/, build/test-results/testDevDebugUnitTest/
                 sonar.coverage.jacoco.xmlReportPaths = $(System.DefaultWorkingDirectory)/api/build/reports/jacoco/testDevDebugUnitTestCoverage/testDevDebugUnitTestCoverage.xml, $(System.DefaultWorkingDirectory)/app/build/reports/jacoco/testDevDebugUnitTestCoverage/testDevDebugUnitTestCoverage.xml, $(System.DefaultWorkingDirectory)/en-api/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml, $(System.DefaultWorkingDirectory)/signing/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml
           - task: Gradle@2
-            displayName: Build and test
+            displayName: Build
+            inputs:
+              gradleWrapperFile: 'gradlew'
+              options: '$(GRADLE_OPTIONS)'
+              tasks: 'app:assemDevDebug app:assemDevDebugAndroidTest --warning-mode=fail'
+              publishJUnitResults: false
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: '1.11'
+              gradleOptions: '$(GRADLE_JVM_OPTIONS)'
+              sonarQubeRunAnalysis: false
+          - task: Gradle@2
+            displayName: Run tests
             inputs:
               gradleWrapperFile: gradlew
               options: $(GRADLE_OPTIONS)
-              tasks: 'app:assemDevDebug app:assemDevDebugAndroidTest testDevDebugUnitTestCoverage testDebugUnitTestCoverage app:lintDevDebug --warning-mode=fail'
+              tasks: 'app:assemDevDebug app:assemDevDebugAndroidTest testDevDebugUnitTestCoverage testDebugUnitTestCoverage app:lintDevDebug'
               publishJUnitResults: true
               testResultsFiles: '**/TEST-*.xml'
               testRunTitle: Unit tests
