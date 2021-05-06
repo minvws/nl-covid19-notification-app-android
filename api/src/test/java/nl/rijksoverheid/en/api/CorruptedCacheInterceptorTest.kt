@@ -10,11 +10,8 @@ import android.content.Context
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider
 import okhttp3.Cache
-import okhttp3.CipherSuite
-import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.TlsVersion
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.tls.HandshakeCertificates
@@ -104,31 +101,10 @@ class CorruptedCacheInterceptorTest {
     private fun createClientBuilder(): OkHttpClient.Builder {
         val handshakeCertificate =
             HandshakeCertificates.Builder().addTrustedCertificate(serverCertificate).build()
-
-        // specify connection specs explicitly and disable TLS 1.2 and 1.3 for this test
-        // since this seems to fail on JDK 11 (with AGP 4.1.0)
-        val spec = ConnectionSpec.Builder(ConnectionSpec.COMPATIBLE_TLS)
-            .tlsVersions(TlsVersion.TLS_1_0, TlsVersion.TLS_1_1)
-            .cipherSuites(
-                CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-                CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-                CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
-                CipherSuite.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-                CipherSuite.TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
-                CipherSuite.TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256,
-                CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
-                CipherSuite.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
-                CipherSuite.TLS_RSA_WITH_AES_128_GCM_SHA256,
-                CipherSuite.TLS_RSA_WITH_AES_256_GCM_SHA384,
-                CipherSuite.TLS_RSA_WITH_AES_128_CBC_SHA,
-                CipherSuite.TLS_RSA_WITH_AES_256_CBC_SHA,
-                CipherSuite.TLS_RSA_WITH_3DES_EDE_CBC_SHA
-            ).build()
-
         return OkHttpClient.Builder().sslSocketFactory(
             handshakeCertificate.sslSocketFactory(),
             handshakeCertificate.trustManager
-        ).connectionSpecs(listOf(spec))
+        )
     }
 
     private fun createCorruptedCacheEntry(url: String) {
