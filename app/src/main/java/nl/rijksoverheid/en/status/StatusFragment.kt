@@ -164,6 +164,7 @@ class StatusFragment @JvmOverloads constructor(
         }
 
         pausedDurationTimer?.startTimer()
+        section.refreshStateContent()
     }
 
     override fun onPause() {
