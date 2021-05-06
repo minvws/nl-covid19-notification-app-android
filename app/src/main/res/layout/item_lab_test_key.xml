@@ -91,7 +91,7 @@
                 android:fontFamily="monospace"
                 android:gravity="center"
                 android:letterSpacing="0.3"
-                android:text="@{viewState.key}"
+                android:text="@{@string/format_lab_test_key(viewState.keyPart1, viewState.keyPart2, viewState.keyPart3)}"
                 android:contentDescription="@{viewState.keyContentDescription}"
                 android:textAppearance="?attr/textAppearanceHeadline5"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -99,7 +99,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:show="@{viewState.showCode}"
-                tools:text="A56-34F" />
+                tools:text="FC9-3A-65" />
 
             <TextView
                 android:id="@+id/error_text"

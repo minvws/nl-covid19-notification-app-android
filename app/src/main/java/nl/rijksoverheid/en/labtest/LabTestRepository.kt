@@ -98,7 +98,7 @@ class LabTestRepository(
                 val config = appConfigManager.getCachedConfigOrDefault()
                 val result = api.register(RegistrationRequest(), config.requestSize)
                 storeResult(result)
-                RegistrationResult.Success(result.labConfirmationId)
+                RegistrationResult.Success(result.ggdKey)
             } catch (ex: Exception) {
                 Timber.e(ex, "Error registering")
                 RegistrationResult.UnknownError
@@ -113,7 +113,7 @@ class LabTestRepository(
                 Base64.encodeToString(result.confirmationKey, Base64.NO_WRAP)
             )
             putString(KEY_BUCKET_ID, result.bucketId)
-            putString(KEY_LAB_CONFIRMATION_ID, result.labConfirmationId)
+            putString(KEY_LAB_CONFIRMATION_ID, result.ggdKey)
             putLong(
                 KEY_REGISTRATION_EXPIRATION,
                 (result.validitySeconds * 1000L) + clock.millis()
