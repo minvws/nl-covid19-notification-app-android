@@ -42,6 +42,7 @@ class CorruptedCacheInterceptorTest {
     fun setup() {
         val certificate = HeldCertificate.Builder()
             .addSubjectAlternativeName("localhost")
+            .addSubjectAlternativeName("127.0.0.1")
             .rsa2048()
             .build()
         val handshakeCertificate = HandshakeCertificates.Builder()
