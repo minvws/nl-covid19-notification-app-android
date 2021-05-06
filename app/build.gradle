@@ -183,8 +183,7 @@ repositories {
             includeGroup "com.bartoszlipinski"
         }
     }
-    maven {
-        url 'https://dl.bintray.com/lisawray/maven/'
+    jcenter() {
         content {
             includeGroup "com.xwray"
         }
