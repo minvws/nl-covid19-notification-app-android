@@ -69,7 +69,7 @@ object BeagleHelperImpl : BeagleHelper {
             TextModule("Exposures", TextModule.Type.SECTION_HEADER),
             SingleSelectionListModule(
                 title = "Test notification ExposureDaysAgo",
-                items = (0..14).map { value -> RadioGroupOption(value.toString(), value) },
+                items = (0..20).map { value -> RadioGroupOption(value.toString(), value) },
                 initiallySelectedItemId = testExposureDaysAgo.toString(),
                 onSelectionChanged = {
                     if (it != null)
