@@ -303,4 +303,8 @@
     <string name="status_error_location"><![CDATA[Je locatie-instellingen staan uit. De app houdt daarom <b>geen</b> nieuwe ontmoetingen bij. De app controleert nog <b>wel</b> of de mensen die je eerder hebt ontmoet corona blijken te hebben.]]></string>
     <string name="status_error_location_card">Je locatie-instellingen staan uit. De app kan geen nieuwe ontmoetingen bijhouden.</string>
     <string name="status_error_location_action">Locatie aanzetten</string>
+
+    <string name="status_old_exposure_card_message">Op %1$s (%2$s) was je in de buurt van iemand met corona</string>
+    <string name="status_old_exposure_card_action_more_info">Meer informatie</string>
+    <string name="status_old_exposure_card_action_delete">Verwijderen</string>
 </resources>
