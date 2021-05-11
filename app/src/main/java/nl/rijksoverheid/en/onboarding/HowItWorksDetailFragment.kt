@@ -58,7 +58,7 @@ private val crossLinks = mapOf(
 
 class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
-    private val onboardingViewModel: OnboardingViewModel by viewModels()
+    private val onboardingViewModel: OnboardingViewModel by activityViewModels()
 
     private val args: HowItWorksDetailFragmentArgs by navArgs()
 

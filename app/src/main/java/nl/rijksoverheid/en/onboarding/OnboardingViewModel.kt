@@ -39,7 +39,7 @@ class OnboardingViewModel(
     }
 
     fun togglePrivacyPolicyConsent() {
-        (privacyPolicyConsentGiven as MutableLiveData).value = !privacyPolicyConsentGiven.value!!
+        (privacyPolicyConsentGiven as MutableLiveData).value = !(privacyPolicyConsentGiven.value ?: false)
     }
 
     fun continueOnboarding() {

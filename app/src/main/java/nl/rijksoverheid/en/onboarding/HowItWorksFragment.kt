@@ -29,7 +29,7 @@ import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 
 class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
-    private val onboardingViewModel: OnboardingViewModel by viewModels()
+    private val onboardingViewModel: OnboardingViewModel by activityViewModels()
 
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(HowItWorksSection()) }
 

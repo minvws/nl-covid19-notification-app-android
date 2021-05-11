@@ -24,7 +24,7 @@ import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 
 class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
-    private val onboardingViewModel: OnboardingViewModel by viewModels()
+    private val onboardingViewModel: OnboardingViewModel by activityViewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
 
     private val disableBatteryOptimizationsResultRegistration =

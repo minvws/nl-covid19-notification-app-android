@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
@@ -23,7 +24,7 @@ import nl.rijksoverheid.en.databinding.FragmentGooglePlayServicesUpgradeRequired
 class GooglePlayServicesUpdateRequiredFragment :
     BaseFragment(R.layout.fragment_google_play_services_upgrade_required) {
 
-    val viewModel: OnboardingViewModel by viewModels()
+    val viewModel: OnboardingViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
