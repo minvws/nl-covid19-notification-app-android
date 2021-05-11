@@ -6,7 +6,6 @@
  */
 package nl.rijksoverheid.en.applifecycle
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +14,6 @@ import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.lifecyle.Event
 
-@SuppressLint("StaticFieldLeak")
 class AppLifecycleViewModel(
     private val appLifecycleManager: AppLifecycleManager,
     private val appConfigManager: AppConfigManager
