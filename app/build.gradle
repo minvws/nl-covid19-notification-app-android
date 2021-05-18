@@ -8,8 +8,8 @@ apply plugin: 'com.google.firebase.appdistribution'
 apply plugin: 'ru.cian.huawei-publish'
 apply from: rootProject.file("jacoco.gradle")
 
-version = "2.0.0"
-def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 92080
+version = "2.0.1"
+def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 98462
 archivesBaseName = "covid-notificatie-v${version}-${buildVersionCode}"
 
 
