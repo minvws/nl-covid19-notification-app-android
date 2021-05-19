@@ -109,7 +109,7 @@ class LabTestRepositoryTest {
     @Test
     fun `registerForUpload calls the register endpoint, caches and returns the code`() =
         runBlocking {
-            mockWebServer.enqueue(MockResponse().setBody("{\"labConfirmationId\":\"user-code\",\"bucketId\":\"vPUC39ia6grsuAnpEEullKJTea6XBJC475EEKpZaD+I=\",\"confirmationKey\":\"I+dl3vS844SEZNYUZ1GDayU9yfGhN5oF0ae70q+Runk=\",\"validity\":64028}"))
+            mockWebServer.enqueue(MockResponse().setBody("{\"ggdKey\":\"user-code\",\"bucketId\":\"vPUC39ia6grsuAnpEEullKJTea6XBJC475EEKpZaD+I=\",\"confirmationKey\":\"I+dl3vS844SEZNYUZ1GDayU9yfGhN5oF0ae70q+Runk=\",\"validity\":64028}"))
             mockWebServer.start()
 
             val prefs =
@@ -175,7 +175,7 @@ class LabTestRepositoryTest {
     @Test
     fun `registerForUpload with expired key requests a new key and returns the code`() =
         runBlocking {
-            mockWebServer.enqueue(MockResponse().setBody("{\"labConfirmationId\":\"server-code\",\"bucketId\":\"vPUC39ia6grsuAnpEEullKJTea6XBJC475EEKpZaD+I=\",\"confirmationKey\":\"I+dl3vS844SEZNYUZ1GDayU9yfGhN5oF0ae70q+Runk=\",\"validity\":64028}"))
+            mockWebServer.enqueue(MockResponse().setBody("{\"ggdKey\":\"server-code\",\"bucketId\":\"vPUC39ia6grsuAnpEEullKJTea6XBJC475EEKpZaD+I=\",\"confirmationKey\":\"I+dl3vS844SEZNYUZ1GDayU9yfGhN5oF0ae70q+Runk=\",\"validity\":64028}"))
             mockWebServer.start()
 
             val prefs =
@@ -211,7 +211,7 @@ class LabTestRepositoryTest {
     @Test
     fun `registerForUpload with invalid response propagates RegistrationResult UnknownError`() =
         runBlocking {
-            mockWebServer.enqueue(MockResponse().setBody("{\"labConfirmationId\":,\"bucketId\":,\"confirmationKey\":,\"validity\":}"))
+            mockWebServer.enqueue(MockResponse().setBody("{\"ggdKey\":,\"bucketId\":,\"confirmationKey\":,\"validity\":}"))
             mockWebServer.start()
 
             val prefs =
