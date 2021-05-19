@@ -47,13 +47,14 @@ class StatusSection : Section() {
 
     fun updateErrorState(
         errorState: StatusViewModel.ErrorState,
-        action: () -> Unit = {}
+        primaryAction: () -> Unit = {},
+        secondaryAction: () -> Unit = {}
     ) {
         if (this.errorState != errorState) {
             this.errorState = errorState
             errorItems.removeAll { it is StatusErrorItem }
             if (errorState !is StatusViewModel.ErrorState.None) {
-                errorItems.add(0, StatusErrorItem(errorState, action))
+                errorItems.add(0, StatusErrorItem(errorState, primaryAction, secondaryAction))
             }
             errorGroup.update(errorItems)
         }

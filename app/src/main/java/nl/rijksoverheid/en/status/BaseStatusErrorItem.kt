@@ -15,8 +15,10 @@ import nl.rijksoverheid.en.items.BaseBindableItem
 abstract class BaseStatusErrorItem : BaseBindableItem<ItemStatusErrorBinding>() {
 
     abstract class ErrorViewState(
-        @StringRes val actionLabel: Int,
-        val action: () -> Unit
+        @StringRes val primaryActionLabel: Int,
+        val primaryAction: () -> Unit,
+        @StringRes val secondaryActionLabel: Int = 0,
+        val secondaryAction: (() -> Unit) = {}
     ) {
         abstract fun getMessage(context: Context): String
     }

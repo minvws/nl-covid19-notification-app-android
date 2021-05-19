@@ -76,6 +76,7 @@ class StatusViewModel(
         createErrorState(
             statusResult,
             lastExposureDate,
+            exposureNotificationsRepository.getLastNotificationReceivedDate(),
             exposureNotificationsEnabled,
             exposureNotificationsRepository.keyProcessingOverdue(),
             settingsRepository.wifiOnly,
@@ -114,8 +115,10 @@ class StatusViewModel(
         isWifiOnlyOn: Boolean,
         pausedState: Settings.PausedState
     ): HeaderState {
+        val exposureInLast14Days =
+            lastExposureDate?.isAfter(LocalDate.now(clock).minusDays(15)) == true
         return when {
-            lastExposureDate != null -> HeaderState.Exposed(
+            lastExposureDate != null && exposureInLast14Days -> HeaderState.Exposed(
                 lastExposureDate,
                 notificationReceivedDate,
                 clock,
@@ -139,13 +142,19 @@ class StatusViewModel(
     private fun createErrorState(
         status: StatusResult,
         lastExposureDate: LocalDate?,
+        notificationReceivedDate: LocalDate?,
         exposureNotificationsEnabled: Boolean,
         keyProcessingOverdue: Boolean,
         isWifiOnlyOn: Boolean,
         pausedState: Settings.PausedState
     ): ErrorState {
         val isPaused = pausedState is Settings.PausedState.Paused
+        val exposureOlderThan14Days =
+            lastExposureDate?.isBefore(LocalDate.now(clock).minusDays(14)) == true
         return when {
+            lastExposureDate != null && exposureOlderThan14Days -> ErrorState.ExposureOver14DaysAgo(
+                lastExposureDate, notificationReceivedDate, clock
+            )
             lastExposureDate != null && !isPaused && status == StatusResult.Disabled -> ErrorState.ConsentRequired
             lastExposureDate != null && !isPaused && status == StatusResult.LocationPreconditionNotSatisfied -> {
                 if (keyProcessingOverdue) ErrorState.ConsentRequired else ErrorState.LocationDisabled
@@ -197,6 +206,12 @@ class StatusViewModel(
 
     sealed class ErrorState {
         object None : ErrorState()
+        data class ExposureOver14DaysAgo(
+            val exposureDate: LocalDate,
+            val notificationReceivedDate: LocalDate?,
+            val clock: Clock
+        ) : ErrorState()
+
         object BluetoothDisabled : ErrorState()
         object LocationDisabled : ErrorState()
         object ConsentRequired : ErrorState()

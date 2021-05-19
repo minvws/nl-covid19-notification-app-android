@@ -119,6 +119,19 @@ class StatusFragment @JvmOverloads constructor(
         statusViewModel.errorState.observe(viewLifecycleOwner) {
             when (it) {
                 StatusViewModel.ErrorState.None -> section.updateErrorState(it)
+                is StatusViewModel.ErrorState.ExposureOver14DaysAgo -> section.updateErrorState(
+                    it,
+                    primaryAction = {
+                        showRemoveNotificationConfirmationDialog(
+                            it.exposureDate.formatExposureDate(requireContext())
+                        )
+                    },
+                    secondaryAction = {
+                        navigateToPostNotification(
+                            it.exposureDate,
+                            it.notificationReceivedDate
+                        )
+                    })
                 StatusViewModel.ErrorState.SyncIssuesWifiOnly -> section.updateErrorState(it) { navigateToInternetRequiredFragment() }
                 StatusViewModel.ErrorState.SyncIssues -> section.updateErrorState(it) { statusViewModel.resetErrorState() }
                 StatusViewModel.ErrorState.NotificationsDisabled -> section.updateErrorState(it) { navigateToNotificationSettings() }
@@ -251,7 +264,8 @@ class StatusFragment @JvmOverloads constructor(
         findNavController().navigateCatchingErrors(StatusFragmentDirections.actionEnableLocationServices())
     }
 
-    private fun requestEnableBluetooth() = startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+    private fun requestEnableBluetooth() =
+        startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
 
     private fun navigateToInternetRequiredFragment() {
         findNavController().navigateCatchingErrors(StatusFragmentDirections.actionNavInternetRequired())
