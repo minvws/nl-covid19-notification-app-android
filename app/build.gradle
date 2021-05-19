@@ -9,9 +9,7 @@ apply plugin: 'ru.cian.huawei-publish'
 apply from: rootProject.file("jacoco.gradle")
 
 version = "2.1.0"
-def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 92080
-archivesBaseName = "covid-notificatie-v${version}-${buildVersionCode}"
-
+def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 98462
 
 def getGitHash = { ->
     def stdout = new ByteArrayOutputStream()
@@ -177,14 +175,7 @@ fladle {
 }
 
 repositories {
-    maven {
-        url 'https://dl.bintray.com/blipinsk/maven/'
-        content {
-            includeGroup "com.bartoszlipinski"
-        }
-    }
-    maven {
-        url 'https://dl.bintray.com/lisawray/maven/'
+    jcenter() {
         content {
             includeGroup "com.xwray"
         }
@@ -193,6 +184,7 @@ repositories {
         url "https://jitpack.io"
         content {
             includeGroup "com.github.pandulapeter.beagle"
+            includeGroup "com.github.blipinsk"
         }
     }
 }
@@ -256,7 +248,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$androidx_espresso_version"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$androidx_espresso_version"
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
-    androidTestImplementation 'com.bartoszlipinski:disable-animations-rule:2.0.0'
+    androidTestImplementation 'com.github.blipinsk:disable-animations-rule:2.0.0'
     androidTestImplementation "org.mockito.kotlin:mockito-kotlin:$mockitokotlin_version"
     androidTestImplementation 'com.vanniktech:junit4-android-integration-rules:0.3.0'
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"

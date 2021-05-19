@@ -40,6 +40,11 @@ class StatusSection : Section() {
         setPlaceholder(LoadingItem())
     }
 
+    fun refreshStateContent() {
+        headerGroup.notifyChanged()
+        errorGroup.notifyChanged()
+    }
+
     fun updateErrorState(
         errorState: StatusViewModel.ErrorState,
         action: () -> Unit = {}
