@@ -42,7 +42,7 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun `pausedState is set on init`() = runBlocking {
+    fun `pausedState available on init`() = runBlocking {
         Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
             .thenReturn(flowOf(Settings.PausedState.Enabled))
 
@@ -72,7 +72,7 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun `wifiOnly is set on init`() = runBlocking {
+    fun `wifiOnly available on init`() = runBlocking {
         Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
             .thenReturn(flowOf(Settings.PausedState.Enabled))
         Mockito.`when`(settingsRepository.wifiOnly)
@@ -150,6 +150,7 @@ class SettingsViewModelTest {
         }
     }
 
+    @Test
     fun `setExposureNotificationsPaused passes paused state to repository`() {
         runBlocking {
             Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
