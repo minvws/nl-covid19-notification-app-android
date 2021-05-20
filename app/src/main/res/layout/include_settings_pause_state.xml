@@ -24,7 +24,7 @@
         <Button
             tools:visibility="visible"
             android:onClick="@{() -> viewModel.requestPauseExposureNotifications()}"
-            app:show="@{!viewModel.exposureNotificationsPaused}"
+            app:show="@{viewModel.pausedState == null}"
             android:text="@string/settings_pause_action_enable"
             android:layout_marginTop="16dp"
             style="@style/Widget.App.Button.Secondary"
@@ -36,12 +36,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
-
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/pause_status"
-            app:show="@{viewModel.exposureNotificationsPaused}"
+            app:show="@{viewModel.pausedState != null}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +61,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                app:show="@{viewModel.exposureNotificationsPaused}"
+                app:show="@{viewModel.pausedState != null}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -74,13 +71,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="0"
-                app:pausedState="@{viewModel.pausedState}"
+                app:pausedState="@{viewModel.pausedState.pausedUntil}"
                 tools:text="De app is gepauzeerd tot 13:00" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-            app:show="@{viewModel.exposureNotificationsPaused}"
+            app:show="@{viewModel.pausedState != null}"
             android:onClick="@{() -> viewModel.enableExposureNotifications()}"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"

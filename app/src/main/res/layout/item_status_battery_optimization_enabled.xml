@@ -14,7 +14,7 @@
 
         <variable
             name="viewState"
-            type="nl.rijksoverheid.en.status.BaseStatusErrorItem.ErrorViewState" />
+            type="nl.rijksoverheid.en.status.StatusBatteryOptimizationEnabledItem.ViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,12 +44,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="@{viewState.getMessage(context)}"
+            android:text="@string/status_error_battery_optimisation"
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/error_box_image"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="De app heeft blootstelling permissie nodig om te kunnen werken." />
+            tools:text="Je telefoon heeft een functie die batterij-optimalisatie heet. Hierdoor werkt de app misschien niet goed. Het is dus belangrijk dat je deze functie uitzet voor CoronaMelder." />
 
         <Button
             android:id="@+id/error_box_button"
@@ -60,8 +60,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/error_box_text"
-            app:showIfLabelSet="@{viewState.actionLabel}"
-            tools:text="Zet blootstelling aan" />
+            android:text="@string/status_error_action_disable_battery_optimisation"
+            tools:text="Probleem oplossen" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

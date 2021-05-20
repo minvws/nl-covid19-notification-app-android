@@ -7,18 +7,18 @@
 package nl.rijksoverheid.en.util
 
 import android.os.CountDownTimer
-import nl.rijksoverheid.en.settings.Settings
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
-class PausedStateTimer(
-    pausedState: Settings.PausedState.Paused,
+class SimpleCountdownTimer(
+    val countDownTo: LocalDateTime,
+    countDownInterval: Long = 5000L,
     private val onTickAndFinish: () -> Unit
 ) : CountDownTimer(
-    LocalDateTime.now().until(pausedState.pausedUntil, ChronoUnit.MILLIS),
-    5000
+    LocalDateTime.now().until(countDownTo, ChronoUnit.MILLIS),
+    countDownInterval
 ) {
-    var isRunning = false
+    private var isRunning = false
     fun startTimer() {
         if (!isRunning) {
             start()
