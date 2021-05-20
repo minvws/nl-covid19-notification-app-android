@@ -65,12 +65,15 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
     }
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
+
     private val notificationsPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.notifications", 0)
     private val configPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.config", 0)
     private val settingsPreferences = context
         .getSharedPreferences("${BuildConfig.APPLICATION_ID}.settings", 0)
+    private val onboardingPreferences = context
+        .getSharedPreferences("${BuildConfig.APPLICATION_ID}.onboarding", 0)
 
     private val service = object : CdnService {
         override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
@@ -121,11 +124,19 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
     private val settingsRepository = SettingsRepository(
         context, nl.rijksoverheid.en.settings.Settings(context, settingsPreferences)
     )
+    private val onboardingRepository = OnboardingRepository(onboardingPreferences) {
+        true
+    }
 
     private val viewModel = ExposureNotificationsViewModel(repository, settingsRepository)
+    private val onboardingViewModel = OnboardingViewModel(onboardingRepository, repository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return viewModel as T
+            return when (modelClass) {
+                ExposureNotificationsViewModel::class.java -> viewModel as T
+                OnboardingViewModel::class.java -> onboardingViewModel as T
+                else -> throw IllegalArgumentException("Invalid modelClass")
+            }
         }
     }
 
@@ -158,6 +169,7 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
             setGraph(R.navigation.nav_onboarding)
             setCurrentDestination(R.id.nav_enable_api)
         }
+
         withFragment(
             EnableApiFragment(),
             navController,
