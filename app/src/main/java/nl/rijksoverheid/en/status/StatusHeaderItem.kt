@@ -137,7 +137,7 @@ class StatusHeaderItem(
                     R.string.status_paused_headline
                 else
                     R.string.status_paused_duration_reached_headline,
-                icon = R.drawable.status_paused,
+                icon = R.drawable.ic_status_paused,
                 enableActionLabel = R.string.status_en_api_disabled_enable,
                 enableAction = primaryAction,
                 refreshDescriptionUntil = headerState.pausedUntil

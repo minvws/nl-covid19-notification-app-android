@@ -32,10 +32,10 @@
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:contentDescription="@string/cd_info_box"
-            android:src="@drawable/ic_status_exposure_older_than_14_days_small"
+            android:src="@drawable/ic_status_exposure_small"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
