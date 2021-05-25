@@ -91,7 +91,7 @@
                 android:fontFamily="monospace"
                 android:gravity="center"
                 android:letterSpacing="0.3"
-                android:text="@{@string/format_lab_test_key(viewState.keyPart1, viewState.keyPart2, viewState.keyPart3)}"
+                android:text="@{viewState.displayKey}"
                 android:contentDescription="@{viewState.keyContentDescription}"
                 android:textAppearance="?attr/textAppearanceHeadline5"
                 app:layout_constraintBottom_toBottomOf="parent"

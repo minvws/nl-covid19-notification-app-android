@@ -70,7 +70,25 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
 
     sealed class KeyState {
         object Loading : KeyState()
-        data class Success(val key: String) : KeyState()
+        class Success(code: String) : KeyState() {
+            val displayKey: String
+            val key: String
+            init {
+                if (code.contains('-')) {
+                    // Code is 6-character displayKey with dashes (cached from registration v1)
+                    displayKey = code
+                    key = code.replace("-", "")
+                } else {
+                    // Code is 7-character key without dashes (from registration v2)
+                    val keyPart1 = code.substring(0..2)
+                    val keyPart2 = code.substring(3..4)
+                    val keyPart3 = code.substring(5..6)
+                    displayKey = "$keyPart1-$keyPart2-$keyPart3"
+                    key = code
+                }
+            }
+        }
+
         object Error : KeyState()
     }
 }
