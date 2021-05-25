@@ -122,4 +122,20 @@ class LabTestViewModelTest {
             }
         }
     }
+
+    @Test
+    fun `LabTestViewModel KeyState Success has correct key and displayKey for code with dashes`() {
+        val code = "TE-ST-KE"
+        val successKeyState = LabTestViewModel.KeyState.Success(code)
+        Assert.assertEquals("TE-ST-KE", successKeyState.displayKey)
+        Assert.assertEquals("TESTKE", successKeyState.key)
+    }
+
+    @Test
+    fun `LabTestViewModel KeyState Success has correct key and displayKey for code without dashes`() {
+        val code = "TESTKEY"
+        val successKeyState = LabTestViewModel.KeyState.Success(code)
+        Assert.assertEquals("TES-TK-EY", successKeyState.displayKey)
+        Assert.assertEquals("TESTKEY", successKeyState.key)
+    }
 }

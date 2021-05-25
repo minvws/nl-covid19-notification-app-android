@@ -70,7 +70,7 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
 
     sealed class KeyState {
         object Loading : KeyState()
-        class Success(code: String) : KeyState() {
+        data class Success(private val code: String) : KeyState() {
             val displayKey: String
             val key: String
             init {
