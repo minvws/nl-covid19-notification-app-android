@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.status
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
@@ -68,7 +69,7 @@ class StatusViewModel(
     val exposureDetected: Boolean
         get() = headerState.value is HeaderState.Exposed
 
-    val notificationState = combine(
+    val notificationState: LiveData<List<NotificationState>> = combine(
         exposureNotificationsRepository.notificationsEnabledTimestamp()
             .flatMapLatest { exposureNotificationsRepository.getStatus() },
         settingsRepository.exposureNotificationsPausedState(),

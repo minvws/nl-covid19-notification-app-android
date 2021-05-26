@@ -43,29 +43,47 @@ class SettingsViewModelTest {
 
     @Test
     fun `pausedState available on init`() = runBlocking {
+        val pausedState = Settings.PausedState.Paused(LocalDateTime.now())
         Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
-            .thenReturn(flowOf(Settings.PausedState.Enabled))
+            .thenReturn(flowOf(pausedState))
 
         val settingsViewModel = SettingsViewModel(settingsRepository)
 
         settingsViewModel.pausedState.observeForTesting {
             Assert.assertEquals(
-                Settings.PausedState.Enabled,
+                pausedState,
                 it.values.first()
             )
         }
     }
 
     @Test
-    fun `exposureNotificationsPaused is true when pausedState is Paused`() = runBlocking {
+    fun `exposureNotificationsPaused is pausedState when Paused`() = runBlocking {
+        val pausedState = Settings.PausedState.Paused(LocalDateTime.now())
         Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
-            .thenReturn(flowOf(Settings.PausedState.Paused(LocalDateTime.now())))
+            .thenReturn(flowOf(pausedState))
 
         val settingsViewModel = SettingsViewModel(settingsRepository)
 
-        settingsViewModel.exposureNotificationsPaused.observeForTesting {
+        settingsViewModel.pausedState.observeForTesting {
             Assert.assertEquals(
-                true,
+                pausedState,
+                it.values.first()
+            )
+        }
+    }
+
+    @Test
+    fun `exposureNotificationsPaused is null when Enabled`() = runBlocking {
+        val pausedState = Settings.PausedState.Enabled
+        Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+            .thenReturn(flowOf(pausedState))
+
+        val settingsViewModel = SettingsViewModel(settingsRepository)
+
+        settingsViewModel.pausedState.observeForTesting {
+            Assert.assertEquals(
+                null,
                 it.values.first()
             )
         }
