@@ -168,26 +168,30 @@ class StatusHeaderItem(
     override fun getLayout() = R.layout.item_status_header
 
     private var refreshTimer: SimpleCountdownTimer? = null
+    private var currentViewBinding: ItemStatusHeaderBinding? = null
 
     override fun bind(viewBinding: ItemStatusHeaderBinding, position: Int) {
         viewBinding.viewState = viewState
 
         viewState.refreshDescriptionUntil?.let {
-            if (refreshTimer?.countDownTo != it) {
+            if (viewBinding != currentViewBinding) {
                 refreshTimer?.cancel()
                 refreshTimer = SimpleCountdownTimer(it) {
                     viewBinding.statusDescription.text =
                         viewState.getDescription(viewBinding.statusDescription.context)
                 }
                 refreshTimer?.startTimer()
+                currentViewBinding = viewBinding
             }
         }
     }
 
     override fun unbind(viewHolder: GroupieViewHolder<ItemStatusHeaderBinding>) {
-        refreshTimer?.let {
-            it.cancel()
-            refreshTimer = null
+        if (viewHolder.binding == currentViewBinding) {
+            refreshTimer?.let {
+                it.cancel()
+                refreshTimer = null
+            }
         }
         super.unbind(viewHolder)
     }

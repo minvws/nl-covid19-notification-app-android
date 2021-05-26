@@ -20,6 +20,8 @@ class StatusPausedItem(
 
     private var refreshTimer: SimpleCountdownTimer? = null
 
+    private var currentViewBinding: ItemStatusPausedBinding? = null
+
     data class ViewState(
         val pausedUntil: LocalDateTime,
         val action: () -> Unit
@@ -27,7 +29,7 @@ class StatusPausedItem(
 
     override fun bind(viewBinding: ItemStatusPausedBinding, position: Int) {
         viewBinding.viewState = viewState
-        if (refreshTimer?.countDownTo != viewState.pausedUntil) {
+        if (refreshTimer?.countDownTo != viewState.pausedUntil || currentViewBinding != viewBinding) {
             refreshTimer?.cancel()
             refreshTimer = SimpleCountdownTimer(viewState.pausedUntil) {
                 viewBinding.infoBoxText.apply {
@@ -36,12 +38,16 @@ class StatusPausedItem(
             }
             refreshTimer?.startTimer()
         }
+        currentViewBinding = viewBinding
     }
 
     override fun unbind(viewHolder: GroupieViewHolder<ItemStatusPausedBinding>) {
-        refreshTimer?.let {
-            it.cancel()
-            refreshTimer = null
+        if (currentViewBinding == viewHolder.binding) {
+            refreshTimer?.let {
+                it.cancel()
+                refreshTimer = null
+            }
+            currentViewBinding = null
         }
         super.unbind(viewHolder)
     }
