@@ -46,9 +46,11 @@ class StatusSection : Section() {
             notificationStates.forEach {
                 when (it) {
                     is StatusViewModel.NotificationState.Error -> {
-                        notificationItems.add(StatusErrorItem(it) {
-                            onAction(it, NotificationAction.Primary)
-                        })
+                        notificationItems.add(
+                            StatusErrorItem(it) {
+                                onAction(it, NotificationAction.Primary)
+                            }
+                        )
                     }
                     is StatusViewModel.NotificationState.ExposureOver14DaysAgo -> {
                         notificationItems.add(

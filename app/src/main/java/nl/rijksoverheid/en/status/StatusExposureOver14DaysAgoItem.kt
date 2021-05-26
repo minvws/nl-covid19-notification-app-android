@@ -48,7 +48,8 @@ class StatusExposureOver14DaysAgoItem(
                     state.exposureDate,
                     state.clock,
                     { onAction(state, StatusSection.NotificationAction.Primary) },
-                    { onAction(state, StatusSection.NotificationAction.Secondary) })
+                    { onAction(state, StatusSection.NotificationAction.Secondary) }
+                )
             )
     }
 }

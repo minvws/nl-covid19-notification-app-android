@@ -137,7 +137,6 @@ class StatusFragment @JvmOverloads constructor(
                     StatusViewModel.NotificationState.Error.NotificationsDisabled -> navigateToNotificationSettings()
                     StatusViewModel.NotificationState.Error.SyncIssues -> statusViewModel.resetErrorState()
                     StatusViewModel.NotificationState.Error.SyncIssuesWifiOnly -> navigateToInternetRequiredFragment()
-
                 }
             }
         }
