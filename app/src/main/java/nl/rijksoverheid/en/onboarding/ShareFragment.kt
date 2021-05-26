@@ -10,7 +10,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import nl.rijksoverheid.en.BaseFragment
@@ -18,7 +18,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentShareBinding
 
 class ShareFragment : BaseFragment(R.layout.fragment_share) {
-    private val onboardingViewModel: OnboardingViewModel by viewModels()
+    private val onboardingViewModel: OnboardingViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
