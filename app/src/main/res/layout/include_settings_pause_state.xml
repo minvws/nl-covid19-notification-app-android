@@ -61,7 +61,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                app:show="@{viewModel.pausedState != null}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"

@@ -27,7 +27,6 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
-import nl.rijksoverheid.en.util.SimpleCountdownTimer
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.isIgnoringBatteryOptimizations
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
@@ -42,8 +41,6 @@ class StatusFragment @JvmOverloads constructor(
 
     private lateinit var section: StatusSection
     private val adapter = GroupAdapter<GroupieViewHolder>()
-
-    private var pausedDurationTimer: SimpleCountdownTimer? = null
 
     private val disableBatteryOptimizationsResultRegistration =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -154,14 +151,7 @@ class StatusFragment @JvmOverloads constructor(
     override fun onResume() {
         super.onResume()
         statusViewModel.isIgnoringBatteryOptimizations.value = requireContext().isIgnoringBatteryOptimizations()
-
-        pausedDurationTimer?.startTimer()
         section.refreshStateContent()
-    }
-
-    override fun onPause() {
-        pausedDurationTimer?.cancelTimer()
-        super.onPause()
     }
 
     private fun updateHeaderState(headerState: StatusViewModel.HeaderState) {
