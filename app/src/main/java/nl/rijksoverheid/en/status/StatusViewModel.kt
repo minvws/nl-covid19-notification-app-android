@@ -77,15 +77,19 @@ class StatusViewModel(
         notificationsRepository.exposureNotificationsEnabled(),
         isIgnoringBatteryOptimizations
     ) { statusResult, pausedState, lastExposureDate, exposureNotificationsEnabled, isIgnoringBatteryOptimizations ->
-        getNotificationState(
-            statusResult,
+        getNotificationStates(
             lastExposureDate,
             exposureNotificationsRepository.getLastNotificationReceivedDate(),
-            exposureNotificationsEnabled,
-            exposureNotificationsRepository.keyProcessingOverdue(),
-            settingsRepository.wifiOnly,
             pausedState,
-            isIgnoringBatteryOptimizations
+            isIgnoringBatteryOptimizations,
+            suspend {
+                getErrorState(
+                    statusResult,
+                    exposureNotificationsEnabled,
+                    exposureNotificationsRepository.keyProcessingOverdue(),
+                    settingsRepository.wifiOnly
+                )
+            }
         )
     }.asLiveData(viewModelScope.coroutineContext)
 
@@ -139,21 +143,17 @@ class StatusViewModel(
         }
     }
 
-    private fun getNotificationState(
-        status: StatusResult,
+    private suspend fun getNotificationStates(
         lastExposureDate: LocalDate?,
         notificationReceivedDate: LocalDate?,
-        exposureNotificationsEnabled: Boolean,
-        keyProcessingOverdue: Boolean,
-        isWifiOnlyOn: Boolean,
         pausedState: Settings.PausedState,
-        isIgnoringBatteryOptimizations: Boolean
+        isIgnoringBatteryOptimizations: Boolean,
+        getErrorState: suspend () -> NotificationState.Error?
     ): List<NotificationState> {
         val notificationStates = mutableListOf<NotificationState>()
         when {
-            lastExposureDate != null && pausedState is Settings.PausedState.Paused ->
-                NotificationState.Paused(pausedState.pausedUntil)
-            lastExposureDate != null && lastExposureDate.isBefore(
+            lastExposureDate == null -> null
+            lastExposureDate.isBefore(
                 LocalDate.now(clock).minusDays(14)
             ) ->
                 NotificationState.ExposureOver14DaysAgo(
@@ -161,13 +161,9 @@ class StatusViewModel(
                     notificationReceivedDate,
                     clock
                 )
-            lastExposureDate != null -> getErrorState(
-                status,
-                exposureNotificationsEnabled,
-                keyProcessingOverdue,
-                isWifiOnlyOn
-            )
-            else -> null
+            pausedState is Settings.PausedState.Paused ->
+                NotificationState.Paused(pausedState.pausedUntil)
+            else -> getErrorState()
         }?.let { notificationStates.add(it) }
 
         // Add ErrorState.BatteryOptimizationEnabled independently from other error states if needed
