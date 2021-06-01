@@ -308,4 +308,8 @@
     <string name="status_error_location"><![CDATA[Setările de locație sunt dezactivate. Din această cauză aplicația <b>nu</b> ține evidența întâlnirilor. Aplicația <b>continuă</b> să verifice dacă persoanele întâlnite anterior se dovedesc a fi infectate cu coronavirus.]]></string>
     <string name="status_error_location_card">Setările de locație sunt dezactivate. Aplicația nu poate ține evidența noilor întâlniri.</string>
     <string name="status_error_location_action">Activare locație.</string>
+    <string name="status_old_exposure_card_title">Contact more than 14 days ago</string>
+    <string name="status_old_exposure_card_message">On %1$s (%2$s) you were near someone with coronavirus</string>
+    <string name="status_old_exposure_card_action_more_info">More information</string>
+    <string name="status_old_exposure_card_action_delete">Delete</string>
 </resources>
