@@ -20,11 +20,6 @@ import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Success
 import nl.rijksoverheid.en.lifecyle.Event
 
 class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewModel() {
-    sealed class KeyState {
-        object Loading : KeyState()
-        data class Success(val key: String) : KeyState()
-        object Error : KeyState()
-    }
 
     val uploadResult: LiveData<Event<UploadResult>> = MutableLiveData()
 
@@ -71,5 +66,29 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
         data class RequestConsent(val resolution: PendingIntent) : UploadResult()
         data class Success(val usedKey: String) : UploadResult()
         object Error : UploadResult()
+    }
+
+    sealed class KeyState {
+        object Loading : KeyState()
+        data class Success(private val code: String) : KeyState() {
+            val displayKey: String
+            val key: String
+            init {
+                if (code.contains('-')) {
+                    // Code is 6-character displayKey with dashes (cached from registration v1)
+                    displayKey = code
+                    key = code.replace("-", "")
+                } else {
+                    // Code is 7-character key without dashes (from registration v2)
+                    val keyPart1 = code.substring(0..2)
+                    val keyPart2 = code.substring(3..4)
+                    val keyPart3 = code.substring(5..6)
+                    displayKey = "$keyPart1-$keyPart2-$keyPart3"
+                    key = code
+                }
+            }
+        }
+
+        object Error : KeyState()
     }
 }

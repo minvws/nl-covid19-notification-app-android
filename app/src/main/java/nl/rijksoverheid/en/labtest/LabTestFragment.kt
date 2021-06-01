@@ -90,11 +90,13 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
 
         labViewModel.keyState.observe(viewLifecycleOwner) { keyState ->
             section.update(keyState)
-            binding.button.isEnabled = getContinueButtonEnabledState(keyState, section.notificationsState)
+            binding.button.isEnabled =
+                getContinueButtonEnabledState(keyState, section.notificationsState)
         }
         viewModel.notificationState.observe(viewLifecycleOwner) { notificationsState ->
             section.update(notificationsState)
-            binding.button.isEnabled = getContinueButtonEnabledState(section.keyState, notificationsState)
+            binding.button.isEnabled =
+                getContinueButtonEnabledState(section.keyState, notificationsState)
         }
 
         labViewModel.uploadResult.observe(
@@ -153,10 +155,8 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
             val clipboard =
                 it.context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
                     ?: return
-            val clip = ClipData.newPlainText(
-                getString(R.string.lab_test_copy_key_to_clipboard),
-                key.replace("-", "")
-            )
+            val clip =
+                ClipData.newPlainText(getString(R.string.lab_test_copy_key_to_clipboard), key)
             clipboard.setPrimaryClip(clip)
             Snackbar.make(it, R.string.lab_test_copy_key_to_clipboard, Snackbar.LENGTH_LONG).show()
         }

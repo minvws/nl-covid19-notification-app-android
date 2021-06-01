@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -58,7 +57,7 @@ private val crossLinks = mapOf(
 
 class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
-    private val onboardingViewModel: OnboardingViewModel by viewModels()
+    private val onboardingViewModel: OnboardingViewModel by activityViewModels()
 
     private val args: HowItWorksDetailFragmentArgs by navArgs()
 

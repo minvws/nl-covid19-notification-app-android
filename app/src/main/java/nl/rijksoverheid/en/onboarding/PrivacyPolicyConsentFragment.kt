@@ -17,7 +17,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.text.HtmlCompat
 import androidx.core.text.getSpans
 import androidx.core.view.ViewCompat
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
@@ -27,7 +27,7 @@ import nl.rijksoverheid.en.databinding.FragmentPrivacyPolicyConsentBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
 class PrivacyPolicyConsentFragment : BaseFragment(R.layout.fragment_privacy_policy_consent) {
-    private val onboardingViewModel: OnboardingViewModel by viewModels()
+    private val onboardingViewModel: OnboardingViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -11,7 +11,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 class Registration(
-    @Json(name = "labConfirmationId") val labConfirmationId: String,
+    @Json(name = "ggdKey") val ggdKey: String,
     @Json(name = "bucketId") val bucketId: String,
     @Json(name = "confirmationKey") val confirmationKey: ByteArray,
     @Json(name = "validity") val validitySeconds: Long

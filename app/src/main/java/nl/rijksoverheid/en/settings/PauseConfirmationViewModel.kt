@@ -15,7 +15,7 @@ class PauseConfirmationViewModel(private val repository: SettingsRepository) : V
     val skipConfirmation: LiveData<Boolean> = MutableLiveData(false)
 
     fun toggleDontAskForConfirmation() {
-        (skipConfirmation as MutableLiveData).value = !skipConfirmation.value!!
+        (skipConfirmation as MutableLiveData).value = !(skipConfirmation.value ?: false)
     }
 
     fun setExposureNotificationsPaused(until: LocalDateTime) {

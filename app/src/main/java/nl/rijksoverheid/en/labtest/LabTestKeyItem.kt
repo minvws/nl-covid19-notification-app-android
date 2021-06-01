@@ -13,16 +13,21 @@ import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
 import java.util.Locale
 
-class LabTestKeyItem(private val keyState: KeyState, private val copy: (String) -> Unit, retry: () -> Unit) :
+class LabTestKeyItem(
+    private val keyState: KeyState,
+    private val copy: (String) -> Unit,
+    retry: () -> Unit
+) :
     BaseBindableItem<ItemLabTestKeyBinding>() {
     data class ViewState(
         val showProgress: Boolean,
         val showCode: Boolean,
         val showError: Boolean,
         val key: String? = null,
+        val displayKey: String? = null,
         val retry: () -> Unit
     ) {
-        val keyContentDescription = key?.toLowerCase(Locale.ROOT)?.replace("-", "")
+        val keyContentDescription = key?.toLowerCase(Locale.ROOT)
     }
 
     private val viewState = ViewState(
@@ -30,6 +35,7 @@ class LabTestKeyItem(private val keyState: KeyState, private val copy: (String) 
         showCode = keyState is KeyState.Success,
         showError = keyState is KeyState.Error,
         key = (keyState as? KeyState.Success)?.key,
+        displayKey = (keyState as? KeyState.Success)?.displayKey,
         retry = retry
     )
 
