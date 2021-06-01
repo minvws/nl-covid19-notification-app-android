@@ -31,8 +31,9 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
             emit(Loading)
             val result = labTestRepository.registerForUpload()
             if (result is RegistrationResult.Success) {
-                usedKey = result.code
-                emit(Success(result.code))
+                val state = Success(result.code)
+                usedKey = state.displayKey
+                emit(state)
             } else {
                 emit(Error)
             }
