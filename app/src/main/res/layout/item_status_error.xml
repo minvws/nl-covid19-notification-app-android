@@ -25,15 +25,15 @@
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="16dp"
         android:background="@drawable/message_box_background"
-        android:backgroundTint="@color/error_surface"
+        android:backgroundTint="@color/info_surface"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp">
 
         <ImageView
             android:id="@+id/error_box_image"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:contentDescription="@string/cd_error_box"
             android:src="@drawable/ic_error"
             app:layout_constraintStart_toStartOf="parent"

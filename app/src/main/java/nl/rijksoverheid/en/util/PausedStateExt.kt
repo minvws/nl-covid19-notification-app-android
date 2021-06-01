@@ -9,13 +9,12 @@ package nl.rijksoverheid.en.util
 import android.content.Context
 import androidx.core.text.HtmlCompat
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.settings.Settings
 import java.time.Duration
 import java.time.LocalDateTime
 
-fun Settings.PausedState.Paused.formatDuration(context: Context): CharSequence {
+fun LocalDateTime.formatPauseDuration(context: Context): CharSequence {
     val now = LocalDateTime.now()
-    return if (pausedUntil.isAfter(now)) {
+    return if (isAfter(now)) {
 
         val (durationHours, durationMinutes) = durationHoursAndMinutes()
         val formattedDuration = when {
@@ -37,11 +36,11 @@ fun Settings.PausedState.Paused.formatDuration(context: Context): CharSequence {
     }
 }
 
-fun Settings.PausedState.Paused.durationHoursAndMinutes(): Pair<Long, Long> {
+private fun LocalDateTime.durationHoursAndMinutes(): Pair<Long, Long> {
     val now = LocalDateTime.now()
-    return if (pausedUntil.isAfter(now)) {
+    return if (isAfter(now)) {
         // Get duration rounded up to minutes
-        val duration = Duration.between(now, pausedUntil).let {
+        val duration = Duration.between(now, this).let {
             it.plusMillis(60000 - (it.toMillis() % 60000))
         }
         val durationHours = duration.toHours()

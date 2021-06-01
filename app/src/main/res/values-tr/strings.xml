@@ -303,4 +303,8 @@
     <string name="status_error_location"><![CDATA[Konum ayarlarınız kapalı. Bu nedenle uygulama, yeni karşılaşmaları <b> tutmaz </b>. Uygulama, daha önce tanıştığınız kişilerde Korona olup olmadığını<b>kontrol eder</b>.]]></string>
     <string name="status_error_location_card">Konum ayarlarınız kapalı. Uygulama yeni karşılaşmaları takip edemez.</string>
     <string name="status_error_location_action">Konumu açmak</string>
+    <string name="status_old_exposure_card_title">Contact more than 14 days ago</string>
+    <string name="status_old_exposure_card_message">On %1$s (%2$s) you were near someone with coronavirus</string>
+    <string name="status_old_exposure_card_action_more_info">More information</string>
+    <string name="status_old_exposure_card_action_delete">Delete</string>
 </resources>

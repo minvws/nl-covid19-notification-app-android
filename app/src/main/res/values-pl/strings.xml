@@ -311,4 +311,8 @@
     <string name="status_error_location"><![CDATA[Ustawienia lokalizacji są wyłączone. W związku z tym aplikacja <b>nie</b> monitoruje nowych spotkań. Aplikacja <b>wciąż</b> jeszcze kontroluje, czy wykryto koronawirusa u osób, które spotkałeś wcześniej.]]></string>
     <string name="status_error_location_card">Ustawienia lokalizacji są wyłączone. Aplikacja nie może monitorować żadnych nowych spotkań.</string>
     <string name="status_error_location_action">Włącz lokalizację</string>
+    <string name="status_old_exposure_card_title">Contact more than 14 days ago</string>
+    <string name="status_old_exposure_card_message">On %1$s (%2$s) you were near someone with coronavirus</string>
+    <string name="status_old_exposure_card_action_more_info">More information</string>
+    <string name="status_old_exposure_card_action_delete">Delete</string>
 </resources>

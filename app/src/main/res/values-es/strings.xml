@@ -305,4 +305,8 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="status_error_location"><![CDATA[Tus ajustes de localización están desactivados, por lo que la app no registrará <b>ningún</b> encuentro nuevo. La app <b>sigue</b> controlando si las personas con las que te has encontrado resultan tener coronavirus.]]></string>
     <string name="status_error_location_card">Tus ajustes de localización están desactivados. La app no puede registrar nuevos encuentros.</string>
     <string name="status_error_location_action">Activar localización</string>
+    <string name="status_old_exposure_card_title">Contact more than 14 days ago</string>
+    <string name="status_old_exposure_card_message">On %1$s (%2$s) you were near someone with coronavirus</string>
+    <string name="status_old_exposure_card_action_more_info">More information</string>
+    <string name="status_old_exposure_card_action_delete">Delete</string>
 </resources>

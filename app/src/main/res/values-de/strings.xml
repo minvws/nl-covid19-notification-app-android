@@ -304,4 +304,8 @@
     <string name="status_error_location"><![CDATA[Ihre Standorteinstellungen sind deaktiviert. Die App registriert deshalb <b>keine</b> neuen Begegnungen. Die App kontrolliert aber noch, ob bei den Personen, denen Sie früher begegnet sind, Corona festgestellt wurde.]]></string>
     <string name="status_error_location_card">Ihre Standorteinstellungen sind deaktiviert. Die App kann keine neuen Begegnungen registrieren.</string>
     <string name="status_error_location_action">Standort aktivieren</string>
+    <string name="status_old_exposure_card_title">Contact more than 14 days ago</string>
+    <string name="status_old_exposure_card_message">On %1$s (%2$s) you were near someone with coronavirus</string>
+    <string name="status_old_exposure_card_action_more_info">More information</string>
+    <string name="status_old_exposure_card_action_delete">Delete</string>
 </resources>
