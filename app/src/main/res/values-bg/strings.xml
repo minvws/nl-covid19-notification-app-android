@@ -305,4 +305,8 @@
     <string name="status_error_location"><![CDATA[Настройките ти за местоположение са изключени. По тази причина приложението <b>не</b> проследява новите срещи. То обаче <b>продължава</b> да контролира дали хората, които си срещнал по-рано, са се оказали с коронавирус.]]></string>
     <string name="status_error_location_card">Настройките ти за местоположение са изключени. Приложението не може да проследява новите срещи.</string>
     <string name="status_error_location_action">Включване на местоположение</string>
+    <string name="status_old_exposure_card_title">Contact more than 14 days ago</string>
+    <string name="status_old_exposure_card_message">On %1$s (%2$s) you were near someone with coronavirus</string>
+    <string name="status_old_exposure_card_action_more_info">More information</string>
+    <string name="status_old_exposure_card_action_delete">Delete</string>
 </resources>
