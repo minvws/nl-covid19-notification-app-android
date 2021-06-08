@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:locale="en">
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="faq_notification_paragraph_1">You get a notification after you\'ve been exposed to a higher risk of infection. This happens if you\'ve spent at least 15 minutes near someone who has coronavirus. This could be one or more people. But only if they also use the app.\n\nWhether or not you get a notification depends on the strength of the Bluetooth signal and the duration of your encounter. Did someone cycle past you on the street? Then you won\'t get a notification later. Yes, the Bluetooth signal was strong because you were near each other. But only for a short time. So your risk of infection is very low.\n\nWere you near someone on the train or in the office? Then you could get a notification later. The Bluetooth signal was strong and you were near each other for a longer period of time.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
@@ -135,7 +134,7 @@
     <string name="faq_anonymous_paragraph_1">The app exchanges random codes with other phones. These codes don\'t include any personal or location data. The code exchange happens when you\'re near a person who also has the app.</string>
     <string name="faq_anonymous_paragraph_2">Was this person later found to have coronavirus? Together with the GGD, they can add their code to a list of codes of infected people. By doing so the infection can be confirmed.\n\nAfter this, a notification is sent to all people who have these codes on their phones. This notification only says when they\'ve been near an infected person. Not who this person is and where they\'ve encountered them.</string>
     <string name="faq_upload_keys_paragraph_1">You can only send a notification to others if you were tested and have coronavirus. In this case, you\'ll get a call from the GGD with the test results. \n\nDuring this call a GGD employee checks your GGD key. You can find this key in the app. Using this method we make sure only people who are really infected can send notifications to others.</string>
-    <string name="faq_upload_keys_paragraph_2">"After your GGD key is checked, you can share the codes your phone has sent to other phones in the last 14 days.&lt;br&gt;&lt;br&gt;By doing so, the people who were near you while you were contagious are notified. But only if these people also use the app."</string>
+    <string name="faq_upload_keys_paragraph_2">After your GGD key is checked, you can share the codes your phone has sent to other phones in the last 14 days.&lt;br&gt;&lt;br&gt;By doing so, the people who were near you while you were contagious are notified. But only if these people also use the app.</string>
     <string name="faq_bluetooth_paragraph_1">"Yes, but the signal would be very weak. Bluetooth works best when your phone is in the same room as another person's phone.\n\nSo the chance of you getting your neighbours' Bluetooth signal is very low.\n\nThat also means you probably won't get a notification if your neighbour has coronavirus and you haven't been in the same room."</string>
     <string name="faq_power_usage_paragraph_1">The app uses Bluetooth Low Energy — a special kind of Bluetooth that only uses a tiny amount of power. How fast this drains your battery depends on your phone.</string>
     <string name="faq_deletion_paragraph_1">"You can delete the Bluetooth files saved by the app yourself. Press the button below and then press &lt;strong&gt;Delete random IDs&lt;/strong&gt;.\n\nIf you don't want the app to save new Bluetooth data, delete the app."</string>
@@ -305,9 +304,5 @@
     <string name="status_error_location"><![CDATA[Your location settings are not enabled. The app is <b>not</b> tracking new encounters. The app <b>does</b> still check if people you\'ve encountered later turn out to have coronavirus.]]></string>
     <string name="status_error_location_card">Your location settings are not enabled. The app is not tracking new encounters.</string>
     <string name="status_error_location_action">Turn on your location</string>
-
-    <string name="status_old_exposure_card_title">Contact more than 14 days ago</string>
-    <string name="status_old_exposure_card_message">On %1$s (%2$s) you were near someone with coronavirus</string>
-    <string name="status_old_exposure_card_action_more_info">More information</string>
-    <string name="status_old_exposure_card_action_delete">Delete</string>
+    <string name="status_error_notifications_disabled_headline">Notifications are turned <u>off</u></string>
 </resources>
