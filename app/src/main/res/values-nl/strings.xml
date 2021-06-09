@@ -307,25 +307,5 @@
     <string name="status_old_exposure_card_message">Op %1$s (%2$s) was je in de buurt van iemand met corona</string>
     <string name="status_old_exposure_card_action_more_info">Meer informatie</string>
     <string name="status_old_exposure_card_action_delete">Verwijderen</string>
-    <string name="post_keys_options_header">Kies hoe je een melding wilt sturen</string>
-    <string name="post_keys_options_description">Je kunt alleen een melding sturen als uit een coronatest blijkt dat je besmet bent.</string>
-    <string name="post_keys_options_coronatest_title">Via coronatest.nl</string>
-    <string name="post_keys_options_coronatest_subtitle">Dit kan alleen als je de testuitslag ontvangt via coronatest.nl</string>
-    <string name="post_keys_options_ggd_title">Als de GGD jou belt</string>
-    <string name="post_keys_options_ggd_subtitle">Dit kan alleen als je nu de GGD aan de telefoon hebt</string>
-    <string name="coronatest_description"><![CDATA[Ontdek je via coronatest.nl dat je corona hebt? Dan kun je via CoronaMelder direct een melding versturen.<a href="">Hoe werkt dit?</a>]]></string>
-    <string name="coronatest_step_1">Deel de codes die CoronaMelder heeft gemaakt</string>
-    <string name="coronatest_step_2">Schrijf je GGD-sleutel op of kopieer deze</string>
-    <string name="coronatest_step_3">Vul je GGD-sleutel in op coronatest.nl. Zo waarschuw  je anderen bij wie je in de buurt bent geweest</string>
-    <string name="coronatest_step_4">GGD-sleutel ingevuld?</string>
-    <string name="coronatest_step_4_subtitle">Je bent klaar. Mensen bij wie je in de buurt bent geweest, terwijl je besmettelijk was, krijgen een melding. Dit gebeurt binnen 8 uur.</string>
-    <string name="coronatest_share_keys">Codes delen</string>
-    <string name="coronatest_keys_shared">Codes gedeeld</string>
-    <string name="coronatest_webpage_button">Naar coronatest.nl</string>
-    <string name="coronatest_finish_button">Afronden</string>
-    <string name="coronatest_finish_confirmation_title">Weet je zeker dat je wilt afronden?</string>
-    <string name="coronatest_finish_confirmation_text">Heb je de GGD-sleutel ingevuld op coronatest.nl en een bevestiging gekregen? Zo ja, dan kun je dit scherm afsluiten.</string>
-    <string name="coronatest_finish_confirmation_accept">Afsluiten</string>
-    <string name="coronatest_finish_confirmation_cancel">Annuleren</string>
     <string name="status_error_notifications_disabled_headline">Meldingen staan <u>uit</u></string>
 </resources>
