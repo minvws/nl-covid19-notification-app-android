@@ -308,4 +308,5 @@
     <string name="status_old_exposure_card_message">On %1$s (%2$s) you were near someone with coronavirus</string>
     <string name="status_old_exposure_card_action_more_info">More information</string>
     <string name="status_old_exposure_card_action_delete">Delete</string>
+    <string name="status_error_notifications_disabled_headline">Nachrichten sind <u>deaktiviert</u></string>
 </resources>

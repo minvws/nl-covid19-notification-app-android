@@ -303,8 +303,9 @@
     <string name="status_error_location"><![CDATA[Dyn lokaasjeynstellings steane út. De app hâldt dêrom <b>gjin</b> nije moetings by. De app kontrolearret noch <b>wol</b> oft de minsken dy\'tsto earder moete hast koroana blike te hawwen.]]></string>
     <string name="status_error_location_card">Dyn lokaasjeynstellings steane út. De app kin gjin nije moetings byhâlde.</string>
     <string name="status_error_location_action">Lokaasje oansette</string>
-    <string name="status_old_exposure_card_title">Contact more than 14 days ago</string>
-    <string name="status_old_exposure_card_message">On %1$s (%2$s) you were near someone with coronavirus</string>
-    <string name="status_old_exposure_card_action_more_info">More information</string>
-    <string name="status_old_exposure_card_action_delete">Delete</string>
+    <string name="status_old_exposure_card_title">Kontakt mears as 14 dagen lyn</string>
+    <string name="status_old_exposure_card_message">Op %1$s (%2$s) wiest yn \'e buert fan immen mei koroana</string>
+    <string name="status_old_exposure_card_action_more_info">Mear ynformaasje</string>
+    <string name="status_old_exposure_card_action_delete">Wiskje</string>
+    <string name="status_error_notifications_disabled_headline">Meldingen staan <u>uit</u></string>
 </resources>

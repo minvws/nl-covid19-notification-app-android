@@ -40,17 +40,35 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/info_box_text"
+            android:id="@+id/info_box_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            app:pausedState="@{viewState.pausedUntil}"
-            android:textAppearance="?attr/textAppearanceBody1"
+            android:text="@string/status_paused_headline"
+            android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/info_box_image"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="De app is gepauzeerd tot 13:00" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/header_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="info_box_image, info_box_title"
+            app:barrierDirection="bottom" />
+
+        <TextView
+            android:id="@+id/info_box_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:pausedState="@{viewState.pausedUntil}"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/info_box_image"
+            app:layout_constraintTop_toBottomOf="@+id/header_barrier"
+            tools:text="De app is gepauzeerd tot 13:00" />
         <Button
             android:id="@+id/info_box_button"
             style="@style/Widget.MaterialComponents.Button.TextButton.Snackbar"

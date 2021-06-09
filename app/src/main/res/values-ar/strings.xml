@@ -325,6 +325,7 @@
     <string name="status_error_location"><![CDATA[إعدادات الموقع غير مشغّلة. وبالتالي فإن التطبيق لا يتتبع أي مخالطات <b> أي </ b>. سيقوم التطبيق <b> بفحص </ b> ما إذا كان الأشخاص الذين قابلتهم من قبل مصابين بكورونا.]]></string>
     <string name="status_error_location_card">إعدادات الموقع غير مشغّلة. لا يمكن للتطبيق تتبع مخالطات جديدة.</string>
     <string name="status_error_location_action">تشغيل الموقع</string>
+    <string name="status_error_notifications_disabled_headline">تم <u> إيقاف تشغيل</u> الإشعارات</string>
     <string name="status_old_exposure_card_title">Contact more than 14 days ago</string>
     <string name="status_old_exposure_card_message">On %1$s (%2$s) you were near someone with coronavirus</string>
     <string name="status_old_exposure_card_action_more_info">More information</string>
