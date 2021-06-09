@@ -166,10 +166,10 @@
     <string name="lab_test_button">Ga door</string>
     <string name="lab_test_upload_error">Het is niet gelukt anderen een melding te sturen. Probeer het later nog eens.</string>
     <string name="lab_test_done_toolbar_title">Bedankt</string>
-    <string name="lab_test_done_header_1">Bedankt, de GGD helpt je verder</string>
-    <string name="lab_test_done_paragraph_2">De GGD-medewerker vertelt wat je kunt doen om te voorkomen dat je anderen besmet. Beterschap en sterkte met je herstel.</string>
+    <string name="lab_test_done_header_1">Bedankt voor het versturen van de melding</string>
+    <string name="lab_test_done_paragraph_2">De GGD vertelt je wat je verder kunt doen om te voorkomen dat je anderen besmet. Beterschap en sterkte met je herstel. </string>
     <string name="lab_test_done_used_key">Gebruikte GGD-sleutel: %1$s</string>
-    <string name="lab_test_done_box_4">De melding wordt alleen verstuurd als de GGD je heeft getest en je corona hebt</string>
+    <string name="lab_test_done_box_4">De melding wordt alleen verstuurd als je jouw GGD-sleutel hebt doorgegeven aan de GGD of via coronatest.nl</string>
     <string name="lab_test_done_button">Sluiten</string>
     <string name="update_google_play_services">Updaten</string>
     <string name="update_google_play_services_headline">Je Google Play Services is niet bijgewerkt</string>
@@ -307,7 +307,6 @@
     <string name="status_old_exposure_card_message">Op %1$s (%2$s) was je in de buurt van iemand met corona</string>
     <string name="status_old_exposure_card_action_more_info">Meer informatie</string>
     <string name="status_old_exposure_card_action_delete">Verwijderen</string>
-
     <string name="post_keys_options_header">Kies hoe je een melding wilt sturen</string>
     <string name="post_keys_options_description">Je kunt alleen een melding sturen als uit een coronatest blijkt dat je besmet bent.</string>
     <string name="post_keys_options_coronatest_title">Via coronatest.nl</string>
