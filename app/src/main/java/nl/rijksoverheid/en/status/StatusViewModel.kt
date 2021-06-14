@@ -180,8 +180,16 @@ class StatusViewModel(
         StatusResult.Disabled,
         is StatusResult.Unavailable,
         is StatusResult.UnknownError -> NotificationState.Error.ConsentRequired
-        StatusResult.BluetoothDisabled -> if (keyProcessingOverdue) NotificationState.Error.ConsentRequired else NotificationState.Error.LocationDisabled
-        StatusResult.LocationPreconditionNotSatisfied -> if (keyProcessingOverdue) NotificationState.Error.ConsentRequired else NotificationState.Error.BluetoothDisabled
+        StatusResult.BluetoothDisabled -> {
+            if (keyProcessingOverdue)
+                NotificationState.Error.ConsentRequired
+            else NotificationState.Error.BluetoothDisabled
+        }
+        StatusResult.LocationPreconditionNotSatisfied -> {
+            if (keyProcessingOverdue)
+                NotificationState.Error.ConsentRequired
+            else NotificationState.Error.LocationDisabled
+        }
         StatusResult.Enabled -> {
             when {
                 !exposureNotificationsEnabled -> NotificationState.Error.NotificationsDisabled

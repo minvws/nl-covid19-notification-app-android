@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.beagle
 
 import android.app.Application
+import nl.rijksoverheid.en.api.model.FeatureFlag
 
 object BeagleHelperImpl : BeagleHelper {
 

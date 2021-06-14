@@ -48,8 +48,7 @@
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/error_box_image"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Je telefoon heeft een functie die batterij-optimalisatie heet. Hierdoor werkt de app misschien niet goed. Het is dus belangrijk dat je deze functie uitzet voor CoronaMelder." />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/error_box_button"
