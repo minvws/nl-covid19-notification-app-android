@@ -40,35 +40,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/error_box_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="@string/status_partly_active_headline"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/error_box_image"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/header_barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="error_box_image, error_box_title"
-            app:barrierDirection="bottom" />
-
-        <TextView
             android:id="@+id/error_box_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
             android:text="@string/status_error_battery_optimisation"
             android:textAppearance="?attr/textAppearanceBody1"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/error_box_image"
-            app:layout_constraintTop_toBottomOf="@+id/header_barrier" />
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/error_box_button"
             style="@style/Widget.MaterialComponents.Button.TextButton.Snackbar"
