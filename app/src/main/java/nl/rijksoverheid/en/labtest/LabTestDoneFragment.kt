@@ -8,6 +8,8 @@ package nl.rijksoverheid.en.labtest
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
@@ -20,6 +22,8 @@ import nl.rijksoverheid.en.databinding.FragmentListBinding
 class LabTestDoneFragment : BaseFragment(R.layout.fragment_list) {
     private val args: LabTestDoneFragmentArgs by navArgs()
     private val adapter = GroupAdapter<GroupieViewHolder>()
+
+    private val labTestDoneViewModel: LabTestDoneViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +45,16 @@ class LabTestDoneFragment : BaseFragment(R.layout.fragment_list) {
             setNavigationIcon(R.drawable.ic_close)
             setNavigationContentDescription(R.string.cd_close)
         }
-        adapter.add(
-            LabTestDoneSection(args.generatedKey) {
-                findNavController().popBackStack()
-            }
-        )
+
+        viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
+            val hasIndependentKeySharing = labTestDoneViewModel.hasIndependentKeySharing()
+            adapter.add(
+                LabTestDoneSection(args.generatedKey, hasIndependentKeySharing) {
+                    findNavController().popBackStack()
+                }
+            )
+        }
+
         binding.content.adapter = adapter
     }
 }

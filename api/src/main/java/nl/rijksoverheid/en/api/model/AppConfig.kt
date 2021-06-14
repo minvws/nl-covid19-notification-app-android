@@ -15,6 +15,7 @@ private const val DEFAULT_MIN_REQUEST_SIZE_BYTES = 1800L
 private const val DEFAULT_MAX_REQUEST_SIZE_BYTES = 17000L
 private const val DEFAULT_APPOINTMENT_PHONE_NUMBER = "0800-1202"
 private const val DEACTIVATED = "deactivated"
+private const val DEFAULT_SHARE_KEY_URL = "https://www.coronatest.nl"
 
 @JsonClass(generateAdapter = true)
 data class AppConfig(
@@ -24,8 +25,14 @@ data class AppConfig(
     @Json(name = "requestMinimumSize") val requestMinimumSize: Long = DEFAULT_MIN_REQUEST_SIZE_BYTES,
     @Json(name = "requestMaximumSize") val requestMaximumSize: Long = DEFAULT_MAX_REQUEST_SIZE_BYTES,
     @Json(name = "coronaMelderDeactivated") val coronaMelderDeactivated: String? = null,
-    @Json(name = "appointmentPhoneNumber") val appointmentPhoneNumber: String = DEFAULT_APPOINTMENT_PHONE_NUMBER
+    @Json(name = "appointmentPhoneNumber") val appointmentPhoneNumber: String = DEFAULT_APPOINTMENT_PHONE_NUMBER,
+    @Json(name = "shareKeyURL") val shareKeyURL: String = DEFAULT_SHARE_KEY_URL,
+    @Json(name = "featureFlags") val featureFlags: List<FeatureFlag> = emptyList()
 ) {
     val deactivated: Boolean
         get() = coronaMelderDeactivated == DEACTIVATED
+
+    fun hasFeature(featureFlagOption: FeatureFlagOption) = featureFlags.any {
+        it.id == featureFlagOption.id && it.featureEnabled
+    }
 }
