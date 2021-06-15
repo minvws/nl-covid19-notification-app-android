@@ -28,10 +28,16 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
-
         <action
             android:id="@+id/action_update_play_services"
             app:destination="@id/nav_update_google_play_services"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+        <action
+            android:id="@+id/action_key_sharing_options"
+            app:destination="@id/nav_key_sharing_options"
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
@@ -57,7 +63,6 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
-
         <action
             android:id="@+id/action_about"
             app:destination="@id/nav_about"
@@ -75,7 +80,6 @@
         <action
             android:id="@+id/action_remove_exposed_message"
             app:destination="@id/nav_remove_exposed_message_dialog" />
-
         <action
             android:id="@+id/action_enable_location_services"
             app:destination="@id/nav_location_services_required"
@@ -83,7 +87,6 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
-
         <action
             android:id="@+id/action_settings"
             app:destination="@id/nav_settings"
@@ -91,7 +94,6 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
-
         <action
             android:id="@+id/action_nav_internet_required"
             app:destination="@id/nav_internet_required"
@@ -236,6 +238,15 @@
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_key_sharing_options"
+        android:name="nl.rijksoverheid.en.labtest.KeyShareOptionsFragment"
+        android:label="KeyShareOptionsFragment"
+        tools:layout="@layout/fragment_list">
+
+    </fragment>
+
     <fragment
         android:id="@+id/nav_lab_test"
         android:name="nl.rijksoverheid.en.labtest.LabTestFragment"
