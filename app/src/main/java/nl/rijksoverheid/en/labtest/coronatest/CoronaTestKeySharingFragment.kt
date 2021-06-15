@@ -1,28 +1,26 @@
 /*
- * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *  SPDX-License-Identifier: EUPL-1.2
+ *   SPDX-License-Identifier: EUPL-1.2
+ *
  */
-package nl.rijksoverheid.en.labtest
+
+package nl.rijksoverheid.en.labtest.coronatest
 
 import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.IntentSender
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -30,19 +28,22 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItemId
-import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
+import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.labtest.LabTestViewModel
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.IllustrationSpaceDecoration
 import timber.log.Timber
 
-class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
+class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
     private val labViewModel: LabTestViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
-    private val section = LabTestSection(
+    private val section = CoronaTestKeySharingSection(
         retry = { labViewModel.retry() },
         requestConsent = { viewModel.requestEnableNotifications() },
-        copy = ::copyToClipboard
+        openCoronaTestWebsite = {},
+        copy = ::copyToClipboard,
+        finish = ::finishCoronaTestKeySharing
     )
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
 
@@ -51,63 +52,39 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
             if (result.resultCode == Activity.RESULT_OK) labViewModel.upload()
         }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        exitTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentListWithButtonBinding.bind(view)
+        val binding = FragmentListBinding.bind(view)
 
-        binding.toolbar.setTitle(R.string.lab_test_toolbar_title)
+        binding.toolbar.setTitle(R.string.lab_test_generic_toolbar_title)
         binding.content.addItemDecoration(IllustrationSpaceDecoration())
         binding.content.adapter = adapter
 
         adapter.setOnItemClickListener { _, _ ->
             findNavController().navigateCatchingErrors(
-                LabTestFragmentDirections.actionHowItWorks(FAQItemId.UPLOAD_KEYS),
+                CoronaTestKeySharingFragmentDirections.actionHowItWorks(FAQItemId.UPLOAD_KEYS),
                 FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
             )
         }
 
         labViewModel.keyState.observe(viewLifecycleOwner) { keyState ->
             section.update(keyState)
-            binding.button.isEnabled =
-                getContinueButtonEnabledState(keyState, section.notificationsState)
+            //binding.button.isEnabled =
+            //    getContinueButtonEnabledState(keyState, section.notificationsState)
         }
         viewModel.notificationState.observe(viewLifecycleOwner) { notificationsState ->
             section.update(notificationsState)
-            binding.button.isEnabled =
-                getContinueButtonEnabledState(section.keyState, notificationsState)
+            //binding.button.isEnabled =
+            //    getContinueButtonEnabledState(section.keyState, notificationsState)
         }
 
         labViewModel.uploadResult.observe(
             viewLifecycleOwner,
             EventObserver {
-                when (it) {
-                    is LabTestViewModel.UploadResult.Success -> findNavController().navigateCatchingErrors(
-                        LabTestFragmentDirections.actionLabTestDone(it.usedKey),
-                        FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
-                    )
-                    is LabTestViewModel.UploadResult.RequestConsent -> requestConsent(it.resolution.intentSender)
-                    LabTestViewModel.UploadResult.Error -> {
-                        Toast.makeText(context, R.string.lab_test_upload_error, Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
+
             }
         )
-
-        binding.button.apply {
-            setText(R.string.lab_test_button)
-            setOnClickListener {
-                labViewModel.upload()
-            }
-        }
     }
 
     override fun onStart() {
@@ -115,17 +92,12 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
         labViewModel.retry()
     }
 
-    private fun getContinueButtonEnabledState(
-        keyState: LabTestViewModel.KeyState,
-        notificationsState: ExposureNotificationsViewModel.NotificationsState
-    ): Boolean {
-
-        return keyState is LabTestViewModel.KeyState.Success &&
-            notificationsState in listOf(
-            ExposureNotificationsViewModel.NotificationsState.Enabled,
-            ExposureNotificationsViewModel.NotificationsState.BluetoothDisabled,
-            ExposureNotificationsViewModel.NotificationsState.LocationPreconditionNotSatisfied
-        )
+    private fun finishCoronaTestKeySharing() {
+        labViewModel.usedKey?.let { key ->
+            findNavController().navigateCatchingErrors(
+                CoronaTestKeySharingFragmentDirections.actionLabTestDone(key)
+            )
+        }
     }
 
     private fun requestConsent(intentSender: IntentSender) {

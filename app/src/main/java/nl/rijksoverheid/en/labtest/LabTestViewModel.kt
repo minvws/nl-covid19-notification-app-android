@@ -23,7 +23,7 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
 
     val uploadResult: LiveData<Event<UploadResult>> = MutableLiveData()
 
-    private var usedKey: String? = null
+    var usedKey: String? = null
 
     private val refresh = MutableLiveData<Unit>()
     val keyState: LiveData<KeyState> = refresh.switchMap {

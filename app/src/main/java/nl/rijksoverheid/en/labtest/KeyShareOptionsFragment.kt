@@ -8,12 +8,14 @@ package nl.rijksoverheid.en.labtest
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
 class KeyShareOptionsFragment : BaseFragment(R.layout.fragment_list) {
 
@@ -31,8 +33,18 @@ class KeyShareOptionsFragment : BaseFragment(R.layout.fragment_list) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentListBinding.bind(view)
-
         binding.toolbar.setTitle(R.string.lab_test_generic_toolbar_title)
         binding.content.adapter = adapter
+
+        adapter.setOnItemClickListener { item, _ ->
+            when(item) {
+                KeyShareOptionItem.CoronaTest -> findNavController().navigateCatchingErrors(
+                    KeyShareOptionsFragmentDirections.actionCoronaTestKeySharing()
+                )
+                KeyShareOptionItem.GGD -> findNavController().navigateCatchingErrors(
+                    KeyShareOptionsFragmentDirections.actionLabTest()
+                )
+            }
+        }
     }
 }
