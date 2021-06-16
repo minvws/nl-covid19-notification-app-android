@@ -151,7 +151,10 @@ class StatusViewModel(
         getErrorState: suspend () -> NotificationState.Error?
     ): List<NotificationState> {
         val notificationStates = mutableListOf<NotificationState>()
+        val errorState = getErrorState()
+
         when {
+            errorState is NotificationState.Error.NotificationsDisabled -> errorState
             lastExposureDate == null -> null
             lastExposureDate.isBefore(
                 LocalDate.now(clock).minusDays(14)
@@ -163,7 +166,7 @@ class StatusViewModel(
                 )
             pausedState is Settings.PausedState.Paused ->
                 NotificationState.Paused(pausedState.pausedUntil)
-            else -> getErrorState()
+            else -> errorState
         }?.let { notificationStates.add(it) }
 
         // Add ErrorState.BatteryOptimizationEnabled independently from other error states if needed
@@ -180,8 +183,16 @@ class StatusViewModel(
         StatusResult.Disabled,
         is StatusResult.Unavailable,
         is StatusResult.UnknownError -> NotificationState.Error.ConsentRequired
-        StatusResult.BluetoothDisabled -> if (keyProcessingOverdue) NotificationState.Error.ConsentRequired else NotificationState.Error.LocationDisabled
-        StatusResult.LocationPreconditionNotSatisfied -> if (keyProcessingOverdue) NotificationState.Error.ConsentRequired else NotificationState.Error.BluetoothDisabled
+        StatusResult.BluetoothDisabled -> {
+            if (keyProcessingOverdue)
+                NotificationState.Error.ConsentRequired
+            else NotificationState.Error.BluetoothDisabled
+        }
+        StatusResult.LocationPreconditionNotSatisfied -> {
+            if (keyProcessingOverdue)
+                NotificationState.Error.ConsentRequired
+            else NotificationState.Error.LocationDisabled
+        }
         StatusResult.Enabled -> {
             when {
                 !exposureNotificationsEnabled -> NotificationState.Error.NotificationsDisabled
