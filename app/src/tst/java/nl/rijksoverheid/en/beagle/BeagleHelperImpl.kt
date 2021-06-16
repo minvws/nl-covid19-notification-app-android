@@ -16,6 +16,7 @@ import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
+import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
@@ -25,6 +26,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.api.model.FeatureFlag
+import nl.rijksoverheid.en.api.model.FeatureFlagOption
 import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
 import java.time.format.DateTimeFormatter
 
@@ -33,7 +36,13 @@ object BeagleHelperImpl : BeagleHelper {
     override var useDefaultGuidance: Boolean = false
         private set
 
+    override var useDebugFeatureFlags: Boolean = false
+        private set
+
     override var testExposureDaysAgo: Int = 5
+        private set
+
+    override var debugFeatureFlags: List<FeatureFlag> = emptyList()
         private set
 
     private const val testNotificationExposureDaysAgoId = "testNotificationExposureDaysAgo"
@@ -59,6 +68,22 @@ object BeagleHelperImpl : BeagleHelper {
                 onValueChanged = {
                     useDefaultGuidance = it
                 }
+            ),
+            SwitchModule(
+                text = "Use debug featureFlags",
+                onValueChanged = {
+                    useDebugFeatureFlags = it
+                }
+            ),
+            MultipleSelectionListModule(
+                title = "Debug feature flags",
+                items = FeatureFlagOption.values().map { FeatureFlagGroupOption(it) },
+                onSelectionChanged = { featureFlagGroupOptions ->
+                    debugFeatureFlags = featureFlagGroupOptions.map {
+                        FeatureFlag(it.featureFlagOption.id, true)
+                    }
+                },
+                initiallySelectedItemIds = emptySet()
             ),
             TextModule("Exposures", TextModule.Type.SECTION_HEADER),
             SingleSelectionListModule(
@@ -100,5 +125,12 @@ object BeagleHelperImpl : BeagleHelper {
         val value: Int
     ) : BeagleListItemContract {
         override val title: Text = Text.CharSequence(value.toString())
+    }
+
+    data class FeatureFlagGroupOption(
+        val featureFlagOption: FeatureFlagOption
+    ) : BeagleListItemContract {
+        override val title: Text = Text.CharSequence(featureFlagOption.id)
+        override val id: String = featureFlagOption.id
     }
 }

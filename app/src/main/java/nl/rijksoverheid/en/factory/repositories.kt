@@ -79,7 +79,11 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
         },
         createAppLifecycleManager(context),
         statusCache,
-        AppConfigManager(service)
+        AppConfigManager(
+            service,
+            BeagleHelperImpl.useDebugFeatureFlags,
+            BeagleHelperImpl.debugFeatureFlags
+        )
     )
 }
 
@@ -122,7 +126,11 @@ private fun createLabTestService(context: Context): LabTestService {
 fun createAppConfigManager(context: Context): AppConfigManager {
     val service =
         cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE).also { cdnService = it }
-    return AppConfigManager(service)
+    return AppConfigManager(
+        service,
+        BeagleHelperImpl.useDebugFeatureFlags,
+        BeagleHelperImpl.debugFeatureFlags
+    )
 }
 
 fun createAppLifecycleManager(context: Context): AppLifecycleManager {

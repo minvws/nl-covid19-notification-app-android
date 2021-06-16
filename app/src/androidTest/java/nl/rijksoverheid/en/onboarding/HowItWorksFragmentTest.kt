@@ -115,7 +115,7 @@ class HowItWorksFragmentTest : BaseInstrumentationTest() {
         },
         AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)) {},
         StatusCache(notificationsPreferences),
-        AppConfigManager(service)
+        AppConfigManager(service, false, emptyList())
     )
     private val settingsRepository = SettingsRepository(
         context, nl.rijksoverheid.en.settings.Settings(context, settingsPreferences)

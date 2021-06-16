@@ -7,11 +7,14 @@
 package nl.rijksoverheid.en.beagle
 
 import android.app.Application
+import nl.rijksoverheid.en.api.model.FeatureFlag
 
 object BeagleHelperImpl : BeagleHelper {
 
     override val useDefaultGuidance: Boolean = false
+    override val useDebugFeatureFlags: Boolean = false
     override val testExposureDaysAgo: Int = 5
+    override val debugFeatureFlags: List<FeatureFlag> = emptyList()
 
     override fun initialize(application: Application) {
         // no-op
