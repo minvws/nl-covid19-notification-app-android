@@ -161,6 +161,52 @@ class StatusViewModelTest {
     }
 
     @Test
+    fun `NotificationsDisabled without being exposed `() = runBlocking {
+        val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
+        val notificationsEnabled = false
+
+        Mockito.`when`(exposureNotificationsRepository.getStatus())
+            .thenReturn(flowOf(StatusResult.Enabled))
+        Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+            .thenReturn(flowOf(Settings.PausedState.Enabled))
+        Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+            .thenReturn(flowOf(clock.millis()))
+        Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+            .thenReturn(flowOf(clock.millis()))
+        Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+            .thenReturn(flowOf(null))
+        Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+            .thenReturn(null)
+        Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+            .thenReturn(false)
+        Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
+            .thenReturn(flowOf(notificationsEnabled))
+
+        val statusViewModel = StatusViewModel(
+            onboardingRepository,
+            exposureNotificationsRepository,
+            notificationsRepository,
+            settingsRepository,
+            appConfigManager,
+            clock
+        )
+
+        statusViewModel.headerState.observeForTesting {
+            Assert.assertEquals(
+                StatusViewModel.HeaderState.Active,
+                it.values.first()
+            )
+        }
+
+        statusViewModel.notificationState.observeForTesting {
+            Assert.assertEquals(
+                listOf(StatusViewModel.NotificationState.Error.NotificationsDisabled),
+                it.values.first()
+            )
+        }
+    }
+
+    @Test
     fun `headerState exposed with syncIssues`() = runBlocking {
         val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
         val exposureDate = LocalDate.now().minusDays(1)

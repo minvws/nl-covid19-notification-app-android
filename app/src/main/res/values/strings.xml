@@ -333,7 +333,7 @@
     <string name="faq_upload_keys_generic_paragraph_2">After your GGD key is checked, the codes your phone has sent to other phones in the last 14 days are shared. \n\nBy doing so the people who you were near to while you were contagious are notified. But only if these people also use the app.</string>
     <string name="lab_test_generic_toolbar_title">Send notification</string>
     <string name="lab_test_done_generic_header_1">Thanks for sending the notification</string>
-    <string name="lab_test_done_generic_paragraph_2">The GGD will tell you what you can do to prevent infecting others.  Take care, and get well soon.</string>
+    <string name="lab_test_done_generic_paragraph_2">The GGD will tell you what you can do to prevent infecting others. Take care, and get well soon.</string>
     <string name="lab_test_done_generic_box_4">The notification is only sent if you\'ve submitted your GGD key to the GGD or via coronatest.nl.</string>
     <string name="status_error_notifications_disabled_headline">Notifications are turned <u>off</u></string>
 </resources>

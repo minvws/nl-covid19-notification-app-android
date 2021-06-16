@@ -332,10 +332,10 @@
     <string name="coronatest_finish_confirmation_text">Ați introdus cheia GGD pe coronatest.nl și ați primit o notificare? Dacă răspunsul este da atunci puteți încheia.</string>
     <string name="coronatest_finish_confirmation_accept">Da, încheiere</string>
     <string name="coronatest_finish_confirmation_cancel">Anulare</string>
-    <string name="coronatest_step_3_nodeeplink">Mergeți (înapoi) la coronatest.nl și introducețu cheia GGD. În acest fel avertizați persoanele în apropierea cărora v-ați aflat.</string>
+    <string name="coronatest_step_3_nodeeplink">Mergeți (înapoi) la coronatest.nl și introduceți cheia GGD. În acest fel avertizați persoanele în apropierea cărora v-ați aflat.</string>
     <string name="faq_upload_keys_generic_paragraph_1">Puteți trimite o notificare altora numai dacă ați fost testat de GGD și a rezultat că aveți coronavirus. Notificarea o trimiteți prin GGD dacă sunați la ei sau prin intermediul site-ului coronatest.nl.\n\n\nCând doriți să transmiteți o notificare, vi se va cere cheia GGD. Această cheie o găsiți în aplicație. Prin această cheie ne asigurăm că doar persoanele cu adevărat infectate pot trimite notificări.</string>
     <string name="faq_upload_keys_generic_paragraph_2">După ce cheia dvs. GGD a fost verificată, codurile pe care telefonul dvs. le-a trimis către alte telefoane în ultimele 14 zile vor fi partajate.\n\n\nAstfel, persoanele în apropierea cărora v-ați aflat când erați contagios pot primi o notificare. Acest lucru este posibil doar dacă aceste persoane folosesc și aplicația.</string>
-    <string name="lab_test_generic_toolbar_title">Trimitere notificare</string>
+    <string name="lab_test_generic_toolbar_title">Trimitere de notificare</string>
     <string name="lab_test_done_generic_header_1">Vă mulțumim pentru trimiterea notificării</string>
     <string name="lab_test_done_generic_paragraph_2">GGD vă va spune ce trebuie sa faceți în continuare pentru nu infecta și alte persoane. Însănătoșire grabnică!</string>
     <string name="lab_test_done_generic_box_4">Notificarea este trimisă doar dacă ați transmis cheia la GGd sau prin coronatest.nl</string>
