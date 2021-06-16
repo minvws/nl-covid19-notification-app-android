@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:locale="en">
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="faq_notification_paragraph_1">You get a notification after you\'ve been exposed to a higher risk of infection. This happens if you\'ve spent at least 15 minutes near someone who has coronavirus. This could be one or more people. But only if they also use the app.\n\nWhether or not you get a notification depends on the strength of the Bluetooth signal and the duration of your encounter. Did someone cycle past you on the street? Then you won\'t get a notification later. Yes, the Bluetooth signal was strong because you were near each other. But only for a short time. So your risk of infection is very low.\n\nWere you near someone on the train or in the office? Then you could get a notification later. The Bluetooth signal was strong and you were near each other for a longer period of time.</string>
     <string name="app_name">CoronaMelder</string>
     <!-- used to determine language for this translation, independent of system settings -->
@@ -135,7 +134,7 @@
     <string name="faq_anonymous_paragraph_1">The app exchanges random codes with other phones. These codes don\'t include any personal or location data. The code exchange happens when you\'re near a person who also has the app.</string>
     <string name="faq_anonymous_paragraph_2">Was this person later found to have coronavirus? Together with the GGD, they can add their code to a list of codes of infected people. By doing so the infection can be confirmed.\n\nAfter this, a notification is sent to all people who have these codes on their phones. This notification only says when they\'ve been near an infected person. Not who this person is and where they\'ve encountered them.</string>
     <string name="faq_upload_keys_paragraph_1">You can only send a notification to others if you were tested and have coronavirus. In this case, you\'ll get a call from the GGD with the test results. \n\nDuring this call a GGD employee checks your GGD key. You can find this key in the app. Using this method we make sure only people who are really infected can send notifications to others.</string>
-    <string name="faq_upload_keys_paragraph_2">"After your GGD key is checked, you can share the codes your phone has sent to other phones in the last 14 days.&lt;br&gt;&lt;br&gt;By doing so, the people who were near you while you were contagious are notified. But only if these people also use the app."</string>
+    <string name="faq_upload_keys_paragraph_2">After your GGD key is checked, you can share the codes your phone has sent to other phones in the last 14 days.&lt;br&gt;&lt;br&gt;By doing so, the people who were near you while you were contagious are notified. But only if these people also use the app.</string>
     <string name="faq_bluetooth_paragraph_1">"Yes, but the signal would be very weak. Bluetooth works best when your phone is in the same room as another person's phone.\n\nSo the chance of you getting your neighbours' Bluetooth signal is very low.\n\nThat also means you probably won't get a notification if your neighbour has coronavirus and you haven't been in the same room."</string>
     <string name="faq_power_usage_paragraph_1">The app uses Bluetooth Low Energy — a special kind of Bluetooth that only uses a tiny amount of power. How fast this drains your battery depends on your phone.</string>
     <string name="faq_deletion_paragraph_1">"You can delete the Bluetooth files saved by the app yourself. Press the button below and then press &lt;strong&gt;Delete random IDs&lt;/strong&gt;.\n\nIf you don't want the app to save new Bluetooth data, delete the app."</string>
@@ -157,7 +156,7 @@
     <string name="share_content">I\'m helping to keep the coronavirus under control with CoronaMelder. Will you join me? %1$s</string>
     <string name="share_title">Share the app with others</string>
     <string name="lab_test_toolbar_title">GGD key</string>
-    <string name="lab_test_paragraph_1"><![CDATA[Were you tested and found to have coronavirus? A GGD employee calls you. This employee helps you protect the people that were near you. You need your GGD key for this call. <a href="">How does this work?</a>]]></string>
+    <string name="lab_test_paragraph_1"><![CDATA[Were you tested and found to have coronavirus? A GGD employee will call you. This employee helps you protect the people that were near you. You need your GGD key for this call. <a href="">How does this work?</a>]]></string>
     <string name="lab_test_step_1">Give this GGD key to the GGD employee.</string>
     <string name="lab_test_token_loading">Retrieving key</string>
     <string name="lab_test_token_error">The app couldn\'t retrieve the GGD key. Please check your internet connection.</string>
@@ -305,9 +304,36 @@
     <string name="status_error_location"><![CDATA[Your location settings are not enabled. The app is <b>not</b> tracking new encounters. The app <b>does</b> still check if people you\'ve encountered later turn out to have coronavirus.]]></string>
     <string name="status_error_location_card">Your location settings are not enabled. The app is not tracking new encounters.</string>
     <string name="status_error_location_action">Turn on your location</string>
-    <string name="status_error_notifications_disabled_headline">Notifications are turned <u>off</u></string>
-    <string name="status_old_exposure_card_title">Contact more than 14 days ago</string>
+    <string name="status_old_exposure_card_title">Contact over 14 days ago</string>
     <string name="status_old_exposure_card_message">On %1$s (%2$s) you were near someone with coronavirus</string>
     <string name="status_old_exposure_card_action_more_info">More information</string>
     <string name="status_old_exposure_card_action_delete">Delete</string>
+    <string name="post_keys_options_header">Choose how you want to send a notification</string>
+    <string name="post_keys_options_description">You can only send a notification if a corona test shows you\'ve been infected.</string>
+    <string name="post_keys_options_coronatest_title">Via coronatest.nl</string>
+    <string name="post_keys_options_coronatest_subtitle">This is only possible if you receive the test result via coronatest.nl</string>
+    <string name="post_keys_options_ggd_title">If the GGD calls you</string>
+    <string name="post_keys_options_ggd_subtitle">This is only possible if you\'re on the phone with the GGD right now</string>
+    <string name="coronatest_description"><![CDATA[Discovering that you have corona through coronatest.nl? Then you can use CoronaMelder to send a notification immediately. <a href="">How does this work?</a>]]></string>
+    <string name="coronatest_step_1">Share the codes created by CoronaMelder</string>
+    <string name="coronatest_step_2">Write down or copy your GGD key</string>
+    <string name="coronatest_step_3">Enter your GGD key on coronatest.nl. This way you warn others you\'ve been near to</string>
+    <string name="coronatest_step_4">Entered your GGD key?</string>
+    <string name="coronatest_step_4_subtitle">You\'re all done. People you\'ve been near to, while you were contagious, will receive a notification. This happens within 8 hours.</string>
+    <string name="coronatest_share_keys">Share codes</string>
+    <string name="coronatest_keys_shared">Codes shared</string>
+    <string name="coronatest_webpage_button">To coronatest.nl</string>
+    <string name="coronatest_finish_button">I am done</string>
+    <string name="coronatest_finish_confirmation_title">Are you sure you\'re done?</string>
+    <string name="coronatest_finish_confirmation_text">Have you entered the GGD key on coronatest.nl and received a confirmation? If so, you can finish.</string>
+    <string name="coronatest_finish_confirmation_accept">Yes, finish</string>
+    <string name="coronatest_finish_confirmation_cancel">Cancel</string>
+    <string name="coronatest_step_3_nodeeplink">Go (back) to coronatest.nl and enter your GGD key. This way you warn others you\'ve been near to.</string>
+    <string name="faq_upload_keys_generic_paragraph_1">You can only send a notification to others if you were tested by the GGD and found to have coronavirus. You\'ll send the notification together with the GGD when they call you, or you can do it yourself via coronatest.nl.\n\nIf you want to send a notification, you\'ll be asked for your GGD key. You can find it in the app. A GGD key ensures only people who are truly infected can send notifications.</string>
+    <string name="faq_upload_keys_generic_paragraph_2">After your GGD key is checked, the codes your phone has sent to other phones in the last 14 days are shared. \n\nBy doing so the people who you were near to while you were contagious are notified. But only if these people also use the app.</string>
+    <string name="lab_test_generic_toolbar_title">Send notification</string>
+    <string name="lab_test_done_generic_header_1">Thanks for sending the notification</string>
+    <string name="lab_test_done_generic_paragraph_2">The GGD will tell you what you can do to prevent infecting others. Take care, and get well soon.</string>
+    <string name="lab_test_done_generic_box_4">The notification is only sent if you\'ve submitted your GGD key to the GGD or via coronatest.nl.</string>
+    <string name="status_error_notifications_disabled_headline">Notifications are turned <u>off</u></string>
 </resources>
