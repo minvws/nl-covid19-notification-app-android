@@ -6,45 +6,17 @@
  */
 package nl.rijksoverheid.en.status
 
-import android.view.View
-import android.widget.Button
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.core.view.AccessibilityDelegateCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.databinding.ItemStatusActionBinding
-import nl.rijksoverheid.en.items.BaseBindableItem
+import nl.rijksoverheid.en.items.ActionItem
 
 sealed class StatusActionItem(
-    @DrawableRes private val icon: Int,
-    @StringRes private val title: Int,
-    @StringRes private val subtitle: Int
-) : BaseBindableItem<ItemStatusActionBinding>() {
-    override fun getLayout() = R.layout.item_status_action
-    override fun isClickable() = true
-
-    override fun bind(viewBinding: ItemStatusActionBinding, position: Int) {
-        ViewCompat.setAccessibilityDelegate(
-            viewBinding.container,
-            object : AccessibilityDelegateCompat() {
-                override fun onInitializeAccessibilityNodeInfo(
-                    host: View,
-                    info: AccessibilityNodeInfoCompat
-                ) {
-                    super.onInitializeAccessibilityNodeInfo(host, info)
-                    info.contentDescription =
-                        "${viewBinding.statusTitle.text}\n${viewBinding.statusSubtitle.text}"
-                    info.className = Button::class.java.name
-                }
-            }
-        )
-        viewBinding.infoIcon = icon
-        viewBinding.infoTitle = title
-        viewBinding.infoSubtitle = subtitle
-    }
+    @DrawableRes icon: Int,
+    @StringRes title: Int,
+    @StringRes subtitle: Int
+) : ActionItem(icon, title, subtitle) {
 
     object About : StatusActionItem(
         R.drawable.ic_info,

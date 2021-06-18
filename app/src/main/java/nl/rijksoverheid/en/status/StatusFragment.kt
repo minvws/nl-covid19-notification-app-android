@@ -88,9 +88,7 @@ class StatusFragment @JvmOverloads constructor(
                         )
                     }
                 }
-                StatusActionItem.LabTest -> findNavController().navigateCatchingErrors(
-                    StatusFragmentDirections.actionLabTest()
-                )
+                StatusActionItem.LabTest -> navigateToSharingKeys()
                 StatusActionItem.Settings -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionSettings()
                 )
@@ -127,7 +125,8 @@ class StatusFragment @JvmOverloads constructor(
                             }
                         }
                     }
-                    StatusViewModel.NotificationState.BatteryOptimizationEnabled -> disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest()
+                    StatusViewModel.NotificationState.BatteryOptimizationEnabled ->
+                        disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest()
                     StatusViewModel.NotificationState.Error.BluetoothDisabled -> requestEnableBluetooth()
                     StatusViewModel.NotificationState.Error.ConsentRequired -> resetAndRequestEnableNotifications()
                     StatusViewModel.NotificationState.Error.LocationDisabled -> requestEnableLocationServices()
@@ -217,6 +216,15 @@ class StatusFragment @JvmOverloads constructor(
 
     private fun navigateToInternetRequiredFragment() {
         findNavController().navigateCatchingErrors(StatusFragmentDirections.actionNavInternetRequired())
+    }
+
+    private fun navigateToSharingKeys() {
+        viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
+            if (statusViewModel.hasIndependentKeySharing())
+                findNavController().navigateCatchingErrors(StatusFragmentDirections.actionKeySharingOptions())
+            else
+                findNavController().navigateCatchingErrors(StatusFragmentDirections.actionLabTest())
+        }
     }
 
     private fun navigateToPostNotification(

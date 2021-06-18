@@ -27,5 +27,5 @@
         android:layout_marginBottom="8dp"
         android:text="@{text}"
         android:textAppearance="?attr/textAppearanceBody1"
-        tools:text="@string/post_notification_paragraph_2" />
+        tools:text="@string/faq_reason_paragraph_1" />
 </layout>
