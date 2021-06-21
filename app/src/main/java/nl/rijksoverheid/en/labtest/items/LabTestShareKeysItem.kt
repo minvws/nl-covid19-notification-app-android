@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.labtest.items
 
+import androidx.core.view.isVisible
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemLabTestShareKeysBinding
@@ -30,6 +31,12 @@ class LabTestShareKeysItem(
         viewBinding.shareKeysButton.isEnabled =
             validPreconditions && uploadResult !is UploadResult.Success
         viewBinding.shareKeysButton.setOnClickListener { buttonClickListener.invoke() }
+        viewBinding.shareKeysButton.isVisible = uploadResult !is UploadResult.Error
+        viewBinding.errorMessage.isVisible = uploadResult is UploadResult.Error
+        viewBinding.retryButton.isVisible = uploadResult is UploadResult.Error
+        viewBinding.retryButton.setOnClickListener {
+            buttonClickListener.invoke()
+        }
     }
 
     override fun isSameAs(other: Item<*>): Boolean = other is LabTestShareKeysItem

@@ -268,8 +268,8 @@
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
-            app:popUpTo="@id/nav_lab_test"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/nav_status"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_how_it_works"
             app:destination="@id/nav_about_detail" />
@@ -287,8 +287,8 @@
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
-            app:popUpTo="@id/nav_lab_test"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/nav_status"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_how_it_works"
             app:destination="@id/nav_about_detail" />

@@ -20,6 +20,7 @@ import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
 import nl.rijksoverheid.en.labtest.LabTestViewModel.UploadResult
 import nl.rijksoverheid.en.labtest.items.LabTestButtonItem
 import nl.rijksoverheid.en.labtest.items.LabTestShareKeysItem
+import nl.rijksoverheid.en.labtest.items.LabTestStepDescriptionItem
 
 class CoronaTestKeySharingSection(
     private val retry: () -> Unit,
@@ -70,6 +71,7 @@ class CoronaTestKeySharingSection(
                 LabTestStepItem(R.string.coronatest_step_3, 3),
                 LabTestButtonItem(R.string.coronatest_webpage_button, openCoronaTestWebsite, uploadResult is UploadResult.Success),
                 LabTestStepItem(R.string.coronatest_step_4, 4, isLastElement = true),
+                LabTestStepDescriptionItem(R.string.coronatest_step_4_subtitle),
                 ButtonItem(
                     text = R.string.coronatest_finish_button,
                     buttonClickListener = finish,

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
   ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
   ~
@@ -8,29 +7,18 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
-            name="viewState"
-            type="nl.rijksoverheid.en.labtest.items.LabTestButtonItem.ViewState" />
+            name="text"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <View
-            android:layout_width="4dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginEnd="12dp"
-            android:background="@color/gray_lighter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/circle_counter"
@@ -47,22 +35,21 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText" />
 
-        <Button
+        <TextView
+            android:id="@+id/description"
+            android:textDirection="locale"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:enabled="@{viewState.enabled}"
-            android:onClick="@{_ -> viewState.click.invoke()}"
-            android:text="@{viewState.text}"
-            tools:text="@string/request_test_button_website"
+            android:text="@{text}"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintStart_toEndOf="@id/circle_counter"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/circle_counter"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            tools:text="@string/coronatest_step_4_subtitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
