@@ -11,12 +11,14 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import com.xwray.groupie.Item
+import com.xwray.groupie.viewbinding.GroupieViewHolder
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusHeaderBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
+import nl.rijksoverheid.en.util.SimpleCountdownTimer
 import nl.rijksoverheid.en.util.formatDaysSince
-import nl.rijksoverheid.en.util.formatDuration
 import nl.rijksoverheid.en.util.formatExposureDate
+import nl.rijksoverheid.en.util.formatPauseDuration
 import nl.rijksoverheid.en.util.fromHtmlWithCustomReplacements
 import java.time.LocalDateTime
 
@@ -38,7 +40,8 @@ class StatusHeaderItem(
         @StringRes val resetActionLabel: Int? = null,
         val enableAction: () -> Unit = {},
         val whatsNextAction: () -> Unit = {},
-        val resetAction: () -> Unit = {}
+        val resetAction: () -> Unit = {},
+        val refreshDescriptionUntil: LocalDateTime? = null
     ) {
         abstract fun getDescription(context: Context): CharSequence
     }
@@ -65,7 +68,10 @@ class StatusHeaderItem(
                 enableAction = primaryAction
             ) {
                 override fun getDescription(context: Context) =
-                    fromHtmlWithCustomReplacements(context, context.getString(R.string.status_error_bluetooth))
+                    fromHtmlWithCustomReplacements(
+                        context,
+                        context.getString(R.string.status_error_bluetooth)
+                    )
             }
         StatusViewModel.HeaderState.LocationDisabled ->
             object : HeaderViewState(
@@ -77,7 +83,10 @@ class StatusHeaderItem(
                 enableAction = primaryAction
             ) {
                 override fun getDescription(context: Context) =
-                    fromHtmlWithCustomReplacements(context, context.getString(R.string.status_error_location))
+                    fromHtmlWithCustomReplacements(
+                        context,
+                        context.getString(R.string.status_error_location)
+                    )
             }
         StatusViewModel.HeaderState.Disabled ->
             object : HeaderViewState(
@@ -89,7 +98,10 @@ class StatusHeaderItem(
                 enableAction = primaryAction
             ) {
                 override fun getDescription(context: Context) =
-                    context.getString(R.string.status_en_api_disabled_description, context.getString(R.string.app_name))
+                    context.getString(
+                        R.string.status_en_api_disabled_description,
+                        context.getString(R.string.app_name)
+                    )
             }
         StatusViewModel.HeaderState.SyncIssues ->
             object : HeaderViewState(
@@ -100,7 +112,8 @@ class StatusHeaderItem(
                 enableActionLabel = R.string.status_error_action_sync_issues,
                 enableAction = primaryAction
             ) {
-                override fun getDescription(context: Context) = context.getString(R.string.status_error_sync_issues)
+                override fun getDescription(context: Context) =
+                    context.getString(R.string.status_error_sync_issues)
             }
         StatusViewModel.HeaderState.SyncIssuesWifiOnly ->
             object : HeaderViewState(
@@ -111,23 +124,28 @@ class StatusHeaderItem(
                 enableActionLabel = R.string.status_error_action_disable_battery_optimisation,
                 enableAction = primaryAction
             ) {
-                override fun getDescription(context: Context) = fromHtmlWithCustomReplacements(context, context.getString(R.string.status_error_sync_issues_wifi_only))
+                override fun getDescription(context: Context) = fromHtmlWithCustomReplacements(
+                    context,
+                    context.getString(R.string.status_error_sync_issues_wifi_only)
+                )
             }
-        is StatusViewModel.HeaderState.Paused ->
+        is StatusViewModel.HeaderState.Paused -> {
             object : HeaderViewState(
                 R.drawable.gradient_status_paused,
                 R.string.cd_status_paused,
-                if (headerState.pauseState.pausedUntil.isAfter(LocalDateTime.now()))
+                if (headerState.pausedUntil.isAfter(LocalDateTime.now()))
                     R.string.status_paused_headline
                 else
                     R.string.status_paused_duration_reached_headline,
-                icon = R.drawable.status_paused,
+                icon = R.drawable.ic_status_paused,
                 enableActionLabel = R.string.status_en_api_disabled_enable,
-                enableAction = primaryAction
+                enableAction = primaryAction,
+                refreshDescriptionUntil = headerState.pausedUntil
             ) {
                 override fun getDescription(context: Context) =
-                    headerState.pauseState.formatDuration(context)
+                    headerState.pausedUntil.formatPauseDuration(context)
             }
+        }
         is StatusViewModel.HeaderState.Exposed ->
             object : HeaderViewState(
                 R.drawable.gradient_status_exposure,
@@ -149,8 +167,33 @@ class StatusHeaderItem(
 
     override fun getLayout() = R.layout.item_status_header
 
+    private var refreshTimer: SimpleCountdownTimer? = null
+    private var currentViewBinding: ItemStatusHeaderBinding? = null
+
     override fun bind(viewBinding: ItemStatusHeaderBinding, position: Int) {
         viewBinding.viewState = viewState
+
+        viewState.refreshDescriptionUntil?.let {
+            if (viewBinding != currentViewBinding) {
+                refreshTimer?.cancel()
+                refreshTimer = SimpleCountdownTimer(it) {
+                    viewBinding.statusDescription.text =
+                        viewState.getDescription(viewBinding.statusDescription.context)
+                }
+                refreshTimer?.startTimer()
+                currentViewBinding = viewBinding
+            }
+        }
+    }
+
+    override fun unbind(viewHolder: GroupieViewHolder<ItemStatusHeaderBinding>) {
+        if (viewHolder.binding == currentViewBinding) {
+            refreshTimer?.let {
+                it.cancel()
+                refreshTimer = null
+            }
+        }
+        super.unbind(viewHolder)
     }
 
     override fun isSameAs(other: Item<*>): Boolean = other is StatusHeaderItem

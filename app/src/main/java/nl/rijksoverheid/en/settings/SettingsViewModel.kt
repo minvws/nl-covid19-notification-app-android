@@ -10,18 +10,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.map
 import nl.rijksoverheid.en.lifecyle.Event
 import java.time.LocalDateTime
 
 class SettingsViewModel(private val repository: SettingsRepository) : ViewModel() {
 
-    val pausedState: LiveData<Settings.PausedState> = repository.exposureNotificationsPausedState()
-        .asLiveData(viewModelScope.coroutineContext)
-
-    val exposureNotificationsPaused: LiveData<Boolean> =
-        pausedState.map { it is Settings.PausedState.Paused }
+    val pausedState: LiveData<Settings.PausedState.Paused?> = repository.exposureNotificationsPausedState().map {
+        when (it) {
+            Settings.PausedState.Enabled -> null
+            is Settings.PausedState.Paused -> it
+        }
+    }.asLiveData(viewModelScope.coroutineContext)
 
     // updated from the view
     val wifiOnly = MutableLiveData(repository.wifiOnly)

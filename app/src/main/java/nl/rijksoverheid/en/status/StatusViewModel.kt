@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -40,6 +41,8 @@ class StatusViewModel(
 
     fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
 
+    val isIgnoringBatteryOptimizations: MutableStateFlow<Boolean> = MutableStateFlow(true)
+
     val headerState = combine(
         exposureNotificationsRepository.getStatus(),
         settingsRepository.exposureNotificationsPausedState(),
@@ -66,26 +69,29 @@ class StatusViewModel(
     val exposureDetected: Boolean
         get() = headerState.value is HeaderState.Exposed
 
-    val errorState = combine(
+    val notificationState: LiveData<List<NotificationState>> = combine(
         exposureNotificationsRepository.notificationsEnabledTimestamp()
             .flatMapLatest { exposureNotificationsRepository.getStatus() },
         settingsRepository.exposureNotificationsPausedState(),
         exposureNotificationsRepository.getLastExposureDate(),
         notificationsRepository.exposureNotificationsEnabled(),
-    ) { statusResult, pausedState, lastExposureDate, exposureNotificationsEnabled ->
-        createErrorState(
-            statusResult,
+        isIgnoringBatteryOptimizations
+    ) { statusResult, pausedState, lastExposureDate, exposureNotificationsEnabled, isIgnoringBatteryOptimizations ->
+        getNotificationStates(
             lastExposureDate,
-            exposureNotificationsEnabled,
-            exposureNotificationsRepository.keyProcessingOverdue(),
-            settingsRepository.wifiOnly,
-            pausedState
+            exposureNotificationsRepository.getLastNotificationReceivedDate(),
+            pausedState,
+            isIgnoringBatteryOptimizations,
+            suspend {
+                getErrorState(
+                    statusResult,
+                    exposureNotificationsEnabled,
+                    exposureNotificationsRepository.keyProcessingOverdue(),
+                    settingsRepository.wifiOnly
+                )
+            }
         )
     }.asLiveData(viewModelScope.coroutineContext)
-
-    val pausedState: LiveData<Settings.PausedState> =
-        settingsRepository.exposureNotificationsPausedState()
-            .asLiveData(viewModelScope.coroutineContext)
 
     val lastKeysProcessed = exposureNotificationsRepository.lastKeyProcessed()
         .map {
@@ -114,14 +120,15 @@ class StatusViewModel(
         isWifiOnlyOn: Boolean,
         pausedState: Settings.PausedState
     ): HeaderState {
+        val exposureInLast14Days =
+            lastExposureDate?.isAfter(LocalDate.now(clock).minusDays(15)) == true
         return when {
-            lastExposureDate != null -> HeaderState.Exposed(
+            lastExposureDate != null && exposureInLast14Days -> HeaderState.Exposed(
                 lastExposureDate,
                 notificationReceivedDate,
-                clock,
-                pausedState
+                clock
             )
-            pausedState is Settings.PausedState.Paused -> HeaderState.Paused(pausedState)
+            pausedState is Settings.PausedState.Paused -> HeaderState.Paused(pausedState.pausedUntil)
             status is StatusResult.Disabled -> HeaderState.Disabled
             status is StatusResult.LocationPreconditionNotSatisfied -> {
                 if (keyProcessingOverdue) HeaderState.Disabled else HeaderState.LocationDisabled
@@ -136,28 +143,63 @@ class StatusViewModel(
         }
     }
 
-    private fun createErrorState(
-        status: StatusResult,
+    private suspend fun getNotificationStates(
         lastExposureDate: LocalDate?,
+        notificationReceivedDate: LocalDate?,
+        pausedState: Settings.PausedState,
+        isIgnoringBatteryOptimizations: Boolean,
+        getErrorState: suspend () -> NotificationState.Error?
+    ): List<NotificationState> {
+        val notificationStates = mutableListOf<NotificationState>()
+        val errorState = getErrorState()
+
+        when {
+            errorState is NotificationState.Error.NotificationsDisabled -> errorState
+            lastExposureDate == null -> null
+            lastExposureDate.isBefore(
+                LocalDate.now(clock).minusDays(14)
+            ) ->
+                NotificationState.ExposureOver14DaysAgo(
+                    lastExposureDate,
+                    notificationReceivedDate,
+                    clock
+                )
+            pausedState is Settings.PausedState.Paused ->
+                NotificationState.Paused(pausedState.pausedUntil)
+            else -> errorState
+        }?.let { notificationStates.add(it) }
+
+        // Add ErrorState.BatteryOptimizationEnabled independently from other error states if needed
+        if (!isIgnoringBatteryOptimizations) notificationStates.add(NotificationState.BatteryOptimizationEnabled)
+        return notificationStates
+    }
+
+    private fun getErrorState(
+        status: StatusResult,
         exposureNotificationsEnabled: Boolean,
         keyProcessingOverdue: Boolean,
-        isWifiOnlyOn: Boolean,
-        pausedState: Settings.PausedState
-    ): ErrorState {
-        val isPaused = pausedState is Settings.PausedState.Paused
-        return when {
-            lastExposureDate != null && !isPaused && status == StatusResult.Disabled -> ErrorState.ConsentRequired
-            lastExposureDate != null && !isPaused && status == StatusResult.LocationPreconditionNotSatisfied -> {
-                if (keyProcessingOverdue) ErrorState.ConsentRequired else ErrorState.LocationDisabled
+        isWifiOnlyOn: Boolean
+    ): NotificationState.Error? = when (status) {
+        StatusResult.Disabled,
+        is StatusResult.Unavailable,
+        is StatusResult.UnknownError -> NotificationState.Error.ConsentRequired
+        StatusResult.BluetoothDisabled -> {
+            if (keyProcessingOverdue)
+                NotificationState.Error.ConsentRequired
+            else NotificationState.Error.BluetoothDisabled
+        }
+        StatusResult.LocationPreconditionNotSatisfied -> {
+            if (keyProcessingOverdue)
+                NotificationState.Error.ConsentRequired
+            else NotificationState.Error.LocationDisabled
+        }
+        StatusResult.Enabled -> {
+            when {
+                !exposureNotificationsEnabled -> NotificationState.Error.NotificationsDisabled
+                keyProcessingOverdue && isWifiOnlyOn -> NotificationState.Error.SyncIssuesWifiOnly
+                keyProcessingOverdue && !isWifiOnlyOn -> NotificationState.Error.SyncIssues
+                else -> null
             }
-            lastExposureDate != null && !isPaused && status == StatusResult.BluetoothDisabled -> {
-                if (keyProcessingOverdue) ErrorState.ConsentRequired else ErrorState.BluetoothDisabled
-            }
-            lastExposureDate != null && !isPaused && status != StatusResult.Enabled -> ErrorState.ConsentRequired
-            !exposureNotificationsEnabled -> ErrorState.NotificationsDisabled
-            lastExposureDate != null && !isPaused && keyProcessingOverdue && isWifiOnlyOn -> ErrorState.SyncIssuesWifiOnly
-            lastExposureDate != null && !isPaused && keyProcessingOverdue && !isWifiOnlyOn -> ErrorState.SyncIssues
-            else -> ErrorState.None
         }
     }
 
@@ -182,26 +224,35 @@ class StatusViewModel(
         object SyncIssues : HeaderState()
         object SyncIssuesWifiOnly : HeaderState()
         data class Paused(
-            val pauseState: Settings.PausedState.Paused,
-            val durationHours: Long? = null,
-            val durationMinutes: Long? = null
+            val pausedUntil: LocalDateTime
         ) : HeaderState()
 
         data class Exposed(
             val date: LocalDate,
             val notificationReceivedDate: LocalDate?,
-            val clock: Clock,
-            val pauseState: Settings.PausedState
+            val clock: Clock
         ) : HeaderState()
     }
 
-    sealed class ErrorState {
-        object None : ErrorState()
-        object BluetoothDisabled : ErrorState()
-        object LocationDisabled : ErrorState()
-        object ConsentRequired : ErrorState()
-        object NotificationsDisabled : ErrorState()
-        object SyncIssues : ErrorState()
-        object SyncIssuesWifiOnly : ErrorState()
+    sealed class NotificationState {
+
+        data class Paused(val pausedUntil: LocalDateTime) : NotificationState()
+
+        data class ExposureOver14DaysAgo(
+            val exposureDate: LocalDate,
+            val notificationReceivedDate: LocalDate?,
+            val clock: Clock
+        ) : NotificationState()
+
+        object BatteryOptimizationEnabled : NotificationState()
+
+        sealed class Error : NotificationState() {
+            object BluetoothDisabled : Error()
+            object LocationDisabled : Error()
+            object ConsentRequired : Error()
+            object NotificationsDisabled : Error()
+            object SyncIssues : Error()
+            object SyncIssuesWifiOnly : Error()
+        }
     }
 }

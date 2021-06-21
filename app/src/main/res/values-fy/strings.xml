@@ -134,7 +134,7 @@
     <string name="faq_anonymous_paragraph_1">De app wikselt net neier útkeazen koades mei oare telefoans út. Yn dy koades steane gjin persoansgegevens of lokaasjegegevens. It útwikseljen fan koades bart op it stuit datst ticht by in persoan yn \'e buert bist dy\'t de app ek hat.</string>
     <string name="faq_anonymous_paragraph_2">Docht letter bliken dat dy persoan koroana hat? Dan kin dyjinge yn \'e mande mei de GGD syn of har koades oan in list mei koades fan besmette persoanen tafoegje. Sa kin de besmetting befêstige wurde.\n\nDêrnei wurdt in melding stjoerd nei alle oare minsken dy\'t dy koades op harren telefoan hawwe. Yn dy melding stiet allinne wannear\'t sy yn \'e buert fan in besmet persoan west hawwe. Net wa\'t dat is en wêr\'t se dy persoan tsjinkommen binne.</string>
     <string name="faq_upload_keys_paragraph_1">Do kinst allinne in melding nei oaren stjoere ast test bist en koroana hast. De GGD bellet dy yn dat gefal mei de útslach fan de test.\n\nYn dat telefoanpetear kontrolearret in GGD-meiwurker dyn GGD-sleutel. Dy fynst yn de app. Sa is altyd wis dat minsken dy\'t echt besmet binne meldings ferstjoere kinne.</string>
-    <string name="faq_upload_keys_paragraph_2">"Neidat dyn GGD-sleutel kontrolearre is kinst de koades diele dy't dyn telefoan de lêste 14 dagen nei oare telefoans ferstjoerd hat.\n\nSa kinne minsken, dêr'tst by yn 'e buert west hast doe'tst besmetlik wiest, in melding krije. Allinne as dy minsken de app ek brûke."</string>
+    <string name="faq_upload_keys_paragraph_2">Neidat dyn GGD-sleutel kontrolearre is kinst de koades diele dy\'t dyn telefoan de lêste 14 dagen nei oare telefoans ferstjoerd hat.\n\nSa kinne minsken, dêr\'tst by yn \'e buert west hast doe\'tst besmetlik wiest, in melding krije. Allinne as dy minsken de app ek brûke.</string>
     <string name="faq_bluetooth_paragraph_1">"Ja, mar it sinjaal wurdt dan hiel swak. Bluetooth wurket it bêste as dyn telefoan yn deselde romte is as de telefoan fan in oar persoan. \n\nDe kâns is bygelyks hiel lyts dat dyn app it bluetoothsinjaal fan dyn buorlju ûntfangt.\n\nEn dêrtroch is de kâns ek hiel lyts datst in melding krigest as dyn buorman koroana blykt te hawwen en jimme net yn deselde romte west hawwe."</string>
     <string name="faq_power_usage_paragraph_1">De app makket gebrûk fan Bluetooth Low Energy (lege-enerzjybluetooth). Dat is in spesjale foarm fan bluetooth dy\'t net folle stroom brûkt. Hoefolle prosint dat krekt fan dyn telefoanbatterij freget ferskilt nei telefoan.</string>
     <string name="faq_deletion_paragraph_1">"Do kinst de bluetoothgegevens dy't CoronaMelder bewarre hat sels wiskje. Druk op de knop hjirûnder en dêrnei op &lt;strong&gt; Willekeurige ID's verwijderen&lt;/strong&gt;.\n\nWolst dat de app gjin nije bluetoothgegevens mear bewarret? Wiskje dan de app fan dyn telefoan."</string>
@@ -167,9 +167,9 @@
     <string name="lab_test_upload_error">It is net slagge om oaren in melding te stjoeren. Besykje it letter nochris.</string>
     <string name="lab_test_done_toolbar_title">Betanke</string>
     <string name="lab_test_done_header_1">Betanke, de GGD helpt dy fierder</string>
-    <string name="lab_test_done_paragraph_2">De GGD-meiwurker fertelt watst dwaan kinst om foar te kommen datst oaren besmetst. Betterskip en sterkte mei it opknappen.</string>
+    <string name="lab_test_done_paragraph_2">De GGD-meiwurker fertelt dy watst fierder dwaan kinst om foar te kommen datst oaren besmetst. Betterskip en sterkte mei it opknappen.</string>
     <string name="lab_test_done_used_key">Brûkte GGD-sleutel: %1$s</string>
-    <string name="lab_test_done_box_4">De melding wurdt allinne ferstjoerd as de GGD dy test hat en asto koroana hast.</string>
+    <string name="lab_test_done_box_4">De melding wurdt allinne ferstjoerd as de GGD dy test hat en ast koroana hast</string>
     <string name="lab_test_done_button">Slute</string>
     <string name="update_google_play_services">Update</string>
     <string name="update_google_play_services_headline">Dyn Google Play Services is net bywurke</string>
@@ -303,4 +303,36 @@
     <string name="status_error_location"><![CDATA[Dyn lokaasjeynstellings steane út. De app hâldt dêrom <b>gjin</b> nije moetings by. De app kontrolearret noch <b>wol</b> oft de minsken dy\'tsto earder moete hast koroana blike te hawwen.]]></string>
     <string name="status_error_location_card">Dyn lokaasjeynstellings steane út. De app kin gjin nije moetings byhâlde.</string>
     <string name="status_error_location_action">Lokaasje oansette</string>
+    <string name="status_old_exposure_card_title">Kontakt mear as 14 dagen lyn</string>
+    <string name="status_old_exposure_card_message">Op %1$s (%2$s) wiest yn \'e buert fan immen mei koroana</string>
+    <string name="status_old_exposure_card_action_more_info">Mear ynformaasje</string>
+    <string name="status_old_exposure_card_action_delete">Wiskje</string>
+    <string name="post_keys_options_header">Kies hoe\'tst in melding stjoere wolst</string>
+    <string name="post_keys_options_description">Do kinst allinne in melding stjoere as út in koroanatest bliken docht datst besmet bist.</string>
+    <string name="post_keys_options_coronatest_title">Fia coronatest.nl</string>
+    <string name="post_keys_options_coronatest_subtitle">Dit kin allinne ast de testútslach fia coronatest.nl krigest</string>
+    <string name="post_keys_options_ggd_title">As de GGD dy bellet</string>
+    <string name="post_keys_options_ggd_subtitle">Dit kin allinne ast no de GGD oan \'e telefoan hast</string>
+    <string name="coronatest_description"><![CDATA[Untdekst fia coronatest.nl datst koroana hast? Dan kinst fia CoronaMelder daliks in melding ferstjoere.<a href="">Hoe wurket dat?</a>]]></string>
+    <string name="coronatest_step_1">Diel de koades dy\'t CoronaMelder makke hat</string>
+    <string name="coronatest_step_2">Skriuw dyn GGD-sleutel op of kopiearje dy</string>
+    <string name="coronatest_step_3">Folje dyn GGD-sleutel yn op coronatest.nl. Sa warskôgest oaren by wa\'tst yn \'e buert west hast</string>
+    <string name="coronatest_step_4">GGD-sleutel ynfolle?</string>
+    <string name="coronatest_step_4_subtitle">Do bist klear. Minsken by wa\'tst yn \'e buert west hast, wylst besmetlik wiest, krije in melding. Dat bart binnen 8 oeren.</string>
+    <string name="coronatest_share_keys">Koades diele</string>
+    <string name="coronatest_keys_shared">Koades dield</string>
+    <string name="coronatest_webpage_button">Nei coronatest.nl</string>
+    <string name="coronatest_finish_button">Ik bin klear</string>
+    <string name="coronatest_finish_confirmation_title">Bist der wis fan datst klear bist?</string>
+    <string name="coronatest_finish_confirmation_text">Hast de GGD-sleutel op coronatest.nl ynfolle en in befêstiging krige? Ja? Dan kinst ôfslute.</string>
+    <string name="coronatest_finish_confirmation_accept">Ja, ôfslute</string>
+    <string name="coronatest_finish_confirmation_cancel">Annulearje</string>
+    <string name="coronatest_step_3_nodeeplink">Gean (werom) nei coronatest.nl en folje dyn GGD-sleutel yn. Sa warskôgest oaren dêr\'tst by yn de buert west hast.</string>
+    <string name="faq_upload_keys_generic_paragraph_1">Do kinst allinne in melding nei oaren stjoere as troch de GGD test bist en bliken docht datst koroana hast. De melding ferstjoerst mei de GGD as dy dy bellet of sels fia coronatest.nl.\n\nAst in melding ferstjoere wolst, wurdt der nei dyn GGD-sleutel frege. Dy fynst yn de app. In GGD-sleutel soarget derfoar dat allinne minsken dy\'t echt besmet binne, meldings ferstjoere kinne.</string>
+    <string name="faq_upload_keys_generic_paragraph_2">Nei\'t dyn GGD-sleutel kontrolearre is, wurde de koades dield dy\'t dyn telefoan yn de ôfrûne 14 dagen nei oare telefoans stjoerd hat.\n\nSa kinne minsken, by wa\'tsto yn \'e buert west hast doe\'tst besmetlik wiest, in melding krije. Allinne as dy minsken de app ek brûke.</string>
+    <string name="lab_test_generic_toolbar_title">Melding stjoere</string>
+    <string name="lab_test_done_generic_header_1">Betanke foar it ferstjoeren fan de melding</string>
+    <string name="lab_test_done_generic_paragraph_2">De GGD fertelt dy watst fierder dwaan kinst om foar te kommen datst oaren besmetst. Betterskip en sterkte mei it opknappen.</string>
+    <string name="lab_test_done_generic_box_4">De melding wurdt allinne ferstjoerd ast dyn GGD-sleutel oan de GGD of fia coronatest.nl  trochjûn hast</string>
+    <string name="status_error_notifications_disabled_headline">Meldingen steane <u>út</u></string>
 </resources>

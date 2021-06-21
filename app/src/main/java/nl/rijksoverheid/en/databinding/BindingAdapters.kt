@@ -18,9 +18,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
-import nl.rijksoverheid.en.settings.Settings
-import nl.rijksoverheid.en.util.formatDuration
+import nl.rijksoverheid.en.util.formatPauseDuration
 import nl.rijksoverheid.en.util.fromHtmlWithCustomReplacements
+import java.time.LocalDateTime
 
 object BindingAdapters {
     @JvmStatic
@@ -125,10 +125,7 @@ object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter("pausedState")
-    fun bindPausedState(view: TextView, state: Settings.PausedState?) {
-        view.text = when (state) {
-            is Settings.PausedState.Paused -> state.formatDuration(view.context)
-            else -> null
-        }
+    fun bindPausedState(view: TextView, pausedUntil: LocalDateTime?) {
+        view.text = pausedUntil?.formatPauseDuration(view.context)
     }
 }

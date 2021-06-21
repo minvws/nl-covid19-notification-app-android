@@ -19,6 +19,7 @@ abstract class BaseStatusErrorItem : BaseBindableItem<ItemStatusErrorBinding>() 
         val action: () -> Unit
     ) {
         abstract fun getMessage(context: Context): String
+        abstract fun getTitle(context: Context): String
     }
 
     abstract val viewState: ErrorViewState?

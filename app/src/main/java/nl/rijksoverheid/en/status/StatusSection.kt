@@ -13,23 +13,14 @@ import java.time.LocalDateTime
 class StatusSection : Section() {
 
     private var headerState: StatusViewModel.HeaderState? = null
-    private var errorState: StatusViewModel.ErrorState = StatusViewModel.ErrorState.None
+    private var notificationStates: List<StatusViewModel.NotificationState> = emptyList()
 
     private val headerGroup = Section()
-    private val errorGroup = Section().apply {
+    private val notificationGroup = Section().apply {
         setHideWhenEmpty(true)
     }
-    private val errorItems = mutableListOf<Item<*>>()
-    private val pausedGroup = Section().apply {
-        setHideWhenEmpty(true)
-    }
-    var pausedItem: StatusPausedItem? = null
-        set(value) {
-            if (value?.viewState != field?.viewState) {
-                field = value
-                pausedGroup.update(listOfNotNull(value))
-            }
-        }
+    private val notificationItems = mutableListOf<Item<*>>()
+
     var lastKeysProcessed: LocalDateTime? = null
         set(value) {
             field = value
@@ -42,35 +33,42 @@ class StatusSection : Section() {
 
     fun refreshStateContent() {
         headerGroup.notifyChanged()
-        errorGroup.notifyChanged()
+        notificationGroup.notifyChanged()
     }
 
-    fun updateErrorState(
-        errorState: StatusViewModel.ErrorState,
-        action: () -> Unit = {}
+    fun updateNotifications(
+        notificationStates: List<StatusViewModel.NotificationState>,
+        onAction: (StatusViewModel.NotificationState, NotificationAction) -> Unit,
     ) {
-        if (this.errorState != errorState) {
-            this.errorState = errorState
-            errorItems.removeAll { it is StatusErrorItem }
-            if (errorState !is StatusViewModel.ErrorState.None) {
-                errorItems.add(0, StatusErrorItem(errorState, action))
+        if (this.notificationStates != notificationStates) {
+            this.notificationStates = notificationStates
+            notificationItems.clear()
+            notificationStates.forEach {
+                when (it) {
+                    is StatusViewModel.NotificationState.Error -> {
+                        notificationItems.add(
+                            StatusErrorItem(it) {
+                                onAction(it, NotificationAction.Primary)
+                            }
+                        )
+                    }
+                    is StatusViewModel.NotificationState.ExposureOver14DaysAgo -> {
+                        notificationItems.add(
+                            StatusExposureOver14DaysAgoItem.forStatus(it, onAction)
+                        )
+                    }
+                    is StatusViewModel.NotificationState.Paused -> {
+                        notificationItems.add(StatusPausedItem.forStatus(it, onAction))
+                    }
+                    is StatusViewModel.NotificationState.BatteryOptimizationEnabled ->
+                        notificationItems.add(
+                            StatusBatteryOptimizationEnabledItem.forStatus(it, onAction)
+                        )
+                }
             }
-            errorGroup.update(errorItems)
+            notificationGroup.update(notificationItems)
         }
         ensureInitialized()
-    }
-
-    fun showBatteryOptimisationsError(action: () -> Unit) {
-        if (errorItems.firstOrNull { it is BatteryOptimisationErrorItem } == null) {
-            errorItems.add(BatteryOptimisationErrorItem(action))
-            errorGroup.update(errorItems)
-        }
-    }
-
-    fun removeBatteryOptimisationsError() {
-        if (errorItems.removeAll { it is BatteryOptimisationErrorItem }) {
-            errorGroup.update(errorItems)
-        }
     }
 
     fun updateHeader(
@@ -97,7 +95,7 @@ class StatusSection : Section() {
         if (isEmpty) {
             addAll(
                 listOf(
-                    headerGroup, pausedGroup, errorGroup,
+                    headerGroup, notificationGroup,
                     Section(
                         listOf(
                             StatusActionItem.About,
@@ -112,5 +110,10 @@ class StatusSection : Section() {
             )
             setFooter(StatusFooterItem(lastKeysProcessed))
         }
+    }
+
+    enum class NotificationAction {
+        Primary,
+        Secondary
     }
 }

@@ -21,7 +21,7 @@ import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.getBackStackEntryObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.LocaleHelper
-import nl.rijksoverheid.en.util.PausedStateTimer
+import nl.rijksoverheid.en.util.SimpleCountdownTimer
 import java.time.LocalDateTime
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
@@ -31,7 +31,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     private val localeHelper = LocaleHelper.getInstance()
 
-    private var pausedDurationTimer: PausedStateTimer? = null
+    private var pausedDurationTimer: SimpleCountdownTimer? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,7 +82,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             val now = LocalDateTime.now()
             if (it is Settings.PausedState.Paused && it.pausedUntil.isAfter(now)) {
                 pausedDurationTimer?.cancel()
-                pausedDurationTimer = PausedStateTimer(it) {
+                pausedDurationTimer = SimpleCountdownTimer(it.pausedUntil) {
                     binding.viewModel = settingsViewModel
                 }
                 pausedDurationTimer?.startTimer()
