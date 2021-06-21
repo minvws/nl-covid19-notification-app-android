@@ -52,7 +52,8 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
                 createAppConfigManager(context)
             ) as T
             LabTestViewModel::class.java -> LabTestViewModel(
-                createLabTestRepository(context)
+                createLabTestRepository(context),
+                createAppConfigManager(context)
             ) as T
             PostNotificationViewModel::class.java -> PostNotificationViewModel(
                 createResourceBundleManager(context),

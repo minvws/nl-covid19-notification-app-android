@@ -1,11 +1,9 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
-
 package nl.rijksoverheid.en.labtest.coronatest
 
 import android.app.Activity
@@ -13,12 +11,15 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.IntentSender
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -41,7 +42,8 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
     private val section = CoronaTestKeySharingSection(
         retry = { labViewModel.retry() },
         requestConsent = { viewModel.requestEnableNotifications() },
-        openCoronaTestWebsite = {},
+        uploadKeys = { labViewModel.upload() },
+        openCoronaTestWebsite = ::openShareKeyUrl,
         copy = ::copyToClipboard,
         finish = ::finishCoronaTestKeySharing
     )
@@ -70,19 +72,22 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
 
         labViewModel.keyState.observe(viewLifecycleOwner) { keyState ->
             section.update(keyState)
-            //binding.button.isEnabled =
+            // binding.button.isEnabled =
             //    getContinueButtonEnabledState(keyState, section.notificationsState)
         }
         viewModel.notificationState.observe(viewLifecycleOwner) { notificationsState ->
             section.update(notificationsState)
-            //binding.button.isEnabled =
+            // binding.button.isEnabled =
             //    getContinueButtonEnabledState(section.keyState, notificationsState)
         }
 
         labViewModel.uploadResult.observe(
             viewLifecycleOwner,
             EventObserver {
+                if (it is LabTestViewModel.UploadResult.RequestConsent)
+                    requestConsent(it.resolution.intentSender)
 
+                section.update(it)
             }
         )
     }
@@ -105,6 +110,15 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
             requestUploadConsent.launch(IntentSenderRequest.Builder(intentSender).build())
         } catch (ex: Exception) {
             Timber.e(ex, "Error requesting consent")
+        }
+    }
+
+    private fun openShareKeyUrl() {
+        viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
+            labViewModel.getShareKeyUrl().let {
+                val url = Uri.parse(labViewModel.getShareKeyUrl())
+                CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
+            }
         }
     }
 

@@ -37,7 +37,7 @@ class KeyShareOptionsFragment : BaseFragment(R.layout.fragment_list) {
         binding.content.adapter = adapter
 
         adapter.setOnItemClickListener { item, _ ->
-            when(item) {
+            when (item) {
                 KeyShareOptionItem.CoronaTest -> findNavController().navigateCatchingErrors(
                     KeyShareOptionsFragmentDirections.actionCoronaTestKeySharing()
                 )

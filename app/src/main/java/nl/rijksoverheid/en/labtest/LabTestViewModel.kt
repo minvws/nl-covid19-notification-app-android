@@ -14,12 +14,16 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Error
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Loading
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState.Success
 import nl.rijksoverheid.en.lifecyle.Event
 
-class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewModel() {
+class LabTestViewModel(
+    private val labTestRepository: LabTestRepository,
+    private val appConfigManager: AppConfigManager
+) : ViewModel() {
 
     val uploadResult: LiveData<Event<UploadResult>> = MutableLiveData()
 
@@ -62,6 +66,9 @@ class LabTestViewModel(private val labTestRepository: LabTestRepository) : ViewM
     private fun updateResult(result: UploadResult) {
         (uploadResult as MutableLiveData).value = Event(result)
     }
+
+    suspend fun getShareKeyUrl() =
+        appConfigManager.getCachedConfigOrDefault().shareKeyURL
 
     sealed class UploadResult {
         data class RequestConsent(val resolution: PendingIntent) : UploadResult()
