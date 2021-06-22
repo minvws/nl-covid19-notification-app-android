@@ -14,13 +14,12 @@ import nl.rijksoverheid.en.items.ButtonItem
 import nl.rijksoverheid.en.items.ErrorBoxItem
 import nl.rijksoverheid.en.items.IllustrationItem
 import nl.rijksoverheid.en.items.ParagraphItem
-import nl.rijksoverheid.en.labtest.items.LabTestKeyItem
-import nl.rijksoverheid.en.labtest.items.LabTestStepItem
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
-import nl.rijksoverheid.en.labtest.LabTestViewModel.UploadResult
 import nl.rijksoverheid.en.labtest.items.LabTestButtonItem
+import nl.rijksoverheid.en.labtest.items.LabTestKeyItem
 import nl.rijksoverheid.en.labtest.items.LabTestShareKeysItem
 import nl.rijksoverheid.en.labtest.items.LabTestStepDescriptionItem
+import nl.rijksoverheid.en.labtest.items.LabTestStepItem
 
 class CoronaTestKeySharingSection(
     private val retry: () -> Unit,
@@ -34,7 +33,7 @@ class CoronaTestKeySharingSection(
         private set
     var notificationsState: NotificationsState = NotificationsState.Enabled
         private set
-    var uploadResult: UploadResult? = null
+    var hasSharedKeys: Boolean = false
         private set
 
     fun update(keyState: KeyState) {
@@ -47,8 +46,8 @@ class CoronaTestKeySharingSection(
         update()
     }
 
-    fun update(uploadResult: UploadResult) {
-        this.uploadResult = uploadResult
+    fun uploadKeysSucceeded() {
+        hasSharedKeys = true
         update()
     }
 
@@ -59,14 +58,14 @@ class CoronaTestKeySharingSection(
             NotificationsState.BluetoothDisabled,
             NotificationsState.LocationPreconditionNotSatisfied
         )
-        val hasSharedKeys = uploadResult is UploadResult.Success
+        val validShareKeysPreconditions = validKeyState && validNotificationsState
 
         update(
             mutableListOf<Group>(
                 IllustrationItem(R.drawable.illustration_lab_test),
                 ParagraphItem(R.string.coronatest_description, clickable = true),
                 LabTestStepItem(R.string.coronatest_step_1, 1, isFirstElement = true, enabled = !hasSharedKeys),
-                LabTestShareKeysItem(uploadKeys, uploadResult, validKeyState && validNotificationsState),
+                LabTestShareKeysItem(keyState, uploadKeys, retry, hasSharedKeys, validShareKeysPreconditions),
                 LabTestStepItem(R.string.coronatest_step_2, 2, enabled = hasSharedKeys),
                 LabTestKeyItem(keyState, copy, retry, hasSharedKeys),
                 LabTestStepItem(R.string.coronatest_step_3, 3, enabled = hasSharedKeys),

@@ -246,7 +246,11 @@
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
-            app:popExitAnim="@anim/fragment_close_exit" />
+            app:popExitAnim="@anim/fragment_close_exit" >
+            <argument
+                android:name="showEnterTransition"
+                android:defaultValue="true" />
+        </action>
         <action
             android:id="@+id/action_corona_test_key_sharing"
             app:destination="@id/nav_corona_test_key_sharing"
@@ -273,6 +277,10 @@
         <action
             android:id="@+id/action_how_it_works"
             app:destination="@id/nav_about_detail" />
+        <argument
+            android:name="showEnterTransition"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 
     <fragment

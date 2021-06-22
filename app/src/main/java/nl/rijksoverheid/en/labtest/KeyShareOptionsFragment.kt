@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.labtest
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.xwray.groupie.GroupAdapter
@@ -39,10 +40,12 @@ class KeyShareOptionsFragment : BaseFragment(R.layout.fragment_list) {
         adapter.setOnItemClickListener { item, _ ->
             when (item) {
                 KeyShareOptionItem.CoronaTest -> findNavController().navigateCatchingErrors(
-                    KeyShareOptionsFragmentDirections.actionCoronaTestKeySharing()
+                    KeyShareOptionsFragmentDirections.actionCoronaTestKeySharing(),
+                    FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
                 KeyShareOptionItem.GGD -> findNavController().navigateCatchingErrors(
-                    KeyShareOptionsFragmentDirections.actionLabTest()
+                    KeyShareOptionsFragmentDirections.actionLabTest(),
+                    FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
             }
         }

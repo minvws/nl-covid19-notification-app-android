@@ -20,6 +20,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupAdapter
@@ -35,6 +36,8 @@ import nl.rijksoverheid.en.util.IllustrationSpaceDecoration
 import timber.log.Timber
 
 class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
+    private val args: LabTestFragmentArgs by navArgs()
+
     private val labViewModel: LabTestViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
     private val section = LabTestSection(
@@ -54,6 +57,13 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
 
         exitTransition =
             TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
+
+        if (args.showEnterTransition) {
+            enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
+            sharedElementEnterTransition =
+                TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
+            sharedElementReturnTransition = sharedElementEnterTransition
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

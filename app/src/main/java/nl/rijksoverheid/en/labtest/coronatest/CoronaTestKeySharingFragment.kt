@@ -14,6 +14,7 @@ import android.content.IntentSender
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.browser.customtabs.CustomTabsIntent
@@ -22,6 +23,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -49,15 +51,28 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
     )
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
 
+    private lateinit var binding: FragmentListBinding
+
     private val requestUploadConsent =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) labViewModel.upload()
         }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
+        exitTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
+        sharedElementReturnTransition = sharedElementEnterTransition
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentListBinding.bind(view)
+        binding = FragmentListBinding.bind(view)
 
         binding.toolbar.setTitle(R.string.lab_test_generic_toolbar_title)
         binding.content.addItemDecoration(IllustrationSpaceDecoration())
@@ -72,22 +87,22 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
 
         labViewModel.keyState.observe(viewLifecycleOwner) { keyState ->
             section.update(keyState)
-            // binding.button.isEnabled =
-            //    getContinueButtonEnabledState(keyState, section.notificationsState)
         }
         viewModel.notificationState.observe(viewLifecycleOwner) { notificationsState ->
             section.update(notificationsState)
-            // binding.button.isEnabled =
-            //    getContinueButtonEnabledState(section.keyState, notificationsState)
         }
 
         labViewModel.uploadResult.observe(
             viewLifecycleOwner,
             EventObserver {
-                if (it is LabTestViewModel.UploadResult.RequestConsent)
-                    requestConsent(it.resolution.intentSender)
-
-                section.update(it)
+                when (it) {
+                    is LabTestViewModel.UploadResult.Success -> section.uploadKeysSucceeded()
+                    is LabTestViewModel.UploadResult.RequestConsent -> requestConsent(it.resolution.intentSender)
+                    LabTestViewModel.UploadResult.Error -> {
+                        Toast.makeText(context, R.string.lab_test_upload_error, Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
             }
         )
     }
@@ -100,7 +115,8 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
     private fun finishCoronaTestKeySharing() {
         labViewModel.usedKey?.let { key ->
             findNavController().navigateCatchingErrors(
-                CoronaTestKeySharingFragmentDirections.actionLabTestDone(key)
+                CoronaTestKeySharingFragmentDirections.actionLabTestDone(key),
+                FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
             )
         }
     }

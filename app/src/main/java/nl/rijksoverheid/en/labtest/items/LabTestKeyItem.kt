@@ -1,9 +1,8 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
 package nl.rijksoverheid.en.labtest.items
 
@@ -19,8 +18,7 @@ class LabTestKeyItem(
     private val copy: (String) -> Unit,
     retry: () -> Unit,
     private val enabled: Boolean = true
-) :
-    BaseBindableItem<ItemLabTestKeyBinding>() {
+) : BaseBindableItem<ItemLabTestKeyBinding>() {
     data class ViewState(
         val showProgress: Boolean,
         val showCode: Boolean,
@@ -34,9 +32,9 @@ class LabTestKeyItem(
     }
 
     private val viewState = ViewState(
-        showProgress = keyState == KeyState.Loading,
+        showProgress = keyState == KeyState.Loading && enabled,
         showCode = keyState is KeyState.Success && enabled,
-        showError = keyState is KeyState.Error,
+        showError = keyState is KeyState.Error && enabled,
         key = (keyState as? KeyState.Success)?.key,
         displayKey = (keyState as? KeyState.Success)?.displayKey,
         enabled = enabled,
