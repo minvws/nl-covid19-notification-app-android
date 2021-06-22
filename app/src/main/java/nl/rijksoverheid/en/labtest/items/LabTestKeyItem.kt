@@ -17,7 +17,8 @@ import java.util.Locale
 class LabTestKeyItem(
     private val keyState: KeyState,
     private val copy: (String) -> Unit,
-    retry: () -> Unit
+    retry: () -> Unit,
+    private val enabled: Boolean = true
 ) :
     BaseBindableItem<ItemLabTestKeyBinding>() {
     data class ViewState(
@@ -26,6 +27,7 @@ class LabTestKeyItem(
         val showError: Boolean,
         val key: String? = null,
         val displayKey: String? = null,
+        val enabled: Boolean,
         val retry: () -> Unit
     ) {
         val keyContentDescription = key?.toLowerCase(Locale.ROOT)
@@ -33,10 +35,11 @@ class LabTestKeyItem(
 
     private val viewState = ViewState(
         showProgress = keyState == KeyState.Loading,
-        showCode = keyState is KeyState.Success,
+        showCode = keyState is KeyState.Success && enabled,
         showError = keyState is KeyState.Error,
         key = (keyState as? KeyState.Success)?.key,
         displayKey = (keyState as? KeyState.Success)?.displayKey,
+        enabled = enabled,
         retry = retry
     )
 
@@ -52,5 +55,5 @@ class LabTestKeyItem(
 
     override fun isSameAs(other: Item<*>): Boolean = other is LabTestKeyItem
     override fun hasSameContentAs(other: Item<*>) =
-        other is LabTestKeyItem && other.keyState == keyState
+        other is LabTestKeyItem && other.keyState == keyState && other.enabled == enabled
 }

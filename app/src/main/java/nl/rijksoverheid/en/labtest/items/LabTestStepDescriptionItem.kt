@@ -16,13 +16,18 @@ import nl.rijksoverheid.en.items.BaseBindableItem
 
 class LabTestStepDescriptionItem(
     @StringRes private val text: Int,
+    private val enabled: Boolean = true
 ) : BaseBindableItem<ItemLabTestStepDescriptionBinding>() {
+
     override fun getLayout() = R.layout.item_lab_test_step_description
 
     override fun bind(viewBinding: ItemLabTestStepDescriptionBinding, position: Int) {
-        viewBinding.text = text
+        viewBinding.description.setText(text)
+        viewBinding.description.isEnabled = enabled
     }
 
-    override fun isSameAs(other: Item<*>): Boolean = other is LabTestStepDescriptionItem && other.text == text
-    override fun hasSameContentAs(other: Item<*>) = other is LabTestStepDescriptionItem && other.text == text
+    override fun isSameAs(other: Item<*>): Boolean =
+        other is LabTestStepDescriptionItem && other.text == text
+    override fun hasSameContentAs(other: Item<*>) =
+        other is LabTestStepDescriptionItem && other.text == text && other.enabled == enabled
 }

@@ -17,22 +17,25 @@ class LabTestStepItem(
     @StringRes private val text: Int,
     private val counter: Int,
     private val isFirstElement: Boolean = false,
-    private val isLastElement: Boolean = false
+    private val isLastElement: Boolean = false,
+    private val enabled: Boolean = true
 ) : BaseBindableItem<ItemLabTestStepBinding>() {
 
     data class ViewState(
         val counter: String,
         val text: Int,
         val showTopLine: Boolean,
-        val showBottomLine: Boolean
+        val showBottomLine: Boolean,
+        val enabled: Boolean
     )
 
     override fun getLayout() = R.layout.item_lab_test_step
 
     override fun bind(viewBinding: ItemLabTestStepBinding, position: Int) {
-        viewBinding.viewState = ViewState(counter.toString(), text, !isFirstElement, !isLastElement)
+        viewBinding.viewState = ViewState(counter.toString(), text, !isFirstElement, !isLastElement, enabled)
     }
 
     override fun isSameAs(other: Item<*>): Boolean = other is LabTestStepItem && other.text == text
-    override fun hasSameContentAs(other: Item<*>) = other is LabTestStepItem && other.text == text
+    override fun hasSameContentAs(other: Item<*>) =
+        other is LabTestStepItem && other.text == text && other.enabled == enabled
 }

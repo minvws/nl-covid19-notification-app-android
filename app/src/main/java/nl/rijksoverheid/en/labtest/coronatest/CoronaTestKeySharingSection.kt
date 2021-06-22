@@ -59,23 +59,24 @@ class CoronaTestKeySharingSection(
             NotificationsState.BluetoothDisabled,
             NotificationsState.LocationPreconditionNotSatisfied
         )
+        val hasSharedKeys = uploadResult is UploadResult.Success
 
         update(
             mutableListOf<Group>(
                 IllustrationItem(R.drawable.illustration_lab_test),
                 ParagraphItem(R.string.coronatest_description, clickable = true),
-                LabTestStepItem(R.string.coronatest_step_1, 1, isFirstElement = true),
+                LabTestStepItem(R.string.coronatest_step_1, 1, isFirstElement = true, enabled = !hasSharedKeys),
                 LabTestShareKeysItem(uploadKeys, uploadResult, validKeyState && validNotificationsState),
-                LabTestStepItem(R.string.coronatest_step_2, 2),
-                LabTestKeyItem(keyState, copy, retry),
-                LabTestStepItem(R.string.coronatest_step_3, 3),
-                LabTestButtonItem(R.string.coronatest_webpage_button, openCoronaTestWebsite, uploadResult is UploadResult.Success),
-                LabTestStepItem(R.string.coronatest_step_4, 4, isLastElement = true),
-                LabTestStepDescriptionItem(R.string.coronatest_step_4_subtitle),
+                LabTestStepItem(R.string.coronatest_step_2, 2, enabled = hasSharedKeys),
+                LabTestKeyItem(keyState, copy, retry, hasSharedKeys),
+                LabTestStepItem(R.string.coronatest_step_3, 3, enabled = hasSharedKeys),
+                LabTestButtonItem(R.string.coronatest_webpage_button, openCoronaTestWebsite, hasSharedKeys),
+                LabTestStepItem(R.string.coronatest_step_4, 4, isLastElement = true, enabled = hasSharedKeys),
+                LabTestStepDescriptionItem(R.string.coronatest_step_4_subtitle, hasSharedKeys),
                 ButtonItem(
                     text = R.string.coronatest_finish_button,
                     buttonClickListener = finish,
-                    enabled = validKeyState && validNotificationsState && uploadResult is UploadResult.Success
+                    enabled = validKeyState && validNotificationsState && hasSharedKeys
                 )
             ).apply {
                 if (notificationsState is NotificationsState.Disabled || notificationsState is NotificationsState.Unavailable) {
