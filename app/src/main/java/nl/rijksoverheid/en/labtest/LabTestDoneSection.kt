@@ -13,6 +13,7 @@ import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.IllustrationItem
 import nl.rijksoverheid.en.items.MessageBoxItem
 import nl.rijksoverheid.en.items.ParagraphItem
+import nl.rijksoverheid.en.labtest.items.LabTestUsedKeyItem
 
 class LabTestDoneSection(
     generatedKey: String,

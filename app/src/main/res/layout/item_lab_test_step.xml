@@ -14,7 +14,7 @@
 
         <variable
             name="viewState"
-            type="nl.rijksoverheid.en.labtest.LabTestStepItem.ViewState" />
+            type="nl.rijksoverheid.en.labtest.items.LabTestStepItem.ViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

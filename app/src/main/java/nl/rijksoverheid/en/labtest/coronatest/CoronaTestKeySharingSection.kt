@@ -14,8 +14,8 @@ import nl.rijksoverheid.en.items.ButtonItem
 import nl.rijksoverheid.en.items.ErrorBoxItem
 import nl.rijksoverheid.en.items.IllustrationItem
 import nl.rijksoverheid.en.items.ParagraphItem
-import nl.rijksoverheid.en.labtest.LabTestKeyItem
-import nl.rijksoverheid.en.labtest.LabTestStepItem
+import nl.rijksoverheid.en.labtest.items.LabTestKeyItem
+import nl.rijksoverheid.en.labtest.items.LabTestStepItem
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
 import nl.rijksoverheid.en.labtest.LabTestViewModel.UploadResult
 import nl.rijksoverheid.en.labtest.items.LabTestButtonItem

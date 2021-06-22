@@ -14,6 +14,8 @@ import nl.rijksoverheid.en.items.ErrorBoxItem
 import nl.rijksoverheid.en.items.IllustrationItem
 import nl.rijksoverheid.en.items.ParagraphItem
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
+import nl.rijksoverheid.en.labtest.items.LabTestKeyItem
+import nl.rijksoverheid.en.labtest.items.LabTestStepItem
 
 class LabTestSection(
     private val retry: () -> Unit,
