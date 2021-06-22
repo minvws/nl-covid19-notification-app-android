@@ -44,6 +44,8 @@ class LabTestViewModel(
         }
     }
 
+    val keyExpiredEvent: LiveData<Event<Unit>> = MutableLiveData()
+
     fun retry() {
         refresh.value = Unit
     }
@@ -60,6 +62,13 @@ class LabTestViewModel(
                         UploadResult.RequestConsent(result.resolution)
                 }
             )
+        }
+    }
+
+    fun checkKeyExpiration() {
+        viewModelScope.launch {
+            if (labTestRepository.isKeyDataExpired())
+                (keyExpiredEvent as MutableLiveData).value = Event(Unit)
         }
     }
 

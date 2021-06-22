@@ -142,4 +142,23 @@ class LabTestViewModelTest {
         Assert.assertEquals("TES-TK-EY", successKeyState.displayKey)
         Assert.assertEquals("TESTKEY", successKeyState.key)
     }
+
+    @Test
+    fun `checkKeyExpiration triggers keyExpiredEvent`() {
+        val labTestViewModelTest = LabTestViewModel(labTestRepository, appConfigManager)
+
+        runBlocking {
+            Mockito.`when`(labTestRepository.isKeyDataExpired())
+                .thenReturn(true)
+
+            labTestViewModelTest.checkKeyExpiration()
+
+            labTestViewModelTest.keyExpiredEvent.observeForTesting {
+                Assert.assertEquals(
+                    Unit,
+                    it.values.first().getContentIfNotHandled()
+                )
+            }
+        }
+    }
 }

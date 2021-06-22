@@ -91,7 +91,6 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
         viewModel.notificationState.observe(viewLifecycleOwner) { notificationsState ->
             section.update(notificationsState)
         }
-
         labViewModel.uploadResult.observe(
             viewLifecycleOwner,
             EventObserver {
@@ -105,11 +104,22 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
                 }
             }
         )
+        labViewModel.keyExpiredEvent.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                findNavController().popBackStack(R.id.nav_status, false)
+            }
+        )
     }
 
     override fun onStart() {
         super.onStart()
         labViewModel.retry()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        labViewModel.checkKeyExpiration()
     }
 
     private fun finishCoronaTestKeySharing() {
