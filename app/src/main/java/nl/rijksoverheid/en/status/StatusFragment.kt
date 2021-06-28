@@ -74,20 +74,7 @@ class StatusFragment @JvmOverloads constructor(
                 StatusActionItem.GenericNotification -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionGenericNotification()
                 )
-                StatusActionItem.RequestTest -> {
-                    if (statusViewModel.exposureDetected) {
-                        viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
-                            val phoneNumber = statusViewModel.getAppointmentPhoneNumber()
-                            findNavController().navigateCatchingErrors(
-                                StatusFragmentDirections.actionRequestTest(phoneNumber)
-                            )
-                        }
-                    } else {
-                        findNavController().navigateCatchingErrors(
-                            StatusFragmentDirections.actionRequestTest(getString(R.string.request_test_phone_number))
-                        )
-                    }
-                }
+                StatusActionItem.RequestTest -> requestTest()
                 StatusActionItem.LabTest -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionLabTest()
                 )
@@ -201,6 +188,21 @@ class StatusFragment @JvmOverloads constructor(
                     }
                 )
             }
+        }
+    }
+
+    private fun requestTest() {
+        if (statusViewModel.exposureDetected) {
+            viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
+                val phoneNumber = statusViewModel.getAppointmentPhoneNumber()
+                findNavController().navigateCatchingErrors(
+                    StatusFragmentDirections.actionRequestTest(phoneNumber)
+                )
+            }
+        } else {
+            findNavController().navigateCatchingErrors(
+                StatusFragmentDirections.actionRequestTest(getString(R.string.request_test_phone_number))
+            )
         }
     }
 

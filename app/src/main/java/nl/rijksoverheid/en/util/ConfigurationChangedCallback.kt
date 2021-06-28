@@ -9,6 +9,10 @@ package nl.rijksoverheid.en.util
 import android.content.ComponentCallbacks
 import android.content.res.Configuration
 
+/**
+ * Simplified [ComponentCallbacks] that only triggers a callback on configuration changed
+ * @param callback method for onConfigurationChanged
+ */
 class ConfigurationChangedCallback(private val callback: (Configuration) -> Unit) :
     ComponentCallbacks {
 
@@ -16,5 +20,7 @@ class ConfigurationChangedCallback(private val callback: (Configuration) -> Unit
         callback.invoke(newConfig)
     }
 
-    override fun onLowMemory() {}
+    override fun onLowMemory() {
+        // Ignore onLowMemory callback
+    }
 }

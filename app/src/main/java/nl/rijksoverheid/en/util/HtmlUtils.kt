@@ -61,11 +61,9 @@ private fun fromHtml(html: String): SpannableStringBuilder {
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE
                 )
             }
-            if (tag == "ul" && opening) {
+            if (tag == "ul" && opening && output.isNotEmpty()) {
                 // add a line break if this tag is not on a new line
-                if (output.isNotEmpty()) {
-                    output.append("\n")
-                }
+                output.append("\n")
             }
             if (tag == "li" && !opening) {
                 output.append("\n")

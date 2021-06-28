@@ -31,16 +31,7 @@ class PaddedRequestInterceptor : Interceptor {
             val jsonString = buffer.readString(Charsets.UTF_8)
             if (!jsonString.contains("\"padding\":")) throw IllegalStateException("Padded request should contain padding in the json payload")
 
-            val r = Random.nextInt(0, 100)
-            val paddedSize = if (r == 0) {
-                if (sizes.min >= sizes.max) sizes.min else Random.nextLong(sizes.min, sizes.max + 1)
-            } else {
-                if (sizes.min >= sizes.max) sizes.min else Random.nextLong(
-                    sizes.min,
-                    sizes.min + ((sizes.max - sizes.min) / 100) + 1
-                )
-            }.coerceAtLeast(0)
-
+            val paddedSize = getPaddedSize(sizes)
             val paddingSize = paddedSize - size.toInt()
             Timber.d("Total size = $paddedSize, added padding = $paddingSize")
             // If we'd deserialize the json into a generic map, number values are converted to doubles.
@@ -58,6 +49,18 @@ class PaddedRequestInterceptor : Interceptor {
             )
         }
         return chain.proceed(chain.request())
+    }
+
+    private fun getPaddedSize(sizes: RequestSize): Long {
+        val r = Random.nextInt(0, 100)
+        return if (r == 0) {
+            if (sizes.min >= sizes.max) sizes.min else Random.nextLong(sizes.min, sizes.max + 1)
+        } else {
+            if (sizes.min >= sizes.max) sizes.min else Random.nextLong(
+                sizes.min,
+                sizes.min + ((sizes.max - sizes.min) / 100) + 1
+            )
+        }.coerceAtLeast(0)
     }
 
     private fun generatePadding(size: Long): String {
