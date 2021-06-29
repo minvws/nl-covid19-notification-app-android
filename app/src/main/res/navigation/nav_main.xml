@@ -107,7 +107,6 @@
         android:id="@+id/nav_settings"
         android:name="nl.rijksoverheid.en.settings.SettingsFragment"
         tools:layout="@layout/fragment_settings">
-
         <action
             android:id="@+id/action_enable_location_services"
             app:destination="@id/nav_location_services_required"
@@ -115,7 +114,6 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
-
         <action
             android:id="@+id/action_pause_confirmation"
             app:destination="@id/nav_pause_confirmation"
@@ -123,9 +121,8 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
-
         <action
-            android:id="@+id/action_select_pause_dation"
+            android:id="@+id/action_select_pause_duration"
             app:destination="@id/nav_pause_duration" />
     </fragment>
 
@@ -161,7 +158,6 @@
         android:id="@+id/nav_internet_required"
         android:name="nl.rijksoverheid.en.status.InternetRequiredFragment"
         tools:layout="@layout/fragment_internet_required">
-
         <action
             android:id="@+id/action_show_settings"
             app:destination="@id/nav_settings"
@@ -244,7 +240,24 @@
         android:name="nl.rijksoverheid.en.labtest.KeyShareOptionsFragment"
         android:label="KeyShareOptionsFragment"
         tools:layout="@layout/fragment_list">
-
+        <action
+            android:id="@+id/action_lab_test"
+            app:destination="@id/nav_lab_test"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" >
+            <argument
+                android:name="showEnterTransition"
+                android:defaultValue="true" />
+        </action>
+        <action
+            android:id="@+id/action_corona_test_key_sharing"
+            app:destination="@id/nav_corona_test_key_sharing"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
 
     <fragment
@@ -259,8 +272,31 @@
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
-            app:popUpTo="@id/nav_lab_test"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/nav_status"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_how_it_works"
+            app:destination="@id/nav_about_detail" />
+        <argument
+            android:name="showEnterTransition"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_corona_test_key_sharing"
+        android:name="nl.rijksoverheid.en.labtest.coronatest.CoronaTestKeySharingFragment"
+        android:label="LabTestFragment"
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_lab_test_done"
+            app:destination="@id/nav_lab_test_done"
+            app:popExitAnim="@anim/fragment_close_exit"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popUpTo="@id/nav_status"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_how_it_works"
             app:destination="@id/nav_about_detail" />

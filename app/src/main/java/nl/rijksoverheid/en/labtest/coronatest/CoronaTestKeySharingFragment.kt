@@ -4,23 +4,25 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.labtest
+package nl.rijksoverheid.en.labtest.coronatest
 
 import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.IntentSender
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupAdapter
@@ -29,23 +31,27 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItemId
-import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
+import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.labtest.LabTestViewModel
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.IllustrationSpaceDecoration
 import timber.log.Timber
 
-class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
-    private val args: LabTestFragmentArgs by navArgs()
-
+class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
     private val labViewModel: LabTestViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
-    private val section = LabTestSection(
+    private val section = CoronaTestKeySharingSection(
         retry = { labViewModel.retry() },
         requestConsent = { viewModel.requestEnableNotifications() },
-        copy = ::copyToClipboard
+        uploadKeys = { labViewModel.upload() },
+        openCoronaTestWebsite = ::openShareKeyUrl,
+        copy = ::copyToClipboard,
+        finish = ::finishCoronaTestKeySharing
     )
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
+
+    private lateinit var binding: FragmentListBinding
 
     private val requestUploadConsent =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
@@ -55,52 +61,41 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
         exitTransition =
             TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
-
-        if (args.showEnterTransition) {
-            enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
-            sharedElementEnterTransition =
-                TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
-            sharedElementReturnTransition = sharedElementEnterTransition
-        }
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
+        sharedElementReturnTransition = sharedElementEnterTransition
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentListWithButtonBinding.bind(view)
+        binding = FragmentListBinding.bind(view)
 
-        binding.toolbar.setTitle(R.string.lab_test_toolbar_title)
+        binding.toolbar.setTitle(R.string.lab_test_generic_toolbar_title)
         binding.content.addItemDecoration(IllustrationSpaceDecoration())
         binding.content.adapter = adapter
 
         adapter.setOnItemClickListener { _, _ ->
             findNavController().navigateCatchingErrors(
-                LabTestFragmentDirections.actionHowItWorks(FAQItemId.UPLOAD_KEYS),
+                CoronaTestKeySharingFragmentDirections.actionHowItWorks(FAQItemId.UPLOAD_KEYS),
                 FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
             )
         }
 
         labViewModel.keyState.observe(viewLifecycleOwner) { keyState ->
             section.update(keyState)
-            binding.button.isEnabled =
-                getContinueButtonEnabledState(keyState, section.notificationsState)
         }
         viewModel.notificationState.observe(viewLifecycleOwner) { notificationsState ->
             section.update(notificationsState)
-            binding.button.isEnabled =
-                getContinueButtonEnabledState(section.keyState, notificationsState)
         }
-
         labViewModel.uploadResult.observe(
             viewLifecycleOwner,
             EventObserver {
                 when (it) {
-                    is LabTestViewModel.UploadResult.Success -> findNavController().navigateCatchingErrors(
-                        LabTestFragmentDirections.actionLabTestDone(it.usedKey),
-                        FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
-                    )
+                    is LabTestViewModel.UploadResult.Success -> section.uploadKeysSucceeded()
                     is LabTestViewModel.UploadResult.RequestConsent -> requestConsent(it.resolution.intentSender)
                     LabTestViewModel.UploadResult.Error -> {
                         Toast.makeText(context, R.string.lab_test_upload_error, Toast.LENGTH_LONG)
@@ -109,13 +104,12 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
                 }
             }
         )
-
-        binding.button.apply {
-            setText(R.string.lab_test_button)
-            setOnClickListener {
-                labViewModel.upload()
+        labViewModel.keyExpiredEvent.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                findNavController().popBackStack(R.id.nav_status, false)
             }
-        }
+        )
     }
 
     override fun onStart() {
@@ -123,17 +117,18 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
         labViewModel.retry()
     }
 
-    private fun getContinueButtonEnabledState(
-        keyState: LabTestViewModel.KeyState,
-        notificationsState: ExposureNotificationsViewModel.NotificationsState
-    ): Boolean {
+    override fun onResume() {
+        super.onResume()
+        labViewModel.checkKeyExpiration()
+    }
 
-        return keyState is LabTestViewModel.KeyState.Success &&
-            notificationsState in listOf(
-            ExposureNotificationsViewModel.NotificationsState.Enabled,
-            ExposureNotificationsViewModel.NotificationsState.BluetoothDisabled,
-            ExposureNotificationsViewModel.NotificationsState.LocationPreconditionNotSatisfied
-        )
+    private fun finishCoronaTestKeySharing() {
+        labViewModel.usedKey?.let { key ->
+            findNavController().navigateCatchingErrors(
+                CoronaTestKeySharingFragmentDirections.actionLabTestDone(key),
+                FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+            )
+        }
     }
 
     private fun requestConsent(intentSender: IntentSender) {
@@ -141,6 +136,15 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
             requestUploadConsent.launch(IntentSenderRequest.Builder(intentSender).build())
         } catch (ex: Exception) {
             Timber.e(ex, "Error requesting consent")
+        }
+    }
+
+    private fun openShareKeyUrl() {
+        viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
+            labViewModel.getShareKeyUrl().let {
+                val url = Uri.parse(labViewModel.getShareKeyUrl())
+                CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
+            }
         }
     }
 

@@ -665,4 +665,27 @@ class LabTestRepositoryTest {
         val result = repository.sendDecoyTraffic()
         assertEquals(LabTestRepository.SendDecoyResult.Success, result)
     }
+
+    @Test
+    fun `isKeyDataExpired returns true if expired`() =
+        runBlocking {
+            val prefs = ApplicationProvider.getApplicationContext<Application>()
+                .getSharedPreferences("test", 0)
+
+            prefs.edit {
+                putLong("registration_expiration", clock.millis() - 5L)
+            }
+
+            val repository = LabTestRepository(
+                AsyncSharedPreferences { prefs },
+                mock(),
+                mock(),
+                mock(),
+                mock(),
+                mock(),
+                clock
+            )
+
+            assertTrue(repository.isKeyDataExpired())
+        }
 }
