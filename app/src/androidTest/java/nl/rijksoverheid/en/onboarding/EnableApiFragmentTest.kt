@@ -118,7 +118,7 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
         },
         AppLifecycleManager(context, configPreferences, AppUpdateManagerFactory.create(context)) {},
         StatusCache(notificationsPreferences),
-        AppConfigManager(service, false, emptyList())
+        AppConfigManager(service, { false }, { emptyList() })
     )
 
     private val settingsRepository = SettingsRepository(

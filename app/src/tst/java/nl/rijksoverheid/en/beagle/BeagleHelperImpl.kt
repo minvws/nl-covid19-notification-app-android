@@ -36,14 +36,14 @@ object BeagleHelperImpl : BeagleHelper {
     override var useDefaultGuidance: Boolean = false
         private set
 
-    override var useDebugFeatureFlags: Boolean = false
-        private set
+    private var useDebugFeatureFlagSetting: Boolean = false
+    override var useDebugFeatureFlags = { useDebugFeatureFlagSetting }
 
     override var testExposureDaysAgo: Int = 5
         private set
 
-    override var debugFeatureFlags: List<FeatureFlag> = emptyList()
-        private set
+    private var debugFeatureFlags: List<FeatureFlag> = emptyList()
+    override var getDebugFeatureFlags = { debugFeatureFlags }
 
     private const val testNotificationExposureDaysAgoId = "testNotificationExposureDaysAgo"
     private const val previouslyKnownExposureDateId = "previouslyKnownExposureDate"
@@ -72,7 +72,7 @@ object BeagleHelperImpl : BeagleHelper {
             SwitchModule(
                 text = "Use debug featureFlags",
                 onValueChanged = {
-                    useDebugFeatureFlags = it
+                    useDebugFeatureFlagSetting = it
                 }
             ),
             MultipleSelectionListModule(

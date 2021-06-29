@@ -18,8 +18,8 @@ private val DEFAULT_CONFIG = AppConfig()
 
 class AppConfigManager(
     private val cdnService: CdnService,
-    private val useDebugFeatureFlags: Boolean,
-    private val debugFeatureFlags: List<FeatureFlag>
+    private val useDebugFeatureFlags: () -> Boolean,
+    private val getDebugFeatureFlags: () -> List<FeatureFlag>
 ) {
 
     private suspend fun getConfigOrDefault(block: suspend () -> AppConfig?): AppConfig {
@@ -40,8 +40,8 @@ class AppConfigManager(
      */
     suspend fun getConfigOrDefault(): AppConfig = getConfigOrDefault {
         cdnService.getAppConfig(cdnService.getManifest().appConfigId).let { appConfig ->
-            if (useDebugFeatureFlags)
-                appConfig.copy(featureFlags = debugFeatureFlags)
+            if (useDebugFeatureFlags())
+                appConfig.copy(featureFlags = getDebugFeatureFlags())
             else
                 appConfig
         }
@@ -56,8 +56,8 @@ class AppConfigManager(
             cdnService.getManifest(CacheStrategy.CACHE_ONLY).appConfigId,
             CacheStrategy.CACHE_ONLY
         ).let { appConfig ->
-            if (useDebugFeatureFlags)
-                appConfig.copy(featureFlags = debugFeatureFlags)
+            if (useDebugFeatureFlags())
+                appConfig.copy(featureFlags = getDebugFeatureFlags())
             else
                 appConfig
         }

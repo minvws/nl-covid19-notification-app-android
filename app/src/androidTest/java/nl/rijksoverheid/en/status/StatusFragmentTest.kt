@@ -129,7 +129,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
                 AppUpdateManagerFactory.create(context)
             ) {},
             StatusCache(notificationsPreferences),
-            AppConfigManager(service, false, emptyList()),
+            AppConfigManager(service, { false }, { emptyList() }),
             clock = clock
         )
     }

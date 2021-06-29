@@ -82,7 +82,7 @@ fun createExposureNotificationsRepository(context: Context): ExposureNotificatio
         AppConfigManager(
             service,
             BeagleHelperImpl.useDebugFeatureFlags,
-            BeagleHelperImpl.debugFeatureFlags
+            BeagleHelperImpl.getDebugFeatureFlags
         )
     )
 }
@@ -129,7 +129,7 @@ fun createAppConfigManager(context: Context): AppConfigManager {
     return AppConfigManager(
         service,
         BeagleHelperImpl.useDebugFeatureFlags,
-        BeagleHelperImpl.debugFeatureFlags
+        BeagleHelperImpl.getDebugFeatureFlags
     )
 }
 
