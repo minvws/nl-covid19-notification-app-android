@@ -13,7 +13,7 @@ object BeagleHelperImpl : BeagleHelper {
     override val useDefaultGuidance: Boolean = false
     override val useDebugFeatureFlags = { false }
     override val testExposureDaysAgo: Int = 5
-    override var getDebugFeatureFlags = { emptyList() }
+    override var getDebugFeatureFlags = { emptyList<FeatureFlag>() }
 
     override fun initialize(application: Application) {
         // no-op
