@@ -94,7 +94,7 @@ class LabTestRepositoryTest {
     }
 
     private val appConfigManager =
-        AppConfigManager(cdnService, false, emptyList())
+        AppConfigManager(cdnService, { false }, { emptyList() })
 
     @Before
     fun setup() {

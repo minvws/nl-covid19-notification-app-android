@@ -12,9 +12,9 @@ import nl.rijksoverheid.en.api.model.FeatureFlag
 interface BeagleHelper {
 
     val useDefaultGuidance: Boolean
-    val useDebugFeatureFlags: Boolean
+    val useDebugFeatureFlags: () -> Boolean
     val testExposureDaysAgo: Int
-    val debugFeatureFlags: List<FeatureFlag>
+    val getDebugFeatureFlags: () -> List<FeatureFlag>
 
     fun initialize(application: Application)
 }
