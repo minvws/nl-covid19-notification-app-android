@@ -16,6 +16,7 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.util.setSlideTransitionWithoutReturnTransition
 
 class LabTestDoneFragment : BaseFragment(R.layout.fragment_list) {
     private val args: LabTestDoneFragmentArgs by navArgs()
@@ -24,11 +25,7 @@ class LabTestDoneFragment : BaseFragment(R.layout.fragment_list) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
-        returnTransition = null
-        sharedElementReturnTransition = null
+        setSlideTransitionWithoutReturnTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -14,7 +14,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.transition.TransitionInflater
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -31,6 +30,7 @@ import nl.rijksoverheid.en.ignoreInitiallyEnabled
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
+import nl.rijksoverheid.en.util.setSlideTransition
 
 private val crossLinks = mapOf(
     FAQItemId.REASON to listOf(FAQItemId.LOCATION, FAQItemId.NOTIFICATION_MESSAGE),
@@ -81,13 +81,7 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
             adapter.addAll(crossLinks.map(::FAQItem))
         }
 
-        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
-        exitTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
-
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
-        sharedElementReturnTransition = sharedElementEnterTransition
+        setSlideTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

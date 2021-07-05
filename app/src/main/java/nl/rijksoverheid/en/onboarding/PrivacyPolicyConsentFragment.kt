@@ -20,11 +20,11 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentPrivacyPolicyConsentBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.setSlideTransition
 
 class PrivacyPolicyConsentFragment : BaseFragment(R.layout.fragment_privacy_policy_consent) {
     private val onboardingViewModel: OnboardingViewModel by activityViewModels()
@@ -32,13 +32,7 @@ class PrivacyPolicyConsentFragment : BaseFragment(R.layout.fragment_privacy_poli
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
-        exitTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
-
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
-        sharedElementReturnTransition = sharedElementEnterTransition
+        setSlideTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
