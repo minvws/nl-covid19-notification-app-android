@@ -27,6 +27,8 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.status.StatusSection.NotificationAction
+import nl.rijksoverheid.en.status.StatusViewModel.NotificationState
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.isIgnoringBatteryOptimizations
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
@@ -91,39 +93,8 @@ class StatusFragment @JvmOverloads constructor(
             }
         }
 
-        statusViewModel.headerState.observe(viewLifecycleOwner) {
-            updateHeaderState(it)
-        }
-
-        statusViewModel.notificationState.observe(viewLifecycleOwner) {
-            section.updateNotifications(it) { state: StatusViewModel.NotificationState, action: StatusSection.NotificationAction ->
-                when (state) {
-                    is StatusViewModel.NotificationState.Paused -> resetAndRequestEnableNotifications()
-                    is StatusViewModel.NotificationState.ExposureOver14DaysAgo -> {
-                        when (action) {
-                            StatusSection.NotificationAction.Primary -> {
-                                showRemoveNotificationConfirmationDialog(
-                                    state.exposureDate.formatExposureDate(requireContext())
-                                )
-                            }
-                            StatusSection.NotificationAction.Secondary -> {
-                                navigateToPostNotification(
-                                    state.exposureDate,
-                                    state.notificationReceivedDate
-                                )
-                            }
-                        }
-                    }
-                    StatusViewModel.NotificationState.BatteryOptimizationEnabled -> disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest()
-                    StatusViewModel.NotificationState.Error.BluetoothDisabled -> requestEnableBluetooth()
-                    StatusViewModel.NotificationState.Error.ConsentRequired -> resetAndRequestEnableNotifications()
-                    StatusViewModel.NotificationState.Error.LocationDisabled -> requestEnableLocationServices()
-                    StatusViewModel.NotificationState.Error.NotificationsDisabled -> navigateToNotificationSettings()
-                    StatusViewModel.NotificationState.Error.SyncIssues -> statusViewModel.resetErrorState()
-                    StatusViewModel.NotificationState.Error.SyncIssuesWifiOnly -> navigateToInternetRequiredFragment()
-                }
-            }
-        }
+        statusViewModel.headerState.observe(viewLifecycleOwner, ::updateHeaderState)
+        statusViewModel.notificationState.observe(viewLifecycleOwner, ::updateNotificationState)
 
         statusViewModel.lastKeysProcessed.observe(viewLifecycleOwner) {
             section.lastKeysProcessed = it
@@ -187,6 +158,37 @@ class StatusFragment @JvmOverloads constructor(
                         )
                     }
                 )
+            }
+        }
+    }
+
+    private fun updateNotificationState(notificationState: List<NotificationState>) {
+        section.updateNotifications(notificationState) { state: NotificationState, action: NotificationAction ->
+            when (state) {
+                is NotificationState.Paused -> resetAndRequestEnableNotifications()
+                is NotificationState.ExposureOver14DaysAgo -> {
+                    when (action) {
+                        NotificationAction.Primary -> {
+                            showRemoveNotificationConfirmationDialog(
+                                state.exposureDate.formatExposureDate(requireContext())
+                            )
+                        }
+                        NotificationAction.Secondary -> {
+                            navigateToPostNotification(
+                                state.exposureDate,
+                                state.notificationReceivedDate
+                            )
+                        }
+                    }
+                }
+                NotificationState.BatteryOptimizationEnabled ->
+                    disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest()
+                NotificationState.Error.BluetoothDisabled -> requestEnableBluetooth()
+                NotificationState.Error.ConsentRequired -> resetAndRequestEnableNotifications()
+                NotificationState.Error.LocationDisabled -> requestEnableLocationServices()
+                NotificationState.Error.NotificationsDisabled -> navigateToNotificationSettings()
+                NotificationState.Error.SyncIssues -> statusViewModel.resetErrorState()
+                NotificationState.Error.SyncIssuesWifiOnly -> navigateToInternetRequiredFragment()
             }
         }
     }

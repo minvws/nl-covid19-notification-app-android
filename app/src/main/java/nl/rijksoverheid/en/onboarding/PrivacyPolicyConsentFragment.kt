@@ -78,8 +78,7 @@ class PrivacyPolicyConsentFragment : BaseFragment(R.layout.fragment_privacy_poli
             }
         }
         binding.description.setOnClickListener {
-            val url =
-                Uri.parse(getString(R.string.privacy_policy_url, getString(R.string.app_language)))
+            val url = Uri.parse(getString(R.string.privacy_policy_url, getString(R.string.app_language)))
             CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
         }
     }

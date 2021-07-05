@@ -17,7 +17,7 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentEnableApiBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
-import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 import nl.rijksoverheid.en.util.setSlideTransition
@@ -53,32 +53,26 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
             }
         }
 
-        onboardingViewModel.skipConsentConfirmation.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                findNavController().navigate(EnableApiFragmentDirections.actionSkipConsentConfirmation())
-                findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
-                    SkipConsentConfirmationDialogFragment.SKIP_CONSENT_RESULT
-                )?.observe(viewLifecycleOwner) { skip ->
-                    if (skip) {
-                        disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest { onboardingViewModel.continueOnboarding() }
-                    } else {
-                        viewModel.requestEnableNotificationsForcingConsent()
-                    }
+        onboardingViewModel.skipConsentConfirmation.observeEvent(viewLifecycleOwner) {
+            findNavController().navigate(EnableApiFragmentDirections.actionSkipConsentConfirmation())
+            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+                SkipConsentConfirmationDialogFragment.SKIP_CONSENT_RESULT
+            )?.observe(viewLifecycleOwner) { skip ->
+                if (skip) {
+                    disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest { onboardingViewModel.continueOnboarding() }
+                } else {
+                    viewModel.requestEnableNotificationsForcingConsent()
                 }
             }
-        )
+        }
 
-        onboardingViewModel.continueOnboarding.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                findNavController().navigateCatchingErrors(
-                    EnableApiFragmentDirections.actionNext(),
-                    FragmentNavigatorExtras(
-                        binding.appbar to binding.appbar.transitionName
-                    )
+        onboardingViewModel.continueOnboarding.observeEvent(viewLifecycleOwner) {
+            findNavController().navigateCatchingErrors(
+                EnableApiFragmentDirections.actionNext(),
+                FragmentNavigatorExtras(
+                    binding.appbar to binding.appbar.transitionName
                 )
-            }
-        )
+            )
+        }
     }
 }

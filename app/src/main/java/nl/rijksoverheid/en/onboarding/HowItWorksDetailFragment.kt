@@ -27,7 +27,7 @@ import nl.rijksoverheid.en.about.FAQItemDecoration
 import nl.rijksoverheid.en.about.FAQItemId
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
-import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 import nl.rijksoverheid.en.util.setSlideTransition
@@ -91,7 +91,6 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
 
         binding.toolbar.setTitle(R.string.onboarding_how_it_works_detail_toolbar_title)
         binding.content.adapter = adapter
-
         binding.content.addItemDecoration(
             FAQItemDecoration(
                 requireContext(),
@@ -115,22 +114,20 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
             setText(R.string.onboarding_how_it_works_request_consent)
             setOnClickListener { viewModel.requestEnableNotificationsForcingConsent() }
         }
+
         viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
                 disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest { onboardingViewModel.continueOnboarding() }
             }
         }
 
-        onboardingViewModel.continueOnboarding.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                findNavController().navigateCatchingErrors(
-                    HowItWorksDetailFragmentDirections.actionNext(),
-                    FragmentNavigatorExtras(
-                        binding.appbar to binding.appbar.transitionName
-                    )
+        onboardingViewModel.continueOnboarding.observeEvent(viewLifecycleOwner) {
+            findNavController().navigateCatchingErrors(
+                HowItWorksDetailFragmentDirections.actionNext(),
+                FragmentNavigatorExtras(
+                    binding.appbar to binding.appbar.transitionName
                 )
-            }
-        )
+            )
+        }
     }
 }

@@ -17,7 +17,7 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentSettingsBinding
-import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.getBackStackEntryObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.LocaleHelper
@@ -49,34 +49,33 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             }
         }
 
-        settingsViewModel.wifiOnlyChanged.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                viewModel.rescheduleBackgroundJobs()
-            }
-        )
+        settingsViewModel.wifiOnlyChanged.observeEvent(viewLifecycleOwner) {
+            viewModel.rescheduleBackgroundJobs()
+        }
 
-        settingsViewModel.pauseRequested.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                if (settingsViewModel.skipPauseConfirmation) {
-                    showPauseDurationBottomSheet()
-                } else {
-                    findNavController().navigateCatchingErrors(SettingsFragmentDirections.actionPauseConfirmation())
-                }
+        settingsViewModel.pauseRequested.observeEvent(viewLifecycleOwner) {
+            if (settingsViewModel.skipPauseConfirmation) {
+                showPauseDurationBottomSheet()
+            } else {
+                findNavController().navigateCatchingErrors(SettingsFragmentDirections.actionPauseConfirmation())
             }
-        )
+        }
 
-        settingsViewModel.enableExposureNotificationsRequested.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                if (viewModel.locationPreconditionSatisfied) {
-                    viewModel.requestEnableNotificationsForcingConsent()
-                } else {
-                    findNavController().navigateCatchingErrors(SettingsFragmentDirections.actionEnableLocationServices())
-                }
+        settingsViewModel.enableExposureNotificationsRequested.observeEvent(viewLifecycleOwner) {
+            if (viewModel.locationPreconditionSatisfied) {
+                viewModel.requestEnableNotificationsForcingConsent()
+            } else {
+                findNavController().navigateCatchingErrors(SettingsFragmentDirections.actionEnableLocationServices())
             }
-        )
+        }
+
+        settingsViewModel.enableExposureNotificationsRequested.observeEvent(viewLifecycleOwner) {
+            if (viewModel.locationPreconditionSatisfied) {
+                viewModel.requestEnableNotificationsForcingConsent()
+            } else {
+                findNavController().navigateCatchingErrors(SettingsFragmentDirections.actionEnableLocationServices())
+            }
+        }
 
         settingsViewModel.pausedState.observe(viewLifecycleOwner) {
             val now = LocalDateTime.now()
