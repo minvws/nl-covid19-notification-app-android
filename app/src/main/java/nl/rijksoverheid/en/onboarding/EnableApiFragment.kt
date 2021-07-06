@@ -12,15 +12,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentEnableApiBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
-import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
+import nl.rijksoverheid.en.util.setSlideTransition
 
 class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
     private val onboardingViewModel: OnboardingViewModel by activityViewModels()
@@ -32,13 +32,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
-        exitTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
-
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
-        sharedElementReturnTransition = sharedElementEnterTransition
+        setSlideTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,32 +53,26 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
             }
         }
 
-        onboardingViewModel.skipConsentConfirmation.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                findNavController().navigate(EnableApiFragmentDirections.actionSkipConsentConfirmation())
-                findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
-                    SkipConsentConfirmationDialogFragment.SKIP_CONSENT_RESULT
-                )?.observe(viewLifecycleOwner) { skip ->
-                    if (skip) {
-                        disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest { onboardingViewModel.continueOnboarding() }
-                    } else {
-                        viewModel.requestEnableNotificationsForcingConsent()
-                    }
+        onboardingViewModel.skipConsentConfirmation.observeEvent(viewLifecycleOwner) {
+            findNavController().navigate(EnableApiFragmentDirections.actionSkipConsentConfirmation())
+            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+                SkipConsentConfirmationDialogFragment.SKIP_CONSENT_RESULT
+            )?.observe(viewLifecycleOwner) { skip ->
+                if (skip) {
+                    disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest { onboardingViewModel.continueOnboarding() }
+                } else {
+                    viewModel.requestEnableNotificationsForcingConsent()
                 }
             }
-        )
+        }
 
-        onboardingViewModel.continueOnboarding.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                findNavController().navigateCatchingErrors(
-                    EnableApiFragmentDirections.actionNext(),
-                    FragmentNavigatorExtras(
-                        binding.appbar to binding.appbar.transitionName
-                    )
+        onboardingViewModel.continueOnboarding.observeEvent(viewLifecycleOwner) {
+            findNavController().navigateCatchingErrors(
+                EnableApiFragmentDirections.actionNext(),
+                FragmentNavigatorExtras(
+                    binding.appbar to binding.appbar.transitionName
                 )
-            }
-        )
+            )
+        }
     }
 }

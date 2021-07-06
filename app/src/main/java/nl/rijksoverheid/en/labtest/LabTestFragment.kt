@@ -31,7 +31,7 @@ import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItemId
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
-import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import timber.log.Timber
 
@@ -99,22 +99,19 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
                 getContinueButtonEnabledState(section.keyState, notificationsState)
         }
 
-        labViewModel.uploadResult.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                when (it) {
-                    is LabTestViewModel.UploadResult.Success -> findNavController().navigateCatchingErrors(
-                        LabTestFragmentDirections.actionLabTestDone(it.usedKey),
-                        FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
-                    )
-                    is LabTestViewModel.UploadResult.RequestConsent -> requestConsent(it.resolution.intentSender)
-                    LabTestViewModel.UploadResult.Error -> {
-                        Toast.makeText(context, R.string.lab_test_upload_error, Toast.LENGTH_LONG)
-                            .show()
-                    }
+        labViewModel.uploadResult.observeEvent(viewLifecycleOwner) {
+            when (it) {
+                is LabTestViewModel.UploadResult.Success -> findNavController().navigateCatchingErrors(
+                    LabTestFragmentDirections.actionLabTestDone(it.usedKey),
+                    FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+                )
+                is LabTestViewModel.UploadResult.RequestConsent -> requestConsent(it.resolution.intentSender)
+                LabTestViewModel.UploadResult.Error -> {
+                    Toast.makeText(context, R.string.lab_test_upload_error, Toast.LENGTH_LONG)
+                        .show()
                 }
             }
-        )
+        }
 
         binding.button.apply {
             setText(R.string.lab_test_button)

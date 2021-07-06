@@ -10,6 +10,10 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 
+/**
+ * Simplified ActivityLifecycleCallbacks that only triggers a callback on activity created
+ * @param callback method for onActivityCreated
+ */
 class ActivityCreatedCallback(private val callback: (Activity) -> Unit) :
     Application.ActivityLifecycleCallbacks {
 
@@ -17,15 +21,27 @@ class ActivityCreatedCallback(private val callback: (Activity) -> Unit) :
         callback.invoke(activity)
     }
 
-    override fun onActivityStarted(activity: Activity) {}
+    override fun onActivityStarted(activity: Activity) {
+        // Ignore onActivityStarted callback
+    }
 
-    override fun onActivityResumed(activity: Activity) {}
+    override fun onActivityResumed(activity: Activity) {
+        // Ignore onActivityResumed callback
+    }
 
-    override fun onActivityPaused(activity: Activity) {}
+    override fun onActivityPaused(activity: Activity) {
+        // Ignore onActivityPaused callback
+    }
 
-    override fun onActivityStopped(activity: Activity) {}
+    override fun onActivityStopped(activity: Activity) {
+        // Ignore onActivityStopped callback
+    }
 
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+        // Ignore onActivitySaveInstanceState callback
+    }
 
-    override fun onActivityDestroyed(activity: Activity) {}
+    override fun onActivityDestroyed(activity: Activity) {
+        // Ignore onActivityDestroyed callback
+    }
 }

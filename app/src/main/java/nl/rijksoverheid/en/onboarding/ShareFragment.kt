@@ -12,10 +12,10 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentShareBinding
+import nl.rijksoverheid.en.util.setSlideTransition
 
 class ShareFragment : BaseFragment(R.layout.fragment_share) {
     private val onboardingViewModel: OnboardingViewModel by activityViewModels()
@@ -23,13 +23,7 @@ class ShareFragment : BaseFragment(R.layout.fragment_share) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
-        exitTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
-
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
-        sharedElementReturnTransition = sharedElementEnterTransition
+        setSlideTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -13,7 +13,6 @@ import android.view.View
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.transition.TransitionInflater
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -36,6 +35,7 @@ import nl.rijksoverheid.en.about.FAQItemId.TECHNICAL
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.setSlideTransition
 
 private val crossLinks = mapOf(
     ONBOARDING to listOf(REASON, LOCATION, ANONYMOUS),
@@ -78,13 +78,7 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
             adapter.addAll(crossLinks.map(::FAQItem))
         }
 
-        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
-        exitTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
-
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
-        sharedElementReturnTransition = sharedElementEnterTransition
+        setSlideTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

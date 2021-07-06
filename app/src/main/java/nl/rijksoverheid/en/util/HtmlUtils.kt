@@ -54,33 +54,20 @@ private fun fromHtml(html: String): SpannableStringBuilder {
         null,
         Html.TagHandler { opening, tag, output, _ ->
             if (tag == "li" && opening) {
-                output.setSpan(
-                    Bullet(),
-                    output.length,
-                    output.length,
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE
-                )
+                output.setSpan(Bullet(), output.length, output.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
             }
-            if (tag == "ul" && opening) {
+            if (tag == "ul" && opening && output.isNotEmpty()) {
                 // add a line break if this tag is not on a new line
-                if (output.isNotEmpty()) {
-                    output.append("\n")
-                }
+                output.append("\n")
             }
             if (tag == "li" && !opening) {
                 output.append("\n")
-                val lastMark =
-                    output.getSpans<Bullet>().lastOrNull()
+                val lastMark = output.getSpans<Bullet>().lastOrNull()
                 lastMark?.let {
                     val start = output.getSpanStart(it)
                     output.removeSpan(it)
                     if (start != output.length) {
-                        output.setSpan(
-                            it,
-                            start,
-                            output.length,
-                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE
-                        )
+                        output.setSpan(it, start, output.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
                     }
                 }
             }

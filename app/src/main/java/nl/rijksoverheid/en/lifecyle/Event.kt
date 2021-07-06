@@ -15,6 +15,8 @@
  */
 package nl.rijksoverheid.en.lifecyle
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 
 /**
@@ -56,3 +58,12 @@ class EventObserver<T>(private val onEventUnhandledContent: (T) -> Unit) : Obser
         }
     }
 }
+
+/**
+ * Extension method for using [EventObserver] as an Observer.
+ *
+ * @param owner LifecycleOwner which controls the observer
+ * @param onEventUnhandledContent is *only* called if the [Event]'s contents has not been handled.
+ */
+fun <T> LiveData<Event<T>>.observeEvent(owner: LifecycleOwner, onEventUnhandledContent: (T) -> Unit) =
+    observe(owner, EventObserver(onEventUnhandledContent))

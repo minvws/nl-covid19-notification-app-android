@@ -13,7 +13,9 @@ import nl.rijksoverheid.en.items.BaseBindableItem
 
 class FAQOnboardingItem : BaseBindableItem<ItemFaqOnboardingBinding>() {
     override fun getLayout() = R.layout.item_faq_onboarding
-    override fun bind(viewBinding: ItemFaqOnboardingBinding, position: Int) {}
+    override fun bind(viewBinding: ItemFaqOnboardingBinding, position: Int) {
+        // Nothing to bind, FAQOnboardingItem is a static item
+    }
     override fun isClickable() = true
     override fun isSameAs(other: Item<*>): Boolean = other is FAQOnboardingItem
     override fun hasSameContentAs(other: Item<*>) = other is FAQOnboardingItem
