@@ -314,7 +314,7 @@
     <string name="post_keys_options_coronatest_subtitle">Das geht nur, wenn Sie das Testergebnis über coronatest.nl erhalten.</string>
     <string name="post_keys_options_ggd_title">Wenn der GGD Sie anruft</string>
     <string name="post_keys_options_ggd_subtitle">Das geht nur, wenn Sie jetzt mit dem GGD telefonieren.</string>
-    <string name="coronatest_description"><![CDATA[Entdecken Sie über coronatest.nl, dass Sie Corona haben? Dann können Sie über CoronaMelder sofort eine Nachricht schicken.<a href="">Wie geht das?</a>]]></string>
+    <string name="coronatest_description"><![CDATA[Entdecken Sie über coronatest.nl, dass Sie Corona haben? Dann können Sie über CoronaMelder sofort eine Nachricht schicken. <a href="">Wie geht das?</a>]]></string>
     <string name="coronatest_step_1">Teilen Sie die Codes, die CoronaMelder erstellt hat</string>
     <string name="coronatest_step_2">Schreiben Sie Ihren GGD-Schlüssel auf oder kopieren Sie ihn</string>
     <string name="coronatest_step_3">Geben Sie Ihren GGD-Schlüssel auf coronatest.nl ein. So warnen Sie Personen, in deren Nähe Sie waren.</string>
