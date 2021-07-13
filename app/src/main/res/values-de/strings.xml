@@ -228,7 +228,7 @@
     <string name="request_test_paragraph_3">Lassen Sie sich kostenlos testen. Es dauert nicht lange und Sie können meistens schnell einen Termin vereinbaren. Das Ergebnis ist innerhalb von 48 Stunden bekannt. Bleiben Sie zu Hause, bis Sie das Ergebnis haben.</string>
     <string name="generic_notification_sample_notification_content_description">Beispiel einer Nachricht</string>
     <string name="onboarding_enable_headline">Aktivieren Sie CoronaMelder</string>
-    <string name="onboarding_enable_description">CoronaMelder braucht Ihre Erlaubnis, um:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Begegnungen mit anderen App-Nutzern zu registrieren&lt;/li&gt;&lt;li&gt;die Batterie-Optimierung nur für diese App zu deaktivieren (für die optimale App-Funktion)&lt;/li&gt;&lt;/ul&gt;.</string>
+    <string name="onboarding_enable_description">CoronaMelder braucht Ihre Erlaubnis, um:&lt;br/&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Begegnungen mit anderen App-Nutzern zu registrieren&lt;/li&gt;&lt;li&gt;die Batterie-Optimierung nur für diese App zu deaktivieren (für die optimale App-Funktion)&lt;/li&gt;&lt;/ul&gt;</string>
     <string name="onboarding_enable_description_location"><![CDATA[CoronaMelder braucht Ihre Erlaubnis, um:<br/><br/><ul><li>Begegnungen mit anderen App-Nutzern zu registrieren</li><li>Ihre Standort-Einstellungen zu aktivieren (CoronaMelder kennt Ihren Standort nicht)</li><li>die Batterie-Optimierung nur für diese App zu deaktivieren (für eine optimale App-Funktion)</li></ul>]]></string>
     <string name="location_services_required_title">Standort-Einstellungen</string>
     <string name="location_services_required_headline">Die App funktioniert nur, wenn die Standort-Einstellungen eingeschaltet sind.</string>
