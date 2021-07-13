@@ -9,7 +9,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="textAppearanceHeadline4">@style/TextAppearance.App.Headline4</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.App.Headline5</item>
         <item name="textAppearanceHeadline6">@style/TextAppearance.App.Headline6</item>
