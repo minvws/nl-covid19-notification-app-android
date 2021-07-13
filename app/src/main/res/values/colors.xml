@@ -15,7 +15,7 @@
     <color name="faq_onboarding_background">@color/light_blue</color>
     <color name="technical_explanation_background">@color/light_yellow</color>
     <color name="faq_github_background">@color/gray_lighter</color>
-    <color name="circle_counter_disabled_tint">@color/gray</color>
+    <color name="circle_counter_disabled_background">@color/gray</color>
 
     <!-- Color palette -->
     <color name="dark_blue">#0047FF</color>
