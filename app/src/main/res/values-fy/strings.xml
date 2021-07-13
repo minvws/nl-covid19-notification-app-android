@@ -313,7 +313,7 @@
     <string name="post_keys_options_coronatest_subtitle">Dit kin allinne ast de testútslach fia coronatest.nl krigest</string>
     <string name="post_keys_options_ggd_title">As de GGD dy bellet</string>
     <string name="post_keys_options_ggd_subtitle">Dit kin allinne ast no de GGD oan \'e telefoan hast</string>
-    <string name="coronatest_description"><![CDATA[Untdekst fia coronatest.nl datst koroana hast? Dan kinst fia CoronaMelder daliks in melding ferstjoere.<a href="">Hoe wurket dat?</a>]]></string>
+    <string name="coronatest_description"><![CDATA[Untdekst fia coronatest.nl datst koroana hast? Dan kinst fia CoronaMelder daliks in melding ferstjoere. <a href="">Hoe wurket dat?</a>]]></string>
     <string name="coronatest_step_1">Diel de koades dy\'t CoronaMelder makke hat</string>
     <string name="coronatest_step_2">Skriuw dyn GGD-sleutel op of kopiearje dy</string>
     <string name="coronatest_step_3">Folje dyn GGD-sleutel yn op coronatest.nl. Sa warskôgest oaren by wa\'tst yn \'e buert west hast</string>

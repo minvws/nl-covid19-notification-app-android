@@ -158,7 +158,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="share_content">Estoy ayudando a contener el coronavirus con CoronaMelder. ¡Únete! %1$s</string>
     <string name="share_title">Comparte la app con más gente</string>
     <string name="lab_test_toolbar_title">Clave GGD</string>
-    <string name="lab_test_paragraph_1"><![CDATA[¿Te has hecho el test y tienes coronavirus? En ese caso, te llamará un asistente del GGD (servicio de salud municipal) que te ayudará a avisar a las personas que estuvieron cerca de ti. Necesitarás tu clave GGD para ello.<a href="">¿Cómo funciona?</a>]]></string>
+    <string name="lab_test_paragraph_1"><![CDATA[¿Te has hecho el test y tienes coronavirus? En ese caso, te llamará un asistente del GGD (servicio de salud municipal) que te ayudará a avisar a las personas que estuvieron cerca de ti. Necesitarás tu clave GGD para ello. <a href="">¿Cómo funciona?</a>]]></string>
     <string name="lab_test_step_1">Dale la clave GGD al asistente del GGD:</string>
     <string name="lab_test_token_loading">Descargando clave</string>
     <string name="lab_test_token_error">La app no ha podido descargar una clave GGD. Comprueba tu conexión a internet.</string>
@@ -315,7 +315,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="post_keys_options_coronatest_subtitle">Solo se puede hacer si recibes los resultados del test por coronatest.nl</string>
     <string name="post_keys_options_ggd_title">Si te llama el GGD</string>
     <string name="post_keys_options_ggd_subtitle">Solo se puede hacer si estás ahora mismo al teléfono con el GGD</string>
-    <string name="coronatest_description"><![CDATA[¿Te han informado por coronatest.nl que tienes coronavirus? Entonces puedes mandar directamente una notificación por CoronaMelder.<a href="">¿Cómo funciona?</a>]]></string>
+    <string name="coronatest_description"><![CDATA[¿Te han informado por coronatest.nl que tienes coronavirus? Entonces puedes mandar directamente una notificación por CoronaMelder. <a href="">¿Cómo funciona?</a>]]></string>
     <string name="coronatest_step_1">Comparte los códigos que ha generado CoronaMelder</string>
     <string name="coronatest_step_2">Escribe tu clave GGD o cópiala</string>
     <string name="coronatest_step_3">Introduce tu clave GGD en coronatest.nl. Así avisarás a las personas que estuvieron cerca de ti.</string>
