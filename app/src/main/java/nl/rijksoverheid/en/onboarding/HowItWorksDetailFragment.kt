@@ -14,7 +14,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.transition.TransitionInflater
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -28,9 +27,10 @@ import nl.rijksoverheid.en.about.FAQItemDecoration
 import nl.rijksoverheid.en.about.FAQItemId
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
-import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
+import nl.rijksoverheid.en.util.setSlideTransition
 
 private val crossLinks = mapOf(
     FAQItemId.REASON to listOf(FAQItemId.LOCATION, FAQItemId.NOTIFICATION_MESSAGE),
@@ -81,13 +81,7 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
             adapter.addAll(crossLinks.map(::FAQItem))
         }
 
-        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
-        exitTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
-
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
-        sharedElementReturnTransition = sharedElementEnterTransition
+        setSlideTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,7 +91,6 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
 
         binding.toolbar.setTitle(R.string.onboarding_how_it_works_detail_toolbar_title)
         binding.content.adapter = adapter
-
         binding.content.addItemDecoration(
             FAQItemDecoration(
                 requireContext(),
@@ -121,22 +114,20 @@ class HowItWorksDetailFragment : BaseFragment(R.layout.fragment_list_with_button
             setText(R.string.onboarding_how_it_works_request_consent)
             setOnClickListener { viewModel.requestEnableNotificationsForcingConsent() }
         }
+
         viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
             if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
                 disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest { onboardingViewModel.continueOnboarding() }
             }
         }
 
-        onboardingViewModel.continueOnboarding.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                findNavController().navigateCatchingErrors(
-                    HowItWorksDetailFragmentDirections.actionNext(),
-                    FragmentNavigatorExtras(
-                        binding.appbar to binding.appbar.transitionName
-                    )
+        onboardingViewModel.continueOnboarding.observeEvent(viewLifecycleOwner) {
+            findNavController().navigateCatchingErrors(
+                HowItWorksDetailFragmentDirections.actionNext(),
+                FragmentNavigatorExtras(
+                    binding.appbar to binding.appbar.transitionName
                 )
-            }
-        )
+            )
+        }
     }
 }

@@ -22,7 +22,7 @@ import nl.rijksoverheid.en.about.FAQItem
 import nl.rijksoverheid.en.about.FAQItemDecoration
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
-import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 
@@ -80,16 +80,13 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
             }
         }
 
-        onboardingViewModel.continueOnboarding.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                findNavController().navigateCatchingErrors(
-                    HowItWorksFragmentDirections.actionNext(),
-                    FragmentNavigatorExtras(
-                        binding.appbar to binding.appbar.transitionName
-                    )
+        onboardingViewModel.continueOnboarding.observeEvent(viewLifecycleOwner) {
+            findNavController().navigateCatchingErrors(
+                HowItWorksFragmentDirections.actionNext(),
+                FragmentNavigatorExtras(
+                    binding.appbar to binding.appbar.transitionName
                 )
-            }
-        )
+            )
+        }
     }
 }

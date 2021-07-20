@@ -12,6 +12,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -65,60 +66,43 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
                     AboutFragmentDirections.actionAboutDetail(item.id),
                     FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
                 )
-                is WebsiteLinkItem -> {
-                    val url = Uri.parse(
-                        getString(
-                            R.string.coronamelder_url,
-                            getString(R.string.app_language)
-                        )
-                    )
-                    CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
-                }
-                is HelpdeskItem -> {
-                    val phoneNumber = getString(R.string.helpdesk_phone_number)
-                    try {
-                        startActivity(
-                            Intent(Intent.ACTION_DIAL).apply {
-                                data = Uri.parse("tel:$phoneNumber")
-                            }
-                        )
-                    } catch (e: ActivityNotFoundException) {
-                        findNavController().navigateCatchingErrors(
-                            AboutFragmentDirections.actionPhoneCallNotSupportedDialog(phoneNumber)
-                        )
-                    }
-                }
-                is ReviewItem -> {
-                    val intent = Intent(Intent.ACTION_VIEW).apply {
-                        data = Uri.parse(getString(R.string.play_store_url))
-                        setPackage("com.android.vending")
-                    }
-                    startActivity(intent)
-                }
-                is PrivacyStatementItem -> {
-                    val url = Uri.parse(
-                        getString(
-                            R.string.privacy_policy_url,
-                            getString(R.string.app_language)
-                        )
-                    )
-                    CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
-                }
-                is AccessibilityItem -> {
-                    val url = Uri.parse(
-                        getString(
-                            R.string.accessibility_url,
-                            getString(R.string.app_language)
-                        )
-                    )
-                    CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
-                }
-                is ColofonItem -> {
-                    val url =
-                        Uri.parse(getString(R.string.colofon_url, getString(R.string.app_language)))
-                    CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
-                }
+                is WebsiteLinkItem -> openUrlResWithLanguagePlaceholder(R.string.coronamelder_url)
+                is HelpdeskItem -> requestToCallHelpdesk()
+                is ReviewItem -> openAppReviewActivity()
+                is PrivacyStatementItem -> openUrlResWithLanguagePlaceholder(R.string.privacy_policy_url)
+                is AccessibilityItem -> openUrlResWithLanguagePlaceholder(R.string.accessibility_url)
+                is ColofonItem -> openUrlResWithLanguagePlaceholder(R.string.colofon_url)
             }
+        }
+    }
+
+    private fun openUrlResWithLanguagePlaceholder(@StringRes stringRes: Int) {
+        val url = Uri.parse(
+            getString(stringRes, getString(R.string.app_language))
+        )
+        CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
+    }
+
+    private fun openAppReviewActivity() {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(getString(R.string.play_store_url))
+            setPackage("com.android.vending")
+        }
+        startActivity(intent)
+    }
+
+    private fun requestToCallHelpdesk() {
+        val phoneNumber = getString(R.string.helpdesk_phone_number)
+        try {
+            startActivity(
+                Intent(Intent.ACTION_DIAL).apply {
+                    data = Uri.parse("tel:$phoneNumber")
+                }
+            )
+        } catch (e: ActivityNotFoundException) {
+            findNavController().navigateCatchingErrors(
+                AboutFragmentDirections.actionPhoneCallNotSupportedDialog(phoneNumber)
+            )
         }
     }
 }

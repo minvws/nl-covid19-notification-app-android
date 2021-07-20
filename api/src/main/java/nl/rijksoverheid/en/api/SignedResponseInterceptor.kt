@@ -38,6 +38,26 @@ class SignedResponseInterceptor : Interceptor {
     }
 
     private fun validateAndRewriteResponse(response: Response): Response {
+        val (content, signature) = readContentAndSignature(response)
+
+        return try {
+            if (BuildConfig.FEATURE_RESPONSE_SIGNATURES) {
+                validator.verifySignature(
+                    ByteArrayInputStream(content.clone().readByteArray()),
+                    signature.readByteArray()
+                )
+            }
+            response.newBuilder()
+                .removeHeader("Content-Type")
+                .body(content.readByteArray().toResponseBody("application/json".toMediaType()))
+                .build()
+        } catch (ex: SignatureValidationException) {
+            response.newBuilder().body("Signature failed to validate".toResponseBody()).code(500)
+                .message("Signature failed to validate").build()
+        }
+    }
+
+    private fun readContentAndSignature(response: Response): Pair<Buffer, Buffer> {
         val body = response.body ?: throw IllegalStateException()
         val content = Buffer()
         val signature = Buffer()
@@ -60,21 +80,7 @@ class SignedResponseInterceptor : Interceptor {
             } while (true)
         }
 
-        return try {
-            if (BuildConfig.FEATURE_RESPONSE_SIGNATURES) {
-                validator.verifySignature(
-                    ByteArrayInputStream(content.clone().readByteArray()),
-                    signature.readByteArray()
-                )
-            }
-            response.newBuilder()
-                .removeHeader("Content-Type")
-                .body(content.readByteArray().toResponseBody("application/json".toMediaType()))
-                .build()
-        } catch (ex: SignatureValidationException) {
-            response.newBuilder().body("Signature failed to validate".toResponseBody()).code(500)
-                .message("Signature failed to validate").build()
-        }
+        return Pair(content, signature)
     }
 }
 

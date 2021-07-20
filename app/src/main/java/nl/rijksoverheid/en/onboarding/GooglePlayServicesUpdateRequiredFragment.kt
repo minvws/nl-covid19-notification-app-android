@@ -14,11 +14,11 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
 import com.google.android.gms.common.GoogleApiAvailability
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentGooglePlayServicesUpgradeRequiredBinding
+import nl.rijksoverheid.en.util.setSlideTransition
 
 class GooglePlayServicesUpdateRequiredFragment :
     BaseFragment(R.layout.fragment_google_play_services_upgrade_required) {
@@ -28,13 +28,7 @@ class GooglePlayServicesUpdateRequiredFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
-        exitTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
-
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
-        sharedElementReturnTransition = sharedElementEnterTransition
+        setSlideTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

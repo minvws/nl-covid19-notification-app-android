@@ -482,25 +482,9 @@ class ExposureNotificationsRepository(
                 zip.closeEntry()
             } while (true)
         }
+
         return if (signatureValidation) {
-            var valid = false
-            if (signature != null) {
-                ZipInputStream(FileInputStream(file)).use {
-                    do {
-                        val entry = it.nextEntry ?: break
-                        if (entry.name == "export.bin") {
-                            try {
-                                signatureValidator.verifySignature(it, signature!!)
-                                valid = true
-                            } catch (ex: SignatureValidationException) {
-                                Timber.e("File for $id did not pass signature validation")
-                            }
-                            break
-                        }
-                        it.closeEntry()
-                    } while (true)
-                }
-            }
+            val valid = validateSignature(id, signature, file)
             if (!valid) {
                 file.delete()
             }
@@ -508,6 +492,26 @@ class ExposureNotificationsRepository(
         } else {
             ExposureKeySet(id, file, true)
         }
+    }
+
+    private fun validateSignature(id: String, signature: ByteArray?, file: File): Boolean {
+        if (signature != null) {
+            ZipInputStream(FileInputStream(file)).use {
+                do {
+                    val entry = it.nextEntry ?: break
+                    if (entry.name == "export.bin") {
+                        try {
+                            signatureValidator.verifySignature(it, signature)
+                            return true
+                        } catch (ex: SignatureValidationException) {
+                            Timber.e("File for $id did not pass signature validation")
+                        }
+                    }
+                    it.closeEntry()
+                } while (true)
+            }
+        }
+        return false
     }
 
     suspend fun processManifest(): ProcessManifestResult {
