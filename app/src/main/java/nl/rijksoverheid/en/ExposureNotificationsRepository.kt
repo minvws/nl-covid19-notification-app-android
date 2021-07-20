@@ -58,6 +58,7 @@ import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
 import nl.rijksoverheid.en.status.StatusCache
+import nl.rijksoverheid.en.util.getLongAsLocalDate
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
 import retrofit2.HttpException
@@ -608,7 +609,7 @@ class ExposureNotificationsRepository(
             val listener =
                 SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                     if (key == KEY_LAST_TOKEN_EXPOSURE_DATE) {
-                        offer(getSharedPrefsLongAsLocalDate(sharedPreferences, KEY_LAST_TOKEN_EXPOSURE_DATE))
+                        offer(sharedPreferences.getLongAsLocalDate(KEY_LAST_TOKEN_EXPOSURE_DATE))
                     }
                 }
 
@@ -616,7 +617,7 @@ class ExposureNotificationsRepository(
 
             preferences.registerOnSharedPreferenceChangeListener(listener)
 
-            offer(getSharedPrefsLongAsLocalDate(preferences, KEY_LAST_TOKEN_EXPOSURE_DATE))
+            offer(preferences.getLongAsLocalDate(KEY_LAST_TOKEN_EXPOSURE_DATE))
 
             awaitClose {
                 preferences.unregisterOnSharedPreferenceChangeListener(listener)
@@ -625,37 +626,28 @@ class ExposureNotificationsRepository(
     }
 
     suspend fun getLastNotificationReceivedDate(): LocalDate? {
-        return getSharedPrefsLongAsLocalDate(preferences.getPreferences(), KEY_LAST_NOTIFICATION_RECEIVED_DATE)
+        return preferences.getPreferences().getLongAsLocalDate(KEY_LAST_NOTIFICATION_RECEIVED_DATE)
     }
 
     suspend fun getPreviouslyKnownExposureDate(): LocalDate? {
-        return getSharedPrefsLongAsLocalDate(preferences.getPreferences(), KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE)
+        return preferences.getPreferences().getLongAsLocalDate(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE)
     }
 
     fun previouslyKnownExposureDate(): Flow<LocalDate?> = callbackFlow {
         val listener =
             SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                 if (key == KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE) {
-                    offer(getSharedPrefsLongAsLocalDate(sharedPreferences, KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE))
+                    offer(sharedPreferences.getLongAsLocalDate(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE))
                 }
             }
 
         val preferences = preferences.getPreferences()
         preferences.registerOnSharedPreferenceChangeListener(listener)
 
-        offer(getSharedPrefsLongAsLocalDate(preferences, KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE))
+        offer(preferences.getLongAsLocalDate(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE))
 
         awaitClose {
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
-        }
-    }
-
-    private fun getSharedPrefsLongAsLocalDate(sharedPreferences: SharedPreferences, sharedPreferenceKey: String): LocalDate? {
-        val timestamp = sharedPreferences.getLong(sharedPreferenceKey, 0L)
-        return if (timestamp > 0) {
-            LocalDate.ofEpochDay(timestamp)
-        } else {
-            null
         }
     }
 

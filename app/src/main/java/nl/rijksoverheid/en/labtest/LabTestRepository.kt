@@ -7,9 +7,13 @@
 package nl.rijksoverheid.en.labtest
 
 import android.app.PendingIntent
+import android.content.SharedPreferences
 import android.util.Base64
 import com.google.android.gms.nearby.exposurenotification.TemporaryExposureKey
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
 import nl.rijksoverheid.en.api.HmacSecret
 import nl.rijksoverheid.en.api.LabTestService
@@ -23,6 +27,7 @@ import nl.rijksoverheid.en.enapi.ExposureNotificationApi
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.enapi.TemporaryExposureKeysResult
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
+import nl.rijksoverheid.en.util.getLongAsLocalDateTime
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
@@ -31,6 +36,7 @@ import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 import java.util.concurrent.TimeUnit
@@ -146,6 +152,40 @@ class LabTestRepository(
             remove(KEY_PENDING_KEYS)
             remove(KEY_UPLOAD_DIAGNOSTIC_KEYS)
             remove(KEY_DID_UPLOAD)
+        }
+    }
+
+    fun getCachedRegistrationCodeFlow(): Flow<String?> = callbackFlow {
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == KEY_LAB_CONFIRMATION_ID) {
+                offer(sharedPreferences.getString(KEY_LAB_CONFIRMATION_ID, null))
+            }
+        }
+
+        val preferences = preferences.getPreferences()
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+
+        offer(preferences.getString(KEY_LAB_CONFIRMATION_ID, null))
+
+        awaitClose {
+            preferences.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
+
+    fun getCachedRegistrationExpirationFlow(): Flow<LocalDateTime?> = callbackFlow {
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == KEY_REGISTRATION_EXPIRATION) {
+                offer(sharedPreferences.getLongAsLocalDateTime(KEY_REGISTRATION_EXPIRATION))
+            }
+        }
+
+        val preferences = preferences.getPreferences()
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+
+        offer(preferences.getLongAsLocalDateTime(KEY_REGISTRATION_EXPIRATION))
+
+        awaitClose {
+            preferences.unregisterOnSharedPreferenceChangeListener(listener)
         }
     }
 

@@ -29,6 +29,9 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.FeatureFlag
 import nl.rijksoverheid.en.api.model.FeatureFlagOption
 import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
+import nl.rijksoverheid.en.factory.createLabTestRepository
+import nl.rijksoverheid.en.labtest.LabTestRepository
+import nl.rijksoverheid.en.util.formatDateTime
 import java.time.format.DateTimeFormatter
 
 object BeagleHelperImpl : BeagleHelper {
@@ -47,11 +50,18 @@ object BeagleHelperImpl : BeagleHelper {
 
     private const val testNotificationExposureDaysAgoId = "testNotificationExposureDaysAgo"
     private const val previouslyKnownExposureDateId = "previouslyKnownExposureDate"
+    private const val keySharingHeaderId = "keySharingHeader"
+    private const val cachedRegistrationCodeId = "cachedRegistrationCode"
+    private const val cachedRegistrationExpirationId = "cachedRegistrationExpiration"
 
     override fun initialize(application: Application) {
         Beagle.initialize(application)
         setBeagleModules(application)
         observePreviousExposureDate(application)
+
+        val labTestRepository = createLabTestRepository(application)
+        observeRegistrationCode(labTestRepository)
+        observeRegistrationKeyExpirationDate(application, labTestRepository)
     }
 
     private fun setBeagleModules(context: Context) {
@@ -96,6 +106,7 @@ object BeagleHelperImpl : BeagleHelper {
                 },
                 id = testNotificationExposureDaysAgoId
             ),
+            TextModule("Key sharing", TextModule.Type.SECTION_HEADER, id = keySharingHeaderId),
             DividerModule(),
             TextModule("Other", TextModule.Type.SECTION_HEADER),
             KeylineOverlaySwitchModule(),
@@ -116,6 +127,41 @@ object BeagleHelperImpl : BeagleHelper {
                         TextModule.Type.NORMAL, id = previouslyKnownExposureDateId
                     ),
                     placement = Placement.Below(testNotificationExposureDaysAgoId)
+                )
+            }
+    }
+
+    private fun observeRegistrationCode(labTestRepository: LabTestRepository) = MainScope().launch {
+        labTestRepository.getCachedRegistrationCodeFlow()
+            .collect { registrationKey ->
+                Beagle.remove(cachedRegistrationCodeId)
+                Beagle.add(
+                    TextModule(
+                        "Cached code: ${
+                        registrationKey ?: "none"
+                        }",
+                        TextModule.Type.NORMAL, id = cachedRegistrationCodeId
+                    ),
+                    placement = Placement.Below(keySharingHeaderId)
+                )
+            }
+    }
+
+    private fun observeRegistrationKeyExpirationDate(
+        context: Context,
+        labTestRepository: LabTestRepository
+    ) = MainScope().launch {
+        labTestRepository.getCachedRegistrationExpirationFlow()
+            .collect { expirationDate ->
+                Beagle.remove(cachedRegistrationExpirationId)
+                Beagle.add(
+                    TextModule(
+                        "Expiration date: ${
+                        expirationDate?.formatDateTime(context) ?: "none"
+                        }",
+                        TextModule.Type.NORMAL, id = cachedRegistrationExpirationId
+                    ),
+                    placement = Placement.Below(cachedRegistrationCodeId)
                 )
             }
     }
