@@ -3,4 +3,6 @@
     <color name="color_secondary">@color/gray_dark</color>
     <color name="divider">@color/gray_darker</color>
     <color name="info_surface">@color/gray_darker</color>
+    <color name="info_surface_disabled">@color/gray_darker</color>
+    <color name="lab_test_step_line">@color/gray_darker</color>
 </resources>

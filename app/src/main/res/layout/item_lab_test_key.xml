@@ -24,7 +24,7 @@
         <View
             android:layout_width="4dp"
             android:layout_height="0dp"
-            android:background="@color/gray_lighter"
+            android:background="@color/lab_test_step_line"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/circle_counter"
             app:layout_constraintStart_toStartOf="@id/circle_counter"
