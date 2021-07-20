@@ -11,16 +11,21 @@ import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemErrorBoxBinding
 
-class ErrorBoxItem(@StringRes text: Int, @StringRes actionLabel: Int, action: () -> Unit = {}) :
-    BaseBindableItem<ItemErrorBoxBinding>() {
+class ErrorBoxItem(
+    @StringRes title: Int,
+    @StringRes text: Int,
+    @StringRes actionLabel: Int,
+    action: () -> Unit = {}
+) : BaseBindableItem<ItemErrorBoxBinding>() {
 
     data class ViewState(
+        val title: Int,
         val text: Int,
         val actionLabel: Int,
         val action: () -> Unit
     )
 
-    val viewState = ViewState(text, actionLabel, action)
+    val viewState = ViewState(title, text, actionLabel, action)
 
     override fun getLayout() = R.layout.item_error_box
 

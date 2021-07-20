@@ -40,16 +40,38 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/error_box_text"
+            android:id="@+id/error_box_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="@{viewState.text}"
-            android:textAppearance="?attr/textAppearanceBody1"
+            android:minHeight="32dp"
+            android:gravity="center_vertical"
+            app:text="@{viewState.title}"
+            tools:text="@string/status_disabled_headline"
+            android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/error_box_image"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="De app heeft blootstelling permissie nodig om te kunnen werken." />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/header_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="error_box_image, error_box_title"
+            app:barrierDirection="bottom" />
+
+        <TextView
+            android:id="@+id/error_box_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{viewState.text}"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/error_box_image"
+            app:layout_constraintTop_toBottomOf="@+id/header_barrier"
+            tools:text="@string/error_upload_not_available" />
 
         <Button
             style="@style/Widget.MaterialComponents.Button.TextButton.Snackbar"
@@ -60,7 +82,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/error_box_text"
             app:showIfLabelSet="@{viewState.actionLabel}"
-            tools:text="Zet blootstelling aan" />
+            tools:text="@string/status_en_api_disabled_enable" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
