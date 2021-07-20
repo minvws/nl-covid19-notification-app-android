@@ -67,6 +67,8 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
         sharedElementEnterTransition =
             TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
         sharedElementReturnTransition = sharedElementEnterTransition
+
+        labViewModel.retry()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -110,11 +112,6 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
                 findNavController().popBackStack(R.id.nav_status, false)
             }
         )
-    }
-
-    override fun onStart() {
-        super.onStart()
-        labViewModel.retry()
     }
 
     override fun onResume() {
