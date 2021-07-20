@@ -14,7 +14,7 @@
 
         <variable
             name="viewState"
-            type="nl.rijksoverheid.en.labtest.LabTestStepItem.ViewState" />
+            type="nl.rijksoverheid.en.labtest.items.LabTestStepItem.ViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,11 +49,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:background="@drawable/circle"
-            android:backgroundTint="?attr/colorPrimary"
             android:gravity="center"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
+            android:minWidth="@dimen/circle_counter_min_diameter"
+            android:minHeight="@dimen/circle_counter_min_diameter"
             android:text="@{viewState.counter}"
+            android:enabled="@{viewState.enabled}"
             android:textAppearance="?attr/textAppearanceSubtitle1"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBaseline_toBaselineOf="@id/content"
@@ -71,6 +71,7 @@
             android:layout_marginBottom="8dp"
             android:accessibilityHeading="true"
             android:text="@{viewState.text}"
+            android:enabled="@{viewState.enabled}"
             android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

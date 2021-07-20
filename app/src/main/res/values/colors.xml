@@ -15,13 +15,16 @@
     <color name="faq_onboarding_background">@color/light_blue</color>
     <color name="technical_explanation_background">@color/light_yellow</color>
     <color name="faq_github_background">@color/gray_lighter</color>
+    <color name="circle_counter_disabled_background">@color/gray</color>
 
     <!-- Color palette -->
     <color name="white">#FFFFFF</color>
     <color name="dark_blue">#0047FF</color>
     <color name="light_blue">#D0F0F3</color>
     <color name="gray_lighter">#F2F2F7</color>
+    <color name="gray_lighter_transparent">#59F2F2F7</color>
     <color name="gray_light">#DDDDDD</color>
+    <color name="gray">#CCCCCC</color>
     <color name="gray_darker">#2C2C2D</color>
     <color name="gray_dark">#353536</color>
     <color name="light_red">#FFECF0</color>

@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.labtest
 
 import android.app.PendingIntent
 import kotlinx.coroutines.runBlocking
+import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.util.observeForTesting
 import org.junit.After
 import org.junit.Assert
@@ -26,6 +27,9 @@ class LabTestViewModelTest {
     @Mock
     private lateinit var labTestRepository: LabTestRepository
 
+    @Mock
+    private lateinit var appConfigManager: AppConfigManager
+
     private lateinit var closeable: AutoCloseable
 
     @Before
@@ -41,7 +45,7 @@ class LabTestViewModelTest {
     @Test
     fun `retry triggers a registerForUpload and updates keyState`() {
         val key = "TEST-KEY"
-        val labTestViewModelTest = LabTestViewModel(labTestRepository)
+        val labTestViewModelTest = LabTestViewModel(labTestRepository, appConfigManager)
 
         runBlocking {
             Mockito.`when`(labTestRepository.registerForUpload())
@@ -61,7 +65,7 @@ class LabTestViewModelTest {
     @Test
     fun `usedKey is used for uploadResult`() {
         val key = "TEST-KEY"
-        val labTestViewModelTest = LabTestViewModel(labTestRepository)
+        val labTestViewModelTest = LabTestViewModel(labTestRepository, appConfigManager)
 
         runBlocking {
             Mockito.`when`(labTestRepository.registerForUpload())
@@ -86,7 +90,7 @@ class LabTestViewModelTest {
 
     @Test
     fun `Error uploadResult from requestUploadDiagnosticKeys`() {
-        val labTestViewModelTest = LabTestViewModel(labTestRepository)
+        val labTestViewModelTest = LabTestViewModel(labTestRepository, appConfigManager)
 
         runBlocking {
             Mockito.`when`(labTestRepository.requestUploadDiagnosticKeys())
@@ -106,7 +110,7 @@ class LabTestViewModelTest {
     @Test
     fun `RequireConsent resolution intent used in uploadResult`() {
         val pendingIntent: PendingIntent = mock(PendingIntent::class.java)
-        val labTestViewModelTest = LabTestViewModel(labTestRepository)
+        val labTestViewModelTest = LabTestViewModel(labTestRepository, appConfigManager)
 
         runBlocking {
             Mockito.`when`(labTestRepository.requestUploadDiagnosticKeys())
@@ -137,5 +141,24 @@ class LabTestViewModelTest {
         val successKeyState = LabTestViewModel.KeyState.Success(code)
         Assert.assertEquals("TES-TK-EY", successKeyState.displayKey)
         Assert.assertEquals("TESTKEY", successKeyState.key)
+    }
+
+    @Test
+    fun `checkKeyExpiration triggers keyExpiredEvent`() {
+        val labTestViewModelTest = LabTestViewModel(labTestRepository, appConfigManager)
+
+        runBlocking {
+            Mockito.`when`(labTestRepository.isKeyDataExpired())
+                .thenReturn(true)
+
+            labTestViewModelTest.checkKeyExpiration()
+
+            labTestViewModelTest.keyExpiredEvent.observeForTesting {
+                Assert.assertEquals(
+                    Unit,
+                    it.values.first().getContentIfNotHandled()
+                )
+            }
+        }
     }
 }

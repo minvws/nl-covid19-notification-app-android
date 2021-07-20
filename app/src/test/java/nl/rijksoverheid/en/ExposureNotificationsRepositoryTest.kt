@@ -1948,7 +1948,7 @@ class ExposureNotificationsRepositoryTest {
             getAppConfig = { _, _ -> AppConfig(updatePeriodMinutes = 10) }
         )
 
-        val appConfigManager = AppConfigManager(fakeCdnService)
+        val appConfigManager = AppConfigManager(fakeCdnService, { false }, { emptyList() })
         val repository = createRepository(
             preferences = preferences,
             scheduler = scheduler,
@@ -2003,7 +2003,7 @@ class ExposureNotificationsRepositoryTest {
         signatureValidation: Boolean = false,
         signatureValidator: ResponseSignatureValidator = ResponseSignatureValidator(),
         scheduler: BackgroundWorkScheduler = fakeScheduler,
-        appConfigManager: AppConfigManager = AppConfigManager(cdnService)
+        appConfigManager: AppConfigManager = AppConfigManager(cdnService, { false }, { emptyList() })
     ): ExposureNotificationsRepository {
         return ExposureNotificationsRepository(
             context,

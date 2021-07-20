@@ -313,7 +313,7 @@
     <string name="post_keys_options_coronatest_subtitle">Cela n\'est possible que si vous recevez le résultat du test via coronatest.nl.</string>
     <string name="post_keys_options_ggd_title">Si le GGD vous téléphone</string>
     <string name="post_keys_options_ggd_subtitle">Cela n\'est possible que si vous avez le GGD au téléphone.</string>
-    <string name="coronatest_description"><![CDATA[Vous découvrez que vous avez le Covid-19 via coronatest.nl ? Alors vous pouvez directement envoyer une notification via CoronaMelder.<a href="">Comment ça marche ?</a>]]></string>
+    <string name="coronatest_description"><![CDATA[Vous découvrez que vous avez le Covid-19 via coronatest.nl ? Alors vous pouvez directement envoyer une notification via CoronaMelder. <a href="">Comment ça marche ?</a>]]></string>
     <string name="coronatest_step_1">Partagez les codes créés par CoronaMelder</string>
     <string name="coronatest_step_2">Inscrivez ou copiez votre code GGD</string>
     <string name="coronatest_step_3">Saisissez votre code GGD sur coronatest.nl. Vous avertissez ainsi les autres des personnes avec qui vous avez eu des contacts.</string>

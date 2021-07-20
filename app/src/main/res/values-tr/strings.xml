@@ -313,7 +313,7 @@
     <string name="post_keys_options_coronatest_subtitle">Bu, sadece test sonucunu coronatest.nl aracılığıyla alırsanız mümkündür.</string>
     <string name="post_keys_options_ggd_title">GGD sizi aradığında</string>
     <string name="post_keys_options_ggd_subtitle">Bu, ancak şimdi GGD ile telefondaysanız mümkündür</string>
-    <string name="coronatest_description"><![CDATA[Coronatest.nl aracılığıyla Korona olduğunuzu mu keşfettiniz? O zaman  CoronaMelder aracılığıyla hemen bir bildirim gönderebilirsiniz.<a href="">Bu nasıl çalışır?</a>]]></string>
+    <string name="coronatest_description"><![CDATA[Coronatest.nl aracılığıyla Korona olduğunuzu mu keşfettiniz? O zaman  CoronaMelder aracılığıyla hemen bir bildirim gönderebilirsiniz. <a href="">Bu nasıl çalışır?</a>]]></string>
     <string name="coronatest_step_1">CoronaMelder\'ın oluşturduğu kodları paylaşın</string>
     <string name="coronatest_step_2">GGD anahtarınızı yazın veya kopyalayın</string>
     <string name="coronatest_step_3">Coronatest.nl adresinde GGD anahtarınızı girin. Yakınınında bulunmuş olduğunuz başkalarını bu şekilde uyarmış olursunuz.</string>

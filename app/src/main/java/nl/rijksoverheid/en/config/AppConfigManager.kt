@@ -9,13 +9,18 @@ package nl.rijksoverheid.en.config
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
+import nl.rijksoverheid.en.api.model.FeatureFlag
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
 
 private val DEFAULT_CONFIG = AppConfig()
 
-class AppConfigManager(private val cdnService: CdnService) {
+class AppConfigManager(
+    private val cdnService: CdnService,
+    private val useDebugFeatureFlags: () -> Boolean,
+    private val getDebugFeatureFlags: () -> List<FeatureFlag>
+) {
 
     private suspend fun getConfigOrDefault(block: suspend () -> AppConfig?): AppConfig {
         return try {
@@ -34,7 +39,12 @@ class AppConfigManager(private val cdnService: CdnService) {
      * @return the config or the default config if it couldn't be retrieved
      */
     suspend fun getConfigOrDefault(): AppConfig = getConfigOrDefault {
-        cdnService.getAppConfig(cdnService.getManifest().appConfigId)
+        cdnService.getAppConfig(cdnService.getManifest().appConfigId).let { appConfig ->
+            if (useDebugFeatureFlags())
+                appConfig.copy(featureFlags = getDebugFeatureFlags())
+            else
+                appConfig
+        }
     }
 
     /**
@@ -45,6 +55,11 @@ class AppConfigManager(private val cdnService: CdnService) {
         cdnService.getAppConfig(
             cdnService.getManifest(CacheStrategy.CACHE_ONLY).appConfigId,
             CacheStrategy.CACHE_ONLY
-        )
+        ).let { appConfig ->
+            if (useDebugFeatureFlags())
+                appConfig.copy(featureFlags = getDebugFeatureFlags())
+            else
+                appConfig
+        }
     }
 }

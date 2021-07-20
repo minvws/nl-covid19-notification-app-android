@@ -156,7 +156,7 @@
     <string name="share_content">Помагам за поставянето на коронавируса под контрол с CoronaMelder. Ще се включиш ли и ти? %1$s</string>
     <string name="share_title">Сподели приложението с други хора</string>
     <string name="lab_test_toolbar_title">GGD-ключ</string>
-    <string name="lab_test_paragraph_1"><![CDATA[Ако ти е направен тест и имаш коронавирус, ще ти се обади служител на Общинската здравна инспекция (GGD). Служителят ще ти помогне да предупредиш други хора, които са били в близост до теб. За целта ти е необходим твоят GGD-ключ.<a href="">Как става това?</a>]]></string>
+    <string name="lab_test_paragraph_1"><![CDATA[Ако ти е направен тест и имаш коронавирус, ще ти се обади служител на Общинската здравна инспекция (GGD). Служителят ще ти помогне да предупредиш други хора, които са били в близост до теб. За целта ти е необходим твоят GGD-ключ. <a href="">Как става това?</a>]]></string>
     <string name="lab_test_step_1">Съобщи този GGD-ключ на служителя на Общинската здравна инспекция (GGD).</string>
     <string name="lab_test_token_loading">Доставя се ключ</string>
     <string name="lab_test_token_error">Приложението не успя да достави GGD-ключ. Провери връзката с интернет.</string>
@@ -315,7 +315,7 @@
     <string name="post_keys_options_coronatest_subtitle">Това е възможно само ако получиш резултата от теста през coronatest.nl</string>
     <string name="post_keys_options_ggd_title">Ако ти се обадят от GGD</string>
     <string name="post_keys_options_ggd_subtitle">Това е възможно само ако в момента говориш по телефона с GGD</string>
-    <string name="coronatest_description"><![CDATA[Ако през coronatest.nl  откриеш, че имаш коронавирус? Тогава можеш директно да изпратиш известие през CoronaMelder .<a href="">Как работи това?</a>]]></string>
+    <string name="coronatest_description"><![CDATA[Ако през coronatest.nl  откриеш, че имаш коронавирус? Тогава можеш директно да изпратиш известие през CoronaMelder. <a href="">Как работи това?</a>]]></string>
     <string name="coronatest_step_1">Сподели кодовете, генерирани от  CoronaMelder</string>
     <string name="coronatest_step_2">Запиши си своя GGD-ключ или го копирай</string>
     <string name="coronatest_step_3">Въведи своя GGD-ключ на coronatest.nl. Така предупреждаваш други хора, до които си бил в близост</string>
