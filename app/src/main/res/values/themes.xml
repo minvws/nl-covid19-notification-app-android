@@ -8,8 +8,10 @@
 
 <resources>
 
+    <style name="Theme.CoronaMelder" parent="Base.Theme.CoronaMelder" />
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.CoronaMelder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="textAppearanceHeadline4">@style/TextAppearance.App.Headline4</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.App.Headline5</item>
         <item name="textAppearanceHeadline6">@style/TextAppearance.App.Headline6</item>
@@ -27,12 +29,14 @@
         <item name="colorControlActivated">@color/color_primary</item>
         <item name="colorSecondaryVariant">@color/color_secondary_variant</item>
         <item name="colorControlHighlight">@color/color_control_highlight</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/color_primary</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <!-- Launcher theme. -->
-    <style name="AppTheme.Launcher">
+    <style name="Theme.CoronaMelder.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 </resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_secondary">@color/gray_dark</color>
+    <color name="divider">@color/gray_darker</color>
+    <color name="info_surface">@color/gray_darker</color>
+</resources>

@@ -211,7 +211,7 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/message_box_background"
-                android:backgroundTint="@color/gray_lighter"
+                android:backgroundTint="@color/info_surface"
                 android:clickable="true"
                 android:focusable="true"
                 android:importantForAccessibility="no"

@@ -7,6 +7,7 @@
 
     <style name="Widget.App.Button.Secondary" parent="Widget.App.Button.Primary">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button.Secondary</item>
+        <item name="android:textColor">?attr/colorOnSecondary</item>
         <item name="rippleColor">?attr/colorSecondaryVariant</item>
     </style>
 
