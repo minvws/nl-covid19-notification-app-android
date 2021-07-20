@@ -33,8 +33,7 @@ class CoronaTestKeySharingSection(
         private set
     var notificationsState: NotificationsState = NotificationsState.Enabled
         private set
-    var hasSharedKeys: Boolean = false
-        private set
+    private var hasSharedKeys: Boolean = false
 
     fun update(keyState: KeyState) {
         this.keyState = keyState

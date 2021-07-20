@@ -68,7 +68,8 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
             TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
         sharedElementReturnTransition = sharedElementEnterTransition
 
-        labViewModel.retry()
+        if (labViewModel.usedKey == null)
+            labViewModel.retry()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -93,19 +94,21 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
         viewModel.notificationState.observe(viewLifecycleOwner) { notificationsState ->
             section.update(notificationsState)
         }
-        labViewModel.uploadResult.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                when (it) {
-                    is LabTestViewModel.UploadResult.Success -> section.uploadKeysSucceeded()
-                    is LabTestViewModel.UploadResult.RequestConsent -> requestConsent(it.resolution.intentSender)
-                    LabTestViewModel.UploadResult.Error -> {
-                        Toast.makeText(context, R.string.lab_test_upload_error, Toast.LENGTH_LONG)
-                            .show()
-                    }
+        labViewModel.uploadResult.observe(viewLifecycleOwner) { uploadResultEvent ->
+            // Update UI also when event was already handled
+            if (uploadResultEvent.peekContent() is LabTestViewModel.UploadResult.Success)
+                section.uploadKeysSucceeded()
+
+            // Handle others results only once
+            when (val it = uploadResultEvent.getContentIfNotHandled()) {
+                is LabTestViewModel.UploadResult.RequestConsent -> requestConsent(it.resolution.intentSender)
+                LabTestViewModel.UploadResult.Error -> {
+                    Toast.makeText(context, R.string.lab_test_upload_error, Toast.LENGTH_LONG)
+                        .show()
                 }
             }
-        )
+        }
+
         labViewModel.keyExpiredEvent.observe(
             viewLifecycleOwner,
             EventObserver {
