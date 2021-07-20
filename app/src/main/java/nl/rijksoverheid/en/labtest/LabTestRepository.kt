@@ -106,6 +106,11 @@ class LabTestRepository(
         }
     }
 
+    suspend fun isKeyDataExpired(): Boolean {
+        val expiration = preferences.getLong(KEY_REGISTRATION_EXPIRATION, 0)
+        return expiration == 0L || expiration < clock.millis()
+    }
+
     private suspend fun storeResult(result: Registration) {
         preferences.edit {
             putString(
@@ -127,8 +132,7 @@ class LabTestRepository(
     }
 
     private suspend fun clearKeyDataIfExpired() {
-        val expiration = preferences.getLong(KEY_REGISTRATION_EXPIRATION, 0)
-        if (expiration == 0L || expiration < clock.millis()) {
+        if (isKeyDataExpired()) {
             clearKeyData()
         }
     }

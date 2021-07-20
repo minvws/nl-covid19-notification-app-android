@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.ExposureNotificationsRepository
+import nl.rijksoverheid.en.api.model.FeatureFlagOption
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
@@ -107,6 +108,9 @@ class StatusViewModel(
 
     suspend fun getAppointmentPhoneNumber() =
         appConfigManager.getCachedConfigOrDefault().appointmentPhoneNumber
+
+    suspend fun hasIndependentKeySharing() =
+        appConfigManager.getCachedConfigOrDefault().hasFeature(FeatureFlagOption.INDEPENDENT_KEY_SHARING)
 
     fun hasCompletedOnboarding(): Boolean {
         return onboardingRepository.hasCompletedOnboarding()

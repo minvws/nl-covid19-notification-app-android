@@ -4,7 +4,7 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.labtest
+package nl.rijksoverheid.en.labtest.items
 
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
@@ -16,26 +16,28 @@ import java.util.Locale
 class LabTestKeyItem(
     private val keyState: KeyState,
     private val copy: (String) -> Unit,
-    retry: () -> Unit
-) :
-    BaseBindableItem<ItemLabTestKeyBinding>() {
+    retry: () -> Unit,
+    private val enabled: Boolean = true
+) : BaseBindableItem<ItemLabTestKeyBinding>() {
     data class ViewState(
         val showProgress: Boolean,
         val showCode: Boolean,
         val showError: Boolean,
         val key: String? = null,
         val displayKey: String? = null,
+        val enabled: Boolean,
         val retry: () -> Unit
     ) {
         val keyContentDescription = key?.toLowerCase(Locale.ROOT)
     }
 
     private val viewState = ViewState(
-        showProgress = keyState == KeyState.Loading,
-        showCode = keyState is KeyState.Success,
-        showError = keyState is KeyState.Error,
+        showProgress = keyState == KeyState.Loading && enabled,
+        showCode = keyState is KeyState.Success && enabled,
+        showError = keyState is KeyState.Error && enabled,
         key = (keyState as? KeyState.Success)?.key,
         displayKey = (keyState as? KeyState.Success)?.displayKey,
+        enabled = enabled,
         retry = retry
     )
 
@@ -51,5 +53,5 @@ class LabTestKeyItem(
 
     override fun isSameAs(other: Item<*>): Boolean = other is LabTestKeyItem
     override fun hasSameContentAs(other: Item<*>) =
-        other is LabTestKeyItem && other.keyState == keyState
+        other is LabTestKeyItem && other.keyState == keyState && other.enabled == enabled
 }

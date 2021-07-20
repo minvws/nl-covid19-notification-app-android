@@ -76,10 +76,8 @@ class StatusFragment @JvmOverloads constructor(
                 StatusActionItem.GenericNotification -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionGenericNotification()
                 )
+                StatusActionItem.LabTest -> navigateToSharingKeys()
                 StatusActionItem.RequestTest -> requestTest()
-                StatusActionItem.LabTest -> findNavController().navigateCatchingErrors(
-                    StatusFragmentDirections.actionLabTest()
-                )
                 StatusActionItem.Settings -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionSettings()
                 )
@@ -95,7 +93,6 @@ class StatusFragment @JvmOverloads constructor(
 
         statusViewModel.headerState.observe(viewLifecycleOwner, ::updateHeaderState)
         statusViewModel.notificationState.observe(viewLifecycleOwner, ::updateNotificationState)
-
         statusViewModel.lastKeysProcessed.observe(viewLifecycleOwner) {
             section.lastKeysProcessed = it
         }
@@ -221,6 +218,15 @@ class StatusFragment @JvmOverloads constructor(
 
     private fun navigateToInternetRequiredFragment() {
         findNavController().navigateCatchingErrors(StatusFragmentDirections.actionNavInternetRequired())
+    }
+
+    private fun navigateToSharingKeys() {
+        viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
+            if (statusViewModel.hasIndependentKeySharing())
+                findNavController().navigateCatchingErrors(StatusFragmentDirections.actionKeySharingOptions())
+            else
+                findNavController().navigateCatchingErrors(StatusFragmentDirections.actionLabTest())
+        }
     }
 
     private fun navigateToPostNotification(

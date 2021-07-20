@@ -17,6 +17,7 @@ import nl.rijksoverheid.en.factory.createLabTestRepository
 import nl.rijksoverheid.en.factory.createOnboardingRepository
 import nl.rijksoverheid.en.factory.createResourceBundleManager
 import nl.rijksoverheid.en.factory.createSettingsRepository
+import nl.rijksoverheid.en.labtest.LabTestDoneViewModel
 import nl.rijksoverheid.en.labtest.LabTestViewModel
 import nl.rijksoverheid.en.notification.PostNotificationViewModel
 import nl.rijksoverheid.en.notifier.NotificationsRepository
@@ -51,7 +52,8 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
                 createAppConfigManager(context)
             ) as T
             LabTestViewModel::class.java -> LabTestViewModel(
-                createLabTestRepository(context)
+                createLabTestRepository(context),
+                createAppConfigManager(context)
             ) as T
             PostNotificationViewModel::class.java -> PostNotificationViewModel(
                 createResourceBundleManager(context),
@@ -59,6 +61,7 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
             ) as T
             SettingsViewModel::class.java -> SettingsViewModel(createSettingsRepository(context)) as T
             PauseConfirmationViewModel::class.java -> PauseConfirmationViewModel(createSettingsRepository(context)) as T
+            LabTestDoneViewModel::class.java -> LabTestDoneViewModel(createAppConfigManager(context)) as T
             else -> throw IllegalStateException("Unknown view model class $modelClass")
         }
     }

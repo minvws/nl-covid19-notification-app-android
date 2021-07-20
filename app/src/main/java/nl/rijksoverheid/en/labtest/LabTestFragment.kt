@@ -11,7 +11,6 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.IntentSender
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -21,7 +20,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
+import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupAdapter
@@ -33,9 +32,12 @@ import nl.rijksoverheid.en.about.FAQItemId
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.IllustrationSpaceDecoration
 import timber.log.Timber
 
 class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
+    private val args: LabTestFragmentArgs by navArgs()
+
     private val labViewModel: LabTestViewModel by viewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
     private val section = LabTestSection(
@@ -55,6 +57,13 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
 
         exitTransition =
             TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
+
+        if (args.showEnterTransition) {
+            enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
+            sharedElementEnterTransition =
+                TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
+            sharedElementReturnTransition = sharedElementEnterTransition
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,23 +71,8 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
 
         val binding = FragmentListWithButtonBinding.bind(view)
 
-        binding.toolbar.apply {
-            setTitle(R.string.lab_test_toolbar_title)
-        }
-        binding.content.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(
-                outRect: Rect,
-                view: View,
-                parent: RecyclerView,
-                state: RecyclerView.State
-            ) {
-                super.getItemOffsets(outRect, view, parent, state)
-                if (parent.getChildAdapterPosition(view) == 0) {
-                    outRect.bottom =
-                        resources.getDimensionPixelOffset(R.dimen.space_below_illustration)
-                }
-            }
-        })
+        binding.toolbar.setTitle(R.string.lab_test_toolbar_title)
+        binding.content.addItemDecoration(IllustrationSpaceDecoration())
         binding.content.adapter = adapter
 
         adapter.setOnItemClickListener { _, _ ->

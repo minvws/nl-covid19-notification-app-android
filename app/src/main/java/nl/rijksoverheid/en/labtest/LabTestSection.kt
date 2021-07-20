@@ -14,6 +14,8 @@ import nl.rijksoverheid.en.items.ErrorBoxItem
 import nl.rijksoverheid.en.items.IllustrationItem
 import nl.rijksoverheid.en.items.ParagraphItem
 import nl.rijksoverheid.en.labtest.LabTestViewModel.KeyState
+import nl.rijksoverheid.en.labtest.items.LabTestKeyItem
+import nl.rijksoverheid.en.labtest.items.LabTestStepItem
 
 class LabTestSection(
     private val retry: () -> Unit,
@@ -47,7 +49,6 @@ class LabTestSection(
             ).apply {
                 if (notificationsState is NotificationsState.Disabled || notificationsState is NotificationsState.Unavailable) {
                     add(
-                        size - 1, // add box as second to last element
                         ErrorBoxItem(
                             R.string.error_upload_not_available,
                             R.string.status_en_api_disabled_enable,

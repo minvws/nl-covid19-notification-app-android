@@ -321,7 +321,7 @@
     <string name="post_keys_options_coronatest_subtitle">Jest to możliwe wyłącznie w przypadku, gdy otrzymałeś wynik testu za pośrednictwem coronatest.nl</string>
     <string name="post_keys_options_ggd_title">Podczas rozmowy telefonicznej z GGD</string>
     <string name="post_keys_options_ggd_subtitle">Jest to możliwe wyłącznie w przypadku rozmowy z GGD</string>
-    <string name="coronatest_description"><![CDATA[Dowiedziałeś się za pośrednictwem strony coronatest.nl, że masz koronawirusa? W takim przypadku możesz przesłać powiadomienie bezpośrednio przez aplikację CoronaMelder.<a href="">W jaki sposób to działa?</a>]]></string>
+    <string name="coronatest_description"><![CDATA[Dowiedziałeś się za pośrednictwem strony coronatest.nl, że masz koronawirusa? W takim przypadku możesz przesłać powiadomienie bezpośrednio przez aplikację CoronaMelder. <a href="">W jaki sposób to działa?</a>]]></string>
     <string name="coronatest_step_1">Udostępnij kody utworzone przez CoronaMelder</string>
     <string name="coronatest_step_2">Zapisz lub skopiuj swój klucz GGD</string>
     <string name="coronatest_step_3">Wprowadź swój klucz GGD na stronie coronatest.nl. W ten sposób ostrzegasz osoby, z którymi miałeś kontakt</string>

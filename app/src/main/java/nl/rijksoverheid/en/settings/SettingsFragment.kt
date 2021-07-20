@@ -120,7 +120,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             }
         )
         findNavController().navigateCatchingErrors(
-            SettingsFragmentDirections.actionSelectPauseDation()
+            SettingsFragmentDirections.actionSelectPauseDuration()
         )
     }
 }

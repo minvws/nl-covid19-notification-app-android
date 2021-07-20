@@ -156,7 +156,7 @@
     <string name="share_content">Ik help corona onder controle te krijgen met CoronaMelder. Doe je ook mee? %1$s</string>
     <string name="share_title">Deel de app met anderen</string>
     <string name="lab_test_toolbar_title">GGD-sleutel</string>
-    <string name="lab_test_paragraph_1"><![CDATA[Ben je getest en heb je corona? Dan belt een GGD-medewerker je. De medewerker helpt je om anderen te waarschuwen die bij jou in de buurt waren. Je hebt hierbij je GGD-sleutel nodig.<a href="">Hoe werkt dit?</a>]]></string>
+    <string name="lab_test_paragraph_1"><![CDATA[Ben je getest en heb je corona? Dan belt een GGD-medewerker je. De medewerker helpt je om anderen te waarschuwen die bij jou in de buurt waren. Je hebt hierbij je GGD-sleutel nodig. <a href="">Hoe werkt dit?</a>]]></string>
     <string name="lab_test_step_1">Geef deze GGD-sleutel door aan de GGD-medewerker:</string>
     <string name="lab_test_token_loading">Sleutel aan het ophalen</string>
     <string name="lab_test_token_error">De app kon geen GGD-sleutel ophalen. Controleer je internetverbinding.</string>
@@ -313,7 +313,7 @@
     <string name="post_keys_options_coronatest_subtitle">Dit kan alleen als je de testuitslag ontvangt via coronatest.nl</string>
     <string name="post_keys_options_ggd_title">Als de GGD jou belt</string>
     <string name="post_keys_options_ggd_subtitle">Dit kan alleen als je nu de GGD aan de telefoon hebt</string>
-    <string name="coronatest_description"><![CDATA[Ontdek je via coronatest.nl dat je corona hebt? Dan kun je via CoronaMelder direct een melding versturen.<a href="">Hoe werkt dit?</a>]]></string>
+    <string name="coronatest_description"><![CDATA[Ontdek je via coronatest.nl dat je corona hebt? Dan kun je via CoronaMelder direct een melding versturen. <a href="">Hoe werkt dit?</a>]]></string>
     <string name="coronatest_step_1">Deel de codes die CoronaMelder heeft gemaakt</string>
     <string name="coronatest_step_2">Schrijf je GGD-sleutel op of kopieer deze</string>
     <string name="coronatest_step_3">Vul je GGD-sleutel in op coronatest.nl. Zo waarschuw  je anderen bij wie je in de buurt bent geweest</string>
