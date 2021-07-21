@@ -25,6 +25,7 @@ import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
 import nl.rijksoverheid.en.about.FAQItemId.REASON
 import nl.rijksoverheid.en.about.FAQItemId.TECHNICAL
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
+import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS_GENERIC
 import nl.rijksoverheid.en.items.ButtonItem
 import nl.rijksoverheid.en.items.FAQOnboardingExplanationItem
 import nl.rijksoverheid.en.items.HeaderItem
@@ -39,6 +40,7 @@ enum class FAQItemId(@StringRes val label: Int) {
     NOTIFICATION(R.string.faq_notification),
     NOTIFICATION_MESSAGE(R.string.faq_notification_message),
     UPLOAD_KEYS(R.string.faq_upload_keys),
+    UPLOAD_KEYS_GENERIC(R.string.faq_upload_keys),
     BLUETOOTH(R.string.faq_bluetooth),
     POWER_USAGE(R.string.faq_power_usage),
     PAUSE(R.string.faq_pause),
@@ -89,6 +91,13 @@ class FAQDetailSections(
                 HeaderItem(R.string.faq_upload_keys),
                 ParagraphItem(R.string.faq_upload_keys_paragraph_1),
                 ParagraphItem(R.string.faq_upload_keys_paragraph_2)
+            )
+        )
+        UPLOAD_KEYS_GENERIC -> Section(
+            listOf(
+                HeaderItem(R.string.faq_upload_keys),
+                ParagraphItem(R.string.faq_upload_keys_generic_paragraph_1),
+                ParagraphItem(R.string.faq_upload_keys_generic_paragraph_2)
             )
         )
         BLUETOOTH -> Section(

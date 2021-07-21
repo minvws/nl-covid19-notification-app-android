@@ -33,6 +33,7 @@ import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
 import nl.rijksoverheid.en.about.FAQItemId.REASON
 import nl.rijksoverheid.en.about.FAQItemId.TECHNICAL
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
+import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS_GENERIC
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.setSlideTransition
@@ -45,6 +46,7 @@ private val crossLinks = mapOf(
     LOCATION to listOf(BLUETOOTH, LOCATION_PERMISSION),
     NOTIFICATION to listOf(NOTIFICATION_MESSAGE, BLUETOOTH, UPLOAD_KEYS),
     UPLOAD_KEYS to listOf(NOTIFICATION_MESSAGE, ANONYMOUS, TECHNICAL),
+    UPLOAD_KEYS_GENERIC to listOf(NOTIFICATION_MESSAGE, ANONYMOUS, TECHNICAL),
     NOTIFICATION_MESSAGE to listOf(NOTIFICATION, BLUETOOTH, REASON),
     BLUETOOTH to listOf(NOTIFICATION, ANONYMOUS),
     LOCATION_PERMISSION to listOf(LOCATION, REASON, ANONYMOUS),

@@ -19,7 +19,7 @@ import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION_MESSAGE
 import nl.rijksoverheid.en.about.FAQItemId.PAUSE
 import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
 import nl.rijksoverheid.en.about.FAQItemId.REASON
-import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
+import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS_GENERIC
 
 class AboutSection : Section(
     listOf(
@@ -31,7 +31,7 @@ class AboutSection : Section(
         FAQItem(LOCATION),
         FAQItem(NOTIFICATION),
         FAQItem(NOTIFICATION_MESSAGE),
-        FAQItem(UPLOAD_KEYS),
+        FAQItem(UPLOAD_KEYS_GENERIC),
         FAQItem(BLUETOOTH),
         FAQItem(LOCATION_PERMISSION),
         FAQItem(POWER_USAGE),
