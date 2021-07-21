@@ -7,24 +7,12 @@
 package nl.rijksoverheid.en.util
 
 import android.content.SharedPreferences
-import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneId
 
 fun SharedPreferences.getLongAsLocalDate(sharedPreferenceKey: String): LocalDate? {
     val timestamp = getLong(sharedPreferenceKey, 0L)
     return if (timestamp > 0) {
         LocalDate.ofEpochDay(timestamp)
-    } else {
-        null
-    }
-}
-
-fun SharedPreferences.getLongAsLocalDateTime(sharedPreferenceKey: String): LocalDateTime? {
-    val timestamp = getLong(sharedPreferenceKey, 0L)
-    return if (timestamp > 0) {
-        LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
     } else {
         null
     }
