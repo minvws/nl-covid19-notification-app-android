@@ -289,17 +289,11 @@
         android:label="LabTestFragment"
         tools:layout="@layout/fragment_list">
         <action
-            android:id="@+id/action_lab_test_done"
-            app:destination="@id/nav_lab_test_done"
-            app:popExitAnim="@anim/fragment_close_exit"
-            app:enterAnim="@anim/fragment_open_enter"
-            app:exitAnim="@anim/fragment_open_exit"
-            app:popEnterAnim="@anim/fragment_close_enter"
-            app:popUpTo="@id/nav_status"
-            app:popUpToInclusive="false" />
-        <action
             android:id="@+id/action_how_it_works"
             app:destination="@id/nav_about_detail" />
+        <action
+            android:id="@+id/action_finish_key_sharing"
+            app:destination="@id/nav_finish_key_sharing_dialog" />
     </fragment>
 
     <fragment
@@ -368,6 +362,17 @@
         <argument
             android:name="phoneNumber"
             app:argType="string" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/nav_finish_key_sharing_dialog"
+        android:name="nl.rijksoverheid.en.labtest.coronatest.FinishKeySharingDialogFragment"
+        android:label="FinishKeySharingDialogFragment">
+        <action
+            android:id="@+id/action_lab_test_done"
+            app:destination="@id/nav_lab_test_done"
+            app:popUpTo="@id/nav_status"
+            app:popUpToInclusive="false" />
     </dialog>
 
 </navigation>

@@ -123,11 +123,19 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
     }
 
     private fun finishCoronaTestKeySharing() {
-        labViewModel.usedKey?.let { key ->
-            findNavController().navigateCatchingErrors(
-                CoronaTestKeySharingFragmentDirections.actionLabTestDone(key),
-                FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
-            )
+        // Show confirmation dialog before navigating to LabTestDoneFragment
+        findNavController().navigate(CoronaTestKeySharingFragmentDirections.actionFinishKeySharing())
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+            FinishKeySharingDialogFragment.FINISH_KEY_SHARING_RESULT
+        )?.observe(viewLifecycleOwner) { confirmed ->
+            if (confirmed) {
+                labViewModel.usedKey?.let { key ->
+                    findNavController().navigateCatchingErrors(
+                        FinishKeySharingDialogFragmentDirections.actionLabTestDone(key),
+                        FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+                    )
+                }
+            }
         }
     }
 
