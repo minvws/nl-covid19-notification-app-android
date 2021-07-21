@@ -83,7 +83,7 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
 
         adapter.setOnItemClickListener { _, _ ->
             findNavController().navigateCatchingErrors(
-                CoronaTestKeySharingFragmentDirections.actionHowItWorks(FAQItemId.UPLOAD_KEYS),
+                CoronaTestKeySharingFragmentDirections.actionHowItWorks(FAQItemId.UPLOAD_KEYS_GENERIC),
                 FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
             )
         }
