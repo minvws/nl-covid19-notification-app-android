@@ -137,7 +137,7 @@ class LabTestRepository(
         }
     }
 
-    private suspend fun clearKeyData() {
+    suspend fun clearKeyData() {
         preferences.edit {
             remove(KEY_CONFIRMATION_KEY)
             remove(KEY_REGISTRATION_EXPIRATION)

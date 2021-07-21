@@ -29,6 +29,8 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.FeatureFlag
 import nl.rijksoverheid.en.api.model.FeatureFlagOption
 import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
+import nl.rijksoverheid.en.factory.createLabTestRepository
+import nl.rijksoverheid.en.labtest.LabTestRepository
 import java.time.format.DateTimeFormatter
 
 object BeagleHelperImpl : BeagleHelper {
@@ -47,14 +49,17 @@ object BeagleHelperImpl : BeagleHelper {
 
     private const val testNotificationExposureDaysAgoId = "testNotificationExposureDaysAgo"
     private const val previouslyKnownExposureDateId = "previouslyKnownExposureDate"
+    private const val keySharingHeaderId = "keySharingHeader"
 
     override fun initialize(application: Application) {
+        val labTestRepository = createLabTestRepository(application)
+
         Beagle.initialize(application)
-        setBeagleModules(application)
+        setBeagleModules(application, labTestRepository)
         observePreviousExposureDate(application)
     }
 
-    private fun setBeagleModules(context: Context) {
+    private fun setBeagleModules(context: Context, labTestRepository: LabTestRepository) {
         Beagle.set(
             HeaderModule(
                 title = context.getString(R.string.app_name),
@@ -96,6 +101,12 @@ object BeagleHelperImpl : BeagleHelper {
                 },
                 id = testNotificationExposureDaysAgoId
             ),
+            TextModule("Key sharing", TextModule.Type.SECTION_HEADER, id = keySharingHeaderId),
+            TextModule("Clear key data", TextModule.Type.BUTTON) {
+                MainScope().launch {
+                    labTestRepository.clearKeyData()
+                }
+            },
             DividerModule(),
             TextModule("Other", TextModule.Type.SECTION_HEADER),
             KeylineOverlaySwitchModule(),
