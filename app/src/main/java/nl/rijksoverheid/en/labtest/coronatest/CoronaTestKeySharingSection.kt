@@ -63,7 +63,12 @@ class CoronaTestKeySharingSection(
             mutableListOf<Group>(
                 IllustrationItem(R.drawable.illustration_lab_test),
                 ParagraphItem(R.string.coronatest_description, clickable = true),
-                LabTestStepItem(R.string.coronatest_step_1, 1, isFirstElement = true, enabled = !hasSharedKeys),
+                LabTestStepItem(
+                    R.string.coronatest_step_1,
+                    1,
+                    isFirstElement = true,
+                    enabled = !hasSharedKeys && validNotificationsState
+                ),
                 LabTestShareKeysItem(keyState, uploadKeys, retry, hasSharedKeys, validShareKeysPreconditions),
                 LabTestStepItem(R.string.coronatest_step_2, 2, enabled = hasSharedKeys),
                 LabTestKeyItem(keyState, copy, retry, hasSharedKeys),
@@ -77,10 +82,11 @@ class CoronaTestKeySharingSection(
                     enabled = validKeyState && validNotificationsState && hasSharedKeys
                 )
             ).apply {
-                if (notificationsState is NotificationsState.Disabled || notificationsState is NotificationsState.Unavailable) {
+                if (!validNotificationsState) {
                     add(
                         2, // add box before the key sharing step
                         ErrorBoxItem(
+                            R.string.status_disabled_headline,
                             R.string.error_upload_not_available,
                             R.string.status_en_api_disabled_enable,
                             requestConsent

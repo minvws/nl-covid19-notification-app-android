@@ -50,6 +50,7 @@ class LabTestSection(
                 if (notificationsState is NotificationsState.Disabled || notificationsState is NotificationsState.Unavailable) {
                     add(
                         ErrorBoxItem(
+                            R.string.status_disabled_headline,
                             R.string.error_upload_not_available,
                             R.string.status_en_api_disabled_enable,
                             requestConsent
