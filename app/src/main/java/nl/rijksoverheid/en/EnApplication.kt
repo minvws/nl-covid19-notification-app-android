@@ -26,14 +26,17 @@ class EnApplication : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         LocaleHelper.initialize(this)
-        BeagleHelperImpl.initialize(this)
+
         if (BuildConfig.FEATURE_LOGGING) {
             Timber.plant(Timber.DebugTree())
             Timber.plant(FileTree(getExternalFilesDir(null)))
             Timber.d("onCreate")
         }
 
+        BeagleHelperImpl.initialize(this)
+
         WorkManager.initialize(this, workManagerConfiguration)
+
         if (BuildConfig.FEATURE_LOGGING) {
             // force init for debug logging
             Logger.setLogger(object : Logger(Log.DEBUG) {
