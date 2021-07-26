@@ -5,4 +5,9 @@
     <color name="info_surface">@color/gray_darker</color>
     <color name="info_surface_disabled">@color/gray_darker</color>
     <color name="lab_test_step_line">@color/gray_darker</color>
+
+    <color name="gradient_status_disabled_start">#111111</color>
+    <color name="gradient_status_exposure_start">#111111</color>
+    <color name="gradient_status_paused_start">#111111</color>
+    <color name="gradient_status_end">#111111</color>
 </resources>

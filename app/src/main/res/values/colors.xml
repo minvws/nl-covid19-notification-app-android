@@ -18,6 +18,11 @@
     <color name="faq_github_background">@color/gray_lighter</color>
     <color name="circle_counter_disabled_background">@color/gray</color>
 
+    <color name="gradient_status_disabled_start">#FFF5DF</color>
+    <color name="gradient_status_exposure_start">#FFF0F3</color>
+    <color name="gradient_status_paused_start">#E5E5E5</color>
+    <color name="gradient_status_end">#FFFFFF</color>
+
     <!-- Color palette -->
     <color name="white">#FFFFFF</color>
     <color name="dark_blue">#0047FF</color>
