@@ -314,7 +314,7 @@
     <string name="post_keys_options_coronatest_subtitle">This is only possible if you receive the test result via coronatest.nl</string>
     <string name="post_keys_options_ggd_title">If the GGD calls you</string>
     <string name="post_keys_options_ggd_subtitle">This is only possible if you\'re on the phone with the GGD right now</string>
-    <string name="coronatest_description"><![CDATA[Discovering that you have corona through coronatest.nl? Then you can use CoronaMelder to send a notification immediately. <a href="">How does this work?</a>]]></string>
+    <string name="coronatest_description"><![CDATA[If you discover that you have coronavirus through coronatest.nl, you can use CoronaMelder to send a notification immediately. <a href="">How does this work?</a>]]></string>
     <string name="coronatest_step_1">Share the codes created by CoronaMelder</string>
     <string name="coronatest_step_2">Write down or copy your GGD key</string>
     <string name="coronatest_step_3">Enter your GGD key on coronatest.nl. This way you warn others you\'ve been near to</string>
