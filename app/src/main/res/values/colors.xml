@@ -23,6 +23,8 @@
     <color name="gradient_status_paused_start">#E5E5E5</color>
     <color name="gradient_status_end">#FFFFFF</color>
 
+    <color name="text_color_dark_gray">#333333</color>
+
     <!-- Color palette -->
     <color name="white">#FFFFFF</color>
     <color name="dark_blue">#0047FF</color>
