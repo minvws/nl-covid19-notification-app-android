@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
+import androidx.annotation.BoolRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
@@ -34,6 +35,7 @@ class StatusHeaderItem(
         @StringRes val headline: Int,
         @RawRes val animatedIcon: Int = 0,
         @DrawableRes val icon: Int = 0,
+        @BoolRes val hideBackgroundOnSmallScreenHeight: Int = R.bool.hide_status_background_on_small_screen_default,
         val showIllustration: Boolean = false,
         @StringRes val enableActionLabel: Int? = null,
         @StringRes val whatsNextActionLabel: Int? = null,
@@ -53,6 +55,7 @@ class StatusHeaderItem(
                 R.string.cd_status_active,
                 R.string.status_no_exposure_detected_headline,
                 animatedIcon = R.raw.status_active,
+                hideBackgroundOnSmallScreenHeight = R.bool.hide_status_active_background_on_small_screen,
                 showIllustration = true
             ) {
                 override fun getDescription(context: Context) =

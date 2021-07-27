@@ -7,6 +7,5 @@
   -->
 
 <resources>
-    <bool name="hide_status_active_background_on_small_screen">false</bool>
-    <bool name="hide_status_background_on_small_screen_default">false</bool>
+    <bool name="hide_status_active_background_on_small_screen">true</bool>
 </resources>
