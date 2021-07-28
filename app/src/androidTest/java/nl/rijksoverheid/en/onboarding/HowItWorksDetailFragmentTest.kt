@@ -147,7 +147,7 @@ class HowItWorksDetailFragmentTest : BaseInstrumentationTest() {
         withFragment(
             HowItWorksDetailFragment(),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             Espresso.onView(ViewMatchers.withId(R.id.button)).perform(ViewActions.click())

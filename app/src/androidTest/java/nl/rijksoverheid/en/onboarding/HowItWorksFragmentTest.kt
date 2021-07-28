@@ -146,7 +146,7 @@ class HowItWorksFragmentTest : BaseInstrumentationTest() {
         withFragment(
             HowItWorksFragment(),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             Espresso.onView(withText(R.string.faq_location)).perform(click())
@@ -168,7 +168,7 @@ class HowItWorksFragmentTest : BaseInstrumentationTest() {
         withFragment(
             HowItWorksFragment(),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             Espresso.onView(ViewMatchers.withId(R.id.button)).perform(click())

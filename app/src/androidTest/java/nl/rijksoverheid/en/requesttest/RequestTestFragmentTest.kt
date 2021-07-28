@@ -36,7 +36,7 @@ class RequestTestFragmentTest : BaseInstrumentationTest() {
 
         val fragment = RequestTestFragment()
 
-        withFragment(fragment, navController, R.style.AppTheme) {
+        withFragment(fragment, navController, R.style.Theme_CoronaMelder) {
             val expectedLabel = context.getString(
                 R.string.request_test_button_call,
                 "12345"

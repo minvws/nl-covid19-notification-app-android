@@ -35,7 +35,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
             setGraph(R.navigation.nav_onboarding)
             setCurrentDestination(R.id.explanationStep1)
         }
-        withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+        withFragment(ExplanationFragment(), navController, R.style.Theme_CoronaMelder) {
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_1_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_1_description)))
             onView(withId(R.id.example)).check(matches(withEffectiveVisibility(GONE)))
@@ -57,7 +57,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
             setCurrentDestination(R.id.explanationStep2)
         }
 
-        withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+        withFragment(ExplanationFragment(), navController, R.style.Theme_CoronaMelder) {
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_2_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_2_description)))
             onView(withId(R.id.example)).check(matches(withEffectiveVisibility(GONE)))
@@ -79,7 +79,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
             setCurrentDestination(R.id.explanationStep3)
         }
 
-        withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+        withFragment(ExplanationFragment(), navController, R.style.Theme_CoronaMelder) {
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_explanation_3_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_explanation_3_description)))
             onView(withId(R.id.example)).check(matches(withEffectiveVisibility(GONE)))
@@ -101,7 +101,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
             setCurrentDestination(R.id.explanationExample1)
         }
 
-        withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+        withFragment(ExplanationFragment(), navController, R.style.Theme_CoronaMelder) {
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_example_1_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_example_1_description)))
             onView(withId(R.id.example)).check(matches(withEffectiveVisibility(VISIBLE)))
@@ -123,7 +123,7 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
             setCurrentDestination(R.id.explanationExample2)
         }
 
-        withFragment(ExplanationFragment(), navController, R.style.AppTheme) {
+        withFragment(ExplanationFragment(), navController, R.style.Theme_CoronaMelder) {
             onView(withId(R.id.headline)).check(matches(withText(R.string.onboarding_example_2_headline)))
             onView(withId(R.id.description)).check(matches(withText(R.string.onboarding_example_2_description)))
             onView(withId(R.id.example)).check(matches(withEffectiveVisibility(VISIBLE)))
