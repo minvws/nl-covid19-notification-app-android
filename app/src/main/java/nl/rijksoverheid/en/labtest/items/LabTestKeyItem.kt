@@ -28,7 +28,7 @@ class LabTestKeyItem(
         val enabled: Boolean,
         val retry: () -> Unit
     ) {
-        val keyContentDescription = key?.toLowerCase(Locale.ROOT)
+        val keyContentDescription = key?.lowercase(Locale.ROOT)
     }
 
     private val viewState = ViewState(

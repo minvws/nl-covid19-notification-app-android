@@ -48,7 +48,7 @@ class CacheStrategyInterceptorTest {
         mockWebServer = MockWebServer()
         tmpDir = File.createTempFile("cache", "dir")
         tmpDir.delete()
-        cache = Cache(tmpDir, 1024 * 1024)
+        cache = Cache(tmpDir, 1024 * 1024L)
         cdnService = Retrofit.Builder().client(
             OkHttpClient.Builder().cache(cache).addInterceptor(CacheStrategyInterceptor()).build()
         ).baseUrl(mockWebServer.url("/")).addConverterFactory(

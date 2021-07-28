@@ -40,7 +40,7 @@ internal fun createOkHttpClient(context: Context, appVersionCode: Int): OkHttpCl
         // enable cache for config and resource bundles
         .followRedirects(false)
         .apply {
-            val cache = Cache(File(context.cacheDir, "http"), 32 * 1024 * 1024)
+            val cache = Cache(File(context.cacheDir, "http"), 32 * 1024 * 1024L)
             cache(cache)
             addInterceptor(CacheStrategyInterceptor())
             addNetworkInterceptor(CacheOverrideInterceptor())
