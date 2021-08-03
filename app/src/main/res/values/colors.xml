@@ -24,7 +24,7 @@
     <color name="gradient_status_end">#FFFFFF</color>
     <color name="ic_ggd_key_format_color">#40000000</color>
 
-    <color name="text_color_dark_gray">#333333</color>
+    <color name="item_background_gray">#383838</color>
 
     <!-- Color palette -->
     <color name="white">#FFFFFF</color>

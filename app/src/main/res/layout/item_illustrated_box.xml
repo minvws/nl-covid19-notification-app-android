@@ -18,6 +18,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout"
         app:markAsButtonForAccessibility="@{true}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +37,6 @@
             android:layout_marginTop="16dp"
             android:text="@{viewState.title}"
             android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textColor="@android:color/primary_text_light"
             app:layout_constraintEnd_toStartOf="@id/image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +51,6 @@
             android:layout_marginBottom="16dp"
             android:text="@{viewState.subtitle}"
             android:textAppearance="?attr/textAppearanceBody1"
-            android:textColor="@color/text_color_dark_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/image"
             app:layout_constraintStart_toStartOf="parent"
