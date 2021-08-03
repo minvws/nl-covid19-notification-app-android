@@ -50,7 +50,7 @@
                 android:id="@+id/button_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorSurface"
+                android:background="@color/footer_background"
                 android:elevation="10dp"
                 android:padding="@dimen/activity_horizontal_margin"
                 app:layout_constraintBottom_toBottomOf="parent"

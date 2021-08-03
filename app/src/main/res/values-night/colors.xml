@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="color_primary">@color/blue</color>
     <color name="color_secondary">@color/gray_dark</color>
+    <color name="color_control_highlight">#243478F6</color>
     <color name="divider">@color/gray_darker</color>
     <color name="info_surface">@color/gray_darker</color>
     <color name="info_surface_disabled">@color/gray_darker</color>
@@ -10,6 +12,8 @@
     <color name="technical_explanation_background">@color/item_background_gray</color>
     <color name="faq_github_background">@color/item_background_gray</color>
     <color name="circle_counter_disabled_background">#656569</color>
+    <color name="link_text_on_info_surface">@color/lighter_blue</color>
+    <color name="footer_background">@color/gray_darker</color>
 
     <color name="gradient_status_disabled_start">#111111</color>
     <color name="gradient_status_exposure_start">#111111</color>
