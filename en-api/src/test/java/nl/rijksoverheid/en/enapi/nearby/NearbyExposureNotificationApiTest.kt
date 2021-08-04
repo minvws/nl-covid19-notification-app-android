@@ -244,6 +244,7 @@ class NearbyExposureNotificationApiTest {
     }
 
     @Test
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     fun `requestEnableNotifications without errors returns Enabled`() = runBlocking {
         // GIVEN
         val api =
@@ -339,6 +340,7 @@ class NearbyExposureNotificationApiTest {
         }
 
     @Test
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     fun `disableNotifications without errors returns Disabled`() = runBlocking {
         // GIVEN
         val api =
@@ -454,6 +456,7 @@ class NearbyExposureNotificationApiTest {
     }
 
     @Test
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     fun `provideDiagnosisKeys without error removes files and returns Success`() = runBlocking {
         // GIVEN
         val file = File.createTempFile("test", "file")
@@ -483,6 +486,7 @@ class NearbyExposureNotificationApiTest {
     }
 
     @Test
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     fun `provideDiagnosisKeys with generic error removes files and returns UnknownError`() =
         runBlocking {
             // GIVEN
@@ -519,6 +523,7 @@ class NearbyExposureNotificationApiTest {
         }
 
     @Test
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     fun `provideDiagnosisKeys with disk io removes files and returns FailedDiskIo`() =
         runBlocking {
             // GIVEN

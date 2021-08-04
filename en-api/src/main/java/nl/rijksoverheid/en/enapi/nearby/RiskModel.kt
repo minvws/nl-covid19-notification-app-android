@@ -41,7 +41,7 @@ class RiskModel(private val config: DailySummariesConfig) {
      * seconds, attenuation, and report type.
      */
     private fun getWindowScore(window: ExposureWindow): Double {
-        val scansScore = window.scanInstances.sumByDouble { scan ->
+        val scansScore = window.scanInstances.sumOf { scan ->
             scan.secondsSinceLastScan * getAttenuationMultiplier(scan.typicalAttenuationDb)
         }
         return (

@@ -53,7 +53,7 @@ class CorruptedCacheInterceptorTest {
         mockWebServer.useHttps(handshakeCertificate.sslSocketFactory(), false)
         tmpDir = File.createTempFile("cache", "dir")
         tmpDir.delete()
-        cache = Cache(tmpDir, 1024 * 1024)
+        cache = Cache(tmpDir, 1024 * 1024L)
     }
 
     @Test(expected = NullPointerException::class)
