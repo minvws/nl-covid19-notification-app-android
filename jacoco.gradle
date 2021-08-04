@@ -41,6 +41,11 @@ project.afterEvaluate {
                     '**/R.class',
                     '**/R$*.class',
                     '**/BuildConfig.*',
+                    '**/*Item*.*',
+                    '**/*Section*.*',
+                    '**/*Fragment*.*',
+                    '**/*Activity*.*',
+                    '**/EnApplication.*',
                     '**/Manifest*.*',
                     '**/*Test*.*',
                     'android/**/*.*'
