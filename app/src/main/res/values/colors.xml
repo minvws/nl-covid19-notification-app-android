@@ -16,6 +16,7 @@
     <color name="faq_onboarding_background">@color/light_blue</color>
     <color name="technical_explanation_background">@color/light_yellow</color>
     <color name="faq_github_background">@color/gray_lighter</color>
+    <color name="circle_counter_enabled_background">@color/dark_blue</color>
     <color name="circle_counter_disabled_background">@color/gray</color>
     <color name="item_background_gray">#383838</color>
     <color name="link_text_on_info_surface">@color/dark_blue</color>
