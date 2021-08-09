@@ -22,10 +22,12 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/background"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:importantForAccessibility="no"
             app:imageResource="@{viewState.background}"
+            app:hideOnSmallScreenHeight="@{context.resources.getBoolean(viewState.hideBackgroundOnSmallScreenHeight)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +50,24 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/clouds"
-            app:show="@{viewState.showIllustration}" />
+            app:showInNightMode="@{false}"
+            app:showInDayMode="@{viewState.showIllustration}" />
+
+        <ImageView
+            android:id="@+id/stars"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:adjustViewBounds="true"
+            android:importantForAccessibility="no"
+            android:src="@drawable/illustration_stars"
+            app:hideOnSmallScreenHeight="@{true}"
+            app:keepInLayout="@{false}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showInNightMode="@{viewState.showIllustration}"
+            app:showInDayMode="@{false}" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/status_animated_image"

@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.databinding
 
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -24,10 +25,19 @@ import java.time.LocalDateTime
 
 object BindingAdapters {
     @JvmStatic
-    @BindingAdapter("show", "keepInLayout", "hideOnSmallScreenHeight", requireAll = false)
+    @BindingAdapter(
+        "show",
+        "showInNightMode",
+        "showInDayMode",
+        "keepInLayout",
+        "hideOnSmallScreenHeight",
+        requireAll = false
+    )
     fun show(
         view: View,
         show: Boolean?,
+        showInNightMode: Boolean?,
+        showInDayMode: Boolean?,
         keepInLayout: Boolean,
         hideOnSmallScreenHeight: Boolean?
     ) {
@@ -39,14 +49,20 @@ object BindingAdapters {
                 (view as? ImageView)?.isImageFillingScreen() == true
             )
 
+        val isUsingNightMode = view.context.resources.isUsingNightModeResources()
+
         val visibility = when {
             hideSmallScreen -> {
                 View.GONE
             }
-            show == true -> {
+            show == true ||
+                (showInNightMode == true && isUsingNightMode) ||
+                (showInDayMode == true && !isUsingNightMode) -> {
                 View.VISIBLE
             }
-            show == false -> {
+            show == false ||
+                (showInNightMode == false && isUsingNightMode) ||
+                (showInDayMode == false && !isUsingNightMode) -> {
                 if (keepInLayout) View.INVISIBLE else View.GONE
             }
             else -> {
@@ -55,6 +71,15 @@ object BindingAdapters {
         }
 
         visibility?.let { view.visibility = it }
+    }
+
+    private fun Resources.isUsingNightModeResources(): Boolean {
+        return when (configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> true
+            Configuration.UI_MODE_NIGHT_NO -> false
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> false
+            else -> false
+        }
     }
 
     private fun isSmallScreen(configuration: Configuration): Boolean {

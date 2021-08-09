@@ -128,7 +128,7 @@ class PrivacyPolicyConsentFragmentTest : BaseInstrumentationTest() {
         withFragment(
             PrivacyPolicyConsentFragment(),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             onView(withId(R.id.consent_checkbox)).check(matches(isNotChecked()))
@@ -158,7 +158,7 @@ class PrivacyPolicyConsentFragmentTest : BaseInstrumentationTest() {
         withFragment(
             PrivacyPolicyConsentFragment(),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             onView(withId(R.id.consent_checkbox)).check(matches(isNotChecked()))

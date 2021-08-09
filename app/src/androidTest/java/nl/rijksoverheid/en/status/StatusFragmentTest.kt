@@ -190,7 +190,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
                 }
             ),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             onView(withId(R.id.status_headline))
@@ -231,7 +231,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
                 }
             ),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             onView(withId(R.id.loading)).check(matches(isDisplayed()))

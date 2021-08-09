@@ -25,7 +25,7 @@
         <View
             android:layout_width="4dp"
             android:layout_height="0dp"
-            android:background="@color/gray_lighter"
+            android:background="@color/lab_test_step_line"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/circle_counter"
             app:layout_constraintStart_toStartOf="@id/circle_counter"
@@ -81,7 +81,7 @@
 
         <Button
             android:id="@+id/retry_button"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Snackbar"
+            style="@style/Widget.App.Button.TextButton.Snackbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"

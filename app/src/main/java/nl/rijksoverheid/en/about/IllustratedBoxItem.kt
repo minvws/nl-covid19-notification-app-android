@@ -33,6 +33,7 @@ open class IllustratedBoxItem(
         viewBinding.viewState = ViewState(
             title, subtitle, illustration, viewBinding.root.context.getColor(backgroundTint)
         )
+        viewBinding.constraintLayout.clipToOutline = true
     }
 
     override fun isClickable() = true

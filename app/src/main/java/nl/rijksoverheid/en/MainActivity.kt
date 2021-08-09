@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
+        setTheme(R.style.Theme_CoronaMelder)
         super.onCreate(savedInstanceState)
         binding = inflate(layoutInflater)
         setContentView(binding.root)
