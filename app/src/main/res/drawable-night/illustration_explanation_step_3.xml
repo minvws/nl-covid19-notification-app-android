@@ -14,9 +14,6 @@
     android:viewportHeight="220"
     tools:ignore="VectorRaster">
   <path
-      android:pathData="M320,0H0V220H320V0Z"
-      android:fillColor="#111111"/>
-  <path
       android:pathData="M218.2,154.7C255.645,154.7 286,124.345 286,86.9C286,49.455 255.645,19.1 218.2,19.1C180.755,19.1 150.4,49.455 150.4,86.9C150.4,124.345 180.755,154.7 218.2,154.7Z"
       android:fillColor="#383838"/>
   <path
