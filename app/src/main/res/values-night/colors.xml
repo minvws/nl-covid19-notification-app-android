@@ -14,6 +14,8 @@
     <color name="faq_github_background">@color/item_background_gray</color>
     <color name="circle_counter_disabled_background">#656569</color>
     <color name="link_text_on_info_surface">@color/lighter_blue</color>
+    <color name="dialog_background_tint">@color/gray_darker</color>
+    <color name="dialog_button_text">@color/lighter_blue</color>
     <color name="footer_background">@color/gray_darker</color>
 
     <color name="gradient_status_disabled_start">#111111</color>

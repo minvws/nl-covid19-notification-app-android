@@ -35,6 +35,10 @@
         <item name="android:textColor">@color/link_text_on_info_surface</item>
     </style>
 
+    <style name="Widget.App.Button.TextButton.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/dialog_button_text</item>
+    </style>
+
     <style name="ThemeOverlay.App.Button.Error" parent="">
         <item name="colorPrimary">@color/color_error</item>
     </style>
