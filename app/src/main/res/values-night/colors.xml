@@ -3,6 +3,7 @@
     <color name="color_primary">@color/blue</color>
     <color name="color_secondary">@color/gray_dark</color>
     <color name="color_control_highlight">#243478F6</color>
+    <color name="onboarding_example_header">@color/light_pink</color>
     <color name="divider">@color/gray_darker</color>
     <color name="info_surface">@color/gray_darker</color>
     <color name="info_surface_disabled">@color/gray_darker</color>
