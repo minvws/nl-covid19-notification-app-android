@@ -20,6 +20,8 @@
     <color name="circle_counter_disabled_background">@color/gray</color>
     <color name="item_background_gray">#383838</color>
     <color name="link_text_on_info_surface">@color/dark_blue</color>
+    <color name="dialog_background_tint">@color/white</color>
+    <color name="dialog_button_text">@color/dark_blue</color>
     <color name="footer_background">@color/white</color>
 
     <color name="gradient_status_disabled_start">#FFF5DF</color>
@@ -42,7 +44,8 @@
     <color name="gray_dark">#353536</color>
     <color name="light_red">#FFECF0</color>
     <color name="light_yellow">#FADD9D</color>
-    <color name="red">#ED395A</color>
+    <color name="red">#DE3151</color>
     <color name="pink">#B8275D</color>
+    <color name="light_pink">#FF375F</color>
     <color name="green">#34C759</color>
 </resources>
