@@ -33,7 +33,7 @@
             android:src="@{image}"
             tools:src="@drawable/ic_shield_bluetooth" />
 
-        <TextView
+        <nl.rijksoverheid.en.util.HtmlTextViewWidget
             android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

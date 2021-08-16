@@ -11,7 +11,6 @@ import android.content.res.Resources
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.core.view.AccessibilityDelegateCompat
@@ -19,8 +18,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
+import nl.rijksoverheid.en.util.HtmlTextViewWidget
 import nl.rijksoverheid.en.util.formatPauseDuration
-import nl.rijksoverheid.en.util.fromHtmlWithCustomReplacements
 import java.time.LocalDateTime
 
 object BindingAdapters {
@@ -108,9 +107,9 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("htmlText")
-    fun setHtmlText(view: TextView, htmlText: String) {
-        view.text = fromHtmlWithCustomReplacements(view.context, htmlText)
+    @BindingAdapter("htmlText", "enableHtmlLinks", requireAll = false)
+    fun setHtmlText(view: HtmlTextViewWidget, htmlText: String?, enableHtmlLinks: Boolean?) {
+        view.setHtmlText(htmlText, enableHtmlLinks ?: false)
     }
 
     @JvmStatic
@@ -150,7 +149,7 @@ object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter("pausedState")
-    fun bindPausedState(view: TextView, pausedUntil: LocalDateTime?) {
-        view.text = pausedUntil?.formatPauseDuration(view.context)
+    fun bindPausedState(view: HtmlTextViewWidget, pausedUntil: LocalDateTime?) {
+        view.setHtmlText(pausedUntil?.formatPauseDuration(view.context))
     }
 }

@@ -33,7 +33,7 @@ class StatusPausedItem(
             refreshTimer?.cancel()
             refreshTimer = SimpleCountdownTimer(viewState.pausedUntil) {
                 viewBinding.infoBoxText.apply {
-                    text = viewState.pausedUntil.formatPauseDuration(context)
+                    setHtmlText(viewState.pausedUntil.formatPauseDuration(context))
                 }
             }
             refreshTimer?.startTimer()

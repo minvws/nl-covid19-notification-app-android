@@ -10,7 +10,6 @@ import androidx.annotation.StringRes
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemParagraphBinding
-import nl.rijksoverheid.en.util.fromHtmlWithCustomReplacements
 
 class BulletedListItem(
     @StringRes private val text: Int,
@@ -19,8 +18,10 @@ class BulletedListItem(
     override fun getLayout() = R.layout.item_paragraph
 
     override fun bind(viewBinding: ItemParagraphBinding, position: Int) {
-        val html = viewBinding.root.context.getString(text, *formatArgs)
-        viewBinding.text = fromHtmlWithCustomReplacements(viewBinding.root.context, html)
+        viewBinding.content.setHtmlText(
+            viewBinding.root.context.getString(text, *formatArgs),
+            true
+        )
     }
 
     override fun isSameAs(other: Item<*>): Boolean =

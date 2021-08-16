@@ -57,7 +57,7 @@
             app:constraint_referenced_ids="info_box_image, info_box_title"
             app:barrierDirection="bottom" />
 
-        <TextView
+        <nl.rijksoverheid.en.util.HtmlTextViewWidget
             android:id="@+id/info_box_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
