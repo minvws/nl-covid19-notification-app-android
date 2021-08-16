@@ -4,7 +4,7 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.util
+package nl.rijksoverheid.en.util.ext
 
 import androidx.fragment.app.Fragment
 import androidx.transition.TransitionInflater

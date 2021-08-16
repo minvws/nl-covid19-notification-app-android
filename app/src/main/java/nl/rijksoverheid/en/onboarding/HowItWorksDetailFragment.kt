@@ -29,8 +29,8 @@ import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
 import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.ext.setSlideTransition
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
-import nl.rijksoverheid.en.util.setSlideTransition
 
 private val crossLinks = mapOf(
     FAQItemId.REASON to listOf(FAQItemId.LOCATION, FAQItemId.NOTIFICATION_MESSAGE),

@@ -19,7 +19,7 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
 import nl.rijksoverheid.en.util.HtmlTextViewWidget
-import nl.rijksoverheid.en.util.formatPauseDuration
+import nl.rijksoverheid.en.util.ext.formatPauseDuration
 import java.time.LocalDateTime
 
 object BindingAdapters {

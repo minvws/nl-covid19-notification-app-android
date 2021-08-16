@@ -4,7 +4,7 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.util
+package nl.rijksoverheid.en.util.ext
 
 import android.content.SharedPreferences
 import java.time.LocalDate

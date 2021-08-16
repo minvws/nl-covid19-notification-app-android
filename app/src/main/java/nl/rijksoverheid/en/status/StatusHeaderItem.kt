@@ -17,9 +17,9 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusHeaderBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.util.SimpleCountdownTimer
+import nl.rijksoverheid.en.util.ext.formatPauseDuration
 import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatExposureDate
-import nl.rijksoverheid.en.util.formatPauseDuration
 import java.time.LocalDateTime
 
 class StatusHeaderItem(

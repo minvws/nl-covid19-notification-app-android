@@ -18,7 +18,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentGooglePlayServicesUpgradeRequiredBinding
-import nl.rijksoverheid.en.util.setSlideTransition
+import nl.rijksoverheid.en.util.ext.setSlideTransition
 
 class GooglePlayServicesUpdateRequiredFragment :
     BaseFragment(R.layout.fragment_google_play_services_upgrade_required) {

@@ -11,7 +11,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusPausedBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.util.SimpleCountdownTimer
-import nl.rijksoverheid.en.util.formatPauseDuration
+import nl.rijksoverheid.en.util.ext.formatPauseDuration
 import java.time.LocalDateTime
 
 class StatusPausedItem(
