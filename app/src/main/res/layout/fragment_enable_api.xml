@@ -101,7 +101,7 @@
                         app:layout_constraintTop_toBottomOf="@id/illustration"
                         app:layout_goneMarginTop="16dp" />
 
-                    <TextView
+                    <nl.rijksoverheid.en.util.HtmlTextViewWidget
                         android:id="@+id/description"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

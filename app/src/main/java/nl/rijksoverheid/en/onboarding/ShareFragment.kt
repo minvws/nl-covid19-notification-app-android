@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentShareBinding
-import nl.rijksoverheid.en.util.setSlideTransition
+import nl.rijksoverheid.en.util.ext.setSlideTransition
 
 class ShareFragment : BaseFragment(R.layout.fragment_share) {
     private val onboardingViewModel: OnboardingViewModel by activityViewModels()

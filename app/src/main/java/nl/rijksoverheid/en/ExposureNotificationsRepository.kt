@@ -58,7 +58,7 @@ import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
 import nl.rijksoverheid.en.status.StatusCache
-import nl.rijksoverheid.en.util.getLongAsLocalDate
+import nl.rijksoverheid.en.util.ext.getLongAsLocalDate
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
 import retrofit2.HttpException

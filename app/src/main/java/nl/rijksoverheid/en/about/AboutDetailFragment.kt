@@ -36,7 +36,7 @@ import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS_GENERIC
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
-import nl.rijksoverheid.en.util.setSlideTransition
+import nl.rijksoverheid.en.util.ext.setSlideTransition
 
 private val crossLinks = mapOf(
     ONBOARDING to listOf(REASON, LOCATION, ANONYMOUS),

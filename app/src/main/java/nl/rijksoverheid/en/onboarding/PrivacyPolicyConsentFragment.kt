@@ -24,7 +24,7 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentPrivacyPolicyConsentBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
-import nl.rijksoverheid.en.util.setSlideTransition
+import nl.rijksoverheid.en.util.ext.setSlideTransition
 
 class PrivacyPolicyConsentFragment : BaseFragment(R.layout.fragment_privacy_policy_consent) {
     private val onboardingViewModel: OnboardingViewModel by activityViewModels()
