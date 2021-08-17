@@ -350,6 +350,15 @@
     <string name="coronatest_finish_confirmation_text">هل قمت بملء رمز الـ GGD في coronatest.nl وتلقيت تأكيدًا؟ إذا كانت الإجابة نعم فيمكنك استكمال العملية.</string>
     <string name="coronatest_finish_confirmation_accept">نعم، أكمل</string>
     <string name="coronatest_finish_confirmation_cancel">إلغاء</string>
+    <string name="still_useful_title">لقد تم تطعيمي او شفيت من كورونا، هل التطبيق لا يزال مجديًا؟</string>
+    <string name="still_useful_paragraph_1">نعم، لا يزال من المفيد أن يكون لديك التطبيق على هاتفك. على الرغم من أنك قد تم تطعيمك بالفعل أو تعافيت من كورونا. الفيروس لا يزال موجودًا ومن خلال تطبيق CoronaMelder يتم الكشف عن الإصابات وإيقافها بشكل أسرع.</string>
+    <string name="still_useful_paragraph_2">لا يزال يتعين عليك الالتزام بالإجراءات المعروفة: ابق على بعد 1.5 متر واغسل يديك كثيرًا. والبس الكمامة في الأماكن التي يكون فيها إلزامياً.  في وسائل النقل العام أو في الطائرة على سبيل المثال.</string>
+    <string name="still_useful_paragraph_3">" سيتم في بعض الأحداث أو المواقع إلغاء إجراء الابقاء على مسافة 1.5 متر، في حدث أثبت فيه جميع الزوار في تطبيق CoronaCheck أنهم قد تم اختبارهم وليس لديهم كورونا أو تم تطعيمهم بالفعل مرتين على سبيل المثال."</string>
+    <string name="still_useful_link_header">هل التطبيق لا يزال مجديًا؟</string>
+    <string name="still_useful_link_description">حتى لو تم تطعيمك أو أصبت بالفعل بكورونا، فإن التطبيق لا يزال أداة مهمة في مكافحة كورونا.</string>
+    <!--Used by the screen reader as prefix of a bullet list item. For example "• Lorem ipsum" will be read as "Bullet 1 Lorem ipsum"-->
+    <string name="bullet_list_item_tts_description">نقطة  %1$d%2$s  \n/n</string>
+    <string name="status_error_battery_optimisation_title">مشكلة في إعدادات الهاتف</string>
     <string name="coronatest_step_3_nodeeplink">انتقل إلى coronatest.nl وأدخل رمز الـ GGD الخاص بك. تحذّر بهذه الطريقة الأشخاص الآخرين الذين كنت على مقربة منهم.</string>
     <string name="faq_upload_keys_generic_paragraph_1">يمكنك فقط إرسال إشعار للآخرين إذا تم اختبارك من قبل الـ GGD وتبين أنك مصاب بكورونا. يمكنك إرسال الإشعار مع الـ GGD الذي يتصل بك هاتفيًا أو بنفسك عبر coronatest.nl.\n\nإذا كنت تريد إرسال إشعار، فستُسئل عن رمز الـ GGD الخاص بك. ستجده في التطبيق. يضمن رمز الـ GGD أن الأشخاص المصابين حقًا هم فقط من يمكنهم إرسال الإشعار.</string>
     <string name="faq_upload_keys_generic_paragraph_2">بعد التحقق من مفتاح الـ GGD، ستتم مشاركة الرموز التي أرسلها هاتفك إلى الهواتف الأخرى خلال الـ 14 يومًا الماضية.\n\nبهذه الطريقة يمكن للأشخاص الذين كنت على مقربة منهم عندما كنت ناقلاً للعدوى تلقي إشعار. فقط إذا كان هؤلاء الأشخاص يستخدمون التطبيق أيضًا.</string>

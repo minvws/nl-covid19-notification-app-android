@@ -327,6 +327,15 @@
     <string name="coronatest_finish_confirmation_text">Coronatest.nl\'de GGD anahtarını doldurdunuz ve bir onay aldınız mı? Cevabınız evet ise, tamamlayabilirsiniz.</string>
     <string name="coronatest_finish_confirmation_accept">Evet, tamamlandı</string>
     <string name="coronatest_finish_confirmation_cancel">İptal</string>
+    <string name="still_useful_title">Aşı oldum veya Korona geçirdim, uygulama hala faydalı mı?</string>
+    <string name="still_useful_paragraph_1">Evet, uygulamanın telefonunuzda bulunması hala yararlıdır. Aşı yapılmış veya Korona geçirmiş olsanız bile virüs hala aramızda ve CoronaMelder uygulaması ile enfeksiyonlar daha hızlı tespit edilip durdurulur.</string>
+    <string name="still_useful_paragraph_2">Yine de iyi bilinen önlemlere bağlı kalmalısınız: 1,5 metre mesafede durun ve ellerinizi sık sık yıkayın. Ve zorunlu olan yerlerde maske kullanın. Örneğin toplu taşımada veya uçakta.</string>
+    <string name="still_useful_paragraph_3">Bazı etkinliklerde veya mekanlarda 1,5 metrelik mesafeyi koruma tedbiri kaldırılacaktır. Örneğin, CoronaCheck uygulamasındaki tüm ziyaretçilerin test edildiklerini ve Korona olmadıklarını veya iki kez aşı olduklarını kanıtlladıkları etkinliklerde.</string>
+    <string name="still_useful_link_header">Uygulama hala faydalı mı?</string>
+    <string name="still_useful_link_description">Aşı olmuş veya daha önce Korona geçirmiş olsanız bile uygulama hala Korona ile mücadelede önemli bir araçtır.</string>
+    <!--Used by the screen reader as prefix of a bullet list item. For example "• Lorem ipsum" will be read as "Bullet 1 Lorem ipsum"-->
+    <string name="bullet_list_item_tts_description">Punt %1$d %2$s\n</string>
+    <string name="status_error_battery_optimisation_title">Telefon ayarları sorunu</string>
     <string name="coronatest_step_3_nodeeplink">Coronatest.nl\'ye (geri) gidin ve GGD anahtarınızı girin. Böylelikle yakınında bulunmuş olduğunuz diğer kişileri uyarırsınız.</string>
     <string name="faq_upload_keys_generic_paragraph_1">Sadece GGD tarafından test edildiyseniz ve Korona taşıdığınız tespit edildiyse başkalarına bildirim gönderebilirsiniz. Bildirimi sizi GGD aracılığıyla aradıklarında veya coronatest.nl aracılığıyla kendiniz gönderirsiniz.\n\nBildirim göndermek istiyorsanız GGD anahtarınız istenecektir. Bunu uygulamada bulacaksınız. Bir GGD anahtarı, sadece gerçekten virüs bulaşmış kişilerin rapor gönderebilmelerini sağlar.</string>
     <string name="faq_upload_keys_generic_paragraph_2">GGD anahtarınız kontrol edildikten sonra, telefonunuzun son 14 gün içinde başka telefonlara gönderdiği kodları paylaşabilirsiniz. \n\nBu şekilde, bulaşıcı olduğunuzda yakınında bulunduğunuz kişilere bir bildirim gönderilir. Ancak bu kişiler de uygulamayı kullanıyorsa.</string>
