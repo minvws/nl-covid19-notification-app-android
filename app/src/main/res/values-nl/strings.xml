@@ -327,6 +327,15 @@
     <string name="coronatest_finish_confirmation_text">Heb je de GGD-sleutel ingevuld op coronatest.nl en een bevestiging gekregen? Zo ja, dan kun je afronden.</string>
     <string name="coronatest_finish_confirmation_accept">Ja, afronden</string>
     <string name="coronatest_finish_confirmation_cancel">Annuleren</string>
+    <string name="still_useful_title">Ik ben gevaccineerd of hersteld van corona, heeft de app dan nog wel nut?</string>
+    <string name="still_useful_paragraph_1">Ja, het is nog steeds nuttig om de app op je telefoon te hebben. Ondanks dat je al gevaccineerd bent of hersteld van corona. Het virus is nog steeds onder ons en met de CoronaMelder-app worden besmettingen sneller opgespoord en gestopt.</string>
+    <string name="still_useful_paragraph_2">Je moet je ook nog steeds houden aan de bekende maatregelen: 1,5 meter afstand houden en vaak je handen wassen. En het dragen van een mondkapje op plekken waar dat verplicht is. Bijvoorbeeld in het openbaar vervoer of in het vliegtuig.</string>
+    <string name="still_useful_paragraph_3">Bij sommige evenementen of locaties vervalt de maatregel van 1,5 meter afstand houden. Bijvoorbeeld bij een evenement waarbij alle bezoekers in de CoronaCheck-app aantonen dat zij getest zijn en geen corona hebben of al twee keer gevaccineerd zijn.</string>
+    <string name="still_useful_link_header">Is de app nog nuttig?</string>
+    <string name="still_useful_link_description">Ook als je gevaccineerd bent of al corona hebt gehad, is de app nog steeds een belangrijk middel in de strijd tegen corona.</string>
+    <!--Used by the screen reader as prefix of a bullet list item. For example "• Lorem ipsum" will be read as "Bullet 1 Lorem ipsum"-->
+    <string name="bullet_list_item_tts_description">Punt %1$d %2$s\n</string>
+    <string name="status_error_battery_optimisation_title">Probleem met instellingen telefoon</string>
     <string name="coronatest_step_3_nodeeplink">Ga (terug) naar coronatest.nl en vul je GGD-sleutel in. Zo waarschuw je anderen bij wie je in de buurt bent geweest.</string>
     <string name="faq_upload_keys_generic_paragraph_1">Je kunt alleen een melding naar anderen sturen als je getest bent door de GGD en corona blijkt te hebben. De melding verstuur je met de GGD als die je belt of zelf via coronatest.nl.\n\nAls je een melding wilt versturen, wordt er naar je GGD-sleutel gevraagd. Deze vind je in de app. Een GGD-sleutel zorgt ervoor dat alleen mensen die echt besmet zijn meldingen kunnen versturen.</string>
     <string name="faq_upload_keys_generic_paragraph_2">Nadat je GGD-sleutel is gecontroleerd, worden de codes gedeeld die jouw telefooon de afgelopen 14 dagen naar andere telefoons heeft verzonden.\n\nZo kunnen mensen, bij wie je in de buurt bent geweest toen je besmettelijk was, een melding krijgen. Alleen als deze mensen ook de app gebruiken.</string>

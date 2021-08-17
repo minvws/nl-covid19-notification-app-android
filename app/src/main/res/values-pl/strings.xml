@@ -335,6 +335,15 @@
     <string name="coronatest_finish_confirmation_text">Wprowadziłeś klucz GGD na stronie coronatest.nl i otrzymałeś potwierdzenie? Jeśli tak, możesz zakończyć.</string>
     <string name="coronatest_finish_confirmation_accept">Tak, zakończ</string>
     <string name="coronatest_finish_confirmation_cancel">Anuluj</string>
+    <string name="still_useful_title">Jestem zaszczepiony lub przeszedłem koronawirusa. Czy aplikacja wciąż jest potrzebna?</string>
+    <string name="still_useful_paragraph_1">Tak, nadal warto mieć aplikację na swoim telefonie. Nawet jeśli jesteś zaszczepiony lub przeszedłeś koronawirusa. Wirus wciąż jest wśród nas, a dzięki CoronaMelder zakażenia są szybciej wykrywane i zwalczane.</string>
+    <string name="still_useful_paragraph_2">Nadal musisz stosować dobrze znane środki: zachowuj 1,5 metra odległości i często myj ręce. Noś maseczkę tam, gdzie to obowiązkowe. Na przykład w publicznych środkach transportu lub samolocie.</string>
+    <string name="still_useful_paragraph_3">Na niektórych wydarzaniach lub miejscach nie trzeba zachowywać 1,5 metra odległości. Dotyczy to na przykład wydarzenia, którego wszyscy uczestnicy wykażą w aplikacji CoronaCheck, że wykonali test na obecność koronawirusa i otrzymali wynik negatywny lub zostali zaszczepieni dwoma dawkami szczepionki.</string>
+    <string name="still_useful_link_header">Czy aplikacja wciąż jest potrzebna?</string>
+    <string name="still_useful_link_description">Nawet jeśli się zaszczepiłeś lub przeszedłeś koronawirusa, aplikacja to nadal ważne narzędzie walki z koronawirusem.</string>
+    <!--Used by the screen reader as prefix of a bullet list item. For example "• Lorem ipsum" will be read as "Bullet 1 Lorem ipsum"-->
+    <string name="bullet_list_item_tts_description">Punkt %1$d %2$s\n</string>
+    <string name="status_error_battery_optimisation_title">Problem dotyczący ustawień telefonu</string>
     <string name="coronatest_step_3_nodeeplink">Wejdź (ponownie) na stronę coronatest.nl i wprowadź swój klucz GGD. W ten sposób ostrzegasz osoby, z którymi miałeś kontakt.</string>
     <string name="faq_upload_keys_generic_paragraph_1">Możesz wysłać innym powiadomienie tylko wtedy, gdy zrobiłeś test w GGD i okazało się, że masz koronawirusa. Powiadomienie przesyłasz wspólnie z GGD podczas rozmowy telefonicznej lub samodzielnie na stronie coronatest.nl.\n\n\nGdy chcesz przesłać powiadomienie, wymagany jest klucz GGD. Znajduje się on w tej aplikacji. Dzięki kluczowi GGD powiadomienie mogą wysłać wyłącznie osoby, które naprawdę zostały zarażone koronawirusem.</string>
     <string name="faq_upload_keys_generic_paragraph_2">Po sprawdzeniu Twojego klucza GGD, udostępniane są kody, które Twój telefon wysłał w przeciągu ostatnich 14 dni do innych telefonów. \n\n\n\nW ten sposób osoby, z którymi miałeś kontakt, gdy byłeś zarażony, mogą otrzymać anonimowe powiadomienie. Tylko, jeśli one również używają aplikacji.</string>

@@ -327,6 +327,15 @@
     <string name="coronatest_finish_confirmation_text">Hast de GGD-sleutel op coronatest.nl ynfolle en in befêstiging krige? Ja? Dan kinst ôfslute.</string>
     <string name="coronatest_finish_confirmation_accept">Ja, ôfslute</string>
     <string name="coronatest_finish_confirmation_cancel">Annulearje</string>
+    <string name="still_useful_title">Ik ben gevaccineerd of hersteld van corona, heeft de app dan nog wel nut?</string>
+    <string name="still_useful_paragraph_1">Ja, het is nog steeds nuttig om de app op je telefoon te hebben. Ondanks dat je al gevaccineerd bent of hersteld van corona. Het virus is nog steeds onder ons en met de CoronaMelder-app worden besmettingen sneller opgespoord en gestopt.</string>
+    <string name="still_useful_paragraph_2">Je moet je ook nog steeds houden aan de bekende maatregelen: 1,5 meter afstand houden en vaak je handen wassen. En het dragen van een mondkapje op plekken waar dat verplicht is. Bijvoorbeeld in het openbaar vervoer of in het vliegtuig.</string>
+    <string name="still_useful_paragraph_3">Bij sommige evenementen of locaties vervalt de maatregel van 1,5 meter afstand houden. Bijvoorbeeld bij een evenement waarbij alle bezoekers in de CoronaCheck-app aantonen dat zij getest zijn en geen corona hebben of al twee keer gevaccineerd zijn.</string>
+    <string name="still_useful_link_header">Is de app nog nuttig?</string>
+    <string name="still_useful_link_description">Ook als je gevaccineerd bent of al corona hebt gehad, is de app nog steeds een belangrijk middel in de strijd tegen corona.</string>
+    <!--Used by the screen reader as prefix of a bullet list item. For example "• Lorem ipsum" will be read as "Bullet 1 Lorem ipsum"-->
+    <string name="bullet_list_item_tts_description">Punt %1$d %2$s\n</string>
+    <string name="status_error_battery_optimisation_title">Probleem met instellingen telefoon</string>
     <string name="coronatest_step_3_nodeeplink">Gean (werom) nei coronatest.nl en folje dyn GGD-sleutel yn. Sa warskôgest oaren dêr\'tst by yn de buert west hast.</string>
     <string name="faq_upload_keys_generic_paragraph_1">Do kinst allinne in melding nei oaren stjoere as troch de GGD test bist en bliken docht datst koroana hast. De melding ferstjoerst mei de GGD as dy dy bellet of sels fia coronatest.nl.\n\nAst in melding ferstjoere wolst, wurdt der nei dyn GGD-sleutel frege. Dy fynst yn de app. In GGD-sleutel soarget derfoar dat allinne minsken dy\'t echt besmet binne, meldings ferstjoere kinne.</string>
     <string name="faq_upload_keys_generic_paragraph_2">Nei\'t dyn GGD-sleutel kontrolearre is, wurde de koades dield dy\'t dyn telefoan yn de ôfrûne 14 dagen nei oare telefoans stjoerd hat.\n\nSa kinne minsken, by wa\'tsto yn \'e buert west hast doe\'tst besmetlik wiest, in melding krije. Allinne as dy minsken de app ek brûke.</string>
