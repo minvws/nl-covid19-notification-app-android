@@ -9,7 +9,7 @@ package nl.rijksoverheid.en.util.spans
 import android.text.style.URLSpan
 import android.view.View
 
-class CallbackUrlSpan(val onLinkClick: () -> Unit) : URLSpan("") {
+class CallbackUrlSpan(private val onLinkClick: () -> Unit) : URLSpan("") {
     override fun onClick(widget: View) {
         super.onClick(widget)
         onLinkClick.invoke()

@@ -31,8 +31,7 @@ class LinkTransformationMethod(private val method: Method) : TransformationMetho
             val text = view.text as Spannable
             val spans = text.getSpans(0, view.length(), URLSpan::class.java)
 
-            for (i in spans.indices.reversed()) {
-                val oldSpan = spans[i]
+            spans.forEach { oldSpan ->
                 val start = text.getSpanStart(oldSpan)
                 val end = text.getSpanEnd(oldSpan)
                 val url = oldSpan.url

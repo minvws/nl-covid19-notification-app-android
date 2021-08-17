@@ -18,10 +18,8 @@ class BulletedListItem(
     override fun getLayout() = R.layout.item_paragraph
 
     override fun bind(viewBinding: ItemParagraphBinding, position: Int) {
-        viewBinding.content.setHtmlText(
-            viewBinding.root.context.getString(text, *formatArgs),
-            true
-        )
+        val html = viewBinding.root.context.getString(text, *formatArgs)
+        viewBinding.content.setHtmlText(html)
     }
 
     override fun isSameAs(other: Item<*>): Boolean =
