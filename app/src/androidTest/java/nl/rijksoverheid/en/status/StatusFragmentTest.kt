@@ -195,15 +195,16 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         ) {
             onView(withId(R.id.status_headline))
                 .check(matches(withText(R.string.status_partly_active_headline)))
-
-            onView(withId(R.id.status_description))
-                .check(matches(withText(R.string.status_error_sync_issues)))
+            onView(withText(R.string.status_error_sync_issues))
+                .check(matches(isDisplayed()))
 
             onView(withId(R.id.disabled_enable)).check(matches(withText(R.string.status_error_action_sync_issues)))
                 .perform(click())
 
-            onView(withId(R.id.status_headline)).check(matches(withText(R.string.status_no_exposure_detected_headline)))
-            onView(withId(R.id.status_description)).check(matches(withText(R.string.status_no_exposure_detected_description)))
+            onView(withId(R.id.status_headline))
+                .check(matches(withText(R.string.status_no_exposure_detected_headline)))
+            onView(withText(R.string.status_no_exposure_detected_description))
+                .check(matches(isDisplayed()))
         }
     }
 

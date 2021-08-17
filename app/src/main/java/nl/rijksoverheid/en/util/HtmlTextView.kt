@@ -11,9 +11,7 @@ import android.text.Spanned
 import android.text.style.ClickableSpan
 import android.util.AttributeSet
 import android.view.accessibility.AccessibilityEvent
-import androidx.core.widget.TextViewCompat
 import com.google.android.material.textview.MaterialTextView
-import nl.rijksoverheid.en.R
 
 /**
  * Subclass of MaterialTextView which is capable of displaying HTML.
@@ -30,10 +28,6 @@ class HtmlTextView @JvmOverloads constructor(
     defStyle: Int = 0,
     defStyleRes: Int = 0,
 ) : MaterialTextView(context, attrs, defStyle, defStyleRes) {
-
-    init {
-        TextViewCompat.setTextAppearance(this, R.style.TextAppearance_App_Body1)
-    }
 
     /**
      * This method is overriden to add support for activating links when using touch exploration

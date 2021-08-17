@@ -13,13 +13,16 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.BulletSpan
 import android.util.AttributeSet
+import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.StyleRes
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.text.getSpans
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
+import androidx.core.widget.TextViewCompat
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.util.ext.enableCustomLinks
 import nl.rijksoverheid.en.util.ext.enableHtmlLinks
@@ -50,7 +53,25 @@ class HtmlTextViewWidget @JvmOverloads constructor(
     var text: CharSequence? = null
         private set
 
+    private val mGravity: Int
+
+    @StyleRes
+    private val textAppearance: Int
+
     init {
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.HtmlTextViewWidget,
+            defStyle,
+            defStyleRes
+        ).apply {
+            try {
+                mGravity = getInt(R.styleable.HtmlTextViewWidget_android_gravity, Gravity.START or Gravity.TOP)
+                textAppearance = getResourceId(R.styleable.HtmlTextViewWidget_android_textAppearance, R.style.TextAppearance_App_Body1)
+            } finally {
+                recycle()
+            }
+        }
         orientation = VERTICAL
     }
 
@@ -102,7 +123,11 @@ class HtmlTextViewWidget @JvmOverloads constructor(
                 }
                 params.setMargins(0, 0, 0, marginBottom)
             }
+
             textView.layoutParams = params
+            textView.gravity = mGravity
+
+            TextViewCompat.setTextAppearance(textView, textAppearance)
 
             addView(textView)
         }
