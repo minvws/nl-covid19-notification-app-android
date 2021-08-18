@@ -13,6 +13,7 @@ import java.time.Clock
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DecimalStyle
 import java.time.temporal.ChronoUnit
 import java.util.Locale
 
@@ -28,35 +29,32 @@ fun LocalDate.formatDaysSince(context: Context, clock: Clock = Clock.systemDefau
 /**
  * Formats the exposure date using the correct locale.
  */
-fun LocalDate.formatExposureDate(context: Context): String =
-    DateTimeFormatter.ofPattern(
-        DateFormat.getBestDateTimePattern(
-            Locale(context.getString(R.string.app_language)),
-            context.getString(R.string.exposure_date_format)
-        ),
-        Locale(context.getString(R.string.app_language))
-    ).format(this)
+fun LocalDate.formatExposureDate(context: Context): String {
+    val locale = Locale(context.getString(R.string.app_language))
+    val format = DateFormat.getBestDateTimePattern(locale, context.getString(R.string.exposure_date_format))
+    return DateTimeFormatter.ofPattern(format, locale)
+        .withDecimalStyle(DecimalStyle.of(locale))
+        .format(this)
+}
 
 /**
  * Formats the exposure date using the correct locale.
  */
-fun LocalDate.formatExposureDateShort(context: Context): String =
-    DateTimeFormatter.ofPattern(
-        DateFormat.getBestDateTimePattern(
-            Locale(context.getString(R.string.app_language)),
-            context.getString(R.string.exposure_date_short_format)
-        ),
-        Locale(context.getString(R.string.app_language))
-    ).format(this)
+fun LocalDate.formatExposureDateShort(context: Context): String {
+    val locale = Locale(context.getString(R.string.app_language))
+    val format = DateFormat.getBestDateTimePattern(locale, context.getString(R.string.exposure_date_short_format))
+    return DateTimeFormatter.ofPattern(format, locale)
+        .withDecimalStyle(DecimalStyle.of(locale))
+        .format(this)
+}
 
 /**
  * Formats the dateTime using the correct locale.
  */
-fun LocalDateTime.formatDateTime(context: Context): String =
-    DateTimeFormatter.ofPattern(
-        DateFormat.getBestDateTimePattern(
-            Locale(context.getString(R.string.app_language)),
-            context.getString(R.string.date_time_format)
-        ),
-        Locale(context.getString(R.string.app_language))
-    ).format(this)
+fun LocalDateTime.formatDateTime(context: Context): String {
+    val locale = Locale(context.getString(R.string.app_language))
+    val format = DateFormat.getBestDateTimePattern(locale, context.getString(R.string.date_time_format))
+    return DateTimeFormatter.ofPattern(format, locale)
+        .withDecimalStyle(DecimalStyle.of(locale))
+        .format(this)
+}
