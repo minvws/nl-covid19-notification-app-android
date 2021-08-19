@@ -31,6 +31,7 @@ import nl.rijksoverheid.en.about.FAQItemId.ONBOARDING
 import nl.rijksoverheid.en.about.FAQItemId.PAUSE
 import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
 import nl.rijksoverheid.en.about.FAQItemId.REASON
+import nl.rijksoverheid.en.about.FAQItemId.STILL_USEFUL
 import nl.rijksoverheid.en.about.FAQItemId.TECHNICAL
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS_GENERIC
@@ -39,6 +40,7 @@ import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.ext.setSlideTransition
 
 private val crossLinks = mapOf(
+    STILL_USEFUL to listOf(REASON, TECHNICAL),
     ONBOARDING to listOf(REASON, LOCATION, ANONYMOUS),
     TECHNICAL to listOf(BLUETOOTH, DELETION, INTEROPERABILITY),
     REASON to listOf(TECHNICAL, NOTIFICATION_MESSAGE),
