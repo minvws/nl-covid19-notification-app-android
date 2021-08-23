@@ -4,7 +4,7 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.items
+package nl.rijksoverheid.en.util.spans
 
 import android.graphics.Canvas
 import android.graphics.Color

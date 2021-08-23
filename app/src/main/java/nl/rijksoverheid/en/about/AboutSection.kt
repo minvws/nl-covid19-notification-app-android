@@ -19,6 +19,7 @@ import nl.rijksoverheid.en.about.FAQItemId.NOTIFICATION_MESSAGE
 import nl.rijksoverheid.en.about.FAQItemId.PAUSE
 import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
 import nl.rijksoverheid.en.about.FAQItemId.REASON
+import nl.rijksoverheid.en.about.FAQItemId.STILL_USEFUL
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
 
 class AboutSection : Section(
@@ -26,6 +27,7 @@ class AboutSection : Section(
         FAQOnboardingItem(),
         FAQTechnicalExplanationItem(),
         FAQHeaderItem(R.string.faq_header),
+        FAQItem(STILL_USEFUL),
         FAQItem(REASON),
         FAQItem(ANONYMOUS),
         FAQItem(LOCATION),

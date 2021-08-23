@@ -19,8 +19,8 @@ import nl.rijksoverheid.en.databinding.FragmentEnableApiBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
 import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.ext.setSlideTransition
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
-import nl.rijksoverheid.en.util.setSlideTransition
 
 class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
     private val onboardingViewModel: OnboardingViewModel by activityViewModels()

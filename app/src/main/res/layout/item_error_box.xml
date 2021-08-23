@@ -74,7 +74,7 @@
             tools:text="@string/error_upload_not_available" />
 
         <Button
-            style="@style/Widget.MaterialComponents.Button.TextButton.Snackbar"
+            style="@style/Widget.App.Button.TextButton.Snackbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> viewState.action.invoke()}"

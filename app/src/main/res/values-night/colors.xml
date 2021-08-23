@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">@color/blue</color>
+    <color name="color_secondary">@color/gray_dark</color>
+    <color name="color_control_highlight">#243478F6</color>
+    <color name="onboarding_example_header">@color/light_pink</color>
+    <color name="divider">@color/gray_darker</color>
+    <color name="info_surface">@color/gray_darker</color>
+    <color name="info_surface_disabled">@color/gray_darker</color>
+    <color name="lab_test_step_line">@color/gray_darker</color>
+    <color name="helpdesk_background">@color/item_background_gray</color>
+    <color name="faq_onboarding_background">@color/item_background_gray</color>
+    <color name="technical_explanation_background">@color/item_background_gray</color>
+    <color name="faq_github_background">@color/item_background_gray</color>
+    <color name="circle_counter_disabled_background">#656569</color>
+    <color name="link_text_on_info_surface">@color/lighter_blue</color>
+    <color name="dialog_background_tint">@color/gray_darker</color>
+    <color name="dialog_button_text">@color/lighter_blue</color>
+    <color name="footer_background">@color/gray_darker</color>
+
+    <color name="gradient_status_disabled_start">#111111</color>
+    <color name="gradient_status_exposure_start">#111111</color>
+    <color name="gradient_status_paused_start">#111111</color>
+    <color name="gradient_status_end">#111111</color>
+    <color name="ic_ggd_key_format_color">#7AFFFFFF</color>
+</resources>

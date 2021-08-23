@@ -4,15 +4,14 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.util
+package nl.rijksoverheid.en.util.ext
 
 import android.content.Context
-import androidx.core.text.HtmlCompat
 import nl.rijksoverheid.en.R
 import java.time.Duration
 import java.time.LocalDateTime
 
-fun LocalDateTime.formatPauseDuration(context: Context): CharSequence {
+fun LocalDateTime.formatPauseDuration(context: Context): String {
     val now = LocalDateTime.now()
     return if (isAfter(now)) {
 
@@ -24,12 +23,9 @@ fun LocalDateTime.formatPauseDuration(context: Context): CharSequence {
             else -> return context.getString(R.string.paused_en_api_duration_reached)
         }
 
-        HtmlCompat.fromHtml(
-            context.getString(
-                R.string.paused_en_api_description,
-                formattedDuration
-            ),
-            HtmlCompat.FROM_HTML_MODE_COMPACT
+        context.getString(
+            R.string.paused_en_api_description,
+            formattedDuration
         )
     } else {
         context.getString(R.string.paused_en_api_duration_reached)

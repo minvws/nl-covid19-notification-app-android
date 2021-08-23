@@ -9,15 +9,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="text"
-            type="CharSequence" />
-    </data>
-
-    <TextView
-        android:textDirection="locale"
+    <nl.rijksoverheid.en.util.HtmlTextViewWidget
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +17,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="8dp"
-        android:text="@{text}"
         android:textAppearance="?attr/textAppearanceBody1"
-        tools:text="@string/faq_reason_paragraph_1" />
+        android:importantForAccessibility="no"
+        tools:text="@string/faq_reason_paragraph_1"/>
+
 </layout>

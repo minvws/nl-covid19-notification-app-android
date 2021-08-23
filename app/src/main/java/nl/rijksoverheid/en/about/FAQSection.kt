@@ -23,6 +23,7 @@ import nl.rijksoverheid.en.about.FAQItemId.ONBOARDING
 import nl.rijksoverheid.en.about.FAQItemId.PAUSE
 import nl.rijksoverheid.en.about.FAQItemId.POWER_USAGE
 import nl.rijksoverheid.en.about.FAQItemId.REASON
+import nl.rijksoverheid.en.about.FAQItemId.STILL_USEFUL
 import nl.rijksoverheid.en.about.FAQItemId.TECHNICAL
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS
 import nl.rijksoverheid.en.about.FAQItemId.UPLOAD_KEYS_GENERIC
@@ -34,6 +35,7 @@ import nl.rijksoverheid.en.notification.GenericNotificationSection
 
 @Keep
 enum class FAQItemId(@StringRes val label: Int) {
+    STILL_USEFUL(R.string.still_useful_title),
     REASON(R.string.faq_reason),
     LOCATION(R.string.faq_location),
     ANONYMOUS(R.string.faq_anonymous),
@@ -57,6 +59,14 @@ class FAQDetailSections(
     private val openAppSettings: () -> Unit = {}
 ) {
     fun getSection(faqItemId: FAQItemId) = when (faqItemId) {
+        STILL_USEFUL -> Section(
+            listOf(
+                HeaderItem(R.string.still_useful_title),
+                ParagraphItem(R.string.still_useful_paragraph_1),
+                ParagraphItem(R.string.still_useful_paragraph_2),
+                ParagraphItem(R.string.still_useful_paragraph_3)
+            )
+        )
         REASON -> Section(
             listOf(
                 HeaderItem(R.string.faq_reason),

@@ -17,7 +17,7 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
-import nl.rijksoverheid.en.util.setSlideTransitionWithoutReturnTransition
+import nl.rijksoverheid.en.util.ext.setSlideTransitionWithoutReturnTransition
 
 class LabTestDoneFragment : BaseFragment(R.layout.fragment_list) {
     private val args: LabTestDoneFragmentArgs by navArgs()

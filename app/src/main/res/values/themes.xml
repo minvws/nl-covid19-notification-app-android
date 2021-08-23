@@ -8,8 +8,10 @@
 
 <resources>
 
+    <style name="Theme.CoronaMelder" parent="Base.Theme.CoronaMelder" />
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Base.Theme.CoronaMelder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="textAppearanceHeadline4">@style/TextAppearance.App.Headline4</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.App.Headline5</item>
         <item name="textAppearanceHeadline6">@style/TextAppearance.App.Headline6</item>
@@ -22,17 +24,28 @@
         <item name="toolbarStyle">@style/Widget.App.Toolbar.Surface</item>
         <item name="appBarLayoutStyle">@style/Widget.MaterialComponents.AppBarLayout.Surface</item>
         <item name="materialButtonStyle">@style/Widget.App.Button.Primary</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorSecondary">@color/color_secondary</item>
         <item name="colorControlActivated">@color/color_primary</item>
         <item name="colorSecondaryVariant">@color/color_secondary_variant</item>
         <item name="colorControlHighlight">@color/color_control_highlight</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/color_primary</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <!-- Launcher theme. -->
-    <style name="AppTheme.Launcher">
+    <style name="Theme.CoronaMelder.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
+
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:backgroundTint">@color/dialog_background_tint</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button.TextButton.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button.TextButton.Dialog</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.App.Button.TextButton.Dialog</item>
+    </style>
+
 </resources>

@@ -9,24 +9,43 @@
     <color name="onboarding_example_header">@color/pink</color>
     <color name="divider">@color/gray_lighter</color>
     <color name="info_surface">@color/gray_lighter</color>
+    <color name="info_surface_disabled">@color/gray_lighter_transparent</color>
     <color name="background_mask">#000000</color>
     <color name="lab_test_step_line">@color/gray_lighter</color>
     <color name="helpdesk_background">@color/light_blue</color>
     <color name="faq_onboarding_background">@color/light_blue</color>
     <color name="technical_explanation_background">@color/light_yellow</color>
     <color name="faq_github_background">@color/gray_lighter</color>
+    <color name="circle_counter_enabled_background">@color/dark_blue</color>
     <color name="circle_counter_disabled_background">@color/gray</color>
+    <color name="item_background_gray">#383838</color>
+    <color name="link_text_on_info_surface">@color/dark_blue</color>
+    <color name="dialog_background_tint">@color/white</color>
+    <color name="dialog_button_text">@color/dark_blue</color>
+    <color name="footer_background">@color/white</color>
+
+    <color name="gradient_status_disabled_start">#FFF5DF</color>
+    <color name="gradient_status_exposure_start">#FFF0F3</color>
+    <color name="gradient_status_paused_start">#E5E5E5</color>
+    <color name="gradient_status_end">#FFFFFF</color>
+    <color name="ic_ggd_key_format_color">#40000000</color>
 
     <!-- Color palette -->
+    <color name="white">#FFFFFF</color>
+    <color name="lighter_blue">#3496F6</color>
+    <color name="blue">#3478F6</color>
     <color name="dark_blue">#0047FF</color>
     <color name="light_blue">#D0F0F3</color>
     <color name="gray_lighter">#F2F2F7</color>
     <color name="gray_lighter_transparent">#59F2F2F7</color>
     <color name="gray_light">#DDDDDD</color>
     <color name="gray">#CCCCCC</color>
+    <color name="gray_darker">#2C2C2D</color>
+    <color name="gray_dark">#353536</color>
     <color name="light_red">#FFECF0</color>
     <color name="light_yellow">#FADD9D</color>
-    <color name="red">#ED395A</color>
+    <color name="red">#DE3151</color>
     <color name="pink">#B8275D</color>
+    <color name="light_pink">#FF375F</color>
     <color name="green">#34C759</color>
 </resources>

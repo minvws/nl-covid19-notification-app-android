@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.CoronaMelder" parent="Base.Theme.CoronaMelder.Night">
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="Base.Theme.CoronaMelder.Night" parent="Base.Theme.CoronaMelder"/>
+
+</resources>

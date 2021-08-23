@@ -8,7 +8,7 @@
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = '0.8.6'
+    toolVersion = '0.8.7'
 }
 
 tasks.withType(Test) {
@@ -41,6 +41,11 @@ project.afterEvaluate {
                     '**/R.class',
                     '**/R$*.class',
                     '**/BuildConfig.*',
+                    '**/*Item*.*',
+                    '**/*Section*.*',
+                    '**/*Fragment*.*',
+                    '**/*Activity*.*',
+                    '**/EnApplication.*',
                     '**/Manifest*.*',
                     '**/*Test*.*',
                     'android/**/*.*'

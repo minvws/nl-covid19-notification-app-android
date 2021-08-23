@@ -113,7 +113,7 @@
                         app:switchPadding="20dp"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:accessibilityHeading="true"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         app:layout_constraintTop_toBottomOf="@id/pause_divider"
@@ -122,9 +122,6 @@
                         android:text="@string/settings_wifi_only_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="0dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
                         tools:targetApi="p" />
 
                     <TextView
@@ -156,7 +153,7 @@
                         app:show="@{!isSystemLanguageDutch}"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:accessibilityHeading="true"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         app:layout_constraintTop_toBottomOf="@id/wifi_only_divider"
@@ -165,9 +162,6 @@
                         android:text="@string/settings_use_nl_language_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="0dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
                         tools:targetApi="p" />
 
                     <TextView

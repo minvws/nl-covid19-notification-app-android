@@ -150,7 +150,7 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
         withFragment(
             EnableApiFragment(),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             onView(ViewMatchers.withId(R.id.explanation)).perform(click())
@@ -173,7 +173,7 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
         withFragment(
             EnableApiFragment(),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             onView(ViewMatchers.withId(R.id.request)).perform(click())
@@ -194,7 +194,7 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
         withFragment(
             EnableApiFragment(),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             onView(ViewMatchers.withId(R.id.skip)).perform(click())

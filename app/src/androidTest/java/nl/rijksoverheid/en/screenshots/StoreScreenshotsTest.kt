@@ -199,7 +199,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
                 }
             ),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             onView(withId(R.id.status_animated_image))
@@ -231,7 +231,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
                 }
             ),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             onView(withId(R.id.status_animated_image))
@@ -250,7 +250,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         withFragment(
             LabTestFragment(),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             onView(withId(R.id.content))
@@ -272,7 +272,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         withFragment(
             RequestTestFragment(),
             navController,
-            R.style.AppTheme,
+            R.style.Theme_CoronaMelder,
             activityViewModelFactory
         ) {
             onView(withId(R.id.content))

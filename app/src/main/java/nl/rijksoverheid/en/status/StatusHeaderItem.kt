@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
+import androidx.annotation.BoolRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
@@ -16,10 +17,9 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusHeaderBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.util.SimpleCountdownTimer
+import nl.rijksoverheid.en.util.ext.formatPauseDuration
 import nl.rijksoverheid.en.util.formatDaysSince
 import nl.rijksoverheid.en.util.formatExposureDate
-import nl.rijksoverheid.en.util.formatPauseDuration
-import nl.rijksoverheid.en.util.fromHtmlWithCustomReplacements
 import java.time.LocalDateTime
 
 class StatusHeaderItem(
@@ -34,6 +34,7 @@ class StatusHeaderItem(
         @StringRes val headline: Int,
         @RawRes val animatedIcon: Int = 0,
         @DrawableRes val icon: Int = 0,
+        @BoolRes val hideBackgroundOnSmallScreenHeight: Int = R.bool.hide_status_background_on_small_screen_default,
         val showIllustration: Boolean = false,
         @StringRes val enableActionLabel: Int? = null,
         @StringRes val whatsNextActionLabel: Int? = null,
@@ -43,7 +44,7 @@ class StatusHeaderItem(
         val resetAction: () -> Unit = {},
         val refreshDescriptionUntil: LocalDateTime? = null
     ) {
-        abstract fun getDescription(context: Context): CharSequence
+        abstract fun getDescription(context: Context): String
     }
 
     private val viewState = when (headerState) {
@@ -53,6 +54,7 @@ class StatusHeaderItem(
                 R.string.cd_status_active,
                 R.string.status_no_exposure_detected_headline,
                 animatedIcon = R.raw.status_active,
+                hideBackgroundOnSmallScreenHeight = R.bool.hide_status_active_background_on_small_screen,
                 showIllustration = true
             ) {
                 override fun getDescription(context: Context) =
@@ -68,10 +70,7 @@ class StatusHeaderItem(
                 enableAction = primaryAction
             ) {
                 override fun getDescription(context: Context) =
-                    fromHtmlWithCustomReplacements(
-                        context,
-                        context.getString(R.string.status_error_bluetooth)
-                    )
+                    context.getString(R.string.status_error_bluetooth)
             }
         StatusViewModel.HeaderState.LocationDisabled ->
             object : HeaderViewState(
@@ -83,10 +82,7 @@ class StatusHeaderItem(
                 enableAction = primaryAction
             ) {
                 override fun getDescription(context: Context) =
-                    fromHtmlWithCustomReplacements(
-                        context,
-                        context.getString(R.string.status_error_location)
-                    )
+                    context.getString(R.string.status_error_location)
             }
         StatusViewModel.HeaderState.Disabled ->
             object : HeaderViewState(
@@ -124,10 +120,8 @@ class StatusHeaderItem(
                 enableActionLabel = R.string.status_error_action_disable_battery_optimisation,
                 enableAction = primaryAction
             ) {
-                override fun getDescription(context: Context) = fromHtmlWithCustomReplacements(
-                    context,
+                override fun getDescription(context: Context) =
                     context.getString(R.string.status_error_sync_issues_wifi_only)
-                )
             }
         is StatusViewModel.HeaderState.Paused -> {
             object : HeaderViewState(
@@ -177,8 +171,9 @@ class StatusHeaderItem(
             if (viewBinding != currentViewBinding) {
                 refreshTimer?.cancel()
                 refreshTimer = SimpleCountdownTimer(it) {
-                    viewBinding.statusDescription.text =
+                    viewBinding.statusDescription.setHtmlText(
                         viewState.getDescription(viewBinding.statusDescription.context)
+                    )
                 }
                 refreshTimer?.startTimer()
                 currentViewBinding = viewBinding
