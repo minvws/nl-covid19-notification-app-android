@@ -10,7 +10,7 @@ import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
 
 /**
@@ -20,7 +20,7 @@ import kotlinx.coroutines.async
 class AsyncSharedPreferences(private val factory: suspend () -> SharedPreferences) {
     // create the underlying preferences lazily on the calling thread / dispatcher
     private val preferences =
-        GlobalScope.async(
+        MainScope().async(
             context = Dispatchers.Unconfined,
             start = CoroutineStart.LAZY
         ) { factory() }

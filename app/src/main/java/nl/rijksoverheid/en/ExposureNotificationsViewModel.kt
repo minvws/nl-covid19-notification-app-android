@@ -65,13 +65,13 @@ class ExposureNotificationsViewModel(
     fun observeLocationPreconditionSatisfied(context: Context) = callbackFlow {
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                offer(locationPreconditionSatisfied)
+                trySend(locationPreconditionSatisfied)
             }
         }
 
         context.registerReceiver(receiver, IntentFilter(LocationManager.MODE_CHANGED_ACTION))
 
-        offer(locationPreconditionSatisfied)
+        trySend(locationPreconditionSatisfied)
 
         awaitClose {
             context.unregisterReceiver(receiver)

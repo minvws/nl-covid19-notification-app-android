@@ -195,10 +195,10 @@ class ExposureNotificationsRepository(
         .map { }.onStart { emit(Unit) }
 
     // Triggers on subscribe and any changes to bluetooth / location permission state
-    private val preconditionsChanged = callbackFlow<Unit> {
+    private val preconditionsChanged = callbackFlow {
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                offer(Unit)
+                trySend(Unit)
             }
         }
         val filter = IntentFilter().apply {
@@ -568,14 +568,14 @@ class ExposureNotificationsRepository(
         val listener =
             SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                 if (key == KEY_LAST_KEYS_PROCESSED) {
-                    offer(sharedPreferences.getLong(key, 0))
+                    trySend(sharedPreferences.getLong(key, 0))
                 }
             }
 
         val preferences = preferences.getPreferences()
         preferences.registerOnSharedPreferenceChangeListener(listener)
 
-        offer(preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0))
+        trySend(preferences.getLong(KEY_LAST_KEYS_PROCESSED, 0))
 
         awaitClose {
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
@@ -586,14 +586,14 @@ class ExposureNotificationsRepository(
         val listener =
             SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                 if (key == KEY_NOTIFICATIONS_ENABLED_TIMESTAMP) {
-                    offer(sharedPreferences.getLong(key, 0))
+                    trySend(sharedPreferences.getLong(key, 0))
                 }
             }
 
         val preferences = preferences.getPreferences()
         preferences.registerOnSharedPreferenceChangeListener(listener)
 
-        offer(preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0))
+        trySend(preferences.getLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, 0))
 
         awaitClose {
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
@@ -609,7 +609,7 @@ class ExposureNotificationsRepository(
             val listener =
                 SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                     if (key == KEY_LAST_TOKEN_EXPOSURE_DATE) {
-                        offer(sharedPreferences.getLongAsLocalDate(KEY_LAST_TOKEN_EXPOSURE_DATE))
+                        trySend(sharedPreferences.getLongAsLocalDate(KEY_LAST_TOKEN_EXPOSURE_DATE))
                     }
                 }
 
@@ -617,7 +617,7 @@ class ExposureNotificationsRepository(
 
             preferences.registerOnSharedPreferenceChangeListener(listener)
 
-            offer(preferences.getLongAsLocalDate(KEY_LAST_TOKEN_EXPOSURE_DATE))
+            trySend(preferences.getLongAsLocalDate(KEY_LAST_TOKEN_EXPOSURE_DATE))
 
             awaitClose {
                 preferences.unregisterOnSharedPreferenceChangeListener(listener)
@@ -637,14 +637,14 @@ class ExposureNotificationsRepository(
         val listener =
             SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                 if (key == KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE) {
-                    offer(sharedPreferences.getLongAsLocalDate(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE))
+                    trySend(sharedPreferences.getLongAsLocalDate(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE))
                 }
             }
 
         val preferences = preferences.getPreferences()
         preferences.registerOnSharedPreferenceChangeListener(listener)
 
-        offer(preferences.getLongAsLocalDate(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE))
+        trySend(preferences.getLongAsLocalDate(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE))
 
         awaitClose {
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
