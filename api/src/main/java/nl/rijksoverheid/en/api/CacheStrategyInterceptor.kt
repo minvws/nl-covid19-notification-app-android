@@ -12,6 +12,10 @@ import okhttp3.Response
 import timber.log.Timber
 import java.io.IOException
 
+/**
+ * Interceptor that provides a custom caching strategy configured as [retrofit2.http.Tag]
+ * See [CacheStrategy] for possible strategies.
+ */
 class CacheStrategyInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         return when (chain.request().tag(CacheStrategy::class.java)) {

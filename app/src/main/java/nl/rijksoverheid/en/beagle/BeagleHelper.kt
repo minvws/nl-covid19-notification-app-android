@@ -9,6 +9,9 @@ package nl.rijksoverheid.en.beagle
 import android.app.Application
 import nl.rijksoverheid.en.api.model.FeatureFlag
 
+/**
+ * BeagleHelper should be implemented in build flavor specific files that should include the debug drawer.
+ */
 interface BeagleHelper {
 
     val useDefaultGuidance: Boolean

@@ -13,8 +13,8 @@ import com.google.android.gms.nearby.exposurenotification.ExposureNotificationCl
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.enapi.StatusResult
-import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
-import nl.rijksoverheid.en.factory.createSettingsRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createExposureNotificationsRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createSettingsRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 

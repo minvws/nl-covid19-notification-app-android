@@ -21,6 +21,9 @@ import java.util.concurrent.TimeUnit
 
 private const val WORKER_ID = "decoy_sender"
 
+/**
+ * CoroutineWorking that will produce decoy traffic.
+ */
 class DecoyWorker(
     context: Context,
     workerParameters: WorkerParameters,

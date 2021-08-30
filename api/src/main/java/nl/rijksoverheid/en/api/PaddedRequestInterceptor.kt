@@ -18,6 +18,12 @@ private val PADDING_REGEX = Regex("\"padding\":\".*\"")
 private const val NO_PADDING = "\"padding\":\"\""
 private const val CHARACTER_SET = "ABCDEFGHIJKLMNOPQRTSUVWXYZabcdefghijklmnopqrstuvwxyz"
 
+/**
+ * Interceptor that sets the padding property based on the requestSize configured as [retrofit2.http.Tag].
+ *
+ * Can be used by adding the [PaddedRequest] annotation in combination with requestSize tag.
+ * The request should contain padding in the json payload.
+ */
 class PaddedRequestInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val invocation = chain.request().tag(Invocation::class.java)

@@ -39,6 +39,7 @@ import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.ext.setSlideTransition
 
+// Map of linked FAQ pages for each FAQ page
 private val crossLinks = mapOf(
     STILL_USEFUL to listOf(REASON, TECHNICAL),
     ONBOARDING to listOf(REASON, LOCATION, ANONYMOUS),

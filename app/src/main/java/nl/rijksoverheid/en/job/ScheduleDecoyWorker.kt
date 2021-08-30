@@ -18,6 +18,10 @@ import java.time.Duration
 
 private const val WORKER_ID = "decoy_scheduler"
 
+/**
+ * CoroutineWorker that will run once a day to trigger [LabTestRepository] to
+ * schedule next decoy schedule sequence.
+ */
 class ScheduleDecoyWorker(
     context: Context,
     params: WorkerParameters,

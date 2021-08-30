@@ -10,6 +10,9 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Invocation
 
+/**
+ * Interceptor that overrides the cache-control header when [CacheOverride] annotation is set.
+ */
 class CacheOverrideInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val invocation = chain.request().tag(Invocation::class.java)

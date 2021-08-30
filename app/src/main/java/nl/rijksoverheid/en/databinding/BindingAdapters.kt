@@ -22,7 +22,22 @@ import nl.rijksoverheid.en.util.HtmlTextViewWidget
 import nl.rijksoverheid.en.util.ext.formatPauseDuration
 import java.time.LocalDateTime
 
+/**
+ * Custom set of data binding properties used by CoronaMelder app.
+ */
 object BindingAdapters {
+
+    /**
+     * Combines a set of custom properties for setting the visibility in certain situations.
+     *
+     * @param view: used view to bind the visibility properties
+     * @param show: show or hide the view
+     * @param showInNightMode: show or hide in night mode
+     * @param showInDayMode: show or hide in day mode
+     * @param keepInLayout: sets the visibility to INVISIBLE or GONE if the view should not be shown
+     * @param hideOnSmallScreenHeight: hides the view if the screen has a small height
+     * or when the view is a [ImageView] containing an image that fills up the whole screen.
+     */
     @JvmStatic
     @BindingAdapter(
         "show",
@@ -106,6 +121,13 @@ object BindingAdapters {
         }
     }
 
+    /**
+     * Updates the text in a HtmlTextViewWidget
+     *
+     * @param view: the HtmlTextViewWidget
+     * @param htmlText: string containing html tags
+     * @param enableHtmlLinks: configure if url spans should be clickable or not
+     */
     @JvmStatic
     @BindingAdapter("htmlText", "enableHtmlLinks", requireAll = false)
     fun setHtmlText(view: HtmlTextViewWidget, htmlText: String?, enableHtmlLinks: Boolean?) {
@@ -128,6 +150,9 @@ object BindingAdapters {
         view.contentDescription = view.context.getString(stringRes)
     }
 
+    /**
+     * Mark view as button for accessibility purposes
+     */
     @JvmStatic
     @BindingAdapter("markAsButtonForAccessibility")
     fun markAsButtonForAccessibility(view: View, mark: Boolean) {
@@ -147,6 +172,9 @@ object BindingAdapters {
         }
     }
 
+    /**
+     * Bind LocalDateTime to HtmlTextViewWidget and format it
+     */
     @JvmStatic
     @BindingAdapter("pausedState")
     fun bindPausedState(view: HtmlTextViewWidget, pausedUntil: LocalDateTime?) {

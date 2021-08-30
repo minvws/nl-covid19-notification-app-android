@@ -10,11 +10,14 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
-import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
-import nl.rijksoverheid.en.factory.createLabTestRepository
-import nl.rijksoverheid.en.factory.createSettingsRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createExposureNotificationsRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createLabTestRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createSettingsRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 
+/**
+ * Factory for CoroutineWorkers classes
+ */
 class EnWorkerFactory : WorkerFactory() {
     override fun createWorker(
         appContext: Context,

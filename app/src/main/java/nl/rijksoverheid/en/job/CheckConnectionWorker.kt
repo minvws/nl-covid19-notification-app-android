@@ -21,6 +21,12 @@ import java.util.concurrent.TimeUnit
 
 private const val WORKER_ID = "check_connection"
 
+/**
+ * CoroutineWorker that runs once a day to see check if there are any issues.
+ *
+ * - Triggers app inactive notification when framework is disabled
+ * - Schedule a SyncIssuesReceiver when key processing is overdue
+ */
 class CheckConnectionWorker(
     context: Context,
     params: WorkerParameters,

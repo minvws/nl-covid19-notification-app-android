@@ -16,7 +16,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
-import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createExposureNotificationsRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 import java.util.concurrent.TimeUnit

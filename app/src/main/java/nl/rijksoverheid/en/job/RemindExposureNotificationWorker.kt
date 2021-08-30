@@ -20,6 +20,10 @@ import java.util.concurrent.TimeUnit
 private const val WORKER_ID = "exposure_reminder"
 private const val REMINDER_INTERVAL_HOURS = 3L
 
+/**
+ * CoroutineWorker that will run every 3 hours when exposed to trigger a reminder notification
+ * until exposure has been removed.
+ */
 class RemindExposureNotificationWorker(
     context: Context,
     workerParameters: WorkerParameters,
