@@ -10,7 +10,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationClient
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
@@ -28,7 +28,7 @@ class ExposureNotificationsStateChangeReceiver : BroadcastReceiver() {
                 val token = goAsync()
                 val settingsRepository = createSettingsRepository(context)
                 val exposureNotificationsRepository = createExposureNotificationsRepository(context)
-                GlobalScope.launch {
+                MainScope().launch {
                     // end pause when the app is in working state
                     if (exposureNotificationsRepository.getCurrentStatus() == StatusResult.Enabled) {
                         exposureNotificationsRepository.requestEnableNotifications()

@@ -21,14 +21,14 @@ open class StatusCache(private val preferences: SharedPreferences) {
         putString(KEY_CACHED_STATUS_NAME, cachedStatus.name)
     }
 
-    fun getCachedStatus(): Flow<CachedStatus> = callbackFlow<CachedStatus> {
+    fun getCachedStatus(): Flow<CachedStatus> = callbackFlow {
         // Emit the current cached value, fallback to Disabled
-        offer(getCachedStatusFromPreferences(preferences))
+        trySend(getCachedStatusFromPreferences(preferences))
         // Emit cached value whenever it changes
         val listener =
             SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                 if (key == KEY_CACHED_STATUS_NAME) {
-                    offer(getCachedStatusFromPreferences(sharedPreferences))
+                    trySend(getCachedStatusFromPreferences(sharedPreferences))
                 }
             }
 

@@ -15,27 +15,27 @@ import kotlinx.coroutines.flow.callbackFlow
 fun LifecycleOwner.asFlow() = callbackFlow<Lifecycle.State> {
     val observer = object : DefaultLifecycleObserver {
         override fun onCreate(owner: LifecycleOwner) {
-            offer(owner.lifecycle.currentState)
+            trySend(owner.lifecycle.currentState)
         }
 
         override fun onStart(owner: LifecycleOwner) {
-            offer(owner.lifecycle.currentState)
+            trySend(owner.lifecycle.currentState)
         }
 
         override fun onResume(owner: LifecycleOwner) {
-            offer(owner.lifecycle.currentState)
+            trySend(owner.lifecycle.currentState)
         }
 
         override fun onPause(owner: LifecycleOwner) {
-            offer(owner.lifecycle.currentState)
+            trySend(owner.lifecycle.currentState)
         }
 
         override fun onStop(owner: LifecycleOwner) {
-            offer(owner.lifecycle.currentState)
+            trySend(owner.lifecycle.currentState)
         }
 
         override fun onDestroy(owner: LifecycleOwner) {
-            offer(owner.lifecycle.currentState)
+            trySend(owner.lifecycle.currentState)
         }
     }
 

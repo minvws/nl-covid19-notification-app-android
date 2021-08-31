@@ -80,9 +80,9 @@ class Settings(
 
     fun observeChanges(): Flow<Settings> = callbackFlow {
         val listener =
-            SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> offer(this@Settings) }
+            SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> trySend(this@Settings) }
         preferences.registerOnSharedPreferenceChangeListener(listener)
-        offer(this@Settings)
+        trySend(this@Settings)
         awaitClose {
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
         }
