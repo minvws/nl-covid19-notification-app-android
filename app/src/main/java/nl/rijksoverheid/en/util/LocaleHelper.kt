@@ -15,6 +15,9 @@ import androidx.core.os.LocaleListCompat
 import nl.rijksoverheid.en.settings.Settings
 import java.util.Locale
 
+/**
+ * Helper class for applying the correct language based on the system or in app setting
+ */
 class LocaleHelper private constructor(application: Application, private val settings: Settings) {
 
     // Ensure systemLocale is set and ConfigurationChangedCallback is registered _before_

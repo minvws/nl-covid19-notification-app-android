@@ -17,6 +17,9 @@ import retrofit2.Invocation
 import java.io.ByteArrayInputStream
 import java.util.zip.ZipInputStream
 
+/**
+ * Interceptor that will validate the response signature and rewrites the response body with json content
+ */
 class SignedResponseInterceptor : Interceptor {
     private val validator = ResponseSignatureValidator()
 
@@ -57,6 +60,10 @@ class SignedResponseInterceptor : Interceptor {
         }
     }
 
+    /**
+     * Read from the response the content.bin and content.sig entries and return the content and signature
+     * as a buffer.
+     */
     private fun readContentAndSignature(response: Response): Pair<Buffer, Buffer> {
         val body = response.body ?: throw IllegalStateException()
         val content = Buffer()

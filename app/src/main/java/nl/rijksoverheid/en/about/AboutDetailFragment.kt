@@ -59,6 +59,9 @@ private val crossLinks = mapOf(
     INTEROPERABILITY to listOf(INTEROP_COUNTRIES, TECHNICAL, NOTIFICATION, LOCATION)
 )
 
+/**
+ * Fragment for displaying a FAQ page including links to subpages based on the crossLinks above
+ */
 class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
 
     private val args: AboutDetailFragmentArgs by navArgs()

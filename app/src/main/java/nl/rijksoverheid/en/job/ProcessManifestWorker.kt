@@ -18,9 +18,9 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ProcessManifestResult
+import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.settings.Settings
-import nl.rijksoverheid.en.api.model.AppConfig
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 

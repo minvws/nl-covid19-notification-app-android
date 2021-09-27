@@ -14,6 +14,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.util.forceLtr
 
+/**
+ * DialogFragment for providing information regarding a devices which doesn't support phone calls
+ */
 class PhoneCallNotSupportedDialogFragment : DialogFragment() {
     private val args: PhoneCallNotSupportedDialogFragmentArgs by navArgs()
 
