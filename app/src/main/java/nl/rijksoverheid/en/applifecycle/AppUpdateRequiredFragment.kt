@@ -17,6 +17,7 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentAppUpdateRequiredBinding
+import nl.rijksoverheid.en.util.IntentHelper
 import timber.log.Timber
 
 private const val APP_GALLERY_PACKAGE = "com.huawei.appmarket"
@@ -40,7 +41,7 @@ class AppUpdateRequiredFragment : BaseFragment(R.layout.fragment_app_update_requ
     private fun openAppStore() {
         when (args.appStorePackage) {
             APP_GALLERY_PACKAGE -> openAppGallery()
-            else -> openPlayStore()
+            else -> IntentHelper.openPlayStore(requireActivity(), BuildConfig.APPLICATION_ID)
         }
     }
 
@@ -53,23 +54,6 @@ class AppUpdateRequiredFragment : BaseFragment(R.layout.fragment_app_update_requ
             requireActivity().startActivity(intent)
         } catch (ex: ActivityNotFoundException) {
             Timber.w("Could not open app gallery!")
-        }
-    }
-
-    private fun openPlayStore() {
-        val intent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("market://details?id=${BuildConfig.APPLICATION_ID}")
-        ).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_NEW_TASK)
-        try {
-            requireActivity().startActivity(intent)
-        } catch (ex: ActivityNotFoundException) {
-            requireActivity().startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("http://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")
-                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
         }
     }
 }

@@ -6,9 +6,6 @@
  */
 package nl.rijksoverheid.en.onboarding
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
@@ -18,6 +15,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentGooglePlayServicesUpgradeRequiredBinding
+import nl.rijksoverheid.en.util.IntentHelper
 import nl.rijksoverheid.en.util.ext.setSlideTransition
 
 class GooglePlayServicesUpdateRequiredFragment :
@@ -41,7 +39,7 @@ class GooglePlayServicesUpdateRequiredFragment :
         }
 
         binding.next.setOnClickListener {
-            openPlayStore()
+            IntentHelper.openPlayStore(requireActivity(), GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE)
         }
 
         viewModel.isExposureNotificationApiUpToDate.observe(viewLifecycleOwner) { upToDate ->
@@ -53,23 +51,5 @@ class GooglePlayServicesUpdateRequiredFragment :
     override fun onResume() {
         super.onResume()
         viewModel.refreshExposureNotificationApiUpToDate()
-    }
-
-    private fun openPlayStore() {
-        val intent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("market://details?id=${GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE}")
-        ).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_NEW_TASK)
-        try {
-            requireActivity().startActivity(intent)
-        } catch (ex: ActivityNotFoundException) {
-            // let it crash if there's no browser to handle this
-            requireActivity().startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("http://play.google.com/store/apps/details?id=${GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE}")
-                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
-        }
     }
 }
