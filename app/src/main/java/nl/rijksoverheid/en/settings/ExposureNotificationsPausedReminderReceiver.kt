@@ -16,6 +16,9 @@ import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.ZoneId
 
+/**
+ * BroadcastReceiver which will trigger reminder notification when the app is paused.
+ */
 class ExposureNotificationsPausedReminderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         Timber.d("onReceive")

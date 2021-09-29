@@ -10,13 +10,13 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import nl.rijksoverheid.en.applifecycle.AppLifecycleViewModel
-import nl.rijksoverheid.en.factory.createAppConfigManager
-import nl.rijksoverheid.en.factory.createAppLifecycleManager
-import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
-import nl.rijksoverheid.en.factory.createLabTestRepository
-import nl.rijksoverheid.en.factory.createOnboardingRepository
-import nl.rijksoverheid.en.factory.createResourceBundleManager
-import nl.rijksoverheid.en.factory.createSettingsRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createAppConfigManager
+import nl.rijksoverheid.en.factory.RepositoryFactory.createAppLifecycleManager
+import nl.rijksoverheid.en.factory.RepositoryFactory.createExposureNotificationsRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createLabTestRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createOnboardingRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createResourceBundleManager
+import nl.rijksoverheid.en.factory.RepositoryFactory.createSettingsRepository
 import nl.rijksoverheid.en.labtest.LabTestDoneViewModel
 import nl.rijksoverheid.en.labtest.LabTestViewModel
 import nl.rijksoverheid.en.notification.PostNotificationViewModel
@@ -26,6 +26,9 @@ import nl.rijksoverheid.en.settings.PauseConfirmationViewModel
 import nl.rijksoverheid.en.settings.SettingsViewModel
 import nl.rijksoverheid.en.status.StatusViewModel
 
+/**
+ * Factory class for viewModel classes.
+ */
 class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val context = context.applicationContext
 

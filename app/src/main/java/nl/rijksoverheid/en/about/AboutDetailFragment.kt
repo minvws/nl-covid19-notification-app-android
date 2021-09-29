@@ -39,6 +39,7 @@ import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.ext.setSlideTransition
 
+// Map of linked FAQ pages for each FAQ page
 private val crossLinks = mapOf(
     STILL_USEFUL to listOf(REASON, TECHNICAL),
     ONBOARDING to listOf(REASON, LOCATION, ANONYMOUS),
@@ -58,6 +59,9 @@ private val crossLinks = mapOf(
     INTEROPERABILITY to listOf(INTEROP_COUNTRIES, TECHNICAL, NOTIFICATION, LOCATION)
 )
 
+/**
+ * Fragment for displaying a FAQ page including links to subpages based on the crossLinks above
+ */
 class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
 
     private val args: AboutDetailFragmentArgs by navArgs()

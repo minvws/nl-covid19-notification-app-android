@@ -10,6 +10,9 @@ import android.util.Base64
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 
+/**
+ * Base64 type converter for converting to [ByteArray] to and from a base64 encoded [String]
+ */
 class Base64Adapter {
     @FromJson
     fun fromBase64(value: String): ByteArray = Base64.decode(value, 0)

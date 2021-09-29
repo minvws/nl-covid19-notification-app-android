@@ -19,6 +19,9 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.util.ext.setSlideTransitionWithoutReturnTransition
 
+/**
+ * Fragment for letting the user know they successfully shared their keys.
+ */
 class LabTestDoneFragment : BaseFragment(R.layout.fragment_list) {
     private val args: LabTestDoneFragmentArgs by navArgs()
     private val adapter = GroupAdapter<GroupieViewHolder>()

@@ -14,6 +14,9 @@ import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.lifecyle.Event
 
+/**
+ * ViewModel containing logic regarding app lifecycles like required updates or deactivation.
+ */
 class AppLifecycleViewModel(
     private val appLifecycleManager: AppLifecycleManager,
     private val appConfigManager: AppConfigManager
@@ -22,6 +25,9 @@ class AppLifecycleViewModel(
     val updateEvent: LiveData<Event<AppLifecycleStatus>> =
         MutableLiveData()
 
+    /**
+     * Check in app config for required [AppLifecycleStatus].
+     */
     fun checkForForcedAppUpdate() {
         viewModelScope.launch {
             val config = appConfigManager.getConfigOrDefault()

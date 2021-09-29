@@ -18,6 +18,9 @@ import nl.rijksoverheid.en.labtest.LabTestRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 
+/**
+ * CoroutineWorker to upload diagnosis keys.
+ */
 class UploadDiagnosisKeysJob(
     context: Context,
     params: WorkerParameters,

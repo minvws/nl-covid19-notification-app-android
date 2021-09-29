@@ -39,6 +39,9 @@ class DebugNotification(private val context: Context) {
         }
     }
 
+    /**
+     * Invoking this method will trigger a test exposure notification.
+     */
     fun show() {
         createNotificationChannel()
 

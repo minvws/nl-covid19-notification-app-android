@@ -28,8 +28,8 @@ import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.FeatureFlag
 import nl.rijksoverheid.en.api.model.FeatureFlagOption
-import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
-import nl.rijksoverheid.en.factory.createLabTestRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createExposureNotificationsRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createLabTestRepository
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import java.time.format.DateTimeFormatter
 
