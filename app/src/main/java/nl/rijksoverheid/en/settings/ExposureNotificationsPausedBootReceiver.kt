@@ -12,7 +12,7 @@ import android.content.Intent
 import nl.rijksoverheid.en.factory.RepositoryFactory.createSettingsRepository
 
 /**
- * BroadcastReceiver for rescheduling app paused reminder when device is booted
+ * BroadcastReceiver for rescheduling app paused reminder when device is booted.
  */
 class ExposureNotificationsPausedBootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

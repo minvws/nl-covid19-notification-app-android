@@ -17,7 +17,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 /**
- * BroadcastReceiver which will trigger reminder notification when the app is paused
+ * BroadcastReceiver which will trigger reminder notification when the app is paused.
  */
 class ExposureNotificationsPausedReminderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

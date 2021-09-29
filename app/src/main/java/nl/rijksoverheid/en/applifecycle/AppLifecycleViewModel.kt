@@ -15,7 +15,7 @@ import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.lifecyle.Event
 
 /**
- * ViewModel containing logic regarding app lifecycles like required updates or deactivation
+ * ViewModel containing logic regarding app lifecycles like required updates or deactivation.
  */
 class AppLifecycleViewModel(
     private val appLifecycleManager: AppLifecycleManager,
@@ -26,7 +26,7 @@ class AppLifecycleViewModel(
         MutableLiveData()
 
     /**
-     * Check in app config for required [AppLifecycleStatus]
+     * Check in app config for required [AppLifecycleStatus].
      */
     fun checkForForcedAppUpdate() {
         viewModelScope.launch {

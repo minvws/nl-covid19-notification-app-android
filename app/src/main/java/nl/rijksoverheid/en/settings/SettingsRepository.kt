@@ -13,7 +13,7 @@ import nl.rijksoverheid.en.notifier.NotificationsRepository
 import java.time.LocalDateTime
 
 /**
- * Repository class for in app settings stored locally
+ * Repository class for in app settings stored locally.
  */
 class SettingsRepository(private val context: Context, private val settings: Settings) {
     val wifiOnly: Boolean

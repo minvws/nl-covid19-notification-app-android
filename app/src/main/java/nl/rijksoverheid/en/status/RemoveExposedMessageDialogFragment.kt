@@ -17,7 +17,7 @@ import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.R
 
 /**
- * Confirmation Dialog fragment for removing an exposure
+ * Confirmation Dialog fragment for removing an exposure.
  */
 class RemoveExposedMessageDialogFragment : DialogFragment() {
     private val args: RemoveExposedMessageDialogFragmentArgs by navArgs()

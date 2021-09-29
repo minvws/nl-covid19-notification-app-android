@@ -13,7 +13,7 @@ import android.content.Intent
 import nl.rijksoverheid.en.job.RemindExposureNotificationWorker
 
 /**
- * BroadcastReceiver for dismissing reminder notifications when exposed
+ * BroadcastReceiver for dismissing reminder notifications when exposed.
  */
 class DismissReminderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

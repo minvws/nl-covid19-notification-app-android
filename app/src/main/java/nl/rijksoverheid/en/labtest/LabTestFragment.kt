@@ -36,7 +36,7 @@ import nl.rijksoverheid.en.util.IllustrationSpaceDecoration
 import timber.log.Timber
 
 /**
- * Fragment for key sharing by having a phone call with the GGD
+ * Fragment for key sharing by having a phone call with the GGD.
  */
 class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val args: LabTestFragmentArgs by navArgs()

@@ -16,7 +16,7 @@ import nl.rijksoverheid.en.job.ExposureNotificationJob
 import timber.log.Timber
 
 /**
- * BroadcastReceiver for triggering a notification when exposed
+ * BroadcastReceiver for triggering a notification when exposed.
  */
 class ExposureNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

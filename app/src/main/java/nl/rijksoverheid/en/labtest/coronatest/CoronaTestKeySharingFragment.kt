@@ -39,7 +39,7 @@ import nl.rijksoverheid.en.util.IllustrationSpaceDecoration
 import timber.log.Timber
 
 /**
- * Fragment for sharing keys through the coronatest.nl flow
+ * Fragment for sharing keys through the coronatest.nl flow.
  */
 class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
     private val labViewModel: LabTestViewModel by viewModels()

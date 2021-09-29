@@ -28,7 +28,7 @@ private const val WORKER_ID = "process_manifest"
 private const val KEY_UPDATE_INTERVAL = "update_interval"
 
 /**
- * CoroutineWorker that wil process the manifest periodically based on the interval.
+ * CoroutineWorker that will process the manifest periodically based on the interval.
  * By default the [AppConfig.updatePeriodMinutes] is used as interval.
  */
 class ProcessManifestWorker(

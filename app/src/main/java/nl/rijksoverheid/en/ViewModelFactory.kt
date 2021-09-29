@@ -27,7 +27,7 @@ import nl.rijksoverheid.en.settings.SettingsViewModel
 import nl.rijksoverheid.en.status.StatusViewModel
 
 /**
- * Factory class for viewModel classes
+ * Factory class for viewModel classes.
  */
 class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val context = context.applicationContext

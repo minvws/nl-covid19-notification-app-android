@@ -22,7 +22,7 @@ import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.forceLtr
 
 /**
- * Fragment with information about how to request a Corona test
+ * Fragment with information about how to request a Corona test.
  */
 class RequestTestFragment : BaseFragment(R.layout.fragment_list_with_two_buttons) {
     private val adapter = GroupAdapter<GroupieViewHolder>()

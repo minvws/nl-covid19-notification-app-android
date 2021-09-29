@@ -16,7 +16,7 @@ import nl.rijksoverheid.en.factory.RepositoryFactory.createSettingsRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 
 /**
- * Factory for CoroutineWorkers classes
+ * Factory for CoroutineWorkers classes.
  */
 class EnWorkerFactory : WorkerFactory() {
     override fun createWorker(

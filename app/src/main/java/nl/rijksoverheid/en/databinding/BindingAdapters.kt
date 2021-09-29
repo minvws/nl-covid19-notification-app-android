@@ -101,7 +101,7 @@ object BindingAdapters {
     }
 
     /**
-     * Check if image would fill more than 90% of the screen when scaled full width while keeping the aspect ratio
+     * Check if image would fill more than 90% of the screen when scaled full width while keeping the aspect ratio.
      * @return true if the image fills more than 90% of the screen
      */
     private fun ImageView.isImageFillingScreen(): Boolean {
@@ -122,7 +122,7 @@ object BindingAdapters {
     }
 
     /**
-     * Updates the text in a HtmlTextViewWidget
+     * Updates the text in a HtmlTextViewWidget.
      *
      * @param view: the HtmlTextViewWidget
      * @param htmlText: string containing html tags
@@ -151,7 +151,7 @@ object BindingAdapters {
     }
 
     /**
-     * Mark view as button for accessibility purposes
+     * Mark view as button for accessibility purposes.
      */
     @JvmStatic
     @BindingAdapter("markAsButtonForAccessibility")
@@ -173,7 +173,7 @@ object BindingAdapters {
     }
 
     /**
-     * Bind LocalDateTime to HtmlTextViewWidget and format it
+     * Bind LocalDateTime to HtmlTextViewWidget and format it.
      */
     @JvmStatic
     @BindingAdapter("pausedState")

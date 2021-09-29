@@ -19,7 +19,7 @@ import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
 /**
- * Fragment for choosing the key sharing method (GGD phone call or CoronaTest)
+ * Fragment for choosing the key sharing method (GGD phone call or CoronaTest).
  */
 class KeyShareOptionsFragment : BaseFragment(R.layout.fragment_list) {
 

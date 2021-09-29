@@ -25,7 +25,7 @@ import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 
 /**
- * Fragment with information about the app
+ * Fragment with information about the app.
  */
 class AboutFragment : BaseFragment(R.layout.fragment_list) {
     private val adapter = GroupAdapter<GroupieViewHolder>()
