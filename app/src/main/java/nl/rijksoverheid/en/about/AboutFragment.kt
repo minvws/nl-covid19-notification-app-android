@@ -7,7 +7,6 @@
 package nl.rijksoverheid.en.about
 
 import android.annotation.SuppressLint
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -23,6 +22,7 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.IntentHelper
 
 /**
  * Fragment with information about the app.
@@ -96,16 +96,10 @@ class AboutFragment : BaseFragment(R.layout.fragment_list) {
 
     private fun requestToCallHelpdesk() {
         val phoneNumber = getString(R.string.helpdesk_phone_number)
-        try {
-            startActivity(
-                Intent(Intent.ACTION_DIAL).apply {
-                    data = Uri.parse("tel:$phoneNumber")
-                }
-            )
-        } catch (e: ActivityNotFoundException) {
-            findNavController().navigateCatchingErrors(
-                AboutFragmentDirections.actionPhoneCallNotSupportedDialog(phoneNumber)
-            )
-        }
+        IntentHelper.openPhoneCallIntent(
+            this,
+            phoneNumber,
+            AboutFragmentDirections.actionPhoneCallNotSupportedDialog(phoneNumber)
+        )
     }
 }
