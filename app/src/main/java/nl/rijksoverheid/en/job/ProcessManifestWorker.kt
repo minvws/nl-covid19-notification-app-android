@@ -18,6 +18,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.ProcessManifestResult
+import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.settings.Settings
 import timber.log.Timber
@@ -26,6 +27,10 @@ import java.util.concurrent.TimeUnit
 private const val WORKER_ID = "process_manifest"
 private const val KEY_UPDATE_INTERVAL = "update_interval"
 
+/**
+ * CoroutineWorker that will process the manifest periodically based on the interval.
+ * By default the [AppConfig.updatePeriodMinutes] is used as interval.
+ */
 class ProcessManifestWorker(
     context: Context,
     params: WorkerParameters,

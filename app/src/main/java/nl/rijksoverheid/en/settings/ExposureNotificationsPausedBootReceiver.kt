@@ -9,8 +9,11 @@ package nl.rijksoverheid.en.settings
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import nl.rijksoverheid.en.factory.createSettingsRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createSettingsRepository
 
+/**
+ * BroadcastReceiver for rescheduling app paused reminder when device is booted.
+ */
 class ExposureNotificationsPausedBootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {

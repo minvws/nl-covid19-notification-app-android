@@ -12,11 +12,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
-import nl.rijksoverheid.en.factory.createExposureNotificationsRepository
+import nl.rijksoverheid.en.factory.RepositoryFactory.createExposureNotificationsRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -26,7 +26,7 @@ class SyncIssuesReceiver : BroadcastReceiver() {
         Timber.d("onReceive")
         val repository = createExposureNotificationsRepository(context)
         val async = goAsync()
-        GlobalScope.launch {
+        MainScope().launch {
             try {
                 // prevent ANRs when this takes too long
                 withTimeout(8000) {

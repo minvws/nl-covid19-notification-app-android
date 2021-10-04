@@ -35,6 +35,10 @@ import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 import timber.log.Timber
 import java.time.LocalDate
 
+/**
+ * Fragment used as landing page which provides status information
+ * and links to different features of the app.
+ */
 class StatusFragment @JvmOverloads constructor(
     factoryProducer: (() -> ViewModelProvider.Factory)? = null
 ) : BaseFragment(R.layout.fragment_status, factoryProducer) {

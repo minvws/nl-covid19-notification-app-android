@@ -14,6 +14,9 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 
+/**
+ * Fragment for providing information how to recognize an exposure notification.
+ */
 class GenericNotificationFragment : BaseFragment(R.layout.fragment_list) {
     private val adapter = GroupAdapter<GroupieViewHolder>()
 

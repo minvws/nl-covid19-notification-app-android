@@ -22,6 +22,9 @@ import java.util.concurrent.TimeUnit
 private const val KEY_TEST_EXPOSURE = "test_exposure"
 private const val MAX_RUN_ATTEMPTS = 10
 
+/**
+ * CoroutineWorker that should run when exposed and will handle the [AddExposureResult].
+ */
 class ExposureNotificationJob(
     context: Context,
     params: WorkerParameters,

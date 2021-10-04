@@ -16,6 +16,9 @@ import java.io.IOException
 
 private val DEFAULT_CONFIG = AppConfig()
 
+/**
+ * Manager class for getting the network, cached or local app config.
+ */
 class AppConfigManager(
     private val cdnService: CdnService,
     private val useDebugFeatureFlags: () -> Boolean,

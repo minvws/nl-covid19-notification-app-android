@@ -21,6 +21,9 @@ import java.time.LocalDateTime
 
 const val KEY_PAUSE_DURATION_RESULT = "pause_duration_result"
 
+/**
+ * BottomSheetDialog for selecting a pause duration.
+ */
 class PauseDurationBottomSheetFragment : BottomSheetDialogFragment() {
 
     private val adapter = GroupAdapter<GroupieViewHolder>().apply {

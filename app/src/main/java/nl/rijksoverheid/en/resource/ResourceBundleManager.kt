@@ -21,6 +21,9 @@ import java.time.temporal.ChronoUnit
 
 private const val DEFAULT_LANGUAGE = "en"
 
+/**
+ * Manager class for fetching the resource bundle and getting correct guidance elements.
+ */
 class ResourceBundleManager(
     private val context: Context,
     private val cdnService: CdnService,

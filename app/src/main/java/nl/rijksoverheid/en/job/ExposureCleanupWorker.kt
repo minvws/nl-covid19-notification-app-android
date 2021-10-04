@@ -16,6 +16,9 @@ import nl.rijksoverheid.en.ExposureNotificationsRepository
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
+/**
+ * CoroutineWorker that will run once a day to cleanup old previously known exposures.
+ */
 class ExposureCleanupWorker(
     context: Context,
     params: WorkerParameters,

@@ -21,6 +21,9 @@ import nl.rijksoverheid.en.navigation.getBackStackEntryObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import java.time.LocalDateTime
 
+/**
+ * Confirmation fragment for pausing the app.
+ */
 class PauseConfirmationFragment : BaseFragment(R.layout.fragment_pause_confirmation) {
 
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()

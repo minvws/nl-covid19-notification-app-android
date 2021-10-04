@@ -6,21 +6,22 @@
  */
 package nl.rijksoverheid.en.requesttest
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListWithTwoButtonsBinding
-import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.IntentHelper
 import nl.rijksoverheid.en.util.forceLtr
 
+/**
+ * Fragment with information about how to request a Corona test.
+ */
 class RequestTestFragment : BaseFragment(R.layout.fragment_list_with_two_buttons) {
     private val adapter = GroupAdapter<GroupieViewHolder>()
     private val args: RequestTestFragmentArgs by navArgs()
@@ -43,17 +44,11 @@ class RequestTestFragment : BaseFragment(R.layout.fragment_list_with_two_buttons
                 phoneNumber.forceLtr()
             )
             setOnClickListener {
-                try {
-                    startActivity(
-                        Intent(Intent.ACTION_DIAL).apply {
-                            data = Uri.parse("tel:$phoneNumber")
-                        }
-                    )
-                } catch (e: ActivityNotFoundException) {
-                    findNavController().navigateCatchingErrors(
-                        RequestTestFragmentDirections.actionPhoneCallNotSupportedDialog(phoneNumber)
-                    )
-                }
+                IntentHelper.openPhoneCallIntent(
+                    this@RequestTestFragment,
+                    phoneNumber,
+                    RequestTestFragmentDirections.actionPhoneCallNotSupportedDialog(phoneNumber)
+                )
             }
         }
         binding.button2.apply {
