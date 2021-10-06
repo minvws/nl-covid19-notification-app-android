@@ -18,6 +18,7 @@
     </data>
 
     <LinearLayout
+        android:importantForAccessibility="no"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -32,28 +33,41 @@
             app:imageResource="@{viewState.illustration}"
             tools:src="@drawable/illustration_explanation_example_1" />
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="@string/onboarding_example"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="@color/onboarding_example_header"
-            app:show="@{viewState.example}" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="8dp"
             android:accessibilityHeading="true"
-            android:text="@{viewState.headline}"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            tools:targetApi="p"
-            tools:text="@string/onboarding_example_1_headline" />
+            android:focusable="true"
+            tools:targetApi="p">
+
+            <TextView
+                android:id="@+id/example"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/onboarding_example"
+                android:labelFor="@+id/headline"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="@color/onboarding_example_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:show="@{viewState.example}" />
+
+            <TextView
+                android:id="@+id/headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@{viewState.headline}"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintTop_toBottomOf="@id/example"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:targetApi="p"
+                tools:text="@string/onboarding_example_1_headline" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/content"
