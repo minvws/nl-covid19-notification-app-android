@@ -7,7 +7,8 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -68,11 +69,13 @@
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
                         android:text="@string/pause_confirmation_title"
                         android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:accessibilityHeading="true"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:targetApi="p"/>
 
                     <TextView
                         android:id="@+id/pause_description"

@@ -110,7 +110,8 @@ class HtmlTextViewWidget @JvmOverloads constructor(
             val textView = HtmlTextView(context)
             textView.text = part
 
-            if (part.isHeading) {
+            // Only mark as heading if text also contains content
+            if (part.isHeading && iterator.hasNext()) {
                 ViewCompat.setAccessibilityHeading(textView, true)
             }
 
