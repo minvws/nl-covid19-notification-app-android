@@ -28,7 +28,11 @@ class LabTestKeyItem(
         val enabled: Boolean,
         val retry: () -> Unit
     ) {
-        val keyContentDescription = key?.lowercase(Locale.ROOT)
+        // Format the key to understandable format for Talkback users
+        val keyContentDescription = key
+            ?.lowercase(Locale.ROOT)
+            ?.replace(Regex("(.)"), "$1 ")
+            ?.trimEnd()
     }
 
     private val viewState = ViewState(
