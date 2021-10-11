@@ -31,6 +31,7 @@ import nl.rijksoverheid.en.items.ButtonItem
 import nl.rijksoverheid.en.items.FAQOnboardingExplanationItem
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.ParagraphItem
+import nl.rijksoverheid.en.items.TalkbackOnlyHeaderItem
 import nl.rijksoverheid.en.notification.GenericNotificationSection
 
 @Keep
@@ -169,6 +170,7 @@ class FAQDetailSections(
                 CenteredIllustrationItem(R.drawable.illustration_technical_5),
                 HeaderItem(R.string.faq_technical_header_9),
                 ParagraphItem(R.string.faq_technical_paragraph_10),
+                TalkbackOnlyHeaderItem(R.string.about_website_link_title),
                 FAQOnboardingItem(),
                 GithubItem()
             )
@@ -202,6 +204,7 @@ class FAQDetailSections(
                     R.drawable.illustration_explanation_example_2,
                     isExample = true
                 ),
+                TalkbackOnlyHeaderItem(R.string.about_website_link_title),
                 FAQTechnicalExplanationItem()
             )
         )
