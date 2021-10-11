@@ -50,7 +50,7 @@ class HtmlTextViewWidget @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyle, defStyleRes) {
 
     // Reflects the full text shown in the subviews. Can only be set internally.
-    var text: CharSequence? = null
+    var text: String? = null
         private set
 
     private val mGravity: Int
@@ -89,6 +89,8 @@ class HtmlTextViewWidget @JvmOverloads constructor(
      * Links are disabled by default, but can be enabled.
      */
     fun setHtmlText(htmlText: String?, htmlLinksEnabled: Boolean = false) {
+        text = htmlText
+
         removeAllViews()
 
         if (htmlText.isNullOrBlank()) {
@@ -97,7 +99,6 @@ class HtmlTextViewWidget @JvmOverloads constructor(
 
         // Step 1: Parse the given String into a Spannable
         val spannable = getSpannableFromHtml(htmlText)
-        text = spannable
 
         // Step 2: Separate the Spannable on each linebreak
         val parts = spannable.separated("\n")

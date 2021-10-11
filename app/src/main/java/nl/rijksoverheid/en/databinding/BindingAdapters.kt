@@ -178,6 +178,8 @@ object BindingAdapters {
     @JvmStatic
     @BindingAdapter("pausedState")
     fun bindPausedState(view: HtmlTextViewWidget, pausedUntil: LocalDateTime?) {
-        view.setHtmlText(pausedUntil?.formatPauseDuration(view.context))
+        val formattedDuration = pausedUntil?.formatPauseDuration(view.context)
+        if (view.text != formattedDuration)
+            view.setHtmlText(formattedDuration)
     }
 }
