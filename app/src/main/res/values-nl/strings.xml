@@ -94,7 +94,7 @@
     <string name="status_info_test_title">Coronatest aanvragen</string>
     <string name="status_info_test_subtitle">Ontdek zo snel mogelijk of je zelf besmet bent</string>
     <string name="status_info_lab_title">GGD-sleutel doorgeven</string>
-    <string name="status_info_lab_subtitle">Ga hierheen als de GGD je belt met de uitslag van je coronatest</string>
+    <string name="status_info_lab_subtitle">Ga hierheen als je de uitslag van je coronatest hebt gekregen</string>
     <string name="status_app_version">Versie %1$s build %2$s</string>
     <string name="status_exposure_what_next">Wat kan ik nu doen?</string>
     <string name="status_error_consent_required">%1$s werkt alleen als de noodzakelijke instellingen aanstaan.</string>

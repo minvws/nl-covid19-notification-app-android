@@ -94,7 +94,7 @@
     <string name="status_info_test_title">Koroanatest oanfreegje</string>
     <string name="status_info_test_subtitle">Untdek sa gau mooglik oftst sels besmet bist.</string>
     <string name="status_info_lab_title">GGD-sleutel trochjaan</string>
-    <string name="status_info_lab_subtitle">Gean hjirhinne as de GGD dy bellet mei de útslach fan dyn koroanatest.</string>
+    <string name="status_info_lab_subtitle">Gean hjirhinne ast de útslach fan dyn koroanatest krige hast.</string>
     <string name="status_app_version">Fersy %1$s build %2$s</string>
     <string name="status_exposure_what_next">Wat kin ik no dwaan?</string>
     <string name="status_error_consent_required">%1$s wurket allinne as de needsaaklike ynstellingen oansteane.</string>
