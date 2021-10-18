@@ -94,7 +94,7 @@
     <string name="status_info_test_title">Request coronavirus test</string>
     <string name="status_info_test_subtitle">Find out as soon as possible if you\'re infected</string>
     <string name="status_info_lab_title">Share the GGD key</string>
-    <string name="status_info_lab_subtitle">Go here if the GGD calls you with your coronavirus test results</string>
+    <string name="status_info_lab_subtitle">Go here if you’ve received your coronavirus test results</string>
     <string name="status_app_version">Version %1$s build %2$s</string>
     <string name="status_exposure_what_next">What can I do now?</string>
     <string name="status_error_consent_required">%1$s only works when the necessary settings are turned on.</string>

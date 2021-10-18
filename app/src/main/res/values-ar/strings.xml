@@ -97,7 +97,7 @@
     <string name="status_info_test_title">طلب إجراء فحص كورونا</string>
     <string name="status_info_test_subtitle">اكتشف ما إذا كنت قد أصبت بالفيروس في أسرع وقت ممكن</string>
     <string name="status_info_lab_title">تمرير رمز الـ GGD</string>
-    <string name="status_info_lab_subtitle">اذهب إلى هنا عندما تتصل بك الـ GGD لإبلاغك بنتيجة اختبار كورونا التي أجريته.</string>
+    <string name="status_info_lab_subtitle">Go here if you’ve received your coronavirus test results</string>
     <string name="status_app_version">الإصدار %1$s إنشاء %2$s</string>
     <string name="status_exposure_what_next">ما الذي يمكنني فعله الآن؟</string>
     <string name="status_error_consent_required">%1$s يعمل فقط إذا قمت بتشغيل الإعدادات اللازمة.</string>
