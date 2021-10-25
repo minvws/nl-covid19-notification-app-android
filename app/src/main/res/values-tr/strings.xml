@@ -94,7 +94,7 @@
     <string name="status_info_test_title">Korona testi talep edin</string>
     <string name="status_info_test_subtitle">Size bulaşmış olup olmadığını en kısa sürede öğrenin</string>
     <string name="status_info_lab_title">GGD anahtarını paylaşmak</string>
-    <string name="status_info_lab_subtitle">Go here if you’ve received your coronavirus test results</string>
+    <string name="status_info_lab_subtitle">Korona testinizin sonucunu aldıysanız buraya gidin</string>
     <string name="status_app_version">Sürümü %1$s build %2$s</string>
     <string name="status_exposure_what_next">Şimdi ne yapabilirim?</string>
     <string name="status_error_consent_required">%1$s sadece gerekli ayarlar açıksa çalışır.</string>

@@ -95,7 +95,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="status_info_test_title">Solicitar test de coronavirus</string>
     <string name="status_info_test_subtitle">Descubre lo antes posible si tú estás contagiado</string>
     <string name="status_info_lab_title">Enviar clave GGD</string>
-    <string name="status_info_lab_subtitle">Go here if you’ve received your coronavirus test results</string>
+    <string name="status_info_lab_subtitle">Pulsa aquí si has recibido los resultados de tu test</string>
     <string name="status_app_version">Versión %1$s build %2$s</string>
     <string name="status_exposure_what_next">¿Qué puedo hacer ahora?</string>
     <string name="status_error_consent_required">%1$s solo funciona si están activados los ajustes necesarios.</string>

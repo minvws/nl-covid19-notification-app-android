@@ -94,7 +94,7 @@
     <string name="status_info_test_title">Demander à faire un test de dépistage du Covid-19</string>
     <string name="status_info_test_subtitle">Découvrez le plus vite possible si vous êtes contaminé(e)</string>
     <string name="status_info_lab_title">Partager le code GGD</string>
-    <string name="status_info_lab_subtitle">Go here if you’ve received your coronavirus test results</string>
+    <string name="status_info_lab_subtitle">Rendez-vous là-bas si vous avez reçu le résultat de votre test de dépistage du Covid-19.</string>
     <string name="status_app_version">Version %1$s créée %2$s</string>
     <string name="status_exposure_what_next">Que puis-je faire maintenant ?</string>
     <string name="status_error_consent_required">%1$s fonctionne uniquement si les paramètres nécessaires ont été activés</string>
