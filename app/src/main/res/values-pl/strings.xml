@@ -94,7 +94,7 @@
     <string name="status_info_test_title">Poproś o test na koronawirusa</string>
     <string name="status_info_test_subtitle">Dowiedz się możliwie jak najszybciej czy sam jesteś zarażony</string>
     <string name="status_info_lab_title">Przekaż klucz GGD</string>
-    <string name="status_info_lab_subtitle">Go here if you’ve received your coronavirus test results</string>
+    <string name="status_info_lab_subtitle">Przejdź tutaj, jeśli otrzymałeś wyniki testu na koronawirusa</string>
     <string name="status_app_version">Wersja %1$s utworzona %2$s</string>
     <string name="status_exposure_what_next">Co mogę teraz zrobić?</string>
     <string name="status_error_consent_required">%1$s działa wyłącznie, gdy włączone są niezbędne ustawienia</string>

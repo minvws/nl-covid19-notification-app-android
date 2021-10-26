@@ -94,7 +94,7 @@
     <string name="status_info_test_title">Заявяване на тест за коронавирус</string>
     <string name="status_info_test_subtitle">Разбери възможно най-бързо дали самият ти си заразен</string>
     <string name="status_info_lab_title">Предаване на GGD-ключ</string>
-    <string name="status_info_lab_subtitle">Go here if you’ve received your coronavirus test results</string>
+    <string name="status_info_lab_subtitle">Отиди там, ако си получил резултата от теста ти за коронавирус</string>
     <string name="status_app_version">Версия %1$s build %2$s</string>
     <string name="status_exposure_what_next">Какво мога да направя сега?</string>
     <string name="status_error_consent_required">%1$s работи само ако са включени необходимите настройки.</string>

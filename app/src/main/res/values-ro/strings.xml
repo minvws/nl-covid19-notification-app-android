@@ -94,7 +94,7 @@
     <string name="status_info_test_title">Solicitați un test pentru coronavirus</string>
     <string name="status_info_test_subtitle">Aflați repede dacă sunteți infectat</string>
     <string name="status_info_lab_title">Transmiteți cheia GGD</string>
-    <string name="status_info_lab_subtitle">Go here if you’ve received your coronavirus test results</string>
+    <string name="status_info_lab_subtitle">După ce primiți rezultatul testului pentru coronavirus, intrați aici.</string>
     <string name="status_app_version">Versiunea %1$s build %2$s</string>
     <string name="status_exposure_what_next">Ce pot face acum?</string>
     <string name="status_error_consent_required">%1$s funcționează doar dacă setările necesare sunt activate.</string>
