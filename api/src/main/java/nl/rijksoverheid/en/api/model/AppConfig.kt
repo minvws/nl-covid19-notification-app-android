@@ -27,7 +27,11 @@ data class AppConfig(
     @Json(name = "coronaMelderDeactivated") val coronaMelderDeactivated: String? = null,
     @Json(name = "appointmentPhoneNumber") val appointmentPhoneNumber: String = DEFAULT_APPOINTMENT_PHONE_NUMBER,
     @Json(name = "shareKeyURL") val shareKeyURL: String = DEFAULT_SHARE_KEY_URL,
-    @Json(name = "featureFlags") val featureFlags: List<FeatureFlag> = emptyList()
+    @Json(name = "featureFlags") val featureFlags: List<FeatureFlag> = listOf(
+        FeatureFlag(
+            FeatureFlagOption.INDEPENDENT_KEY_SHARING.id, true
+        )
+    )
 ) {
     val deactivated: Boolean
         get() = coronaMelderDeactivated == DEACTIVATED
