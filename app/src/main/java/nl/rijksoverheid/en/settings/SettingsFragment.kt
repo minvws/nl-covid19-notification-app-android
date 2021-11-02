@@ -34,11 +34,13 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     private val localeHelper = LocaleHelper.getInstance()
 
+    private lateinit var binding: FragmentSettingsBinding
+
     private var pausedDurationTimer: SimpleCountdownTimer? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentSettingsBinding.bind(view)
+        binding = FragmentSettingsBinding.bind(view)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = settingsViewModel
 
@@ -80,19 +82,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             }
         }
 
-        settingsViewModel.pausedState.observe(viewLifecycleOwner) {
-            val now = LocalDateTime.now()
-            if (it is Settings.PausedState.Paused && it.pausedUntil.isAfter(now)) {
-                pausedDurationTimer?.cancel()
-                pausedDurationTimer = SimpleCountdownTimer(it.pausedUntil) {
-                    binding.viewModel = settingsViewModel
-                }
-                pausedDurationTimer?.startTimer()
-            } else if (it !is Settings.PausedState.Paused && pausedDurationTimer != null) {
-                pausedDurationTimer?.cancelTimer()
-                pausedDurationTimer = null
-            }
-        }
+        settingsViewModel.pausedState.observe(viewLifecycleOwner, ::handlePausedState)
     }
 
     override fun onResume() {
@@ -104,6 +94,20 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         pausedDurationTimer?.cancelTimer()
         pausedDurationTimer = null
         super.onPause()
+    }
+
+    private fun handlePausedState(pausedState: Settings.PausedState.Paused?) {
+        val now = LocalDateTime.now()
+        if (pausedState is Settings.PausedState.Paused && pausedState.pausedUntil.isAfter(now)) {
+            pausedDurationTimer?.cancel()
+            pausedDurationTimer = SimpleCountdownTimer(pausedState.pausedUntil) {
+                binding.viewModel = settingsViewModel
+            }
+            pausedDurationTimer?.startTimer()
+        } else if (pausedState !is Settings.PausedState.Paused && pausedDurationTimer != null) {
+            pausedDurationTimer?.cancelTimer()
+            pausedDurationTimer = null
+        }
     }
 
     private fun showPauseDurationBottomSheet() {
