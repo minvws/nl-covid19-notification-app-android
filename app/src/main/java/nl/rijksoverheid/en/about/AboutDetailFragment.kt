@@ -10,6 +10,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -68,6 +69,8 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
 
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
+    private lateinit var binding: FragmentListBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter.add(
@@ -92,7 +95,7 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentListBinding.bind(view)
+        binding = FragmentListBinding.bind(view)
 
         binding.toolbar.setTitle(
             when (args.faqItemId) {
@@ -111,37 +114,34 @@ class AboutDetailFragment : BaseFragment(R.layout.fragment_list) {
 
         adapter.setOnItemClickListener { item, _ ->
             when (item) {
-                is GithubItem -> {
-                    val uri = Uri.parse(getString(R.string.github_url))
-                    startActivity(Intent(Intent.ACTION_VIEW, uri))
-                }
+                is GithubItem -> openUri(getString(R.string.github_url))
                 is FAQItem -> {
                     if (item.id == INTEROP_COUNTRIES) {
-                        val uri = Uri.parse(getString(R.string.interop_countries_url, getString(R.string.app_language)))
-                        startActivity(Intent(Intent.ACTION_VIEW, uri))
+                        openUri(getString(R.string.interop_countries_url, getString(R.string.app_language)))
                     } else {
-                        enterTransition = exitTransition
-                        findNavController().navigateCatchingErrors(
-                            AboutDetailFragmentDirections.actionAboutDetail(item.id),
-                            FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
-                        )
+                        navigateWithTransition(AboutDetailFragmentDirections.actionAboutDetail(item.id))
                     }
                 }
                 is FAQOnboardingItem -> {
-                    enterTransition = exitTransition
-                    findNavController().navigateCatchingErrors(
-                        AboutDetailFragmentDirections.actionAboutDetail(ONBOARDING),
-                        FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
-                    )
+                    navigateWithTransition(AboutDetailFragmentDirections.actionAboutDetail(ONBOARDING))
                 }
                 is FAQTechnicalExplanationItem -> {
-                    enterTransition = exitTransition
-                    findNavController().navigateCatchingErrors(
-                        AboutDetailFragmentDirections.actionAboutDetail(TECHNICAL),
-                        FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
-                    )
+                    navigateWithTransition(AboutDetailFragmentDirections.actionAboutDetail(TECHNICAL))
                 }
             }
         }
+    }
+
+    private fun navigateWithTransition(directions: NavDirections) {
+        enterTransition = exitTransition
+        findNavController().navigateCatchingErrors(
+            directions,
+            FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+        )
+    }
+
+    private fun openUri(uriString: String) {
+        val uri = Uri.parse(uriString)
+        startActivity(Intent(Intent.ACTION_VIEW, uri))
     }
 }
