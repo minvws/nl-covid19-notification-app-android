@@ -56,8 +56,8 @@ class AppConfigManager(
      */
     suspend fun getCachedConfigOrDefault(): AppConfig = getConfigOrDefault {
         cdnService.getAppConfig(
-            cdnService.getManifest(CacheStrategy.CACHE_ONLY).appConfigId,
-            CacheStrategy.CACHE_ONLY
+            cdnService.getManifest(CacheStrategy.CACHE_FIRST).appConfigId,
+            CacheStrategy.CACHE_FIRST
         ).let { appConfig ->
             if (useDebugFeatureFlags())
                 appConfig.copy(featureFlags = getDebugFeatureFlags())
