@@ -155,7 +155,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
     private val viewModel by lazy { ExposureNotificationsViewModel(repository, settingsRepository) }
     private val activityViewModelFactory by lazy {
         object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return viewModel as T
             }
         }
@@ -183,7 +183,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             StatusFragment(
                 factoryProducer = {
                     object : ViewModelProvider.Factory {
-                        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                        override fun <T : ViewModel> create(modelClass: Class<T>): T {
                             return statusViewModel as T
                         }
                     }
@@ -225,7 +225,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             StatusFragment(
                 factoryProducer = {
                     object : ViewModelProvider.Factory {
-                        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                        override fun <T : ViewModel> create(modelClass: Class<T>): T {
                             return statusViewModel as T
                         }
                     }

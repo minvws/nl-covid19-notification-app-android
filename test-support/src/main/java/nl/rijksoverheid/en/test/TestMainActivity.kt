@@ -41,7 +41,7 @@ class TestMainActivity : AppCompatActivity() {
     private val viewModel by viewModels<FactoryHolderViewModel> {
         object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return FactoryHolderViewModel() as T
             }
         }

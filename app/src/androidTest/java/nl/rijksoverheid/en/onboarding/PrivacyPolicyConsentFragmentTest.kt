@@ -110,7 +110,7 @@ class PrivacyPolicyConsentFragmentTest : BaseInstrumentationTest() {
 
     private val onboardingViewModel = OnboardingViewModel(onboardingRepository, repository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return when (modelClass) {
                 OnboardingViewModel::class.java -> onboardingViewModel as T
                 else -> throw IllegalArgumentException("Invalid modelClass")
