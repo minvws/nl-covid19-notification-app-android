@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoronaMelder.Launcher">
-        <activity android:name="nl.rijksoverheid.en.MainActivity">
+        <activity android:name="nl.rijksoverheid.en.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -31,7 +32,8 @@
         <receiver android:name=".notifier.DismissReminderReceiver" />
         <receiver android:name=".job.SyncIssuesReceiver" />
 
-        <receiver android:name=".update.UpdateReceiver">
+        <receiver android:name=".update.UpdateReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
@@ -39,7 +41,8 @@
 
         <receiver
             android:name=".settings.ExposureNotificationsStateChangeReceiver"
-            android:permission="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK">
+            android:permission="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.exposurenotification.ACTION_SERVICE_STATE_UPDATED" />
             </intent-filter>
@@ -49,7 +52,8 @@
             android:name=".settings.ExposureNotificationsPausedReminderReceiver"
             android:exported="false" />
 
-        <receiver android:name=".settings.ExposureNotificationsPausedBootReceiver">
+        <receiver android:name=".settings.ExposureNotificationsPausedBootReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -57,7 +61,8 @@
 
         <receiver
             android:name=".notification.ExposureNotificationReceiver"
-            android:permission="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK">
+            android:permission="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.exposurenotification.ACTION_EXPOSURE_STATE_UPDATED" />
                 <action android:name="com.google.android.gms.exposurenotification.ACTION_EXPOSURE_NOT_FOUND" />
