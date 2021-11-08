@@ -41,7 +41,7 @@ class ExposureNotificationsPausedReminderReceiver : BroadcastReceiver() {
                 context,
                 0,
                 Intent(context, ExposureNotificationsPausedReminderReceiver::class.java),
-                0
+                PendingIntent.FLAG_IMMUTABLE
             )
         }
 

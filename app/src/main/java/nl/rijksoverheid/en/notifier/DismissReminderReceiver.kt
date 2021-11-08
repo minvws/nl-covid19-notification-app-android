@@ -27,7 +27,7 @@ class DismissReminderReceiver : BroadcastReceiver() {
                 context,
                 0,
                 Intent(context, DismissReminderReceiver::class.java),
-                PendingIntent.FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
             )
         }
     }

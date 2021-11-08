@@ -48,7 +48,7 @@ class NotificationsRepository(
 ) {
 
     private val refreshOnStart = lifecycleOwner.asFlow().filter { it == Lifecycle.State.STARTED }
-        .map { Unit }.onStart { emit(Unit) }
+        .map { }.onStart { emit(Unit) }
 
     fun exposureNotificationsEnabled(): Flow<Boolean> = refreshOnStart.map {
         val allNotificationsEnabled =

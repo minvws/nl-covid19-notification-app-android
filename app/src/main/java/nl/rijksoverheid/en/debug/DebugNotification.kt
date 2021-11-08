@@ -49,7 +49,7 @@ class DebugNotification(private val context: Context) {
             action = ACTION_TEST_EXPOSURE
         }
         val pendingIntent: PendingIntent =
-            PendingIntent.getBroadcast(context, 0, intent, 0)
+            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         val builder = NotificationCompat.Builder(context, DEBUG_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)

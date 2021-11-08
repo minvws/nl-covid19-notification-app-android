@@ -76,7 +76,7 @@ class ExposureNotificationsViewModel(
         awaitClose {
             context.unregisterReceiver(receiver)
         }
-    }.filter { it }.take(1).map { Unit }
+    }.filter { it }.take(1).map { }
 
     fun requestEnableNotifications() {
         viewModelScope.launch {
