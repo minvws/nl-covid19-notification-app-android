@@ -104,7 +104,7 @@ class HtmlTextViewWidget @JvmOverloads constructor(
         val parts = spannable.separated("\n")
 
         // Step 3: Add a HtmlTextView for each part of the Spannable
-        val iterator = parts.iterator()
+        val iterator = parts.listIterator()
         while (iterator.hasNext()) {
             val part = iterator.next()
 
@@ -118,7 +118,8 @@ class HtmlTextViewWidget @JvmOverloads constructor(
 
             val params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
             if (iterator.hasNext()) {
-                val marginBottom = if (part.isHeading || part.isListItem) {
+                val nextPart = parts[iterator.nextIndex()]
+                val marginBottom = if (part.isHeading || (part.isListItem && nextPart.isListItem)) {
                     textView.lineHeight / 4 // Headings and list items have a quarter of the default margin
                 } else {
                     textView.lineHeight // By default, the line height is used as bottom bottom
@@ -209,7 +210,7 @@ class HtmlTextViewWidget @JvmOverloads constructor(
         class Bullet
 
         val htmlSpannable = HtmlCompat.fromHtml(
-            html,
+            html.replace("\n", "<br/>"),
             HtmlCompat.FROM_HTML_MODE_COMPACT,
             null,
             { opening, tag, output, _ ->
