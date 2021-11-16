@@ -12,13 +12,11 @@ import android.util.Log
 import androidx.work.Configuration
 import androidx.work.Logger
 import androidx.work.WorkManager
-import nl.rijksoverheid.en.appmessage.AppMessageReceiver
 import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.job.EnWorkerFactory
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.util.LocaleHelper
 import timber.log.Timber
-import java.time.LocalDateTime
 
 @Suppress("ConstantConditionIf")
 class EnApplication : Application(), Configuration.Provider {

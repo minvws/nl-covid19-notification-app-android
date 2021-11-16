@@ -357,7 +357,7 @@
 
     <fragment
         android:id="@+id/nav_main_share"
-        android:name="nl.rijksoverheid.en.onboarding.ShareFragment"
+        android:name="nl.rijksoverheid.en.share.MainShareFragment"
         android:label="ShareFragment"
         tools:layout="@layout/fragment_share" />
 

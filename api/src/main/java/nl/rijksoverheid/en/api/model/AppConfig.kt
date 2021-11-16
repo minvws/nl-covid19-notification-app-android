@@ -33,8 +33,8 @@ data class AppConfig(
             FeatureFlagOption.INDEPENDENT_KEY_SHARING.id, true
         )
     ),
-    @Json (name = "notification") val notification: AppMessage? = AppMessage(
-        OffsetDateTime.parse("2021-11-16T17:10:00+01:00"),
+    @Json(name = "notification") val notification: AppMessage? = AppMessage(
+        OffsetDateTime.parse("2021-11-16T18:00:00+01:00"),
         "vaccinated_title",
         "vaccinated_body",
         "share"
