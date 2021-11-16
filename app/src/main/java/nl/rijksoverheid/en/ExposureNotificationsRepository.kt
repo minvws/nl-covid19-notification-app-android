@@ -44,6 +44,7 @@ import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
+import nl.rijksoverheid.en.appmessage.AppMessageReceiver
 import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DailyRiskScoresResult
@@ -547,6 +548,14 @@ class ExposureNotificationsRepository(
                     Timber.w(ex, "Could not fetch resource bundle")
                 }
 
+                // Schedule app message notification
+                val notification = config.notification
+                if (notification != null) {
+                    AppMessageReceiver.schedule(context, notification.scheduledDateTime.toLocalDateTime())
+                } else {
+                    AppMessageReceiver.cancel(context)
+                }
+
                 val result = processExposureKeySets(manifest)
                 Timber.d("Processing keys result = $result")
 
@@ -631,7 +640,7 @@ class ExposureNotificationsRepository(
         return preferences.getPreferences().getLongAsLocalDate(KEY_LAST_NOTIFICATION_RECEIVED_DATE)
     }
 
-    suspend fun getPreviouslyKnownExposureDate(): LocalDate? {
+    private suspend fun getPreviouslyKnownExposureDate(): LocalDate? {
         return preferences.getPreferences().getLongAsLocalDate(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE)
     }
 

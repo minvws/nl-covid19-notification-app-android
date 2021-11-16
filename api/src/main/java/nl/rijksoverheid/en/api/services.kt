@@ -12,6 +12,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import nl.rijksoverheid.en.api.model.ResourceBundle
+import nl.rijksoverheid.en.api.typeConverter.OffsetDateTimeConverter
 import okhttp3.Cache
 import okhttp3.CertificatePinner
 import okhttp3.ConnectionSpec
@@ -31,6 +32,7 @@ internal fun createMoshi() =
                 .withSubtype(ResourceBundle.Guidance.Element.Paragraph::class.java, "paragraph")
                 .withDefaultValue(ResourceBundle.Guidance.Element.Unknown)
         )
+        .add(OffsetDateTimeConverter)
         .add(Base64Adapter())
         .add(KotlinJsonAdapterFactory())
         .build()

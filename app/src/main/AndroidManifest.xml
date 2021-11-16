@@ -31,6 +31,7 @@
         </activity>
 
         <receiver android:name=".notifier.DismissReminderReceiver" />
+
         <receiver android:name=".job.SyncIssuesReceiver" />
 
         <receiver android:name=".update.UpdateReceiver"
@@ -54,7 +55,18 @@
             android:exported="false" />
 
         <receiver android:name=".settings.ExposureNotificationsPausedBootReceiver"
-            android:exported="true">
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".appmessage.AppMessageReceiver"
+            android:exported="false" />
+
+        <receiver android:name=".appmessage.AppMessageBootReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

@@ -202,7 +202,7 @@
             app:destination="@id/nav_skip_consent_confirmation" />
         <action
             android:id="@+id/action_next"
-            app:destination="@id/nav_share" />
+            app:destination="@id/nav_onboarding_share" />
     </fragment>
 
     <fragment
@@ -214,7 +214,7 @@
             app:destination="@id/nav_how_it_works_detail" />
         <action
             android:id="@+id/action_next"
-            app:destination="@id/nav_share" />
+            app:destination="@id/nav_onboarding_share" />
     </fragment>
 
     <fragment
@@ -226,7 +226,7 @@
             app:argType="nl.rijksoverheid.en.about.FAQItemId" />
         <action
             android:id="@+id/action_next"
-            app:destination="@id/nav_share" />
+            app:destination="@id/nav_onboarding_share" />
         <action
             android:id="@+id/action_how_it_works_detail"
             app:destination="@id/nav_how_it_works_detail"
@@ -240,11 +240,11 @@
         android:label="SkipConsentConfirmationDialogFragment">
         <action
             android:id="@+id/action_next"
-            app:destination="@id/nav_share" />
+            app:destination="@id/nav_onboarding_share" />
     </dialog>
 
     <fragment
-        android:id="@+id/nav_share"
+        android:id="@+id/nav_onboarding_share"
         android:name="nl.rijksoverheid.en.onboarding.ShareFragment"
         android:label="ShareFragment"
         tools:layout="@layout/fragment_share" />

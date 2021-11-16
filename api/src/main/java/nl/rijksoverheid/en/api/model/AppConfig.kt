@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.api.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.time.OffsetDateTime
 
 private const val DEFAULT_UPDATE_INTERVAL_MINUTES = 240
 private const val DEFAULT_DECOY_PROBABILITY = 0.00118
@@ -31,6 +32,12 @@ data class AppConfig(
         FeatureFlag(
             FeatureFlagOption.INDEPENDENT_KEY_SHARING.id, true
         )
+    ),
+    @Json (name = "notification") val notification: AppMessage? = AppMessage(
+        OffsetDateTime.parse("2021-11-16T17:10:00+01:00"),
+        "vaccinated_title",
+        "vaccinated_body",
+        "share"
     )
 ) {
     val deactivated: Boolean

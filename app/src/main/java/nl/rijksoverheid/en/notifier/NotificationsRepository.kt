@@ -12,9 +12,11 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -24,6 +26,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.api.model.AppMessage
 import nl.rijksoverheid.en.job.RemindExposureNotificationWorker
 import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.util.formatDaysSince
@@ -40,6 +43,8 @@ private const val UPLOAD_KEYS_FAILED_ID = 4
 private const val APP_INACTIVE_NOTIFICATION_ID = 5
 private const val REMINDER_NOTIFICATION_CHANNEL_ID = "reminders"
 private const val PAUSED_REMINDER_NOTIFICATION_ID = 6
+private const val APP_MESSAGE_NOTIFICATION_CHANNEL_ID = "app_message"
+private const val APP_MESSAGE_NOTIFICATION = 7
 
 class NotificationsRepository(
     private val context: Context,
@@ -87,6 +92,11 @@ class NotificationsRepository(
             R.string.reminder_channel_name,
             R.string.reminder_channel_description
         )
+        createNotificationChannel(
+            APP_MESSAGE_NOTIFICATION_CHANNEL_ID,
+            R.string.app_message_channel_name,
+            R.string.app_message_channel_description
+        )
     }
 
     fun showSyncIssuesNotification() {
@@ -120,7 +130,7 @@ class NotificationsRepository(
         )
         val builder = createNotification(
             EXPOSURE_NOTIFICATION_CHANNEL_ID,
-            R.string.notification_title,
+            context.getString(R.string.notification_title),
             if (reminder) context.getString(
                 R.string.notification_message_reminder_prefix,
                 message
@@ -208,6 +218,35 @@ class NotificationsRepository(
         NotificationManagerCompat.from(context).notify(id, notification)
     }
 
+    fun showAppMessageNotification(
+        title: String,
+        message: String,
+        destination: AppMessage.TargetScreenOption?
+    ) {
+        val spannableString = SpannableString(
+            HtmlCompat.fromHtml(message, HtmlCompat.FROM_HTML_MODE_COMPACT)
+        )
+
+        val pendingIntent = NavDeepLinkBuilder(context)
+            .setGraph(R.navigation.nav_main)
+            .setDestination(
+                when (destination) {
+                    AppMessage.TargetScreenOption.SHARE -> R.id.nav_main_share
+                    else -> R.id.main_nav
+                }
+            )
+            .createPendingIntent()
+
+        showNotification(
+            APP_MESSAGE_NOTIFICATION,
+            createNotification(
+                APP_MESSAGE_NOTIFICATION_CHANNEL_ID,
+                title,
+                spannableString
+            ).setContentIntent(pendingIntent).build()
+        )
+    }
+
     private fun createNotificationChannel(
         id: String,
         @StringRes name: Int,
@@ -235,19 +274,19 @@ class NotificationsRepository(
         @StringRes title: Int,
         @StringRes message: Int,
         autoCancel: Boolean = true
-    ) = createNotification(channelId, title, context.getString(message), autoCancel)
+    ) = createNotification(channelId, context.getString(title), context.getString(message), autoCancel)
 
     private fun createNotification(
         channel: String,
-        @StringRes title: Int,
-        message: String,
+        title: String,
+        message: CharSequence,
         autoCancel: Boolean = true
     ): NotificationCompat.Builder {
         val pendingIntent = NavDeepLinkBuilder(context).setGraph(R.navigation.nav_main)
             .setDestination(R.id.main_nav).createPendingIntent()
         return NotificationCompat.Builder(context, channel)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(context.getString(title))
+            .setContentTitle(title)
             .setContentText(message)
             .setStyle(
                 NotificationCompat.BigTextStyle()

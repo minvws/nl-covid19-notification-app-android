@@ -84,6 +84,19 @@ class ResourceBundleManager(
         }
     }
 
+    suspend fun getAppMessageResources(title: String, message: String): Pair<String, String> {
+        val bundle = loadResourceBundle()
+        val language = context.getString(R.string.app_language)
+        val localeMap = bundle.resources[language]
+        val fallback = bundle.resources[DEFAULT_LANGUAGE]
+            ?: error("No resources for default language $DEFAULT_LANGUAGE")
+
+        return Pair(
+            localeMap?.get(title) ?: fallback[title] ?: title,
+            localeMap?.get(message) ?: fallback[message] ?: message
+        )
+    }
+
     private fun String.replacePlaceHolders(exposureDate: LocalDate, notificationReceiveDate: LocalDate?): String {
         val daysSinceExposure = exposureDate.formatDaysSince(context, clock)
         return this.replace("\\\n", "\n")

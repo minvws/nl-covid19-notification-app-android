@@ -344,4 +344,6 @@
     <string name="lab_test_done_generic_paragraph_2">De GGD vertelt je wat je verder kunt doen om te voorkomen dat je anderen besmet. Beterschap en sterkte met je herstel.</string>
     <string name="lab_test_done_generic_box_4">De melding wordt alleen verstuurd als je jouw GGD-sleutel hebt doorgegeven aan de GGD of via coronatest.nl</string>
     <string name="status_error_notifications_disabled_headline">Meldingen staan <u>uit</u></string>
+    <string name="app_message_channel_name">App notificaties</string>
+    <string name="app_message_channel_description">Notificaties over CoronaMelder</string>
 </resources>

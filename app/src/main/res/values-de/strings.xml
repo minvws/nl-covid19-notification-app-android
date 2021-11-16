@@ -345,4 +345,6 @@
     <string name="lab_test_done_generic_paragraph_2">Der GGD sagt Ihnen, was Sie sonst noch tun können, damit Sie andere nicht anstecken. Wir wünschen Ihnen gute Besserung.</string>
     <string name="lab_test_done_generic_box_4">Die Nachricht wird nur verschickt, wenn Sie Ihren GGD-Schlüssel dem GGD mitgeteilt oder ihn auf coronatest.nl eingegeben haben.</string>
     <string name="status_error_notifications_disabled_headline">Nachrichten sind <u>deaktiviert</u></string>
+    <string name="app_message_channel_name">App notifications</string>
+    <string name="app_message_channel_description">Notifications about CoronaMelder</string>
 </resources>
