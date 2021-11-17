@@ -640,7 +640,7 @@ class ExposureNotificationsRepository(
         return preferences.getPreferences().getLongAsLocalDate(KEY_LAST_NOTIFICATION_RECEIVED_DATE)
     }
 
-    private suspend fun getPreviouslyKnownExposureDate(): LocalDate? {
+    suspend fun getPreviouslyKnownExposureDate(): LocalDate? {
         return preferences.getPreferences().getLongAsLocalDate(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE)
     }
 
