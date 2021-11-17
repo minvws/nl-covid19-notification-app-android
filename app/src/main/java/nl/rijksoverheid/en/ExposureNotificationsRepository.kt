@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en
 
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -267,7 +268,8 @@ class ExposureNotificationsRepository(
     }
 
     private fun isBluetoothEnabled(): Boolean {
-        return BluetoothAdapter.getDefaultAdapter()?.isEnabled ?: false
+        val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
+        return bluetoothManager?.adapter?.isEnabled ?: false
     }
 
     /**

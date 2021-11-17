@@ -131,7 +131,7 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
     private val viewModel = ExposureNotificationsViewModel(repository, settingsRepository)
     private val onboardingViewModel = OnboardingViewModel(onboardingRepository, repository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return when (modelClass) {
                 ExposureNotificationsViewModel::class.java -> viewModel as T
                 OnboardingViewModel::class.java -> onboardingViewModel as T

@@ -71,6 +71,8 @@ stages:
               jdkVersionOption: '1.11'
               gradleOptions: $(GRADLE_JVM_OPTIONS)
               sonarQubeRunAnalysis: true
+              sqGradlePluginVersionChoice: 'specify'
+              sonarQubeGradlePluginVersion: '3.3'
           - task: DownloadSecureFile@1
             displayName: Download Firebase credentials
             name: firebaseCredentials

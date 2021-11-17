@@ -1811,13 +1811,12 @@ class ExposureNotificationsRepositoryTest {
 
             repository.requestEnableNotificationsForcingConsent()
 
-            val results = result
             assertEquals(
                 listOf(
                     StatusResult.Disabled,
                     StatusResult.LocationPreconditionNotSatisfied
                 ),
-                results
+                result
             )
         }
 

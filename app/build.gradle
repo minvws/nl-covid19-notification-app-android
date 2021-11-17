@@ -8,7 +8,7 @@ apply plugin: 'com.google.firebase.appdistribution'
 apply plugin: 'ru.cian.huawei-publish'
 apply from: rootProject.file("jacoco.gradle")
 
-version = "2.4.4"
+version = "2.4.5"
 def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 104462
 
 def getGitHash = { ->
@@ -127,8 +127,8 @@ android {
     compileOptions.coreLibraryDesugaringEnabled true
 
     buildFeatures {
-        viewBinding = true
-        dataBinding = true
+        viewBinding true
+        dataBinding true
     }
 
     variantFilter { variant ->
@@ -145,7 +145,7 @@ android {
     }
 
     kotlinOptions {
-        freeCompilerArgs += ["-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+        freeCompilerArgs += ["-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
     }
 }
 
@@ -175,16 +175,12 @@ fladle {
 }
 
 repositories {
-    jcenter() {
-        content {
-            includeGroup "com.xwray"
-        }
-    }
     maven {
         url "https://jitpack.io"
         content {
             includeGroup "com.github.pandulapeter.beagle"
             includeGroup "com.github.blipinsk"
+            includeGroup "com.github.lisawray.groupie"
         }
     }
 }
@@ -209,7 +205,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$androidx_core_version"
 
     // ConstraintLayout
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
 
     // CustomTabs
     implementation "androidx.browser:browser:1.3.0"
@@ -239,7 +235,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
 
     // Google Play Core Library
-    implementation "com.google.android.play:core:1.10.0"
+    implementation "com.google.android.play:core:1.10.2"
     implementation "com.google.android.play:core-ktx:1.8.1"
 
     // Google play services
@@ -251,8 +247,8 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.4.1'
 
     // Groupie (RecyclerView builder)
-    implementation "com.xwray:groupie:$groupie_version"
-    implementation "com.xwray:groupie-viewbinding:$groupie_version"
+    implementation "com.github.lisawray.groupie:groupie:$groupie_version"
+    implementation "com.github.lisawray.groupie:groupie-viewbinding:$groupie_version"
 
     // Insetter (WindowInsets util)
     implementation "dev.chrisbanes.insetter:insetter:$insetter_version"
@@ -303,7 +299,7 @@ dependencies {
     androidTestImplementation 'com.vanniktech:junit4-android-integration-rules:0.3.0'
 
     // Fastlane Screengrab: localized screenshots
-    androidTestImplementation 'tools.fastlane:screengrab:2.0.0'
+    androidTestImplementation 'tools.fastlane:screengrab:2.1.1'
 
     // Beagle debug drawer
     def beagleVersion = "2.5.1"

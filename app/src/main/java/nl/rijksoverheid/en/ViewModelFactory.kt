@@ -33,7 +33,7 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val context = context.applicationContext
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
             ExposureNotificationsViewModel::class.java -> ExposureNotificationsViewModel(
                 createExposureNotificationsRepository(context),

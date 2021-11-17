@@ -48,19 +48,19 @@ class EnApplication : Application(), Configuration.Provider {
                     Timber.tag(tag).i(throwables.firstOrNull(), message)
                 }
 
-                override fun error(tag: String?, message: String?, vararg throwables: Throwable?) {
+                override fun error(tag: String, message: String, vararg throwables: Throwable?) {
                     Timber.tag(tag).e(throwables.firstOrNull(), message)
                 }
 
                 override fun verbose(
-                    tag: String?,
-                    message: String?,
+                    tag: String,
+                    message: String,
                     vararg throwables: Throwable?
                 ) {
                     Timber.tag(tag).v(throwables.firstOrNull(), message)
                 }
 
-                override fun debug(tag: String?, message: String?, vararg throwables: Throwable?) {
+                override fun debug(tag: String, message: String, vararg throwables: Throwable?) {
                     Timber.tag(tag).d(throwables.firstOrNull(), message)
                 }
             })

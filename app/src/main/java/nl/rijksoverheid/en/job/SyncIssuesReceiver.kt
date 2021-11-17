@@ -50,7 +50,7 @@ class SyncIssuesReceiver : BroadcastReceiver() {
                 context,
                 0,
                 Intent(context, SyncIssuesReceiver::class.java),
-                PendingIntent.FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
             )
             alarmManager.set(
                 AlarmManager.ELAPSED_REALTIME,
@@ -66,7 +66,7 @@ class SyncIssuesReceiver : BroadcastReceiver() {
                 context,
                 0,
                 Intent(context, SyncIssuesReceiver::class.java),
-                PendingIntent.FLAG_NO_CREATE
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_NO_CREATE
             )
             pendingIntent?.let {
                 alarmManager.cancel(it)

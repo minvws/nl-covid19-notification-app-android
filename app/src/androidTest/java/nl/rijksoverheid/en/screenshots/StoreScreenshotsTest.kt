@@ -172,7 +172,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
     )
     private val viewModel = ExposureNotificationsViewModel(repository, settingsRepository)
     private val activityViewModelFactory = object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return viewModel as T
         }
     }
@@ -192,7 +192,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
             StatusFragment(
                 factoryProducer = {
                     object : ViewModelProvider.Factory {
-                        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                        override fun <T : ViewModel> create(modelClass: Class<T>): T {
                             return statusViewModel as T
                         }
                     }
@@ -224,7 +224,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
             StatusFragment(
                 factoryProducer = {
                     object : ViewModelProvider.Factory {
-                        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                        override fun <T : ViewModel> create(modelClass: Class<T>): T {
                             return statusViewModel as T
                         }
                     }

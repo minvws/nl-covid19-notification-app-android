@@ -17,21 +17,14 @@ import java.util.Locale
 
 @SuppressLint("LogNotTimber")
 class FileTree(directory: File?) : Timber.DebugTree() {
-    private val writer: FileWriter?
 
-    init {
-        writer = try {
-            directory?.mkdirs()
-            val file: File? = File(directory, "log.txt")
-            if (file != null) {
-                FileWriter(file, true)
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            Log.e("FileTree", "Error while logging into file : $e")
-            null
-        }
+    private val writer: FileWriter? = try {
+        directory?.mkdirs()
+        val file = File(directory, "log.txt")
+        FileWriter(file, true)
+    } catch (e: Exception) {
+        Log.e("FileTree", "Error while logging into file : $e")
+        null
     }
 
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
