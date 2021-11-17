@@ -74,14 +74,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             }
         }
 
-        settingsViewModel.enableExposureNotificationsRequested.observeEvent(viewLifecycleOwner) {
-            if (viewModel.locationPreconditionSatisfied) {
-                viewModel.requestEnableNotificationsForcingConsent()
-            } else {
-                findNavController().navigateCatchingErrors(SettingsFragmentDirections.actionEnableLocationServices())
-            }
-        }
-
         settingsViewModel.pausedState.observe(viewLifecycleOwner, ::handlePausedState)
     }
 
