@@ -344,4 +344,6 @@
     <string name="lab_test_done_generic_paragraph_2">De GGD fertelt dy watst fierder dwaan kinst om foar te kommen datst oaren besmetst. Betterskip en sterkte mei it opknappen.</string>
     <string name="lab_test_done_generic_box_4">De melding wurdt allinne ferstjoerd ast dyn GGD-sleutel oan de GGD of fia coronatest.nl  trochjûn hast</string>
     <string name="status_error_notifications_disabled_headline">Meldingen steane <u>út</u></string>
+    <string name="app_message_channel_name">App notifications</string>
+    <string name="app_message_channel_description">Notifications about CoronaMelder</string>
 </resources>

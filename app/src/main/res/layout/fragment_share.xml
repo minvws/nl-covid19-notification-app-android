@@ -118,6 +118,7 @@
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:onClick="@{nextButtonClickListener}"
                 android:text="@string/onboarding_share_continue"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/share"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

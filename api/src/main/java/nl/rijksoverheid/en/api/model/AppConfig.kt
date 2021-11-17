@@ -31,7 +31,8 @@ data class AppConfig(
         FeatureFlag(
             FeatureFlagOption.INDEPENDENT_KEY_SHARING.id, true
         )
-    )
+    ),
+    @Json(name = "notification") val notification: AppMessage? = null
 ) {
     val deactivated: Boolean
         get() = coronaMelderDeactivated == DEACTIVATED

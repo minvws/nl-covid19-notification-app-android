@@ -44,6 +44,7 @@ import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
+import nl.rijksoverheid.en.appmessage.AppMessageReceiver
 import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DailyRiskScoresResult
@@ -545,6 +546,14 @@ class ExposureNotificationsRepository(
                     }
                 } catch (ex: Exception) {
                     Timber.w(ex, "Could not fetch resource bundle")
+                }
+
+                // Schedule app message notification
+                val notification = config.notification
+                if (notification != null) {
+                    AppMessageReceiver.schedule(context, notification.scheduledDateTime.toLocalDateTime())
+                } else {
+                    AppMessageReceiver.cancel(context)
                 }
 
                 val result = processExposureKeySets(manifest)
