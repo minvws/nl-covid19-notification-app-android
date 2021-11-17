@@ -32,8 +32,8 @@ class LabTestKeyItem(
         val keyContentDescription =
             if (enabled)
                 key?.lowercase(Locale.ROOT)
-                ?.replace(Regex("(.)"), "$1 ")
-                ?.trimEnd()
+                    ?.replace(Regex("(.)"), "$1 ")
+                    ?.trimEnd()
             else
                 null
     }
