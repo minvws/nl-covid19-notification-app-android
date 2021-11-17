@@ -62,7 +62,7 @@ class AppMessageReceiver : BroadcastReceiver() {
             val pendingIntent = createPendingIntent(context)
             val alarmManager = context.getSystemService(AlarmManager::class.java)
 
-            alarmManager.setAndAllowWhileIdle(
+            alarmManager.set(
                 AlarmManager.RTC,
                 scheduledDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
                 pendingIntent
