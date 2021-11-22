@@ -76,7 +76,9 @@ class StatusFragment @JvmOverloads constructor(
                 StatusActionItem.About -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionAbout()
                 )
-                StatusActionItem.Share -> share()
+                StatusActionItem.Share -> findNavController().navigateCatchingErrors(
+                    StatusFragmentDirections.actionShare()
+                )
                 StatusActionItem.GenericNotification -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionGenericNotification()
                 )
@@ -279,19 +281,5 @@ class StatusFragment @JvmOverloads constructor(
         } catch (ex: IllegalArgumentException) {
             Timber.w(ex, "Error while navigating")
         }
-    }
-
-    private fun share() {
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(
-                Intent.EXTRA_TEXT,
-                getString(R.string.share_content, getString(R.string.share_url))
-            )
-            type = "text/plain"
-        }
-
-        val shareIntent = Intent.createChooser(sendIntent, getString(R.string.share_title))
-        startActivity(shareIntent)
     }
 }
