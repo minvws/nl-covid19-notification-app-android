@@ -10,13 +10,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.ext.setExitSlideTransition
 
 /**
  * Fragment for choosing the key sharing method (GGD phone call or CoronaTest).
@@ -29,8 +29,7 @@ class KeyShareOptionsFragment : BaseFragment(R.layout.fragment_list) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        exitTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
+        setExitSlideTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -12,7 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
@@ -24,6 +23,7 @@ import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.ignoreInitiallyEnabled
 import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.ext.setExitSlideTransition
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 
 class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
@@ -38,8 +38,7 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        exitTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
+        setExitSlideTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

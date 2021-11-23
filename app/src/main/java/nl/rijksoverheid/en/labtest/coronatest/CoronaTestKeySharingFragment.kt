@@ -23,7 +23,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -36,6 +35,7 @@ import nl.rijksoverheid.en.labtest.LabTestViewModel
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.IllustrationSpaceDecoration
+import nl.rijksoverheid.en.util.ext.setSlideTransition
 import timber.log.Timber
 
 /**
@@ -64,12 +64,7 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
-        exitTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
-        sharedElementReturnTransition = sharedElementEnterTransition
+        setSlideTransition()
 
         if (labViewModel.usedKey == null)
             labViewModel.retry()
@@ -109,6 +104,7 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
                     Toast.makeText(context, R.string.lab_test_upload_error, Toast.LENGTH_LONG)
                         .show()
                 }
+                else -> {}
             }
         }
 

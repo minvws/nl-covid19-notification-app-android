@@ -21,7 +21,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -33,6 +32,8 @@ import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
 import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.IllustrationSpaceDecoration
+import nl.rijksoverheid.en.util.ext.setExitSlideTransition
+import nl.rijksoverheid.en.util.ext.setSlideTransition
 import timber.log.Timber
 
 /**
@@ -58,14 +59,10 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        exitTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.slide_start)
-
         if (args.showEnterTransition) {
-            enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_end)
-            sharedElementEnterTransition =
-                TransitionInflater.from(context).inflateTransition(R.transition.move_fade)
-            sharedElementReturnTransition = sharedElementEnterTransition
+            setSlideTransition()
+        } else {
+            setExitSlideTransition()
         }
     }
 
