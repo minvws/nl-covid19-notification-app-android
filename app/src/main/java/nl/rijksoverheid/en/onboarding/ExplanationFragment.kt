@@ -88,7 +88,7 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
 
         // Don't use enter transitions for the first screen in the onboarding graph
         val navController = findNavController()
-        if (navController.currentDestination?.id == navController.currentDestination?.parent?.startDestination) {
+        if (navController.currentDestination?.id == navController.currentDestination?.parent?.startDestinationId) {
             enterTransition = null
             binding.toolbar.navigationIcon = null
             activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) {
