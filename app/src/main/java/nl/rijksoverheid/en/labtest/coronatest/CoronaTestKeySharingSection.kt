@@ -73,7 +73,7 @@ class CoronaTestKeySharingSection(
                 LabTestStepItem(R.string.coronatest_step_2, 2, enabled = hasSharedKeys),
                 LabTestKeyItem(keyState, copy, retry, hasSharedKeys),
                 LabTestStepItem(R.string.coronatest_step_3, 3, enabled = hasSharedKeys),
-                LabTestButtonItem(R.string.coronatest_webpage_button, openCoronaTestWebsite, hasSharedKeys),
+                LabTestButtonItem(R.string.coronatest_webpage_button, R.drawable.ic_digid, openCoronaTestWebsite, hasSharedKeys),
                 LabTestStepItem(R.string.coronatest_step_4, 4, isLastElement = true, enabled = hasSharedKeys),
                 LabTestStepDescriptionItem(R.string.coronatest_step_4_subtitle, hasSharedKeys),
                 ButtonItem(

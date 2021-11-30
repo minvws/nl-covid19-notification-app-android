@@ -56,6 +56,8 @@
             android:enabled="@{viewState.enabled}"
             android:onClick="@{_ -> viewState.click.invoke()}"
             android:text="@{viewState.text}"
+            android:drawableEnd="@{viewState.drawableEnd}"
+            android:drawablePadding="@dimen/button_drawable_padding"
             tools:text="@string/request_test_button_website"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
