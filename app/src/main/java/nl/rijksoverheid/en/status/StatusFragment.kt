@@ -6,15 +6,19 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -47,6 +51,14 @@ class StatusFragment @JvmOverloads constructor(
 
     private lateinit var section: StatusSection
     private val adapter = GroupAdapter<GroupieViewHolder>()
+
+    private val requestBluetoothConnectPermission = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+        }
+    }
 
     private val disableBatteryOptimizationsResultRegistration =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -219,8 +231,33 @@ class StatusFragment @JvmOverloads constructor(
         findNavController().navigateCatchingErrors(StatusFragmentDirections.actionEnableLocationServices())
     }
 
-    private fun requestEnableBluetooth() =
-        startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+    private fun requestEnableBluetooth() {
+        // Android 12 requires BLUETOOTH_CONNECT permission for BluetoothAdapter.ACTION_REQUEST_ENABLE
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val bluetoothConnectPermission = ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.BLUETOOTH_CONNECT
+            )
+            when {
+                bluetoothConnectPermission == PackageManager.PERMISSION_GRANTED -> {
+                    // Permission granted so we can start BluetoothAdapter.ACTION_REQUEST_ENABLE intent
+                    startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+                }
+                shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_CONNECT) -> {
+                    // Permission was denied so open bluetooth settings and let the user turn on bluetooth by themself
+                    val intentOpenBluetoothSettings = Intent()
+                    intentOpenBluetoothSettings.action = Settings.ACTION_BLUETOOTH_SETTINGS
+                    startActivity(intentOpenBluetoothSettings)
+                }
+                else -> {
+                    // Request BLUETOOTH_CONNECT permission
+                    requestBluetoothConnectPermission.launch(Manifest.permission.BLUETOOTH_CONNECT)
+                }
+            }
+        } else {
+            startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+        }
+    }
 
     private fun navigateToInternetRequiredFragment() {
         findNavController().navigateCatchingErrors(StatusFragmentDirections.actionNavInternetRequired())
