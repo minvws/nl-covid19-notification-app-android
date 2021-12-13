@@ -30,8 +30,8 @@
     <string name="onboarding_how_it_works_toolbar_title">Wie funktioniert die App?</string>
     <string name="onboarding_how_it_works_request_consent">App aktivieren</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Häufig gestellte Frage</string>
-    <string name="onboarding_share_headline">Teilen Sie anderen mit, dass Sie dazu beitragen, das Virus zu stoppen.</string>
-    <string name="onboarding_share_description">Je mehr Menschen CoronaMelder nutzen, desto besser funktioniert die App. Nur gemeinsam bekommen wir Corona unter Kontrolle. Teilen Sie die App deshalb mit möglichst vielen anderen.</string>
+    <string name="onboarding_share_headline">Teilen Sie die App mit Menschen in Ihrer Umgebung</string>
+    <string name="onboarding_share_description">Je mehr Menschen CoronaMelder nutzen, desto besser funktioniert die App. Teilen Sie die App deshalb mit möglichst vielen Personen in Ihrer Umgebung, zum Beispiel Freunden und Angehörigen.</string>
     <string name="onboarding_share_continue">Weiter</string>
     <string name="onboarding_share_share">App teilen</string>
     <string name="status_no_exposure_detected_headline">Die App ist aktiv.</string>
@@ -317,7 +317,7 @@
     <string name="coronatest_description"><![CDATA[Entdecken Sie über coronatest.nl, dass Sie Corona haben? Dann können Sie über CoronaMelder sofort eine Nachricht schicken. <a href="">Wie geht das?</a>]]></string>
     <string name="coronatest_step_1">Teilen Sie die Codes, die CoronaMelder erstellt hat</string>
     <string name="coronatest_step_2">Schreiben Sie Ihren GGD-Schlüssel auf oder kopieren Sie ihn</string>
-    <string name="coronatest_step_3">Geben Sie Ihren GGD-Schlüssel auf coronatest.nl ein. So warnen Sie Personen, in deren Nähe Sie waren.</string>
+    <string name="coronatest_step_3">Melden Sie sich auf coronatest.nl mit Ihrer DigiD an und geben Sie Ihren GGD-Schlüssel ein, um andere Personen zu warnen</string>
     <string name="coronatest_step_4">GGD-Schlüssel eingegeben?</string>
     <string name="coronatest_step_4_subtitle">Sie sind fertig. Personen, in deren Nähe Sie waren, als Sie ansteckend waren, bekommen innerhalb von 8 Stunden eine Nachricht.</string>
     <string name="coronatest_share_keys">Codes teilen</string>
@@ -328,16 +328,16 @@
     <string name="coronatest_finish_confirmation_text">Haben Sie den GGD-Schlüssel auf coronatest.nl eingegeben und eine Bestätigung erhalten? Wenn ja, können Sie abschließen.</string>
     <string name="coronatest_finish_confirmation_accept">Ja, abschließen</string>
     <string name="coronatest_finish_confirmation_cancel">Annullieren</string>
+    <string name="app_message_channel_name">App-Meldungen</string>
+    <string name="app_message_channel_description">Meldungen über CoronaMelder</string>
     <string name="still_useful_title">Ich bin geimpft bzw. genesen. Hat die App dann noch Sinn?</string>
     <string name="still_useful_paragraph_1">Ja. Es ist immer noch sinnvoll, die App auf dem Handy zu haben – obwohl Sie schon geimpft oder genesen sind. Das Virus ist immer noch aktiv, und mit der CoronaMelder-App können Infizierte schneller gefunden und Corona eingedämmt werden.</string>
-    <string name="still_useful_paragraph_2">Sie müssen auch immer noch die bekannten Regeln beachten: 1,5 m Abstand, oft Hände waschen und Mundschutz tragen, wo das Pflicht ist. Zum Beispiel in öffentlichen Verkehrsmitteln oder im Flugzeug.</string>
-    <string name="still_useful_paragraph_3">Bei manchen Veranstaltungen bzw. an manchen Standorten entfällt die Abstandsregel. Zum Beispiel bei einer Veranstaltung, bei der alle Besucher mit der CoronaCheck-App nachweisen, dass sie getestet sind und kein Corona haben oder vollständig geimpft sind.</string>
+    <string name="still_useful_paragraph_2">Sie müssen auch weiterhin die bekannten Regeln beachten: 1,5 m Abstand halten, regelmäßig Hände waschen und Mundschutz tragen, wo das vorgeschrieben ist. Zum Beispiel in öffentlichen Verkehrsmitteln oder im Flugzeug.</string>
+    <string name="still_useful_paragraph_3">Bei manchen Veranstaltungen bzw. an manchen Orten entfällt die 1,5-Meter-Abstandsregel. Zum Beispiel bei einer Veranstaltung, bei der alle Besucher mit der CoronaCheck-App nachweisen, dass sie getestet sind und kein Corona haben, oder vollständig geimpft sind.</string>
     <string name="still_useful_link_header">Hat die App noch Sinn?</string>
     <string name="still_useful_link_description">Auch wenn Sie geimpft sind oder Corona gehabt haben: Die App ist immer noch ein wichtiges Werkzeug im Kampf gegen Corona.</string>
-    <!--Used by the screen reader as prefix of a bullet list item. For example "• Lorem ipsum" will be read as "Bullet 1 Lorem ipsum"-->
-    <string name="bullet_list_item_tts_description">Punkt %1$d %2$s\n</string>
     <string name="status_error_battery_optimisation_title">Problem mit Telefoneinstellungen</string>
-    <string name="coronatest_step_3_nodeeplink">Gehen Sie (zurück) zu coronatest.nl und geben Sie Ihren GGD-Schlüssel ein. So warnen Sie Personen, in deren Nähe Sie waren.</string>
+    <string name="coronatest_step_3_nodeeplink">Melden Sie sich auf coronatest.nl mit Ihrer DigiD an und geben Sie Ihren GGD-Schlüssel ein, um andere Personen zu warnen</string>
     <string name="faq_upload_keys_generic_paragraph_1">Sie können nur eine Nachricht an andere schicken, wenn sich nach einem Test beim GGD herausstellt, dass Sie Corona haben. Die Nachricht schicken Sie, wenn der GGD Sie anruft. Oder Sie tun es selbst auf coronatest.nl.\n\nWenn Sie eine Nachricht schicken möchten, müssen Sie Ihren GGD-Schlüssel eingeben. Sie finden ihn in der App. Ein GGD-Schlüssel sorgt dafür, dass nur Personen Nachrichten verschicken können, die wirklich Corona haben.</string>
     <string name="faq_upload_keys_generic_paragraph_2">Nach der Kontrolle Ihres GGD-Schlüssels werden die Codes geteilt, die Ihr Telefon in den letzten 14 Tagen an andere Telefone geschickt hat. \n\nSo bekommen Personen, in deren Nähe Sie waren, als Sie ansteckend waren, eine Nachricht. Aber nur, wenn diese Personen auch die App verwenden.</string>
     <string name="lab_test_generic_toolbar_title">Nachricht verschicken</string>
@@ -345,6 +345,4 @@
     <string name="lab_test_done_generic_paragraph_2">Der GGD sagt Ihnen, was Sie sonst noch tun können, damit Sie andere nicht anstecken. Wir wünschen Ihnen gute Besserung.</string>
     <string name="lab_test_done_generic_box_4">Die Nachricht wird nur verschickt, wenn Sie Ihren GGD-Schlüssel dem GGD mitgeteilt oder ihn auf coronatest.nl eingegeben haben.</string>
     <string name="status_error_notifications_disabled_headline">Nachrichten sind <u>deaktiviert</u></string>
-    <string name="app_message_channel_name">App notifications</string>
-    <string name="app_message_channel_description">Notifications about CoronaMelder</string>
 </resources>

@@ -31,8 +31,8 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="onboarding_how_it_works_toolbar_title">¿Cómo funciona la app?</string>
     <string name="onboarding_how_it_works_request_consent">Activar la app</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Preguntas frecuentes</string>
-    <string name="onboarding_share_headline">Cuéntale a más gente cómo estás ayudando a detener el virus</string>
-    <string name="onboarding_share_description">Cuantas más personas utilicen CoronaMelder, mejor funcionará. Solo juntos podemos contener la propagación del virus, así que comparte la app con tanta gente como puedas.</string>
+    <string name="onboarding_share_headline">Comparte la app con tu entorno cercano</string>
+    <string name="onboarding_share_description">Cuantas más personas utilicen CoronaMelder, mejor funcionará. Comparte la app con tanta gente como puedas. Por ejemplo, familiares y amigos.</string>
     <string name="onboarding_share_continue">Continuar</string>
     <string name="onboarding_share_share">Compartir la app</string>
     <string name="status_no_exposure_detected_headline">La app está activada</string>
@@ -318,7 +318,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="coronatest_description"><![CDATA[¿Te han informado por coronatest.nl que tienes coronavirus? Entonces puedes mandar directamente una notificación por CoronaMelder. <a href="">¿Cómo funciona?</a>]]></string>
     <string name="coronatest_step_1">Comparte los códigos que ha generado CoronaMelder</string>
     <string name="coronatest_step_2">Escribe tu clave GGD o cópiala</string>
-    <string name="coronatest_step_3">Introduce tu clave GGD en coronatest.nl. Así avisarás a las personas que estuvieron cerca de ti.</string>
+    <string name="coronatest_step_3">Inicia sesión en coronatest.nl con tu DigiD. A continuación introduce tu clave GGD para avisar a otras personas</string>
     <string name="coronatest_step_4">¿Ya has introducido tu clave GGD?</string>
     <string name="coronatest_step_4_subtitle">Ya has terminado. Las personas que estuvieron cerca de ti mientras eras contagioso/a recibirán una notificación. Esto ocurrirá en las próximas 8 horas.</string>
     <string name="coronatest_share_keys">Compartir códigos</string>
@@ -329,16 +329,16 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="coronatest_finish_confirmation_text">¿Has introducido tu clave GGD en coronatest.nl y has recibido una confirmación? Entonces ya has terminado.</string>
     <string name="coronatest_finish_confirmation_accept">Sí, terminar</string>
     <string name="coronatest_finish_confirmation_cancel">Cancelar</string>
+    <string name="app_message_channel_name">Mensajes de la app</string>
+    <string name="app_message_channel_description">Mensajes sobre CoronaMelder</string>
     <string name="still_useful_title">Estoy vacunado/a o me he recuperado del coronavirus. ¿Sigue siendo útil la app?</string>
     <string name="still_useful_paragraph_1">Sí, sigue siendo útil tener la app instalada en tu móvil, incluso si ya estás vacunado/a o te has recuperado del coronavirus. El virus sigue entre nosotros y, con la app de CoronaMelder, se pueden rastrear y detener contagios.</string>
     <string name="still_useful_paragraph_2">También tienes que seguir cumpliendo con las medidas vigentes: mantener una distancia de 1,5 metros, lavarse las manos a menudo y llevar puesta la mascarilla en lugares donde sea obligatorio, como en el transporte público o en el avión.</string>
     <string name="still_useful_paragraph_3">En algunos eventos o lugares, la medida de 1,5 metros de distancia no se aplica. Por ejemplo, en un evento donde todos los visitantes muestran mediante la app CoronaCheck que se han hecho un test y ha salido negativo o que ya se han vacunado dos veces.</string>
     <string name="still_useful_link_header">¿Sigue siendo útil la app?</string>
     <string name="still_useful_link_description">Incluso aunque estés vacunado/a o te hayas recuperado del coronavirus, la app sigue siendo un medio importante en la lucha contra el coronavirus.</string>
-    <!--Used by the screen reader as prefix of a bullet list item. For example "• Lorem ipsum" will be read as "Bullet 1 Lorem ipsum"-->
-    <string name="bullet_list_item_tts_description">Punto %1$d %2$s\n</string>
     <string name="status_error_battery_optimisation_title">Hay un problema con los ajustes del teléfono</string>
-    <string name="coronatest_step_3_nodeeplink">Ve a coronatest.nl e introduce tu clave GGD. Así avisarás a las personas que estuvieron cerca de ti.</string>
+    <string name="coronatest_step_3_nodeeplink">Inicia sesión en coronatest.nl con tu DigiD. A continuación introduce tu clave GGD para avisar a otras personas</string>
     <string name="faq_upload_keys_generic_paragraph_1">Solo puedes enviar una notificación a otras personas si te has hecho un test con el GGD y resulta que tienes coronavirus. Podrás enviar la notificación llamando al GGD o tú mismo/a en coronatest.nl.\n\nSi quieres enviar una notificación, necesitarás aportar tu clave GGD que encontrarás en la app. La clave GGD asegura que solo las personas que están realmente contagiadas puedan enviar una notificación.</string>
     <string name="faq_upload_keys_generic_paragraph_2">Una vez controlada tu clave GGD, se compartirán los códigos que tu teléfono ha enviado a otros teléfonos en los últimos 14 días.\n\nAsí las personas que estuvieron cerca de ti podrán recibir una notificación, siempre y cuando también usen la app.</string>
     <string name="lab_test_generic_toolbar_title">Enviar una notificación</string>
@@ -346,6 +346,4 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="lab_test_done_generic_paragraph_2">El GGD (servicio municipal de salud) te indicará qué tienes que hacer para evitar contagiar a otros. Mucho ánimo y que te recuperes pronto.</string>
     <string name="lab_test_done_generic_box_4">Tu notificación solo se enviará si mandas tu clave GGD al GGD o mediante coronatest.nl.</string>
     <string name="status_error_notifications_disabled_headline">Las notificaciones están <u>desactivadas</u></string>
-    <string name="app_message_channel_name">App notifications</string>
-    <string name="app_message_channel_description">Notifications about CoronaMelder</string>
 </resources>

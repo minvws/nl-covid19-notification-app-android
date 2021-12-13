@@ -30,8 +30,8 @@
     <string name="onboarding_how_it_works_toolbar_title">Hoe werkt de app?</string>
     <string name="onboarding_how_it_works_request_consent">App aanzetten</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Veelgestelde vraag</string>
-    <string name="onboarding_share_headline">Laat anderen weten dat jij helpt het virus te stoppen</string>
-    <string name="onboarding_share_description">Hoe meer mensen CoronaMelder gebruiken, hoe beter deze werkt. Alleen samen kunnen we corona onder controle krijgen. Deel de app dus met zo veel mogelijk anderen.</string>
+    <string name="onboarding_share_headline">Deel de app met je omgeving</string>
+    <string name="onboarding_share_description">Hoe meer mensen CoronaMelder gebruiken, hoe beter deze werkt. Deel de app dus met zo veel mogelijk mensen in je omgeving. Bijvoorbeeld vrienden en familie.</string>
     <string name="onboarding_share_continue">Ga door</string>
     <string name="onboarding_share_share">App delen</string>
     <string name="status_no_exposure_detected_headline">De app is actief</string>
@@ -316,7 +316,7 @@
     <string name="coronatest_description"><![CDATA[Ontdek je via coronatest.nl dat je corona hebt? Dan kun je via CoronaMelder direct een melding versturen. <a href="">Hoe werkt dit?</a>]]></string>
     <string name="coronatest_step_1">Deel de codes die CoronaMelder heeft gemaakt</string>
     <string name="coronatest_step_2">Schrijf je GGD-sleutel op of kopieer deze</string>
-    <string name="coronatest_step_3">Vul je GGD-sleutel in op coronatest.nl. Zo waarschuw  je anderen bij wie je in de buurt bent geweest</string>
+    <string name="coronatest_step_3">Log in op coronatest.nl met je DigiD. Vul daar je GGD-sleutel in om anderen te waarschuwen</string>
     <string name="coronatest_step_4">GGD-sleutel ingevuld?</string>
     <string name="coronatest_step_4_subtitle">Je bent klaar. Mensen bij wie je in de buurt bent geweest, terwijl je besmettelijk was, krijgen een melding. Dit gebeurt binnen 8 uur.</string>
     <string name="coronatest_share_keys">Codes delen</string>
@@ -327,16 +327,16 @@
     <string name="coronatest_finish_confirmation_text">Heb je de GGD-sleutel ingevuld op coronatest.nl en een bevestiging gekregen? Zo ja, dan kun je afronden.</string>
     <string name="coronatest_finish_confirmation_accept">Ja, afronden</string>
     <string name="coronatest_finish_confirmation_cancel">Annuleren</string>
+    <string name="app_message_channel_name">App-meldingen</string>
+    <string name="app_message_channel_description">Meldingen over CoronaMelder</string>
     <string name="still_useful_title">Ik ben gevaccineerd of hersteld van corona, heeft de app dan nog wel nut?</string>
     <string name="still_useful_paragraph_1">Ja, het is nog steeds nuttig om de app op je telefoon te hebben. Ondanks dat je al gevaccineerd bent of hersteld van corona. Het virus is nog steeds onder ons en met de CoronaMelder-app worden besmettingen sneller opgespoord en gestopt.</string>
     <string name="still_useful_paragraph_2">Je moet je ook nog steeds houden aan de bekende maatregelen: 1,5 meter afstand houden en vaak je handen wassen. En het dragen van een mondkapje op plekken waar dat verplicht is. Bijvoorbeeld in het openbaar vervoer of in het vliegtuig.</string>
     <string name="still_useful_paragraph_3">Bij sommige evenementen of locaties vervalt de maatregel van 1,5 meter afstand houden. Bijvoorbeeld bij een evenement waarbij alle bezoekers in de CoronaCheck-app aantonen dat zij getest zijn en geen corona hebben of al twee keer gevaccineerd zijn.</string>
     <string name="still_useful_link_header">Is de app nog nuttig?</string>
     <string name="still_useful_link_description">Ook als je gevaccineerd bent of al corona hebt gehad, is de app nog steeds een belangrijk middel in de strijd tegen corona.</string>
-    <!--Used by the screen reader as prefix of a bullet list item. For example "• Lorem ipsum" will be read as "Bullet 1 Lorem ipsum"-->
-    <string name="bullet_list_item_tts_description">Punt %1$d %2$s\n</string>
     <string name="status_error_battery_optimisation_title">Probleem met instellingen telefoon</string>
-    <string name="coronatest_step_3_nodeeplink">Ga (terug) naar coronatest.nl en vul je GGD-sleutel in. Zo waarschuw je anderen bij wie je in de buurt bent geweest.</string>
+    <string name="coronatest_step_3_nodeeplink">Log in op coronatest.nl met je DigiD. Vul daar je GGD-sleutel in om anderen te waarschuwen</string>
     <string name="faq_upload_keys_generic_paragraph_1">Je kunt alleen een melding naar anderen sturen als je getest bent door de GGD en corona blijkt te hebben. De melding verstuur je met de GGD als die je belt of zelf via coronatest.nl.\n\nAls je een melding wilt versturen, wordt er naar je GGD-sleutel gevraagd. Deze vind je in de app. Een GGD-sleutel zorgt ervoor dat alleen mensen die echt besmet zijn meldingen kunnen versturen.</string>
     <string name="faq_upload_keys_generic_paragraph_2">Nadat je GGD-sleutel is gecontroleerd, worden de codes gedeeld die jouw telefooon de afgelopen 14 dagen naar andere telefoons heeft verzonden.\n\nZo kunnen mensen, bij wie je in de buurt bent geweest toen je besmettelijk was, een melding krijgen. Alleen als deze mensen ook de app gebruiken.</string>
     <string name="lab_test_generic_toolbar_title">Melding sturen</string>
@@ -344,6 +344,4 @@
     <string name="lab_test_done_generic_paragraph_2">De GGD vertelt je wat je verder kunt doen om te voorkomen dat je anderen besmet. Beterschap en sterkte met je herstel.</string>
     <string name="lab_test_done_generic_box_4">De melding wordt alleen verstuurd als je jouw GGD-sleutel hebt doorgegeven aan de GGD of via coronatest.nl</string>
     <string name="status_error_notifications_disabled_headline">Meldingen staan <u>uit</u></string>
-    <string name="app_message_channel_name">App notificaties</string>
-    <string name="app_message_channel_description">Notificaties over CoronaMelder</string>
 </resources>
