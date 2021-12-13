@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -56,7 +56,9 @@
             android:enabled="@{viewState.enabled}"
             android:onClick="@{_ -> viewState.click.invoke()}"
             android:text="@{viewState.text}"
-            android:drawableEnd="@{viewState.drawableEnd}"
+            app:icon="@{viewState.drawableEnd}"
+            app:iconGravity="textEnd"
+            app:iconTint="@null"
             android:drawablePadding="@dimen/button_drawable_padding"
             tools:text="@string/request_test_button_website"
             app:layout_constraintTop_toTopOf="parent"
