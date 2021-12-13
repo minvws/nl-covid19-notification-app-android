@@ -30,8 +30,8 @@
     <string name="onboarding_how_it_works_toolbar_title">Cum funcționează aplicația?</string>
     <string name="onboarding_how_it_works_request_consent">Activare aplicație</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Întrebare frecventă</string>
-    <string name="onboarding_share_headline">Înștiințați-i pe ceilalți că ajutați la oprirea virusului.</string>
-    <string name="onboarding_share_description">Cu cât sunt mai multe persoane care folosesc CoronaMelder, cu atât aceasta funcționează mai bine. Numai împreună putem ține coronavirus sub control. Deci, distribuiți aplicația cât mai multor persoane.</string>
+    <string name="onboarding_share_headline">Spuneți-le și altora despre aplicație.</string>
+    <string name="onboarding_share_description">Cu cât sunt mai multe persoane care folosesc CoronaMelder, cu atât aceasta funcționează mai bine. Așadar, spuneți-le cât mai multor cunoscuți despre aplicație. De exemplu, prietenilor și rudelor.</string>
     <string name="onboarding_share_continue">Continuați</string>
     <string name="onboarding_share_share">Distribuiți aplicația</string>
     <string name="status_no_exposure_detected_headline">Aplicația este activă</string>
@@ -321,7 +321,7 @@
     <string name="coronatest_description"><![CDATA[Ați descoperit că aveți corona prin coronatest.nl? Atunci puteți trimite imediat o notificare prin CoronaMelder.  <a href="">Cum funcționează acest lucru? </a>]]></string>
     <string name="coronatest_step_1">Distribuiți codurile pe care le-a generat CoronaMelder</string>
     <string name="coronatest_step_2">Notați sau copiați cheia GGD</string>
-    <string name="coronatest_step_3">Introduceți cheia dvs. GGD pe coronatest.nl. Așa îi avertizați pe cei în apropierea cărora v-ați aflat</string>
+    <string name="coronatest_step_3">Conectați-vă pe coronatest.nl cu DigiD-ul dvs. Introduceți acolo cheia dvs. GGD pentru a-i avertiza pe alții.</string>
     <string name="coronatest_step_4">Ați introdus cheia GGD?</string>
     <string name="coronatest_step_4_subtitle">Sunteți gata. Persoanele în apropierea cărora ați fost în timp ce erați contagios vor primi o notificare. Acest lucru se întâmplă în decurs de 8 ore.</string>
     <string name="coronatest_share_keys">Partajați coduri</string>
@@ -332,16 +332,16 @@
     <string name="coronatest_finish_confirmation_text">Ați introdus cheia GGD pe coronatest.nl și ați primit o notificare? Dacă răspunsul este da atunci puteți încheia.</string>
     <string name="coronatest_finish_confirmation_accept">Da, încheiere</string>
     <string name="coronatest_finish_confirmation_cancel">Anulare</string>
+    <string name="app_message_channel_name">Notificări în aplicație</string>
+    <string name="app_message_channel_description">Notificări despre CoronaMelder</string>
     <string name="still_useful_title">M-am vaccinat sau am avut deja COVID-19. Mai este utilă aplicația?</string>
     <string name="still_useful_paragraph_1">Da, este totuși util să aveți aplicația pe telefon. Chiar dacă v-ați vaccinat sau ați avut deja COVID-19. Virusul este prezent în continuare printre noi, iar cu aplicația CoronaMelder se pot depista și opri mai rapid infectările.</string>
     <string name="still_useful_paragraph_2">Trebuie să respectați în continuare măsurile cunoscute: păstrați distanța de 1,5 metri și spălați-vă frecvent pe mâini. De asemenea, purtați masca în locurile în care aceasta este obligatorie. De exemplu, în vehiculele de transport public sau în avion.</string>
     <string name="still_useful_paragraph_3">La unele evenimente sau locații nu este valabilă cerința păstrării distanței de 1,5 metri. De exemplu, la un eveniment la care toți participanții demonstrează în aplicația CoronaCheck că au fost testați și nu au coronavirusul sau că s-au vaccinat deja cu două doze.</string>
     <string name="still_useful_link_header">Este utilă în continuare aplicația?</string>
     <string name="still_useful_link_description">Aplicația rămâne un mijloc important de combatere a coronavirusului inclusiv dacă v-ați vaccinat sau dacă ați avut deja COVID-19.</string>
-    <!--Used by the screen reader as prefix of a bullet list item. For example "• Lorem ipsum" will be read as "Bullet 1 Lorem ipsum"-->
-    <string name="bullet_list_item_tts_description">Punctul %1$d %2$s\n</string>
     <string name="status_error_battery_optimisation_title">Problemă cu setările telefonului</string>
-    <string name="coronatest_step_3_nodeeplink">Mergeți (înapoi) la coronatest.nl și introduceți cheia GGD. În acest fel avertizați persoanele în apropierea cărora v-ați aflat.</string>
+    <string name="coronatest_step_3_nodeeplink">Conectați-vă pe coronatest.nl cu DigiD-ul dvs. Introduceți acolo cheia dvs. GGD pentru a-i avertiza pe alții.</string>
     <string name="faq_upload_keys_generic_paragraph_1">Puteți trimite o notificare altora numai dacă ați fost testat de GGD și a rezultat că aveți coronavirus. Notificarea o trimiteți prin GGD dacă sunați la ei sau prin intermediul site-ului coronatest.nl.\n\n\nCând doriți să transmiteți o notificare, vi se va cere cheia GGD. Această cheie o găsiți în aplicație. Prin această cheie ne asigurăm că doar persoanele cu adevărat infectate pot trimite notificări.</string>
     <string name="faq_upload_keys_generic_paragraph_2">După ce cheia dvs. GGD a fost verificată, codurile pe care telefonul dvs. le-a trimis către alte telefoane în ultimele 14 zile vor fi partajate.\n\n\nAstfel, persoanele în apropierea cărora v-ați aflat când erați contagios pot primi o notificare. Acest lucru este posibil doar dacă aceste persoane folosesc și aplicația.</string>
     <string name="lab_test_generic_toolbar_title">Trimitere de notificare</string>
@@ -349,6 +349,4 @@
     <string name="lab_test_done_generic_paragraph_2">GGD vă va spune ce trebuie sa faceți în continuare pentru nu infecta și alte persoane. Însănătoșire grabnică!</string>
     <string name="lab_test_done_generic_box_4">Notificarea este trimisă doar dacă ați transmis cheia la GGd sau prin coronatest.nl</string>
     <string name="status_error_notifications_disabled_headline">Notificările <u>nu</u> sunt activate</string>
-    <string name="app_message_channel_name">App notifications</string>
-    <string name="app_message_channel_description">Notifications about CoronaMelder</string>
 </resources>

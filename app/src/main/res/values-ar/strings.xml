@@ -33,8 +33,8 @@
     <string name="onboarding_how_it_works_toolbar_title">كيف يعمل التطبيق؟</string>
     <string name="onboarding_how_it_works_request_consent">تشغيل التطبيق</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">سؤال متكرر</string>
-    <string name="onboarding_share_headline">عرّف الآخرين بإنك تساهم في وقف الفيروس.</string>
-    <string name="onboarding_share_description">كلما قام عدد أكبر من الأشخاص باستخدام CoronaMelder، كلما أصبح التطبيق يعمل بصورة أفضل. معًا فقط نستطيع إيقاف انتشار فيروس كورونا. شارك التطبيق إذًا مع أكبر عدد ممكن من الأشخاص.</string>
+    <string name="onboarding_share_headline">شارك التطبيق مع الأشخاص الآخرين في محيطك.</string>
+    <string name="onboarding_share_description">كلما زاد عدد الأشخاص الذين يستخدمون CoronaMelder، كلما أصبح التطبيق يعمل بصورة أفضل. لذا شارك التطبيق مع أكبر عدد ممكن من الأشخاص في محيطك. على سبيل المثال الأصدقاء والعائلة.</string>
     <string name="onboarding_share_continue">متابعة</string>
     <string name="onboarding_share_share">مشاركة التطبيق</string>
     <string name="status_no_exposure_detected_headline">التطبيق نشط</string>
@@ -339,7 +339,7 @@
 <a href="">  كيف يحدث ذلك؟ </a>]]></string>
     <string name="coronatest_step_1">شارك الرموز التي أنشأها CoronaMelder</string>
     <string name="coronatest_step_2">اكتب أو انسخ رمز الـ GGD الخاص بك</string>
-    <string name="coronatest_step_3">أدخل مفتاح الـ GGD الخاص بك في coronatest.nl. هذه هي الطريقة التي تحذر بها الأشخاص الذين كنت قريبًا منهم.</string>
+    <string name="coronatest_step_3">قم بتسجيل الدخول على الموقع الإلكتروني coronatest.nl باستخدام كود تعريف الهوية للدخول إلى المواقع الحكومية على الإنترنت (GGD) الخاص بك. وأدخل هناك مفتاح كود تعريف الهوية للدخول إلى المواقع الحكومية على الإنترنت (GGD) الخاص بك لتحذير الأشخاص الآخرين الذين كنت على مقربة منهم</string>
     <string name="coronatest_step_4">هل تم ملء رمز الـ GGD؟</string>
     <string name="coronatest_step_4_subtitle">لقد انتهيت. سيتلقى الأشخاص الذين كنت على مقربة منهم عندما كنت ناقلاً للعدوى إشعارًا. يحدث هذا في غضون 8 ساعات.</string>
     <string name="coronatest_share_keys">مشاركة الرموز</string>
@@ -350,16 +350,16 @@
     <string name="coronatest_finish_confirmation_text">هل قمت بملء رمز الـ GGD في coronatest.nl وتلقيت تأكيدًا؟ إذا كانت الإجابة نعم فيمكنك استكمال العملية.</string>
     <string name="coronatest_finish_confirmation_accept">نعم، أكمل</string>
     <string name="coronatest_finish_confirmation_cancel">إلغاء</string>
+    <string name="app_message_channel_name">إشعارات التطبيق</string>
+    <string name="app_message_channel_description">CoronaMelder إشعارات حول تطبيق</string>
     <string name="still_useful_title">لقد تم تطعيمي او شفيت من كورونا، هل التطبيق لا يزال مجديًا؟</string>
     <string name="still_useful_paragraph_1">نعم، لا يزال من المفيد أن يكون لديك التطبيق على هاتفك. على الرغم من أنك قد تم تطعيمك بالفعل أو تعافيت من كورونا. الفيروس لا يزال موجودًا ومن خلال تطبيق CoronaMelder يتم الكشف عن الإصابات وإيقافها بشكل أسرع.</string>
     <string name="still_useful_paragraph_2">لا يزال يتعين عليك الالتزام بالإجراءات المعروفة: ابق على بعد 1.5 متر واغسل يديك كثيرًا. والبس الكمامة في الأماكن التي يكون فيها إلزامياً.  في وسائل النقل العام أو في الطائرة على سبيل المثال.</string>
     <string name="still_useful_paragraph_3">" سيتم في بعض الأحداث أو المواقع إلغاء إجراء الابقاء على مسافة 1.5 متر، في حدث أثبت فيه جميع الزوار في تطبيق CoronaCheck أنهم قد تم اختبارهم وليس لديهم كورونا أو تم تطعيمهم بالفعل مرتين على سبيل المثال."</string>
     <string name="still_useful_link_header">هل التطبيق لا يزال مجديًا؟</string>
     <string name="still_useful_link_description">حتى لو تم تطعيمك أو أصبت بالفعل بكورونا، فإن التطبيق لا يزال أداة مهمة في مكافحة كورونا.</string>
-    <!--Used by the screen reader as prefix of a bullet list item. For example "• Lorem ipsum" will be read as "Bullet 1 Lorem ipsum"-->
-    <string name="bullet_list_item_tts_description">نقطة  %1$d%2$s  \n/n</string>
     <string name="status_error_battery_optimisation_title">مشكلة في إعدادات الهاتف</string>
-    <string name="coronatest_step_3_nodeeplink">انتقل إلى coronatest.nl وأدخل رمز الـ GGD الخاص بك. تحذّر بهذه الطريقة الأشخاص الآخرين الذين كنت على مقربة منهم.</string>
+    <string name="coronatest_step_3_nodeeplink">قم بتسجيل الدخول على الموقع الإلكتروني coronatest.nl باستخدام كود تعريف الهوية للدخول إلى المواقع الحكومية على الإنترنت (GGD) الخاص بك. وأدخل هناك مفتاح كود تعريف الهوية للدخول إلى المواقع الحكومية على الإنترنت (GGD) الخاص بك لتحذير الأشخاص الآخرين الذين كنت على مقربة منهم</string>
     <string name="faq_upload_keys_generic_paragraph_1">يمكنك فقط إرسال إشعار للآخرين إذا تم اختبارك من قبل الـ GGD وتبين أنك مصاب بكورونا. يمكنك إرسال الإشعار مع الـ GGD الذي يتصل بك هاتفيًا أو بنفسك عبر coronatest.nl.\n\nإذا كنت تريد إرسال إشعار، فستُسئل عن رمز الـ GGD الخاص بك. ستجده في التطبيق. يضمن رمز الـ GGD أن الأشخاص المصابين حقًا هم فقط من يمكنهم إرسال الإشعار.</string>
     <string name="faq_upload_keys_generic_paragraph_2">بعد التحقق من مفتاح الـ GGD، ستتم مشاركة الرموز التي أرسلها هاتفك إلى الهواتف الأخرى خلال الـ 14 يومًا الماضية.\n\nبهذه الطريقة يمكن للأشخاص الذين كنت على مقربة منهم عندما كنت ناقلاً للعدوى تلقي إشعار. فقط إذا كان هؤلاء الأشخاص يستخدمون التطبيق أيضًا.</string>
     <string name="lab_test_generic_toolbar_title">إرسال إشعار</string>
@@ -367,6 +367,4 @@
     <string name="lab_test_done_generic_paragraph_2">"ستخبرك الـ GGD بما يمكنك فعله لتجنب نقل العدوى إلى الآخرين. نتمنى لك الشفاء العاجل والتحلي بالقوة في مواجهة المرض. "</string>
     <string name="lab_test_done_generic_box_4">سيتم إرسال الإشعار فقط إذا قمت بإرسال رمز الـ GGD إلى الـ GGD أو من خلال coronatest.nl.</string>
     <string name="status_error_notifications_disabled_headline">تم <u> إيقاف تشغيل</u> الإشعارات</string>
-    <string name="app_message_channel_name">App notifications</string>
-    <string name="app_message_channel_description">Notifications about CoronaMelder</string>
 </resources>

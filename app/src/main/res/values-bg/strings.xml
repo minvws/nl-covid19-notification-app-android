@@ -30,8 +30,8 @@
     <string name="onboarding_how_it_works_toolbar_title">Как работи приложението?</string>
     <string name="onboarding_how_it_works_request_consent">Включване на приложението</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Често задавани въпроси</string>
-    <string name="onboarding_share_headline">Съобщи на други хора, че помагаш за спирането на вируса</string>
-    <string name="onboarding_share_description">Колкото повече хора използват CoronaMelder, толкова по-ефективна е работата му. Единствено заедно можем да поставим коронавируса под контрол. Затова сподели приложението с възможно най-много хора.</string>
+    <string name="onboarding_share_headline">Сподели приложението с твоите близки и приятели</string>
+    <string name="onboarding_share_description">Колкото повече хора използват CoronaMelder, толкова по-ефективна е работата му. Затова сподели приложението с възможно най-много хора от твоето обкръжение. Например с близки и приятели.</string>
     <string name="onboarding_share_continue">Продължи</string>
     <string name="onboarding_share_share">Споделяне на приложението</string>
     <string name="status_no_exposure_detected_headline">Приложението е активно</string>
@@ -318,7 +318,7 @@
     <string name="coronatest_description"><![CDATA[Ако през coronatest.nl  откриеш, че имаш коронавирус? Тогава можеш директно да изпратиш известие през CoronaMelder. <a href="">Как работи това?</a>]]></string>
     <string name="coronatest_step_1">Сподели кодовете, генерирани от  CoronaMelder</string>
     <string name="coronatest_step_2">Запиши си своя GGD-ключ или го копирай</string>
-    <string name="coronatest_step_3">Въведи своя GGD-ключ на coronatest.nl. Така предупреждаваш други хора, до които си бил в близост</string>
+    <string name="coronatest_step_3">Влез на coronatest.nl чрез своя DigiD. Там въведи своя GGD-ключ, за да предупредиш други хора</string>
     <string name="coronatest_step_4">Въвел ли си GGD-ключа?</string>
     <string name="coronatest_step_4_subtitle">Значи си готов. Хората, до които си бил в близост, докато си бил заразен, ще получат известие. Това става в рамките на 8 часа.</string>
     <string name="coronatest_share_keys">Споделяне на кодове</string>
@@ -329,16 +329,16 @@
     <string name="coronatest_finish_confirmation_text">След въвеждане на GGD-ключа на coronatest.nl получи ли  потвърждение? Ако е така, значи можеш да завършиш.</string>
     <string name="coronatest_finish_confirmation_accept">Да, завършване</string>
     <string name="coronatest_finish_confirmation_cancel">Анулиране</string>
+    <string name="app_message_channel_name">Известия от приложението</string>
+    <string name="app_message_channel_description">Известия относно CoronaMelder</string>
     <string name="still_useful_title">Ваксиниран съм или съм се излекувал от коронавирус. Има ли все още полза от приложението?</string>
     <string name="still_useful_paragraph_1">Да, все още е необходимо да имаш приложението в телефона си. Въпреки че си ваксиниран или си се излекувал от коронавирус. Вирусът все още е сред нас и с приложението CoronaMelder заразяванията се проследяват и спират по-бързо.</string>
     <string name="still_useful_paragraph_2">Също така трябва да спазваш известните мерки: спазване на дистанция от 1,5 метра и често миене на ръцете. Както и да носиш маска върху  устата и носа на места, където това е задължително. Например в обществения транспорт или в самолета.</string>
     <string name="still_useful_paragraph_3">На някои събития или места отпада мярката за спазване на дистанция от 1,5 метра. Например на събитие, на което всички посетители покажат в приложението CoronaCheck, че са се тествали и нямат коронавирус или вече са ваксинирани с две дози.</string>
     <string name="still_useful_link_header">Все още има ли полза от приложението?</string>
     <string name="still_useful_link_description">Дори ако си ваксиниран или ако си прекарал коронавирус, приложението все още е важен инструмент в борбата срещу коронавируса.</string>
-    <!--Used by the screen reader as prefix of a bullet list item. For example "• Lorem ipsum" will be read as "Bullet 1 Lorem ipsum"-->
-    <string name="bullet_list_item_tts_description">Точка %1$d %2$s\n</string>
     <string name="status_error_battery_optimisation_title">Проблем с настройките на телефона</string>
-    <string name="coronatest_step_3_nodeeplink">Отиди (обратно) на coronatest.nl и въведи своя GGD-ключ. Така предупреждаваш другите, до които си бил в близост.</string>
+    <string name="coronatest_step_3_nodeeplink">Влез на coronatest.nl чрез своя DigiD. Там въведи своя GGD-ключ, за да предупредиш други хора</string>
     <string name="faq_upload_keys_generic_paragraph_1">Можеш да изпратиш известие на други хора единствено ако от GGD са ти  направили тест и се е оказало, че имаш коронавирус. Изпращаш известието заедно с GGD, ако ти се обадят, или самостоятелно през coronatest.nl.\n\nАко искаш да изпратиш известие, ще ти поискат твоя GGD-ключ. Ще го откриеш в приложението. GGD-ключът гарантира, че  единствено хора, които наистина са заразени, могат да изпращат известия.</string>
     <string name="faq_upload_keys_generic_paragraph_2">След като твоя GGD-ключ е проверен, ще се споделят кодовете, които твоят телефон е изпращал на други телефони през последните 14 дни.\n\nТака хората, до които си бил в близост, когато си бил заразен, ще могат да получат известие. Единствено ако и тези хора използват приложението.</string>
     <string name="lab_test_generic_toolbar_title">Изпращане на известие</string>
@@ -346,6 +346,4 @@
     <string name="lab_test_done_generic_paragraph_2">От GGD ще ти кажат какво още можеш да направиш, за да предотвратиш заразяването на други хора. Бързо оздравяване и успешно възстановяване.</string>
     <string name="lab_test_done_generic_box_4">Известието се изпраща единствено ако си съобщил своя GGD-ключ на GGD или през coronatest.nl</string>
     <string name="status_error_notifications_disabled_headline">Известията са<u>изключени</u></string>
-    <string name="app_message_channel_name">App notifications</string>
-    <string name="app_message_channel_description">Notifications about CoronaMelder</string>
 </resources>

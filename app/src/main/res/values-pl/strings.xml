@@ -30,8 +30,8 @@
     <string name="onboarding_how_it_works_toolbar_title">Jak działa aplikacja?</string>
     <string name="onboarding_how_it_works_request_consent">Włącz aplikację</string>
     <string name="onboarding_how_it_works_detail_toolbar_title">Często zadawane pytanie</string>
-    <string name="onboarding_share_headline">Przekaż innym, że pomagasz w powstrzymaniu rozprzestrzeniania się koronawirusa.</string>
-    <string name="onboarding_share_description">Im więcej osób używa aplikacji CoronaMelder, tym lepiej ona działa. Tylko wspólnymi siłami możemy uzyskać kontrolę nad koronawirusem. Udostępnij więc tę aplikację jak największej liczbie osób.</string>
+    <string name="onboarding_share_headline">Udostępnij aplikację innym</string>
+    <string name="onboarding_share_description">Im więcej osób używa aplikacji CoronaMelder, tym lepiej ona działa. Udostępnij więc tę aplikację jak największej liczbie osób w swoim otoczeniu, na przykład przyjaciołom i rodzinie.</string>
     <string name="onboarding_share_continue">Dalej</string>
     <string name="onboarding_share_share">Udostępnij aplikację</string>
     <string name="status_no_exposure_detected_headline">Aplikacja jest aktywna</string>
@@ -324,7 +324,7 @@
     <string name="coronatest_description"><![CDATA[Dowiedziałeś się za pośrednictwem strony coronatest.nl, że masz koronawirusa? W takim przypadku możesz przesłać powiadomienie bezpośrednio przez aplikację CoronaMelder. <a href="">W jaki sposób to działa?</a>]]></string>
     <string name="coronatest_step_1">Udostępnij kody utworzone przez CoronaMelder</string>
     <string name="coronatest_step_2">Zapisz lub skopiuj swój klucz GGD</string>
-    <string name="coronatest_step_3">Wprowadź swój klucz GGD na stronie coronatest.nl. W ten sposób ostrzegasz osoby, z którymi miałeś kontakt</string>
+    <string name="coronatest_step_3">Zaloguj się na stronie coronatest.nl za pomocą swojego klucza DigiD. Wprowadź tam swój klucz GGD, aby ostrzec innych</string>
     <string name="coronatest_step_4">Wprowadziłeś klucz GGD?</string>
     <string name="coronatest_step_4_subtitle">Gotowe. Osoby, z którymi miałeś kontakt i mogły zostać zarażone, otrzymają powiadomienie. Nastąpi to w przeciągu 8 godzin.</string>
     <string name="coronatest_share_keys">Udostępnij kody</string>
@@ -335,16 +335,16 @@
     <string name="coronatest_finish_confirmation_text">Wprowadziłeś klucz GGD na stronie coronatest.nl i otrzymałeś potwierdzenie? Jeśli tak, możesz zakończyć.</string>
     <string name="coronatest_finish_confirmation_accept">Tak, zakończ</string>
     <string name="coronatest_finish_confirmation_cancel">Anuluj</string>
+    <string name="app_message_channel_name">Powiadomienia aplikacji</string>
+    <string name="app_message_channel_description">Powiadomienia na temat aplikacji CoronaMelder</string>
     <string name="still_useful_title">Jestem zaszczepiony lub przeszedłem koronawirusa. Czy aplikacja wciąż jest potrzebna?</string>
     <string name="still_useful_paragraph_1">Tak, nadal warto mieć aplikację na swoim telefonie. Nawet jeśli jesteś zaszczepiony lub przeszedłeś koronawirusa. Wirus wciąż jest wśród nas, a dzięki CoronaMelder zakażenia są szybciej wykrywane i zwalczane.</string>
     <string name="still_useful_paragraph_2">Nadal musisz stosować dobrze znane środki: zachowuj 1,5 metra odległości i często myj ręce. Noś maseczkę tam, gdzie to obowiązkowe. Na przykład w publicznych środkach transportu lub samolocie.</string>
     <string name="still_useful_paragraph_3">Na niektórych wydarzaniach lub miejscach nie trzeba zachowywać 1,5 metra odległości. Dotyczy to na przykład wydarzenia, którego wszyscy uczestnicy wykażą w aplikacji CoronaCheck, że wykonali test na obecność koronawirusa i otrzymali wynik negatywny lub zostali zaszczepieni dwoma dawkami szczepionki.</string>
     <string name="still_useful_link_header">Czy aplikacja wciąż jest potrzebna?</string>
     <string name="still_useful_link_description">Nawet jeśli się zaszczepiłeś lub przeszedłeś koronawirusa, aplikacja to nadal ważne narzędzie walki z koronawirusem.</string>
-    <!--Used by the screen reader as prefix of a bullet list item. For example "• Lorem ipsum" will be read as "Bullet 1 Lorem ipsum"-->
-    <string name="bullet_list_item_tts_description">Punkt %1$d %2$s\n</string>
     <string name="status_error_battery_optimisation_title">Problem dotyczący ustawień telefonu</string>
-    <string name="coronatest_step_3_nodeeplink">Wejdź (ponownie) na stronę coronatest.nl i wprowadź swój klucz GGD. W ten sposób ostrzegasz osoby, z którymi miałeś kontakt.</string>
+    <string name="coronatest_step_3_nodeeplink">Zaloguj się na stronie coronatest.nl za pomocą swojego klucza DigiD. Wprowadź tam swój klucz GGD, aby ostrzec innych</string>
     <string name="faq_upload_keys_generic_paragraph_1">Możesz wysłać innym powiadomienie tylko wtedy, gdy zrobiłeś test w GGD i okazało się, że masz koronawirusa. Powiadomienie przesyłasz wspólnie z GGD podczas rozmowy telefonicznej lub samodzielnie na stronie coronatest.nl.\n\n\nGdy chcesz przesłać powiadomienie, wymagany jest klucz GGD. Znajduje się on w tej aplikacji. Dzięki kluczowi GGD powiadomienie mogą wysłać wyłącznie osoby, które naprawdę zostały zarażone koronawirusem.</string>
     <string name="faq_upload_keys_generic_paragraph_2">Po sprawdzeniu Twojego klucza GGD, udostępniane są kody, które Twój telefon wysłał w przeciągu ostatnich 14 dni do innych telefonów. \n\n\n\nW ten sposób osoby, z którymi miałeś kontakt, gdy byłeś zarażony, mogą otrzymać anonimowe powiadomienie. Tylko, jeśli one również używają aplikacji.</string>
     <string name="lab_test_generic_toolbar_title">Prześlij powiadomienie</string>
@@ -352,6 +352,4 @@
     <string name="lab_test_done_generic_paragraph_2">GGD doradzi, co jeszcze możesz zrobić, aby zapobiec zarażeniu innych. Trzymaj się i szybko wracaj do zdrowia.</string>
     <string name="lab_test_done_generic_box_4">Powiadomienie zostaje wysłane wyłącznie w przypadku, gdy podałeś swój klucz GGD lub na za pośrednictwem strony coronatest.nl</string>
     <string name="status_error_notifications_disabled_headline">Powiadomienia są <u>wyłączone</u></string>
-    <string name="app_message_channel_name">App notifications</string>
-    <string name="app_message_channel_description">Notifications about CoronaMelder</string>
 </resources>
