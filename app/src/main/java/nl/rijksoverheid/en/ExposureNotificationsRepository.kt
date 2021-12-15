@@ -61,6 +61,7 @@ import nl.rijksoverheid.en.signing.ResponseSignatureValidator
 import nl.rijksoverheid.en.signing.SignatureValidationException
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.util.ext.getLongAsLocalDate
+import nl.rijksoverheid.en.util.ext.shouldScheduleBasedOnProbability
 import okhttp3.ResponseBody
 import okio.ByteString.Companion.toByteString
 import retrofit2.HttpException
@@ -550,7 +551,7 @@ class ExposureNotificationsRepository(
 
                 // Schedule app message notification
                 val notification = config.notification
-                if (notification != null) {
+                if (notification != null && notification.shouldScheduleBasedOnProbability()) {
                     AppMessageReceiver.schedule(context, notification.scheduledDateTime.toLocalDateTime())
                 } else {
                     AppMessageReceiver.cancel(context)
