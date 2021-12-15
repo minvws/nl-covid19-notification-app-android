@@ -14,7 +14,8 @@ data class AppMessage(
     val scheduledDateTime: OffsetDateTime,
     val title: String,
     val body: String,
-    val targetScreen: String
+    val targetScreen: String,
+    val probability: Float = 1f
 ) {
     /**
      * All implemented target screen by value
