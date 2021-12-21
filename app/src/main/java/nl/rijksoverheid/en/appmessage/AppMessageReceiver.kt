@@ -17,6 +17,7 @@ import nl.rijksoverheid.en.api.model.AppMessage
 import nl.rijksoverheid.en.factory.RepositoryFactory.createAppConfigManager
 import nl.rijksoverheid.en.factory.RepositoryFactory.createResourceBundleManager
 import nl.rijksoverheid.en.notifier.NotificationsRepository
+import nl.rijksoverheid.en.util.ext.shouldScheduleBasedOnProbability
 import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -52,11 +53,18 @@ class AppMessageReceiver : BroadcastReceiver() {
         /**
          * Schedules or updates an scheduled [AppMessageReceiver]
          */
-        fun schedule(context: Context, scheduledDateTime: LocalDateTime) {
+        fun schedule(context: Context, notification: AppMessage) {
+            val scheduledDateTime = notification.scheduledDateTime.toLocalDateTime()
+
             if (scheduledDateTime.isBefore(LocalDateTime.now())) {
                 Timber.d("ScheduledDateTime has already passed")
                 return
             }
+
+            val shouldScheduleBasedOnProbability = notification.shouldScheduleBasedOnProbability()
+            Timber.d("Schedule notification based on probability result: $shouldScheduleBasedOnProbability")
+            if (!shouldScheduleBasedOnProbability)
+                return
 
             Timber.d("Schedule")
             val pendingIntent = createPendingIntent(context)
