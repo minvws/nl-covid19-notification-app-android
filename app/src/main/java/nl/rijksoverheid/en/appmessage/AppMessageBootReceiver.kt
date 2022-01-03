@@ -24,7 +24,7 @@ class AppMessageBootReceiver : BroadcastReceiver() {
             val async = goAsync()
             MainScope().launch {
                 appConfigManager.getCachedConfigOrDefault().notification?.let { appMessage ->
-                    AppMessageReceiver.schedule(context, appMessage.scheduledDateTime.toLocalDateTime())
+                    AppMessageReceiver.schedule(context, appMessage)
                 }
                 async.finish()
             }
