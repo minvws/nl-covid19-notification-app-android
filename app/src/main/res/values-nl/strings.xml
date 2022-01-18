@@ -327,6 +327,7 @@
     <string name="coronatest_finish_confirmation_text">Heb je de GGD-sleutel ingevuld op coronatest.nl en een bevestiging gekregen? Zo ja, dan kun je afronden.</string>
     <string name="coronatest_finish_confirmation_accept">Ja, afronden</string>
     <string name="coronatest_finish_confirmation_cancel">Annuleren</string>
+    <string name="lab_test_key_cd">GGD-sleutel</string>
     <string name="app_message_channel_name">App-meldingen</string>
     <string name="app_message_channel_description">Meldingen over CoronaMelder</string>
     <string name="still_useful_title">Ik ben gevaccineerd of hersteld van corona, heeft de app dan nog wel nut?</string>

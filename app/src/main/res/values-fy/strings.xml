@@ -327,6 +327,7 @@
     <string name="coronatest_finish_confirmation_text">Hast de GGD-sleutel op coronatest.nl ynfolle en in befêstiging krige? Ja? Dan kinst ôfslute.</string>
     <string name="coronatest_finish_confirmation_accept">Ja, ôfslute</string>
     <string name="coronatest_finish_confirmation_cancel">Annulearje</string>
+    <string name="lab_test_key_cd">GGD-sleutel</string>
     <string name="app_message_channel_name">App-meldings</string>
     <string name="app_message_channel_description">Meldings oer CoronaMelder</string>
     <string name="still_useful_title">Ik bin faksinearre of genêzen fan koroana, hat de app dan no noch wol doel?</string>

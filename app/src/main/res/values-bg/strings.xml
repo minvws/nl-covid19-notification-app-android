@@ -329,6 +329,7 @@
     <string name="coronatest_finish_confirmation_text">След въвеждане на GGD-ключа на coronatest.nl получи ли  потвърждение? Ако е така, значи можеш да завършиш.</string>
     <string name="coronatest_finish_confirmation_accept">Да, завършване</string>
     <string name="coronatest_finish_confirmation_cancel">Анулиране</string>
+    <string name="lab_test_key_cd">GGD-ключ</string>
     <string name="app_message_channel_name">Известия от приложението</string>
     <string name="app_message_channel_description">Известия относно CoronaMelder</string>
     <string name="still_useful_title">Ваксиниран съм или съм се излекувал от коронавирус. Има ли все още полза от приложението?</string>

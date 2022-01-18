@@ -332,6 +332,7 @@
     <string name="coronatest_finish_confirmation_text">Ați introdus cheia GGD pe coronatest.nl și ați primit o notificare? Dacă răspunsul este da atunci puteți încheia.</string>
     <string name="coronatest_finish_confirmation_accept">Da, încheiere</string>
     <string name="coronatest_finish_confirmation_cancel">Anulare</string>
+    <string name="lab_test_key_cd">Cheia GGD</string>
     <string name="app_message_channel_name">Notificări în aplicație</string>
     <string name="app_message_channel_description">Notificări despre CoronaMelder</string>
     <string name="still_useful_title">M-am vaccinat sau am avut deja COVID-19. Mai este utilă aplicația?</string>
