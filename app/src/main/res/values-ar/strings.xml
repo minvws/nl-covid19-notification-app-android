@@ -350,6 +350,7 @@
     <string name="coronatest_finish_confirmation_text">هل قمت بملء رمز الـ GGD في coronatest.nl وتلقيت تأكيدًا؟ إذا كانت الإجابة نعم فيمكنك استكمال العملية.</string>
     <string name="coronatest_finish_confirmation_accept">نعم، أكمل</string>
     <string name="coronatest_finish_confirmation_cancel">إلغاء</string>
+    <string name="lab_test_key_cd">رمزالـ GGD</string>
     <string name="app_message_channel_name">إشعارات التطبيق</string>
     <string name="app_message_channel_description">CoronaMelder إشعارات حول تطبيق</string>
     <string name="still_useful_title">لقد تم تطعيمي او شفيت من كورونا، هل التطبيق لا يزال مجديًا؟</string>

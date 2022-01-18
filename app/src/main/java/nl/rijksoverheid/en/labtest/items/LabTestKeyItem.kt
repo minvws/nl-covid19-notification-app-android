@@ -16,7 +16,7 @@ import java.util.Locale
 class LabTestKeyItem(
     private val keyState: KeyState,
     private val copy: (String) -> Unit,
-    retry: () -> Unit,
+    private val retry: () -> Unit,
     private val enabled: Boolean = true
 ) : BaseBindableItem<ItemLabTestKeyBinding>() {
     data class ViewState(
@@ -26,31 +26,30 @@ class LabTestKeyItem(
         val key: String? = null,
         val displayKey: String? = null,
         val enabled: Boolean,
-        val retry: () -> Unit
-    ) {
-        // Format the key to understandable format for Talkback users
-        val keyContentDescription =
-            if (enabled)
-                key?.lowercase(Locale.ROOT)
-                    ?.replace(Regex("(.)"), "$1 ")
-                    ?.trimEnd()
-            else
-                null
-    }
-
-    private val viewState = ViewState(
-        showProgress = keyState == KeyState.Loading && enabled,
-        showCode = keyState is KeyState.Success && enabled,
-        showError = keyState is KeyState.Error && enabled,
-        key = (keyState as? KeyState.Success)?.key,
-        displayKey = (keyState as? KeyState.Success)?.displayKey,
-        enabled = enabled,
-        retry = retry
+        val retry: () -> Unit,
+        val keyContentDescription: String?
     )
 
     override fun getLayout() = R.layout.item_lab_test_key
 
     override fun bind(viewBinding: ItemLabTestKeyBinding, position: Int) {
+        val key = (keyState as? KeyState.Success)?.key
+        val viewState = ViewState(
+            showProgress = keyState == KeyState.Loading && enabled,
+            showCode = keyState is KeyState.Success && enabled,
+            showError = keyState is KeyState.Error && enabled,
+            key = key,
+            displayKey = (keyState as? KeyState.Success)?.displayKey,
+            enabled = enabled,
+            retry = retry,
+            keyContentDescription = if (enabled)
+                key?.lowercase(Locale.ROOT)
+                    ?.replace(Regex("(.)"), "$1 ")
+                    ?.trimEnd()
+            else
+                viewBinding.root.context.getString(R.string.lab_test_key_cd)
+        )
+
         viewBinding.viewState = viewState
         viewBinding.keyContainer.setOnLongClickListener {
             viewState.key?.let { copy(it) }

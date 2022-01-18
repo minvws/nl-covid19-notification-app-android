@@ -329,6 +329,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="coronatest_finish_confirmation_text">¿Has introducido tu clave GGD en coronatest.nl y has recibido una confirmación? Entonces ya has terminado.</string>
     <string name="coronatest_finish_confirmation_accept">Sí, terminar</string>
     <string name="coronatest_finish_confirmation_cancel">Cancelar</string>
+    <string name="lab_test_key_cd">Clave GGD</string>
     <string name="app_message_channel_name">Mensajes de la app</string>
     <string name="app_message_channel_description">Mensajes sobre CoronaMelder</string>
     <string name="still_useful_title">Estoy vacunado/a o me he recuperado del coronavirus. ¿Sigue siendo útil la app?</string>

@@ -327,6 +327,7 @@
     <string name="coronatest_finish_confirmation_text">Avez-vous saisi votre code GGD sur coronatest.nl et reçu une confirmation ? Si oui, vous pouvez terminer.</string>
     <string name="coronatest_finish_confirmation_accept">Oui, terminer</string>
     <string name="coronatest_finish_confirmation_cancel">Annuler</string>
+    <string name="lab_test_key_cd">Code GGD</string>
     <string name="app_message_channel_name">Notifications de l\'application</string>
     <string name="app_message_channel_description">Notifications relatives à CoronaMelder</string>
     <string name="still_useful_title">Je suis vacciné(e) ou guéri(e) de la Covid-19, l\'application est-elle encore vraiment utile ?</string>
