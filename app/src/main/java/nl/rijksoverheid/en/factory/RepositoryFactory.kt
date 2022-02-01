@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.factory
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.google.android.gms.common.ConnectionResult
@@ -29,6 +30,7 @@ import nl.rijksoverheid.en.job.ProcessManifestWorker
 import nl.rijksoverheid.en.job.ScheduleDecoyWorker
 import nl.rijksoverheid.en.job.UploadDiagnosisKeysJob
 import nl.rijksoverheid.en.labtest.LabTestRepository
+import nl.rijksoverheid.en.migration.RecoverBackupHelper.recoverSecurePreferencesFromBackupMigration
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.GooglePlayServicesUpToDateChecker
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
@@ -163,17 +165,26 @@ object RepositoryFactory {
 
     @Suppress("BlockingMethodInNonBlockingContext")
     private fun createSecurePreferences(context: Context): AsyncSharedPreferences {
+        fun create(fileName: String): SharedPreferences {
+            val masterKey =
+                MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
+            return EncryptedSharedPreferences.create(
+                context,
+                fileName,
+                masterKey,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+        }
+
         return notificationPreferences ?: AsyncSharedPreferences {
-            retry {
-                val masterKey =
-                    MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
-                EncryptedSharedPreferences.create(
-                    context,
-                    "${BuildConfig.APPLICATION_ID}.notifications",
-                    masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-                )
+            val fileName = "${BuildConfig.APPLICATION_ID}.notifications"
+
+            try {
+                retry { create(fileName) }
+            } catch (e: Exception) {
+                recoverSecurePreferencesFromBackupMigration(context, fileName)
+                create(fileName)
             }
         }.also { notificationPreferences = it }
     }
