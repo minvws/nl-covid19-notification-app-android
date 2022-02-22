@@ -21,6 +21,7 @@ import nl.rijksoverheid.en.api.LabTestService
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.dashboard.DashboardRepository
 import nl.rijksoverheid.en.enapi.nearby.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
 import nl.rijksoverheid.en.job.CheckConnectionWorker
@@ -161,6 +162,10 @@ object RepositoryFactory {
 
     fun createSettingsRepository(context: Context): SettingsRepository {
         return SettingsRepository(context, Settings(context))
+    }
+
+    fun createDashboardRepository(): DashboardRepository {
+        return DashboardRepository()
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")

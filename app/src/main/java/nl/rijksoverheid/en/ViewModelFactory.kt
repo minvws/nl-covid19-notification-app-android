@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import nl.rijksoverheid.en.applifecycle.AppLifecycleViewModel
 import nl.rijksoverheid.en.factory.RepositoryFactory.createAppConfigManager
 import nl.rijksoverheid.en.factory.RepositoryFactory.createAppLifecycleManager
+import nl.rijksoverheid.en.factory.RepositoryFactory.createDashboardRepository
 import nl.rijksoverheid.en.factory.RepositoryFactory.createExposureNotificationsRepository
 import nl.rijksoverheid.en.factory.RepositoryFactory.createLabTestRepository
 import nl.rijksoverheid.en.factory.RepositoryFactory.createOnboardingRepository
@@ -51,6 +52,7 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
                 createOnboardingRepository(context),
                 createExposureNotificationsRepository(context),
                 NotificationsRepository(context),
+                createDashboardRepository(),
                 createSettingsRepository(context),
                 createAppConfigManager(context)
             ) as T

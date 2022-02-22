@@ -7,19 +7,23 @@
 package nl.rijksoverheid.en.status
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.ExposureNotificationsRepository
+import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.FeatureFlagOption
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.dashboard.DashboardRepository
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
@@ -35,6 +39,7 @@ class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
     private val exposureNotificationsRepository: ExposureNotificationsRepository,
     private val notificationsRepository: NotificationsRepository,
+    private val dashboardRepository: DashboardRepository,
     settingsRepository: SettingsRepository,
     private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone()
@@ -105,6 +110,8 @@ class StatusViewModel(
     val exposureNotificationApiUpdateRequired = liveData {
         emit(exposureNotificationsRepository.isExposureNotificationApiUpdateRequired())
     }
+
+    val dashboardData: LiveData<DashboardData?> = MutableLiveData(null)
 
     suspend fun getAppointmentPhoneNumber() =
         appConfigManager.getCachedConfigOrDefault().appointmentPhoneNumber
@@ -217,6 +224,12 @@ class StatusViewModel(
         viewModelScope.launch {
             exposureNotificationsRepository.resetNotificationsEnabledTimestamp()
             exposureNotificationsRepository.rescheduleBackgroundJobs()
+        }
+    }
+
+    fun updateDashboardData() {
+        viewModelScope.launch {
+            (dashboardData as MutableLiveData).value = dashboardRepository.getDashboardData()
         }
     }
 

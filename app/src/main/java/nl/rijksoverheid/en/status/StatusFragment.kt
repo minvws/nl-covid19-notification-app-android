@@ -114,7 +114,10 @@ class StatusFragment @JvmOverloads constructor(
         statusViewModel.lastKeysProcessed.observe(viewLifecycleOwner) {
             section.lastKeysProcessed = it
         }
-
+        statusViewModel.dashboardData.observe(viewLifecycleOwner) { dashboardData ->
+            if (dashboardData != null)
+                section.updateDashboardData(dashboardData)
+        }
         statusViewModel.exposureNotificationApiUpdateRequired.observe(viewLifecycleOwner) { requireAnUpdate ->
             if (requireAnUpdate)
                 findNavController().navigateCatchingErrors(StatusFragmentDirections.actionUpdatePlayServices())
@@ -125,6 +128,7 @@ class StatusFragment @JvmOverloads constructor(
         super.onResume()
         statusViewModel.isIgnoringBatteryOptimizations.value = requireContext().isIgnoringBatteryOptimizations()
         section.refreshStateContent()
+        statusViewModel.updateDashboardData()
     }
 
     private fun updateHeaderState(headerState: StatusViewModel.HeaderState) {

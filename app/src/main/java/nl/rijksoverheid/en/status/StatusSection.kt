@@ -8,7 +8,14 @@ package nl.rijksoverheid.en.status
 
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
+import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.api.model.DashboardData
+import nl.rijksoverheid.en.api.model.DashboardItem
+import nl.rijksoverheid.en.items.HorizontalRecyclerViewItem
+import java.time.Instant
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 class StatusSection : Section() {
 
@@ -20,6 +27,11 @@ class StatusSection : Section() {
         setHideWhenEmpty(true)
     }
     private val notificationItems = mutableListOf<Item<*>>()
+
+    private var dashboardData: DashboardData? = null
+    private val dashboardGroup = Section().apply {
+        setHideWhenEmpty(true)
+    }
 
     var lastKeysProcessed: LocalDateTime? = null
         set(value) {
@@ -91,11 +103,29 @@ class StatusSection : Section() {
         ensureInitialized()
     }
 
+   fun updateDashboardData(dashboardData: DashboardData) {
+       if (this.dashboardData != dashboardData) {
+           this.dashboardData = dashboardData
+           val dashboardItems = dashboardData.items
+               .sortedBy { it.sortingValue }
+               .map { StatusDashboardItem(it) }
+
+           dashboardGroup.update(
+               listOf(
+                   HorizontalRecyclerViewItem(dashboardItems)
+               )
+           )
+       }
+       ensureInitialized()
+    }
+
     private fun ensureInitialized() {
         if (isEmpty) {
             addAll(
                 listOf(
-                    headerGroup, notificationGroup,
+                    headerGroup,
+                    notificationGroup,
+                    dashboardGroup,
                     Section(
                         listOf(
                             StatusActionItem.About,
