@@ -16,61 +16,91 @@
             type="nl.rijksoverheid.en.status.StatusDashboardItem.ViewState" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container"
+    <androidx.cardview.widget.CardView
         android:layout_width="256dp"
         android:layout_height="171dp"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
-        android:background="@drawable/message_box_background"
-        android:backgroundTint="@color/info_surface"
-        android:padding="16dp">
+        app:cardCornerRadius="@dimen/cardview_corner_radius">
 
-        <ImageView
-            android:id="@+id/dashboard_item_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:importantForAccessibility="no"
-            app:imageResource="@{viewState.icon}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_positive_test_results" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/dashboard_item_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="@{viewState.title}"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/dashboard_item_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/status_dashboard_positive_test_results" />
+            <ImageView
+                android:id="@+id/dashboard_item_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:importantForAccessibility="no"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                app:imageResource="@{viewState.icon}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_positive_test_results" />
 
-        <TextView
-            android:id="@+id/highlightedLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="@{viewState.getHighlightedLabel(context)}"
-            android:textAppearance="?attr/textAppearanceBody2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/highlighted_value"
-            tools:text="Yesterday" />
+            <TextView
+                android:id="@+id/dashboard_item_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@{viewState.title}"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/dashboard_item_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/status_dashboard_card_positive_test_results" />
 
-        <TextView
-            android:id="@+id/highlighted_value"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="@{viewState.getHighlightedValue(context)}"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="54.225" />
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/header_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="dashboard_item_icon, dashboard_item_title" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/line_chart"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header_barrier"
+                app:layout_constraintBottom_toTopOf="@id/highlightedLabel"/>
+
+            <TextView
+                android:id="@+id/highlightedLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{viewState.getHighlightedLabel(context)}"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/highlighted_value"
+                tools:text="Yesterday" />
+
+            <TextView
+                android:id="@+id/highlighted_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{viewState.getHighlightedValue(context)}"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="54.225" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
