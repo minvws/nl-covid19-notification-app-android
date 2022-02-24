@@ -17,3 +17,7 @@ fun Double.formatToString(context: Context): String {
     val locale = Locale(context.getString(R.string.app_language))
     return DecimalFormat.getInstance(locale).format(this).toString()
 }
+
+fun Float.formatPercentageToString(): String {
+    return "${toString()}%"
+}

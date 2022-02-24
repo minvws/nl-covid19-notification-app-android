@@ -69,10 +69,40 @@
                 android:focusable="false"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/header_barrier"
                 app:layout_constraintBottom_toTopOf="@id/highlightedLabel"/>
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:importantForAccessibility="no"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header_barrier"
+                app:layout_constraintBottom_toTopOf="@id/highlightedLabel"
+                app:layout_constraintHorizontal_bias="1"
+                tools:src="@drawable/illustration_helpdesk"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/progress_container"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:importantForAccessibility="no"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header_barrier"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
                 android:id="@+id/highlightedLabel"

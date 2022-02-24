@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/description_text"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintBaseline_toBaselineOf="@id/percentage_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/percentage_text"
+        tools:text="Volledig gevaccineerd (18+)"/>
+
+    <TextView
+        android:id="@+id/percentage_text"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="86,1%"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/text_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="description_text, percentage_text" />
+
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_barrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:trackCornerRadius="8dp"
+        app:trackThickness="8dp"
+        app:indicatorColor="@color/dashboard_graph_line"
+        app:trackColor="@color/dashboard_graph_fill"
+        tools:progress="86"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

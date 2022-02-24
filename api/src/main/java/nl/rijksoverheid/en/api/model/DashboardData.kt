@@ -31,7 +31,7 @@ data class DashboardData (
 sealed class DashboardItem (
     val sortingValue: Int,
     val highlightedValue: GraphValue? = null,
-    val values: List<GraphValue>
+    val values: List<GraphValue> = emptyList()
 ) {
     @JsonClass(generateAdapter = true)
     class PositiveTestResults(
