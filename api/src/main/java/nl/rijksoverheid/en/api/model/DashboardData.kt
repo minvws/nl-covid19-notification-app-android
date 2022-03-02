@@ -8,8 +8,10 @@
 
 package nl.rijksoverheid.en.api.model
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 data class DashboardData (
@@ -29,59 +31,66 @@ data class DashboardData (
 }
 
 sealed class DashboardItem (
-    val sortingValue: Int,
-    val highlightedValue: GraphValue? = null,
-    val values: List<GraphValue> = emptyList()
-) {
+    open val sortingValue: Int,
+    open val highlightedValue: GraphValue? = null,
+    open val values: List<GraphValue> = emptyList()
+): Parcelable {
+
+    @Parcelize
     @JsonClass(generateAdapter = true)
     class PositiveTestResults(
-        @Json(name = "sorting_value") sortingValue: Int,
-        @Json(name = "highlighted_value") highlightedValue: GraphValue?,
-        @Json(name = "values") values: List<GraphValue>,
+        @Json(name = "sorting_value") override val sortingValue: Int,
+        @Json(name = "highlighted_value") override val highlightedValue: GraphValue?,
+        @Json(name = "values") override val values: List<GraphValue>,
         @Json(name = "daily_average_amount") val dailyAverageAmount: Double,
         @Json(name = "daily_average_start") val dailyAverageStart: Long,
         @Json(name = "daily_average_end") val dailyAverageEnd: Long,
         @Json(name = "confirmed_cases") val confirmedCases: Double
     ): DashboardItem(sortingValue, highlightedValue, values)
 
+    @Parcelize
     @JsonClass(generateAdapter = true)
     class CoronaMelderUsers(
-        @Json(name = "sorting_value") sortingValue: Int,
-        @Json(name = "highlighted_value") highlightedValue: GraphValue?,
-        @Json(name = "values") values: List<GraphValue>
+        @Json(name = "sorting_value") override val sortingValue: Int,
+        @Json(name = "highlighted_value") override val highlightedValue: GraphValue?,
+        @Json(name = "values") override val values: List<GraphValue>
     ): DashboardItem(sortingValue, highlightedValue, values)
 
+    @Parcelize
     @JsonClass(generateAdapter = true)
     class HospitalAdmissions(
-        @Json(name = "sorting_value") sortingValue: Int,
-        @Json(name = "highlighted_value") highlightedValue: GraphValue?,
-        @Json(name = "values") values: List<GraphValue>,
+        @Json(name = "sorting_value") override val sortingValue: Int,
+        @Json(name = "highlighted_value") override val highlightedValue: GraphValue?,
+        @Json(name = "values") override val values: List<GraphValue>,
         @Json(name = "daily_average_amount") val dailyAverageAmount: Double,
         @Json(name = "daily_average_start") val dailyAverageStart: Long,
         @Json(name = "daily_average_end") val dailyAverageEnd: Long,
     ): DashboardItem(sortingValue, highlightedValue, values)
 
+    @Parcelize
     @JsonClass(generateAdapter = true)
     class IcuAdmissions(
-        @Json(name = "sorting_value") sortingValue: Int,
-        @Json(name = "highlighted_value") highlightedValue: GraphValue?,
-        @Json(name = "values") values: List<GraphValue>,
+        @Json(name = "sorting_value") override val sortingValue: Int,
+        @Json(name = "highlighted_value") override val highlightedValue: GraphValue?,
+        @Json(name = "values") override val values: List<GraphValue>,
         @Json(name = "daily_average_amount") val dailyAverageAmount: Double,
         @Json(name = "daily_average_start") val dailyAverageStart: Long,
         @Json(name = "daily_average_end") val dailyAverageEnd: Long,
     ): DashboardItem(sortingValue, highlightedValue, values)
 
+    @Parcelize
     @JsonClass(generateAdapter = true)
     class VaccinationCoverage(
-        @Json(name = "sorting_value") sortingValue: Int,
-        @Json(name = "values") values: List<GraphValue>,
+        @Json(name = "sorting_value") override val sortingValue: Int,
+        @Json(name = "values") override val values: List<GraphValue>,
         @Json(name = "booster_coverage") val boosterCoverage: Float,
         @Json(name = "elder_coverage") val elderCoverage: Float,
     ): DashboardItem(sortingValue, null, values)
 }
 
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class GraphValue (
     @Json(name = "timestamp") val timestamp: Long,
     @Json(name = "value") val value: Double
-)
+): Parcelable

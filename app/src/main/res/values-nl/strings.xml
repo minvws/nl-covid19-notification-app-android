@@ -352,4 +352,5 @@
     <string name="status_dashboard_card_vaccination_coverage">Vaccinatiegraad</string>
     <string name="status_dashboard_card_vaccination_coverage_elder">Volledig gevaccineerd (18+)</string>
     <string name="status_dashboard_card_vaccination_coverage_booster">Opkomst boosterprik (18+)</string>
+    <string name="dashboard_title">Statistieken</string>
 </resources>

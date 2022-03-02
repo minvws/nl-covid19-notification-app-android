@@ -29,6 +29,7 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.status.StatusSection.NotificationAction
@@ -116,7 +117,7 @@ class StatusFragment @JvmOverloads constructor(
         }
         statusViewModel.dashboardData.observe(viewLifecycleOwner) { dashboardData ->
             if (dashboardData != null)
-                section.updateDashboardData(dashboardData)
+                section.updateDashboardData(dashboardData, ::navigateToDashboardItem)
         }
         statusViewModel.exposureNotificationApiUpdateRequired.observe(viewLifecycleOwner) { requireAnUpdate ->
             if (requireAnUpdate)
@@ -305,6 +306,12 @@ class StatusFragment @JvmOverloads constructor(
                 Timber.e("Could not open app settings")
             }
         }
+    }
+
+    private fun navigateToDashboardItem(dashboardItem: DashboardItem) {
+        findNavController().navigateCatchingErrors(
+            StatusFragmentDirections.actionDashboard(dashboardItem)
+        )
     }
 
     private fun showRemoveNotificationConfirmationDialog(formattedDate: String) {

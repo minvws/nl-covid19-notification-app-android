@@ -103,7 +103,10 @@ class StatusSection : Section() {
         ensureInitialized()
     }
 
-   fun updateDashboardData(dashboardData: DashboardData) {
+   fun updateDashboardData(
+       dashboardData: DashboardData,
+       onItemClick: (DashboardItem) -> Unit
+   ) {
        if (this.dashboardData != dashboardData) {
            this.dashboardData = dashboardData
            val dashboardItems = dashboardData.items
@@ -112,7 +115,11 @@ class StatusSection : Section() {
 
            dashboardGroup.update(
                listOf(
-                   HorizontalRecyclerViewItem(dashboardItems)
+                   HorizontalRecyclerViewItem(dashboardItems) { item, _ ->
+                       val dashBoardItem = (item as? StatusDashboardItem)?.viewState?.dashboardItem
+                       if (dashBoardItem != null)
+                           onItemClick(dashBoardItem)
+                   }
                )
            )
        }

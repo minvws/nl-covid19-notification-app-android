@@ -8,25 +8,28 @@
 
 package nl.rijksoverheid.en.items
 
-import android.view.View
 import com.xwray.groupie.Group
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemHorizontalRecyclerviewBinding
 
 class HorizontalRecyclerViewItem(
-    private val children: List<Group>
+    private val children: List<Group>,
+    private val onItemClickListener: OnItemClickListener
 ) : BaseBindableItem<ItemHorizontalRecyclerviewBinding>() {
 
     private val section = Section()
-    private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
+    val adapter = GroupAdapter<GroupieViewHolder>().apply { add(section) }
 
     override fun getLayout() = R.layout.item_horizontal_recyclerview
 
     override fun bind(viewBinding: ItemHorizontalRecyclerviewBinding, position: Int) {
         section.update(children)
         viewBinding.content.adapter = adapter
+
+        adapter.setOnItemClickListener(onItemClickListener)
     }
 }

@@ -36,7 +36,7 @@ open class StatusDashboardItem(
     dashboardItem: DashboardItem
 ) : BaseBindableItem<ItemStatusDashboardItemBinding>() {
 
-    private val viewState: ViewState = ViewState(dashboardItem)
+    val viewState: ViewState = ViewState(dashboardItem)
 
     data class ViewState(
         val dashboardItem: DashboardItem,
@@ -133,6 +133,10 @@ open class StatusDashboardItem(
         viewBinding.lineChart.isVisible = false
         viewBinding.image.isVisible = true
         viewBinding.progressContainer.isVisible = false
+
+        if (viewState.dashboardItem is DashboardItem.CoronaMelderUsers) {
+            viewBinding.image.setImageResource(R.drawable.ic_corona_melder_users)
+        }
     }
 
     private fun bindProgressStyle(viewBinding: ItemStatusDashboardItemBinding) {

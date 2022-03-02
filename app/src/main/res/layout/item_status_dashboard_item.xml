@@ -21,7 +21,7 @@
         android:layout_height="171dp"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
-        app:cardCornerRadius="@dimen/cardview_corner_radius">
+        app:cardCornerRadius="@dimen/cardview_corner_radius" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
@@ -85,9 +85,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/header_barrier"
-                app:layout_constraintBottom_toTopOf="@id/highlightedLabel"
                 app:layout_constraintHorizontal_bias="1"
-                tools:src="@drawable/illustration_helpdesk"
+                tools:src="@drawable/ic_corona_melder_users"
                 tools:visibility="visible" />
 
             <LinearLayout

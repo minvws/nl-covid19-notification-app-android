@@ -30,8 +30,9 @@
     <color name="gradient_status_end">#FFFFFF</color>
     <color name="ic_ggd_key_format_color">#40000000</color>
 
-    <color name="dashboard_graph_line">#3479C1</color>
+    <color name="dashboard_graph_line">@color/dark_blue</color>
     <color name="dashboard_graph_fill">#D0E4F2</color>
+    <color name="dashboard_graph_highlight_line">#4F4F4F</color>
 
     <!-- Color palette -->
     <color name="white">#FFFFFF</color>
