@@ -346,12 +346,20 @@
     <string name="lab_test_done_generic_paragraph_2">The GGD will tell you what you can do to prevent infecting others. Take care, and get well soon.</string>
     <string name="lab_test_done_generic_box_4">The notification is only sent if you\'ve submitted your GGD key to the GGD or via coronatest.nl.</string>
     <string name="status_error_notifications_disabled_headline">Notifications are turned <u>off</u></string>
-    <string name="status_dashboard_card_positive_test_results">Positief geteste mensen</string>
-    <string name="status_dashboard_card_corona_melder_users">Mensen die CoronaMelder gebruiken</string>
-    <string name="status_dashboard_card_hospital_admissions">Mensen met corona in ziekenhuis (zonder IC)</string>
-    <string name="status_dashboard_card_icu_admissions">Mensen met corona op IC</string>
-    <string name="status_dashboard_card_vaccination_coverage">Vaccinatiegraad</string>
+    <string name="dashboard_positive_test_results_header">Positief geteste mensen</string>
+    <string name="dashboard_corona_melder_users_header">Mensen die CoronaMelder gebruiken</string>
+    <string name="dashboard_hospital_admissions_header">Mensen met corona in ziekenhuis (zonder IC)</string>
+    <string name="dashboard_icu_admissions_header">Mensen met corona op IC</string>
+    <string name="dashboard_vaccination_coverage_header">Vaccinatiegraad</string>
     <string name="status_dashboard_card_vaccination_coverage_elder">Volledig gevaccineerd (18+)</string>
     <string name="status_dashboard_card_vaccination_coverage_booster">Opkomst boosterprik (18+)</string>
     <string name="dashboard_title">Statistieken</string>
+    <string name="dashboard_more_info_header">Meer cijfers</string>
+    <string name="dashboard_positive_test_results_summary">Er zijn gemiddeld 117.758 mensen per dag positief getest op corona tussen 2 februari en 9 februari. Van alle testen bij de GGD waren er 60,7%% positief.</string>
+    <string name="dashboard_corona_melder_users_summary">Gisteren gebruikten 2.680.672 mensen de CoronaMelder-app om ontmoetingen bij te houden.</string>
+    <string name="dashboard_hospital_admissions_summary">Er zijn gemiddeld 187 mensen per dag opgenomen in het ziekenhuis tussen 29 januari en 4 februari. De afgelopen dagen tellen niet mee voor het gemiddelde, omdat de cijfers over deze dagen nog niet compleet zijn.</string>
+    <string name="dashboard_icu_admissions_summary">Er zijn gemiddeld 15 mensen per dag opgenomen op een intensive care-afdeling tussen 29 januari en 4 februari. De afgelopen dagen tellen niet mee voor het gemiddelde, omdat de cijfers over deze dagen nog niet compleet zijn. </string>
+    <string name="dashboard_vaccination_coverage_summary">Op dit moment is 86,3%% van de bevolking van 18 jaar en ouder volledig gevaccineerd tegen corona. 60,2%% van de bevolking heeft een boosterprik tegen corona gekregen.</string>
+    <string name="dashboard_more_info_link">Bekijk alle cijfers</string>
 </resources>
+

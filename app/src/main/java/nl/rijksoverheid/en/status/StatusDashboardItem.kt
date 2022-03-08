@@ -24,6 +24,8 @@ import nl.rijksoverheid.en.databinding.ViewLabelledProgressBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.util.ext.applyCardViewStyling
 import nl.rijksoverheid.en.util.ext.applyLineStyling
+import nl.rijksoverheid.en.util.ext.icon
+import nl.rijksoverheid.en.util.ext.title
 import nl.rijksoverheid.en.util.formatExposureDateShort
 import nl.rijksoverheid.en.util.formatPercentageToString
 import nl.rijksoverheid.en.util.formatToString
@@ -42,21 +44,11 @@ open class StatusDashboardItem(
         val dashboardItem: DashboardItem,
         val clock: Clock = Clock.systemDefaultZone(),
     ) {
-        @DrawableRes val icon: Int = when (dashboardItem) {
-            is DashboardItem.PositiveTestResults -> R.drawable.ic_positive_test_results
-            is DashboardItem.CoronaMelderUsers -> R.drawable.ic_corona_melder
-            is DashboardItem.HospitalAdmissions -> R.drawable.ic_hospital_admissions
-            is DashboardItem.IcuAdmissions -> R.drawable.ic_icu_admissions
-            is DashboardItem.VaccinationCoverage -> R.drawable.ic_vaccination_coverage
-        }
+        @DrawableRes
+        val icon: Int = dashboardItem.icon
 
-        @StringRes val title: Int = when (dashboardItem) {
-            is DashboardItem.PositiveTestResults -> R.string.status_dashboard_card_positive_test_results
-            is DashboardItem.CoronaMelderUsers -> R.string.status_dashboard_card_corona_melder_users
-            is DashboardItem.HospitalAdmissions -> R.string.status_dashboard_card_hospital_admissions
-            is DashboardItem.IcuAdmissions -> R.string.status_dashboard_card_icu_admissions
-            is DashboardItem.VaccinationCoverage -> R.string.status_dashboard_card_vaccination_coverage
-        }
+        @StringRes
+        val title: Int = dashboardItem.title
 
         private fun getLocalDateByTimestamp(timestamp: Long): LocalDate {
             return Instant.ofEpochMilli(timestamp)

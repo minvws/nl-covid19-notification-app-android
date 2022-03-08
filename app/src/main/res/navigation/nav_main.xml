@@ -401,8 +401,17 @@
         android:label="DashboardFragment"
         tools:layout="@layout/fragment_dashboard" >
         <argument
-            android:name="dashboardItem"
-            app:argType="nl.rijksoverheid.en.api.model.DashboardItem" />
+            android:name="dashboardItemReference"
+            app:argType="nl.rijksoverheid.en.api.model.DashboardItem$Reference" />
+        <argument
+            android:name="showEnterTransition"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_dashboard_fragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@id/dashboardFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>

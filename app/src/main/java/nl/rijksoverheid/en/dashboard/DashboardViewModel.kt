@@ -8,7 +8,16 @@
 
 package nl.rijksoverheid.en.dashboard
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import nl.rijksoverheid.en.api.model.DashboardData
 
-class DashboardViewModel: ViewModel() {
+class DashboardViewModel(
+    dashboardRepository: DashboardRepository
+): ViewModel() {
+
+    val dashboardData: LiveData<DashboardData?> = liveData {
+        emit(dashboardRepository.getDashboardData())
+    }
 }

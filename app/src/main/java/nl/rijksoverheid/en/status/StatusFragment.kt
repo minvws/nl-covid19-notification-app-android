@@ -310,7 +310,7 @@ class StatusFragment @JvmOverloads constructor(
 
     private fun navigateToDashboardItem(dashboardItem: DashboardItem) {
         findNavController().navigateCatchingErrors(
-            StatusFragmentDirections.actionDashboard(dashboardItem)
+            StatusFragmentDirections.actionDashboard(dashboardItem.reference)
         )
     }
 

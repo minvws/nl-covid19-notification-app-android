@@ -10,78 +10,70 @@ package nl.rijksoverheid.en.dashboard
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.databinding.FragmentDashboardBinding
-import nl.rijksoverheid.en.util.ext.applyDashboardStyling
-import nl.rijksoverheid.en.util.ext.applyLineStyling
+import nl.rijksoverheid.en.api.model.DashboardItem
+import nl.rijksoverheid.en.databinding.FragmentListBinding
+import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.notification.PostNotificationSection
+import nl.rijksoverheid.en.util.ext.setExitSlideTransition
+import nl.rijksoverheid.en.util.ext.setSlideTransition
+
 /**
  * Fragment for displaying Corona statistics.
  */
-class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
+class DashboardFragment : BaseFragment(R.layout.fragment_list) {
 
     private val args: DashboardFragmentArgs by navArgs()
 
     private val viewModel: DashboardViewModel by viewModels()
+    private val adapter = GroupAdapter<GroupieViewHolder>()
+    private val section = DashboardSection().also {
+        adapter.add(it)
+    }
 
-    private lateinit var binding: FragmentDashboardBinding
+    private lateinit var binding: FragmentListBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (args.showEnterTransition) {
+            setSlideTransition()
+        } else {
+            setExitSlideTransition()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentDashboardBinding.bind(view)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
+        binding = FragmentListBinding.bind(view)
 
-
-        binding.lineChart.apply {
-
-            val entries = args.dashboardItem.values
-                .map { Entry(it.timestamp.toFloat(), it.value.toFloat()) }
-                .sortedBy { it.x }
-            val dataSet = LineDataSet(entries, "")
-            data = LineData(dataSet)
-
-            applyDashboardStyling(context, dataSet)
-
-            //val horizontalOffset = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin).toFloat()
-            //setViewPortOffsets(horizontalOffset, 0f, horizontalOffset, 0f)
-
-            //Fix: SetViewPortOffSets are not applied the first time
-            //post { invalidate() }
+        binding.toolbar.apply {
+            setTitle(R.string.dashboard_title)
+            setNavigationIcon(R.drawable.ic_close)
+            setNavigationContentDescription(R.string.cd_close)
         }
 
-        /*
-        val chartViewModel = ChartViewModel(
-            chartDataPoints = args.dashboardItem.values.mapIndexed { index, item ->
-                ScrubPointViewModel(
-                    value = item.value,
-                    timestamp = item.timestamp,
-                    index = index,
-                    talkbackString = item.value.toString()
-                ) {
-                    // On Swipe Callback
-                }
-            },
-            strokeColor = R.color.dashboard_graph_line,
-            fillColor = R.color.dashboard_graph_fill,
-            benchmark =54225.0,
-            benchmarkColor = R.color.color_error,
-            contentDescription = "",
-            priceHint = 0
-        )
-        binding.chartView.setViewModel(chartViewModel)
+        binding.content.adapter = adapter
 
-         */
+        viewModel.dashboardData.observe(viewLifecycleOwner) { dashboardData ->
+            if (dashboardData != null)
+                section.updateDashboardData(args.dashboardItemReference, dashboardData, ::navigateToDashboardItem)
+        }
+    }
+
+    private fun navigateToDashboardItem(dashboardItemReference: DashboardItem.Reference) {
+        enterTransition = exitTransition
+        findNavController().navigateCatchingErrors(
+            DashboardFragmentDirections.actionDashboardFragment(dashboardItemReference, true),
+            FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
+        )
     }
 }

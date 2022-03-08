@@ -21,6 +21,7 @@
         android:layout_height="171dp"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="@dimen/cardview_corner_radius" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,7 +53,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/dashboard_item_icon"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/status_dashboard_card_positive_test_results" />
+                tools:text="@string/dashboard_positive_test_results_header" />
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/header_barrier"
