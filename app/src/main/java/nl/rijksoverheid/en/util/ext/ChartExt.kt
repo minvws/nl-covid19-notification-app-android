@@ -12,6 +12,7 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.Utils
@@ -30,6 +31,12 @@ fun LineChart.applyCardViewStyling() {
     description.isEnabled = false
 
     setTouchEnabled(false)
+
+    val horizontalOffset = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin).toFloat()
+    setViewPortOffsets(horizontalOffset, 0f, horizontalOffset, 0f)
+
+    //Fix: SetViewPortOffSets are not applied the first time within a Recyclerview
+    post { invalidate() }
 }
 
 fun LineChart.applyDashboardStyling(
@@ -41,6 +48,8 @@ fun LineChart.applyDashboardStyling(
     description.isEnabled = false
 
     with(axisLeft) {
+        yOffset = -(Utils.convertPixelsToDp(textSize) / 2)
+        setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)
         setDrawAxisLine(false)
         setDrawGridLines(false)
         setLabelCount(2, true)
@@ -77,6 +86,12 @@ fun LineChart.applyDashboardStyling(
     }
 
     dataSet.applyLineStyling(context)
+
+    val verticalOffset = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin).toFloat()
+    setViewPortOffsets(0f, verticalOffset, 0f, verticalOffset)
+
+    //Fix: SetViewPortOffSets are not applied the first time within a Recyclerview
+    post { invalidate() }
 }
 
 fun LineDataSet.applyLineStyling(context: Context) {

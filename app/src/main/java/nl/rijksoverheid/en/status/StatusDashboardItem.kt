@@ -30,13 +30,9 @@ import nl.rijksoverheid.en.util.ext.getIconTint
 import nl.rijksoverheid.en.util.ext.icon
 import nl.rijksoverheid.en.util.ext.title
 import nl.rijksoverheid.en.util.formatDateShort
-import nl.rijksoverheid.en.util.formatExposureDateShort
 import nl.rijksoverheid.en.util.formatPercentageToString
 import nl.rijksoverheid.en.util.formatToString
 import java.time.Clock
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneOffset
 
 open class StatusDashboardItem(
     dashboardItem: DashboardItem
@@ -110,12 +106,7 @@ open class StatusDashboardItem(
 
                 applyCardViewStyling()
 
-                val horizontalOffset = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin).toFloat()
-                setViewPortOffsets(horizontalOffset, 0f, horizontalOffset, 0f)
                 isVisible = true
-
-                //Fix: SetViewPortOffSets are not applied the first time
-                post { invalidate() }
             }
         } else {
             viewBinding.lineChart.isVisible = false
