@@ -59,6 +59,17 @@ fun LocalDateTime.formatDateTime(context: Context): String {
         .format(this)
 }
 
+/**
+ * Formats the exposure date using the correct locale.
+ */
+fun LocalDate.formatDateShort(context: Context): String {
+    val locale = Locale(context.getString(R.string.app_language))
+    val format = DateFormat.getBestDateTimePattern(locale, context.getString(R.string.date_short_format))
+    return DateTimeFormatter.ofPattern(format, locale)
+        .withDecimalStyle(DecimalStyle.of(locale))
+        .format(this)
+}
+
 fun LocalDateTime.formatDate(context: Context): String {
     val locale = Locale(context.getString(R.string.app_language))
     val format = DateFormat.getBestDateTimePattern(locale, context.getString(R.string.date_format))

@@ -64,8 +64,14 @@ class DashboardFragment : BaseFragment(R.layout.fragment_list) {
         binding.content.adapter = adapter
 
         viewModel.dashboardData.observe(viewLifecycleOwner) { dashboardData ->
-            if (dashboardData != null)
-                section.updateDashboardData(args.dashboardItemReference, dashboardData, ::navigateToDashboardItem)
+            if (dashboardData != null) {
+                section.updateDashboardData(
+                    requireContext(),
+                    args.dashboardItemReference,
+                    dashboardData,
+                    ::navigateToDashboardItem
+                )
+            }
         }
     }
 

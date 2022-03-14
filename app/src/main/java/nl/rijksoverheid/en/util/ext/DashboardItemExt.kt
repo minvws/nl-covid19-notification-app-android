@@ -8,6 +8,8 @@
 
 package nl.rijksoverheid.en.util.ext
 
+import android.content.Context
+import androidx.core.content.ContextCompat
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardItem
 
@@ -20,6 +22,12 @@ val DashboardItem.icon: Int
         is DashboardItem.IcuAdmissions -> R.drawable.ic_icu_admissions
         is DashboardItem.VaccinationCoverage -> R.drawable.ic_vaccination_coverage
     }
+
+fun DashboardItem.getIconTint(context: Context) =
+    if (this !is DashboardItem.CoronaMelderUsers)
+        ContextCompat.getColor(context, R.color.color_primary)
+    else
+        null
 
 val DashboardItem.title: Int
     get() = when (this) {

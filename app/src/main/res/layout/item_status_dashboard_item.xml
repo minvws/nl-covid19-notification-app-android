@@ -36,6 +36,7 @@
                 android:importantForAccessibility="no"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
+                app:tint="@{viewState.getTintColor(context)}"
                 app:imageResource="@{viewState.icon}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

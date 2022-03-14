@@ -8,16 +8,22 @@
 
 package nl.rijksoverheid.en.dashboard
 
+import android.content.Context
 import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.ParagraphItem
+import nl.rijksoverheid.en.util.DateTimeHelper
+import nl.rijksoverheid.en.util.formatDateShort
+import nl.rijksoverheid.en.util.formatPercentageToString
+import nl.rijksoverheid.en.util.formatToString
 
 class DashboardSection: Section() {
 
     fun updateDashboardData(
+        context: Context,
         selectedDashboardItem: DashboardItem.Reference,
         dashboardData: DashboardData,
         onDashboardLinkItemClicked: (DashboardItem.Reference) -> Unit
@@ -38,9 +44,35 @@ class DashboardSection: Section() {
             DashboardItem.Reference.VaccinationCoverage -> R.string.dashboard_vaccination_coverage_summary
         }
 
+        val summaryArgs: List<String>  = when (dashboardItem) {
+            is DashboardItem.PositiveTestResults -> listOf(
+                dashboardItem.dailyAverageAmount.formatToString(context),
+                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDateShort(context),
+                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDateShort(context),
+                dashboardItem.confirmedCases.formatPercentageToString()
+            )
+            is DashboardItem.CoronaMelderUsers -> listOfNotNull(
+                dashboardItem.highlightedValue?.value?.formatToString(context)
+            )
+            is DashboardItem.HospitalAdmissions -> listOf(
+                dashboardItem.dailyAverageAmount.formatToString(context),
+                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDateShort(context),
+                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDateShort(context),
+            )
+            is DashboardItem.IcuAdmissions -> listOf(
+                dashboardItem.dailyAverageAmount.formatToString(context),
+                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDateShort(context),
+                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDateShort(context),
+            )
+            is DashboardItem.VaccinationCoverage -> listOf(
+                dashboardItem.elderCoverage.formatPercentageToString(),
+                dashboardItem.boosterCoverage.formatPercentageToString()
+            )
+        }
+
         val items = listOf(
             HeaderItem(headerRes),
-            ParagraphItem(summaryRes),
+            ParagraphItem(summaryRes, *summaryArgs.toTypedArray()),
             DashboardGraphItem(dashboardItem),
             HeaderItem(R.string.dashboard_more_info_header)
         ) + dashboardData.items

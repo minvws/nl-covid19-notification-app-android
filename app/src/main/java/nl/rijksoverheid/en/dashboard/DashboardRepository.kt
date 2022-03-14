@@ -31,7 +31,7 @@ class DashboardRepository {
                     79530.0,
                     1627257600,
                     1627257800,
-                    59.3
+                    59.3f
                 ),
                 DashboardItem.CoronaMelderUsers(
                     1,

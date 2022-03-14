@@ -18,6 +18,7 @@ import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.databinding.ItemDashboardGraphBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.util.ext.applyDashboardStyling
+import nl.rijksoverheid.en.util.ext.getIconTint
 import nl.rijksoverheid.en.util.ext.icon
 import nl.rijksoverheid.en.util.ext.title
 
@@ -27,9 +28,13 @@ class DashboardGraphItem(
     override fun getLayout() = R.layout.item_dashboard_graph
 
     override fun bind(viewBinding: ItemDashboardGraphBinding, position: Int) {
+        val context = viewBinding.root.context
 
-        viewBinding.dashboardItemTitle.setCompoundDrawablesWithIntrinsicBounds(dashboardItem.icon, 0, 0, 0)
         viewBinding.dashboardItemTitle.setText(dashboardItem.title)
+        viewBinding.dashboardItemTitle.setCompoundDrawablesWithIntrinsicBounds(dashboardItem.icon, 0, 0, 0)
+        dashboardItem.getIconTint(context)?.let {
+            viewBinding.dashboardItemTitle.compoundDrawables[0]?.setTint(it)
+        }
 
         viewBinding.lineChart.apply {
             val entries = dashboardItem.values

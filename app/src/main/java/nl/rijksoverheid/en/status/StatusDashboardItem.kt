@@ -10,6 +10,7 @@ package nl.rijksoverheid.en.status
 
 import android.content.Context
 import android.view.LayoutInflater
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
@@ -22,10 +23,13 @@ import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.databinding.ItemStatusDashboardItemBinding
 import nl.rijksoverheid.en.databinding.ViewLabelledProgressBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
+import nl.rijksoverheid.en.util.DateTimeHelper
 import nl.rijksoverheid.en.util.ext.applyCardViewStyling
 import nl.rijksoverheid.en.util.ext.applyLineStyling
+import nl.rijksoverheid.en.util.ext.getIconTint
 import nl.rijksoverheid.en.util.ext.icon
 import nl.rijksoverheid.en.util.ext.title
+import nl.rijksoverheid.en.util.formatDateShort
 import nl.rijksoverheid.en.util.formatExposureDateShort
 import nl.rijksoverheid.en.util.formatPercentageToString
 import nl.rijksoverheid.en.util.formatToString
@@ -47,17 +51,14 @@ open class StatusDashboardItem(
         @DrawableRes
         val icon: Int = dashboardItem.icon
 
+        @ColorInt
+        fun getTintColor(context: Context) = dashboardItem.getIconTint(context)
+
         @StringRes
         val title: Int = dashboardItem.title
 
-        private fun getLocalDateByTimestamp(timestamp: Long): LocalDate {
-            return Instant.ofEpochMilli(timestamp)
-                .atOffset(ZoneOffset.UTC)
-                .toLocalDate()
-        }
-
         fun getHighlightedLabel(context: Context) = dashboardItem.highlightedValue?.timestamp
-            ?.let { getLocalDateByTimestamp(it) }?.formatExposureDateShort(context)
+            ?.let { DateTimeHelper.convertToLocalDate(it) }?.formatDateShort(context)
 
         fun getHighlightedValue(context: Context) = dashboardItem.highlightedValue?.value
             ?.formatToString(context)

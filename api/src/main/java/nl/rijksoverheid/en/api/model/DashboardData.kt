@@ -64,7 +64,7 @@ sealed class DashboardItem (
         @Json(name = "daily_average_amount") val dailyAverageAmount: Double,
         @Json(name = "daily_average_start") val dailyAverageStart: Long,
         @Json(name = "daily_average_end") val dailyAverageEnd: Long,
-        @Json(name = "confirmed_cases") val confirmedCases: Double
+        @Json(name = "confirmed_cases") val confirmedCases: Float
     ): DashboardItem(sortingValue, highlightedValue, values, Reference.PositiveTestResults)
 
     @Parcelize

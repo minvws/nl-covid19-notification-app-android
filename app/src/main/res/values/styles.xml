@@ -31,10 +31,6 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button.Error</item>
     </style>
 
-    <style name="Widget.App.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@color/link_text_on_info_surface</item>
-    </style>
-
     <style name="Widget.App.Button.TextButton.Snackbar" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
         <item name="android:textColor">@color/link_text_on_info_surface</item>
     </style>
