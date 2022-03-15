@@ -9,12 +9,12 @@
 package nl.rijksoverheid.en.dashboard
 
 import android.content.Context
-import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.TextAppearanceSpan
 import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardItem
@@ -24,13 +24,10 @@ import nl.rijksoverheid.en.util.DateTimeHelper
 import nl.rijksoverheid.en.util.ext.getIconTint
 import nl.rijksoverheid.en.util.ext.icon
 import nl.rijksoverheid.en.util.ext.title
-import nl.rijksoverheid.en.util.formatDateShort
-import nl.rijksoverheid.en.util.formatExposureDateShort
+import nl.rijksoverheid.en.util.formatDashboardDateShort
+import nl.rijksoverheid.en.util.formatPercentageToString
 import nl.rijksoverheid.en.util.formatToString
 import java.time.Clock
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneOffset
 
 class DashboardLinkItem(
     private val dashboardItem: DashboardItem,
@@ -53,10 +50,34 @@ class DashboardLinkItem(
         @StringRes
         val title: Int = dashboardItem.title
 
-        fun getHighlightedValue(context: Context) = dashboardItem.highlightedValue?.let{ StringBuilder()
-            .append(DateTimeHelper.convertToLocalDate(it.timestamp).formatDateShort(context))
-            .append(" ")
-            .append(it.value.formatToString(context))
+        fun getSubtitle(context: Context): Spannable {
+            val highlightedLabel = when (dashboardItem) {
+                is DashboardItem.VaccinationCoverage -> context
+                    .getString(R.string.status_dashboard_card_vaccination_coverage_booster)
+                else -> dashboardItem.highlightedValue?.let {
+                    DateTimeHelper.convertToLocalDate(it.timestamp)
+                        .formatDashboardDateShort(context)
+                } ?: ""
+            }
+
+            val highlightedValue = when (dashboardItem) {
+                is DashboardItem.VaccinationCoverage -> dashboardItem.boosterCoverage.formatPercentageToString()
+                else -> dashboardItem.highlightedValue?.value?.formatToString(context) ?: ""
+            }
+
+            val stringBuilder = SpannableStringBuilder()
+                .append(highlightedLabel)
+                .append(" ")
+                .append(highlightedValue)
+
+            stringBuilder.setSpan(
+                TextAppearanceSpan(context, R.style.TextAppearance_App_Subtitle2),
+                highlightedLabel.length + 1,
+                highlightedLabel.length + 1 + highlightedValue.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            return stringBuilder
         }
     }
 

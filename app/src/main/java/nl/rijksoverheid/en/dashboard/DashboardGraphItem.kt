@@ -8,7 +8,6 @@
 
 package nl.rijksoverheid.en.dashboard
 
-import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -44,12 +43,6 @@ class DashboardGraphItem(
             data = LineData(dataSet)
 
             applyDashboardStyling(context, dataSet)
-
-            //val horizontalOffset = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin).toFloat()
-            //setViewPortOffsets(horizontalOffset, 0f, horizontalOffset, 0f)
-
-            //Fix: SetViewPortOffSets are not applied the first time
-            //post { invalidate() }
         }
     }
 

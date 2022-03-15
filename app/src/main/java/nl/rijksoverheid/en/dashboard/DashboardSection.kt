@@ -16,7 +16,7 @@ import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.ParagraphItem
 import nl.rijksoverheid.en.util.DateTimeHelper
-import nl.rijksoverheid.en.util.formatDateShort
+import nl.rijksoverheid.en.util.formatDashboardDateShort
 import nl.rijksoverheid.en.util.formatPercentageToString
 import nl.rijksoverheid.en.util.formatToString
 
@@ -47,8 +47,8 @@ class DashboardSection: Section() {
         val summaryArgs: List<String>  = when (dashboardItem) {
             is DashboardItem.PositiveTestResults -> listOf(
                 dashboardItem.dailyAverageAmount.formatToString(context),
-                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDateShort(context),
-                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDateShort(context),
+                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDashboardDateShort(context),
+                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDashboardDateShort(context),
                 dashboardItem.confirmedCases.formatPercentageToString()
             )
             is DashboardItem.CoronaMelderUsers -> listOfNotNull(
@@ -56,13 +56,13 @@ class DashboardSection: Section() {
             )
             is DashboardItem.HospitalAdmissions -> listOf(
                 dashboardItem.dailyAverageAmount.formatToString(context),
-                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDateShort(context),
-                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDateShort(context),
+                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDashboardDateShort(context),
+                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDashboardDateShort(context),
             )
             is DashboardItem.IcuAdmissions -> listOf(
                 dashboardItem.dailyAverageAmount.formatToString(context),
-                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDateShort(context),
-                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDateShort(context),
+                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDashboardDateShort(context),
+                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDashboardDateShort(context),
             )
             is DashboardItem.VaccinationCoverage -> listOf(
                 dashboardItem.elderCoverage.formatPercentageToString(),

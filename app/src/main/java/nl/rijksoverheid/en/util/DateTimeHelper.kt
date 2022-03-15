@@ -15,7 +15,7 @@ import java.time.ZoneOffset
 object DateTimeHelper {
 
     fun convertToLocalDate(timestamp: Long): LocalDate {
-        return Instant.ofEpochMilli(timestamp)
+        return Instant.ofEpochSecond(timestamp)
             .atOffset(ZoneOffset.UTC)
             .toLocalDate()
     }

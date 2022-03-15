@@ -29,7 +29,7 @@ import nl.rijksoverheid.en.util.ext.applyLineStyling
 import nl.rijksoverheid.en.util.ext.getIconTint
 import nl.rijksoverheid.en.util.ext.icon
 import nl.rijksoverheid.en.util.ext.title
-import nl.rijksoverheid.en.util.formatDateShort
+import nl.rijksoverheid.en.util.formatDashboardDateShort
 import nl.rijksoverheid.en.util.formatPercentageToString
 import nl.rijksoverheid.en.util.formatToString
 import java.time.Clock
@@ -54,7 +54,7 @@ open class StatusDashboardItem(
         val title: Int = dashboardItem.title
 
         fun getHighlightedLabel(context: Context) = dashboardItem.highlightedValue?.timestamp
-            ?.let { DateTimeHelper.convertToLocalDate(it) }?.formatDateShort(context)
+            ?.let { DateTimeHelper.convertToLocalDate(it) }?.formatDashboardDateShort(context)
 
         fun getHighlightedValue(context: Context) = dashboardItem.highlightedValue?.value
             ?.formatToString(context)

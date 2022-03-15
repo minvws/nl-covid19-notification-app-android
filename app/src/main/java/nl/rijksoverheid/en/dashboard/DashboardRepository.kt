@@ -60,7 +60,7 @@ class DashboardRepository {
                 ),
                 DashboardItem.IcuAdmissions(
                     3,
-                    GraphValue(1627257600, 898.0),
+                    GraphValue(1647169811, 899.0),
                     listOf(
                         GraphValue(1645169766, 934.0),
                         GraphValue(	1645256166, 913.0),

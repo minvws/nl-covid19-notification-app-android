@@ -354,10 +354,12 @@
     <string name="status_dashboard_card_vaccination_coverage_booster">Opkomst boosterprik (18+)</string>
     <string name="dashboard_title">Statistieken</string>
     <string name="dashboard_more_info_header">Meer cijfers</string>
-    <string name="dashboard_positive_test_results_summary">Er zijn gemiddeld %1$s mensen per dag positief getest op corona tussen %2$s en %3$s. Van alle testen bij de GGD waren er %4$s positief.</string>
-    <string name="dashboard_corona_melder_users_summary">Gisteren gebruikten %1$s mensen de CoronaMelder-app om ontmoetingen bij te houden.</string>
-    <string name="dashboard_hospital_admissions_summary">Er zijn gemiddeld %1$s mensen per dag opgenomen in het ziekenhuis tussen %2$s en %3$s. De afgelopen dagen tellen niet mee voor het gemiddelde, omdat de cijfers over deze dagen nog niet compleet zijn.</string>
-    <string name="dashboard_icu_admissions_summary">Er zijn gemiddeld %1$s mensen per dag opgenomen op een intensive care-afdeling tussen %2$s en %3$s. De afgelopen dagen tellen niet mee voor het gemiddelde, omdat de cijfers over deze dagen nog niet compleet zijn. </string>
-    <string name="dashboard_vaccination_coverage_summary">Op dit moment is %1$s van de bevolking van 18 jaar en ouder volledig gevaccineerd tegen corona. %2$s van de bevolking heeft een boosterprik tegen corona gekregen.</string>
+    <string name="dashboard_positive_test_results_summary"><![CDATA[Er zijn gemiddeld <b>%1$s</b> mensen per dag positief getest op corona tussen %2$s en %3$s. Van alle testen bij de GGD waren er <b>%4$s</b> positief.]]></string>
+    <string name="dashboard_corona_melder_users_summary"><![CDATA[Gisteren gebruikten <b>%1$s</b> mensen de CoronaMelder-app om ontmoetingen bij te houden.]]></string>
+    <string name="dashboard_hospital_admissions_summary"><![CDATA[Er zijn gemiddeld <b>%1$s</b> mensen per dag opgenomen in het ziekenhuis tussen %2$s en %3$s. De afgelopen dagen tellen niet mee voor het gemiddelde, omdat de cijfers over deze dagen nog niet compleet zijn.]]></string>
+    <string name="dashboard_icu_admissions_summary"><![CDATA[Er zijn gemiddeld <b>%1$s</b> mensen per dag opgenomen op een intensive care-afdeling tussen %2$s en %3$s. De afgelopen dagen tellen niet mee voor het gemiddelde, omdat de cijfers over deze dagen nog niet compleet zijn.]]></string>
+    <string name="dashboard_vaccination_coverage_summary"><![CDATA[Op dit moment is <b>%1$s</b> van de bevolking van 18 jaar en ouder volledig gevaccineerd tegen corona. <b>%2$s</b> van de bevolking heeft een boosterprik tegen corona gekregen.]]></string>
     <string name="dashboard_more_info_link">Bekijk alle cijfers</string>
+    <string name="yesterday">Gisteren</string>
+    <string name="day_before_yesterday">Eergisteren</string>
 </resources>

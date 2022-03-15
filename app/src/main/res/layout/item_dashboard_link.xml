@@ -62,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:text="@{viewState.getHighlightedValue(context)}"
+                android:text="@{viewState.getSubtitle(context)}"
                 android:textAppearance="?attr/textAppearanceBody2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/link_title"
