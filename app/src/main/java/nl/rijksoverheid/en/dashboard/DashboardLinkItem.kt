@@ -53,7 +53,7 @@ class DashboardLinkItem(
         fun getSubtitle(context: Context): Spannable {
             val highlightedLabel = when (dashboardItem) {
                 is DashboardItem.VaccinationCoverage -> context
-                    .getString(R.string.status_dashboard_card_vaccination_coverage_booster)
+                    .getString(R.string.dashboard_vaccination_coverage_booster_label)
                 else -> dashboardItem.highlightedValue?.let {
                     DateTimeHelper.convertToLocalDate(it.timestamp)
                         .formatDashboardDateShort(context)

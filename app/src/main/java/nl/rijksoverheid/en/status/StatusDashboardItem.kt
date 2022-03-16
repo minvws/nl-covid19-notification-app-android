@@ -135,12 +135,12 @@ open class StatusDashboardItem(
             val layoutInflater = LayoutInflater.from(context)
 
             ViewLabelledProgressBinding.inflate(layoutInflater, viewBinding.progressContainer, true).apply {
-                descriptionText.setText(R.string.status_dashboard_card_vaccination_coverage_elder)
+                descriptionText.setText(R.string.dashboard_vaccination_coverage_elder_label)
                 percentageText.text = viewState.dashboardItem.elderCoverage.formatPercentageToString()
                 progressIndicator.progress = viewState.dashboardItem.elderCoverage.toInt()
             }
             ViewLabelledProgressBinding.inflate(layoutInflater, viewBinding.progressContainer, true).apply {
-                descriptionText.setText(R.string.status_dashboard_card_vaccination_coverage_booster)
+                descriptionText.setText(R.string.dashboard_vaccination_coverage_booster_label)
                 percentageText.text = viewState.dashboardItem.boosterCoverage.formatPercentageToString()
                 progressIndicator.progress = viewState.dashboardItem.boosterCoverage.toInt()
             }
