@@ -12,8 +12,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -29,6 +31,7 @@ import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.settings.SettingsRepository
+import nl.rijksoverheid.en.util.Resource
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDate
@@ -111,7 +114,8 @@ class StatusViewModel(
         emit(exposureNotificationsRepository.isExposureNotificationApiUpdateRequired())
     }
 
-    val dashboardData: LiveData<DashboardData?> = MutableLiveData(null)
+    private val dashboardDataFlow: MutableStateFlow<Resource<DashboardData>> = MutableStateFlow(Resource.Loading())
+    val dashboardData: LiveData<Resource<DashboardData>> = dashboardDataFlow.asLiveData(viewModelScope.coroutineContext)
 
     suspend fun getAppointmentPhoneNumber() =
         appConfigManager.getCachedConfigOrDefault().appointmentPhoneNumber
@@ -229,7 +233,7 @@ class StatusViewModel(
 
     fun updateDashboardData() {
         viewModelScope.launch {
-            (dashboardData as MutableLiveData).value = dashboardRepository.getDashboardData()
+            dashboardRepository.getDashboardData().collect { dashboardDataFlow.emit(it) }
         }
     }
 

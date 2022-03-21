@@ -65,8 +65,8 @@ class DashboardSection: Section() {
                 DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDashboardDateShort(context),
             )
             is DashboardItem.VaccinationCoverage -> listOf(
-                dashboardItem.elderCoverage.formatPercentageToString(),
-                dashboardItem.boosterCoverage.formatPercentageToString()
+                dashboardItem.vaccinationCoverage18Plus.formatPercentageToString(),
+                dashboardItem.boosterCoverage18Plus.formatPercentageToString()
             )
         }
 

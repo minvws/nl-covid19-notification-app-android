@@ -136,13 +136,13 @@ open class StatusDashboardItem(
 
             ViewLabelledProgressBinding.inflate(layoutInflater, viewBinding.progressContainer, true).apply {
                 descriptionText.setText(R.string.dashboard_vaccination_coverage_elder_label)
-                percentageText.text = viewState.dashboardItem.elderCoverage.formatPercentageToString()
-                progressIndicator.progress = viewState.dashboardItem.elderCoverage.toInt()
+                percentageText.text = viewState.dashboardItem.vaccinationCoverage18Plus.formatPercentageToString()
+                progressIndicator.progress = viewState.dashboardItem.vaccinationCoverage18Plus.toInt()
             }
             ViewLabelledProgressBinding.inflate(layoutInflater, viewBinding.progressContainer, true).apply {
                 descriptionText.setText(R.string.dashboard_vaccination_coverage_booster_label)
-                percentageText.text = viewState.dashboardItem.boosterCoverage.formatPercentageToString()
-                progressIndicator.progress = viewState.dashboardItem.boosterCoverage.toInt()
+                percentageText.text = viewState.dashboardItem.boosterCoverage18Plus.formatPercentageToString()
+                progressIndicator.progress = viewState.dashboardItem.boosterCoverage18Plus.toInt()
             }
         }
     }

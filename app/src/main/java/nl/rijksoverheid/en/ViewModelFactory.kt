@@ -53,7 +53,7 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
                 createOnboardingRepository(context),
                 createExposureNotificationsRepository(context),
                 NotificationsRepository(context),
-                createDashboardRepository(),
+                createDashboardRepository(context),
                 createSettingsRepository(context),
                 createAppConfigManager(context)
             ) as T
@@ -68,7 +68,7 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
             SettingsViewModel::class.java -> SettingsViewModel(createSettingsRepository(context)) as T
             PauseConfirmationViewModel::class.java -> PauseConfirmationViewModel(createSettingsRepository(context)) as T
             LabTestDoneViewModel::class.java -> LabTestDoneViewModel(createAppConfigManager(context)) as T
-            DashboardViewModel::class.java -> DashboardViewModel(createDashboardRepository()) as T
+            DashboardViewModel::class.java -> DashboardViewModel(createDashboardRepository(context)) as T
             else -> throw IllegalStateException("Unknown view model class $modelClass")
         }
     }

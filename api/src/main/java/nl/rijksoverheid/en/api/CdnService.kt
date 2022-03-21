@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.api
 
 import android.content.Context
 import nl.rijksoverheid.en.api.model.AppConfig
+import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
@@ -51,6 +52,12 @@ interface CdnService {
         @Path("id") id: String,
         @Tag cacheStrategy: CacheStrategy? = null
     ): ResourceBundle
+
+    @GET("v1/dashboarddata")
+    @SignedResponse
+    suspend fun getDashboardData(
+        @Tag cacheStrategy: CacheStrategy? = null
+    ): DashboardData
 
     companion object {
         fun create(

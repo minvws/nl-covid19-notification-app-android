@@ -20,6 +20,7 @@ import nl.rijksoverheid.en.util.ext.applyDashboardStyling
 import nl.rijksoverheid.en.util.ext.getIconTint
 import nl.rijksoverheid.en.util.ext.icon
 import nl.rijksoverheid.en.util.ext.title
+import nl.rijksoverheid.en.util.formatToString
 
 class DashboardGraphItem(
     private val dashboardItem: DashboardItem
@@ -40,9 +41,12 @@ class DashboardGraphItem(
                 .map { Entry(it.timestamp.toFloat(), it.value.toFloat()) }
                 .sortedBy { it.x }
             val dataSet = LineDataSet(entries, "")
+            val maxValue = dashboardItem.values.maxOf { it.value }.toFloat()
             data = LineData(dataSet)
 
-            applyDashboardStyling(context, dataSet)
+            applyDashboardStyling(context, dataSet, maxValue) {
+                it.toInt().formatToString(context)
+            }
         }
     }
 

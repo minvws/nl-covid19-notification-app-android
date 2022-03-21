@@ -9,8 +9,10 @@
 package nl.rijksoverheid.en.util.ext
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.LineDataSet
@@ -22,6 +24,10 @@ import nl.rijksoverheid.en.util.formatDate
 import java.time.Instant
 import java.time.LocalDateTime.ofInstant
 import java.time.ZoneId
+import kotlin.math.ceil
+import kotlin.math.log10
+import kotlin.math.max
+import kotlin.math.pow
 
 fun LineChart.applyCardViewStyling() {
     axisLeft.isEnabled = false
@@ -41,20 +47,32 @@ fun LineChart.applyCardViewStyling() {
 
 fun LineChart.applyDashboardStyling(
     context: Context,
-    dataSet: LineDataSet
+    dataSet: LineDataSet,
+    maxValue: Float,
+    formatValue: (Float) -> String
 ) {
     axisRight.isEnabled = false
     legend.isEnabled = false
     description.isEnabled = false
 
+    val upperbound = calculateUpperbound(maxValue)
+    val yAsGridLines = calculateAmountOfGridLines(maxValue)
+
     with(axisLeft) {
         yOffset = -(Utils.convertPixelsToDp(textSize) / 2)
         setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)
         setDrawAxisLine(false)
-        setDrawGridLines(false)
-        setLabelCount(2, true)
+        setDrawGridLines(true)
+        setLabelCount(yAsGridLines, true)
         axisMinimum = 0f
-        axisMaximum = 60000f
+        axisMaximum = upperbound
+        valueFormatter = object: ValueFormatter() {
+            override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+                return if(value == axisMinimum || value == axisMaximum)
+                    formatValue(value)
+                else ""
+            }
+        }
     }
 
     with(xAxis) {
@@ -95,10 +113,11 @@ fun LineChart.applyDashboardStyling(
 }
 
 fun LineDataSet.applyLineStyling(context: Context) {
-    mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+    mode = LineDataSet.Mode.CUBIC_BEZIER
     lineWidth = 2f
     color = ContextCompat.getColor(context, R.color.dashboard_graph_line)
     fillColor = ContextCompat.getColor(context, R.color.dashboard_graph_fill)
+    cubicIntensity = 0.1f
 
 
     setDrawFilled(true)
@@ -110,4 +129,25 @@ fun LineDataSet.applyLineStyling(context: Context) {
     enableDashedHighlightLine(highlightLength, highlightLength, 0f)
     setDrawVerticalHighlightIndicator(true)
     setDrawHorizontalHighlightIndicator(false)
+}
+
+@VisibleForTesting
+private fun numberOfDigits(maxValue: Float) = when {
+    maxValue < 1f -> 1f
+    else -> log10(maxValue).toInt() + 1
+}.toFloat()
+
+@VisibleForTesting
+private fun calculateUpperbound(maxValue: Float): Float {
+    val numberOfDigits = numberOfDigits(maxValue)
+    val orderOfMagnitude = 10f.pow(numberOfDigits - 1)
+    return ceil(maxValue / orderOfMagnitude) * orderOfMagnitude
+}
+
+@VisibleForTesting
+private fun calculateAmountOfGridLines(maxValue: Float): Int {
+    val numberOfDigits = numberOfDigits(maxValue)
+    val orderOfMagnitude = 10f.pow(numberOfDigits - 1)
+    val upperBound = calculateUpperbound(maxValue)
+    return (upperBound / orderOfMagnitude).toInt()
 }

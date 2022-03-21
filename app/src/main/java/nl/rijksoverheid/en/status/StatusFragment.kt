@@ -116,8 +116,9 @@ class StatusFragment @JvmOverloads constructor(
             section.lastKeysProcessed = it
         }
         statusViewModel.dashboardData.observe(viewLifecycleOwner) { dashboardData ->
-            if (dashboardData != null)
-                section.updateDashboardData(dashboardData, ::navigateToDashboardItem)
+            dashboardData.data?.let{
+                section.updateDashboardData(it, ::navigateToDashboardItem)
+            }
         }
         statusViewModel.exposureNotificationApiUpdateRequired.observe(viewLifecycleOwner) { requireAnUpdate ->
             if (requireAnUpdate)

@@ -14,6 +14,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.nearby.Nearby
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import kotlinx.coroutines.Dispatchers
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.CdnService
@@ -41,6 +42,7 @@ import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.settings.SettingsRepository
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.util.retry
+import okhttp3.Dispatcher
 
 /**
  * Factory for Repository classes
@@ -55,10 +57,13 @@ object RepositoryFactory {
 
     private const val MINIMUM_PLAY_SERVICES_VERSION = 202665000
 
+    private fun createCdnService(context: Context): CdnService {
+        return cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE)
+            .also { cdnService = it }
+    }
+
     fun createExposureNotificationsRepository(context: Context): ExposureNotificationsRepository {
-        val service =
-            cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE)
-                .also { cdnService = it }
+        val service = createCdnService(context)
         val statusCache = statusCache ?: StatusCache(
             context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.cache", 0)
         ).also { statusCache = it }
@@ -133,11 +138,8 @@ object RepositoryFactory {
     }
 
     fun createAppConfigManager(context: Context): AppConfigManager {
-        val service =
-            cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE)
-                .also { cdnService = it }
         return AppConfigManager(
-            service,
+            createCdnService(context),
             BeagleHelperImpl.useDebugFeatureFlags,
             BeagleHelperImpl.getDebugFeatureFlags
         )
@@ -154,8 +156,7 @@ object RepositoryFactory {
     fun createResourceBundleManager(context: Context): ResourceBundleManager {
         return ResourceBundleManager(
             context,
-            cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE)
-                .also { cdnService = it },
+            createCdnService(context),
             useDefaultGuidance = BeagleHelperImpl.useDefaultGuidance
         )
     }
@@ -164,8 +165,8 @@ object RepositoryFactory {
         return SettingsRepository(context, Settings(context))
     }
 
-    fun createDashboardRepository(): DashboardRepository {
-        return DashboardRepository()
+    fun createDashboardRepository(context: Context): DashboardRepository {
+        return DashboardRepository(createCdnService(context), Dispatchers.IO)
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")

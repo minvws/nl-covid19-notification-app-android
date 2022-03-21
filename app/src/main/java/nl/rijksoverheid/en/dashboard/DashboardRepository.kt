@@ -8,83 +8,34 @@
 
 package nl.rijksoverheid.en.dashboard
 
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import nl.rijksoverheid.en.api.CacheStrategy
+import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.api.model.GraphValue
+import nl.rijksoverheid.en.util.DashboardServerError
+import nl.rijksoverheid.en.util.Resource
+import timber.log.Timber
 
-class DashboardRepository {
+class DashboardRepository(
+    private val cdnService: CdnService,
+    private val dispatcher: CoroutineDispatcher,
+) {
 
-    suspend fun getDashboardData(): DashboardData {
-        return coroutineScope {
-            return@coroutineScope DashboardData(
-                DashboardItem.PositiveTestResults(
-                    0,
-                    GraphValue(1627257600, 54225.0),
-                    listOf(
-                        GraphValue(1645169766, 50225.0),
-                        GraphValue(	1645256166, 53225.0),
-                        GraphValue(	1645342566, 51225.0),
-                        GraphValue(1645428966, 55225.0),
-                        GraphValue(1645518974, 54225.0),
-                    ),
-                    79530.0,
-                    1627257600,
-                    1627257800,
-                    59.3f
-                ),
-                DashboardItem.CoronaMelderUsers(
-                    1,
-                    GraphValue(1627257600, 2650000.0),
-                    listOf(
-                        GraphValue(1645169766, 281000.0),
-                        GraphValue(	1645256166, 2720000.0),
-                        GraphValue(	1645342566, 2760000.0),
-                        GraphValue(1645428966, 2740000.0),
-                        GraphValue(1645518974, 2650000.0),
-                    ),
-                ),
-                DashboardItem.HospitalAdmissions(
-                    2,
-                    GraphValue(1627257600, 233.0),
-                    listOf(
-                        GraphValue(1645169766, 230.0),
-                        GraphValue(	1645256166, 235.0),
-                        GraphValue(	1645342566, 219.0),
-                        GraphValue(1645428966, 222.0),
-                        GraphValue(1645518974, 233.0),
-                    ),
-                    142.0,
-                    1627257600,
-                    1627257800,
-                ),
-                DashboardItem.IcuAdmissions(
-                    3,
-                    GraphValue(1647169811, 899.0),
-                    listOf(
-                        GraphValue(1645169766, 934.0),
-                        GraphValue(	1645256166, 913.0),
-                        GraphValue(	1645342566, 892.0),
-                        GraphValue(1645428966, 899.0),
-                        GraphValue(1645518974, 898.0),
-                    ),
-                    11.0,
-                    1627257600,
-                    1627257800,
-                ),
-                DashboardItem.VaccinationCoverage(
-                    4,
-                    listOf(
-                        GraphValue(1645169766, 8652243.0),
-                        GraphValue(	1645256166, 8652543.0),
-                        GraphValue(	1645342566, 8652943.0),
-                        GraphValue(1645428966, 8653043.0),
-                        GraphValue(1645518974, 8653243.0),
-                    ),
-                    59.4f,
-                    86.3f
-                )
-            )
-        }
-    }
+    fun getDashboardData(): Flow<Resource<DashboardData>> = flow {
+        emit(Resource.Loading())
+        val dashboardData = cdnService.getDashboardData(CacheStrategy.CACHE_LAST)
+        emit(Resource.Success(dashboardData))
+    }.catch { throwable ->
+        Timber.w(throwable)
+        emit(Resource.Error(DashboardServerError))
+    }.flowOn(dispatcher)
 }
