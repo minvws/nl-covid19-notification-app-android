@@ -27,8 +27,8 @@ class PostNotificationViewModel(
         }
     }
 
-    suspend fun getAppointmentPhoneNumber() =
-        appConfigManager.getCachedConfigOrDefault().appointmentPhoneNumber
+    suspend fun getCoronaTestUrl() =
+        appConfigManager.getCachedConfigOrDefault().coronaTestURL
 
     fun setExposureNotificationGuidanceArgs(exposureDate: LocalDate, notificationReceivedDate: LocalDate?) {
         this.exposureNotificationGuidanceArgs.value = ExposureNotificationGuidanceArgs(
