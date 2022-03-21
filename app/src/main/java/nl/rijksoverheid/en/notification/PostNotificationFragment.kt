@@ -6,8 +6,10 @@
  */
 package nl.rijksoverheid.en.notification
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
@@ -16,7 +18,6 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
-import nl.rijksoverheid.en.util.IntentHelper
 import java.time.LocalDate
 
 class PostNotificationFragment : BaseFragment(R.layout.fragment_list_with_button) {
@@ -55,19 +56,15 @@ class PostNotificationFragment : BaseFragment(R.layout.fragment_list_with_button
         binding.button.apply {
             setText(R.string.post_notification_button)
             setOnClickListener {
-                requestToCallForAnAppointment()
+                requestCoronaTest()
             }
         }
     }
 
-    private fun requestToCallForAnAppointment() {
+    private fun requestCoronaTest() {
         viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
-            val phoneNumber = viewModel.getAppointmentPhoneNumber()
-            IntentHelper.openPhoneCallIntent(
-                this@PostNotificationFragment,
-                phoneNumber,
-                PostNotificationFragmentDirections.actionPhoneCallNotSupportedDialog(phoneNumber)
-            )
+            val url = Uri.parse(viewModel.getCoronaTestUrl())
+            CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
         }
     }
 }
