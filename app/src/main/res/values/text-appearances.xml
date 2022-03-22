@@ -52,4 +52,12 @@
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
+
+    <style name="TextAppearance.App.Tag" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
 </resources>

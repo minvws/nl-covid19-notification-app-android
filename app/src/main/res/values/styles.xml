@@ -51,4 +51,12 @@
         <item name="navigationContentDescription">@string/cd_back</item>
         <item name="navigationIcon">?attr/homeAsUpIndicator</item>
     </style>
+
+    <style name="Widget.App.Tag" parent="">
+        <item name="android:background">@drawable/tag_background</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.Tag</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+    </style>
+
 </resources>

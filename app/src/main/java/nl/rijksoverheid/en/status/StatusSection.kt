@@ -115,6 +115,7 @@ class StatusSection : Section() {
 
            dashboardGroup.update(
                listOf(
+                   StatusDashboardHeaderItem,
                    HorizontalRecyclerViewItem(dashboardItems) { item, _ ->
                        val dashBoardItem = (item as? StatusDashboardItem)?.viewState?.dashboardItem
                        if (dashBoardItem != null)

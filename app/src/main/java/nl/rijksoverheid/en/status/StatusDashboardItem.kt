@@ -13,20 +13,18 @@ import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
-import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import androidx.core.text.bold
 import androidx.core.view.isVisible
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardItem
-import nl.rijksoverheid.en.databinding.ItemStatusDashboardItemBinding
+import nl.rijksoverheid.en.databinding.ItemStatusDashboardBinding
 import nl.rijksoverheid.en.databinding.ViewLabelledProgressBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.util.DateTimeHelper
@@ -42,7 +40,7 @@ import java.time.Clock
 
 open class StatusDashboardItem(
     dashboardItem: DashboardItem
-) : BaseBindableItem<ItemStatusDashboardItemBinding>() {
+) : BaseBindableItem<ItemStatusDashboardBinding>() {
 
     val viewState: ViewState = ViewState(dashboardItem)
 
@@ -78,10 +76,10 @@ open class StatusDashboardItem(
         }
     }
 
-    override fun getLayout() = R.layout.item_status_dashboard_item
+    override fun getLayout() = R.layout.item_status_dashboard
     override fun isClickable() = true
 
-    override fun bind(viewBinding: ItemStatusDashboardItemBinding, position: Int) {
+    override fun bind(viewBinding: ItemStatusDashboardBinding, position: Int) {
         viewBinding.viewState = viewState
 
         when (viewState.cardStyle) {
@@ -91,7 +89,7 @@ open class StatusDashboardItem(
         }
     }
 
-    private fun bindGraphStyle(viewBinding: ItemStatusDashboardItemBinding) {
+    private fun bindGraphStyle(viewBinding: ItemStatusDashboardBinding) {
         viewBinding.image.isVisible = false
         viewBinding.progressContainer.isVisible = false
 
@@ -119,7 +117,7 @@ open class StatusDashboardItem(
         }
     }
 
-    private fun bindImageStyle(viewBinding: ItemStatusDashboardItemBinding) {
+    private fun bindImageStyle(viewBinding: ItemStatusDashboardBinding) {
         viewBinding.lineChart.isVisible = false
         viewBinding.image.isVisible = true
         viewBinding.progressContainer.isVisible = false
@@ -129,7 +127,7 @@ open class StatusDashboardItem(
         }
     }
 
-    private fun bindProgressStyle(viewBinding: ItemStatusDashboardItemBinding) {
+    private fun bindProgressStyle(viewBinding: ItemStatusDashboardBinding) {
         viewBinding.lineChart.isVisible = false
         viewBinding.image.isVisible = false
         viewBinding.progressContainer.isVisible = true

@@ -11,6 +11,7 @@ package nl.rijksoverheid.en.items
 import com.xwray.groupie.Group
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.Item
 import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
