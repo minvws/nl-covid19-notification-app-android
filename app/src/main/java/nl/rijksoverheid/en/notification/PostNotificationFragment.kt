@@ -6,10 +6,10 @@
  */
 package nl.rijksoverheid.en.notification
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
@@ -63,8 +63,8 @@ class PostNotificationFragment : BaseFragment(R.layout.fragment_list_with_button
 
     private fun requestCoronaTest() {
         viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
-            val url = Uri.parse(viewModel.getCoronaTestUrl())
-            CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
+            val coronaTestUrl = viewModel.getCoronaTestUrl()
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(coronaTestUrl)))
         }
     }
 }

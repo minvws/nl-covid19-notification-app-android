@@ -327,6 +327,9 @@
         <argument
             android:name="phoneNumber"
             app:argType="string" />
+        <argument
+            android:name="website"
+            app:argType="string" />
         <action
             android:id="@+id/action_phone_call_not_supported_dialog"
             app:destination="@id/nav_phone_call_not_supported_dialog" />

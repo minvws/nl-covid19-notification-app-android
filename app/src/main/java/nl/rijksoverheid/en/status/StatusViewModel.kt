@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.ExposureNotificationsRepository
+import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.FeatureFlagOption
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.StatusResult
@@ -106,8 +108,17 @@ class StatusViewModel(
         emit(exposureNotificationsRepository.isExposureNotificationApiUpdateRequired())
     }
 
-    suspend fun getAppointmentPhoneNumber() =
-        appConfigManager.getCachedConfigOrDefault().appointmentPhoneNumber
+    suspend fun getAppointmentInfo(context: Context): AppointmentInfo {
+        val appConfig = appConfigManager.getCachedConfigOrDefault()
+        val phoneNumber = if (exposureDetected)
+            appConfig.appointmentPhoneNumber
+        else
+            context.getString(R.string.request_test_phone_number)
+        return AppointmentInfo(
+            phoneNumber = phoneNumber,
+            website = appConfig.coronaTestURL
+        )
+    }
 
     suspend fun hasIndependentKeySharing() =
         appConfigManager.getCachedConfigOrDefault().hasFeature(FeatureFlagOption.INDEPENDENT_KEY_SHARING)
@@ -259,4 +270,6 @@ class StatusViewModel(
             object SyncIssuesWifiOnly : Error()
         }
     }
+
+    class AppointmentInfo(val phoneNumber: String, val website: String)
 }
