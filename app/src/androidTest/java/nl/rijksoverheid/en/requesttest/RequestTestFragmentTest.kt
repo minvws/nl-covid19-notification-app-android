@@ -32,7 +32,7 @@ class RequestTestFragmentTest : BaseInstrumentationTest() {
             setCurrentDestination(R.id.nav_status)
         }
 
-        navController.navigate(StatusFragmentDirections.actionRequestTest("12345"))
+        navController.navigate(StatusFragmentDirections.actionRequestTest("12345", "https://coronatest.nl/ik-wil-me-laten-testen/online-een-afspraak-maken"))
 
         val fragment = RequestTestFragment()
 

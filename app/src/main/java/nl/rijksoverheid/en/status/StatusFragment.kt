@@ -215,16 +215,10 @@ class StatusFragment @JvmOverloads constructor(
     }
 
     private fun requestTest() {
-        if (statusViewModel.exposureDetected) {
-            viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
-                val phoneNumber = statusViewModel.getAppointmentPhoneNumber()
-                findNavController().navigateCatchingErrors(
-                    StatusFragmentDirections.actionRequestTest(phoneNumber)
-                )
-            }
-        } else {
+        viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
+            val appointmentInfo = statusViewModel.getAppointmentInfo(requireContext())
             findNavController().navigateCatchingErrors(
-                StatusFragmentDirections.actionRequestTest(getString(R.string.request_test_phone_number))
+                StatusFragmentDirections.actionRequestTest(appointmentInfo.phoneNumber, appointmentInfo.website)
             )
         }
     }
