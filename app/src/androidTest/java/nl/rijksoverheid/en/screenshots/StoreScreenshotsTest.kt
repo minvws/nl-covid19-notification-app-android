@@ -265,7 +265,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
             setGraph(R.navigation.nav_main)
             setCurrentDestination(
                 R.id.requestTestFragment,
-                RequestTestFragmentArgs(context.getString(R.string.request_test_phone_number)).toBundle()
+                RequestTestFragmentArgs(context.getString(R.string.request_test_phone_number), "https://coronatest.nl/ik-wil-me-laten-testen/online-een-afspraak-maken").toBundle()
             )
         }
 
