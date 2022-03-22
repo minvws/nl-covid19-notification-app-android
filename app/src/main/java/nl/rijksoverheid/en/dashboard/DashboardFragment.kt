@@ -6,8 +6,10 @@
  */
 package nl.rijksoverheid.en.dashboard
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -65,7 +67,8 @@ class DashboardFragment : BaseFragment(R.layout.fragment_list) {
                     requireContext(),
                     args.dashboardItemReference,
                     it,
-                    ::navigateToDashboardItem
+                    ::navigateToDashboardItem,
+                    ::navigateToMoreInfo
                 )
             }
         }
@@ -77,5 +80,12 @@ class DashboardFragment : BaseFragment(R.layout.fragment_list) {
             DashboardFragmentDirections.actionDashboardFragment(dashboardItemReference, true),
             FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)
         )
+    }
+
+    private fun navigateToMoreInfo() {
+        viewModel.dashboardData.value?.data?.getDashboardItem(args.dashboardItemReference)?.let {
+            val url = Uri.parse(it.moreInfoUrl)
+            CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
+        }
     }
 }

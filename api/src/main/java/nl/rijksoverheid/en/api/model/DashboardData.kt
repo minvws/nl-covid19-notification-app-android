@@ -11,6 +11,8 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
+private const val DEFAULT_MORE_INFO_URL = "https://coronadashboard.rijksoverheid.nl/"
+
 @JsonClass(generateAdapter = true)
 data class DashboardData(
     @Json(name = "PositiveTestResults") val positiveTestResults: DashboardItem.PositiveTestResults? = null,
@@ -42,7 +44,8 @@ sealed class DashboardItem(
     open val sortingValue: Int,
     open val highlightedValue: GraphValue? = null,
     open val values: List<GraphValue> = emptyList(),
-    val reference: Reference
+    val reference: Reference,
+    open val moreInfoUrl: String = DEFAULT_MORE_INFO_URL,
 ) : Parcelable {
 
     enum class Reference {

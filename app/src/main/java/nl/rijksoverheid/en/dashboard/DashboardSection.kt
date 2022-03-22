@@ -12,6 +12,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.items.HeaderItem
+import nl.rijksoverheid.en.items.LinkItem
 import nl.rijksoverheid.en.items.ParagraphItem
 import nl.rijksoverheid.en.util.DateTimeHelper
 import nl.rijksoverheid.en.util.formatDashboardDateShort
@@ -24,7 +25,8 @@ class DashboardSection : Section() {
         context: Context,
         selectedDashboardItem: DashboardItem.Reference,
         dashboardData: DashboardData,
-        onDashboardLinkItemClicked: (DashboardItem.Reference) -> Unit
+        onDashboardLinkItemClicked: (DashboardItem.Reference) -> Unit,
+        onMoreInfoLinkItemClicked: () -> Unit
     ) {
         val dashboardItem = dashboardData.getDashboardItem(selectedDashboardItem) ?: return
         val headerRes = when (selectedDashboardItem) {
@@ -72,6 +74,7 @@ class DashboardSection : Section() {
             HeaderItem(headerRes),
             ParagraphItem(summaryRes, *summaryArgs.toTypedArray()),
             DashboardGraphItem(dashboardItem),
+            LinkItem(R.string.dashboard_more_info_link, onClick = onMoreInfoLinkItemClicked),
             HeaderItem(R.string.dashboard_more_info_header)
         ) + dashboardData.items
             .filter { it.reference != selectedDashboardItem }

@@ -34,14 +34,5 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"/>
 
-        <nl.rijksoverheid.en.util.HtmlTextView
-            android:id="@+id/more_info_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:gravity="center_vertical"
-            android:autoLink="web"
-            android:text="@string/dashboard_more_info_link"/>
-
     </LinearLayout>
 </layout>
