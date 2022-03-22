@@ -116,7 +116,7 @@ class StatusFragment @JvmOverloads constructor(
             section.lastKeysProcessed = it
         }
         statusViewModel.dashboardData.observe(viewLifecycleOwner) { dashboardData ->
-            dashboardData.data?.let{
+            dashboardData.data?.let {
                 section.updateDashboardData(it, ::navigateToDashboardItem)
             }
         }

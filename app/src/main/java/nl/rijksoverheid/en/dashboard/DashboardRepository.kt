@@ -1,26 +1,19 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
-
 package nl.rijksoverheid.en.dashboard
 
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.DashboardData
-import nl.rijksoverheid.en.api.model.DashboardItem
-import nl.rijksoverheid.en.api.model.GraphValue
 import nl.rijksoverheid.en.util.DashboardServerError
 import nl.rijksoverheid.en.util.Resource
 import timber.log.Timber

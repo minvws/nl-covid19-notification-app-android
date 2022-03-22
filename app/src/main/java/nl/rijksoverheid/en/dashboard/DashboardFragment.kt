@@ -1,17 +1,14 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
-
 package nl.rijksoverheid.en.dashboard
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -22,7 +19,6 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
-import nl.rijksoverheid.en.notification.PostNotificationSection
 import nl.rijksoverheid.en.util.ext.setExitSlideTransition
 import nl.rijksoverheid.en.util.ext.setSlideTransition
 

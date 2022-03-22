@@ -1,11 +1,9 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
-
 package nl.rijksoverheid.en.dashboard
 
 import android.content.Context
@@ -20,7 +18,7 @@ import nl.rijksoverheid.en.util.formatDashboardDateShort
 import nl.rijksoverheid.en.util.formatPercentageToString
 import nl.rijksoverheid.en.util.formatToString
 
-class DashboardSection: Section() {
+class DashboardSection : Section() {
 
     fun updateDashboardData(
         context: Context,
@@ -44,7 +42,7 @@ class DashboardSection: Section() {
             DashboardItem.Reference.VaccinationCoverage -> R.string.dashboard_vaccination_coverage_summary
         }
 
-        val summaryArgs: List<String>  = when (dashboardItem) {
+        val summaryArgs: List<String> = when (dashboardItem) {
             is DashboardItem.PositiveTestResults -> listOf(
                 dashboardItem.dailyAverageAmount.formatToString(context),
                 DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDashboardDateShort(context),

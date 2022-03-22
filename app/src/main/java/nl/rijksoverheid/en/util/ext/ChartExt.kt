@@ -1,11 +1,9 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
-
 package nl.rijksoverheid.en.util.ext
 
 import android.content.Context
@@ -26,7 +24,6 @@ import java.time.LocalDateTime.ofInstant
 import java.time.ZoneId
 import kotlin.math.ceil
 import kotlin.math.log10
-import kotlin.math.max
 import kotlin.math.pow
 
 fun LineChart.applyCardViewStyling() {
@@ -41,7 +38,7 @@ fun LineChart.applyCardViewStyling() {
     val horizontalOffset = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin).toFloat()
     setViewPortOffsets(horizontalOffset, 0f, horizontalOffset, 0f)
 
-    //Fix: SetViewPortOffSets are not applied the first time within a Recyclerview
+    // Fix: SetViewPortOffSets are not applied the first time within a Recyclerview
     post { invalidate() }
 }
 
@@ -66,9 +63,9 @@ fun LineChart.applyDashboardStyling(
         setLabelCount(yAsGridLines, true)
         axisMinimum = 0f
         axisMaximum = upperbound
-        valueFormatter = object: ValueFormatter() {
+        valueFormatter = object : ValueFormatter() {
             override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-                return if(value == axisMinimum || value == axisMaximum)
+                return if (value == axisMinimum || value == axisMaximum)
                     formatValue(value)
                 else ""
             }
@@ -108,7 +105,7 @@ fun LineChart.applyDashboardStyling(
     val verticalOffset = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin).toFloat()
     setViewPortOffsets(0f, verticalOffset, 0f, verticalOffset)
 
-    //Fix: SetViewPortOffSets are not applied the first time within a Recyclerview
+    // Fix: SetViewPortOffSets are not applied the first time within a Recyclerview
     post { invalidate() }
 }
 

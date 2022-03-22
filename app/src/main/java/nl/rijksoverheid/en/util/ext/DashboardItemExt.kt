@@ -1,18 +1,15 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
-
 package nl.rijksoverheid.en.util.ext
 
 import android.content.Context
 import androidx.core.content.ContextCompat
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardItem
-
 
 val DashboardItem.icon: Int
     get() = when (this) {

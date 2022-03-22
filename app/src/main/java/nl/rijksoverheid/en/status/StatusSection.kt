@@ -8,14 +8,10 @@ package nl.rijksoverheid.en.status
 
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
-import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.items.HorizontalRecyclerViewItem
-import java.time.Instant
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 class StatusSection : Section() {
 
@@ -103,28 +99,28 @@ class StatusSection : Section() {
         ensureInitialized()
     }
 
-   fun updateDashboardData(
-       dashboardData: DashboardData,
-       onItemClick: (DashboardItem) -> Unit
-   ) {
-       if (this.dashboardData != dashboardData) {
-           this.dashboardData = dashboardData
-           val dashboardItems = dashboardData.items
-               .sortedBy { it.sortingValue }
-               .map { StatusDashboardItem(it) }
+    fun updateDashboardData(
+        dashboardData: DashboardData,
+        onItemClick: (DashboardItem) -> Unit
+    ) {
+        if (this.dashboardData != dashboardData) {
+            this.dashboardData = dashboardData
+            val dashboardItems = dashboardData.items
+                .sortedBy { it.sortingValue }
+                .map { StatusDashboardItem(it) }
 
-           dashboardGroup.update(
-               listOf(
-                   StatusDashboardHeaderItem,
-                   HorizontalRecyclerViewItem(dashboardItems) { item, _ ->
-                       val dashBoardItem = (item as? StatusDashboardItem)?.viewState?.dashboardItem
-                       if (dashBoardItem != null)
-                           onItemClick(dashBoardItem)
-                   }
-               )
-           )
-       }
-       ensureInitialized()
+            dashboardGroup.update(
+                listOf(
+                    StatusDashboardHeaderItem,
+                    HorizontalRecyclerViewItem(dashboardItems) { item, _ ->
+                        val dashBoardItem = (item as? StatusDashboardItem)?.viewState?.dashboardItem
+                        if (dashBoardItem != null)
+                            onItemClick(dashBoardItem)
+                    }
+                )
+            )
+        }
+        ensureInitialized()
     }
 
     private fun ensureInitialized() {

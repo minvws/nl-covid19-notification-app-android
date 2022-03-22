@@ -42,7 +42,6 @@ import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.settings.SettingsRepository
 import nl.rijksoverheid.en.status.StatusCache
 import nl.rijksoverheid.en.util.retry
-import okhttp3.Dispatcher
 
 /**
  * Factory for Repository classes
