@@ -371,5 +371,6 @@
     <string name="yesterday">Gisteren</string>
     <string name="day_before_yesterday">Eergisteren</string>
     <string name="dashboard_date_prefix">Op %1$s</string>
+    <string name="dashboard_simplified_graph_cd">Grafiek %1$s, klik voor uitgebreide beschrijving</string>
 </resources>
 

@@ -233,7 +233,13 @@ class StatusViewModel(
 
     fun updateDashboardData() {
         viewModelScope.launch {
-            dashboardRepository.getDashboardData().collect { dashboardDataFlow.emit(it) }
+            dashboardRepository.getDashboardData().collect {
+                // Ignore Loading state when we already have data to show
+                if (dashboardData.value is Resource.Success && it is Resource.Loading)
+                    return@collect
+
+                dashboardDataFlow.emit(it)
+            }
         }
     }
 

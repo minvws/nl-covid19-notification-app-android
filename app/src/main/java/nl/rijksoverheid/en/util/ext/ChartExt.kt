@@ -119,7 +119,6 @@ fun LineDataSet.applyLineStyling(context: Context) {
     fillColor = ContextCompat.getColor(context, R.color.dashboard_graph_fill)
     cubicIntensity = 0.1f
 
-
     setDrawFilled(true)
     setDrawValues(false)
     setDrawCircles(false)
@@ -149,5 +148,5 @@ private fun calculateAmountOfGridLines(maxValue: Float): Int {
     val numberOfDigits = numberOfDigits(maxValue)
     val orderOfMagnitude = 10f.pow(numberOfDigits - 1)
     val upperBound = calculateUpperbound(maxValue)
-    return (upperBound / orderOfMagnitude).toInt()
+    return (upperBound / orderOfMagnitude).toInt() + 1
 }

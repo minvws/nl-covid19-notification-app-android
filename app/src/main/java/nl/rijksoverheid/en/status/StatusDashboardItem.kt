@@ -9,11 +9,17 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
+import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.text.bold
 import androidx.core.view.isVisible
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -135,16 +141,30 @@ open class StatusDashboardItem(
             val layoutInflater = LayoutInflater.from(context)
 
             ViewLabelledProgressBinding.inflate(layoutInflater, viewBinding.progressContainer, true).apply {
-                descriptionText.setText(R.string.dashboard_vaccination_coverage_elder_label)
-                percentageText.text = viewState.dashboardItem.vaccinationCoverage18Plus.formatPercentageToString()
+                descriptionText.text = formatProgressLabel(
+                    context,
+                    viewState.dashboardItem.vaccinationCoverage18Plus,
+                    R.string.dashboard_vaccination_coverage_elder_label
+                )
                 progressIndicator.progress = viewState.dashboardItem.vaccinationCoverage18Plus.toInt()
             }
             ViewLabelledProgressBinding.inflate(layoutInflater, viewBinding.progressContainer, true).apply {
-                descriptionText.setText(R.string.dashboard_vaccination_coverage_booster_label)
-                percentageText.text = viewState.dashboardItem.boosterCoverage18Plus.formatPercentageToString()
+                descriptionText.text = formatProgressLabel(
+                    context,
+                    viewState.dashboardItem.boosterCoverage18Plus,
+                    R.string.dashboard_vaccination_coverage_booster_label
+                )
                 progressIndicator.progress = viewState.dashboardItem.boosterCoverage18Plus.toInt()
             }
         }
+    }
+
+    private fun formatProgressLabel(context: Context, percentage: Float, @StringRes description: Int): Spannable {
+        val formattedPercentage = percentage.formatPercentageToString()
+        return SpannableStringBuilder()
+            .append(formattedPercentage, StyleSpan(Typeface.BOLD), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            .append(" ")
+            .append(context.getString(description))
     }
 
 }

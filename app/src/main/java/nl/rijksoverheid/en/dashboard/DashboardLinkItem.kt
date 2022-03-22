@@ -9,8 +9,10 @@
 package nl.rijksoverheid.en.dashboard
 
 import android.content.Context
+import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.text.style.TextAppearanceSpan
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
@@ -65,19 +67,15 @@ class DashboardLinkItem(
                 else -> dashboardItem.highlightedValue?.value?.formatToString(context) ?: ""
             }
 
-            val stringBuilder = SpannableStringBuilder()
+            return SpannableStringBuilder()
                 .append(highlightedLabel)
                 .append(" ")
-                .append(highlightedValue)
+                .append(
+                    highlightedValue,
+                    StyleSpan(Typeface.BOLD),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
 
-            stringBuilder.setSpan(
-                TextAppearanceSpan(context, R.style.TextAppearance_App_Subtitle2),
-                highlightedLabel.length + 1,
-                highlightedLabel.length + 1 + highlightedValue.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-
-            return stringBuilder
         }
     }
 
