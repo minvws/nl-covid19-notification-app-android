@@ -20,8 +20,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.ExposureNotificationsRepository
-import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.FeatureFlagOption
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.dashboard.DashboardRepository

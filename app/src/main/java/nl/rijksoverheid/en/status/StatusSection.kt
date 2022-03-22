@@ -11,6 +11,7 @@ import com.xwray.groupie.Section
 import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.items.HorizontalRecyclerViewItem
+import nl.rijksoverheid.en.util.Resource
 import java.time.LocalDateTime
 
 class StatusSection : Section() {
@@ -24,7 +25,7 @@ class StatusSection : Section() {
     }
     private val notificationItems = mutableListOf<Item<*>>()
 
-    private var dashboardData: DashboardData? = null
+    private var dashboardData: Resource<DashboardData>? = Resource.Loading()
     private val dashboardGroup = Section().apply {
         setHideWhenEmpty(true)
     }
@@ -100,26 +101,42 @@ class StatusSection : Section() {
     }
 
     fun updateDashboardData(
-        dashboardData: DashboardData,
+        dashboardData: Resource<DashboardData>,
         onItemClick: (DashboardItem) -> Unit
     ) {
-        if (this.dashboardData != dashboardData) {
-            this.dashboardData = dashboardData
-            val dashboardItems = dashboardData.items
-                .sortedBy { it.sortingValue }
-                .map { StatusDashboardItem(it) }
+        val contentDidNotChange = (this.dashboardData is Resource.Loading && dashboardData is Resource.Loading) ||
+            (this.dashboardData is Resource.Success && dashboardData is Resource.Success && this.dashboardData?.data == dashboardData.data) ||
+            (this.dashboardData is Resource.Error && dashboardData is Resource.Error && this.dashboardData?.error == dashboardData.error)
 
-            dashboardGroup.update(
+        if (contentDidNotChange)
+            return
+
+        this.dashboardData = dashboardData
+        val items = when (dashboardData) {
+            is Resource.Loading -> listOf(
+                StatusDashboardHeaderItem,
+                StatusDashboardLoadingItem
+            )
+            is Resource.Error -> listOf(
+                StatusDashboardHeaderItem,
+                StatusDashboardErrorItem(dashboardData.error.peekContent())
+            )
+            is Resource.Success -> {
+
+                val dashboardItems = dashboardData.data.items
+                    .sortedBy { it.sortingValue }
+                    .map { StatusDashboardItem(it) }
+
                 listOf(
                     StatusDashboardHeaderItem,
                     HorizontalRecyclerViewItem(dashboardItems) { item, _ ->
-                        val dashBoardItem = (item as? StatusDashboardItem)?.viewState?.dashboardItem
-                        if (dashBoardItem != null)
-                            onItemClick(dashBoardItem)
+                        (item as? StatusDashboardItem)?.viewState?.dashboardItem?.let { onItemClick(it) }
                     }
                 )
-            )
+            }
         }
+
+        dashboardGroup.update(items)
         ensureInitialized()
     }
 

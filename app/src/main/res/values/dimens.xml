@@ -17,4 +17,5 @@
     <dimen name="circle_counter_min_diameter">32dp</dimen>
     <dimen name="button_drawable_padding">8dp</dimen>
     <dimen name="cardview_corner_radius">8dp</dimen>
+    <dimen name="dashboard_content_min_height">128dp</dimen>
 </resources>

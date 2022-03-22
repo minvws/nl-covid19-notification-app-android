@@ -58,7 +58,7 @@ sealed class DashboardItem(
 
     @Parcelize
     @JsonClass(generateAdapter = true)
-    class PositiveTestResults(
+    data class PositiveTestResults(
         @Json(name = "SortingValue") override val sortingValue: Int,
         @Json(name = "HighlightedValue") override val highlightedValue: GraphValue?,
         @Json(name = "Values") override val values: List<GraphValue>,
@@ -70,7 +70,7 @@ sealed class DashboardItem(
 
     @Parcelize
     @JsonClass(generateAdapter = true)
-    class CoronaMelderUsers(
+    data class CoronaMelderUsers(
         @Json(name = "SortingValue") override val sortingValue: Int,
         @Json(name = "HighlightedValue") override val highlightedValue: GraphValue?,
         @Json(name = "Values") override val values: List<GraphValue>
@@ -78,7 +78,7 @@ sealed class DashboardItem(
 
     @Parcelize
     @JsonClass(generateAdapter = true)
-    class HospitalAdmissions(
+    data class HospitalAdmissions(
         @Json(name = "SortingValue") override val sortingValue: Int,
         @Json(name = "HighlightedValue") override val highlightedValue: GraphValue?,
         @Json(name = "Values") override val values: List<GraphValue>,
@@ -89,7 +89,7 @@ sealed class DashboardItem(
 
     @Parcelize
     @JsonClass(generateAdapter = true)
-    class IcuAdmissions(
+    data class IcuAdmissions(
         @Json(name = "SortingValue") override val sortingValue: Int,
         @Json(name = "HighlightedValue") override val highlightedValue: GraphValue?,
         @Json(name = "Values") override val values: List<GraphValue>,
@@ -100,7 +100,7 @@ sealed class DashboardItem(
 
     @Parcelize
     @JsonClass(generateAdapter = true)
-    class VaccinationCoverage(
+    data class VaccinationCoverage(
         @Json(name = "SortingValue") override val sortingValue: Int,
         @Json(name = "BoosterCoverage") val boosterCoverage: BoosterCoverage,
         @Json(name = "BoosterCoverage18Plus") val boosterCoverage18Plus: Float,
