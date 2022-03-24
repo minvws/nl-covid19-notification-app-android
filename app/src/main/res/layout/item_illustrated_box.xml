@@ -14,7 +14,7 @@
 
         <variable
             name="viewState"
-            type="nl.rijksoverheid.en.about.IllustratedBoxItem.ViewState" />
+            type="nl.rijksoverheid.en.items.IllustratedBoxItem.ViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,6 +40,8 @@
             app:layout_constraintEnd_toStartOf="@id/image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/subtitle"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:text="@string/about_helpdesk_title" />
 
         <TextView

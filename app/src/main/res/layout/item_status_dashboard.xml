@@ -13,7 +13,7 @@
 
         <variable
             name="viewState"
-            type="nl.rijksoverheid.en.status.StatusDashboardItem.ViewState" />
+            type="nl.rijksoverheid.en.status.items.StatusDashboardItem.ViewState" />
     </data>
 
     <androidx.cardview.widget.CardView

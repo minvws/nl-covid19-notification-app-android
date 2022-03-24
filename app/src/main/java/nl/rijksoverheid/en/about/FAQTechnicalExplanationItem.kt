@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.about
 
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.items.IllustratedBoxItem
 
 class FAQTechnicalExplanationItem : IllustratedBoxItem(
     R.string.about_technical_explanation_title,

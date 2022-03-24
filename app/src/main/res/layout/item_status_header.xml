@@ -14,7 +14,7 @@
 
         <variable
             name="viewState"
-            type="nl.rijksoverheid.en.status.StatusHeaderItem.HeaderViewState" />
+            type="nl.rijksoverheid.en.status.items.StatusHeaderItem.HeaderViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -14,7 +14,7 @@
 
         <variable
             name="viewState"
-            type="nl.rijksoverheid.en.status.StatusPausedItem.ViewState" />
+            type="nl.rijksoverheid.en.status.items.StatusPausedItem.ViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

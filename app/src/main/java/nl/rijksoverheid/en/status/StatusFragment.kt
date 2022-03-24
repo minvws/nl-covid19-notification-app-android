@@ -34,6 +34,7 @@ import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.status.StatusSection.NotificationAction
 import nl.rijksoverheid.en.status.StatusViewModel.NotificationState
+import nl.rijksoverheid.en.status.items.StatusActionItem
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.isIgnoringBatteryOptimizations
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
@@ -115,8 +116,8 @@ class StatusFragment @JvmOverloads constructor(
         statusViewModel.lastKeysProcessed.observe(viewLifecycleOwner) {
             section.lastKeysProcessed = it
         }
-        statusViewModel.dashboardData.observe(viewLifecycleOwner) { dashboardData ->
-            section.updateDashboardData(dashboardData, ::navigateToDashboardItem)
+        statusViewModel.dashboardState.observe(viewLifecycleOwner) { dashboardDataState ->
+            section.updateDashboardData(dashboardDataState, ::navigateToDashboardItem)
         }
         statusViewModel.exposureNotificationApiUpdateRequired.observe(viewLifecycleOwner) { requireAnUpdate ->
             if (requireAnUpdate)

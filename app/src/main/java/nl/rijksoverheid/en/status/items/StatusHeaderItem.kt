@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *  SPDX-License-Identifier: EUPL-1.2
+ *   SPDX-License-Identifier: EUPL-1.2
+ *
  */
-package nl.rijksoverheid.en.status
+package nl.rijksoverheid.en.status.items
 
 import android.content.Context
 import androidx.annotation.BoolRes
@@ -16,6 +17,7 @@ import com.xwray.groupie.viewbinding.GroupieViewHolder
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusHeaderBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
+import nl.rijksoverheid.en.status.StatusViewModel
 import nl.rijksoverheid.en.util.SimpleCountdownTimer
 import nl.rijksoverheid.en.util.ext.formatPauseDuration
 import nl.rijksoverheid.en.util.formatDaysSince

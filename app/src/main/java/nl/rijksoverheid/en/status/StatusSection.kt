@@ -8,9 +8,21 @@ package nl.rijksoverheid.en.status
 
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
-import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.items.HorizontalRecyclerViewItem
+import nl.rijksoverheid.en.status.items.LoadingItem
+import nl.rijksoverheid.en.status.items.StatusActionDashboardItem
+import nl.rijksoverheid.en.status.items.StatusActionItem
+import nl.rijksoverheid.en.status.items.StatusBatteryOptimizationEnabledItem
+import nl.rijksoverheid.en.status.items.StatusDashboardErrorItem
+import nl.rijksoverheid.en.status.items.StatusDashboardHeaderItem
+import nl.rijksoverheid.en.status.items.StatusDashboardItem
+import nl.rijksoverheid.en.status.items.StatusDashboardLoadingItem
+import nl.rijksoverheid.en.status.items.StatusErrorItem
+import nl.rijksoverheid.en.status.items.StatusExposureOver14DaysAgoItem
+import nl.rijksoverheid.en.status.items.StatusFooterItem
+import nl.rijksoverheid.en.status.items.StatusHeaderItem
+import nl.rijksoverheid.en.status.items.StatusPausedItem
 import nl.rijksoverheid.en.util.Resource
 import java.time.LocalDateTime
 
@@ -25,7 +37,7 @@ class StatusSection : Section() {
     }
     private val notificationItems = mutableListOf<Item<*>>()
 
-    private var dashboardData: Resource<DashboardData>? = Resource.Loading()
+    private var dashboardState: StatusViewModel.DashboardState? = null
     private val dashboardGroup = Section().apply {
         setHideWhenEmpty(true)
     }
@@ -101,27 +113,35 @@ class StatusSection : Section() {
     }
 
     fun updateDashboardData(
-        dashboardData: Resource<DashboardData>,
+        dashboardState: StatusViewModel.DashboardState,
         onItemClick: (DashboardItem) -> Unit
     ) {
-        val contentDidNotChange = (this.dashboardData is Resource.Loading && dashboardData is Resource.Loading) ||
-            (this.dashboardData is Resource.Success && dashboardData is Resource.Success && this.dashboardData?.data == dashboardData.data) ||
-            (this.dashboardData is Resource.Error && dashboardData is Resource.Error && this.dashboardData?.error == dashboardData.error)
+        val dashboardData = dashboardState.resource
+        val currentDashboardData = this.dashboardState?.resource
 
-        if (contentDidNotChange)
+        val contentDidNotChange = (currentDashboardData is Resource.Loading && dashboardData is Resource.Loading) ||
+            (currentDashboardData is Resource.Success && dashboardData is Resource.Success && currentDashboardData.data == dashboardData.data) ||
+            (currentDashboardData is Resource.Error && dashboardData is Resource.Error && currentDashboardData.error == dashboardData.error)
+
+        if (contentDidNotChange && dashboardState.showAsAction == this.dashboardState?.showAsAction)
             return
 
-        this.dashboardData = dashboardData
-        val items = when (dashboardData) {
-            is Resource.Loading -> listOf(
+        this.dashboardState = dashboardState
+
+
+        val items = when {
+            dashboardState.showAsAction -> listOf(
+                StatusActionDashboardItem
+            )
+            dashboardData is Resource.Loading -> listOf(
                 StatusDashboardHeaderItem,
                 StatusDashboardLoadingItem
             )
-            is Resource.Error -> listOf(
+            dashboardData is Resource.Error -> listOf(
                 StatusDashboardHeaderItem,
                 StatusDashboardErrorItem(dashboardData.error.peekContent())
             )
-            is Resource.Success -> {
+            dashboardData is Resource.Success -> {
 
                 val dashboardItems = dashboardData.data.items
                     .sortedBy { it.sortingValue }
@@ -134,6 +154,7 @@ class StatusSection : Section() {
                     }
                 )
             }
+            else -> emptyList()
         }
 
         dashboardGroup.update(items)

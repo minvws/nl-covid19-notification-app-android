@@ -9,6 +9,7 @@ package nl.rijksoverheid.en.status
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
@@ -74,9 +75,6 @@ class StatusViewModel(
         notificationsRepository.cancelExposureNotification()
     }.asLiveData(viewModelScope.coroutineContext)
 
-    val exposureDetected: Boolean
-        get() = headerState.value is HeaderState.Exposed
-
     val notificationState: LiveData<List<NotificationState>> = combine(
         exposureNotificationsRepository.notificationsEnabledTimestamp()
             .flatMapLatest { exposureNotificationsRepository.getStatus() },
@@ -114,11 +112,18 @@ class StatusViewModel(
     }
 
     private val dashboardDataFlow: MutableStateFlow<Resource<DashboardData>> = MutableStateFlow(Resource.Loading())
-    val dashboardData: LiveData<Resource<DashboardData>> = dashboardDataFlow.asLiveData(viewModelScope.coroutineContext)
+    val dashboardState: LiveData<DashboardState> = combine(
+        dashboardDataFlow,
+        headerState.asFlow(),
+        notificationState.asFlow()
+    ) { dashboardData, headerState, notificationState ->
+        val showAsAction = headerState !is HeaderState.Active || notificationState.isNotEmpty()
+        DashboardState(dashboardData, showAsAction)
+    }.asLiveData(viewModelScope.coroutineContext)
 
     suspend fun getAppointmentInfo(context: Context): AppointmentInfo {
         val appConfig = appConfigManager.getCachedConfigOrDefault()
-        val phoneNumber = if (exposureDetected)
+        val phoneNumber = if (headerState.value is HeaderState.Exposed)
             appConfig.appointmentPhoneNumber
         else
             context.getString(R.string.request_test_phone_number)
@@ -243,7 +248,7 @@ class StatusViewModel(
         viewModelScope.launch {
             dashboardRepository.getDashboardData().collect {
                 // Ignore Loading state when we already have data to show
-                if (dashboardData.value is Resource.Success && it is Resource.Loading)
+                if (dashboardDataFlow.value is Resource.Success && it is Resource.Loading)
                     return@collect
 
                 dashboardDataFlow.emit(it)
@@ -290,6 +295,11 @@ class StatusViewModel(
             object SyncIssuesWifiOnly : Error()
         }
     }
+
+    data class DashboardState(
+        val resource: Resource<DashboardData>,
+        val showAsAction: Boolean
+    )
 
     class AppointmentInfo(val phoneNumber: String, val website: String)
 }

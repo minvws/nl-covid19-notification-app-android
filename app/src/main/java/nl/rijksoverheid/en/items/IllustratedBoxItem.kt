@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *  SPDX-License-Identifier: EUPL-1.2
+ *   SPDX-License-Identifier: EUPL-1.2
+ *
  */
-package nl.rijksoverheid.en.about
+package nl.rijksoverheid.en.items
 
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
@@ -13,7 +14,6 @@ import androidx.annotation.StringRes
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemIllustratedBoxBinding
-import nl.rijksoverheid.en.items.BaseBindableItem
 
 open class IllustratedBoxItem(
     @StringRes private val title: Int,

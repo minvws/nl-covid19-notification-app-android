@@ -4,7 +4,7 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.status
+package nl.rijksoverheid.en.status.items
 
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.R

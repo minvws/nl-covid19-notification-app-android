@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.about
 
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.items.IllustratedBoxItem
 
 class WebsiteLinkItem : IllustratedBoxItem(
     R.string.about_website_link_title,

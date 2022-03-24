@@ -15,6 +15,7 @@
     <color name="helpdesk_background">@color/light_blue</color>
     <color name="faq_onboarding_background">@color/light_blue</color>
     <color name="technical_explanation_background">@color/light_yellow</color>
+    <color name="status_action_dashboard_item_background">@color/light_blue_2</color>
     <color name="faq_github_background">@color/gray_lighter</color>
     <color name="circle_counter_enabled_background">@color/dark_blue</color>
     <color name="circle_counter_disabled_background">@color/gray</color>
@@ -40,6 +41,7 @@
     <color name="blue">#3478F6</color>
     <color name="dark_blue">#0047FF</color>
     <color name="light_blue">#D0F0F3</color>
+    <color name="light_blue_2">#E1F6F8</color>
     <color name="gray_lighter">#F2F2F7</color>
     <color name="gray_lighter_transparent">#59F2F2F7</color>
     <color name="gray_light">#DDDDDD</color>
