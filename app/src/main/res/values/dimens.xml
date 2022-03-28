@@ -18,4 +18,5 @@
     <dimen name="button_drawable_padding">8dp</dimen>
     <dimen name="cardview_corner_radius">8dp</dimen>
     <dimen name="dashboard_content_min_height">128dp</dimen>
+    <dimen name="dashboard_content_width_margin">64dp</dimen>
 </resources>

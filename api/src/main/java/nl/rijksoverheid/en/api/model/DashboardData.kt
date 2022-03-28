@@ -20,6 +20,7 @@ data class DashboardData(
     @Json(name = "HospitalAdmissions") val hospitalAdmissions: DashboardItem.HospitalAdmissions? = null,
     @Json(name = "IcuAdmissions") val icuAdmissions: DashboardItem.IcuAdmissions? = null,
     @Json(name = "VaccinationCoverage") val vaccinationCoverage: DashboardItem.VaccinationCoverage? = null,
+    @Json(name = "more_info_url") val moreInfoUrl: String = DEFAULT_MORE_INFO_URL
 ) {
     val items get() = listOfNotNull(
         positiveTestResults,

@@ -9,16 +9,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="viewState"
-            type="nl.rijksoverheid.en.status.items.StatusDashboardItem.ViewState" />
-    </data>
-
     <androidx.cardview.widget.CardView
-        android:layout_width="256dp"
-        android:layout_height="171dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dashboard_content_min_height"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:foreground="?android:attr/selectableItemBackground"
@@ -36,8 +30,6 @@
                 android:importantForAccessibility="no"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
-                app:tint="@{viewState.getTintColor(context)}"
-                app:imageResource="@{viewState.icon}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_positive_test_results" />
@@ -47,7 +39,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="@{viewState.title}"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -66,7 +57,7 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="56dp"
                 android:clickable="false"
                 android:focusable="false"
                 android:layout_marginTop="4dp"
@@ -109,7 +100,6 @@
                 android:id="@+id/highlightedLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{viewState.getHighlightedLabel(context)}"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -122,7 +112,6 @@
                 android:id="@+id/highlighted_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{viewState.getHighlightedValue(context)}"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"

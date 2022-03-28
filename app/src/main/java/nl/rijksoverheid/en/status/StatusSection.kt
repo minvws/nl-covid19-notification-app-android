@@ -6,8 +6,11 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.content.Context
+import android.content.res.Configuration
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
+import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.items.HorizontalRecyclerViewItem
 import nl.rijksoverheid.en.status.items.LoadingItem
@@ -16,7 +19,7 @@ import nl.rijksoverheid.en.status.items.StatusActionItem
 import nl.rijksoverheid.en.status.items.StatusBatteryOptimizationEnabledItem
 import nl.rijksoverheid.en.status.items.StatusDashboardErrorItem
 import nl.rijksoverheid.en.status.items.StatusDashboardHeaderItem
-import nl.rijksoverheid.en.status.items.StatusDashboardItem
+import nl.rijksoverheid.en.items.DashboardCardItem
 import nl.rijksoverheid.en.status.items.StatusDashboardLoadingItem
 import nl.rijksoverheid.en.status.items.StatusErrorItem
 import nl.rijksoverheid.en.status.items.StatusExposureOver14DaysAgoItem
@@ -25,6 +28,7 @@ import nl.rijksoverheid.en.status.items.StatusHeaderItem
 import nl.rijksoverheid.en.status.items.StatusPausedItem
 import nl.rijksoverheid.en.util.Resource
 import java.time.LocalDateTime
+
 
 class StatusSection : Section() {
 
@@ -37,6 +41,7 @@ class StatusSection : Section() {
     }
     private val notificationItems = mutableListOf<Item<*>>()
 
+    private var highestDashboardItemHeight = 0
     private var dashboardState: StatusViewModel.DashboardState? = null
     private val dashboardGroup = Section().apply {
         setHideWhenEmpty(true)
@@ -113,8 +118,10 @@ class StatusSection : Section() {
     }
 
     fun updateDashboardData(
+        context: Context,
         dashboardState: StatusViewModel.DashboardState,
-        onItemClick: (DashboardItem) -> Unit
+        onItemClick: (DashboardItem) -> Unit,
+        highestItemHeight: Int = context.resources.getDimensionPixelSize(R.dimen.dashboard_content_min_height)
     ) {
         val dashboardData = dashboardState.resource
         val currentDashboardData = this.dashboardState?.resource
@@ -123,11 +130,13 @@ class StatusSection : Section() {
             (currentDashboardData is Resource.Success && dashboardData is Resource.Success && currentDashboardData.data == dashboardData.data) ||
             (currentDashboardData is Resource.Error && dashboardData is Resource.Error && currentDashboardData.error == dashboardData.error)
 
-        if (contentDidNotChange && dashboardState.showAsAction == this.dashboardState?.showAsAction)
+        if (contentDidNotChange &&
+            dashboardState.showAsAction == this.dashboardState?.showAsAction &&
+            highestItemHeight <= highestDashboardItemHeight)
             return
 
         this.dashboardState = dashboardState
-
+        this.highestDashboardItemHeight = highestItemHeight
 
         val items = when {
             dashboardState.showAsAction -> listOf(
@@ -143,14 +152,30 @@ class StatusSection : Section() {
             )
             dashboardData is Resource.Success -> {
 
+                val resources = context.resources
+                val dashboardItemWidth = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    context.resources.displayMetrics.widthPixels - resources.getDimensionPixelSize(R.dimen.dashboard_content_width_margin)
+                } else {
+                    context.resources.displayMetrics.widthPixels / 2
+                }
+
                 val dashboardItems = dashboardData.data.items
                     .sortedBy { it.sortingValue }
-                    .map { StatusDashboardItem(it) }
+                    .map { dashboardItem ->
+                        DashboardCardItem(
+                            context = context,
+                            dashboardItem = dashboardItem,
+                            contentWidth = dashboardItemWidth,
+                            minHeight = highestItemHeight
+                        ) { updatedHighestItemHeight ->
+                            updateDashboardData(context, dashboardState, onItemClick, updatedHighestItemHeight)
+                        }
+                    }
 
                 listOf(
                     StatusDashboardHeaderItem,
                     HorizontalRecyclerViewItem(dashboardItems) { item, _ ->
-                        (item as? StatusDashboardItem)?.viewState?.dashboardItem?.let { onItemClick(it) }
+                        (item as? DashboardCardItem)?.dashboardItem?.let { onItemClick(it) }
                     }
                 )
             }

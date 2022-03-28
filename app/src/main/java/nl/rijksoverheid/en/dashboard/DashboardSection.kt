@@ -14,12 +14,17 @@ import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.LinkItem
 import nl.rijksoverheid.en.items.ParagraphItem
+import nl.rijksoverheid.en.status.items.LoadingItem
 import nl.rijksoverheid.en.util.DateTimeHelper
 import nl.rijksoverheid.en.util.formatDashboardDateShort
 import nl.rijksoverheid.en.util.formatPercentageToString
 import nl.rijksoverheid.en.util.formatToString
 
 class DashboardSection : Section() {
+
+    init {
+        setPlaceholder(LoadingItem())
+    }
 
     fun updateDashboardData(
         context: Context,
