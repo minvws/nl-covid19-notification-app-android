@@ -12,6 +12,7 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardItem
+import nl.rijksoverheid.en.items.DashboardCardItem
 import nl.rijksoverheid.en.items.HorizontalRecyclerViewItem
 import nl.rijksoverheid.en.status.items.LoadingItem
 import nl.rijksoverheid.en.status.items.StatusActionDashboardItem
@@ -19,16 +20,13 @@ import nl.rijksoverheid.en.status.items.StatusActionItem
 import nl.rijksoverheid.en.status.items.StatusBatteryOptimizationEnabledItem
 import nl.rijksoverheid.en.status.items.StatusDashboardErrorItem
 import nl.rijksoverheid.en.status.items.StatusDashboardHeaderItem
-import nl.rijksoverheid.en.items.DashboardCardItem
 import nl.rijksoverheid.en.status.items.StatusDashboardLoadingItem
 import nl.rijksoverheid.en.status.items.StatusErrorItem
 import nl.rijksoverheid.en.status.items.StatusExposureOver14DaysAgoItem
 import nl.rijksoverheid.en.status.items.StatusFooterItem
 import nl.rijksoverheid.en.status.items.StatusHeaderItem
 import nl.rijksoverheid.en.status.items.StatusPausedItem
-import nl.rijksoverheid.en.util.Resource
 import java.time.LocalDateTime
-
 
 class StatusSection : Section() {
 
@@ -123,34 +121,29 @@ class StatusSection : Section() {
         onItemClick: (DashboardItem) -> Unit,
         highestItemHeight: Int = context.resources.getDimensionPixelSize(R.dimen.dashboard_content_min_height)
     ) {
-        val dashboardData = dashboardState.resource
-        val currentDashboardData = this.dashboardState?.resource
 
-        val contentDidNotChange = (currentDashboardData is Resource.Loading && dashboardData is Resource.Loading) ||
-            (currentDashboardData is Resource.Success && dashboardData is Resource.Success && currentDashboardData.data == dashboardData.data) ||
-            (currentDashboardData is Resource.Error && dashboardData is Resource.Error && currentDashboardData.error == dashboardData.error)
-
-        if (contentDidNotChange &&
-            dashboardState.showAsAction == this.dashboardState?.showAsAction &&
-            highestItemHeight <= highestDashboardItemHeight)
+        if (this.dashboardState == dashboardState &&
+            highestItemHeight <= highestDashboardItemHeight
+        )
             return
 
         this.dashboardState = dashboardState
         this.highestDashboardItemHeight = highestItemHeight
 
-        val items = when {
-            dashboardState.showAsAction -> listOf(
+        val items = when (dashboardState) {
+            StatusViewModel.DashboardState.Disabled -> emptyList()
+            StatusViewModel.DashboardState.ShowAsAction -> listOf(
                 StatusActionDashboardItem
             )
-            dashboardData is Resource.Loading -> listOf(
+            StatusViewModel.DashboardState.Loading -> listOf(
                 StatusDashboardHeaderItem,
                 StatusDashboardLoadingItem
             )
-            dashboardData is Resource.Error -> listOf(
+            is StatusViewModel.DashboardState.Error -> listOf(
                 StatusDashboardHeaderItem,
-                StatusDashboardErrorItem(dashboardData.error.peekContent())
+                StatusDashboardErrorItem(dashboardState.message)
             )
-            dashboardData is Resource.Success -> {
+            is StatusViewModel.DashboardState.DashboardCards -> {
 
                 val resources = context.resources
                 val dashboardItemWidth = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -159,7 +152,7 @@ class StatusSection : Section() {
                     context.resources.displayMetrics.widthPixels / 2
                 }
 
-                val dashboardItems = dashboardData.data.items
+                val dashboardItems = dashboardState.data.items
                     .sortedBy { it.sortingValue }
                     .map { dashboardItem ->
                         DashboardCardItem(
@@ -179,7 +172,6 @@ class StatusSection : Section() {
                     }
                 )
             }
-            else -> emptyList()
         }
 
         dashboardGroup.update(items)

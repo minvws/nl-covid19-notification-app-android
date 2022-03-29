@@ -185,7 +185,7 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("app:tint")
+    @BindingAdapter("tint")
     fun ImageView.setImageTint(@ColorInt color: Int) {
         setColorFilter(color)
     }

@@ -25,7 +25,7 @@ import nl.rijksoverheid.en.util.SimpleCountdownTimer
 import java.time.LocalDateTime
 
 /**
- * Fragment for configuring in app settings like pausing, wifi only and language.
+ * Fragment for configuring in app settings like pausing, wifi only, language and dashboard usage.
  */
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 

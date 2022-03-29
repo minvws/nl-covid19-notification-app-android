@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
@@ -43,7 +44,7 @@ class StatusViewModel(
     private val exposureNotificationsRepository: ExposureNotificationsRepository,
     private val notificationsRepository: NotificationsRepository,
     private val dashboardRepository: DashboardRepository,
-    settingsRepository: SettingsRepository,
+    private val settingsRepository: SettingsRepository,
     private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone()
 ) : ViewModel() {
@@ -115,10 +116,17 @@ class StatusViewModel(
     val dashboardState: LiveData<DashboardState> = combine(
         dashboardDataFlow,
         headerState.asFlow(),
-        notificationState.asFlow()
-    ) { dashboardData, headerState, notificationState ->
+        notificationState.asFlow(),
+        settingsRepository.getDashboardEnabledFlow()
+    ) { dashboardData, headerState, notificationState, enabled ->
         val showAsAction = headerState !is HeaderState.Active || notificationState.isNotEmpty()
-        DashboardState(dashboardData, showAsAction)
+        when {
+            !enabled -> DashboardState.Disabled
+            showAsAction -> DashboardState.ShowAsAction
+            dashboardData is Resource.Success -> DashboardState.DashboardCards(dashboardData.data)
+            dashboardData is Resource.Error -> DashboardState.Error(dashboardData.error.peekContent().errorMessage)
+            else -> DashboardState.Loading
+        }
     }.asLiveData(viewModelScope.coroutineContext)
 
     suspend fun getAppointmentInfo(context: Context): AppointmentInfo {
@@ -245,6 +253,10 @@ class StatusViewModel(
     }
 
     fun updateDashboardData() {
+        // Ignore if has been disabled
+        if (!settingsRepository.dashboardEnabled)
+            return
+
         viewModelScope.launch {
             dashboardRepository.getDashboardData().collect {
                 // Ignore Loading state when we already have data to show
@@ -296,10 +308,13 @@ class StatusViewModel(
         }
     }
 
-    data class DashboardState(
-        val resource: Resource<DashboardData>,
-        val showAsAction: Boolean
-    )
+    sealed class DashboardState {
+        object Disabled : DashboardState()
+        object ShowAsAction : DashboardState()
+        object Loading : DashboardState()
+        data class Error(@StringRes val message: Int) : DashboardState()
+        data class DashboardCards(val data: DashboardData) : DashboardState()
+    }
 
     class AppointmentInfo(val phoneNumber: String, val website: String)
 }
