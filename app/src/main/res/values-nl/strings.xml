@@ -372,4 +372,9 @@
     <string name="dashboard_date_prefix">Op %1$s</string>
     <string name="dashboard_simplified_graph_cd">Grafiek %1$s, klik voor uitgebreide beschrijving</string>
     <string name="dashboard_overview_summary">Je vindt hieronder een aantal belangrijke statistieken over het gebruik van CoronaMelder en hoe het in Nederland met corona gaat.</string>
+    <string name="dashboard_positive_test_results_graph_marker"><![CDATA[Testen met een positieve uitslag: <b>%1$s</b>]]></string>
+    <string name="dashboard_corona_melder_users_graph_marker"><![CDATA[CoronaMelder-downloads: <b>%1$s</b>]]></string>
+    <string name="dashboard_hospital_admissions_graph_marker"><![CDATA[Mensen in ziekenhuis: <b>%1$s</b>]]></string>
+    <string name="dashboard_icu_admissions_graph_marker"><![CDATA[Mensen op de IC: <b>%1$s</b>]]></string>
+    <string name="dashboard_vaccination_coverage_graph_marker"><![CDATA[Mensen met een boosterprik: <b>%1$s</b>]]></string>
 </resources>

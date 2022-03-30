@@ -150,7 +150,7 @@ open class DashboardCardItem(
     }
 
     private fun formatProgressLabel(context: Context, percentage: Float, @StringRes description: Int): Spannable {
-        val formattedPercentage = percentage.formatPercentageToString()
+        val formattedPercentage = percentage.formatPercentageToString(context)
         return SpannableStringBuilder()
             .append(formattedPercentage, StyleSpan(Typeface.BOLD), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             .append(" ")

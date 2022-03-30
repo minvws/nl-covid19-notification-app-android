@@ -11,6 +11,7 @@ import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.DashboardItem
+import nl.rijksoverheid.en.api.model.MovingAverage
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.LinkItem
 import nl.rijksoverheid.en.items.ParagraphItem
@@ -50,28 +51,17 @@ class DashboardSection : Section() {
         }
 
         val summaryArgs: List<String> = when (dashboardItem) {
-            is DashboardItem.PositiveTestResults -> listOf(
-                dashboardItem.dailyAverageAmount.formatToString(context),
-                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDashboardDateShort(context),
-                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDashboardDateShort(context),
-                dashboardItem.confirmedCases.formatPercentageToString()
-            )
+            is DashboardItem.PositiveTestResults -> dashboardItem.infectedMovingAverage.toSummaryArgs(context) +
+                    listOf(dashboardItem.confirmedCases.formatPercentageToString(context))
             is DashboardItem.CoronaMelderUsers -> listOfNotNull(
                 dashboardItem.highlightedValue?.value?.formatToString(context)
             )
-            is DashboardItem.HospitalAdmissions -> listOf(
-                dashboardItem.dailyAverageAmount.formatToString(context),
-                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDashboardDateShort(context),
-                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDashboardDateShort(context),
-            )
-            is DashboardItem.IcuAdmissions -> listOf(
-                dashboardItem.dailyAverageAmount.formatToString(context),
-                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageStart).formatDashboardDateShort(context),
-                DateTimeHelper.convertToLocalDate(dashboardItem.dailyAverageEnd).formatDashboardDateShort(context),
-            )
+            is DashboardItem.HospitalAdmissions ->
+                dashboardItem.hospitalAdmissionMovingAverage.toSummaryArgs(context)
+            is DashboardItem.IcuAdmissions -> dashboardItem.icuAdmissionMovingAverage.toSummaryArgs(context)
             is DashboardItem.VaccinationCoverage -> listOf(
-                dashboardItem.vaccinationCoverage18Plus.formatPercentageToString(),
-                dashboardItem.boosterCoverage18Plus.formatPercentageToString()
+                dashboardItem.vaccinationCoverage18Plus.formatPercentageToString(context),
+                dashboardItem.boosterCoverage18Plus.formatPercentageToString(context)
             )
         }
 
@@ -87,4 +77,10 @@ class DashboardSection : Section() {
 
         update(items)
     }
+
+    private fun MovingAverage.toSummaryArgs(context: Context) = listOf(
+        value.formatToString(context),
+        DateTimeHelper.convertToLocalDate(timestampStart).formatDashboardDateShort(context),
+        DateTimeHelper.convertToLocalDate(timestampEnd).formatDashboardDateShort(context),
+    )
 }

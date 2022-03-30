@@ -61,7 +61,7 @@ class DashboardLinkItem(
             }
 
             val highlightedValue = when (dashboardItem) {
-                is DashboardItem.VaccinationCoverage -> dashboardItem.boosterCoverage18Plus.formatPercentageToString()
+                is DashboardItem.VaccinationCoverage -> dashboardItem.boosterCoverage18Plus.formatPercentageToString(context)
                 else -> dashboardItem.highlightedValue?.value?.formatToString(context) ?: ""
             }
 

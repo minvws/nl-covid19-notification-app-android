@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.util.ext
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
@@ -49,6 +50,7 @@ fun LineChart.applyDashboardStyling(
     context: Context,
     dataSet: LineDataSet,
     maxValue: Float,
+    @StringRes markerLabel: Int,
     formatValue: (Float) -> String
 ) {
     axisRight.isEnabled = false
@@ -99,7 +101,7 @@ fun LineChart.applyDashboardStyling(
 
     isHighlightPerDragEnabled = true
     isHighlightPerTapEnabled = true
-    marker = GraphMarkerView(context) {
+    marker = GraphMarkerView(context, markerLabel) {
         this.width
     }
 

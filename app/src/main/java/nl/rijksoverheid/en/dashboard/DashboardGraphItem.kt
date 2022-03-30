@@ -17,6 +17,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.databinding.ItemDashboardGraphBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
+import nl.rijksoverheid.en.items.DashboardCardItem
 import nl.rijksoverheid.en.util.ext.applyDashboardStyling
 import nl.rijksoverheid.en.util.ext.getIconTint
 import nl.rijksoverheid.en.util.ext.icon
@@ -38,6 +39,9 @@ class DashboardGraphItem(
         }
 
         viewBinding.lineChart.apply {
+            if (dashboardItem.values.isEmpty())
+                return
+
             val entries = dashboardItem.values
                 .map { Entry(it.timestamp.toFloat(), it.value.toFloat()) }
                 .sortedBy { it.x }
@@ -45,10 +49,18 @@ class DashboardGraphItem(
             val maxValue = dashboardItem.values.maxOf { it.value }.toFloat()
             data = LineData(dataSet)
 
-            applyDashboardStyling(context, dataSet, maxValue) {
+            applyDashboardStyling(context, dataSet, maxValue, dashboardItem.markerLabelRes) {
                 it.toInt().formatToString(context)
             }
         }
+    }
+
+    private val DashboardItem.markerLabelRes: Int get() = when (this) {
+        is DashboardItem.PositiveTestResults -> R.string.dashboard_positive_test_results_graph_marker
+        is DashboardItem.CoronaMelderUsers -> R.string.dashboard_corona_melder_users_graph_marker
+        is DashboardItem.HospitalAdmissions -> R.string.dashboard_hospital_admissions_graph_marker
+        is DashboardItem.IcuAdmissions -> R.string.dashboard_icu_admissions_graph_marker
+        is DashboardItem.VaccinationCoverage -> R.string.dashboard_vaccination_coverage_graph_marker
     }
 
     override fun isSameAs(other: Item<*>): Boolean =

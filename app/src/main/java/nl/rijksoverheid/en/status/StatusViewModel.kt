@@ -120,8 +120,9 @@ class StatusViewModel(
         settingsRepository.getDashboardEnabledFlow()
     ) { dashboardData, headerState, notificationState, enabled ->
         val showAsAction = headerState !is HeaderState.Active || notificationState.isNotEmpty()
+        val emptyDashboard = dashboardData is Resource.Success && dashboardData.data.items.isEmpty()
         when {
-            !enabled -> DashboardState.Disabled
+            !enabled || emptyDashboard -> DashboardState.Disabled
             showAsAction -> DashboardState.ShowAsAction
             dashboardData is Resource.Success -> DashboardState.DashboardCards(dashboardData.data)
             dashboardData is Resource.Error -> DashboardState.Error(dashboardData.error.peekContent().errorMessage)

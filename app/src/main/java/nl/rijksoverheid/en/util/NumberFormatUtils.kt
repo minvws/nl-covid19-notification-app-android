@@ -17,11 +17,16 @@ fun Double.formatToString(context: Context): String {
     return DecimalFormat.getInstance(locale).format(this).toString()
 }
 
+fun Float.formatToString(context: Context): String {
+    val locale = Locale(context.getString(R.string.app_language))
+    return DecimalFormat.getInstance(locale).format(this).toString()
+}
+
 fun Int.formatToString(context: Context): String {
     val locale = Locale(context.getString(R.string.app_language))
     return NumberFormat.getInstance(locale).format(this).toString()
 }
 
-fun Float.formatPercentageToString(): String {
-    return "${toString()}%"
+fun Float.formatPercentageToString(context: Context): String {
+    return "${formatToString(context)}%"
 }
