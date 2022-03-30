@@ -23,6 +23,10 @@ class GraphMarkerView(
 
     private lateinit var binding: ViewGraphMarkerBinding
 
+    init {
+        isFocusable = true
+    }
+
     override fun refreshContent(entry: Entry?, highlight: Highlight?) {
         binding = ViewGraphMarkerBinding.bind(this)
 
@@ -41,7 +45,7 @@ class GraphMarkerView(
             else -> -(width / 2).toFloat()
         }
 
-        mpPointF.y = -posY
+        mpPointF.y = -posY - (resources.getDimensionPixelSize(R.dimen.activity_vertical_margin) / 2)
         return mpPointF
     }
 }

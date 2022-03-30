@@ -13,8 +13,11 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.Utils
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.dashboard.GraphMarkerView
@@ -102,8 +105,27 @@ fun LineChart.applyDashboardStyling(
 
     dataSet.applyLineStyling(context)
 
-    val verticalOffset = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin).toFloat()
-    setViewPortOffsets(0f, verticalOffset, 0f, verticalOffset)
+    setOnChartValueSelectedListener(object: OnChartValueSelectedListener {
+        val selectedValueIcon = ContextCompat.getDrawable(context, R.drawable.ic_graph_dot_indicator)
+        var selectedEntry: Entry? = null
+
+        override fun onValueSelected(e: Entry?, h: Highlight?) {
+            selectedEntry?.apply { icon = null }
+            selectedEntry = e
+            selectedEntry?.apply { icon = selectedValueIcon }
+        }
+
+        override fun onNothingSelected() {
+            selectedEntry?.apply { icon = null }
+            selectedEntry = null
+        }
+    })
+
+    setViewPortOffsets(
+        0f,
+        resources.getDimensionPixelSize(R.dimen.dashboard_graph_top_margin).toFloat(),
+        0f,
+        resources.getDimensionPixelSize(R.dimen.activity_vertical_margin).toFloat())
 
     // Fix: SetViewPortOffSets are not applied the first time within a Recyclerview
     post { invalidate() }

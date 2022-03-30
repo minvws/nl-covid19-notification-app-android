@@ -54,7 +54,7 @@
                 app:barrierDirection="bottom"
                 app:constraint_referenced_ids="dashboard_item_icon, dashboard_item_title" />
 
-            <com.github.mikephil.charting.charts.LineChart
+            <nl.rijksoverheid.en.util.AccessibleLineChart
                 android:id="@+id/line_chart"
                 android:layout_width="0dp"
                 android:layout_height="56dp"

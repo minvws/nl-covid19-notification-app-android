@@ -19,4 +19,5 @@
     <dimen name="cardview_corner_radius">8dp</dimen>
     <dimen name="dashboard_content_min_height">128dp</dimen>
     <dimen name="dashboard_content_width_margin">64dp</dimen>
+    <dimen name="dashboard_graph_top_margin">48dp</dimen>
 </resources>
