@@ -14,6 +14,7 @@ import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
@@ -48,6 +49,10 @@ class StatusViewModel(
     private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone()
 ) : ViewModel() {
+
+    init {
+        refreshDashboardData()
+    }
 
     fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
 
@@ -112,6 +117,7 @@ class StatusViewModel(
         emit(exposureNotificationsRepository.isExposureNotificationApiUpdateRequired())
     }
 
+    private var refreshDashboardDataJob: Job? = null
     private val dashboardDataFlow: MutableStateFlow<Resource<DashboardData>> = MutableStateFlow(Resource.Loading())
     val dashboardState: LiveData<DashboardState> = combine(
         dashboardDataFlow,
@@ -253,12 +259,12 @@ class StatusViewModel(
         }
     }
 
-    fun updateDashboardData() {
-        // Ignore if has been disabled
-        if (!settingsRepository.dashboardEnabled)
+    fun refreshDashboardData() {
+        // Ignore if dashboard has been disabled or refresh job is still in progress
+        if (!settingsRepository.dashboardEnabled || refreshDashboardDataJob?.isActive == true)
             return
 
-        viewModelScope.launch {
+        refreshDashboardDataJob = viewModelScope.launch {
             dashboardRepository.getDashboardData().collect {
                 // Ignore Loading state when we already have data to show
                 if (dashboardDataFlow.value is Resource.Success && it is Resource.Loading)

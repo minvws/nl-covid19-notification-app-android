@@ -31,6 +31,7 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
+import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
@@ -98,6 +99,10 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
             cacheStrategy: CacheStrategy?
         ): ResourceBundle {
             throw IllegalStateException()
+        }
+
+        override suspend fun getDashboardData(cacheStrategy: CacheStrategy?): DashboardData {
+            throw NotImplementedError()
         }
     }
 

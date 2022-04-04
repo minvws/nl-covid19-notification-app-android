@@ -34,6 +34,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
+import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.DaySinceOnsetToInfectiousness
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.ResourceBundle
@@ -753,6 +754,9 @@ class ExposureNotificationsRepositoryTest {
             ): ResourceBundle {
                 throw java.lang.IllegalStateException()
             }
+
+            override suspend fun getDashboardData(cacheStrategy: CacheStrategy?): DashboardData =
+                throw NotImplementedError()
         }
 
         val repository = createRepository(
@@ -823,6 +827,9 @@ class ExposureNotificationsRepositoryTest {
             ): ResourceBundle {
                 throw java.lang.IllegalStateException()
             }
+
+            override suspend fun getDashboardData(cacheStrategy: CacheStrategy?): DashboardData =
+                throw NotImplementedError()
         }
 
         val repository = createRepository(
@@ -1210,6 +1217,9 @@ class ExposureNotificationsRepositoryTest {
                     ): ResourceBundle {
                         throw java.lang.IllegalStateException()
                     }
+
+                    override suspend fun getDashboardData(cacheStrategy: CacheStrategy?): DashboardData =
+                        throw NotImplementedError()
                 },
                 scheduler = object : BackgroundWorkScheduler {
                     override fun schedule(intervalMinutes: Int) {
@@ -2050,6 +2060,9 @@ class ExposureNotificationsRepositoryTest {
                 id: String,
                 cacheStrategy: CacheStrategy?
             ): ResourceBundle = getResourceBundle(id, cacheStrategy)
+
+            override suspend fun getDashboardData(cacheStrategy: CacheStrategy?): DashboardData =
+                throw NotImplementedError()
         }
     }
 

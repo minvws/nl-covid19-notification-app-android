@@ -12,6 +12,7 @@ import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
+import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
@@ -556,5 +557,8 @@ class ResourceBundleManagerTest {
             id: String,
             cacheStrategy: CacheStrategy?
         ): ResourceBundle = resourceBundle
+
+        override suspend fun getDashboardData(cacheStrategy: CacheStrategy?): DashboardData =
+            throw NotImplementedError()
     }
 }

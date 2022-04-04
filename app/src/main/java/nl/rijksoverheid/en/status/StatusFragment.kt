@@ -133,7 +133,7 @@ class StatusFragment @JvmOverloads constructor(
         super.onResume()
         statusViewModel.isIgnoringBatteryOptimizations.value = requireContext().isIgnoringBatteryOptimizations()
         section.refreshStateContent()
-        statusViewModel.updateDashboardData()
+        statusViewModel.refreshDashboardData()
     }
 
     private fun updateHeaderState(headerState: StatusViewModel.HeaderState) {

@@ -114,7 +114,7 @@ class SettingsViewModelTest {
                 .thenReturn(false)
 
             val settingsViewModel = SettingsViewModel(settingsRepository)
-            settingsViewModel.wifiOnly.value = true
+            settingsViewModel.wifiOnlyChanged(true)
 
             verify(settingsRepository, times(1)).setWifiOnly(true)
             verify(settingsRepository, never()).setWifiOnly(false)
@@ -182,6 +182,34 @@ class SettingsViewModelTest {
 
             verify(settingsRepository, times(1))
                 .setExposureNotificationsPaused(pausedUntil)
+        }
+    }
+
+    @Test
+    fun `dashboardEnabled available on init`() = runBlocking {
+        Mockito.`when`(settingsRepository.dashboardEnabled)
+            .thenReturn(true)
+
+        val settingsViewModel = SettingsViewModel(settingsRepository)
+
+        settingsViewModel.dashboardEnabled.observeForTesting {
+            Assert.assertTrue(
+                it.values.first()
+            )
+        }
+    }
+
+    @Test
+    fun `Setting setDashboardEnabled persists state to repository`() {
+        runBlocking {
+            Mockito.`when`(settingsRepository.dashboardEnabled)
+                .thenReturn(true)
+
+            val settingsViewModel = SettingsViewModel(settingsRepository)
+            settingsViewModel.dashboardEnabledChanged(false)
+
+            verify(settingsRepository, times(1)).setDashboardEnabled(false)
+            verify(settingsRepository, never()).setDashboardEnabled(true)
         }
     }
 }

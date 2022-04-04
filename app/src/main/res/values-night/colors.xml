@@ -11,6 +11,7 @@
     <color name="helpdesk_background">@color/item_background_gray</color>
     <color name="faq_onboarding_background">@color/item_background_gray</color>
     <color name="technical_explanation_background">@color/item_background_gray</color>
+    <color name="status_action_dashboard_item_background">@color/item_background_gray</color>
     <color name="faq_github_background">@color/item_background_gray</color>
     <color name="circle_counter_disabled_background">#656569</color>
     <color name="link_text_on_info_surface">@color/lighter_blue</color>

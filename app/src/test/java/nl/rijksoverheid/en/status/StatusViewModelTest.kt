@@ -10,11 +10,14 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.dashboard.DashboardRepository
+import nl.rijksoverheid.en.dashboardTestData
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.settings.SettingsRepository
+import nl.rijksoverheid.en.util.Resource
 import nl.rijksoverheid.en.util.observeForTesting
 import org.junit.After
 import org.junit.Assert
@@ -46,12 +49,17 @@ class StatusViewModelTest {
     private lateinit var notificationsRepository: NotificationsRepository
 
     @Mock
+    private lateinit var dashboardRepository: DashboardRepository
+
+    @Mock
     private lateinit var settingsRepository: SettingsRepository
 
     @Mock
     private lateinit var appConfigManager: AppConfigManager
 
     private lateinit var closeable: AutoCloseable
+
+    private val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
     @Before
     fun openMocks() {
@@ -65,8 +73,6 @@ class StatusViewModelTest {
 
     @Test
     fun `headerState active with valid conditions`() = runBlocking {
-        val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
-
         Mockito.`when`(exposureNotificationsRepository.getStatus())
             .thenReturn(flowOf(StatusResult.Enabled))
         Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
@@ -88,6 +94,7 @@ class StatusViewModelTest {
             onboardingRepository,
             exposureNotificationsRepository,
             notificationsRepository,
+            dashboardRepository,
             settingsRepository,
             appConfigManager,
             clock
@@ -110,7 +117,6 @@ class StatusViewModelTest {
 
     @Test
     fun `headerState exposed with no errorState`() = runBlocking {
-        val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
         val exposureDate = LocalDate.now().minusDays(1)
         val notificationReceivedDate = LocalDate.now()
         val pausedState = Settings.PausedState.Enabled
@@ -136,6 +142,7 @@ class StatusViewModelTest {
             onboardingRepository,
             exposureNotificationsRepository,
             notificationsRepository,
+            dashboardRepository,
             settingsRepository,
             appConfigManager,
             clock
@@ -162,7 +169,6 @@ class StatusViewModelTest {
 
     @Test
     fun `NotificationsDisabled without being exposed `() = runBlocking {
-        val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
         val notificationsEnabled = false
 
         Mockito.`when`(exposureNotificationsRepository.getStatus())
@@ -186,6 +192,7 @@ class StatusViewModelTest {
             onboardingRepository,
             exposureNotificationsRepository,
             notificationsRepository,
+            dashboardRepository,
             settingsRepository,
             appConfigManager,
             clock
@@ -208,7 +215,6 @@ class StatusViewModelTest {
 
     @Test
     fun `headerState exposed with syncIssues`() = runBlocking {
-        val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
         val exposureDate = LocalDate.now().minusDays(1)
         val notificationReceivedDate = LocalDate.now()
         val pausedState = Settings.PausedState.Enabled
@@ -234,6 +240,7 @@ class StatusViewModelTest {
             onboardingRepository,
             exposureNotificationsRepository,
             notificationsRepository,
+            dashboardRepository,
             settingsRepository,
             appConfigManager,
             clock
@@ -261,7 +268,6 @@ class StatusViewModelTest {
     @Test
     fun `headerState exposed and notificationState paused when framework is paused while being exposed`() =
         runBlocking {
-            val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
             val exposureDate = LocalDate.now(clock).minusDays(1)
             val notificationReceivedDate = LocalDate.now(clock)
             val pausedState = Settings.PausedState.Paused(LocalDateTime.now(clock).plusDays(1))
@@ -287,6 +293,7 @@ class StatusViewModelTest {
                 onboardingRepository,
                 exposureNotificationsRepository,
                 notificationsRepository,
+                dashboardRepository,
                 settingsRepository,
                 appConfigManager,
                 clock
@@ -317,7 +324,6 @@ class StatusViewModelTest {
 
     @Test
     fun `headerState exposed with errorState consentRequired`() = runBlocking {
-        val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
         val exposureDate = LocalDate.now(clock).minusDays(1)
         val notificationReceivedDate = LocalDate.now(clock)
         val pausedState = Settings.PausedState.Enabled
@@ -343,6 +349,7 @@ class StatusViewModelTest {
             onboardingRepository,
             exposureNotificationsRepository,
             notificationsRepository,
+            dashboardRepository,
             settingsRepository,
             appConfigManager,
             clock
@@ -369,7 +376,6 @@ class StatusViewModelTest {
 
     @Test
     fun `headerState bluetooth disabled`() = runBlocking {
-        val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
         Mockito.`when`(exposureNotificationsRepository.getStatus())
             .thenReturn(flowOf(StatusResult.BluetoothDisabled))
@@ -392,6 +398,7 @@ class StatusViewModelTest {
             onboardingRepository,
             exposureNotificationsRepository,
             notificationsRepository,
+            dashboardRepository,
             settingsRepository,
             appConfigManager,
             clock
@@ -414,7 +421,6 @@ class StatusViewModelTest {
 
     @Test
     fun `headerState syncIssues wifi only`() = runBlocking {
-        val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
         Mockito.`when`(exposureNotificationsRepository.getStatus())
             .thenReturn(flowOf(StatusResult.Enabled))
@@ -439,6 +445,7 @@ class StatusViewModelTest {
             onboardingRepository,
             exposureNotificationsRepository,
             notificationsRepository,
+            dashboardRepository,
             settingsRepository,
             appConfigManager,
             clock
@@ -485,6 +492,7 @@ class StatusViewModelTest {
                 onboardingRepository,
                 exposureNotificationsRepository,
                 notificationsRepository,
+                dashboardRepository,
                 settingsRepository,
                 appConfigManager,
                 clock
@@ -531,6 +539,7 @@ class StatusViewModelTest {
                 onboardingRepository,
                 exposureNotificationsRepository,
                 notificationsRepository,
+                dashboardRepository,
                 settingsRepository,
                 appConfigManager,
                 clock
@@ -542,4 +551,97 @@ class StatusViewModelTest {
             verify(exposureNotificationsRepository, times(1)).rescheduleBackgroundJobs()
         }
     }
+
+    @Test
+    fun `dashboardState returns DashboardCards`() {
+        runBlocking {
+            val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
+
+            Mockito.`when`(exposureNotificationsRepository.getStatus())
+                .thenReturn(flowOf(StatusResult.Enabled))
+            Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+                .thenReturn(flowOf(Settings.PausedState.Enabled))
+            Mockito.`when`(settingsRepository.dashboardEnabled)
+                .thenReturn(true)
+            Mockito.`when`(settingsRepository.getDashboardEnabledFlow())
+                .thenReturn(flowOf(true))
+            Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+                .thenReturn(flowOf(clock.millis()))
+            Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+                .thenReturn(flowOf(clock.millis()))
+            Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+                .thenReturn(flowOf(null))
+            Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+                .thenReturn(null)
+            Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+                .thenReturn(false)
+            Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
+                .thenReturn(flowOf(true))
+            Mockito.`when`(dashboardRepository.getDashboardData())
+                .thenReturn(flowOf(Resource.Success(dashboardTestData)))
+
+            val statusViewModel = StatusViewModel(
+                onboardingRepository,
+                exposureNotificationsRepository,
+                notificationsRepository,
+                dashboardRepository,
+                settingsRepository,
+                appConfigManager,
+                clock
+            )
+
+            statusViewModel.refreshDashboardData()
+
+            statusViewModel.dashboardState.observeForTesting {
+                Assert.assertTrue(
+                    it.values.first() is StatusViewModel.DashboardState.DashboardCards
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `dashboardState returns ShowAsAction when framework is disabled`() = runBlocking {
+        Mockito.`when`(exposureNotificationsRepository.getStatus())
+            .thenReturn(flowOf(StatusResult.Disabled))
+        Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+            .thenReturn(flowOf(Settings.PausedState.Enabled))
+        Mockito.`when`(settingsRepository.dashboardEnabled)
+            .thenReturn(true)
+        Mockito.`when`(settingsRepository.getDashboardEnabledFlow())
+            .thenReturn(flowOf(true))
+        Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+            .thenReturn(flowOf(clock.millis()))
+        Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+            .thenReturn(flowOf(clock.millis()))
+        Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+            .thenReturn(flowOf(null))
+        Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+            .thenReturn(null)
+        Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+            .thenReturn(false)
+        Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
+            .thenReturn(flowOf(true))
+        Mockito.`when`(dashboardRepository.getDashboardData())
+            .thenReturn(flowOf(Resource.Success(dashboardTestData)))
+
+        val statusViewModel = StatusViewModel(
+            onboardingRepository,
+            exposureNotificationsRepository,
+            notificationsRepository,
+            dashboardRepository,
+            settingsRepository,
+            appConfigManager,
+            clock
+        )
+
+        statusViewModel.refreshDashboardData()
+
+        statusViewModel.dashboardState.observeForTesting {
+            Assert.assertTrue(
+                it.values.first() is StatusViewModel.DashboardState.ShowAsAction
+            )
+        }
+    }
+
 }

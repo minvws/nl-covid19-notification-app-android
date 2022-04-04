@@ -21,6 +21,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.BaseInstrumentationTest
@@ -31,11 +32,13 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
+import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.dashboard.DashboardRepository
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.factory.RepositoryFactory.createAppConfigManager
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
@@ -46,6 +49,7 @@ import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.settings.SettingsRepository
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
+import okhttp3.Dispatcher
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Test
@@ -105,6 +109,10 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         ): ResourceBundle {
             throw IllegalStateException()
         }
+
+        override suspend fun getDashboardData(cacheStrategy: CacheStrategy?): DashboardData {
+            throw NotImplementedError()
+        }
     }
 
     private val repository by lazy {
@@ -138,6 +146,9 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             context, Settings(context, settingsPreferences)
         )
     }
+    private val dashboardRepository by lazy {
+        DashboardRepository(service, Dispatchers.IO)
+    }
 
     private val statusViewModel by lazy {
         StatusViewModel(
@@ -147,6 +158,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
             ),
             repository,
             NotificationsRepository(context, clock),
+            dashboardRepository,
             settingsRepository,
             createAppConfigManager(context),
             clock

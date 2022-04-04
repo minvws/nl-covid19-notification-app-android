@@ -28,6 +28,7 @@ import com.vanniktech.junit4androidintegrationrules.NetworkCommand.Companion.net
 import com.vanniktech.junit4androidintegrationrules.NotificationsCommand.Companion.notifications
 import com.vanniktech.junit4androidintegrationrules.StatusCommand
 import com.vanniktech.junit4androidintegrationrules.StatusCommand.Companion.status
+import kotlinx.coroutines.Dispatchers
 import nl.rijksoverheid.en.BaseInstrumentationTest
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
@@ -36,11 +37,13 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
+import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.dashboard.DashboardRepository
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.factory.RepositoryFactory.createAppConfigManager
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
@@ -134,6 +137,10 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         ): ResourceBundle {
             throw IllegalStateException()
         }
+
+        override suspend fun getDashboardData(cacheStrategy: CacheStrategy?): DashboardData {
+            throw NotImplementedError()
+        }
     }
 
     private val repository = ExposureNotificationsRepository(
@@ -158,6 +165,9 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
     private val settingsRepository = SettingsRepository(
         context, Settings(context, settingsPreferences)
     )
+    private val dashboardRepository by lazy {
+        DashboardRepository(service, Dispatchers.IO)
+    }
 
     private val statusViewModel = StatusViewModel(
         OnboardingRepository(
@@ -166,6 +176,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         ),
         repository,
         NotificationsRepository(context, clock),
+        dashboardRepository,
         settingsRepository,
         createAppConfigManager(context),
         clock
