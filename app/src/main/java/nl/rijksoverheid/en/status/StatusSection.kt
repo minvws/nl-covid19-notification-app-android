@@ -158,7 +158,7 @@ class StatusSection : Section() {
                         DashboardCardItem(
                             context = context,
                             dashboardItem = dashboardItem,
-                            contentWidth = dashboardItemWidth,
+                            cardWidth = dashboardItemWidth,
                             minHeight = highestItemHeight
                         ) { updatedHighestItemHeight ->
                             updateDashboardData(context, dashboardState, onItemClick, updatedHighestItemHeight)

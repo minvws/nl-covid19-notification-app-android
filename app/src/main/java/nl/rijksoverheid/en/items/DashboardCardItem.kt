@@ -36,7 +36,7 @@ import nl.rijksoverheid.en.util.formatToString
 open class DashboardCardItem(
     context: Context,
     val dashboardItem: DashboardItem,
-    private val contentWidth: Int = ViewGroup.LayoutParams.MATCH_PARENT,
+    private val cardWidth: Int = ViewGroup.LayoutParams.MATCH_PARENT,
     private val minHeight: Int = context.resources.getDimensionPixelSize(R.dimen.dashboard_content_min_height),
     private val setHighestHeight: ((Int) -> Unit)? = null,
 ) : BaseBindableItem<ItemDashboardCardBinding>() {
@@ -67,8 +67,8 @@ open class DashboardCardItem(
             CardStyle.PROGRESS -> bindProgressStyle(viewBinding)
         }
 
-        viewBinding.container.layoutParams = viewBinding.container.layoutParams.apply {
-            width = contentWidth
+        viewBinding.root.layoutParams = viewBinding.root.layoutParams.apply {
+            width = cardWidth
         }
 
         if (setHighestHeight != null) {
