@@ -82,7 +82,9 @@ abstract class FakeExposureNotificationsClient : ExposureNotificationClient {
     override fun getExposureInformation(token: String): Task<List<ExposureInformation>> =
         Tasks.forException(IllegalStateException())
 
-    override fun getApiKey(): ApiKey<Api.ApiOptions.NoOptions>? = null
+    override fun getApiKey(): ApiKey<Api.ApiOptions.NoOptions> {
+        throw NotImplementedError()
+    }
 
     override fun getTemporaryExposureKeyHistory(): Task<List<TemporaryExposureKey>> =
         Tasks.forException(IllegalStateException())

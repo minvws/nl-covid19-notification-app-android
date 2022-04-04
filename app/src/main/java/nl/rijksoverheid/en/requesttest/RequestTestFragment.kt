@@ -54,7 +54,7 @@ class RequestTestFragment : BaseFragment(R.layout.fragment_list_with_two_buttons
         binding.button2.apply {
             setText(R.string.request_test_button_website)
             setOnClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.test_url))))
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(args.website)))
             }
         }
     }
