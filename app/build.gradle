@@ -8,7 +8,7 @@ apply plugin: 'com.google.firebase.appdistribution'
 apply plugin: 'ru.cian.huawei-publish'
 apply from: rootProject.file("jacoco.gradle")
 
-version = "2.5.5"
+version = "2.5.6"
 def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 125210
 
 def getGitHash = { ->
