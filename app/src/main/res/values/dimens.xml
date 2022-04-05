@@ -20,4 +20,5 @@
     <dimen name="dashboard_content_min_height">128dp</dimen>
     <dimen name="dashboard_content_width_margin">64dp</dimen>
     <dimen name="dashboard_graph_top_margin">48dp</dimen>
+    <dimen name="dashboard_graph_bottom_offset">4dp</dimen>
 </resources>

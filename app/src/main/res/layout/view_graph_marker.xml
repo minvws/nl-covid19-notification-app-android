@@ -11,15 +11,13 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools">
 
-        <nl.rijksoverheid.en.util.HtmlTextViewWidget
+        <TextView
             android:id="@+id/marker_label"
             android:textAppearance="?attr/textAppearanceCaption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:background="@drawable/marker_background"
-            android:ellipsize="end"
-            android:singleLine="true"
             android:padding="8dp"
             tools:text="Testen met een positieve uitslag: 117.857"/>
 

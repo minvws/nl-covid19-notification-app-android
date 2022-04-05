@@ -8,7 +8,10 @@ package nl.rijksoverheid.en.dashboard
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.annotation.StringRes
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
@@ -20,20 +23,21 @@ import nl.rijksoverheid.en.util.formatToString
 @SuppressLint("ViewConstructor")
 class GraphMarkerView(
     context: Context,
-    @StringRes val label: Int,
+    private val label: String,
     private val graphWidth: () -> Int
 ) : MarkerView(context, R.layout.view_graph_marker) {
 
     private lateinit var binding: ViewGraphMarkerBinding
 
-    init {
-        isFocusable = true
-    }
-
     override fun refreshContent(entry: Entry?, highlight: Highlight?) {
         binding = ViewGraphMarkerBinding.bind(this)
 
-        binding.markerLabel.setHtmlText(context.getString(label, entry?.y?.formatToString(context)))
+        binding.markerLabel.text = SpannableStringBuilder()
+            .append(label)
+            .append(": ")
+            .append(entry?.y?.formatToString(context), StyleSpan(Typeface.BOLD), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding.markerLabel.maxWidth = graphWidth()
 
         super.refreshContent(entry, highlight)
     }

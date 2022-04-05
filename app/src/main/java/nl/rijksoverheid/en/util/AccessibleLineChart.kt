@@ -1,49 +1,65 @@
 /*
- *  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
- *   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+ * Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+ *  Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
  *
- *   SPDX-License-Identifier: EUPL-1.2
- *
+ *  SPDX-License-Identifier: EUPL-1.2
  */
-
 package nl.rijksoverheid.en.util
 
 import android.content.Context
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.accessibility.AccessibilityEvent
+import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
-import timber.log.Timber
-import java.util.Locale
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import nl.rijksoverheid.en.R
 
-class AccessibleLineChart: LineChart {
+class AccessibleLineChart : LineChart {
 
     constructor (context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) :super(context, attrs)
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor (context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
+
+    private var selectedEntry: Entry? = null
+    var selectedValueIcon = ContextCompat.getDrawable(context, R.drawable.ic_graph_dot_indicator)
+    var selectedValueLabel: String? = null
+
+    var accessibilityGraphDescription: String = ""
 
     init {
         // enable being detected by ScreenReader
         isFocusable = true
+
+        setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+            override fun onValueSelected(entry: Entry?, h: Highlight?) {
+                selectedEntry?.apply { icon = null }
+                selectedEntry = entry
+                selectedEntry?.apply { icon = selectedValueIcon }
+
+                sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED)
+            }
+
+            override fun onNothingSelected() {
+                selectedEntry?.apply { icon = null }
+                selectedEntry = null
+            }
+        })
     }
 
-    val accessibilitySummaryDescription: String = ""
-
     override fun dispatchPopulateAccessibilityEvent(event: AccessibilityEvent): Boolean {
-        val completed = super.dispatchPopulateAccessibilityEvent(event)
-        Timber.d("Dispatch called for Chart <View> and completed as $completed")
-        event.text.add(getAccessibilityDescription())
+        super.dispatchPopulateAccessibilityEvent(event)
+        if (selectedEntry == null)
+            event.text.add(getAccessibilityDescription())
+        else
+            getSelectedValueAccessibilityDescription()?.let { event.text.add(it) }
 
-        // Add the user generated summary after the dynamic summary is complete.
-        if (!TextUtils.isEmpty(accessibilitySummaryDescription)) {
-            event.text.add(accessibilitySummaryDescription)
-        }
         return true
     }
 
     private fun getAccessibilityDescription(): String {
         val lineData = lineData
-        val numberOfPoints = lineData.entryCount
 
         // Min and max values...
         val yAxisValueFormatter = axisLeft.valueFormatter
@@ -55,12 +71,20 @@ class AccessibleLineChart: LineChart {
             xAxis.valueFormatter
         val minRange = xAxisValueFormatter.getFormattedValue(lineData.xMin)
         val maxRange = xAxisValueFormatter.getFormattedValue(lineData.xMax)
-        val entries = if (numberOfPoints == 1) "entry" else "entries"
-        return String.format(
-            Locale.getDefault(), "The line chart has %d %s. " +
-                "The minimum value is %s and maximum value is %s." +
-                "Data ranges from %s to %s.",
-            numberOfPoints, entries, minVal, maxVal, minRange, maxRange
+        return context.getString(
+            R.string.dashboard_graph_content_description,
+            accessibilityGraphDescription, minVal, maxVal, minRange, maxRange
         )
+    }
+
+    private fun getSelectedValueAccessibilityDescription(): String? {
+        return selectedEntry?.let { entry ->
+            context.getString(
+                R.string.dashboard_graph_selected_value_content_description,
+                entry.y.formatToString(context),
+                selectedValueLabel,
+                xAxis.valueFormatter.getFormattedValue(entry.x)
+            )
+        }
     }
 }

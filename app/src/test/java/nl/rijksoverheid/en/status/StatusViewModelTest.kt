@@ -643,5 +643,4 @@ class StatusViewModelTest {
             )
         }
     }
-
 }

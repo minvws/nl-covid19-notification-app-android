@@ -12,9 +12,13 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.core.view.isVisible
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -46,6 +50,25 @@ open class DashboardCardItem(
 
     override fun bind(viewBinding: ItemDashboardCardBinding, position: Int) {
         val context = viewBinding.root.context
+
+        ViewCompat.setAccessibilityDelegate(
+            viewBinding.root,
+            object : AccessibilityDelegateCompat() {
+                override fun onInitializeAccessibilityNodeInfo(
+                    host: View,
+                    info: AccessibilityNodeInfoCompat
+                ) {
+                    super.onInitializeAccessibilityNodeInfo(host, info)
+                    info.contentDescription = StringBuilder()
+                        .appendLine(viewBinding.dashboardItemTitle.text)
+                        .appendCardStyleSpecificContentDescription(context)
+                        .append(viewBinding.highlightedLabel.text)
+                        .append(" ")
+                        .append(viewBinding.highlightedValue.text)
+                    info.className = Button::class.java.name
+                }
+            }
+        )
 
         viewBinding.dashboardItemIcon.apply {
             setImageResource(dashboardItem.icon)
@@ -87,21 +110,20 @@ open class DashboardCardItem(
 
         if (dashboardItem.values.isNotEmpty()) {
             viewBinding.lineChart.apply {
-
                 val entries = dashboardItem.values
                     .map { Entry(it.timestamp.toFloat(), it.value.toFloat()) }
                     .sortedBy { it.x }
                 val dataSet = LineDataSet(entries, "")
                     .apply {
                         applyLineStyling(context)
-                        getEntryForIndex(entries.size - 1).icon =
-                            ContextCompat.getDrawable(context, R.drawable.ic_graph_dot_indicator)
+                        getEntryForIndex(entries.size - 1).icon = selectedValueIcon
                     }
 
                 data = LineData(dataSet)
 
                 applyCardViewStyling()
 
+                isFocusable = false
                 isVisible = true
             }
         } else {
@@ -146,6 +168,36 @@ open class DashboardCardItem(
                 )
                 progressIndicator.progress = dashboardItem.boosterCoverage18Plus.toInt()
             }
+        }
+    }
+
+    private fun StringBuilder.appendCardStyleSpecificContentDescription(
+        context: Context
+    ): StringBuilder {
+        return when (dashboardItem.cardStyle) {
+            CardStyle.GRAPH ->
+                appendLine(context.getString(R.string.dashboard_card_graph_content_description))
+            CardStyle.PROGRESS -> {
+                if (dashboardItem is DashboardItem.VaccinationCoverage) {
+                    appendLine(
+                        formatProgressLabel(
+                            context,
+                            dashboardItem.vaccinationCoverage18Plus,
+                            R.string.dashboard_vaccination_coverage_elder_label
+                        )
+                    )
+                    appendLine(
+                        formatProgressLabel(
+                            context,
+                            dashboardItem.boosterCoverage18Plus,
+                            R.string.dashboard_vaccination_coverage_booster_label
+                        )
+                    )
+                } else {
+                    this
+                }
+            }
+            else -> this
         }
     }
 

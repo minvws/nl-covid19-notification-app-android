@@ -51,7 +51,8 @@ class DashboardSection : Section() {
         }
 
         val summaryArgs: List<String> = when (dashboardItem) {
-            is DashboardItem.PositiveTestResults -> dashboardItem.infectedMovingAverage.toSummaryArgs(context) +
+            is DashboardItem.PositiveTestResults ->
+                dashboardItem.infectedMovingAverage.toSummaryArgs(context) +
                     listOf(dashboardItem.confirmedCases.formatPercentageToString(context))
             is DashboardItem.CoronaMelderUsers -> listOfNotNull(
                 dashboardItem.highlightedValue?.value?.formatToString(context)

@@ -64,7 +64,6 @@ class DashboardOverviewFragment : BaseFragment(R.layout.fragment_list) {
     }
 
     private fun navigateToDashboardItem(dashboardItemReference: DashboardItem.Reference) {
-        enterTransition = exitTransition
         findNavController().navigateCatchingErrors(
             DashboardOverviewFragmentDirections.actionDashboardFragment(dashboardItemReference, true),
             FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)

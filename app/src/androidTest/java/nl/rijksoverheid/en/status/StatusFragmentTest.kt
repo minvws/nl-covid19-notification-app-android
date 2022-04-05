@@ -49,7 +49,6 @@ import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.settings.SettingsRepository
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import nl.rijksoverheid.en.test.withFragment
-import okhttp3.Dispatcher
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Test

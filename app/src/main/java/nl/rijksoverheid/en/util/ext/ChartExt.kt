@@ -7,21 +7,18 @@
 package nl.rijksoverheid.en.util.ext
 
 import android.content.Context
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.Utils
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.dashboard.GraphMarkerView
+import nl.rijksoverheid.en.util.AccessibleLineChart
 import nl.rijksoverheid.en.util.formatDate
 import java.time.Instant
 import java.time.LocalDateTime.ofInstant
@@ -46,11 +43,11 @@ fun LineChart.applyCardViewStyling() {
     post { invalidate() }
 }
 
-fun LineChart.applyDashboardStyling(
+fun AccessibleLineChart.applyDashboardStyling(
     context: Context,
     dataSet: LineDataSet,
     maxValue: Float,
-    @StringRes markerLabel: Int,
+    markerLabel: String,
     formatValue: (Float) -> String
 ) {
     axisRight.isEnabled = false
@@ -59,6 +56,7 @@ fun LineChart.applyDashboardStyling(
 
     val upperbound = calculateUpperbound(maxValue)
     val yAsGridLines = calculateAmountOfGridLines(maxValue)
+    val axisTextSize = 12f * resources.configuration.fontScale
 
     with(axisLeft) {
         yOffset = -(Utils.convertPixelsToDp(textSize) / 2)
@@ -66,6 +64,7 @@ fun LineChart.applyDashboardStyling(
         setDrawAxisLine(false)
         setDrawGridLines(true)
         setLabelCount(yAsGridLines, true)
+        textSize = axisTextSize
         axisMinimum = 0f
         axisMaximum = upperbound
         valueFormatter = object : ValueFormatter() {
@@ -83,6 +82,7 @@ fun LineChart.applyDashboardStyling(
         setDrawGridLines(false)
         setAvoidFirstLastClipping(true)
         setLabelCount(2, true)
+        textSize = axisTextSize
         axisMinimum = dataSet.xMin
         axisMaximum = dataSet.xMax
         valueFormatter = object : ValueFormatter() {
@@ -101,33 +101,23 @@ fun LineChart.applyDashboardStyling(
 
     isHighlightPerDragEnabled = true
     isHighlightPerTapEnabled = true
+
+    selectedValueLabel = markerLabel
     marker = GraphMarkerView(context, markerLabel) {
         this.width
     }
 
     dataSet.applyLineStyling(context)
 
-    setOnChartValueSelectedListener(object: OnChartValueSelectedListener {
-        val selectedValueIcon = ContextCompat.getDrawable(context, R.drawable.ic_graph_dot_indicator)
-        var selectedEntry: Entry? = null
-
-        override fun onValueSelected(e: Entry?, h: Highlight?) {
-            selectedEntry?.apply { icon = null }
-            selectedEntry = e
-            selectedEntry?.apply { icon = selectedValueIcon }
-        }
-
-        override fun onNothingSelected() {
-            selectedEntry?.apply { icon = null }
-            selectedEntry = null
-        }
-    })
-
+    val bottomOffset = Utils.convertDpToPixel(
+        axisTextSize + context.resources.getDimension(R.dimen.dashboard_graph_bottom_offset)
+    )
     setViewPortOffsets(
         0f,
         resources.getDimensionPixelSize(R.dimen.dashboard_graph_top_margin).toFloat(),
         0f,
-        resources.getDimensionPixelSize(R.dimen.activity_vertical_margin).toFloat())
+        bottomOffset
+    )
 
     // Fix: SetViewPortOffSets are not applied the first time within a Recyclerview
     post { invalidate() }

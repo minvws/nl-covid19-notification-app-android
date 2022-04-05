@@ -10,6 +10,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/dashboard_content_min_height"
@@ -58,8 +59,6 @@
                 android:id="@+id/line_chart"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
-                android:clickable="false"
-                android:focusable="false"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="8dp"
                 android:visibility="gone"

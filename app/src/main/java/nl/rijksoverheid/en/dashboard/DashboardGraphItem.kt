@@ -6,18 +6,14 @@
  */
 package nl.rijksoverheid.en.dashboard
 
-import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.databinding.ItemDashboardGraphBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
-import nl.rijksoverheid.en.items.DashboardCardItem
 import nl.rijksoverheid.en.util.ext.applyDashboardStyling
 import nl.rijksoverheid.en.util.ext.getIconTint
 import nl.rijksoverheid.en.util.ext.icon
@@ -49,7 +45,10 @@ class DashboardGraphItem(
             val maxValue = dashboardItem.values.maxOf { it.value }.toFloat()
             data = LineData(dataSet)
 
-            applyDashboardStyling(context, dataSet, maxValue, dashboardItem.markerLabelRes) {
+            accessibilityGraphDescription = context.getString(dashboardItem.title)
+
+            val markerLabel = context.getString(dashboardItem.markerLabelRes)
+            applyDashboardStyling(context, dataSet, maxValue, markerLabel) {
                 it.toInt().formatToString(context)
             }
         }
