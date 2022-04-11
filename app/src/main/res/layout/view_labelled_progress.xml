@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:trackCornerRadius="8dp"
         app:trackThickness="8dp"
-        app:indicatorColor="@color/dashboard_graph_line"
+        app:indicatorColor="?attr/colorPrimary"
         app:trackColor="@color/dashboard_graph_fill"
         tools:progress="86"/>
 

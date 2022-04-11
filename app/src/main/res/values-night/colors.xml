@@ -25,6 +25,8 @@
     <color name="gradient_status_end">#111111</color>
     <color name="ic_ggd_key_format_color">#7AFFFFFF</color>
 
-    <color name="dashboard_graph_line">@color/lighter_blue</color>
+    <color name="dashboard_graph_fill">#323472F6</color>
+    <color name="dashboard_graph_highlight_line">#656569</color>
+    <color name="dashboard_graph_axis_text">#777777</color>
 
 </resources>

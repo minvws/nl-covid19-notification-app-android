@@ -57,6 +57,7 @@ fun AccessibleLineChart.applyDashboardStyling(
     val upperbound = calculateUpperbound(maxValue)
     val yAsGridLines = calculateAmountOfGridLines(maxValue)
     val axisTextSize = 12f * resources.configuration.fontScale
+    val axisTextColor = ContextCompat.getColor(context, R.color.dashboard_graph_axis_text)
 
     with(axisLeft) {
         yOffset = -(Utils.convertPixelsToDp(textSize) / 2)
@@ -65,6 +66,7 @@ fun AccessibleLineChart.applyDashboardStyling(
         setDrawGridLines(true)
         setLabelCount(yAsGridLines, true)
         textSize = axisTextSize
+        textColor = axisTextColor
         axisMinimum = 0f
         axisMaximum = upperbound
         valueFormatter = object : ValueFormatter() {
@@ -83,6 +85,7 @@ fun AccessibleLineChart.applyDashboardStyling(
         setAvoidFirstLastClipping(true)
         setLabelCount(2, true)
         textSize = axisTextSize
+        textColor = axisTextColor
         axisMinimum = dataSet.xMin
         axisMaximum = dataSet.xMax
         valueFormatter = object : ValueFormatter() {
@@ -126,7 +129,7 @@ fun AccessibleLineChart.applyDashboardStyling(
 fun LineDataSet.applyLineStyling(context: Context) {
     mode = LineDataSet.Mode.CUBIC_BEZIER
     lineWidth = 2f
-    color = ContextCompat.getColor(context, R.color.dashboard_graph_line)
+    color = ContextCompat.getColor(context, R.color.color_primary)
     fillColor = ContextCompat.getColor(context, R.color.dashboard_graph_fill)
     cubicIntensity = 0.1f
 

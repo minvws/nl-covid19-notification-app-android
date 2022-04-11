@@ -31,14 +31,14 @@
     <color name="gradient_status_end">#FFFFFF</color>
     <color name="ic_ggd_key_format_color">#40000000</color>
 
-    <color name="dashboard_graph_line">@color/dark_blue</color>
-    <color name="dashboard_graph_fill">#D0E4F2</color>
+    <color name="dashboard_graph_fill">#320047FF</color>
     <color name="dashboard_graph_highlight_line">#4F4F4F</color>
+    <color name="dashboard_graph_axis_text">#777777</color>
 
     <!-- Color palette -->
     <color name="white">#FFFFFF</color>
     <color name="lighter_blue">#3496F6</color>
-    <color name="blue">#3478F6</color>
+    <color name="blue">#3472F6</color>
     <color name="dark_blue">#0047FF</color>
     <color name="light_blue">#D0F0F3</color>
     <color name="light_blue_2">#E1F6F8</color>
