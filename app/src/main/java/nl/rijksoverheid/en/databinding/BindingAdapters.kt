@@ -11,6 +11,7 @@ import android.content.res.Resources
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import androidx.annotation.ColorInt
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.core.view.AccessibilityDelegateCompat
@@ -181,5 +182,11 @@ object BindingAdapters {
         val formattedDuration = pausedUntil?.formatPauseDuration(view.context)
         if (view.text != formattedDuration)
             view.setHtmlText(formattedDuration)
+    }
+
+    @JvmStatic
+    @BindingAdapter("tint")
+    fun ImageView.setImageTint(@ColorInt color: Int) {
+        setColorFilter(color)
     }
 }

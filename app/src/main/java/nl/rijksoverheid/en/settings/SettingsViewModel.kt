@@ -24,24 +24,18 @@ class SettingsViewModel(private val repository: SettingsRepository) : ViewModel(
         }
     }.asLiveData(viewModelScope.coroutineContext)
 
-    // updated from the view
     val wifiOnly = MutableLiveData(repository.wifiOnly)
     val wifiOnlyChanged: LiveData<Event<Boolean>> = MutableLiveData()
     val pauseRequested: LiveData<Event<Unit>> = MutableLiveData()
     val enableExposureNotificationsRequested: LiveData<Event<Unit>> = MutableLiveData()
+    val dashboardEnabled = MutableLiveData(repository.dashboardEnabled)
 
     val skipPauseConfirmation: Boolean
         get() = repository.skipPauseConfirmation
 
-    init {
-        var firstValue = true
-        wifiOnly.observeForever {
-            if (!firstValue) {
-                repository.setWifiOnly(it)
-                (wifiOnlyChanged as MutableLiveData).value = Event(it)
-            }
-            firstValue = false
-        }
+    fun wifiOnlyChanged(checked: Boolean) {
+        repository.setWifiOnly(checked)
+        (wifiOnlyChanged as MutableLiveData).value = Event(checked)
     }
 
     fun requestPauseExposureNotifications() {
@@ -54,5 +48,9 @@ class SettingsViewModel(private val repository: SettingsRepository) : ViewModel(
 
     fun enableExposureNotifications() {
         (enableExposureNotificationsRequested as MutableLiveData).value = Event(Unit)
+    }
+
+    fun dashboardEnabledChanged(enabled: Boolean) {
+        repository.setDashboardEnabled(enabled)
     }
 }

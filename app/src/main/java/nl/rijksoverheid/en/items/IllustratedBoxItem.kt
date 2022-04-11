@@ -4,7 +4,7 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.about
+package nl.rijksoverheid.en.items
 
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
@@ -13,7 +13,6 @@ import androidx.annotation.StringRes
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemIllustratedBoxBinding
-import nl.rijksoverheid.en.items.BaseBindableItem
 
 open class IllustratedBoxItem(
     @StringRes private val title: Int,

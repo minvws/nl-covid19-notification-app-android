@@ -29,10 +29,13 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.databinding.FragmentStatusBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.status.StatusSection.NotificationAction
 import nl.rijksoverheid.en.status.StatusViewModel.NotificationState
+import nl.rijksoverheid.en.status.items.StatusActionDashboardItem
+import nl.rijksoverheid.en.status.items.StatusActionItem
 import nl.rijksoverheid.en.util.formatExposureDate
 import nl.rijksoverheid.en.util.isIgnoringBatteryOptimizations
 import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
@@ -99,6 +102,9 @@ class StatusFragment @JvmOverloads constructor(
                 StatusActionItem.Settings -> findNavController().navigateCatchingErrors(
                     StatusFragmentDirections.actionSettings()
                 )
+                StatusActionDashboardItem -> findNavController().navigateCatchingErrors(
+                    StatusFragmentDirections.actionDashboardOverview()
+                )
             }
         }
 
@@ -114,7 +120,9 @@ class StatusFragment @JvmOverloads constructor(
         statusViewModel.lastKeysProcessed.observe(viewLifecycleOwner) {
             section.lastKeysProcessed = it
         }
-
+        statusViewModel.dashboardState.observe(viewLifecycleOwner) { dashboardDataState ->
+            section.updateDashboardData(requireContext(), dashboardDataState, ::navigateToDashboardItem)
+        }
         statusViewModel.exposureNotificationApiUpdateRequired.observe(viewLifecycleOwner) { requireAnUpdate ->
             if (requireAnUpdate)
                 findNavController().navigateCatchingErrors(StatusFragmentDirections.actionUpdatePlayServices())
@@ -125,6 +133,7 @@ class StatusFragment @JvmOverloads constructor(
         super.onResume()
         statusViewModel.isIgnoringBatteryOptimizations.value = requireContext().isIgnoringBatteryOptimizations()
         section.refreshStateContent()
+        statusViewModel.refreshDashboardData()
     }
 
     private fun updateHeaderState(headerState: StatusViewModel.HeaderState) {
@@ -295,6 +304,12 @@ class StatusFragment @JvmOverloads constructor(
                 Timber.e("Could not open app settings")
             }
         }
+    }
+
+    private fun navigateToDashboardItem(dashboardItem: DashboardItem) {
+        findNavController().navigateCatchingErrors(
+            StatusFragmentDirections.actionDashboard(dashboardItem.reference)
+        )
     }
 
     private fun showRemoveNotificationConfirmationDialog(formattedDate: String) {

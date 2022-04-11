@@ -17,6 +17,7 @@ import nl.rijksoverheid.en.api.HmacSecret
 import nl.rijksoverheid.en.api.LabTestService
 import nl.rijksoverheid.en.api.RequestSize
 import nl.rijksoverheid.en.api.model.AppConfig
+import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.PostKeysRequest
 import nl.rijksoverheid.en.api.model.Registration
@@ -91,6 +92,9 @@ class LabTestRepositoryTest {
         ): ResourceBundle {
             throw java.lang.IllegalStateException()
         }
+
+        override suspend fun getDashboardData(cacheStrategy: CacheStrategy?): DashboardData =
+            throw NotImplementedError()
     }
 
     private val appConfigManager =

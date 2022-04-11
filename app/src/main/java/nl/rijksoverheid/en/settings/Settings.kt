@@ -21,6 +21,7 @@ private const val KEY_PAUSED = "paused"
 private const val KEY_PAUSED_UNTIL = "paused_until"
 private const val KEY_PAUSE_CONFIRMATION = "paused_confirmation"
 private const val KEY_APP_LANGUAGE_DUTCH = "app_language_dutch"
+private const val KEY_DASHBOARD_ENABLED = "dashboard_enabled"
 
 /**
  * Thin wrapper around the default app preferences
@@ -77,6 +78,10 @@ class Settings(
     var isAppSetToDutch: Boolean
         get() = preferences.getBoolean(KEY_APP_LANGUAGE_DUTCH, false)
         set(value) = preferences.edit { putBoolean(KEY_APP_LANGUAGE_DUTCH, value) }
+
+    var dashboardEnabled: Boolean
+        get() = preferences.getBoolean(KEY_DASHBOARD_ENABLED, true)
+        set(value) = preferences.edit { putBoolean(KEY_DASHBOARD_ENABLED, value) }
 
     fun observeChanges(): Flow<Settings> = callbackFlow {
         val listener =

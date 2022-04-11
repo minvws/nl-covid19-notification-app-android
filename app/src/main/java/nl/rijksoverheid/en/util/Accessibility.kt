@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.util
 
 import android.content.Context
+import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import androidx.core.content.ContextCompat
 
@@ -36,5 +37,17 @@ object Accessibility {
      */
     fun touchExploration(context: Context?): Boolean {
         return accessibilityManager(context)?.isTouchExplorationEnabled ?: false
+    }
+
+    fun announcementForScreenReader(context: Context, description: String) {
+        if (!touchExploration(context)) {
+            return
+        }
+
+        val event = AccessibilityEvent.obtain()
+        event.packageName = context.packageName
+        event.eventType = AccessibilityEvent.TYPE_ANNOUNCEMENT
+        event.text.add(description)
+        accessibilityManager(context)?.sendAccessibilityEvent(event)
     }
 }

@@ -4,11 +4,12 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.status
+package nl.rijksoverheid.en.status.items
 
 import android.content.Context
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusErrorBinding
+import nl.rijksoverheid.en.status.StatusViewModel
 
 class StatusErrorItem(
     error: StatusViewModel.NotificationState.Error,

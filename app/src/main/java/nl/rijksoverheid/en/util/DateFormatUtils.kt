@@ -58,3 +58,29 @@ fun LocalDateTime.formatDateTime(context: Context): String {
         .withDecimalStyle(DecimalStyle.of(locale))
         .format(this)
 }
+
+/**
+ * Formats the dashboard date using the correct locale.
+ */
+fun LocalDate.formatDashboardDateShort(context: Context, clock: Clock = Clock.systemDefaultZone()): String {
+    return when (ChronoUnit.DAYS.between(this, LocalDate.now(clock)).toInt()) {
+        0 -> context.resources.getString(R.string.today)
+        1 -> context.resources.getString(R.string.yesterday)
+        2 -> context.resources.getString(R.string.day_before_yesterday)
+        else -> {
+            val locale = Locale(context.getString(R.string.app_language))
+            val format = DateFormat.getBestDateTimePattern(locale, context.getString(R.string.date_short_format))
+            return DateTimeFormatter.ofPattern(format, locale)
+                .withDecimalStyle(DecimalStyle.of(locale))
+                .format(this)
+        }
+    }
+}
+
+fun LocalDateTime.formatDate(context: Context): String {
+    val locale = Locale(context.getString(R.string.app_language))
+    val format = DateFormat.getBestDateTimePattern(locale, context.getString(R.string.date_format))
+    return DateTimeFormatter.ofPattern(format, locale)
+        .withDecimalStyle(DecimalStyle.of(locale))
+        .format(this)
+}

@@ -14,7 +14,7 @@
 
         <variable
             name="viewState"
-            type="nl.rijksoverheid.en.status.StatusExposureOver14DaysAgoItem.ViewState" />
+            type="nl.rijksoverheid.en.status.items.StatusExposureOver14DaysAgoItem.ViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

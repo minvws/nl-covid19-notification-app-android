@@ -4,7 +4,7 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.status
+package nl.rijksoverheid.en.status.items
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

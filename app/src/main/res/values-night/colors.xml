@@ -11,6 +11,7 @@
     <color name="helpdesk_background">@color/item_background_gray</color>
     <color name="faq_onboarding_background">@color/item_background_gray</color>
     <color name="technical_explanation_background">@color/item_background_gray</color>
+    <color name="status_action_dashboard_item_background">@color/item_background_gray</color>
     <color name="faq_github_background">@color/item_background_gray</color>
     <color name="circle_counter_disabled_background">#656569</color>
     <color name="link_text_on_info_surface">@color/lighter_blue</color>
@@ -23,4 +24,9 @@
     <color name="gradient_status_paused_start">#111111</color>
     <color name="gradient_status_end">#111111</color>
     <color name="ic_ggd_key_format_color">#7AFFFFFF</color>
+
+    <color name="dashboard_graph_fill">#323472F6</color>
+    <color name="dashboard_graph_highlight_line">#656569</color>
+    <color name="dashboard_graph_axis_text">#777777</color>
+
 </resources>

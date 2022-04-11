@@ -108,6 +108,20 @@
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
+        <action
+            android:id="@+id/action_dashboard_overview"
+            app:destination="@id/dashboardOverviewFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+        <action
+            android:id="@+id/action_dashboard"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
 
     <fragment
@@ -390,5 +404,38 @@
             app:popUpTo="@id/nav_status"
             app:popUpToInclusive="false" />
     </dialog>
+
+    <fragment
+        android:id="@+id/dashboardOverviewFragment"
+        android:name="nl.rijksoverheid.en.dashboard.DashboardOverviewFragment"
+        android:label="DashboardOverviewFragment"
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_dashboard_fragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="nl.rijksoverheid.en.dashboard.DashboardFragment"
+        android:label="DashboardFragment"
+        tools:layout="@layout/fragment_list" >
+        <argument
+            android:name="dashboardItemReference"
+            app:argType="nl.rijksoverheid.en.api.model.DashboardItem$Reference" />
+        <argument
+            android:name="showEnterTransition"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_dashboard_fragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@id/dashboardFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

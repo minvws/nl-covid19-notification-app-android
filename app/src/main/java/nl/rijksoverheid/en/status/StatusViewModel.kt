@@ -7,12 +7,16 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -20,13 +24,16 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.FeatureFlagOption
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.dashboard.DashboardRepository
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.settings.SettingsRepository
+import nl.rijksoverheid.en.util.Resource
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDate
@@ -37,10 +44,15 @@ class StatusViewModel(
     private val onboardingRepository: OnboardingRepository,
     private val exposureNotificationsRepository: ExposureNotificationsRepository,
     private val notificationsRepository: NotificationsRepository,
-    settingsRepository: SettingsRepository,
+    private val dashboardRepository: DashboardRepository,
+    private val settingsRepository: SettingsRepository,
     private val appConfigManager: AppConfigManager,
     private val clock: Clock = Clock.systemDefaultZone()
 ) : ViewModel() {
+
+    init {
+        refreshDashboardData()
+    }
 
     fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
 
@@ -68,9 +80,6 @@ class StatusViewModel(
     }.onEach {
         notificationsRepository.cancelExposureNotification()
     }.asLiveData(viewModelScope.coroutineContext)
-
-    val exposureDetected: Boolean
-        get() = headerState.value is HeaderState.Exposed
 
     val notificationState: LiveData<List<NotificationState>> = combine(
         exposureNotificationsRepository.notificationsEnabledTimestamp()
@@ -108,9 +117,28 @@ class StatusViewModel(
         emit(exposureNotificationsRepository.isExposureNotificationApiUpdateRequired())
     }
 
+    private var refreshDashboardDataJob: Job? = null
+    private val dashboardDataFlow: MutableStateFlow<Resource<DashboardData>> = MutableStateFlow(Resource.Loading())
+    val dashboardState: LiveData<DashboardState> = combine(
+        dashboardDataFlow,
+        headerState.asFlow(),
+        notificationState.asFlow(),
+        settingsRepository.getDashboardEnabledFlow()
+    ) { dashboardData, headerState, notificationState, enabled ->
+        val showAsAction = headerState !is HeaderState.Active || notificationState.isNotEmpty()
+        val emptyDashboard = dashboardData is Resource.Success && dashboardData.data.items.isEmpty()
+        when {
+            !enabled || emptyDashboard -> DashboardState.Disabled
+            showAsAction -> DashboardState.ShowAsAction
+            dashboardData is Resource.Success -> DashboardState.DashboardCards(dashboardData.data)
+            dashboardData is Resource.Error -> DashboardState.Error(dashboardData.error.peekContent().errorMessage)
+            else -> DashboardState.Loading
+        }
+    }.asLiveData(viewModelScope.coroutineContext)
+
     suspend fun getAppointmentInfo(context: Context): AppointmentInfo {
         val appConfig = appConfigManager.getCachedConfigOrDefault()
-        val phoneNumber = if (exposureDetected)
+        val phoneNumber = if (headerState.value is HeaderState.Exposed)
             appConfig.appointmentPhoneNumber
         else
             context.getString(R.string.request_test_phone_number)
@@ -231,6 +259,22 @@ class StatusViewModel(
         }
     }
 
+    fun refreshDashboardData() {
+        // Ignore if dashboard has been disabled or refresh job is still in progress
+        if (!settingsRepository.dashboardEnabled || refreshDashboardDataJob?.isActive == true)
+            return
+
+        refreshDashboardDataJob = viewModelScope.launch {
+            dashboardRepository.getDashboardData().collect {
+                // Ignore Loading state when we already have data to show
+                if (dashboardDataFlow.value is Resource.Success && it is Resource.Loading)
+                    return@collect
+
+                dashboardDataFlow.emit(it)
+            }
+        }
+    }
+
     sealed class HeaderState {
         object Active : HeaderState()
         object BluetoothDisabled : HeaderState()
@@ -269,6 +313,14 @@ class StatusViewModel(
             object SyncIssues : Error()
             object SyncIssuesWifiOnly : Error()
         }
+    }
+
+    sealed class DashboardState {
+        object Disabled : DashboardState()
+        object ShowAsAction : DashboardState()
+        object Loading : DashboardState()
+        data class Error(@StringRes val message: Int) : DashboardState()
+        data class DashboardCards(val data: DashboardData) : DashboardState()
     }
 
     class AppointmentInfo(val phoneNumber: String, val website: String)

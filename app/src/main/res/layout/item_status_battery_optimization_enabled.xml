@@ -14,7 +14,7 @@
 
         <variable
             name="viewState"
-            type="nl.rijksoverheid.en.status.StatusBatteryOptimizationEnabledItem.ViewState" />
+            type="nl.rijksoverheid.en.status.items.StatusBatteryOptimizationEnabledItem.ViewState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -8,6 +8,7 @@ package nl.rijksoverheid.en.settings
 
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import java.time.LocalDateTime
@@ -31,7 +32,7 @@ class SettingsRepository(private val context: Context, private val settings: Set
     }
 
     fun exposureNotificationsPausedState(): Flow<Settings.PausedState> =
-        settings.observeChanges().map { it.exposureStatePausedState }
+        settings.observeChanges().map { it.exposureStatePausedState }.distinctUntilChanged()
 
     fun isPaused() =
         settings.exposureStatePausedState is Settings.PausedState.Paused
@@ -53,4 +54,14 @@ class SettingsRepository(private val context: Context, private val settings: Set
         NotificationsRepository(context).clearAppPausedNotification()
         settings.clearExposureNotificationsPaused()
     }
+
+    val dashboardEnabled: Boolean
+        get() = settings.dashboardEnabled
+
+    fun setDashboardEnabled(enabled: Boolean) {
+        settings.dashboardEnabled = enabled
+    }
+
+    fun getDashboardEnabledFlow(): Flow<Boolean> =
+        settings.observeChanges().map { it.dashboardEnabled }.distinctUntilChanged()
 }

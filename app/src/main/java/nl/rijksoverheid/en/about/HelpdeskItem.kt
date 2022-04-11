@@ -7,6 +7,7 @@
 package nl.rijksoverheid.en.about
 
 import nl.rijksoverheid.en.R
+import nl.rijksoverheid.en.items.IllustratedBoxItem
 
 class HelpdeskItem : IllustratedBoxItem(
     R.string.about_helpdesk_title,

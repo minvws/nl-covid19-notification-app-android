@@ -4,12 +4,14 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-package nl.rijksoverheid.en.status
+package nl.rijksoverheid.en.status.items
 
 import com.xwray.groupie.viewbinding.GroupieViewHolder
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ItemStatusPausedBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
+import nl.rijksoverheid.en.status.StatusSection
+import nl.rijksoverheid.en.status.StatusViewModel
 import nl.rijksoverheid.en.util.SimpleCountdownTimer
 import nl.rijksoverheid.en.util.ext.formatPauseDuration
 import java.time.LocalDateTime
