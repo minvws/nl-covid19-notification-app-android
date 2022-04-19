@@ -66,7 +66,6 @@ fun LocalDate.formatDashboardDateShort(context: Context, clock: Clock = Clock.sy
     return when (ChronoUnit.DAYS.between(this, LocalDate.now(clock)).toInt()) {
         0 -> context.resources.getString(R.string.today)
         1 -> context.resources.getString(R.string.yesterday)
-        2 -> context.resources.getString(R.string.day_before_yesterday)
         else -> formatDateShort(context)
     }
 }

@@ -55,7 +55,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/dashboard_item_icon"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/status_info_about_title" />
+                tools:text="@string/dashboard_positive_test_results_header" />
 
             <TextView
                 android:id="@+id/link_subtitle"
@@ -67,7 +67,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/link_title"
                 app:layout_constraintTop_toBottomOf="@id/link_title"
-                tools:text="@string/status_info_about_subtitle" />
+                tools:text="Yesterday 4.133" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
