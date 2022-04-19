@@ -43,7 +43,7 @@ class PauseConfirmationViewModelTest {
 
         pauseConfirmationViewModel.setExposureNotificationsPaused(until)
 
-        verify(settingsRepository, never()).setSkipPauseConfirmation(true)
+        verify(settingsRepository, never()).skipPauseConfirmation = true
         verify(settingsRepository, times(1)).setExposureNotificationsPaused(until)
     }
 
@@ -55,7 +55,7 @@ class PauseConfirmationViewModelTest {
         pauseConfirmationViewModel.toggleDontAskForConfirmation()
         pauseConfirmationViewModel.setExposureNotificationsPaused(until)
 
-        verify(settingsRepository, times(1)).setSkipPauseConfirmation(true)
+        verify(settingsRepository, times(1)).skipPauseConfirmation = true
         verify(settingsRepository, times(1)).setExposureNotificationsPaused(until)
     }
 }

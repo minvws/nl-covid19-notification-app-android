@@ -18,13 +18,15 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.ViewGraphMarkerBinding
+import nl.rijksoverheid.en.util.DateTimeHelper
+import nl.rijksoverheid.en.util.formatDateShort
 import nl.rijksoverheid.en.util.formatToString
 
 @SuppressLint("ViewConstructor")
 class GraphMarkerView(
     context: Context,
     private val label: String,
-    private val graphWidth: () -> Int
+    private val graphDimensions: () -> Pair<Int, Int>
 ) : MarkerView(context, R.layout.view_graph_marker) {
 
     private lateinit var binding: ViewGraphMarkerBinding
@@ -37,7 +39,13 @@ class GraphMarkerView(
             .append(": ")
             .append(entry?.y?.formatToString(context), StyleSpan(Typeface.BOLD), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        binding.markerLabel.maxWidth = graphWidth()
+        binding.bottomLabel.text = entry?.x?.toLong()?.let { timestamp ->
+            DateTimeHelper.convertToLocalDate(timestamp).formatDateShort(context)
+        }
+
+        val (graphWidth, graphHeight) = graphDimensions()
+        binding.markerLabel.maxWidth = graphWidth
+        binding.bottomLabelContainer.layoutParams.height = graphHeight
 
         super.refreshContent(entry, highlight)
     }
@@ -45,6 +53,7 @@ class GraphMarkerView(
     override fun getOffsetForDrawingAtPoint(posX: Float, posY: Float): MPPointF {
         val defaultXOffset = -(width / 2).toFloat()
         val mpPointF = MPPointF()
+        val (graphWidth, _) = graphDimensions()
 
         // Avoid marker being positioned outside the graph
         mpPointF.x = when {
@@ -52,10 +61,14 @@ class GraphMarkerView(
             posX - width / 2 < 0 -> -posX
             // Calculate the difference between the end of the graph and the end of the marker
             // and use is as the offset + the default offset to position the marker against the right side of the graph
-            posX + width / 2 > graphWidth() -> graphWidth() - (posX + width / 2) + defaultXOffset
+            posX + width / 2 > graphWidth -> graphWidth - (posX + width / 2) + defaultXOffset
             // Use halve of the marker width to center the marker above the selected value
             else -> defaultXOffset
         }
+
+        val defaultBottomLabelPadding = (binding.bottomLabelContainer.width - binding.bottomLabel.width) / 2
+
+        binding.bottomLabelContainer.setPadding(defaultBottomLabelPadding, 0, defaultBottomLabelPadding, 0)
 
         mpPointF.y = -posY
         return mpPointF

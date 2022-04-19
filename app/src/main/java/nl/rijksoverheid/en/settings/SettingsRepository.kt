@@ -17,19 +17,18 @@ import java.time.LocalDateTime
  * Repository class for in app settings stored locally.
  */
 class SettingsRepository(private val context: Context, private val settings: Settings) {
-    val wifiOnly: Boolean
+
+    var wifiOnly: Boolean
         get() = settings.checkOnWifiOnly
+        set(value) { settings.checkOnWifiOnly = value }
 
-    fun setWifiOnly(wifiOnly: Boolean) {
-        settings.checkOnWifiOnly = wifiOnly
-    }
-
-    val skipPauseConfirmation: Boolean
+    var skipPauseConfirmation: Boolean
         get() = settings.skipPauseConfirmation
+        set(value) { settings.skipPauseConfirmation = value }
 
-    fun setSkipPauseConfirmation(skipPauseConfirmation: Boolean) {
-        settings.skipPauseConfirmation = skipPauseConfirmation
-    }
+    var dashboardEnabled: Boolean
+        get() = settings.dashboardEnabled
+        set(value) { settings.dashboardEnabled = value }
 
     fun exposureNotificationsPausedState(): Flow<Settings.PausedState> =
         settings.observeChanges().map { it.exposureStatePausedState }.distinctUntilChanged()
@@ -53,13 +52,6 @@ class SettingsRepository(private val context: Context, private val settings: Set
         ExposureNotificationsPausedReminderReceiver.cancel(context)
         NotificationsRepository(context).clearAppPausedNotification()
         settings.clearExposureNotificationsPaused()
-    }
-
-    val dashboardEnabled: Boolean
-        get() = settings.dashboardEnabled
-
-    fun setDashboardEnabled(enabled: Boolean) {
-        settings.dashboardEnabled = enabled
     }
 
     fun getDashboardEnabledFlow(): Flow<Boolean> =

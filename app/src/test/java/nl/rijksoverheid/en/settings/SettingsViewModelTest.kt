@@ -116,8 +116,8 @@ class SettingsViewModelTest {
             val settingsViewModel = SettingsViewModel(settingsRepository)
             settingsViewModel.wifiOnlyChanged(true)
 
-            verify(settingsRepository, times(1)).setWifiOnly(true)
-            verify(settingsRepository, never()).setWifiOnly(false)
+            verify(settingsRepository, times(1)).wifiOnly = true
+            verify(settingsRepository, never()).wifiOnly = false
 
             settingsViewModel.wifiOnlyChanged.observeForTesting {
                 Assert.assertEquals(
@@ -208,8 +208,8 @@ class SettingsViewModelTest {
             val settingsViewModel = SettingsViewModel(settingsRepository)
             settingsViewModel.dashboardEnabledChanged(false)
 
-            verify(settingsRepository, times(1)).setDashboardEnabled(false)
-            verify(settingsRepository, never()).setDashboardEnabled(true)
+            verify(settingsRepository, times(1)).dashboardEnabled = false
+            verify(settingsRepository, never()).dashboardEnabled = true
         }
     }
 }

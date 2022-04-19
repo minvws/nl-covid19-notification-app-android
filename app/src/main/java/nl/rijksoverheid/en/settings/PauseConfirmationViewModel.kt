@@ -20,7 +20,7 @@ class PauseConfirmationViewModel(private val repository: SettingsRepository) : V
 
     fun setExposureNotificationsPaused(until: LocalDateTime) {
         skipConfirmation.value?.let {
-            if (it) repository.setSkipPauseConfirmation(it)
+            if (it) repository.skipPauseConfirmation = it
         }
 
         repository.setExposureNotificationsPaused(until)
