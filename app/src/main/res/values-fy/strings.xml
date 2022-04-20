@@ -192,8 +192,8 @@
     <string name="upload_keys_failed_notification_paragraph">Wy hawwe besocht de melding te ferstjoeren, mar dat is net slagge. Belje de GGD om dat op \'en nij te dwaan. It is hiel wichtich datst dat gau dochst. Oars kinne der mear minsken besmet reitsje.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Belje de GGD</string>
     <string name="end_of_life_action">Lês mear</string>
-    <string name="end_of_life_description">It Ministerie van Volksgezondheid, Welzijn en Sport hat besletten dat de app net mear nedich is. Do krigest dus gjin melding mear neidatst yn \'e buert west hast fan immen mei koroana.</string>
-    <string name="end_of_life_headline">CoronaMelder is ophâlden</string>
+    <string name="end_of_life_description">CoronaMelder is op dit moment tijdelijk stopgezet. Je krijgt dus geen melding meer nadat je in de buurt bent geweest van iemand met corona.</string>
+    <string name="end_of_life_headline">CoronaMelder is tijdelijk gestopt</string>
     <string name="status_error_notifications_disabled">Do hast dyn meldings útstean. Do krigest dus gjin melding ast yn \'e buert west hast fan immen mei koroana.</string>
     <string name="status_error_action_notifications_disabled">Meldings oansette</string>
     <string name="cd_status_active">Grien rûntsje mei finkje dat oanjout dat de app goed ynsteld stiet.</string>

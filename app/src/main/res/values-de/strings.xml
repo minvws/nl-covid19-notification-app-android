@@ -192,8 +192,8 @@
     <string name="upload_keys_failed_notification_paragraph">Wir haben versucht, die Nachricht zu schicken. Aber das ist fehlgeschlagen. Rufen Sie den GGD an, um die Nachricht erneut zu schicken. Es ist sehr wichtig, dass Sie das schnell tun. Sonst können sich noch mehr Menschen anstecken.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Rufen Sie den GGD an.</string>
     <string name="end_of_life_action">Lesen Sie weiter</string>
-    <string name="end_of_life_description">Das Ministerium für Gesundheit, Gemeinwohl und Sport hat beschlossen, dass die App nicht mehr erforderlich ist. Sie erhalten also keine Nachricht mehr, wenn Sie in der Nähe einer Person mit Corona waren.</string>
-    <string name="end_of_life_headline">CoronaMelder wurde eingestellt.</string>
+    <string name="end_of_life_description">CoronaMelder is currently temporarily suspended. You will no longer receive notifications after you have been near someone who has tested positive for the coronavirus.</string>
+    <string name="end_of_life_headline">CoronaMelder is temporarily turned off</string>
     <string name="status_error_notifications_disabled">Bei Ihnen sind Nachrichten deaktiviert. Sie erhalten also keine Nachricht, wenn Sie in der Nähe einer Person mit Corona waren.</string>
     <string name="status_error_action_notifications_disabled">Nachrichten aktivieren</string>
     <string name="cd_status_active">Ein grüner Kreis mit Häkchen gibt an, dass die App gut eingestellt ist.</string>

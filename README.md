@@ -19,6 +19,7 @@ This is a general overview of the features that are available in the app:
 - **Q&A Section**. In-app information about the functionality of the app, how your privacy is protected and how the app works in detail.
 - **Requesting a Coronatest**. Information on how to request a Coronatest with links to related websites or phonenumbers. Note that you can not directly request a test within the app itself.
 - **Invite people to use the app**. Allows the user to share a link to [coronamelder.nl](coronamelder.nl) to their friends & family using the android share intent.
+- **App Config Notifications**. Provides the possibility to schedule a notification by configuring it in the app config.
 
 Other functions of the app that are automatically performed and are not available through the UI of the app:
 
