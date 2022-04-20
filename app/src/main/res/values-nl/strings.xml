@@ -363,7 +363,7 @@
     <string name="dashboard_header">De situatie nu in Nederland</string>
     <string name="dashboard_summary_card_text">Bekijk de cijfers</string>
     <string name="dashboard_summary_text">Je vindt hieronder een aantal belangrijke statistieken over het gebruik van CoronaMelder en hoe het in Nederland met corona gaat.</string>
-    <string name="dashboard_tag">Corona Dashboard</string>
+    <string name="dashboard_tag">Coronadashboard</string>
     <string name="dashboard_server_error">Gegevens laden mislukt</string>
     <string name="settings_dashboard_title">Coronadashboard</string>
     <string name="settings_dashboard_description">Het Coronadashboard laat een aantal belangrijke statistieken zien over het gebruik van CoronaMelder en hoe het in Nederland met corona gaat.</string>
@@ -378,6 +378,6 @@
     <string name="dashboard_icu_admissions_graph_marker">Mensen op de IC</string>
     <string name="dashboard_vaccination_coverage_graph_marker">Mensen met een boosterprik</string>
     <string name="dashboard_card_graph_content_description">Grafiek actuele trend, klik voor uitgebreide beschrijving.</string>
-    <string name="dashboard_graph_content_description">Lijngrafiek %1$s. De minimum waarde is %2$s en maximum waarde is %3$s. De data geldt voor %4$s tot %5$s.</string>
+    <string name="dashboard_graph_content_description">Lijngrafiek %1$s. De minimum waarde is %2$s en maximum waarde is %3$s. De data gelden voor %4$s tot %5$s.</string>
     <string name="dashboard_graph_selected_value_content_description">%1$s %2$s op %3$s</string>
 </resources>

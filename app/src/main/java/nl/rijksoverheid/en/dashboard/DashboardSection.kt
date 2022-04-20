@@ -54,9 +54,12 @@ class DashboardSection : Section() {
             is DashboardItem.PositiveTestResults ->
                 dashboardItem.infectedMovingAverage.toSummaryArgs(context) +
                     listOf(dashboardItem.confirmedCases.formatPercentageToString(context))
-            is DashboardItem.CoronaMelderUsers -> listOfNotNull(
-                dashboardItem.highlightedValue?.value?.formatToString(context)
-            )
+            is DashboardItem.CoronaMelderUsers -> dashboardItem.highlightedValue?.let {
+                listOf(
+                    DateTimeHelper.convertToLocalDate(it.timestamp).formatDashboardDateShort(context),
+                    it.value.formatToString(context)
+                )
+            } ?: emptyList()
             is DashboardItem.HospitalAdmissions ->
                 dashboardItem.hospitalAdmissionMovingAverage.toSummaryArgs(context)
             is DashboardItem.IcuAdmissions -> dashboardItem.icuAdmissionMovingAverage.toSummaryArgs(context)

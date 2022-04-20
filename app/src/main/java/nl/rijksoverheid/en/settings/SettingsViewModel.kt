@@ -34,7 +34,7 @@ class SettingsViewModel(private val repository: SettingsRepository) : ViewModel(
         get() = repository.skipPauseConfirmation
 
     fun wifiOnlyChanged(checked: Boolean) {
-        repository.setWifiOnly(checked)
+        repository.wifiOnly = checked
         (wifiOnlyChanged as MutableLiveData).value = Event(checked)
     }
 
@@ -51,6 +51,6 @@ class SettingsViewModel(private val repository: SettingsRepository) : ViewModel(
     }
 
     fun dashboardEnabledChanged(enabled: Boolean) {
-        repository.setDashboardEnabled(enabled)
+        repository.dashboardEnabled = enabled
     }
 }

@@ -8,8 +8,9 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
+
 
         <TextView
             android:id="@+id/marker_label"
@@ -19,6 +20,26 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/marker_background"
             android:padding="8dp"
+            android:layout_alignParentTop="true"
             tools:text="Testen met een positieve uitslag: 117.857"/>
+
+    <FrameLayout
+        android:id="@+id/bottom_label_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/bottom_label"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="2dp"
+            android:paddingBottom="2dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/white"
+            tools:text="18 Jan." />
+    </FrameLayout>
 
 </RelativeLayout>

@@ -50,10 +50,6 @@ class StatusViewModel(
     private val clock: Clock = Clock.systemDefaultZone()
 ) : ViewModel() {
 
-    init {
-        refreshDashboardData()
-    }
-
     fun isPlayServicesUpToDate() = onboardingRepository.isGooglePlayServicesUpToDate()
 
     val isIgnoringBatteryOptimizations: MutableStateFlow<Boolean> = MutableStateFlow(true)
@@ -135,6 +131,10 @@ class StatusViewModel(
             else -> DashboardState.Loading
         }
     }.asLiveData(viewModelScope.coroutineContext)
+
+    init {
+        refreshDashboardData()
+    }
 
     suspend fun getAppointmentInfo(context: Context): AppointmentInfo {
         val appConfig = appConfigManager.getCachedConfigOrDefault()

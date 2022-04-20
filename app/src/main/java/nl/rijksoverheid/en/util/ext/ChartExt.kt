@@ -107,7 +107,7 @@ fun AccessibleLineChart.applyDashboardStyling(
 
     selectedValueLabel = markerLabel
     marker = GraphMarkerView(context, markerLabel) {
-        this.width
+        Pair(this.width, this.height)
     }
 
     dataSet.applyLineStyling(context)

@@ -147,9 +147,9 @@ class StatusSection : Section() {
 
                 val resources = context.resources
                 val dashboardItemWidth = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    context.resources.displayMetrics.widthPixels - resources.getDimensionPixelSize(R.dimen.dashboard_content_width_margin)
+                    resources.displayMetrics.widthPixels - resources.getDimensionPixelSize(R.dimen.dashboard_content_width_margin)
                 } else {
-                    context.resources.displayMetrics.widthPixels / 2
+                    resources.displayMetrics.widthPixels / 2
                 }
 
                 val dashboardItems = dashboardState.data.items
