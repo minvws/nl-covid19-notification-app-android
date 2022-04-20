@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -38,12 +39,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:text="@string/end_of_life_headline"
                 android:textAppearance="?attr/textAppearanceHeadline5"
                 app:layout_constraintBottom_toTopOf="@id/description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/illustration" />
+                app:layout_constraintTop_toBottomOf="@id/illustration"
+                tools:text="@string/end_of_life_headline"/>
 
             <TextView
                 android:id="@+id/description"
@@ -53,12 +54,12 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="16dp"
-                android:text="@string/end_of_life_description"
                 android:textAppearance="?attr/textAppearanceBody1"
                 app:layout_constraintBottom_toTopOf="@id/next"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headline" />
+                app:layout_constraintTop_toBottomOf="@id/headline"
+                tools:text="@string/end_of_life_description"/>
 
             <Button
                 android:id="@+id/next"
