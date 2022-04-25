@@ -77,7 +77,7 @@ class ProcessManifestWorkerTest {
                     id: String,
                     cacheStrategy: CacheStrategy?
                 ): AppConfig =
-                    AppConfig()
+                    AppConfig(coronaMelderDeactivated = null)
 
                 override suspend fun getResourceBundle(
                     id: String,

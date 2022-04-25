@@ -935,7 +935,7 @@ class ExposureNotificationsRepositoryTest {
 
             val fakeService = createFakeCdnService(
                 getManifest = { Manifest(emptyList(), "", "appConfig") },
-                getAppConfig = { _, _ -> AppConfig(1, 5, 0.0) }
+                getAppConfig = { _, _ -> AppConfig(1, 5, 0.0, coronaMelderDeactivated = null) }
             )
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -968,7 +968,7 @@ class ExposureNotificationsRepositoryTest {
 
             val fakeService = createFakeCdnService(
                 getManifest = { Manifest(emptyList(), "", "appConfig", resourceBundleId = "bundle") },
-                getAppConfig = { _, _ -> AppConfig(1, 5, 0.0) },
+                getAppConfig = { _, _ -> AppConfig(1, 5, 0.0, coronaMelderDeactivated = null) },
                 getResourceBundle = { _, _ ->
                     called.set(true)
                     ResourceBundle(
@@ -1093,7 +1093,7 @@ class ExposureNotificationsRepositoryTest {
                     Manifest(emptyList(), "riskParamId", "configId")
                 },
                 getAppConfig = { _, _ ->
-                    AppConfig(BuildConfig.VERSION_CODE + 1, 5, 0.0)
+                    AppConfig(BuildConfig.VERSION_CODE + 1, 5, 0.0, coronaMelderDeactivated = null)
                 },
             )
 
@@ -1138,7 +1138,7 @@ class ExposureNotificationsRepositoryTest {
                     Manifest(emptyList(), "riskParamId", "configId")
                 },
                 getAppConfig = { _, _ ->
-                    AppConfig(0, 5, 0.0)
+                    AppConfig(0, 5, 0.0, coronaMelderDeactivated = null)
                 },
             )
 
@@ -1202,7 +1202,7 @@ class ExposureNotificationsRepositoryTest {
                         id: String,
                         cacheStrategy: CacheStrategy?
                     ): AppConfig =
-                        AppConfig()
+                        AppConfig(coronaMelderDeactivated = null)
 
                     override suspend fun getResourceBundle(
                         id: String,
