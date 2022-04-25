@@ -182,13 +182,13 @@ class ExposureNotificationsRepository(
     }
 
     suspend fun requestDisableNotifications(): DisableNotificationsResult {
-        manifestWorkerScheduler.cancel()
-        preferences.edit {
-            remove(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP)
-        }
         val result = exposureNotificationsApi.disableNotifications()
         if (result == DisableNotificationsResult.Disabled) {
             statusCache.updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+        }
+        manifestWorkerScheduler.cancel()
+        preferences.edit {
+            remove(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP)
         }
         return result
     }
