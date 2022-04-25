@@ -25,7 +25,7 @@ data class AppConfig(
     @Json(name = "decoyProbability") val decoyProbability: Double = DEFAULT_DECOY_PROBABILITY,
     @Json(name = "requestMinimumSize") val requestMinimumSize: Long = DEFAULT_MIN_REQUEST_SIZE_BYTES,
     @Json(name = "requestMaximumSize") val requestMaximumSize: Long = DEFAULT_MAX_REQUEST_SIZE_BYTES,
-    @Json(name = "coronaMelderDeactivated") val coronaMelderDeactivated: String? = null,
+    @Json(name = "coronaMelderDeactivated") val coronaMelderDeactivated: String? = DEACTIVATED,
     @Json(name = "coronaMelderDeactivatedTitle") val coronaMelderDeactivatedTitle: String? = null,
     @Json(name = "coronaMelderDeactivatedBody") val coronaMelderDeactivatedBody: String? = null,
     @Json(name = "appointmentPhoneNumber") val appointmentPhoneNumber: String = DEFAULT_APPOINTMENT_PHONE_NUMBER,
