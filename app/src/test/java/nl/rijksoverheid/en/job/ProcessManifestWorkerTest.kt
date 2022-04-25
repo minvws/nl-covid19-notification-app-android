@@ -23,11 +23,14 @@ import nl.rijksoverheid.en.api.model.AppConfig
 import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
+import nl.rijksoverheid.en.enapi.DisableNotificationsResult
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.preferences.AsyncSharedPreferences
 import nl.rijksoverheid.en.test.FakeExposureNotificationApi
 import okhttp3.ResponseBody
+import okhttp3.internal.wait
+import org.junit.Assert
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -125,5 +128,85 @@ class ProcessManifestWorkerTest {
         }
 
         assertTrue(Shadows.shadowOf(notificationManager).activeNotifications.isEmpty())
+    }
+
+    @Test
+    fun `Framework gets disabled before current is cancelled`() {
+        var frameworkStatus: StatusResult = StatusResult.Enabled
+        var worker: CoroutineWorker? = null
+        val repository = ExposureNotificationsRepository(
+            context,
+            object : FakeExposureNotificationApi() {
+                override suspend fun getStatus(): StatusResult = frameworkStatus
+                override suspend fun disableNotifications(): DisableNotificationsResult {
+                    frameworkStatus = StatusResult.Disabled
+                    return super.disableNotifications()
+                }
+            },
+            object : CdnService {
+                override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
+                    Manifest(listOf(), "risk", "config")
+
+                override suspend fun getRiskCalculationParameters(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): RiskCalculationParameters {
+                    throw NotImplementedError()
+                }
+
+                override suspend fun getAppConfig(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): AppConfig =
+                    AppConfig(coronaMelderDeactivated = "deactivated")
+
+                override suspend fun getResourceBundle(
+                    id: String,
+                    cacheStrategy: CacheStrategy?
+                ): ResourceBundle {
+                    throw java.lang.IllegalStateException()
+                }
+            },
+            AsyncSharedPreferences { context.getSharedPreferences("test_repository", 0) },
+            object : BackgroundWorkScheduler {
+                override fun schedule(intervalMinutes: Int) {
+                }
+
+                override fun cancel() {
+                    worker?.onStopped()
+                    worker?.wait()
+                }
+            },
+            mock(),
+            mock(),
+            mock()
+        )
+
+        worker =
+            TestListenableWorkerBuilder<ProcessManifestWorker>(context).setWorkerFactory(object :
+                    WorkerFactory() {
+                    override fun createWorker(
+                        appContext: Context,
+                        workerClassName: String,
+                        workerParameters: WorkerParameters
+                    ): ListenableWorker {
+                        return ProcessManifestWorker(
+                            appContext,
+                            workerParameters,
+                            repository,
+                            NotificationsRepository(context)
+                        )
+                    }
+                }).build()
+
+        runBlocking {
+            worker.doWork()
+        }
+
+        Assert.assertEquals(StatusResult.Disabled, frameworkStatus)
     }
 }
