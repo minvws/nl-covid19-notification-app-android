@@ -24,9 +24,10 @@ class UpdateReceiver : BroadcastReceiver() {
         val updatePrefs = UpdatePrefs(context)
 
         if (intent.action == Intent.ACTION_MY_PACKAGE_REPLACED) {
+            val lastVersion = updatePrefs.lastVersionUpdated
 
             if (BuildConfig.VERSION_CODE > VERSION_CODE_1_3_0 &&
-                updatePrefs.lastVersionUpdated <= VERSION_CODE_1_3_0
+                lastVersion <= VERSION_CODE_1_3_0
             ) {
                 Timber.d("Run 1.3.0+ migration")
                 // Reschedule background jobs when updating to versions higher than 1.3.0 from 1.3.0 or below
@@ -35,7 +36,7 @@ class UpdateReceiver : BroadcastReceiver() {
             }
 
             if (BuildConfig.VERSION_CODE > VERSION_CODE_2_5_7 &&
-                updatePrefs.lastVersionUpdated <= VERSION_CODE_2_5_7
+                lastVersion <= VERSION_CODE_2_5_7
             ) {
                 Timber.d("Run 2.5.7+ migration")
                 // Rerun processManifest job to ensure all disabled app have also disabled the framework
@@ -52,7 +53,10 @@ class UpdateReceiver : BroadcastReceiver() {
 
         val async = goAsync()
         MainScope().launch {
-            exposureNotificationsRepository.rescheduleBackgroundJobs()
+            if (exposureNotificationsRepository.hasNotificationsEnabledTimestamp()) {
+                exposureNotificationsRepository.resetNotificationsEnabledTimestamp()
+                exposureNotificationsRepository.rescheduleBackgroundJobs()
+            }
             async.finish()
         }
     }
