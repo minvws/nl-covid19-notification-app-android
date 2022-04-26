@@ -71,7 +71,7 @@ class Test {
         val mockUpdateState = mock(AppLifecycleManager.UpdateState.UpdateRequired::class.java)
 
         Mockito.`when`(appConfigManager.getConfigOrDefault())
-            .thenReturn(AppConfig(coronaMelderDeactivated = null))
+            .thenReturn(AppConfig())
         Mockito.`when`(appLifecycleManager.getUpdateState())
             .thenReturn(mockUpdateState)
 
@@ -93,7 +93,7 @@ class Test {
 
         val mockUpdateToDateState = mock(AppLifecycleManager.UpdateState.UpToDate::class.java)
         Mockito.`when`(appConfigManager.getConfigOrDefault())
-            .thenReturn(AppConfig(coronaMelderDeactivated = null))
+            .thenReturn(AppConfig())
         Mockito.`when`(appLifecycleManager.getUpdateState())
             .thenReturn(mockUpdateToDateState)
 
