@@ -20,6 +20,7 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentExplanationBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
+import nl.rijksoverheid.en.util.ext.setExitSlideTransition
 import nl.rijksoverheid.en.util.ext.setSlideTransition
 
 class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
@@ -36,7 +37,11 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setSlideTransition()
+        if (args.showEnterTransition) {
+            setSlideTransition()
+        } else {
+            setExitSlideTransition()
+        }
 
         if (args.fromFirstPage) {
             setEnterSharedElementCallback(object : SharedElementCallback() {

@@ -37,8 +37,12 @@
     </style>
 
     <!-- Launcher theme. -->
-    <style name="Theme.CoronaMelder.Launcher">
-        <item name="android:windowBackground">@drawable/launch_screen</item>
+    <style name="Theme.CoronaMelder.Launcher" parent="Theme.SplashScreen">
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="windowSplashScreenBackground">@color/splash_screen_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.CoronaMelder</item>
     </style>
 
     <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
