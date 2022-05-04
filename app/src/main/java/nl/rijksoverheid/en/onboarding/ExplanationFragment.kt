@@ -20,7 +20,6 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentExplanationBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
-import nl.rijksoverheid.en.util.ext.setExitSlideTransition
 import nl.rijksoverheid.en.util.ext.setSlideTransition
 
 class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
@@ -37,11 +36,7 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (args.showEnterTransition) {
-            setSlideTransition()
-        } else {
-            setExitSlideTransition()
-        }
+        setSlideTransition()
 
         if (args.fromFirstPage) {
             setEnterSharedElementCallback(object : SharedElementCallback() {
@@ -98,6 +93,20 @@ class ExplanationFragment : BaseFragment(R.layout.fragment_explanation) {
             binding.toolbar.navigationIcon = null
             activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) {
                 activity?.finish()
+            }
+        }
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            val animatedDestinations = listOf(
+                R.id.explanationStep1,
+                R.id.explanationStep2,
+                R.id.explanationStep3,
+                R.id.explanationExample1,
+                R.id.explanationExample2,
+                R.id.nav_privacy_policy_consent
+            )
+
+            if (!animatedDestinations.contains(destination.id)) {
+                exitTransition = null
             }
         }
     }

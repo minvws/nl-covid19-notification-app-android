@@ -15,9 +15,6 @@
             android:defaultValue="false"
             app:argType="boolean" />
         <argument
-            android:name="showEnterTransition"
-            android:defaultValue="false" />
-        <argument
             android:name="isExample"
             android:defaultValue="false"
             app:argType="boolean" />
@@ -51,9 +48,6 @@
             android:name="fromFirstPage"
             android:defaultValue="true"
             app:argType="boolean" />
-        <argument
-            android:name="showEnterTransition"
-            android:defaultValue="true" />
         <argument
             android:name="isExample"
             android:defaultValue="false"
@@ -89,9 +83,6 @@
             android:defaultValue="false"
             app:argType="boolean" />
         <argument
-            android:name="showEnterTransition"
-            android:defaultValue="true" />
-        <argument
             android:name="isExample"
             android:defaultValue="false"
             app:argType="boolean" />
@@ -126,9 +117,6 @@
             android:defaultValue="false"
             app:argType="boolean" />
         <argument
-            android:name="showEnterTransition"
-            android:defaultValue="true" />
-        <argument
             android:name="isExample"
             android:defaultValue="true"
             app:argType="boolean" />
@@ -162,9 +150,6 @@
             android:name="fromFirstPage"
             android:defaultValue="false"
             app:argType="boolean" />
-        <argument
-            android:name="showEnterTransition"
-            android:defaultValue="true" />
         <argument
             android:name="isExample"
             android:defaultValue="true"

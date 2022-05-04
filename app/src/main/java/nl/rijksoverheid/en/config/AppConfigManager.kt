@@ -38,6 +38,19 @@ class AppConfigManager(
     }
 
     /**
+     * Get the config resource. This may result in network calls.
+     * @return the config or throws an exception if network call fails
+     */
+    suspend fun getConfig(): AppConfig {
+        return cdnService.getAppConfig(cdnService.getManifest().appConfigId).let { appConfig ->
+            if (useDebugFeatureFlags())
+                appConfig.copy(featureFlags = getDebugFeatureFlags())
+            else
+                appConfig
+        }
+    }
+
+    /**
      * Get the config or the default config. This may result in network calls.
      * @return the config or the default config if it couldn't be retrieved
      */

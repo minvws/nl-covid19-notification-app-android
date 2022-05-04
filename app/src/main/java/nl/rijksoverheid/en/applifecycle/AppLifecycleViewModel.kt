@@ -7,14 +7,18 @@
 package nl.rijksoverheid.en.applifecycle
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.config.AppConfigManager
-import nl.rijksoverheid.en.lifecyle.Event
+import timber.log.Timber
+
+private const val NAVIGATION_TRANSITION_DURATION = 300L
 
 /**
  * ViewModel containing logic regarding app lifecycles like required updates or deactivation.
@@ -26,8 +30,10 @@ class AppLifecycleViewModel(
 
     private var checkForForcedAppUpdateJob: Job? = null
 
-    val updateEvent: LiveData<Event<AppLifecycleStatus>> =
-        MutableLiveData()
+    private val _updateEvent: MutableStateFlow<AppLifecycleStatus?> = MutableStateFlow(null)
+    val updateEvent: LiveData<AppLifecycleStatus> = _updateEvent
+        .filterNotNull()
+        .asLiveData(viewModelScope.coroutineContext)
 
     private var initialCheckInProgress: Boolean = true
 
@@ -47,23 +53,30 @@ class AppLifecycleViewModel(
             return
 
         checkForForcedAppUpdateJob = viewModelScope.launch {
-            val config = appConfigManager.getConfigOrDefault()
-            if (config.deactivated) {
-                (updateEvent as MutableLiveData).value = Event(AppLifecycleStatus.EndOfLife)
-            } else {
-                appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode, false)
-                when (val result = appLifecycleManager.getUpdateState()) {
-                    is AppLifecycleManager.UpdateState.UpdateRequired,
-                    is AppLifecycleManager.UpdateState.InAppUpdate -> {
-                        (updateEvent as MutableLiveData).value =
-                            Event(AppLifecycleStatus.Update(result))
-                    }
-                    else -> {
-                        /* nothing, no updates */
+            try {
+                val config = appConfigManager.getConfig()
+                if (config.deactivated) {
+                    _updateEvent.emit(AppLifecycleStatus.EndOfLife)
+                } else {
+                    appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode, false)
+                    when (val result = appLifecycleManager.getUpdateState()) {
+                        is AppLifecycleManager.UpdateState.UpdateRequired,
+                        is AppLifecycleManager.UpdateState.InAppUpdate -> {
+                            _updateEvent.emit(AppLifecycleStatus.Update(result))
+                        }
+                        else -> {
+                            _updateEvent.emit(AppLifecycleStatus.Ready)
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                Timber.w(e, "Error getting app config")
+                _updateEvent.emit(AppLifecycleStatus.UnableToFetchAppConfig)
+            } finally {
+                if (_updateEvent.value !is AppLifecycleStatus.Ready)
+                    delay(NAVIGATION_TRANSITION_DURATION)
+                initialCheckInProgress = false
             }
-            initialCheckInProgress = false
         }
     }
 
@@ -72,5 +85,7 @@ class AppLifecycleViewModel(
             AppLifecycleStatus()
 
         object EndOfLife : AppLifecycleStatus()
+        object UnableToFetchAppConfig : AppLifecycleStatus()
+        object Ready : AppLifecycleStatus()
     }
 }

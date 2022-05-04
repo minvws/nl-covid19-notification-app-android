@@ -23,6 +23,7 @@ import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.applifecycle.AppLifecycleViewModel
 import nl.rijksoverheid.en.applifecycle.AppUpdateRequiredFragmentDirections
 import nl.rijksoverheid.en.applifecycle.EndOfLifeFragmentDirections
+import nl.rijksoverheid.en.applifecycle.NoInternetFragmentDirections
 import nl.rijksoverheid.en.databinding.ActivityMainBinding
 import nl.rijksoverheid.en.databinding.ActivityMainBinding.inflate
 import nl.rijksoverheid.en.debug.DebugNotification
@@ -43,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) viewModel.requestEnableNotifications()
         }
+
+    private val navController get() = findNavController(R.id.nav_host_fragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -83,17 +86,17 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        appLifecycleViewModel.updateEvent.observe(
-            this,
-            EventObserver {
-                when (it) {
-                    is AppLifecycleViewModel.AppLifecycleStatus.Update ->
-                        handleUpdateState(it.update)
-                    AppLifecycleViewModel.AppLifecycleStatus.EndOfLife ->
-                        handleEndOfLifeState()
-                }
+        appLifecycleViewModel.updateEvent.observe(this) {
+            when (it) {
+                is AppLifecycleViewModel.AppLifecycleStatus.Update ->
+                    handleUpdateState(it.update)
+                is AppLifecycleViewModel.AppLifecycleStatus.EndOfLife ->
+                    handleEndOfLifeState()
+                is AppLifecycleViewModel.AppLifecycleStatus.UnableToFetchAppConfig ->
+                    handleUnableToFetchAppConfig()
+                else -> {}
             }
-        )
+        }
 
         if (BuildConfig.FEATURE_DEBUG_NOTIFICATION) {
             DebugNotification(this).show()
@@ -114,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             val installerPackageName =
                 (update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
-            findNavController(R.id.nav_host_fragment).navigate(
+            navController.navigate(
                 AppUpdateRequiredFragmentDirections.actionAppUpdateRequired(
                     installerPackageName
                 )
@@ -124,15 +127,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleEndOfLifeState() {
         viewModel.disableExposureNotifications()
-        findNavController(R.id.nav_host_fragment).navigate(
-            EndOfLifeFragmentDirections.actionEndOfLife()
+        navController.navigate(EndOfLifeFragmentDirections.actionEndOfLife())
+    }
+
+    private fun handleUnableToFetchAppConfig() {
+        navController.navigate(
+            NoInternetFragmentDirections.actionNoInternet()
         )
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         if (BuildConfig.FEATURE_SECURE_SCREEN) {
-            findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener(
+            navController.addOnDestinationChangedListener(
                 SecureScreenNavigationListener(
                     window,
                     R.id.nav_status,
