@@ -345,4 +345,7 @@
     <string name="lab_test_done_generic_paragraph_2">GGD çalışanı size başkalarına bulaştırmamak için neler yapabileceğinizi söyleyecektir. Geçmiş olsun ve umarız çabuk iyileşirsiniz.</string>
     <string name="lab_test_done_generic_box_4">Rapor ancak GGD anahtarınızı GGD\'ye veya coronatest.nl aracılığıyla ilettiyseniz gönderilecektir.</string>
     <string name="status_error_notifications_disabled_headline">Bildirimler <u>kapalı</u></string>
+    <string name="no_internet_headline">Je hebt geen internetverbinding</string>
+    <string name="no_internet_description">Om de app op te starten heb je internet nodig.</string>
+    <string name="no_internet_action">Probeer opnieuw</string>
 </resources>

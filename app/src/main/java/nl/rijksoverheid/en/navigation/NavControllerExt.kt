@@ -30,8 +30,7 @@ fun NavController.navigateCatchingErrors(directions: NavDirections, extras: Navi
 
 fun NavController.isInitialised(): Boolean {
     return try {
-        @Suppress("SENSELESS_COMPARISON")
-        graph != null
+        graph.startDestinationRoute != null
     } catch (ex: IllegalStateException) {
         false
     }
