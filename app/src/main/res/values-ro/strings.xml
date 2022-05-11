@@ -194,8 +194,8 @@
     <string name="upload_keys_failed_notification_paragraph">Am încercat să trimitem notificarea, dar acest lucru nu a fost posibil. Sunați la GGD (Serviciul de Sănătate Municipal) pentru a face acest lucru din nou. Este foarte important să faceți acest lucru repede. În caz contrar, mai multe persoane pot fi infectate.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Sunați la GGD (Serviciul de Sănătate Municipal)</string>
     <string name="end_of_life_action">Citiți mai departe</string>
-    <string name="end_of_life_description">CoronaMelder is currently temporarily suspended. You will no longer receive notifications after you have been near someone who has tested positive for the coronavirus.</string>
-    <string name="end_of_life_headline">CoronaMelder is temporarily turned off</string>
+    <string name="end_of_life_description">În prezent, aplicația CoronaMelder este întreruptă temporar. Aceasta înseamnă că nu veți mai primi o notificare după ce ați fost în apropierea unei persoane cu coronavirus.</string>
+    <string name="end_of_life_headline">CoronaMelder a fost oprită temporar</string>
     <string name="status_error_notifications_disabled">Aveți notificările dezactivate. Deci nu veți fi înștiințat dacă ați fost în apropierea cuiva infectat cu coronavirus.</string>
     <string name="status_error_action_notifications_disabled">Activare notificări</string>
     <string name="cd_status_active">Cercul verde cu marcaj de validare care indică faptul că aplicația este configurată corect</string>

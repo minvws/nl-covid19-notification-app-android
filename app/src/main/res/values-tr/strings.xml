@@ -192,8 +192,8 @@
     <string name="upload_keys_failed_notification_paragraph">Bildirim göndermeye çalıştık, ancak bu başarısız oldu. Bunu tekrar yapmak için GGD\'yi arayın. Bunu bir an evvel yapmanız çok önemlidir. Aksi takdirde, daha fazla insan enfekte olabilir.</string>
     <string name="upload_keys_failed_notification_toolbar_title">GGD\'yi arayın</string>
     <string name="end_of_life_action">Daha fazlasını oku</string>
-    <string name="end_of_life_description">CoronaMelder is currently temporarily suspended. You will no longer receive notifications after you have been near someone who has tested positive for the coronavirus.</string>
-    <string name="end_of_life_headline">CoronaMelder is temporarily turned off</string>
+    <string name="end_of_life_description">CoronaMelder şu an geçici olarak durdurulmuştur. Bu durumda koronalı bir kişinin yanında bulunmuş olduktan sonra artık size bildirim gönderilmeyecektir.</string>
+    <string name="end_of_life_headline">CoronaMelder geçici olarak durdurulmuştur</string>
     <string name="status_error_notifications_disabled">Bildirimleriniz açık değil. Bu nedenle, Korona bulaşmış olan birinin yakınında bulunduktan sonra size bildirim gönderilmez.</string>
     <string name="status_error_action_notifications_disabled">Bildirimleri açmak</string>
     <string name="cd_status_active">Uygulamanın doğru kurulduğunu gösteren yeşil daire içinde onay işareti</string>

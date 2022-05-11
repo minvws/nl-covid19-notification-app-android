@@ -194,8 +194,8 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="upload_keys_failed_notification_paragraph">Hemos intentado enviar la notificación sin conseguirlo. Llama al GGD (servicio municipal de salud) para volver a intentarlo. Es importante hacerlo lo antes posible, ya que mientras tanto podrían contagiarse más personas.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Llamar al GGD</string>
     <string name="end_of_life_action">Más información</string>
-    <string name="end_of_life_description">CoronaMelder is currently temporarily suspended. You will no longer receive notifications after you have been near someone who has tested positive for the coronavirus.</string>
-    <string name="end_of_life_headline">CoronaMelder is temporarily turned off</string>
+    <string name="end_of_life_description">En este momento, se ha interrumpido temporalmente el funcionamiento de la aplicación CoronaMelder. En consecuencia, no va a recibir notificaciones si ha estado cerca de una persona con COVID-19.</string>
+    <string name="end_of_life_headline">Interrupción temporal del funcionamiento de CoronaMelder</string>
     <string name="status_error_notifications_disabled">Has desactivado tus notificaciones. No recibirás ninguna notificación cuando hayas estado cerca de alguien con coronavirus.</string>
     <string name="status_error_action_notifications_disabled">Activar notificaciones</string>
     <string name="cd_status_active">Círculo verde con una marca que indica que la app está ajustada correctamente</string>

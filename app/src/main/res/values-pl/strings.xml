@@ -194,8 +194,8 @@
     <string name="upload_keys_failed_notification_paragraph">Próbowaliśmy wysłać powiadomienie, ale nie udało się. Zadzwoń do GGD, aby spróbować ponownie. Istotne jest, abyś zrobił to szybko. W przeciwnym razie, więcej osób może się zarazić.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Zadzwoń do GGD</string>
     <string name="end_of_life_action">Czytaj więcej</string>
-    <string name="end_of_life_description">CoronaMelder is currently temporarily suspended. You will no longer receive notifications after you have been near someone who has tested positive for the coronavirus.</string>
-    <string name="end_of_life_headline">CoronaMelder is temporarily turned off</string>
+    <string name="end_of_life_description">Aplikacja CoronaMelder przestała obecnie tymczasowo działać. Nie prześle Ci więc już powiadomienia, gdy znajdziesz się w pobliżu osoby zarażonej koronawirusem.</string>
+    <string name="end_of_life_headline">działanie aplikacji CoronaMelder tymczasowo wstrzymane</string>
     <string name="status_error_notifications_disabled">Wyłączyłeś powiadomienia. Nie otrzymasz więc powiadomienia, gdy okaże się, że znajdowałeś się w pobliżu osoby z koronawirusem.</string>
     <string name="status_error_action_notifications_disabled">Włącz powiadomienia</string>
     <string name="cd_status_active">Zielone kółko z ptaszkiem oznacza, że ustawienia aplikacji są prawidłowe</string>
