@@ -8,7 +8,7 @@ apply plugin: 'com.google.firebase.appdistribution'
 apply plugin: 'ru.cian.huawei-publish'
 apply from: rootProject.file("jacoco.gradle")
 
-version = "2.5.8"
+version = "2.5.9"
 def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 125210
 
 def getGitHash = { ->
@@ -204,6 +204,9 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$androidx_fragment_version"
     implementation "androidx.core:core-ktx:$androidx_core_version"
 
+    // Splashscreen
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+
     // ConstraintLayout
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
 
@@ -228,6 +231,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$androidx_nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$androidx_nav_version"
     androidTestImplementation "androidx.navigation:navigation-testing:$androidx_nav_version"
+
 
     // Timber logger
     implementation "com.jakewharton.timber:timber:$timber_version"

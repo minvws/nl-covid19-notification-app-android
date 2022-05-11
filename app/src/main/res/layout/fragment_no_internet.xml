@@ -41,11 +41,11 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:textAppearance="?attr/textAppearanceHeadline5"
+                android:text="@string/no_internet_headline"
                 app:layout_constraintBottom_toTopOf="@id/description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/illustration"
-                tools:text="@string/end_of_life_headline"/>
+                app:layout_constraintTop_toBottomOf="@id/illustration" />
 
             <TextView
                 android:id="@+id/description"
@@ -56,20 +56,20 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="16dp"
                 android:textAppearance="?attr/textAppearanceBody1"
-                app:layout_constraintBottom_toTopOf="@id/next"
+                android:text="@string/no_internet_description"
+                app:layout_constraintBottom_toTopOf="@id/retry_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headline"
-                tools:text="@string/end_of_life_description"/>
+                app:layout_constraintTop_toBottomOf="@id/headline" />
 
             <Button
-                android:id="@+id/next"
+                android:id="@+id/retry_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:text="@string/end_of_life_action"
+                android:text="@string/no_internet_action"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

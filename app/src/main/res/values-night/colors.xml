@@ -17,6 +17,7 @@
     <color name="dialog_background_tint">@color/gray_darker</color>
     <color name="dialog_button_text">@color/lighter_blue</color>
     <color name="footer_background">@color/gray_darker</color>
+    <color name="splash_screen_background">@color/gray_darker</color>
 
     <color name="gradient_status_disabled_start">#111111</color>
     <color name="gradient_status_exposure_start">#111111</color>
