@@ -27,8 +27,8 @@ class AppLifecycleViewModel(
 
     private var checkForForcedAppUpdateJob: Job? = null
 
-    private val _updateEvent: MutableStateFlow<AppLifecycleStatus?> = MutableStateFlow(null)
-    val updateEvent: LiveData<AppLifecycleStatus> = _updateEvent
+    private val _appLifecycleStatus: MutableStateFlow<AppLifecycleStatus?> = MutableStateFlow(null)
+    val appLifecycleStatus: LiveData<AppLifecycleStatus> = _appLifecycleStatus
         .filterNotNull()
         .asLiveData(viewModelScope.coroutineContext)
 
@@ -39,13 +39,13 @@ class AppLifecycleViewModel(
     }
 
     init {
-        checkForForcedAppUpdate()
+        checkAppLifecycleStatus()
     }
 
     /**
      * Check in app config for required [AppLifecycleStatus].
      */
-    fun checkForForcedAppUpdate() {
+    fun checkAppLifecycleStatus() {
         if (checkForForcedAppUpdateJob?.isActive == true)
             return
 
@@ -53,22 +53,22 @@ class AppLifecycleViewModel(
             try {
                 val config = appConfigManager.getConfig()
                 if (config.deactivated) {
-                    _updateEvent.emit(AppLifecycleStatus.EndOfLife)
+                    _appLifecycleStatus.emit(AppLifecycleStatus.EndOfLife)
                 } else {
                     appLifecycleManager.verifyMinimumVersion(config.requiredAppVersionCode, false)
                     when (val result = appLifecycleManager.getUpdateState()) {
                         is AppLifecycleManager.UpdateState.UpdateRequired,
                         is AppLifecycleManager.UpdateState.InAppUpdate -> {
-                            _updateEvent.emit(AppLifecycleStatus.Update(result))
+                            _appLifecycleStatus.emit(AppLifecycleStatus.Update(result))
                         }
                         else -> {
-                            _updateEvent.emit(AppLifecycleStatus.Ready)
+                            _appLifecycleStatus.emit(AppLifecycleStatus.Ready)
                         }
                     }
                 }
             } catch (e: Exception) {
                 Timber.w(e, "Error getting app config")
-                _updateEvent.emit(AppLifecycleStatus.UnableToFetchAppConfig)
+                _appLifecycleStatus.emit(AppLifecycleStatus.UnableToFetchAppConfig)
             } finally {
                 initialCheckInProgress = false
             }

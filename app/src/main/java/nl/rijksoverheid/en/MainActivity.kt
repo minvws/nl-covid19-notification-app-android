@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        appLifecycleViewModel.updateEvent.observe(this) {
+        appLifecycleViewModel.appLifecycleStatus.observe(this) {
             when (it) {
                 is AppLifecycleViewModel.AppLifecycleStatus.Update ->
                     handleUpdateState(it.update)
@@ -108,10 +108,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleUpdateState(update: AppLifecycleManager.UpdateState) {
-        if (!navController.isInitialised())
-            inflateNavGraph()
-
         if (update is AppLifecycleManager.UpdateState.InAppUpdate) {
+            if (!navController.isInitialised())
+                inflateNavGraph()
+
             update.appUpdateManager.startUpdateFlow(
                 update.appUpdateInfo,
                 this, AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
@@ -122,13 +122,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         } else {
-            val installerPackageName =
-                (update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
-            navController.navigate(
-                AppUpdateRequiredFragmentDirections.actionAppUpdateRequired(
-                    installerPackageName
+            if (!navController.isInitialised())
+                inflateNavGraph(R.id.nav_app_update_required)
+            else {
+                val installerPackageName =
+                    (update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
+                navController.navigate(
+                    AppUpdateRequiredFragmentDirections.actionAppUpdateRequired(
+                        installerPackageName
+                    )
                 )
-            )
+            }
         }
     }
 
@@ -177,7 +181,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        appLifecycleViewModel.checkForForcedAppUpdate()
+        appLifecycleViewModel.checkAppLifecycleStatus()
     }
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {

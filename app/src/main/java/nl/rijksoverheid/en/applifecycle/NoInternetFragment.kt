@@ -23,10 +23,10 @@ class NoInternetFragment : Fragment(R.layout.fragment_no_internet) {
         val binding = FragmentNoInternetBinding.bind(view)
 
         binding.retryButton.setOnClickListener {
-            appLifecycleViewModel.checkForForcedAppUpdate()
+            appLifecycleViewModel.checkAppLifecycleStatus()
         }
 
-        appLifecycleViewModel.updateEvent.observe(viewLifecycleOwner) {
+        appLifecycleViewModel.appLifecycleStatus.observe(viewLifecycleOwner) {
             if (it is AppLifecycleViewModel.AppLifecycleStatus.Ready)
                 findNavController().popBackStack()
         }
