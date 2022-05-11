@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigator
 import timber.log.Timber
+import java.lang.IllegalStateException
 
 fun NavController.navigateCatchingErrors(directions: NavDirections) {
     try {
@@ -24,5 +25,14 @@ fun NavController.navigateCatchingErrors(directions: NavDirections, extras: Navi
         navigate(directions, extras)
     } catch (ex: IllegalArgumentException) {
         Timber.w(ex, "Error while navigating")
+    }
+}
+
+fun NavController.isInitialised(): Boolean {
+    return try {
+        @Suppress("SENSELESS_COMPARISON")
+        graph != null
+    } catch (ex: IllegalStateException) {
+        false
     }
 }

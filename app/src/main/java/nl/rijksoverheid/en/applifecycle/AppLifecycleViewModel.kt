@@ -11,14 +11,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.config.AppConfigManager
 import timber.log.Timber
-
-private const val NAVIGATION_TRANSITION_DURATION = 300L
 
 /**
  * ViewModel containing logic regarding app lifecycles like required updates or deactivation.
@@ -73,8 +70,6 @@ class AppLifecycleViewModel(
                 Timber.w(e, "Error getting app config")
                 _updateEvent.emit(AppLifecycleStatus.UnableToFetchAppConfig)
             } finally {
-                if (_updateEvent.value !is AppLifecycleStatus.Ready)
-                    delay(NAVIGATION_TRANSITION_DURATION)
                 initialCheckInProgress = false
             }
         }

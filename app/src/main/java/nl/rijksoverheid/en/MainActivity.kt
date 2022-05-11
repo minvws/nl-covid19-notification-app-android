@@ -29,6 +29,7 @@ import nl.rijksoverheid.en.databinding.ActivityMainBinding.inflate
 import nl.rijksoverheid.en.debug.DebugNotification
 import nl.rijksoverheid.en.job.RemindExposureNotificationWorker
 import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.navigation.isInitialised
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 
@@ -94,7 +95,10 @@ class MainActivity : AppCompatActivity() {
                     handleEndOfLifeState()
                 is AppLifecycleViewModel.AppLifecycleStatus.UnableToFetchAppConfig ->
                     handleUnableToFetchAppConfig()
-                else -> {}
+                else -> {
+                    if (!navController.isInitialised())
+                        inflateNavGraph()
+                }
             }
         }
 
@@ -104,6 +108,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleUpdateState(update: AppLifecycleManager.UpdateState) {
+        if (!navController.isInitialised())
+            inflateNavGraph()
+
         if (update is AppLifecycleManager.UpdateState.InAppUpdate) {
             update.appUpdateManager.startUpdateFlow(
                 update.appUpdateInfo,
@@ -125,15 +132,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun inflateNavGraph(startDestinationId: Int? = null) {
+        val graph = navController.navInflater.inflate(R.navigation.nav_main)
+        startDestinationId?.let { graph.setStartDestination(it) }
+        navController.graph = graph
+    }
+
     private fun handleEndOfLifeState() {
         viewModel.disableExposureNotifications()
-        navController.navigate(EndOfLifeFragmentDirections.actionEndOfLife())
+        if (!navController.isInitialised())
+            inflateNavGraph(R.id.nav_end_of_life)
+        else
+            navController.navigate(EndOfLifeFragmentDirections.actionEndOfLife())
     }
 
     private fun handleUnableToFetchAppConfig() {
-        navController.navigate(
-            NoInternetFragmentDirections.actionNoInternet()
-        )
+        if (!navController.isInitialised())
+            inflateNavGraph(R.id.nav_no_internet)
+        else
+            navController.navigate(
+                NoInternetFragmentDirections.actionNoInternet()
+            )
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
