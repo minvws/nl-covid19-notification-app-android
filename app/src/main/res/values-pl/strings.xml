@@ -353,7 +353,7 @@
     <string name="lab_test_done_generic_paragraph_2">GGD doradzi, co jeszcze możesz zrobić, aby zapobiec zarażeniu innych. Trzymaj się i szybko wracaj do zdrowia.</string>
     <string name="lab_test_done_generic_box_4">Powiadomienie zostaje wysłane wyłącznie w przypadku, gdy podałeś swój klucz GGD lub na za pośrednictwem strony coronatest.nl</string>
     <string name="status_error_notifications_disabled_headline">Powiadomienia są <u>wyłączone</u></string>
-    <string name="no_internet_headline">Je hebt geen internetverbinding</string>
-    <string name="no_internet_description">Om de app op te starten heb je internet nodig.</string>
-    <string name="no_internet_action">Probeer opnieuw</string>
+    <string name="no_internet_headline">Brak połączenia internetowego</string>
+    <string name="no_internet_description">Aby uruchomić aplikację potrzebne jest połączenie z internetem.</string>
+    <string name="no_internet_action">Spróbuj ponownie</string>
 </resources>

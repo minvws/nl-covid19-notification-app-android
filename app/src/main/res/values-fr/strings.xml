@@ -345,7 +345,7 @@
     <string name="lab_test_done_generic_paragraph_2">Le GGD vous dira ce que vous devez faire pour éviter de contaminer les autres. Nous vous souhaitons un prompt rétablissement.</string>
     <string name="lab_test_done_generic_box_4">La notification n\'est envoyée que si vous avez communiqué votre code GGD au GGD ou sur coronatest.nl</string>
     <string name="status_error_notifications_disabled_headline">Les notifications sont <u>désactivées</u></string>
-    <string name="no_internet_headline">Je hebt geen internetverbinding</string>
-    <string name="no_internet_description">Om de app op te starten heb je internet nodig.</string>
-    <string name="no_internet_action">Probeer opnieuw</string>
+    <string name="no_internet_headline">Vous n\'êtes pas connecté(e) à Internet.</string>
+    <string name="no_internet_description">Vous devez être connecté(e) à Internet pour lancer l\'application.</string>
+    <string name="no_internet_action">Veuillez réessayer.</string>
 </resources>

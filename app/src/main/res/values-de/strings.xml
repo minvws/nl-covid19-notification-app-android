@@ -192,7 +192,7 @@
     <string name="upload_keys_failed_notification_paragraph">Wir haben versucht, die Nachricht zu schicken. Aber das ist fehlgeschlagen. Rufen Sie den GGD an, um die Nachricht erneut zu schicken. Es ist sehr wichtig, dass Sie das schnell tun. Sonst können sich noch mehr Menschen anstecken.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Rufen Sie den GGD an.</string>
     <string name="end_of_life_action">Lesen Sie weiter</string>
-    <string name="end_of_life_description">Der CoronaMelder ist nun vorübergehend eingestellt. Sie erhalten keine Benachrichtigung mehr, wenn Sie sich in der Nähe einer mit Corona infizierten Person aufgehalten haben.</string>
+    <string name="end_of_life_description">Der CoronaMelder ist nun vorübergehend eingestellt. Sie erhalten also keine Benachrichtigung mehr, wenn Sie sich in der Nähe einer mit Corona infizierten Person aufgehalten haben.</string>
     <string name="end_of_life_headline">Der CoronaMelder wurde vorübergehend eingestellt</string>
     <string name="status_error_notifications_disabled">Bei Ihnen sind Nachrichten deaktiviert. Sie erhalten also keine Nachricht, wenn Sie in der Nähe einer Person mit Corona waren.</string>
     <string name="status_error_action_notifications_disabled">Nachrichten aktivieren</string>
@@ -346,7 +346,7 @@
     <string name="lab_test_done_generic_paragraph_2">Der GGD sagt Ihnen, was Sie sonst noch tun können, damit Sie andere nicht anstecken. Wir wünschen Ihnen gute Besserung.</string>
     <string name="lab_test_done_generic_box_4">Die Nachricht wird nur verschickt, wenn Sie Ihren GGD-Schlüssel dem GGD mitgeteilt oder ihn auf coronatest.nl eingegeben haben.</string>
     <string name="status_error_notifications_disabled_headline">Nachrichten sind <u>deaktiviert</u></string>
-    <string name="no_internet_headline">Je hebt geen internetverbinding</string>
-    <string name="no_internet_description">Om de app op te starten heb je internet nodig.</string>
-    <string name="no_internet_action">Probeer opnieuw</string>
+    <string name="no_internet_headline">Sie haben keine Internetverbindung</string>
+    <string name="no_internet_description">Sie benötigen eine Internetverbindung, um die App zu starten.</string>
+    <string name="no_internet_action">Versuchen Sie es erneut</string>
 </resources>
