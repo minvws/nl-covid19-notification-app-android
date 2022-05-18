@@ -347,7 +347,7 @@ pero durante tan poco tiempo que la posibilidad de contagio es muy pequeña.</st
     <string name="lab_test_done_generic_paragraph_2">El GGD (servicio municipal de salud) te indicará qué tienes que hacer para evitar contagiar a otros. Mucho ánimo y que te recuperes pronto.</string>
     <string name="lab_test_done_generic_box_4">Tu notificación solo se enviará si mandas tu clave GGD al GGD o mediante coronatest.nl.</string>
     <string name="status_error_notifications_disabled_headline">Las notificaciones están <u>desactivadas</u></string>
-    <string name="no_internet_headline">Je hebt geen internetverbinding</string>
-    <string name="no_internet_description">Om de app op te starten heb je internet nodig.</string>
-    <string name="no_internet_action">Probeer opnieuw</string>
+    <string name="no_internet_headline">No tienes conexión a Internet</string>
+    <string name="no_internet_description">Es necesario estar conectado para ejecutar la aplicación.</string>
+    <string name="no_internet_action">Vuelve a intentarlo</string>
 </resources>

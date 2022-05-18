@@ -368,7 +368,7 @@
     <string name="lab_test_done_generic_paragraph_2">"ستخبرك الـ GGD بما يمكنك فعله لتجنب نقل العدوى إلى الآخرين. نتمنى لك الشفاء العاجل والتحلي بالقوة في مواجهة المرض. "</string>
     <string name="lab_test_done_generic_box_4">سيتم إرسال الإشعار فقط إذا قمت بإرسال رمز الـ GGD إلى الـ GGD أو من خلال coronatest.nl.</string>
     <string name="status_error_notifications_disabled_headline">تم <u> إيقاف تشغيل</u> الإشعارات</string>
-    <string name="no_internet_headline">Je hebt geen internetverbinding</string>
-    <string name="no_internet_description">Om de app op te starten heb je internet nodig.</string>
-    <string name="no_internet_action">Probeer opnieuw</string>
+    <string name="no_internet_headline">أنت لست متصلاً بالإنترنت</string>
+    <string name="no_internet_description">يجب أن تكون متصلاً بالإنترنت لبدء التطبيق.</string>
+    <string name="no_internet_action">حاول مرة أخرى</string>
 </resources>

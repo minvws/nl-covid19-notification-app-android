@@ -345,7 +345,7 @@
     <string name="lab_test_done_generic_paragraph_2">De GGD fertelt dy watst fierder dwaan kinst om foar te kommen datst oaren besmetst. Betterskip en sterkte mei it opknappen.</string>
     <string name="lab_test_done_generic_box_4">De melding wurdt allinne ferstjoerd ast dyn GGD-sleutel oan de GGD of fia coronatest.nl  trochjûn hast</string>
     <string name="status_error_notifications_disabled_headline">Meldingen steane <u>út</u></string>
-    <string name="no_internet_headline">Je hebt geen internetverbinding</string>
-    <string name="no_internet_description">Om de app op te starten heb je internet nodig.</string>
-    <string name="no_internet_action">Probeer opnieuw</string>
+    <string name="no_internet_headline">Do hast gjin ynternetferbining</string>
+    <string name="no_internet_description">Om de app op te starten hast ynternet nedich.</string>
+    <string name="no_internet_action">Besykje it nochris</string>
 </resources>
