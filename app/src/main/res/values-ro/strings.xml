@@ -194,8 +194,8 @@
     <string name="upload_keys_failed_notification_paragraph">Am încercat să trimitem notificarea, dar acest lucru nu a fost posibil. Sunați la GGD (Serviciul de Sănătate Municipal) pentru a face acest lucru din nou. Este foarte important să faceți acest lucru repede. În caz contrar, mai multe persoane pot fi infectate.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Sunați la GGD (Serviciul de Sănătate Municipal)</string>
     <string name="end_of_life_action">Citiți mai departe</string>
-    <string name="end_of_life_description">Ministerul Sănătății publice, Bunăstării și Sportului a decis că aplicația nu mai este necesară. Deci, nu veți mai primi notificări după ce ați fost în cuiva contaminat cu corona.</string>
-    <string name="end_of_life_headline">CoronaMelder s-a oprit.</string>
+    <string name="end_of_life_description">În prezent, aplicația CoronaMelder este întreruptă temporar. Aceasta înseamnă că nu veți mai primi o notificare după ce ați fost în apropierea unei persoane cu coronavirus.</string>
+    <string name="end_of_life_headline">CoronaMelder a fost oprită temporar</string>
     <string name="status_error_notifications_disabled">Aveți notificările dezactivate. Deci nu veți fi înștiințat dacă ați fost în apropierea cuiva infectat cu coronavirus.</string>
     <string name="status_error_action_notifications_disabled">Activare notificări</string>
     <string name="cd_status_active">Cercul verde cu marcaj de validare care indică faptul că aplicația este configurată corect</string>
@@ -385,4 +385,7 @@
     <string name="dashboard_card_graph_content_description">Graficul tendinței actuale. Faceți clic pentru descrierea amănunțită.</string>
     <string name="dashboard_graph_content_description">Graficul %1$s. Valoarea minimă este %2$s, iar valoarea maximă este %3$s. Datele sunt valabile pentru intervalul %4$s-%5$s.</string>
     <string name="dashboard_graph_selected_value_content_description">%1$s %2$s la %3$s</string>
+    <string name="no_internet_headline">Nu aveți conexiune la internet</string>
+    <string name="no_internet_description">Pentru a porni aplicația, aveți nevoie de internet.</string>
+    <string name="no_internet_action">Încercați din nou</string>
 </resources>

@@ -20,6 +20,7 @@ import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
+import java.lang.IllegalStateException
 
 @RunWith(RobolectricTestRunner::class)
 class Test {
@@ -49,15 +50,15 @@ class Test {
             appConfigManager
         )
 
-        Mockito.`when`(appConfigManager.getConfigOrDefault())
+        Mockito.`when`(appConfigManager.getConfig())
             .thenReturn(AppConfig().copy(coronaMelderDeactivated = "deactivated"))
 
-        appLifecycleViewModel.checkForForcedAppUpdate()
+        appLifecycleViewModel.checkAppLifecycleStatus()
 
-        appLifecycleViewModel.updateEvent.observeForTesting {
+        appLifecycleViewModel.appLifecycleStatus.observeForTesting {
             Assert.assertEquals(
                 AppLifecycleViewModel.AppLifecycleStatus.EndOfLife,
-                it.values.first().getContentIfNotHandled()
+                it.values.first()
             )
         }
     }
@@ -70,38 +71,57 @@ class Test {
         )
         val mockUpdateState = mock(AppLifecycleManager.UpdateState.UpdateRequired::class.java)
 
-        Mockito.`when`(appConfigManager.getConfigOrDefault())
+        Mockito.`when`(appConfigManager.getConfig())
             .thenReturn(AppConfig())
         Mockito.`when`(appLifecycleManager.getUpdateState())
             .thenReturn(mockUpdateState)
 
-        appLifecycleViewModel.checkForForcedAppUpdate()
+        appLifecycleViewModel.checkAppLifecycleStatus()
 
-        appLifecycleViewModel.updateEvent.observeForTesting {
+        appLifecycleViewModel.appLifecycleStatus.observeForTesting {
             Assert.assertTrue(
-                it.values.first().getContentIfNotHandled() is AppLifecycleViewModel.AppLifecycleStatus.Update
+                it.values.first() is AppLifecycleViewModel.AppLifecycleStatus.Update
             )
         }
     }
 
     @Test
-    fun `No unnecessary events triggered when checkForForcedAppUpdate`() = runBlocking {
+    fun `Update even triggered also when app is ready to use`() = runBlocking {
         val appLifecycleViewModel = AppLifecycleViewModel(
             appLifecycleManager,
             appConfigManager
         )
 
         val mockUpdateToDateState = mock(AppLifecycleManager.UpdateState.UpToDate::class.java)
-        Mockito.`when`(appConfigManager.getConfigOrDefault())
+        Mockito.`when`(appConfigManager.getConfig())
             .thenReturn(AppConfig())
         Mockito.`when`(appLifecycleManager.getUpdateState())
             .thenReturn(mockUpdateToDateState)
 
-        appLifecycleViewModel.checkForForcedAppUpdate()
+        appLifecycleViewModel.checkAppLifecycleStatus()
 
-        appLifecycleViewModel.updateEvent.observeForTesting {
+        appLifecycleViewModel.appLifecycleStatus.observeForTesting {
             Assert.assertTrue(
-                it.values.isEmpty()
+                it.values.first() is AppLifecycleViewModel.AppLifecycleStatus.Ready
+            )
+        }
+    }
+
+    @Test
+    fun `Update even triggered when unable to fetch appConfig`() = runBlocking {
+        val appLifecycleViewModel = AppLifecycleViewModel(
+            appLifecycleManager,
+            appConfigManager
+        )
+
+        Mockito.`when`(appConfigManager.getConfig())
+            .thenThrow(IllegalStateException())
+
+        appLifecycleViewModel.checkAppLifecycleStatus()
+
+        appLifecycleViewModel.appLifecycleStatus.observeForTesting {
+            Assert.assertTrue(
+                it.values.first() is AppLifecycleViewModel.AppLifecycleStatus.UnableToFetchAppConfig
             )
         }
     }

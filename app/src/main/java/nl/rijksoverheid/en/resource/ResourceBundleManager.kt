@@ -31,11 +31,13 @@ class ResourceBundleManager(
     private val useDefaultGuidance: Boolean
 ) {
 
-    private suspend fun loadResourceBundle(): ResourceBundle {
+    private suspend fun loadResourceBundle(
+        refreshFromServer: Boolean = false
+    ): ResourceBundle {
         return if (useDefaultGuidance)
             loadDefaultResourceBundle()
         else
-            getResourceBundleFromCacheOrNetwork() ?: loadDefaultResourceBundle()
+            getResourceBundleFromCacheOrNetwork(refreshFromServer) ?: loadDefaultResourceBundle()
     }
 
     private fun loadDefaultResourceBundle(): ResourceBundle {
@@ -44,10 +46,13 @@ class ResourceBundleManager(
         }
     }
 
-    private suspend fun getResourceBundleFromCacheOrNetwork(): ResourceBundle? {
+    private suspend fun getResourceBundleFromCacheOrNetwork(refreshFromServer: Boolean): ResourceBundle? {
         return try {
             cdnService.getManifest(CacheStrategy.CACHE_FIRST).resourceBundleId?.let {
-                cdnService.getResourceBundle(it, CacheStrategy.CACHE_FIRST)
+                cdnService.getResourceBundle(
+                    it,
+                    if (refreshFromServer) CacheStrategy.CACHE_LAST else CacheStrategy.CACHE_FIRST
+                )
             }
         } catch (ex: Exception) {
             Timber.w(ex, "Error fetching resource bundle")
@@ -95,6 +100,20 @@ class ResourceBundleManager(
             localeMap?.get(title) ?: fallback[title] ?: title,
             localeMap?.get(message) ?: fallback[message] ?: message
         )
+    }
+
+    suspend fun getEndOfLifeResources(titleRef: String?, bodyRef: String?): Pair<String, String> {
+        // Refresh the content from server because the processManifest job has probably been deactivated during end of life
+        val bundle = loadResourceBundle(true)
+        val language = context.getString(R.string.app_language)
+        val localeMap = bundle.resources[language]
+        val fallback = bundle.resources[DEFAULT_LANGUAGE]
+            ?: error("No resources for default language $DEFAULT_LANGUAGE")
+
+        val title = titleRef?.let { localeMap?.get(it) ?: fallback[it] } ?: context.getString(R.string.end_of_life_headline)
+        val body = bodyRef?.let { localeMap?.get(it) ?: fallback[it] } ?: context.getString(R.string.end_of_life_description)
+
+        return Pair(title, body)
     }
 
     private fun String.replacePlaceHolders(exposureDate: LocalDate, notificationReceiveDate: LocalDate?): String {

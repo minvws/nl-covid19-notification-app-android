@@ -16,6 +16,7 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.ktx.requestAppUpdateInfo
 import nl.rijksoverheid.en.BuildConfig
+import timber.log.Timber
 
 private const val KEY_MINIMUM_VERSION_CODE = "minimum_version_code"
 private const val PLAY_STORE_PACKAGE_NAME = "com.android.vending"
@@ -55,15 +56,20 @@ class AppLifecycleManager(
         return if (minimumVersionCode > currentVersionCode) {
             when (val source = getInstallPackageName()) {
                 PLAY_STORE_PACKAGE_NAME -> {
-                    val appUpdateInfo = appUpdateManager.requestAppUpdateInfo()
-                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) ||
-                        appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
-                    ) {
-                        UpdateState.InAppUpdate(appUpdateManager, appUpdateInfo)
-                    } else {
-                        // update might not be available for in-app update, for example for a staged roll out
-                        UpdateState.UpToDate
+                    try {
+                        val appUpdateInfo = appUpdateManager.requestAppUpdateInfo()
+                        if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                            appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) ||
+                            appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
+                        ) {
+                            UpdateState.InAppUpdate(appUpdateManager, appUpdateInfo)
+                        } else {
+                            // update might not be available for in-app update, for example for a staged roll out
+                            UpdateState.UpToDate
+                        }
+                    } catch (e: Exception) {
+                        Timber.e("requestAppUpdateInfo failed", e)
+                        UpdateState.UpdateRequired(source)
                     }
                 }
                 else -> UpdateState.UpdateRequired(source)

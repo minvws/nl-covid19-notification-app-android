@@ -17,7 +17,6 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.api.model.DashboardItem
 import nl.rijksoverheid.en.api.model.DashboardItemRef
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.items.DashboardCardItem

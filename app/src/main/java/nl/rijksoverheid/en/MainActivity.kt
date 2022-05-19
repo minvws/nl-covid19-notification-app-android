@@ -12,6 +12,7 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -22,11 +23,13 @@ import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.applifecycle.AppLifecycleViewModel
 import nl.rijksoverheid.en.applifecycle.AppUpdateRequiredFragmentDirections
 import nl.rijksoverheid.en.applifecycle.EndOfLifeFragmentDirections
+import nl.rijksoverheid.en.applifecycle.NoInternetFragmentDirections
 import nl.rijksoverheid.en.databinding.ActivityMainBinding
 import nl.rijksoverheid.en.databinding.ActivityMainBinding.inflate
 import nl.rijksoverheid.en.debug.DebugNotification
 import nl.rijksoverheid.en.job.RemindExposureNotificationWorker
 import nl.rijksoverheid.en.lifecyle.EventObserver
+import nl.rijksoverheid.en.navigation.isInitialised
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 
@@ -43,9 +46,16 @@ class MainActivity : AppCompatActivity() {
             if (result.resultCode == Activity.RESULT_OK) viewModel.requestEnableNotifications()
         }
 
+    private val navController get() = findNavController(R.id.nav_host_fragment)
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Theme_CoronaMelder)
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+
+        splashScreen.setKeepOnScreenCondition {
+            appLifecycleViewModel.splashScreenKeepOnScreenCondition
+        }
+
         binding = inflate(layoutInflater)
         setContentView(binding.root)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -77,17 +87,20 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        appLifecycleViewModel.updateEvent.observe(
-            this,
-            EventObserver {
-                when (it) {
-                    is AppLifecycleViewModel.AppLifecycleStatus.Update ->
-                        handleUpdateState(it.update)
-                    AppLifecycleViewModel.AppLifecycleStatus.EndOfLife ->
-                        handleEndOfLifeState()
+        appLifecycleViewModel.appLifecycleStatus.observe(this) {
+            when (it) {
+                is AppLifecycleViewModel.AppLifecycleStatus.Update ->
+                    handleUpdateState(it.update)
+                is AppLifecycleViewModel.AppLifecycleStatus.EndOfLife ->
+                    handleEndOfLifeState()
+                is AppLifecycleViewModel.AppLifecycleStatus.UnableToFetchAppConfig ->
+                    handleUnableToFetchAppConfig()
+                else -> {
+                    if (!navController.isInitialised())
+                        inflateNavGraph()
                 }
             }
-        )
+        }
 
         if (BuildConfig.FEATURE_DEBUG_NOTIFICATION) {
             DebugNotification(this).show()
@@ -96,6 +109,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleUpdateState(update: AppLifecycleManager.UpdateState) {
         if (update is AppLifecycleManager.UpdateState.InAppUpdate) {
+            if (!navController.isInitialised())
+                inflateNavGraph()
+
             update.appUpdateManager.startUpdateFlow(
                 update.appUpdateInfo,
                 this, AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
@@ -106,27 +122,47 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         } else {
-            val installerPackageName =
-                (update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
-            findNavController(R.id.nav_host_fragment).navigate(
-                AppUpdateRequiredFragmentDirections.actionAppUpdateRequired(
-                    installerPackageName
+            if (!navController.isInitialised())
+                inflateNavGraph(R.id.nav_app_update_required)
+            else {
+                val installerPackageName =
+                    (update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
+                navController.navigate(
+                    AppUpdateRequiredFragmentDirections.actionAppUpdateRequired(
+                        installerPackageName
+                    )
                 )
-            )
+            }
         }
+    }
+
+    private fun inflateNavGraph(startDestinationId: Int? = null) {
+        val graph = navController.navInflater.inflate(R.navigation.nav_main)
+        startDestinationId?.let { graph.setStartDestination(it) }
+        navController.graph = graph
     }
 
     private fun handleEndOfLifeState() {
         viewModel.disableExposureNotifications()
-        findNavController(R.id.nav_host_fragment).navigate(
-            EndOfLifeFragmentDirections.actionEndOfLife()
-        )
+        if (!navController.isInitialised())
+            inflateNavGraph(R.id.nav_end_of_life)
+        else
+            navController.navigate(EndOfLifeFragmentDirections.actionEndOfLife())
+    }
+
+    private fun handleUnableToFetchAppConfig() {
+        if (!navController.isInitialised())
+            inflateNavGraph(R.id.nav_no_internet)
+        else
+            navController.navigate(
+                NoInternetFragmentDirections.actionNoInternet()
+            )
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         if (BuildConfig.FEATURE_SECURE_SCREEN) {
-            findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener(
+            navController.addOnDestinationChangedListener(
                 SecureScreenNavigationListener(
                     window,
                     R.id.nav_status,
@@ -145,7 +181,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        appLifecycleViewModel.checkForForcedAppUpdate()
+        appLifecycleViewModel.checkAppLifecycleStatus()
     }
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {

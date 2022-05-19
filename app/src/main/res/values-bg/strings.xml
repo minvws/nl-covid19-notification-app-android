@@ -192,8 +192,8 @@
     <string name="upload_keys_failed_notification_paragraph">Опитахме да изпратим известието, но безуспешно. Обади се на GGD, за да направиш това отново. Много е важно да действаш бързо. В противен случай могат да бъдат заразени повече хора.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Обади се на Общинската здравна инспекция (GGD).</string>
     <string name="end_of_life_action">Повече информация</string>
-    <string name="end_of_life_description">Министерството на здравеопазването, благосъстоянието и спорта реши, че приложението вече не е необходимо. Това означава, че повече няма да получаваш известия, ако си бил близо до някой с коронавирус.</string>
-    <string name="end_of_life_headline">CoronaMelder е спряно.</string>
+    <string name="end_of_life_description">В момента CoronaMelder временно e спрян. Затова няма да получавате повече известия, когато сте били в близост до човек с коронавирус.</string>
+    <string name="end_of_life_headline">CoronaMelder временно е спрян</string>
     <string name="status_error_notifications_disabled">Изключил си си известията. Така няма да получаваш известия, ако си бил близо до някой с коронавирус.</string>
     <string name="status_error_action_notifications_disabled">Включване на известията</string>
     <string name="cd_status_active">Зелено кръгче с отметка, което показва, че приложението е настроено правилно</string>
@@ -382,4 +382,7 @@
     <string name="dashboard_card_graph_content_description">Графика за актуалната тенденция, кликнете за подробно описание</string>
     <string name="dashboard_graph_content_description">Линейна графика %1$s. Минималната стойност е %2$s, а максималната стойност е %3$s. Данните са за %4$s до %5$s.</string>
     <string name="dashboard_graph_selected_value_content_description">%1$s %2$s на %3$s</string>
+    <string name="no_internet_headline">Няма връзка с интернет</string>
+    <string name="no_internet_description">За да стартираш приложението, ти е необходим интернет.</string>
+    <string name="no_internet_action">Опитай отново</string>
 </resources>

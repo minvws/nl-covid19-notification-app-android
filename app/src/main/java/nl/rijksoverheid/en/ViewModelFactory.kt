@@ -10,6 +10,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import nl.rijksoverheid.en.applifecycle.AppLifecycleViewModel
+import nl.rijksoverheid.en.applifecycle.EndOfLifeViewModel
 import nl.rijksoverheid.en.dashboard.DashboardViewModel
 import nl.rijksoverheid.en.factory.RepositoryFactory.createAppConfigManager
 import nl.rijksoverheid.en.factory.RepositoryFactory.createAppLifecycleManager
@@ -69,6 +70,10 @@ class ViewModelFactory(context: Context) : ViewModelProvider.Factory {
             PauseConfirmationViewModel::class.java -> PauseConfirmationViewModel(createSettingsRepository(context)) as T
             LabTestDoneViewModel::class.java -> LabTestDoneViewModel(createAppConfigManager(context)) as T
             DashboardViewModel::class.java -> DashboardViewModel(createDashboardRepository(context)) as T
+            EndOfLifeViewModel::class.java -> EndOfLifeViewModel(
+                createResourceBundleManager(context),
+                createAppConfigManager(context)
+            ) as T
             else -> throw IllegalStateException("Unknown view model class $modelClass")
         }
     }

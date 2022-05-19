@@ -192,8 +192,8 @@
     <string name="upload_keys_failed_notification_paragraph">We hebben geprobeerd de melding te versturen, maar dit is niet gelukt. Bel de GGD om dit opnieuw te doen. Het is heel belangrijk dat je dit snel doet. Anders kunnen er meer mensen besmet raken.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Bel de GGD</string>
     <string name="end_of_life_action">Lees meer</string>
-    <string name="end_of_life_description">Het Ministerie van Volksgezondheid, Welzijn en Sport heeft besloten dat de app niet meer nodig is. Je krijgt dus geen melding meer nadat je in de buurt bent geweest van iemand met corona.</string>
-    <string name="end_of_life_headline">CoronaMelder is gestopt</string>
+    <string name="end_of_life_description">CoronaMelder is op dit moment tijdelijk stopgezet. Je krijgt dus geen melding meer nadat je in de buurt bent geweest van iemand met corona.</string>
+    <string name="end_of_life_headline">CoronaMelder is tijdelijk gestopt</string>
     <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met corona.</string>
     <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
     <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
@@ -380,4 +380,7 @@
     <string name="dashboard_card_graph_content_description">Grafiek actuele trend, klik voor uitgebreide beschrijving.</string>
     <string name="dashboard_graph_content_description">Lijngrafiek %1$s. De minimum waarde is %2$s en maximum waarde is %3$s. De data gelden voor %4$s tot %5$s.</string>
     <string name="dashboard_graph_selected_value_content_description">%1$s %2$s op %3$s</string>
+    <string name="no_internet_headline">Je hebt geen internetverbinding</string>
+    <string name="no_internet_description">Om de app op te starten heb je internet nodig.</string>
+    <string name="no_internet_action">Probeer opnieuw</string>
 </resources>

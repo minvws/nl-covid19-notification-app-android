@@ -26,6 +26,8 @@ data class AppConfig(
     @Json(name = "requestMinimumSize") val requestMinimumSize: Long = DEFAULT_MIN_REQUEST_SIZE_BYTES,
     @Json(name = "requestMaximumSize") val requestMaximumSize: Long = DEFAULT_MAX_REQUEST_SIZE_BYTES,
     @Json(name = "coronaMelderDeactivated") val coronaMelderDeactivated: String? = null,
+    @Json(name = "coronaMelderDeactivatedTitle") val coronaMelderDeactivatedTitle: String? = null,
+    @Json(name = "coronaMelderDeactivatedBody") val coronaMelderDeactivatedBody: String? = null,
     @Json(name = "appointmentPhoneNumber") val appointmentPhoneNumber: String = DEFAULT_APPOINTMENT_PHONE_NUMBER,
     @Json(name = "shareKeyURL") val shareKeyURL: String = DEFAULT_SHARE_KEY_URL,
     @Json(name = "coronaTestURL") val coronaTestURL: String = DEFAULT_APPOINTMENT_URL,

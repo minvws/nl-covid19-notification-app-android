@@ -192,8 +192,8 @@
     <string name="upload_keys_failed_notification_paragraph">Wy hawwe besocht de melding te ferstjoeren, mar dat is net slagge. Belje de GGD om dat op \'en nij te dwaan. It is hiel wichtich datst dat gau dochst. Oars kinne der mear minsken besmet reitsje.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Belje de GGD</string>
     <string name="end_of_life_action">Lês mear</string>
-    <string name="end_of_life_description">It Ministerie van Volksgezondheid, Welzijn en Sport hat besletten dat de app net mear nedich is. Do krigest dus gjin melding mear neidatst yn \'e buert west hast fan immen mei koroana.</string>
-    <string name="end_of_life_headline">CoronaMelder is ophâlden</string>
+    <string name="end_of_life_description">CoronaMelder is op it stuit tydlik ophâlden. Do krigest dus gjin melding mear neidatst yn \'e buert west hast fan immen mei koroana.</string>
+    <string name="end_of_life_headline">CoronaMelder is tydlik ophâlden</string>
     <string name="status_error_notifications_disabled">Do hast dyn meldings útstean. Do krigest dus gjin melding ast yn \'e buert west hast fan immen mei koroana.</string>
     <string name="status_error_action_notifications_disabled">Meldings oansette</string>
     <string name="cd_status_active">Grien rûntsje mei finkje dat oanjout dat de app goed ynsteld stiet.</string>
@@ -380,4 +380,7 @@
     <string name="dashboard_card_graph_content_description">Grafyk aktuele trend, klik foar wiidweidige beskriuwing</string>
     <string name="dashboard_graph_content_description">Linegrafyk %1$s. De minimum wearde is %2$s en maximum wearde is %3$s. De data jilde foar   %4$s oant %5$s.</string>
     <string name="dashboard_graph_selected_value_content_description">%1$s %2$s op %3$s</string>
+    <string name="no_internet_headline">Do hast gjin ynternetferbining</string>
+    <string name="no_internet_description">Om de app op te starten hast ynternet nedich.</string>
+    <string name="no_internet_action">Besykje it nochris</string>
 </resources>
