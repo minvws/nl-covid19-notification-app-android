@@ -32,3 +32,6 @@
 
 # Tink is used by androidx.security and its shaded protobufs needs to be kept
 -keep class * extends com.google.crypto.tink.shaded.protobuf.GeneratedMessageLite { *; }
+
+# Keep all api models
+-keepnames class nl.rijksoverheid.en.api.model.** { *; }
