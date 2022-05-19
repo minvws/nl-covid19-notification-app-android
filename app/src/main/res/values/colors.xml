@@ -24,6 +24,7 @@
     <color name="dialog_background_tint">@color/white</color>
     <color name="dialog_button_text">@color/dark_blue</color>
     <color name="footer_background">@color/white</color>
+    <color name="splash_screen_background">@color/white</color>
 
     <color name="gradient_status_disabled_start">#FFF5DF</color>
     <color name="gradient_status_exposure_start">#FFF0F3</color>

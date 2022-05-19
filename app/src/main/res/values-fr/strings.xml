@@ -192,8 +192,8 @@
     <string name="upload_keys_failed_notification_paragraph">L\'envoi de la notification a échoué. Veuillez appeler le GGD pour réessayer. Il est très important que vous le fassiez rapidement au risque de contaminer d\'autres personnes.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Appelez le GGD</string>
     <string name="end_of_life_action">En savoir plus</string>
-    <string name="end_of_life_description">Le Ministère de la Santé publique, du Bien-être et des Sports a décidé que l\'application n\'est plus nécessaire. Vous ne recevez donc plus de notification après avoir été proche de quelqu\'un qui a le Covid-19.</string>
-    <string name="end_of_life_headline">CoronaMelder n\'existe plus</string>
+    <string name="end_of_life_description">CoronaMelder est actuellement désactivée. Vous ne recevrez donc plus de notification après avoir été en contact avec une personne positive au coronavirus.</string>
+    <string name="end_of_life_headline">CoronaMelder provisoirement désactivée</string>
     <string name="status_error_notifications_disabled">Vous avez désactivé vos notifications. Vous ne recevrez donc pas de notification si vous avez été proche de quelqu\'un qui a le Covid-19.</string>
     <string name="status_error_action_notifications_disabled">Activer les notifications</string>
     <string name="cd_status_active">Cercle vert coché qui indique que l\'application est paramétrée correctement</string>
@@ -380,4 +380,7 @@
     <string name="dashboard_card_graph_content_description">Graphique de la tendance actuelle ; cliquez pour une description détaillée.</string>
     <string name="dashboard_graph_content_description">Graphique en courbe des %1$s. La valeur minimale est %2$s et la valeur maximale est %3$s. Les données valent pour la période du %4$s au %5$s.</string>
     <string name="dashboard_graph_selected_value_content_description">%1$s %2$s le %3$s</string>
+    <string name="no_internet_headline">Vous n\'êtes pas connecté(e) à Internet.</string>
+    <string name="no_internet_description">Vous devez être connecté(e) à Internet pour lancer l\'application.</string>
+    <string name="no_internet_action">Veuillez réessayer.</string>
 </resources>

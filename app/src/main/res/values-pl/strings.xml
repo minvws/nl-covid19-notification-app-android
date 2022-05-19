@@ -194,8 +194,8 @@
     <string name="upload_keys_failed_notification_paragraph">Próbowaliśmy wysłać powiadomienie, ale nie udało się. Zadzwoń do GGD, aby spróbować ponownie. Istotne jest, abyś zrobił to szybko. W przeciwnym razie, więcej osób może się zarazić.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Zadzwoń do GGD</string>
     <string name="end_of_life_action">Czytaj więcej</string>
-    <string name="end_of_life_description">Holenderskie Ministerstwo Zdrowia, Opieki Społecznej i Sportu uznało, że aplikacja nie jest już potrzebna. Nie otrzymasz więc już powiadomienia, gdy okaże się, że znajdowałeś się w pobliżu osoby z koronawirusem.</string>
-    <string name="end_of_life_headline">Aplikacja CoronaMelder została zatrzymana</string>
+    <string name="end_of_life_description">Aplikacja CoronaMelder przestała obecnie tymczasowo działać. Nie prześle Ci więc już powiadomienia, gdy znajdziesz się w pobliżu osoby zarażonej koronawirusem.</string>
+    <string name="end_of_life_headline">działanie aplikacji CoronaMelder tymczasowo wstrzymane</string>
     <string name="status_error_notifications_disabled">Wyłączyłeś powiadomienia. Nie otrzymasz więc powiadomienia, gdy okaże się, że znajdowałeś się w pobliżu osoby z koronawirusem.</string>
     <string name="status_error_action_notifications_disabled">Włącz powiadomienia</string>
     <string name="cd_status_active">Zielone kółko z ptaszkiem oznacza, że ustawienia aplikacji są prawidłowe</string>
@@ -388,4 +388,7 @@
     <string name="dashboard_card_graph_content_description">Wykres aktualnego trendu, kliknij, aby uzyskać szczegółowy opis.</string>
     <string name="dashboard_graph_content_description">Wykres liniowy %1$s. Minimalna wartość to %2$s, maksymalna wartosć to %3$s. Dane dotyczą %4$s do %5$s.</string>
     <string name="dashboard_graph_selected_value_content_description">%1$s %2$s na %3$s</string>
+    <string name="no_internet_headline">Brak połączenia internetowego</string>
+    <string name="no_internet_description">Aby uruchomić aplikację potrzebne jest połączenie z internetem.</string>
+    <string name="no_internet_action">Spróbuj ponownie</string>
 </resources>

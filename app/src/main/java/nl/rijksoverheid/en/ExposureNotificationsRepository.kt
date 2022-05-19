@@ -169,7 +169,12 @@ class ExposureNotificationsRepository(
         }
     }
 
+    suspend fun hasNotificationsEnabledTimestamp(): Boolean {
+        return preferences.contains(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP)
+    }
+
     suspend fun resetNotificationsEnabledTimestamp() {
+        Timber.d("Reset notifications enabled timestamp")
         preferences.edit(commit = true) {
             // reset the timer
             putLong(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP, clock.millis())
@@ -182,14 +187,15 @@ class ExposureNotificationsRepository(
     }
 
     suspend fun requestDisableNotifications(): DisableNotificationsResult {
-        manifestWorkerScheduler.cancel()
-        preferences.edit {
-            remove(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP)
-        }
         val result = exposureNotificationsApi.disableNotifications()
+        Timber.d("Disable notifications result: $result")
         if (result == DisableNotificationsResult.Disabled) {
             statusCache.updateCachedStatus(StatusCache.CachedStatus.DISABLED)
         }
+        preferences.edit {
+            remove(KEY_NOTIFICATIONS_ENABLED_TIMESTAMP)
+        }
+        manifestWorkerScheduler.cancel()
         return result
     }
 

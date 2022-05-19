@@ -17,6 +17,12 @@
         app:popUpTo="@id/main_nav"
         app:popUpToInclusive="true" />
 
+    <action
+        android:id="@+id/action_no_internet"
+        app:destination="@id/nav_no_internet"
+        app:popUpTo="@id/main_nav"
+        app:popUpToInclusive="true" />
+
     <fragment
         android:id="@+id/nav_status"
         android:name="nl.rijksoverheid.en.status.StatusFragment"
@@ -380,6 +386,11 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_no_internet"
+        android:name="nl.rijksoverheid.en.applifecycle.NoInternetFragment"
+        tools:layout="@layout/fragment_no_internet" />
+
+    <fragment
         android:id="@+id/nav_main_share"
         android:name="nl.rijksoverheid.en.share.MainShareFragment"
         android:label="ShareFragment"
@@ -426,7 +437,7 @@
         tools:layout="@layout/fragment_list" >
         <argument
             android:name="dashboardItemReference"
-            app:argType="nl.rijksoverheid.en.api.model.DashboardItem$Reference" />
+            app:argType="nl.rijksoverheid.en.api.model.DashboardItemRef" />
         <argument
             android:name="showEnterTransition"
             app:argType="boolean"

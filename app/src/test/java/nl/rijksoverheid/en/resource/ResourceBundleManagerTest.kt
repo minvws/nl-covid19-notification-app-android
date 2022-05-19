@@ -9,6 +9,7 @@ package nl.rijksoverheid.en.resource
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.runBlocking
+import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
@@ -533,7 +534,65 @@ class ResourceBundleManagerTest {
         )
     }
 
-    private class FakeResourceBundleCdnService(val resourceBundle: ResourceBundle) : CdnService {
+    @Test
+    fun `getEndOfLifeResources refreshes the resource bundle`() = runBlocking {
+        val cacheBundle = ResourceBundle(
+            mapOf(
+                "en" to mapOf(
+                    "title_key" to "invalid title",
+                    "body_key" to "invalid body"
+                )
+            ),
+            ResourceBundle.Guidance(listOf(), emptyList())
+        )
+
+        val updatedBundle = ResourceBundle(
+            mapOf(
+                "en" to mapOf(
+                    "title_key" to "title",
+                    "body_key" to "body"
+                )
+            ),
+            ResourceBundle.Guidance(emptyList(), emptyList())
+        )
+
+        val resourceBundleManager = ResourceBundleManager(
+            context,
+            object : FakeResourceBundleCdnService(cacheBundle) {
+                override suspend fun getResourceBundle(id: String, cacheStrategy: CacheStrategy?): ResourceBundle {
+                    return if (cacheStrategy == CacheStrategy.CACHE_FIRST || cacheStrategy == CacheStrategy.CACHE_ONLY)
+                        cacheBundle
+                    else
+                        updatedBundle
+                }
+            },
+            useDefaultGuidance = false
+        )
+
+        val (title, body) = resourceBundleManager.getEndOfLifeResources("title_key", "body_key")
+
+        assertEquals("title", title)
+        assertEquals("body", body)
+    }
+
+    @Test
+    fun `getEndOfLifeResources fallback to local string resources`() = runBlocking {
+        val service = FakeResourceBundleCdnService(
+            ResourceBundle(
+                mapOf("en" to mapOf()),
+                ResourceBundle.Guidance(emptyList(), emptyList())
+            )
+        )
+
+        val resourceBundleManager = ResourceBundleManager(context, service, useDefaultGuidance = false)
+
+        val (title, body) = resourceBundleManager.getEndOfLifeResources("title_key", "body_key")
+
+        assertEquals(context.getString(R.string.end_of_life_headline), title)
+        assertEquals(context.getString(R.string.end_of_life_description), body)
+    }
+
+    private open class FakeResourceBundleCdnService(val resourceBundle: ResourceBundle) : CdnService {
         override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
             throw IllegalStateException()
         }

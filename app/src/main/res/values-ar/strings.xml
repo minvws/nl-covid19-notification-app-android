@@ -200,8 +200,8 @@
     <string name="upload_keys_failed_notification_paragraph">حاولنا إرسالك إشعار إلا أننا لم ننجح في ذلك. اتصل بالـ GGD لتعاود المحاولة. من المهم جدًا أن تقوم بذلك بسرعة وإلا قد يصاب عدد أكبر من الأشخاص بالعدوى.</string>
     <string name="upload_keys_failed_notification_toolbar_title">اتصل بالـ GGD</string>
     <string name="end_of_life_action">إقرأ المزيد</string>
-    <string name="end_of_life_description">قررت وزارة الصحة والرعاية والرياضة بأن التطبيق لم يعد ضروريًا. لذلك لن تتلقى إشعارات بعد تواجدك بالقرب من شخص مصاب بكورونا.</string>
-    <string name="end_of_life_headline">توقف CoronaMelder عن العمل</string>
+    <string name="end_of_life_description">حاليًا، تم إيقاف كورونا ميلدر مؤقتًا. ولن تتلقى إشعارات بعد أن كنت بالقرب من شخص ثبتت إيجابية فحصه وإصابته بفيروس كورونا.</string>
+    <string name="end_of_life_headline">إيقاف كورونا ميلدر مؤقتًا</string>
     <string name="status_error_notifications_disabled">"لقد قمت بإيقاف استلام الإشعارات. لن تستلم إشعارات إذًا عند تواجدك بالقرب من شخص مصاب بكورونا. "</string>
     <string name="status_error_action_notifications_disabled">تشغيل الإشعارات</string>
     <string name="cd_status_active">دائرة خضراء مع علامة الصح تشير إلى أنه قد تم إعداد التطبيق بشكل صحيح</string>
@@ -403,4 +403,7 @@
     <string name="dashboard_card_graph_content_description">"رسم للتوجه الحالي: انقر للحصول على وصف تفصيلي. "</string>
     <string name="dashboard_graph_content_description">"خط الرسم البياني%1$s. أقل قيمة %2$s وأعلى قيمة%3$s. هذه البيانات تخص ما بين %4$s إلى %5$s. "</string>
     <string name="dashboard_graph_selected_value_content_description">%1$s %2$s في %3$s</string>
+    <string name="no_internet_headline">أنت لست متصلاً بالإنترنت</string>
+    <string name="no_internet_description">يجب أن تكون متصلاً بالإنترنت لبدء التطبيق.</string>
+    <string name="no_internet_action">حاول مرة أخرى</string>
 </resources>

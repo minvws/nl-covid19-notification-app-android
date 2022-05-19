@@ -18,7 +18,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
-import nl.rijksoverheid.en.api.model.DashboardItem
+import nl.rijksoverheid.en.api.model.DashboardItemRef
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.ext.setExitSlideTransition
@@ -74,7 +74,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_list) {
         }
     }
 
-    private fun navigateToDashboardItem(dashboardItemReference: DashboardItem.Reference) {
+    private fun navigateToDashboardItem(dashboardItemReference: DashboardItemRef) {
         enterTransition = exitTransition
         findNavController().navigateCatchingErrors(
             DashboardFragmentDirections.actionDashboardFragment(dashboardItemReference, true),
