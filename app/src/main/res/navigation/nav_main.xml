@@ -426,7 +426,7 @@
         tools:layout="@layout/fragment_list" >
         <argument
             android:name="dashboardItemReference"
-            app:argType="nl.rijksoverheid.en.api.model.DashboardItem$Reference" />
+            app:argType="nl.rijksoverheid.en.api.model.DashboardItemRef" />
         <argument
             android:name="showEnterTransition"
             app:argType="boolean"

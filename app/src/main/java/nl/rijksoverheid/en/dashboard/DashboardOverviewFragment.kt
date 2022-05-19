@@ -18,6 +18,7 @@ import com.xwray.groupie.GroupieViewHolder
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardItem
+import nl.rijksoverheid.en.api.model.DashboardItemRef
 import nl.rijksoverheid.en.databinding.FragmentListBinding
 import nl.rijksoverheid.en.items.DashboardCardItem
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
@@ -63,7 +64,7 @@ class DashboardOverviewFragment : BaseFragment(R.layout.fragment_list) {
         }
     }
 
-    private fun navigateToDashboardItem(dashboardItemReference: DashboardItem.Reference) {
+    private fun navigateToDashboardItem(dashboardItemReference: DashboardItemRef) {
         findNavController().navigateCatchingErrors(
             DashboardOverviewFragmentDirections.actionDashboardFragment(dashboardItemReference, true),
             FragmentNavigatorExtras(binding.appbar to binding.appbar.transitionName)

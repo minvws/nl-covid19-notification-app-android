@@ -11,6 +11,7 @@ import com.xwray.groupie.Section
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.DashboardItem
+import nl.rijksoverheid.en.api.model.DashboardItemRef
 import nl.rijksoverheid.en.api.model.MovingAverage
 import nl.rijksoverheid.en.items.HeaderItem
 import nl.rijksoverheid.en.items.LinkItem
@@ -29,25 +30,25 @@ class DashboardSection : Section() {
 
     fun updateDashboardData(
         context: Context,
-        selectedDashboardItem: DashboardItem.Reference,
+        selectedDashboardItem: DashboardItemRef,
         dashboardData: DashboardData,
-        onDashboardLinkItemClicked: (DashboardItem.Reference) -> Unit,
+        onDashboardLinkItemClicked: (DashboardItemRef) -> Unit,
         onMoreInfoLinkItemClicked: () -> Unit
     ) {
         val dashboardItem = dashboardData.getDashboardItem(selectedDashboardItem) ?: return
         val headerRes = when (selectedDashboardItem) {
-            DashboardItem.Reference.PositiveTestResults -> R.string.dashboard_positive_test_results_header
-            DashboardItem.Reference.CoronaMelderUsers -> R.string.dashboard_corona_melder_users_header
-            DashboardItem.Reference.HospitalAdmissions -> R.string.dashboard_hospital_admissions_header
-            DashboardItem.Reference.IcuAdmissions -> R.string.dashboard_icu_admissions_header
-            DashboardItem.Reference.VaccinationCoverage -> R.string.dashboard_vaccination_coverage_header
+            DashboardItemRef.PositiveTestResults -> R.string.dashboard_positive_test_results_header
+            DashboardItemRef.CoronaMelderUsers -> R.string.dashboard_corona_melder_users_header
+            DashboardItemRef.HospitalAdmissions -> R.string.dashboard_hospital_admissions_header
+            DashboardItemRef.IcuAdmissions -> R.string.dashboard_icu_admissions_header
+            DashboardItemRef.VaccinationCoverage -> R.string.dashboard_vaccination_coverage_header
         }
         val summaryRes = when (selectedDashboardItem) {
-            DashboardItem.Reference.PositiveTestResults -> R.string.dashboard_positive_test_results_summary
-            DashboardItem.Reference.CoronaMelderUsers -> R.string.dashboard_corona_melder_users_summary
-            DashboardItem.Reference.HospitalAdmissions -> R.string.dashboard_hospital_admissions_summary
-            DashboardItem.Reference.IcuAdmissions -> R.string.dashboard_icu_admissions_summary
-            DashboardItem.Reference.VaccinationCoverage -> R.string.dashboard_vaccination_coverage_summary
+            DashboardItemRef.PositiveTestResults -> R.string.dashboard_positive_test_results_summary
+            DashboardItemRef.CoronaMelderUsers -> R.string.dashboard_corona_melder_users_summary
+            DashboardItemRef.HospitalAdmissions -> R.string.dashboard_hospital_admissions_summary
+            DashboardItemRef.IcuAdmissions -> R.string.dashboard_icu_admissions_summary
+            DashboardItemRef.VaccinationCoverage -> R.string.dashboard_vaccination_coverage_summary
         }
 
         val summaryArgs: List<String> = when (dashboardItem) {

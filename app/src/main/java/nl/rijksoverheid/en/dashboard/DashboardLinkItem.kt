@@ -17,6 +17,7 @@ import androidx.annotation.StringRes
 import com.xwray.groupie.Item
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardItem
+import nl.rijksoverheid.en.api.model.DashboardItemRef
 import nl.rijksoverheid.en.databinding.ItemDashboardLinkBinding
 import nl.rijksoverheid.en.items.BaseBindableItem
 import nl.rijksoverheid.en.util.DateTimeHelper
@@ -30,7 +31,7 @@ import java.time.Clock
 
 class DashboardLinkItem(
     private val dashboardItem: DashboardItem,
-    private val onDashboardLinkItemClicked: (DashboardItem.Reference) -> Unit
+    private val onDashboardLinkItemClicked: (DashboardItemRef) -> Unit
 ) : BaseBindableItem<ItemDashboardLinkBinding>() {
     override fun getLayout() = R.layout.item_dashboard_link
 
