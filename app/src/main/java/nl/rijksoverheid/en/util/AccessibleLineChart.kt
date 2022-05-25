@@ -12,6 +12,7 @@ import android.view.accessibility.AccessibilityEvent
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import nl.rijksoverheid.en.R
@@ -60,21 +61,66 @@ class AccessibleLineChart : LineChart {
 
     private fun getAccessibilityDescription(): String {
         val lineData = lineData
+        val yAxisValueFormatter = axisLeft.valueFormatter
+        val xAxisValueFormatter = xAxis.valueFormatter
+
+        val dataSet = lineData.getDataSetByIndex(0) as LineDataSet
+        val startValue = dataSet.getEntryForIndex(0).y
+        val endValue = dataSet.getEntryForIndex(dataSet.entryCount - 1).y
+        val differencePercentage = startValue / endValue * 100
 
         // Min and max values...
-        val yAxisValueFormatter = axisLeft.valueFormatter
-        val minVal = yAxisValueFormatter.getFormattedValue(lineData.yMin)
-        val maxVal = yAxisValueFormatter.getFormattedValue(lineData.yMax)
+        val minEntry = dataSet.values.minByOrNull { it.y } ?: return ""
+        val minVal = yAxisValueFormatter.getFormattedValue(minEntry.y)
+        val minValDate = DateTimeHelper.convertToLocalDate(minEntry.x.toLong()).formatDateShort(context)
+        val maxEntry = dataSet.values.maxByOrNull { it.y } ?: return ""
+        val maxVal = yAxisValueFormatter.getFormattedValue(maxEntry.y)
+        val maxValDate = DateTimeHelper.convertToLocalDate(maxEntry.x.toLong()).formatDateShort(context)
 
         // Data range...
-        val xAxisValueFormatter =
-            xAxis.valueFormatter
         val minRange = xAxisValueFormatter.getFormattedValue(lineData.xMin)
         val maxRange = xAxisValueFormatter.getFormattedValue(lineData.xMax)
-        return context.getString(
-            R.string.dashboard_graph_content_description,
-            accessibilityGraphDescription, minVal, maxVal, minRange, maxRange
-        )
+
+        return when {
+            startValue < endValue -> {
+                context.getString(
+                    R.string.dashboard_graph_content_description_increase,
+                    accessibilityGraphDescription,
+                    differencePercentage.toInt(),
+                    minRange,
+                    maxRange,
+                    maxVal,
+                    maxValDate,
+                    minVal,
+                    minValDate
+                )
+            }
+            startValue > endValue -> {
+                context.getString(
+                    R.string.dashboard_graph_content_description_decrease,
+                    accessibilityGraphDescription,
+                    differencePercentage.toInt(),
+                    minRange,
+                    maxRange,
+                    maxVal,
+                    maxValDate,
+                    minVal,
+                    minValDate
+                )
+            }
+            else -> {
+                context.getString(
+                    R.string.dashboard_graph_content_description_same,
+                    accessibilityGraphDescription,
+                    minRange,
+                    maxRange,
+                    maxVal,
+                    maxValDate,
+                    minVal,
+                    minValDate
+                )
+            }
+        }
     }
 
     private fun getSelectedValueAccessibilityDescription(): String? {

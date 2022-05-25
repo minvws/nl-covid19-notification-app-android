@@ -38,7 +38,7 @@
             android:paddingHorizontal="2dp"
             android:paddingBottom="2dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/white"
+            android:background="?attr/colorSurface"
             tools:text="18 Jan." />
     </FrameLayout>
 
