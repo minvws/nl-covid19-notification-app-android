@@ -8,10 +8,15 @@ package nl.rijksoverheid.en.util
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import androidx.core.content.ContextCompat
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import nl.rijksoverheid.en.R
@@ -22,6 +27,7 @@ class AccessibleLineChart : LineChart {
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor (context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
+    private var touchEnabled = true
     private var selectedEntry: Entry? = null
     var selectedValueIcon = ContextCompat.getDrawable(context, R.drawable.ic_graph_dot_indicator)
     var selectedValueLabel: String? = null
@@ -31,6 +37,19 @@ class AccessibleLineChart : LineChart {
     init {
         // enable being detected by ScreenReader
         isFocusable = true
+
+        ViewCompat.setAccessibilityDelegate(
+            this,
+            object : AccessibilityDelegateCompat() {
+                override fun onInitializeAccessibilityNodeInfo(host: View, info: AccessibilityNodeInfoCompat) {
+                    super.onInitializeAccessibilityNodeInfo(host, info)
+
+                    info.setSource(host)
+                    if (touchEnabled)
+                        info.isClickable = true
+                }
+            }
+        )
 
         setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(entry: Entry?, h: Highlight?) {
@@ -58,23 +77,73 @@ class AccessibleLineChart : LineChart {
         return true
     }
 
+    override fun setTouchEnabled(enabled: Boolean) {
+        super.setTouchEnabled(enabled)
+        touchEnabled = enabled
+    }
+
     private fun getAccessibilityDescription(): String {
-        val lineData = lineData
+        val lineData = lineData ?: return ""
+        val yAxisValueFormatter = axisLeft.valueFormatter
+        val xAxisValueFormatter = xAxis.valueFormatter
+
+        val dataSet = lineData.getDataSetByIndex(0) as LineDataSet
+        val startValueY = dataSet.getEntryForIndex(0).y
+        val endValueY = dataSet.getEntryForIndex(dataSet.entryCount - 1).y
+        val differencePercentage = startValueY / endValueY * 100
 
         // Min and max values...
-        val yAxisValueFormatter = axisLeft.valueFormatter
-        val minVal = yAxisValueFormatter.getFormattedValue(lineData.yMin)
-        val maxVal = yAxisValueFormatter.getFormattedValue(lineData.yMax)
+        val minEntry = dataSet.values.minByOrNull { it.y } ?: return ""
+        val minVal = yAxisValueFormatter.getFormattedValue(minEntry.y)
+        val minValDate = DateTimeHelper.convertToLocalDate(minEntry.x.toLong()).formatDateShort(context)
+        val maxEntry = dataSet.values.maxByOrNull { it.y } ?: return ""
+        val maxVal = yAxisValueFormatter.getFormattedValue(maxEntry.y)
+        val maxValDate = DateTimeHelper.convertToLocalDate(maxEntry.x.toLong()).formatDateShort(context)
 
         // Data range...
-        val xAxisValueFormatter =
-            xAxis.valueFormatter
         val minRange = xAxisValueFormatter.getFormattedValue(lineData.xMin)
         val maxRange = xAxisValueFormatter.getFormattedValue(lineData.xMax)
-        return context.getString(
-            R.string.dashboard_graph_content_description,
-            accessibilityGraphDescription, minVal, maxVal, minRange, maxRange
-        )
+
+        return when {
+            startValueY < endValueY -> {
+                context.getString(
+                    R.string.dashboard_graph_content_description_increase,
+                    accessibilityGraphDescription,
+                    differencePercentage.toInt(),
+                    minRange,
+                    maxRange,
+                    maxVal,
+                    maxValDate,
+                    minVal,
+                    minValDate
+                )
+            }
+            startValueY > endValueY -> {
+                context.getString(
+                    R.string.dashboard_graph_content_description_decrease,
+                    accessibilityGraphDescription,
+                    differencePercentage.toInt(),
+                    minRange,
+                    maxRange,
+                    maxVal,
+                    maxValDate,
+                    minVal,
+                    minValDate
+                )
+            }
+            else -> {
+                context.getString(
+                    R.string.dashboard_graph_content_description_same,
+                    accessibilityGraphDescription,
+                    minRange,
+                    maxRange,
+                    maxVal,
+                    maxValDate,
+                    minVal,
+                    minValDate
+                )
+            }
+        }
     }
 
     private fun getSelectedValueAccessibilityDescription(): String? {

@@ -384,4 +384,7 @@
     <string name="no_internet_headline">Sie haben keine Internetverbindung</string>
     <string name="no_internet_description">Sie benötigen eine Internetverbindung, um die App zu starten.</string>
     <string name="no_internet_action">Versuchen Sie es erneut</string>
+    <string name="dashboard_graph_content_description_increase">De grafiek laat zien dat het aantal %1$s is gestegen %2$d\%% in de periode van %3$s tot %4$s. De hoogste piek was %5$s op %6$s en de laagste waarde was %7$s op %8$s.</string>
+    <string name="dashboard_graph_content_description_decrease">De grafiek laat zien dat het aantal %1$s is gedaald %2$d\%% in de periode van %3$s tot %4$s. De hoogste piek was %5$s op %6$s en de laagste waarde was %7$s op %8$s.</string>
+    <string name="dashboard_graph_content_description_same">De grafiek laat zien dat het aantal %1$s gelijk is gebleven over de periode van %2$s tot %3$s. De hoogste piek was %4$s op %5$s en de laagste waarde was %6$s op %7$s.</string>
 </resources>
