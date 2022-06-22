@@ -88,9 +88,9 @@ class AccessibleLineChart : LineChart {
         val xAxisValueFormatter = xAxis.valueFormatter
 
         val dataSet = lineData.getDataSetByIndex(0) as LineDataSet
-        val startValue = dataSet.getEntryForIndex(0).y
-        val endValue = dataSet.getEntryForIndex(dataSet.entryCount - 1).y
-        val differencePercentage = startValue / endValue * 100
+        val startValueY = dataSet.getEntryForIndex(0).y
+        val endValueY = dataSet.getEntryForIndex(dataSet.entryCount - 1).y
+        val differencePercentage = startValueY / endValueY * 100
 
         // Min and max values...
         val minEntry = dataSet.values.minByOrNull { it.y } ?: return ""
@@ -105,7 +105,7 @@ class AccessibleLineChart : LineChart {
         val maxRange = xAxisValueFormatter.getFormattedValue(lineData.xMax)
 
         return when {
-            startValue < endValue -> {
+            startValueY < endValueY -> {
                 context.getString(
                     R.string.dashboard_graph_content_description_increase,
                     accessibilityGraphDescription,
@@ -118,7 +118,7 @@ class AccessibleLineChart : LineChart {
                     minValDate
                 )
             }
-            startValue > endValue -> {
+            startValueY > endValueY -> {
                 context.getString(
                     R.string.dashboard_graph_content_description_decrease,
                     accessibilityGraphDescription,
