@@ -36,6 +36,15 @@ fun LineChart.applyCardViewStyling() {
 
     setTouchEnabled(false)
 
+    xAxis.valueFormatter = object : ValueFormatter() {
+        override fun getFormattedValue(value: Float): String {
+            return ofInstant(
+                Instant.ofEpochSecond(value.toLong()),
+                ZoneId.systemDefault()
+            ).formatDate(context)
+        }
+    }
+
     val horizontalOffset = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin).toFloat()
     setViewPortOffsets(horizontalOffset, 0f, horizontalOffset, 0f)
 

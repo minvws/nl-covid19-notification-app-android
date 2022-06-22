@@ -8,8 +8,12 @@ package nl.rijksoverheid.en.util
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import androidx.core.content.ContextCompat
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
@@ -23,6 +27,7 @@ class AccessibleLineChart : LineChart {
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor (context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
+    private var touchEnabled = true
     private var selectedEntry: Entry? = null
     var selectedValueIcon = ContextCompat.getDrawable(context, R.drawable.ic_graph_dot_indicator)
     var selectedValueLabel: String? = null
@@ -32,6 +37,19 @@ class AccessibleLineChart : LineChart {
     init {
         // enable being detected by ScreenReader
         isFocusable = true
+
+        ViewCompat.setAccessibilityDelegate(
+            this,
+            object : AccessibilityDelegateCompat() {
+                override fun onInitializeAccessibilityNodeInfo(host: View, info: AccessibilityNodeInfoCompat) {
+                    super.onInitializeAccessibilityNodeInfo(host, info)
+
+                    info.setSource(host)
+                    if (touchEnabled)
+                        info.isClickable = true
+                }
+            }
+        )
 
         setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(entry: Entry?, h: Highlight?) {
@@ -59,8 +77,13 @@ class AccessibleLineChart : LineChart {
         return true
     }
 
+    override fun setTouchEnabled(enabled: Boolean) {
+        super.setTouchEnabled(enabled)
+        touchEnabled = enabled
+    }
+
     private fun getAccessibilityDescription(): String {
-        val lineData = lineData
+        val lineData = lineData ?: return ""
         val yAxisValueFormatter = axisLeft.valueFormatter
         val xAxisValueFormatter = xAxis.valueFormatter
 
