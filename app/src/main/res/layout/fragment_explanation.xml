@@ -62,7 +62,7 @@
                         android:importantForAccessibility="no"
                         app:hideOnSmallScreenHeight="@{true}"
                         app:imageResource="@{viewState.illustration}"
-                        app:layout_constraintBottom_toTopOf="@id/example"
+                        app:layout_constraintBottom_toTopOf="@id/heading_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -72,37 +72,45 @@
                         app:optional_animation="@{viewState.animation}"
                         tools:src="@drawable/illustration_explanation_step_1" />
 
-                    <TextView
-                        android:id="@+id/example"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/heading_layout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="16dp"
-                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        android:text="@string/onboarding_example"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="@color/onboarding_example_header"
-                        app:layout_constraintBottom_toTopOf="@id/headline"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/illustration"
-                        app:show="@{viewState.example}" />
-
-                    <TextView
-                        android:id="@+id/headline"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        android:text="@{viewState.headline}"
-                        android:textAppearance="?attr/textAppearanceHeadline5"
+                        android:accessibilityHeading="true"
+                        android:focusable="true"
                         app:layout_constraintBottom_toTopOf="@id/description"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/example"
-                        app:layout_goneMarginTop="16dp"
-                        tools:text="@string/onboarding_explanation_1_headline" />
+                        app:layout_constraintTop_toBottomOf="@id/illustration"
+                        tools:targetApi="p">
+
+                        <TextView
+                            android:id="@+id/example"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/onboarding_example"
+                            android:textAppearance="?attr/textAppearanceSubtitle1"
+                            android:textColor="@color/onboarding_example_header"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:show="@{viewState.example}" />
+
+                        <TextView
+                            android:id="@+id/headline"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@{viewState.headline}"
+                            android:textAppearance="?attr/textAppearanceHeadline5"
+                            app:layout_constraintTop_toBottomOf="@id/example"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_goneMarginTop="16dp"
+                            tools:text="@string/onboarding_explanation_1_headline" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:id="@+id/description"
@@ -117,7 +125,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/headline"
+                        app:layout_constraintTop_toBottomOf="@id/heading_layout"
                         tools:text="@string/onboarding_explanation_1_description" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
