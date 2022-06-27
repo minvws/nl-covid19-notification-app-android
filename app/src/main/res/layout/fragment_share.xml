@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -76,11 +77,13 @@
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
                         android:text="@string/onboarding_share_headline"
                         android:textAppearance="?attr/textAppearanceHeadline5"
+                        android:accessibilityHeading="true"
                         app:layout_constraintBottom_toTopOf="@id/description"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/illustration"
-                        app:layout_goneMarginTop="16dp" />
+                        app:layout_goneMarginTop="16dp"
+                        tools:targetApi="p" />
 
                     <TextView
                         android:id="@+id/description"

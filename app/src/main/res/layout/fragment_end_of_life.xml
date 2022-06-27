@@ -41,11 +41,13 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:textAppearance="?attr/textAppearanceHeadline5"
+                android:accessibilityHeading="true"
                 app:layout_constraintBottom_toTopOf="@id/description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/illustration"
-                android:text="@string/end_of_life_headline"/>
+                android:text="@string/end_of_life_headline"
+                tools:targetApi="p" />
 
             <TextView
                 android:id="@+id/description"
