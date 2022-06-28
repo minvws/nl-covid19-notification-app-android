@@ -45,8 +45,7 @@ class AccessibleLineChart : LineChart {
                     super.onInitializeAccessibilityNodeInfo(host, info)
 
                     info.setSource(host)
-                    if (touchEnabled)
-                        info.isClickable = true
+                    info.isClickable = touchEnabled
                 }
             }
         )
@@ -57,7 +56,7 @@ class AccessibleLineChart : LineChart {
                 selectedEntry = entry
                 selectedEntry?.apply { icon = selectedValueIcon }
 
-                sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED)
+                sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
             }
 
             override fun onNothingSelected() {
