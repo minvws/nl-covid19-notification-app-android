@@ -26,6 +26,10 @@ Other functions of the app that are automatically performed and are not availabl
 - **Contact Tracing** using the GAEN framework. The app regularly downloads published keys from a public API and checks if the user ever came into contact with the device from which these infectious keys originated. This work is performed in regularly scheduled background tasks.
 - **Decoy Traffic Generation**. Since the "Share GGD Key" functionality of the app sends data to the API, any network traffic coming from the app could be construed as a sign that the user was infected. Because this presents a potential breach of privacy, the app regularly schedules similar (decoy) calls to the API to mask this traffic.
 
+#### Unreleased
+
+- **Coronavirus dashboard**. In-app COVID-19 related statistics similar to [coronadashboard.rijksoverheid.nl](https://coronadashboard.rijksoverheid.nl/). For more information see [CORONA_DASHBOARD.md](CORONA_DASHBOARD.md).
+
 ## Supported devices
 
 The Android app is supported on devices with API level 23 and above, that is Android 6.0 and above, that include support for Bluetooth Low Energy.
