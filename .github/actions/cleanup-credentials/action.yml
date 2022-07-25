@@ -1,0 +1,10 @@
+name: Clean up credentials
+description: "Clean up credentials"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Remove credentials"
+      run: |
+        rm -f keystore.jks firebase.json playstore.json
+      shell: bash
