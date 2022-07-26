@@ -19,11 +19,8 @@ jobs:
       - name: "Check for code formatting violations"
         run: ./gradlew spotlessCheck --warning-mode=fail
 
-      - name: "Build app"
-        run: ./gradlew app:assemDevDebug app:assemDevDebugAndroidTest --warning-mode=fail
-
-      - name: "Run tests"
-        run: ./gradlew app:assemDevDebug app:assemDevDebugAndroidTest testDevDebugUnitTestCoverage testDebugUnitTestCoverage app:lintDevDebug
+      - name: "Build, test and lint app"
+        run: ./gradlew app:assemDevDebug app:assemDevDebugAndroidTest testDevDebugUnitTestCoverage testDebugUnitTest app:lintDevDebug --warning-mode=fail
 
       - name: "Setup firebase credentials"
         uses: ./.github/actions/credentials
