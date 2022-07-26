@@ -13,7 +13,7 @@ jobs:
       - name: "Checkout repository"
         uses: actions/checkout@v2
 
-      - name: "Check out and setup Gradle"
+      - name: "Setup Gradle"
         uses: ./.github/actions/common-setup
 
       - name: "Check for code formatting violations"
@@ -47,7 +47,7 @@ jobs:
       - name: "Checkout repository"
         uses: actions/checkout@v2
 
-      - name: "Check out and setup Gradle"
+      - name: "Setup Gradle"
         uses: ./.github/actions/common-setup
 
       - name: "Setup credentials"
