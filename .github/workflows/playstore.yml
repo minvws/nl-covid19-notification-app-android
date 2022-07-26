@@ -1,0 +1,43 @@
+name: 'Upload to Play Store'
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - published
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "Setup Gradle"
+        uses: ./.github/actions/common-setup
+
+      - name: "Setup credentials"
+        uses: ./.github/actions/credentials
+        with:
+          playStoreServiceAccount: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT }}
+
+      - name: "Download bundle"
+        uses: dawidd6/action-download-artifact@6765a42d86407a3d532749069ac03705ad82ebc6
+        with:
+          workflow_conclusion: success
+          name: bundle
+          # Note that this is the workflow id of ci-app.yml, not the name as the docs imply ¯\_(ツ)_/¯
+          workflow: 1458714
+          # Match successful workflow run by commit sha of this workflow run
+          commit: ${{ github.sha }}
+          path: playstore-deploy
+
+      - name: "Set release notes"
+        run: git log -1 --format=%B > app/src/main/play/release-notes/nl-NL/internal.txt
+
+      - name: "Upload to Play Store"
+        run: ./gradlew app:publishProdReleaseBundle --artifact-dir playstore-deploy
+
+      - name: "Clean up credentials"
+        if: always()
+        uses: ./.github/actions/cleanup-credentials
+
