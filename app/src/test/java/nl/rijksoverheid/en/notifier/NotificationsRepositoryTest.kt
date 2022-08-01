@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.yield
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -80,7 +80,7 @@ class NotificationsRepositoryTest {
         }
 
     @Test
-    fun `exposureNotificationsEnabled refreshes when app is started`() = runBlockingTest {
+    fun `exposureNotificationsEnabled refreshes when app is started`() = runTest {
         val context = ApplicationProvider.getApplicationContext<Application>()
         val lifecycleOwner = ProcessLifecycleOwner.get()
         val notificationManager = context.getSystemService(NotificationManager::class.java)

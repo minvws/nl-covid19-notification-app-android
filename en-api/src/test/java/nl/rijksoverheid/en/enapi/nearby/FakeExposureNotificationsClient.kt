@@ -50,7 +50,7 @@ abstract class FakeExposureNotificationsClient : ExposureNotificationClient {
         throw NotImplementedError()
     }
 
-    override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping?): Task<Void> {
+    override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping): Task<Void> {
         throw NotImplementedError()
     }
 

@@ -25,12 +25,14 @@ import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
 import com.google.android.gms.nearby.exposurenotification.DiagnosisKeysDataMapping
 import com.google.android.gms.nearby.exposurenotification.Infectiousness
 import com.google.android.gms.nearby.exposurenotification.ReportType
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.AppConfig
@@ -294,8 +296,7 @@ class ExposureNotificationsRepositoryTest {
         assertEquals(
             DiagnosisKeysDataMapping.DiagnosisKeysDataMappingBuilder()
                 .setDaysSinceOnsetToInfectiousness(
-                    (-14..14).map { it to Infectiousness.STANDARD }
-                        .toMap()
+                    (-14..14).associateWith { Infectiousness.STANDARD }
                 )
                 .setReportTypeWhenMissing(ReportType.CONFIRMED_TEST)
                 .setInfectiousnessWhenDaysSinceOnsetMissing(Infectiousness.STANDARD).build(),
@@ -967,7 +968,14 @@ class ExposureNotificationsRepositoryTest {
             val called = AtomicBoolean(false)
 
             val fakeService = createFakeCdnService(
-                getManifest = { Manifest(emptyList(), "", "appConfig", resourceBundleId = "bundle") },
+                getManifest = {
+                    Manifest(
+                        emptyList(),
+                        "",
+                        "appConfig",
+                        resourceBundleId = "bundle"
+                    )
+                },
                 getAppConfig = { _, _ -> AppConfig(1, 5, 0.0) },
                 getResourceBundle = { _, _ ->
                     called.set(true)
@@ -1315,7 +1323,10 @@ class ExposureNotificationsRepositoryTest {
 
             // Verify previouslyKnownExposureDate was added
             repository.addExposure()
-            assertEquals(LocalDate.now(clock).minusDays(15), repository.getPreviouslyKnownExposureDate())
+            assertEquals(
+                LocalDate.now(clock).minusDays(15),
+                repository.getPreviouslyKnownExposureDate()
+            )
 
             // Verify previouslyKnownExposureDate was removed
             repository.cleanupPreviouslyKnownExposures()
@@ -1553,7 +1564,7 @@ class ExposureNotificationsRepositoryTest {
     }
 
     @Test
-    fun `getStatus emits when cache changes`() = runBlockingTest {
+    fun `getStatus emits when cache changes`() = runTest(context = UnconfinedTestDispatcher()) {
         val api = object : FakeExposureNotificationApi() {
             override suspend fun getStatus(): StatusResult {
                 return StatusResult.Enabled
@@ -1577,19 +1588,24 @@ class ExposureNotificationsRepositoryTest {
             statusCache = statusCache
         )
 
+        val result = async {
+            repository.getStatus().take(3).toList()
+        }
+
         statusCache.updateCachedStatus(StatusCache.CachedStatus.DISABLED)
+
         assertEquals(
             listOf(
                 StatusResult.Disabled,
                 StatusResult.Enabled,
                 StatusResult.Disabled
             ),
-            repository.getStatus().take(3).toList()
+            result.await()
         )
     }
 
     @Test
-    fun `getStatus re-triggers when location state changes change`() = runBlockingTest {
+    fun `getStatus re-triggers when location state changes change`() = runTest {
         val api = object : FakeExposureNotificationApi() {
             override suspend fun getStatus() = StatusResult.Enabled
         }
@@ -1624,7 +1640,7 @@ class ExposureNotificationsRepositoryTest {
     }
 
     @Test
-    fun `getStatus re-triggers when bluetooth state changes change`() = runBlockingTest {
+    fun `getStatus re-triggers when bluetooth state changes change`() = runTest {
         val api = object : FakeExposureNotificationApi() {
             override suspend fun getStatus() = StatusResult.Enabled
         }
@@ -1656,7 +1672,7 @@ class ExposureNotificationsRepositoryTest {
     }
 
     @Test
-    fun `getStatus does not remember API errors`() = runBlockingTest {
+    fun `getStatus does not remember API errors`() = runTest {
         val api = object : FakeExposureNotificationApi() {
             override suspend fun getStatus() = StatusResult.Unavailable(5)
         }
@@ -1686,7 +1702,7 @@ class ExposureNotificationsRepositoryTest {
 
     @Test
     fun `getStatus without cached state defaults to disabled and retrieves status`() =
-        runBlockingTest {
+        runTest {
             val api = object : FakeExposureNotificationApi() {
                 override suspend fun getStatus() = StatusResult.Enabled
             }
@@ -1713,12 +1729,13 @@ class ExposureNotificationsRepositoryTest {
 
     @Test
     fun `requestEnableNotifications updates statusCache to BluetoothDisabled when bluetooth is disabled`() =
-        runBlockingTest {
+        runTest {
             val api = object : FakeExposureNotificationApi() {
                 override suspend fun getStatus() = StatusResult.Enabled
                 override suspend fun requestEnableNotifications(): EnableNotificationsResult {
                     return EnableNotificationsResult.Enabled
                 }
+
                 override suspend fun disableNotifications(): DisableNotificationsResult {
                     return DisableNotificationsResult.Disabled
                 }
@@ -1769,12 +1786,13 @@ class ExposureNotificationsRepositoryTest {
 
     @Test
     fun `requestEnableNotifications updates statusCache to LocationPreconditionNotSatisfied when location is disabled`() =
-        runBlockingTest {
+        runTest {
             val api = object : FakeExposureNotificationApi() {
                 override suspend fun getStatus() = StatusResult.Enabled
                 override suspend fun requestEnableNotifications(): EnableNotificationsResult {
                     return EnableNotificationsResult.Enabled
                 }
+
                 override suspend fun disableNotifications(): DisableNotificationsResult {
                     return DisableNotificationsResult.Disabled
                 }
@@ -1823,58 +1841,60 @@ class ExposureNotificationsRepositoryTest {
         }
 
     @Test
-    fun `requestEnableNotifications updates statusCache to Enabled when preconditions are correct`() = runBlockingTest {
-        val api = object : FakeExposureNotificationApi() {
-            override suspend fun getStatus() = StatusResult.Enabled
-            override suspend fun requestEnableNotifications(): EnableNotificationsResult {
-                return EnableNotificationsResult.Enabled
-            }
-            override suspend fun disableNotifications(): DisableNotificationsResult {
-                return DisableNotificationsResult.Disabled
-            }
-        }
-        val context = ApplicationProvider.getApplicationContext<Application>()
-        val sharedPrefs = context.getSharedPreferences("repository_test", 0)
-        val statusCache = StatusCache(sharedPrefs)
-        val fakeCdnService = createFakeCdnService(
-            getManifest = { Manifest(emptyList(), "risk", "config") },
-            getAppConfig = { _, _ -> AppConfig() }
-        )
-
-        val repository = createRepository(
-            context = context,
-            api = api,
-            preferences = sharedPrefs,
-            statusCache = statusCache,
-            cdnService = fakeCdnService,
-            scheduler = object : BackgroundWorkScheduler {
-                override fun schedule(intervalMinutes: Int) {
+    fun `requestEnableNotifications updates statusCache to Enabled when preconditions are correct`() =
+        runTest {
+            val api = object : FakeExposureNotificationApi() {
+                override suspend fun getStatus() = StatusResult.Enabled
+                override suspend fun requestEnableNotifications(): EnableNotificationsResult {
+                    return EnableNotificationsResult.Enabled
                 }
 
-                override fun cancel() {
-                    throw AssertionError()
+                override suspend fun disableNotifications(): DisableNotificationsResult {
+                    return DisableNotificationsResult.Disabled
                 }
             }
-        )
+            val context = ApplicationProvider.getApplicationContext<Application>()
+            val sharedPrefs = context.getSharedPreferences("repository_test", 0)
+            val statusCache = StatusCache(sharedPrefs)
+            val fakeCdnService = createFakeCdnService(
+                getManifest = { Manifest(emptyList(), "risk", "config") },
+                getAppConfig = { _, _ -> AppConfig() }
+            )
 
-        (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
-        shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
-            setLocationEnabled(true)
-            setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+            val repository = createRepository(
+                context = context,
+                api = api,
+                preferences = sharedPrefs,
+                statusCache = statusCache,
+                cdnService = fakeCdnService,
+                scheduler = object : BackgroundWorkScheduler {
+                    override fun schedule(intervalMinutes: Int) {
+                    }
+
+                    override fun cancel() {
+                        throw AssertionError()
+                    }
+                }
+            )
+
+            (context.getSystemService(BluetoothManager::class.java) as BluetoothManager).adapter.enable()
+            shadowOf(context.getSystemService(LocationManager::class.java) as LocationManager).apply {
+                setLocationEnabled(true)
+                setProviderEnabled(LocationManager.NETWORK_PROVIDER, true)
+            }
+
+            val result = repository.getStatus().take(2).toList()
+
+            repository.requestEnableNotificationsForcingConsent()
+
+            assertEquals(
+                listOf(
+                    StatusResult.Disabled,
+                    StatusResult.Enabled
+                ),
+                result
+            )
         }
-
-        val result = repository.getStatus().take(2).toList()
-
-        repository.requestEnableNotificationsForcingConsent()
-
-        assertEquals(
-            listOf(
-                StatusResult.Disabled,
-                StatusResult.Enabled
-            ),
-            result
-        )
-    }
 
     @Test
     fun `requestEnableNotificationsForcingConsent disables then enables the EN api`() =
@@ -2004,7 +2024,11 @@ class ExposureNotificationsRepositoryTest {
         signatureValidation: Boolean = false,
         signatureValidator: ResponseSignatureValidator = ResponseSignatureValidator(),
         scheduler: BackgroundWorkScheduler = fakeScheduler,
-        appConfigManager: AppConfigManager = AppConfigManager(cdnService, { false }, { emptyList() })
+        appConfigManager: AppConfigManager = AppConfigManager(
+            cdnService,
+            { false },
+            { emptyList() }
+        )
     ): ExposureNotificationsRepository {
         return ExposureNotificationsRepository(
             context,
