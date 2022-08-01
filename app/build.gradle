@@ -10,6 +10,7 @@ apply from: rootProject.file("jacoco.gradle")
 
 version = "2.6.0"
 def buildVersionCode = System.getenv("BUILD_ID") != null ? System.getenv("BUILD_ID").toInteger() : 125210
+archivesBaseName = "coronamelder-${version}-${buildVersionCode}"
 
 def getGitHash = { ->
     def stdout = new ByteArrayOutputStream()
