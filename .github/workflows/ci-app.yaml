@@ -17,10 +17,10 @@ jobs:
         uses: ./.github/actions/common-setup
 
       - name: "Check for code formatting violations"
-        run: ./gradlew spotlessCheck --warning-mode=fail
+        run: ./gradlew spotlessCheck
 
       - name: "Build, test and lint app"
-        run: ./gradlew app:assemDevDebug app:assemDevDebugAndroidTest testDevDebugUnitTestCoverage testDebugUnitTest app:lintDevDebug --warning-mode=fail
+        run: ./gradlew app:assemDevDebug app:assemDevDebugAndroidTest testDevDebugUnitTestCoverage testDebugUnitTest app:lintDevDebug
 
       - name: "Setup firebase credentials"
         uses: ./.github/actions/credentials
