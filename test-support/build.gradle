@@ -1,8 +1,9 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+}
 
 android {
-
     defaultConfig {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -17,16 +18,14 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-
-    api 'androidx.test:core-ktx:1.4.0'
-    api "androidx.fragment:fragment-ktx:$androidx_fragment_version"
+    api libs.androidx.test.core
+    api libs.androidx.fragment
 
     implementation project(":en-api")
 
-    implementation "androidx.activity:activity-ktx:$androidx_activity_version"
-    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
-    implementation "androidx.navigation:navigation-testing:$androidx_nav_version"
+    implementation libs.androidx.activity
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.navigation.testing
 
-    implementation "dev.chrisbanes.insetter:insetter:$insetter_version"
+    implementation libs.insetter
 }
