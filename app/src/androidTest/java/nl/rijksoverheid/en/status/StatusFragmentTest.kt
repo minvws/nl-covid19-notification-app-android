@@ -135,7 +135,8 @@ class StatusFragmentTest : BaseInstrumentationTest() {
     }
     private val settingsRepository by lazy {
         SettingsRepository(
-            context, Settings(context, settingsPreferences)
+            context,
+            Settings(context, settingsPreferences)
         )
     }
 

@@ -26,7 +26,7 @@ class HtmlTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0,
-    defStyleRes: Int = 0,
+    defStyleRes: Int = 0
 ) : MaterialTextView(context, attrs, defStyle, defStyleRes) {
 
     /**

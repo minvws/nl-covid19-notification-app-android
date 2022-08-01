@@ -122,7 +122,8 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
     )
 
     private val settingsRepository = SettingsRepository(
-        context, nl.rijksoverheid.en.settings.Settings(context, settingsPreferences)
+        context,
+        nl.rijksoverheid.en.settings.Settings(context, settingsPreferences)
     )
     private val onboardingRepository = OnboardingRepository(onboardingPreferences) {
         true
@@ -157,7 +158,8 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
 
             assertEquals(
                 "Explanation button navigates to how it works screen",
-                R.id.nav_how_it_works, navController.currentDestination?.id
+                R.id.nav_how_it_works,
+                navController.currentDestination?.id
             )
         }
     }
@@ -201,7 +203,8 @@ class EnableApiFragmentTest : BaseInstrumentationTest() {
 
             assertEquals(
                 "Skip button opens skip dialog",
-                R.id.nav_skip_consent_confirmation, navController.currentDestination?.id
+                R.id.nav_skip_consent_confirmation,
+                navController.currentDestination?.id
             )
         }
     }

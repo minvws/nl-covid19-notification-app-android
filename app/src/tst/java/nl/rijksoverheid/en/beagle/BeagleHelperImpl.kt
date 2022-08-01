@@ -96,8 +96,9 @@ object BeagleHelperImpl : BeagleHelper {
                 items = (0..20).map { value -> RadioGroupOption(value.toString(), value) },
                 initiallySelectedItemId = testExposureDaysAgo.toString(),
                 onSelectionChanged = {
-                    if (it != null)
+                    if (it != null) {
                         testExposureDaysAgo = it.value
+                    }
                 },
                 id = testNotificationExposureDaysAgoId
             ),
@@ -110,7 +111,7 @@ object BeagleHelperImpl : BeagleHelper {
             DividerModule(),
             TextModule("Other", TextModule.Type.SECTION_HEADER),
             KeylineOverlaySwitchModule(),
-            DeviceInfoModule(),
+            DeviceInfoModule()
         )
     }
 
@@ -124,7 +125,8 @@ object BeagleHelperImpl : BeagleHelper {
                         "Previous exposure date: ${
                         previouslyKnownExposureDate?.format(DateTimeFormatter.ISO_LOCAL_DATE) ?: "none"
                         }",
-                        TextModule.Type.NORMAL, id = previouslyKnownExposureDateId
+                        TextModule.Type.NORMAL,
+                        id = previouslyKnownExposureDateId
                     ),
                     placement = Placement.Below(testNotificationExposureDaysAgoId)
                 )

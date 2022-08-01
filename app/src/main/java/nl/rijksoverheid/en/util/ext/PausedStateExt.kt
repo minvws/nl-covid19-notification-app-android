@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 fun LocalDateTime.formatPauseDuration(context: Context): String {
     val now = LocalDateTime.now()
     return if (isAfter(now)) {
-
         val (durationHours, durationMinutes) = durationHoursAndMinutes()
         val formattedDuration = when {
             durationHours > 0 && durationMinutes > 0 -> formattedHoursAndMinutes(durationHours, durationMinutes, context)

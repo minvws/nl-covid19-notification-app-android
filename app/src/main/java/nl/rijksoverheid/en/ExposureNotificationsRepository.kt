@@ -286,8 +286,8 @@ class ExposureNotificationsRepository(
     fun isLocationPreconditionSatisfied(): Boolean {
         return exposureNotificationsApi.deviceSupportsLocationlessScanning() ||
             context.getSystemService(LocationManager::class.java)?.let {
-            LocationManagerCompat.isLocationEnabled(it)
-        } ?: true
+                LocationManagerCompat.isLocationEnabled(it)
+            } ?: true
     }
 
     /**
@@ -405,20 +405,23 @@ class ExposureNotificationsRepository(
                 riskCalculationParameters.attenuationBucketWeights
             ).apply {
                 riskCalculationParameters.infectiousnessWeights.forEachIndexed { infectiousness, weight ->
-                    if (isValidInfectiousnessWeight(infectiousness, weight))
+                    if (isValidInfectiousnessWeight(infectiousness, weight)) {
                         setInfectiousnessWeight(infectiousness, weight)
+                    }
                 }
                 riskCalculationParameters.reportTypeWeights.forEachIndexed { reportType, weight ->
-                    if (isValidReportTypeWeight(reportType, weight))
+                    if (isValidReportTypeWeight(reportType, weight)) {
                         setReportTypeWeight(reportType, weight)
+                    }
                 }
             }.build()
     }
 
     private fun isValidInfectiousnessWeight(infectiousness: Int, weight: Double): Boolean {
         val invalidWeight = weight < 0.0 || weight > 2.5
-        if (invalidWeight)
+        if (invalidWeight) {
             Timber.w("Element value of infectiousnessWeights must between 0 ~ 2.5")
+        }
 
         // Infectiousness.NONE will trigger a (IllegalArgumentException: Incorrect value of infectiousness)
         return infectiousness != Infectiousness.NONE && !invalidWeight
@@ -426,8 +429,9 @@ class ExposureNotificationsRepository(
 
     private fun isValidReportTypeWeight(reportType: Int, weight: Double): Boolean {
         val invalidWeight = weight < 0.0 || weight > 2.5
-        if (invalidWeight)
+        if (invalidWeight) {
             Timber.w("Element value of reportTypeWeights must between 0 ~ 2.5")
+        }
 
         // ReportType.UNKNOWN and ReportType.REVOKED will trigger a (IllegalArgumentException: Incorrect value of ReportType)
         return reportType != ReportType.UNKNOWN && reportType != ReportType.REVOKED && !invalidWeight
@@ -698,8 +702,9 @@ class ExposureNotificationsRepository(
 
         val dailyRiskScoresResult =
             exposureNotificationsApi.getDailyRiskScores(dailySummariesConfig)
-        if (dailyRiskScoresResult is DailyRiskScoresResult.UnknownError)
+        if (dailyRiskScoresResult is DailyRiskScoresResult.UnknownError) {
             return AddExposureResult.Error
+        }
 
         val riskScores =
             (dailyRiskScoresResult as? DailyRiskScoresResult.Success)?.dailyRiskScores?.filter {
@@ -728,7 +733,8 @@ class ExposureNotificationsRepository(
                 putLong(KEY_LAST_TOKEN_EXPOSURE_DATE, newExposureEpochDay)
                 putLong(KEY_PREVIOUSLY_KNOWN_EXPOSURE_DATE, newExposureEpochDay)
                 putLong(
-                    KEY_LAST_NOTIFICATION_RECEIVED_DATE, newNotificationReceivedDate.toEpochDay()
+                    KEY_LAST_NOTIFICATION_RECEIVED_DATE,
+                    newNotificationReceivedDate.toEpochDay()
                 )
             }
             AddExposureResult.Notify(

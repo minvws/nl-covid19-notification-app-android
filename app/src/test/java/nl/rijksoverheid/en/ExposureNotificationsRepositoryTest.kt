@@ -173,7 +173,7 @@ private val MOCK_RISK_CALCULATION_PARAMS = RiskCalculationParameters(
         DaySinceOnsetToInfectiousness(11, 1),
         DaySinceOnsetToInfectiousness(12, 0),
         DaySinceOnsetToInfectiousness(13, 0),
-        DaySinceOnsetToInfectiousness(14, 0),
+        DaySinceOnsetToInfectiousness(14, 0)
 
     ),
     infectiousnessWhenDaysSinceOnsetMissing = Infectiousness.STANDARD,
@@ -1005,7 +1005,7 @@ class ExposureNotificationsRepositoryTest {
                 },
                 getAppConfig = { _, _ ->
                     AppConfig(1, 5, 0.0, coronaMelderDeactivated = "deactivated")
-                },
+                }
             )
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -1094,7 +1094,7 @@ class ExposureNotificationsRepositoryTest {
                 },
                 getAppConfig = { _, _ ->
                     AppConfig(BuildConfig.VERSION_CODE + 1, 5, 0.0)
-                },
+                }
             )
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -1139,7 +1139,7 @@ class ExposureNotificationsRepositoryTest {
                 },
                 getAppConfig = { _, _ ->
                     AppConfig(0, 5, 0.0)
-                },
+                }
             )
 
             val context = ApplicationProvider.getApplicationContext<Application>()
@@ -1188,7 +1188,9 @@ class ExposureNotificationsRepositoryTest {
 
                     override suspend fun getManifest(cacheStrategy: CacheStrategy?): Manifest =
                         Manifest(
-                            listOf(), "risk", "config"
+                            listOf(),
+                            "risk",
+                            "config"
                         )
 
                     override suspend fun getRiskCalculationParameters(
@@ -2025,7 +2027,7 @@ class ExposureNotificationsRepositoryTest {
         getManifest: (CacheStrategy?) -> Manifest = { throw NotImplementedError() },
         getRiskCalculationParameters: (String, CacheStrategy?) -> RiskCalculationParameters = { _, _ -> throw NotImplementedError() },
         getAppConfig: (String, CacheStrategy?) -> AppConfig = { _, _ -> throw NotImplementedError() },
-        getResourceBundle: (String, CacheStrategy?) -> ResourceBundle = { _, _ -> throw NotImplementedError() },
+        getResourceBundle: (String, CacheStrategy?) -> ResourceBundle = { _, _ -> throw NotImplementedError() }
     ): CdnService {
         return object : CdnService {
             override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {

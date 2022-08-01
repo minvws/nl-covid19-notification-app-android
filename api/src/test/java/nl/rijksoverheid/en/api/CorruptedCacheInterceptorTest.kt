@@ -56,8 +56,8 @@ class CorruptedCacheInterceptorTest {
         cache = Cache(tmpDir, 1024 * 1024L)
     }
 
-    @Test(expected = NullPointerException::class)
     // if this test starts failing, the OkHttp bug might have been fixed
+    @Test(expected = NullPointerException::class)
     fun `OkHttp crashes when certificates in cache entry are corrupted`() {
         mockWebServer.enqueue(
             MockResponse().setResponseCode(200)

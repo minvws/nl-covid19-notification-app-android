@@ -31,10 +31,11 @@ class LabTestShareKeysItem(
     )
 
     private val viewState = ViewState(
-        uploadButtonText = if (hasSharedKeys)
+        uploadButtonText = if (hasSharedKeys) {
             R.string.coronatest_keys_shared
-        else
-            R.string.coronatest_share_keys,
+        } else {
+            R.string.coronatest_share_keys
+        },
         showButton = keyState is KeyState.Success,
         showProgress = keyState == KeyState.Loading,
         showError = keyState is KeyState.Error,

@@ -67,8 +67,9 @@ class LabTestViewModel(
 
     fun checkKeyExpiration() {
         viewModelScope.launch {
-            if (labTestRepository.isKeyDataExpired())
+            if (labTestRepository.isKeyDataExpired()) {
                 (keyExpiredEvent as MutableLiveData).value = Event(Unit)
+            }
         }
     }
 

@@ -21,7 +21,7 @@ class LabTestDoneSection(
     close: () -> Unit
 ) : Section(
 
-    if (hasIndependentKeySharing)
+    if (hasIndependentKeySharing) {
         listOf(
             IllustrationItem(R.drawable.illustration_lab_test_done),
             HeaderItem(R.string.lab_test_done_generic_header_1),
@@ -30,7 +30,7 @@ class LabTestDoneSection(
             MessageBoxItem(R.string.lab_test_done_generic_box_4),
             ButtonItem(R.string.lab_test_done_button, close)
         )
-    else
+    } else {
         listOf(
             IllustrationItem(R.drawable.illustration_lab_test_done),
             HeaderItem(R.string.lab_test_done_header_1),
@@ -39,4 +39,5 @@ class LabTestDoneSection(
             MessageBoxItem(R.string.lab_test_done_box_4),
             ButtonItem(R.string.lab_test_done_button, close)
         )
+    }
 )

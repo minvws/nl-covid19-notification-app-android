@@ -105,7 +105,8 @@ class HowItWorksDetailFragmentTest : BaseInstrumentationTest() {
     )
 
     private val settingsRepository = SettingsRepository(
-        context, nl.rijksoverheid.en.settings.Settings(context, settingsPreferences)
+        context,
+        nl.rijksoverheid.en.settings.Settings(context, settingsPreferences)
     )
 
     private val onboardingRepository = OnboardingRepository(onboardingPreferences) {

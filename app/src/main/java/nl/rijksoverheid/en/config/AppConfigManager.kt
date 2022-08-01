@@ -43,10 +43,11 @@ class AppConfigManager(
      */
     suspend fun getConfig(): AppConfig {
         return cdnService.getAppConfig(cdnService.getManifest().appConfigId).let { appConfig ->
-            if (useDebugFeatureFlags())
+            if (useDebugFeatureFlags()) {
                 appConfig.copy(featureFlags = getDebugFeatureFlags())
-            else
+            } else {
                 appConfig
+            }
         }
     }
 
@@ -56,10 +57,11 @@ class AppConfigManager(
      */
     suspend fun getConfigOrDefault(): AppConfig = getConfigOrDefault {
         cdnService.getAppConfig(cdnService.getManifest().appConfigId).let { appConfig ->
-            if (useDebugFeatureFlags())
+            if (useDebugFeatureFlags()) {
                 appConfig.copy(featureFlags = getDebugFeatureFlags())
-            else
+            } else {
                 appConfig
+            }
         }
     }
 
@@ -72,10 +74,11 @@ class AppConfigManager(
             cdnService.getManifest(CacheStrategy.CACHE_FIRST).appConfigId,
             CacheStrategy.CACHE_FIRST
         ).let { appConfig ->
-            if (useDebugFeatureFlags())
+            if (useDebugFeatureFlags()) {
                 appConfig.copy(featureFlags = getDebugFeatureFlags())
-            else
+            } else {
                 appConfig
+            }
         }
     }
 }

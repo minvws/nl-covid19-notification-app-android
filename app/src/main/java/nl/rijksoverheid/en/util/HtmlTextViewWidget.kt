@@ -46,7 +46,7 @@ class HtmlTextViewWidget @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0,
-    defStyleRes: Int = 0,
+    defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyle, defStyleRes) {
 
     // Reflects the full text shown in the subviews. Can only be set internally.
@@ -146,8 +146,9 @@ class HtmlTextViewWidget @JvmOverloads constructor(
      */
     fun enableHtmlLinks() {
         children.filterIsInstance(TextView::class.java).forEach { textView ->
-            if (textView.hasUrlSpans())
+            if (textView.hasUrlSpans()) {
                 textView.enableHtmlLinks()
+            }
         }
     }
 
@@ -156,8 +157,9 @@ class HtmlTextViewWidget @JvmOverloads constructor(
      */
     fun enableCustomLinks(onLinkClick: () -> Unit) {
         children.filterIsInstance(TextView::class.java).forEach { textView ->
-            if (textView.hasUrlSpans())
+            if (textView.hasUrlSpans()) {
                 textView.enableCustomLinks(onLinkClick)
+            }
         }
     }
 

@@ -25,12 +25,14 @@ class SkipConsentConfirmationDialogFragment : DialogFragment() {
             .setMessage(R.string.onboarding_consent_skip_dialog_message)
             .setPositiveButton(R.string.onboarding_consent_skip_dialog_enable) { _, _ ->
                 findNavController().currentBackStackEntry?.savedStateHandle?.set(
-                    SKIP_CONSENT_RESULT, false
+                    SKIP_CONSENT_RESULT,
+                    false
                 )
             }
             .setNegativeButton(R.string.onboarding_consent_skip_dialog_skip) { _, _ ->
                 findNavController().currentBackStackEntry?.savedStateHandle?.set(
-                    SKIP_CONSENT_RESULT, true
+                    SKIP_CONSENT_RESULT,
+                    true
                 )
             }
         return builder.create()

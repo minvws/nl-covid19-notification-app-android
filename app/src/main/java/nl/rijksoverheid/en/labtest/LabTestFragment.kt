@@ -124,7 +124,6 @@ class LabTestFragment : BaseFragment(R.layout.fragment_list_with_button) {
         keyState: LabTestViewModel.KeyState,
         notificationsState: ExposureNotificationsViewModel.NotificationsState
     ): Boolean {
-
         return keyState is LabTestViewModel.KeyState.Success &&
             notificationsState in listOf(
             ExposureNotificationsViewModel.NotificationsState.Enabled,

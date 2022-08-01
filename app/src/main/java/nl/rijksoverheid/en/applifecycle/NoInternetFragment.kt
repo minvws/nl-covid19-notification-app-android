@@ -27,8 +27,9 @@ class NoInternetFragment : Fragment(R.layout.fragment_no_internet) {
         }
 
         appLifecycleViewModel.appLifecycleStatus.observe(viewLifecycleOwner) {
-            if (it is AppLifecycleViewModel.AppLifecycleStatus.Ready)
+            if (it is AppLifecycleViewModel.AppLifecycleStatus.Ready) {
                 findNavController().popBackStack()
+            }
         }
     }
 }

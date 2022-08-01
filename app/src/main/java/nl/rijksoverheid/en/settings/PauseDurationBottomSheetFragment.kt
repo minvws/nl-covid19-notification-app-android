@@ -55,8 +55,9 @@ class PauseDurationBottomSheetFragment : BottomSheetDialogFragment() {
 
         binding.content.adapter = adapter
         adapter.setOnItemClickListener { item, _ ->
-            if (item !is PauseDurationItem)
+            if (item !is PauseDurationItem) {
                 return@setOnItemClickListener
+            }
 
             val until = LocalDateTime.now().plusHours(item.pauseDurationInHours.toLong())
 

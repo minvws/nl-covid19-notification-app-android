@@ -477,7 +477,7 @@ class NearbyExposureNotificationApiTest {
         // WHEN
         val status = api.provideDiagnosisKeys(
             listOf(file),
-            diagnosisKeysDataMapping,
+            diagnosisKeysDataMapping
         )
 
         // THEN
@@ -510,7 +510,7 @@ class NearbyExposureNotificationApiTest {
                 // WHEN
                 val status = api.provideDiagnosisKeys(
                     listOf(file),
-                    diagnosisKeysDataMapping,
+                    diagnosisKeysDataMapping
                 )
 
                 // THEN
@@ -547,7 +547,7 @@ class NearbyExposureNotificationApiTest {
                 // WHEN
                 val status = api.provideDiagnosisKeys(
                     listOf(file),
-                    diagnosisKeysDataMapping,
+                    diagnosisKeysDataMapping
                 )
 
                 // THEN

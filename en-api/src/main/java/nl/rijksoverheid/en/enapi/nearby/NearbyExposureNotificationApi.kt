@@ -169,7 +169,7 @@ class NearbyExposureNotificationApi(
      */
     override suspend fun provideDiagnosisKeys(
         files: List<File>,
-        diagnosisKeysDataMapping: DiagnosisKeysDataMapping,
+        diagnosisKeysDataMapping: DiagnosisKeysDataMapping
     ): DiagnosisKeysResult {
         return suspendCoroutine { c ->
             client.setDiagnosisKeysDataMapping(
@@ -238,10 +238,11 @@ class NearbyExposureNotificationApi(
             try {
                 // Parse version as string, extract first 2 chars to get the en module version, then
                 // convert back to a long for easy comparison.
-                if (it.toString().substring(0, 2).toLong() >= MINIMUM_EN_VERSION)
+                if (it.toString().substring(0, 2).toLong() >= MINIMUM_EN_VERSION) {
                     c.resume(UpdateToDateResult.UpToDate)
-                else
+                } else {
                     c.resume(UpdateToDateResult.RequiresAnUpdate)
+                }
             } catch (e: Exception) {
                 Timber.e(e, "Unable to parse version")
                 c.resume(UpdateToDateResult.UnknownError(e))
@@ -249,10 +250,11 @@ class NearbyExposureNotificationApi(
         }.addOnFailureListener {
             Timber.e(it, "Error getting version of ExposureNotificationApi")
 
-            if ((it as? ApiException)?.statusCode == CommonStatusCodes.API_NOT_CONNECTED)
+            if ((it as? ApiException)?.statusCode == CommonStatusCodes.API_NOT_CONNECTED) {
                 c.resume(UpdateToDateResult.RequiresAnUpdate)
-            else
+            } else {
                 c.resume(UpdateToDateResult.UnknownError(it))
+            }
         }
     }
 

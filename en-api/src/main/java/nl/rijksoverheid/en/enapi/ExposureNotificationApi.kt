@@ -44,7 +44,7 @@ interface ExposureNotificationApi {
      */
     suspend fun provideDiagnosisKeys(
         files: List<File>,
-        diagnosisKeysDataMapping: DiagnosisKeysDataMapping,
+        diagnosisKeysDataMapping: DiagnosisKeysDataMapping
     ): DiagnosisKeysResult
 
     /**

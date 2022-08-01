@@ -22,8 +22,9 @@ import java.util.Locale
  */
 fun LocalDate.formatDaysSince(context: Context, clock: Clock = Clock.systemDefaultZone()): String {
     val daysSince = ChronoUnit.DAYS.between(this, LocalDate.now(clock)).toInt()
-    return if (daysSince == 0) context.resources.getString(R.string.today) else
+    return if (daysSince == 0) context.resources.getString(R.string.today) else {
         context.resources.getQuantityString(R.plurals.days_ago, daysSince, daysSince)
+    }
 }
 
 /**

@@ -33,7 +33,8 @@ data class AppConfig(
     @Json(name = "coronaTestURL") val coronaTestURL: String = DEFAULT_APPOINTMENT_URL,
     @Json(name = "featureFlags") val featureFlags: List<FeatureFlag> = listOf(
         FeatureFlag(
-            FeatureFlagOption.INDEPENDENT_KEY_SHARING.id, true
+            FeatureFlagOption.INDEPENDENT_KEY_SHARING.id,
+            true
         )
     ),
     @Json(name = "notification") val notification: AppMessage? = null

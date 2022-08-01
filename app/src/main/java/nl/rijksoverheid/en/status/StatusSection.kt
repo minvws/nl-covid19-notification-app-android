@@ -38,7 +38,7 @@ class StatusSection : Section() {
 
     fun updateNotifications(
         notificationStates: List<StatusViewModel.NotificationState>,
-        onAction: (StatusViewModel.NotificationState, NotificationAction) -> Unit,
+        onAction: (StatusViewModel.NotificationState, NotificationAction) -> Unit
     ) {
         if (this.notificationStates != notificationStates) {
             this.notificationStates = notificationStates
@@ -95,7 +95,8 @@ class StatusSection : Section() {
         if (isEmpty) {
             addAll(
                 listOf(
-                    headerGroup, notificationGroup,
+                    headerGroup,
+                    notificationGroup,
                     Section(
                         listOf(
                             StatusActionItem.About,
