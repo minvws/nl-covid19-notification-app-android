@@ -4,6 +4,8 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
+@file:Suppress("ktlint:filename")
+
 package nl.rijksoverheid.en.util.ext
 
 import nl.rijksoverheid.en.api.model.AppMessage

@@ -4,6 +4,8 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
+@file:Suppress("ktlint:filename")
+
 package nl.rijksoverheid.en.util
 
 import androidx.core.text.BidiFormatter
