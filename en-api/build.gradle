@@ -40,7 +40,9 @@ dependencies {
     api project(":play-services-nearby-eap")
     implementation libs.kotlin.coroutines.android
     implementation libs.androidx.core
-    implementation libs.bundles.playServices
+    implementation(libs.bundles.playServices) {
+        exclude group: "androidx.fragment", module: "fragment"
+    }
     implementation libs.timber
 
     testImplementation libs.junit
