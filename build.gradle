@@ -12,6 +12,18 @@ plugins {
 
 apply from: 'gradle/spotless.gradle'
 
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return !stableKeyword && !(version ==~ regex)
+}
+
+tasks.named("dependencyUpdates").configure {
+    rejectVersionIf {
+        isNonStable(it.candidate.version) && !isNonStable(it.currentVersion)
+    }
+}
+
 allprojects {
     afterEvaluate {
         tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
@@ -23,10 +35,10 @@ allprojects {
 
         project.plugins.withId("com.android.base") {
             android {
-                compileSdkVersion 31
+                compileSdkVersion 32
                 defaultConfig {
                     minSdkVersion 23
-                    targetSdkVersion 31
+                    targetSdkVersion 32
                 }
                 compileOptions {
                     sourceCompatibility JavaVersion.VERSION_1_8
