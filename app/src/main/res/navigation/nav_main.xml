@@ -365,10 +365,6 @@
         android:id="@+id/nav_app_update_required"
         android:name="nl.rijksoverheid.en.applifecycle.AppUpdateRequiredFragment"
         tools:layout="@layout/fragment_app_update_required">
-        <argument
-            android:name="app_store_package"
-            app:argType="string"
-            app:nullable="true" />
     </fragment>
 
     <fragment

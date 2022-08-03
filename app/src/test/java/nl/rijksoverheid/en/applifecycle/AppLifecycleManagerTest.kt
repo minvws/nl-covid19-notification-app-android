@@ -10,7 +10,6 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.google.android.play.core.appupdate.testing.FakeAppUpdateManager
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -69,9 +68,5 @@ class AppLifecycleManagerTest {
             val result = appLifecycleManager.getUpdateState()
 
             assertTrue(result is AppLifecycleManager.UpdateState.UpdateRequired)
-            assertEquals(
-                "com.some.appstore",
-                (result as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
-            )
         }
 }

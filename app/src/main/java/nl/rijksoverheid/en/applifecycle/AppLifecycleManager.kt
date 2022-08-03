@@ -54,7 +54,7 @@ class AppLifecycleManager(
      */
     suspend fun getUpdateState(): UpdateState {
         return if (minimumVersionCode > currentVersionCode) {
-            when (val source = getInstallPackageName()) {
+            when (getInstallPackageName()) {
                 PLAY_STORE_PACKAGE_NAME -> {
                     try {
                         val appUpdateInfo = appUpdateManager.requestAppUpdateInfo()
@@ -69,10 +69,11 @@ class AppLifecycleManager(
                         }
                     } catch (e: Exception) {
                         Timber.e("requestAppUpdateInfo failed", e)
-                        UpdateState.UpdateRequired(source)
+                        UpdateState.UpdateRequired
                     }
                 }
-                else -> UpdateState.UpdateRequired(source)
+                // side loaded, or previously from another app store
+                else -> UpdateState.UpdateRequired
             }
         } else {
             UpdateState.UpToDate
@@ -85,7 +86,7 @@ class AppLifecycleManager(
             val appUpdateInfo: AppUpdateInfo
         ) : UpdateState()
 
-        data class UpdateRequired(val installerPackageName: String?) : UpdateState()
+        object UpdateRequired : UpdateState()
 
         data class Error(val ex: Exception) : UpdateState()
 
