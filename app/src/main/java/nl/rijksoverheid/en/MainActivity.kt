@@ -128,12 +128,8 @@ class MainActivity : AppCompatActivity() {
             if (!navController.isInitialised()) {
                 inflateNavGraph(R.id.nav_app_update_required)
             } else {
-                val installerPackageName =
-                    (update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
                 navController.navigate(
-                    AppUpdateRequiredFragmentDirections.actionAppUpdateRequired(
-                        installerPackageName
-                    )
+                    AppUpdateRequiredFragmentDirections.actionAppUpdateRequired()
                 )
             }
         }
