@@ -1,92 +1,30 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
-buildscript {
-    //androidx/google dependency versions
-    ext.androidx_activity_version = "1.4.0"
-    ext.androidx_appcompat_version = "1.4.1"
-    ext.androidx_core_version = "1.7.0"
-    ext.arch_core_version = "2.1.0"
-    ext.androidx_espresso_version = "3.4.0"
-    ext.androidx_fragment_version = "1.4.1"
-    ext.androidx_lifecycle_version = "2.4.1"
-    ext.androidx_nav_version = "2.4.2"
-    ext.androidx_test_core_version = "1.4.0"
-    ext.androidx_test_ext_junit_version = "1.1.3"
-    ext.androidx_work_version = "2.7.1"
-    ext.coroutines_version = "1.5.2"
-    ext.kotlin_version = '1.6.10'
-    ext.play_services_base_version = "18.0.1"
-    ext.play_services_tasks_version = "18.0.1"
-    //3rd-party dependency versions
-    ext.groupie_version = "2.10.0"
-    ext.jdk15to18_version = "1.66"
-    ext.junit_version = "4.13.2"
-    ext.moshi_version = '1.13.0'
-    ext.mockito_version = '4.3.1'
-    ext.mockitokotlin_version = '4.0.0'
-    ext.okhttp3_version = "4.9.1"
-    ext.retrofit_version = "2.9.0"
-    ext.robolectric_version = '4.7.3'
-    ext.timber_version = "5.0.1"
-    ext.insetter_version = '0.6.1'
-
-    repositories {
-        google {
-            content {
-                includeGroup "com.google"
-                includeGroup "com.android"
-                includeGroupByRegex "com.google\\..*"
-                includeGroupByRegex "com.android\\..*"
-                includeGroupByRegex "androidx\\..*"
-            }
-        }
-        mavenCentral()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-            content {
-                includeGroup "com.github.triplet.gradle"
-            }
-        }
-    }
-
-    dependencies {
-        // Android build tools
-        classpath 'com.android.tools.build:gradle:7.0.4'
-        // Fladle: Testing Firebase Snapshot Releases
-        classpath "com.osacky.flank.gradle:fladle:0.11.0"
-        // Kotlin gradle plugin
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // Spotless (code formatting) plugin
-        classpath "com.diffplug.spotless:spotless-plugin-gradle:5.6.1"
-        // Android navigation save arguments
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$androidx_nav_version"
-        // Gradle Play publisher: Release automation gradle plugin
-        classpath "com.github.triplet.gradle:play-publisher:3.6.0"
-        // Firebase app distribution
-        classpath 'com.google.firebase:firebase-appdistribution-gradle:3.0.0'
-        // Huawei publish gradle plugin
-        classpath "ru.cian:huawei-publish-gradle-plugin:1.1.0"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
+plugins {
+    alias(libs.plugins.versions)
+    alias(libs.plugins.versionCatalog)
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.spotless)
 }
 
 apply from: 'gradle/spotless.gradle'
 
-allprojects {
-    repositories {
-        google {
-            content {
-                includeGroup "com.google"
-                includeGroup "com.android"
-                includeGroupByRegex "com.google\\..*"
-                includeGroupByRegex "com.android\\..*"
-                includeGroupByRegex "androidx\\..*"
-            }
-        }
-        mavenCentral()
-    }
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return !stableKeyword && !(version ==~ regex)
+}
 
+tasks.named("dependencyUpdates").configure {
+    rejectVersionIf {
+        isNonStable(it.candidate.version) && !isNonStable(it.currentVersion)
+    }
+}
+
+allprojects {
     afterEvaluate {
         tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
             kotlinOptions {
@@ -97,10 +35,10 @@ allprojects {
 
         project.plugins.withId("com.android.base") {
             android {
-                compileSdkVersion 31
+                compileSdkVersion 32
                 defaultConfig {
                     minSdkVersion 23
-                    targetSdkVersion 31
+                    targetSdkVersion 32
                 }
                 compileOptions {
                     sourceCompatibility JavaVersion.VERSION_1_8

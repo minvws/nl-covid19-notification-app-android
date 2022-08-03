@@ -23,7 +23,7 @@ class LocaleHelper private constructor(application: Application, private val set
     // Ensure systemLocale is set and ConfigurationChangedCallback is registered _before_
     // custom Locale is applied, as the system locale can not be reliably retrieved after
     // changing the app's Locale.
-    private var systemLocale: Locale = LocaleListCompat.getDefault()[0]
+    private var systemLocale: Locale = requireNotNull(LocaleListCompat.getDefault()[0])
 
     val isAppSetToDutch: Boolean
         get() = settings.isAppSetToDutch
@@ -43,7 +43,7 @@ class LocaleHelper private constructor(application: Application, private val set
 
         application.registerComponentCallbacks(
             ConfigurationChangedCallback { configuration ->
-                systemLocale = ConfigurationCompat.getLocales(configuration)[0]
+                systemLocale = requireNotNull(ConfigurationCompat.getLocales(configuration)[0])
                 applyLocale(application, localeToUse)
             }
         )

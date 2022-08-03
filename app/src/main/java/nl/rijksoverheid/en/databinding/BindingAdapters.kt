@@ -179,7 +179,8 @@ object BindingAdapters {
     @BindingAdapter("pausedState")
     fun bindPausedState(view: HtmlTextViewWidget, pausedUntil: LocalDateTime?) {
         val formattedDuration = pausedUntil?.formatPauseDuration(view.context)
-        if (view.text != formattedDuration)
+        if (view.text != formattedDuration) {
             view.setHtmlText(formattedDuration)
+        }
     }
 }

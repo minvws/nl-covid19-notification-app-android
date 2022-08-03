@@ -44,10 +44,11 @@ class ExposureNotificationJob(
             }
             is AddExposureResult.Processed -> Result.success()
             is AddExposureResult.Error -> {
-                if (runAttemptCount + 1 < MAX_RUN_ATTEMPTS)
+                if (runAttemptCount + 1 < MAX_RUN_ATTEMPTS) {
                     Result.retry()
-                else
+                } else {
                     Result.failure()
+                }
             }
         }
     }

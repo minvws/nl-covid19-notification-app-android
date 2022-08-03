@@ -51,7 +51,7 @@ import java.io.File
 import java.time.LocalDate
 import java.time.ZoneId
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "BlockingMethodInNonBlockingContext")
 @LooperMode(LooperMode.Mode.LEGACY)
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [Build.VERSION_CODES.O_MR1])
@@ -468,7 +468,7 @@ class NearbyExposureNotificationApiTest {
                     override fun provideDiagnosisKeys(files: List<File>): Task<Void> {
                         return Tasks.forResult(null)
                     }
-                    override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping?): Task<Void> {
+                    override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping): Task<Void> {
                         return Tasks.forResult(null)
                     }
                 }
@@ -477,7 +477,7 @@ class NearbyExposureNotificationApiTest {
         // WHEN
         val status = api.provideDiagnosisKeys(
             listOf(file),
-            diagnosisKeysDataMapping,
+            diagnosisKeysDataMapping
         )
 
         // THEN
@@ -500,7 +500,7 @@ class NearbyExposureNotificationApiTest {
                         override fun provideDiagnosisKeys(files: List<File>): Task<Void> {
                             return Tasks.forException(exception)
                         }
-                        override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping?): Task<Void> {
+                        override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping): Task<Void> {
                             return Tasks.forResult(null)
                         }
                     }
@@ -510,7 +510,7 @@ class NearbyExposureNotificationApiTest {
                 // WHEN
                 val status = api.provideDiagnosisKeys(
                     listOf(file),
-                    diagnosisKeysDataMapping,
+                    diagnosisKeysDataMapping
                 )
 
                 // THEN
@@ -537,7 +537,7 @@ class NearbyExposureNotificationApiTest {
                         override fun provideDiagnosisKeys(files: List<File>): Task<Void> {
                             return Tasks.forException(exception)
                         }
-                        override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping?): Task<Void> {
+                        override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping): Task<Void> {
                             return Tasks.forResult(null)
                         }
                     }
@@ -547,7 +547,7 @@ class NearbyExposureNotificationApiTest {
                 // WHEN
                 val status = api.provideDiagnosisKeys(
                     listOf(file),
-                    diagnosisKeysDataMapping,
+                    diagnosisKeysDataMapping
                 )
 
                 // THEN

@@ -66,8 +66,9 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
 
         setSlideTransition()
 
-        if (labViewModel.usedKey == null)
+        if (labViewModel.usedKey == null) {
             labViewModel.retry()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,8 +95,9 @@ class CoronaTestKeySharingFragment : BaseFragment(R.layout.fragment_list) {
         }
         labViewModel.uploadResult.observe(viewLifecycleOwner) { uploadResultEvent ->
             // Update UI also when event was already handled
-            if (uploadResultEvent.peekContent() is LabTestViewModel.UploadResult.Success)
+            if (uploadResultEvent.peekContent() is LabTestViewModel.UploadResult.Success) {
                 section.uploadKeysSucceeded()
+            }
 
             // Handle others results only once
             when (val it = uploadResultEvent.getContentIfNotHandled()) {

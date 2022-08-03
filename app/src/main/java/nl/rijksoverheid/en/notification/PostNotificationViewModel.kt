@@ -32,7 +32,8 @@ class PostNotificationViewModel(
 
     fun setExposureNotificationGuidanceArgs(exposureDate: LocalDate, notificationReceivedDate: LocalDate?) {
         this.exposureNotificationGuidanceArgs.value = ExposureNotificationGuidanceArgs(
-            exposureDate, notificationReceivedDate
+            exposureDate,
+            notificationReceivedDate
         )
     }
 

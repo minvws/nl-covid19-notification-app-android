@@ -85,7 +85,7 @@ class RiskModelTest {
                         listOf(
                             ScanInstance.Builder()
                                 .setSecondsSinceLastScan(600)
-                                .setTypicalAttenuationDb(57).build(),
+                                .setTypicalAttenuationDb(57).build()
                         )
                     )
                     .build(),
@@ -239,7 +239,7 @@ class RiskModelTest {
                                 .setTypicalAttenuationDb(57).build(),
                             ScanInstance.Builder()
                                 .setSecondsSinceLastScan(60)
-                                .setTypicalAttenuationDb(55).build(),
+                                .setTypicalAttenuationDb(55).build()
                         )
                     )
                     .build()

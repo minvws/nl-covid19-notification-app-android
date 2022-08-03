@@ -5,9 +5,11 @@
  *   SPDX-License-Identifier: EUPL-1.2
  *
  */
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    id 'jacoco'
+}
 apply from: rootProject.file("jacoco.gradle")
 
 android {
@@ -26,15 +28,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-
-    // AndroidX
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-
-    // Bouncy Castle Provider
-    implementation "org.bouncycastle:bcprov-jdk15to18:$jdk15to18_version"
-    api "org.bouncycastle:bcpkix-jdk15to18:$jdk15to18_version"
-
-    // JUnit
-    testImplementation "junit:junit:$junit_version"
+    implementation libs.androidx.core
+    implementation libs.bcprov
+    api libs.bcpkix
+    testImplementation libs.junit
 }

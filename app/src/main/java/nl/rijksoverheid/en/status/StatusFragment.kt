@@ -116,8 +116,9 @@ class StatusFragment @JvmOverloads constructor(
         }
 
         statusViewModel.exposureNotificationApiUpdateRequired.observe(viewLifecycleOwner) { requireAnUpdate ->
-            if (requireAnUpdate)
+            if (requireAnUpdate) {
                 findNavController().navigateCatchingErrors(StatusFragmentDirections.actionUpdatePlayServices())
+            }
         }
     }
 
@@ -259,10 +260,11 @@ class StatusFragment @JvmOverloads constructor(
 
     private fun navigateToSharingKeys() {
         viewLifecycleOwner.lifecycle.coroutineScope.launchWhenResumed {
-            if (statusViewModel.hasIndependentKeySharing())
+            if (statusViewModel.hasIndependentKeySharing()) {
                 findNavController().navigateCatchingErrors(StatusFragmentDirections.actionKeySharingOptions())
-            else
+            } else {
                 findNavController().navigateCatchingErrors(StatusFragmentDirections.actionLabTest())
+            }
         }
     }
 

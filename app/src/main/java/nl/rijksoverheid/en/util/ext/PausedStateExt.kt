@@ -4,6 +4,8 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
+@file:Suppress("ktlint:filename")
+
 package nl.rijksoverheid.en.util.ext
 
 import android.content.Context
@@ -14,7 +16,6 @@ import java.time.LocalDateTime
 fun LocalDateTime.formatPauseDuration(context: Context): String {
     val now = LocalDateTime.now()
     return if (isAfter(now)) {
-
         val (durationHours, durationMinutes) = durationHoursAndMinutes()
         val formattedDuration = when {
             durationHours > 0 && durationMinutes > 0 -> formattedHoursAndMinutes(durationHours, durationMinutes, context)

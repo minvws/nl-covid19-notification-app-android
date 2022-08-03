@@ -20,10 +20,9 @@ import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
-import java.lang.IllegalStateException
 
 @RunWith(RobolectricTestRunner::class)
-class Test {
+class AppLifecycleViewModelTest {
 
     @Mock
     private lateinit var appLifecycleManager: AppLifecycleManager

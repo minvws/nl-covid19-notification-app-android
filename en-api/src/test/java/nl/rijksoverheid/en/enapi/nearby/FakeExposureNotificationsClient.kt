@@ -4,7 +4,7 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
-@file:Suppress("DEPRECATION")
+@file:Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
 
 package nl.rijksoverheid.en.enapi.nearby
 
@@ -50,7 +50,7 @@ abstract class FakeExposureNotificationsClient : ExposureNotificationClient {
         throw NotImplementedError()
     }
 
-    override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping?): Task<Void> {
+    override fun setDiagnosisKeysDataMapping(p0: DiagnosisKeysDataMapping): Task<Void> {
         throw NotImplementedError()
     }
 
@@ -66,10 +66,11 @@ abstract class FakeExposureNotificationsClient : ExposureNotificationClient {
         throw NotImplementedError()
     }
 
-    override fun getDailySummaries(p0: DailySummariesConfig?): Task<MutableList<DailySummary>> {
+    override fun getDailySummaries(p0: DailySummariesConfig): Task<MutableList<DailySummary>> {
         throw NotImplementedError()
     }
 
+    @Deprecated("Deprecated in Java")
     @Suppress("DEPRECATION")
     override fun getExposureSummary(token: String): Task<ExposureSummary> =
         Tasks.forException(IllegalStateException())
@@ -78,6 +79,7 @@ abstract class FakeExposureNotificationsClient : ExposureNotificationClient {
 
     override fun stop(): Task<Void> = Tasks.forException(IllegalStateException())
 
+    @Deprecated("Deprecated in Java")
     @Suppress("DEPRECATION")
     override fun getExposureInformation(token: String): Task<List<ExposureInformation>> =
         Tasks.forException(IllegalStateException())
@@ -89,7 +91,8 @@ abstract class FakeExposureNotificationsClient : ExposureNotificationClient {
     override fun getTemporaryExposureKeyHistory(): Task<List<TemporaryExposureKey>> =
         Tasks.forException(IllegalStateException())
 
-    override fun getExposureWindows(token: String?): Task<MutableList<ExposureWindow>> =
+    @Deprecated("Deprecated in Java")
+    override fun getExposureWindows(token: String): Task<MutableList<ExposureWindow>> =
         Tasks.forException(IllegalStateException())
 
     override fun getStatus(): Task<MutableSet<ExposureNotificationStatus>> =

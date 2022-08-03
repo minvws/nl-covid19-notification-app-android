@@ -1,6 +1,8 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    id 'jacoco'
+}
 apply from: rootProject.file("jacoco.gradle")
 
 android {
@@ -35,29 +37,15 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-
-    // Play services nearby ExposureNotification SDK (included as AAR file)
     api project(":play-services-nearby-eap")
+    implementation libs.kotlin.coroutines.android
+    implementation libs.androidx.core
+    implementation(libs.bundles.playServices) {
+        exclude group: "androidx.fragment", module: "fragment"
+    }
+    implementation libs.timber
 
-    // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-
-    // AndroidX
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-
-    // Google play services
-    implementation "com.google.android.gms:play-services-base:$play_services_base_version"
-    implementation "com.google.android.gms:play-services-basement:$play_services_base_version"
-    implementation "com.google.android.gms:play-services-tasks:$play_services_tasks_version"
-
-    // Timber logging
-    implementation "com.jakewharton.timber:timber:$timber_version"
-
-    // JUnit
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "androidx.test:core:$androidx_test_core_version"
-
-    // Roboelectric test runner
-    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    testImplementation libs.junit
+    testImplementation libs.androidx.test.core
+    testImplementation libs.robolectric
 }

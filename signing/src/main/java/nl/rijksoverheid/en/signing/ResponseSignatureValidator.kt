@@ -76,7 +76,8 @@ class ResponseSignatureValidator(
             val sp = CMSSignedDataParser(
                 JcaDigestCalculatorProviderBuilder().setProvider(provider)
                     .build(),
-                CMSTypedStream(BufferedInputStream(content)), signature
+                CMSTypedStream(BufferedInputStream(content)),
+                signature
             )
 
             sp.signedContent.drain()

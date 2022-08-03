@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.status
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.BoolRes
 import androidx.annotation.DrawableRes
@@ -47,6 +48,8 @@ class StatusHeaderItem(
         abstract fun getDescription(context: Context): String
     }
 
+    // After upgrading AGP lint is flagging some of the fields incorrectly unfortunately
+    @SuppressLint("ResourceType")
     private val viewState = when (headerState) {
         StatusViewModel.HeaderState.Active ->
             object : HeaderViewState(
@@ -127,10 +130,11 @@ class StatusHeaderItem(
             object : HeaderViewState(
                 R.drawable.gradient_status_paused,
                 R.string.cd_status_paused,
-                if (headerState.pausedUntil.isAfter(LocalDateTime.now()))
+                if (headerState.pausedUntil.isAfter(LocalDateTime.now())) {
                     R.string.status_paused_headline
-                else
-                    R.string.status_paused_duration_reached_headline,
+                } else {
+                    R.string.status_paused_duration_reached_headline
+                },
                 icon = R.drawable.ic_status_paused,
                 enableActionLabel = R.string.status_en_api_disabled_enable,
                 enableAction = primaryAction,

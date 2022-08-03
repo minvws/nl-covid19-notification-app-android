@@ -4,13 +4,14 @@
  *
  *  SPDX-License-Identifier: EUPL-1.2
  */
+@file:Suppress("ktlint:filename")
+
 package nl.rijksoverheid.en.lifecyle
 
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
-
 fun LifecycleOwner.asFlow() = callbackFlow {
     val observer = object : DefaultLifecycleObserver {
         override fun onCreate(owner: LifecycleOwner) {
