@@ -36,7 +36,7 @@ class DashboardOverviewSection : Section() {
             listOf(
                 HeaderItem(R.string.dashboard_header),
                 TagItem(R.string.dashboard_tag),
-                ParagraphItem(R.string.dashboard_overview_summary),
+                ParagraphItem(R.string.dashboard_overview_summary)
             ) +
                 dashboardItems +
                 LinkItem(R.string.dashboard_more_info_link, onClick = onMoreInfoLinkItemClicked)

@@ -21,10 +21,11 @@ val DashboardItem.icon: Int
     }
 
 fun DashboardItem.getIconTint(context: Context) =
-    if (this !is DashboardItem.CoronaMelderUsers)
+    if (this !is DashboardItem.CoronaMelderUsers) {
         ContextCompat.getColor(context, R.color.color_primary)
-    else
+    } else {
         null
+    }
 
 val DashboardItem.title: Int
     get() = when (this) {

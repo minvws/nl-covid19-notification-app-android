@@ -71,9 +71,9 @@ fun AccessibleLineChart.applyDashboardStyling(
         axisMaximum = upperbound
         valueFormatter = object : ValueFormatter() {
             override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-                return if (value == axisMinimum || value == axisMaximum)
+                return if (value == axisMinimum || value == axisMaximum) {
                     formatValue(value)
-                else ""
+                } else ""
             }
         }
     }

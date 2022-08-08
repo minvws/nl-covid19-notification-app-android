@@ -44,7 +44,7 @@ sealed class DashboardItem(
     open val highlightedValue: GraphValue? = null,
     open val values: List<GraphValue> = emptyList(),
     val reference: DashboardItemRef,
-    open val moreInfoUrl: String = DEFAULT_MORE_INFO_URL,
+    open val moreInfoUrl: String = DEFAULT_MORE_INFO_URL
 ) {
 
     @JsonClass(generateAdapter = true)
@@ -68,7 +68,7 @@ sealed class DashboardItem(
         @Json(name = "sortingValue") override val sortingValue: Int,
         @Json(name = "highlightedValue") override val highlightedValue: GraphValue?,
         @Json(name = "values") override val values: List<GraphValue>,
-        @Json(name = "hospitalAdmissionMovingAverage") val hospitalAdmissionMovingAverage: MovingAverage,
+        @Json(name = "hospitalAdmissionMovingAverage") val hospitalAdmissionMovingAverage: MovingAverage
     ) : DashboardItem(sortingValue, highlightedValue, values, DashboardItemRef.HospitalAdmissions)
 
     @JsonClass(generateAdapter = true)
@@ -76,7 +76,7 @@ sealed class DashboardItem(
         @Json(name = "sortingValue") override val sortingValue: Int,
         @Json(name = "highlightedValue") override val highlightedValue: GraphValue?,
         @Json(name = "values") override val values: List<GraphValue>,
-        @Json(name = "icuAdmissionMovingAverage") val icuAdmissionMovingAverage: MovingAverage,
+        @Json(name = "icuAdmissionMovingAverage") val icuAdmissionMovingAverage: MovingAverage
     ) : DashboardItem(sortingValue, highlightedValue, values, DashboardItemRef.IcuAdmissions)
 
     @JsonClass(generateAdapter = true)
@@ -84,7 +84,7 @@ sealed class DashboardItem(
         @Json(name = "sortingValue") override val sortingValue: Int,
         @Json(name = "boosterCoverage") val boosterCoverage: BoosterCoverage = BoosterCoverage(emptyList()),
         @Json(name = "boosterCoverage18Plus") val boosterCoverage18Plus: Float,
-        @Json(name = "vaccinationCoverage18Plus") val vaccinationCoverage18Plus: Float,
+        @Json(name = "vaccinationCoverage18Plus") val vaccinationCoverage18Plus: Float
     ) : DashboardItem(sortingValue, null, boosterCoverage.values, DashboardItemRef.VaccinationCoverage) {
 
         @JsonClass(generateAdapter = true)

@@ -86,6 +86,6 @@ class DashboardSection : Section() {
     private fun MovingAverage.toSummaryArgs(context: Context) = listOf(
         value.formatToString(context),
         DateTimeHelper.convertToLocalDate(timestampStart).formatDashboardDateShort(context),
-        DateTimeHelper.convertToLocalDate(timestampEnd).formatDashboardDateShort(context),
+        DateTimeHelper.convertToLocalDate(timestampEnd).formatDashboardDateShort(context)
     )
 }

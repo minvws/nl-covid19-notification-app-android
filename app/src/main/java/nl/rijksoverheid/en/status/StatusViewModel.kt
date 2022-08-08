@@ -262,14 +262,16 @@ class StatusViewModel(
 
     fun refreshDashboardData() {
         // Ignore if dashboard has been disabled or refresh job is still in progress
-        if (!settingsRepository.dashboardEnabled || refreshDashboardDataJob?.isActive == true)
+        if (!settingsRepository.dashboardEnabled || refreshDashboardDataJob?.isActive == true) {
             return
+        }
 
         refreshDashboardDataJob = viewModelScope.launch {
             dashboardRepository.getDashboardData().collect {
                 // Ignore Loading state when we already have data to show
-                if (dashboardDataFlow.value is Resource.Success && it is Resource.Loading)
+                if (dashboardDataFlow.value is Resource.Success && it is Resource.Loading) {
                     return@collect
+                }
 
                 dashboardDataFlow.emit(it)
             }

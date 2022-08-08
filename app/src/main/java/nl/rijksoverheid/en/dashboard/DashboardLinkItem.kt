@@ -39,7 +39,7 @@ class DashboardLinkItem(
 
     data class ViewState(
         val dashboardItem: DashboardItem,
-        val clock: Clock = Clock.systemDefaultZone(),
+        val clock: Clock = Clock.systemDefaultZone()
     ) {
         @DrawableRes
         val icon: Int = dashboardItem.icon

@@ -71,10 +71,11 @@ class AccessibleLineChart : LineChart {
 
     override fun dispatchPopulateAccessibilityEvent(event: AccessibilityEvent): Boolean {
         super.dispatchPopulateAccessibilityEvent(event)
-        if (selectedEntry == null)
+        if (selectedEntry == null) {
             event.text.add(getAccessibilityDescription())
-        else
+        } else {
             getSelectedValueAccessibilityDescription()?.let { event.text.add(it) }
+        }
 
         return true
     }

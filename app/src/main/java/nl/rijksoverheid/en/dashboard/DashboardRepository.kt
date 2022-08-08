@@ -20,7 +20,7 @@ import timber.log.Timber
 
 class DashboardRepository(
     private val cdnService: CdnService,
-    private val dispatcher: CoroutineDispatcher,
+    private val dispatcher: CoroutineDispatcher
 ) {
 
     fun getDashboardData(): Flow<Resource<DashboardData>> = flow {
