@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.ksp)
     id 'jacoco'
 }
 apply from: rootProject.file("jacoco.gradle")
@@ -76,6 +76,15 @@ android {
     }
 
     compileOptions.coreLibraryDesugaringEnabled true
+
+    kotlin {
+        sourceSets.main {
+            kotlin.srcDir("build/generated/ksp/main/kotlin")
+        }
+        sourceSets.test {
+            kotlin.srcDir("build/generated/ksp/test/kotlin")
+        }
+    }
 }
 
 dependencies {
@@ -90,7 +99,7 @@ dependencies {
         exclude group: "org.jetbrains.kotlin", module: "kotlin-reflect"
     }
     implementation libs.moshi.adapters
-    kapt libs.moshi.kotlin.codegen
+    ksp libs.moshi.kotlin.codegen
     implementation libs.timber
 
     testImplementation libs.junit
