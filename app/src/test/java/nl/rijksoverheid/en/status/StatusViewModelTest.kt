@@ -376,7 +376,6 @@ class StatusViewModelTest {
 
     @Test
     fun `headerState bluetooth disabled`() = runBlocking {
-
         Mockito.`when`(exposureNotificationsRepository.getStatus())
             .thenReturn(flowOf(StatusResult.BluetoothDisabled))
         Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
@@ -421,7 +420,6 @@ class StatusViewModelTest {
 
     @Test
     fun `headerState syncIssues wifi only`() = runBlocking {
-
         Mockito.`when`(exposureNotificationsRepository.getStatus())
             .thenReturn(flowOf(StatusResult.Enabled))
         Mockito.`when`(settingsRepository.exposureNotificationsPausedState())

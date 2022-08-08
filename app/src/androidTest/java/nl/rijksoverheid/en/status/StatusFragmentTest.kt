@@ -21,7 +21,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.BaseInstrumentationTest
@@ -147,7 +146,7 @@ class StatusFragmentTest : BaseInstrumentationTest() {
         )
     }
     private val dashboardRepository by lazy {
-        DashboardRepository(service, Dispatchers.IO)
+        DashboardRepository(service)
     }
 
     private val statusViewModel by lazy {

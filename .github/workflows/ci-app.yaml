@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - release/*
   pull_request:
 
 jobs:
@@ -35,7 +36,7 @@ jobs:
         uses: ./.github/actions/cleanup-credentials
 
   distribute:
-    if: ${{ (github.ref == 'refs/heads/main') }}
+    if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')) }}
     env:
       KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
       KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
@@ -70,12 +71,14 @@ jobs:
         run: ./gradlew app:bundleProdRelease app:assemAccRelease app:assemTstRelease app:assemProdRelease app:appDistributionUploadTstRelease app:appDistributionUploadAccRelease app:appDistributionUploadProdRelease
 
       - name: "Publish APK"
+        if: ${{ (github.ref == 'refs/heads/main') }}
         uses: actions/upload-artifact@v3
         with:
           name: apk
           path: app/build/outputs/apk/prod/release/*-release.apk
 
       - name: "Publish bundle"
+        if: ${{ (github.ref == 'refs/heads/main') }}
         uses: actions/upload-artifact@v3
         with:
           name: bundle

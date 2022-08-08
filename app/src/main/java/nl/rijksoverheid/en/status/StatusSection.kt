@@ -121,11 +121,11 @@ class StatusSection : Section() {
         onItemClick: (DashboardItem) -> Unit,
         highestItemHeight: Int = context.resources.getDimensionPixelSize(R.dimen.dashboard_content_min_height)
     ) {
-
         if (this.dashboardState == dashboardState &&
             highestItemHeight <= highestDashboardItemHeight
-        )
+        ) {
             return
+        }
 
         this.dashboardState = dashboardState
         this.highestDashboardItemHeight = highestItemHeight
@@ -144,7 +144,6 @@ class StatusSection : Section() {
                 StatusDashboardErrorItem(dashboardState.message)
             )
             is StatusViewModel.DashboardState.DashboardCards -> {
-
                 val resources = context.resources
                 val dashboardItemWidth = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     resources.displayMetrics.widthPixels - resources.getDimensionPixelSize(R.dimen.dashboard_content_width_margin)

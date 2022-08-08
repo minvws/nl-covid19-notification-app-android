@@ -6,22 +6,21 @@
  */
 package nl.rijksoverheid.en.dashboard
 
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.runTest
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.dashboardTestData
 import nl.rijksoverheid.en.util.DashboardServerError
 import nl.rijksoverheid.en.util.Resource
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
+import org.mockito.Mockito.`when`
+import org.mockito.MockitoAnnotations.openMocks
 import org.robolectric.RobolectricTestRunner
 import retrofit2.HttpException
 
@@ -36,11 +35,9 @@ class DashboardRepositoryTest {
 
     private lateinit var closeable: AutoCloseable
 
-    private val testDispatcher = TestCoroutineDispatcher()
-
     @Before
     fun openMocks() {
-        closeable = MockitoAnnotations.openMocks(this)
+        closeable = openMocks(this)
     }
 
     @After
@@ -49,31 +46,31 @@ class DashboardRepositoryTest {
     }
 
     @Test
-    fun `getDashboardData returns service call result as Success Resource`() = runBlocking {
-        Mockito.`when`(cdnService.getDashboardData(CacheStrategy.CACHE_LAST))
+    fun `getDashboardData returns service call result as Success Resource`() = runTest {
+        `when`(cdnService.getDashboardData(CacheStrategy.CACHE_LAST))
             .thenReturn(dashboardTestData)
 
-        val dashboardRepository = DashboardRepository(cdnService, testDispatcher)
+        val dashboardRepository = DashboardRepository(cdnService)
 
         dashboardRepository.getDashboardData().collect { dashboardResource ->
             if (dashboardResource !is Resource.Loading) {
-                Assert.assertTrue(dashboardResource is Resource.Success)
-                Assert.assertEquals(dashboardTestData, dashboardResource.data)
+                assertTrue(dashboardResource is Resource.Success)
+                assertEquals(dashboardTestData, dashboardResource.data)
             }
         }
     }
 
     @Test
-    fun `getDashboardData from cdnService failed returns DashboardServerError`() = runBlocking {
-        Mockito.`when`(cdnService.getDashboardData(CacheStrategy.CACHE_LAST))
+    fun `getDashboardData from cdnService failed returns DashboardServerError`() = runTest {
+        `when`(cdnService.getDashboardData(CacheStrategy.CACHE_LAST))
             .thenThrow(httpException)
 
-        val dashboardRepository = DashboardRepository(cdnService, testDispatcher)
+        val dashboardRepository = DashboardRepository(cdnService)
 
         dashboardRepository.getDashboardData().collect { dashboardResource ->
             if (dashboardResource !is Resource.Loading) {
-                Assert.assertTrue(dashboardResource is Resource.Error)
-                Assert.assertEquals(dashboardResource.error?.peekContent(), DashboardServerError)
+                assertTrue(dashboardResource is Resource.Error)
+                assertEquals(dashboardResource.error?.peekContent(), DashboardServerError)
             }
         }
     }

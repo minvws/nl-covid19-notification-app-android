@@ -42,7 +42,7 @@ open class DashboardCardItem(
     val dashboardItem: DashboardItem,
     private val cardWidth: Int = ViewGroup.LayoutParams.MATCH_PARENT,
     private val minHeight: Int = context.resources.getDimensionPixelSize(R.dimen.dashboard_content_min_height),
-    private val setHighestHeight: ((Int) -> Unit)? = null,
+    private val setHighestHeight: ((Int) -> Unit)? = null
 ) : BaseBindableItem<ItemDashboardCardBinding>() {
 
     override fun getLayout() = R.layout.item_dashboard_card
@@ -73,10 +73,11 @@ open class DashboardCardItem(
         viewBinding.dashboardItemIcon.apply {
             setImageResource(dashboardItem.icon)
             val iconTint = dashboardItem.getIconTint(context)
-            if (iconTint != null)
+            if (iconTint != null) {
                 setColorFilter(iconTint)
-            else
+            } else {
                 clearColorFilter()
+            }
         }
         viewBinding.dashboardItemTitle.setText(dashboardItem.title)
         viewBinding.highlightedLabel.text = dashboardItem.highlightedValue?.timestamp
@@ -98,8 +99,9 @@ open class DashboardCardItem(
             viewBinding.container.minHeight = minHeight
             viewBinding.container.post {
                 val measuredHeight = viewBinding.container.measuredHeight
-                if (measuredHeight > minHeight)
+                if (measuredHeight > minHeight) {
                     setHighestHeight.invoke(measuredHeight)
+                }
             }
         }
     }

@@ -35,8 +35,9 @@ class DashboardGraphItem(
         }
 
         viewBinding.lineChart.apply {
-            if (dashboardItem.values.isEmpty())
+            if (dashboardItem.values.isEmpty()) {
                 return
+            }
 
             val entries = dashboardItem.values
                 .map { Entry(it.timestamp.toFloat(), it.value.toFloat()) }

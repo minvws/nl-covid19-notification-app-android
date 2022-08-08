@@ -30,6 +30,6 @@ val dashboardTestData = DashboardData(
             GraphValue(1645065335, 1300000.0),
             GraphValue(1646065335, 1290000.0),
             GraphValue(1647065335, 1280000.0)
-        ),
+        )
     )
 )
