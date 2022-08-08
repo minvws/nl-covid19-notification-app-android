@@ -148,7 +148,8 @@ class PrivacyPolicyConsentFragmentTest : BaseInstrumentationTest() {
 
             assertEquals(
                 "Pressing next button in privacy policy consent screen navigates to enable api screen",
-                R.id.nav_enable_api, navController.currentDestination?.id
+                R.id.nav_enable_api,
+                navController.currentDestination?.id
             )
         }
     }

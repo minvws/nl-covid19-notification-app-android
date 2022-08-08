@@ -63,8 +63,9 @@ class AppMessageReceiver : BroadcastReceiver() {
 
             val shouldScheduleBasedOnProbability = notification.shouldScheduleBasedOnProbability()
             Timber.d("Schedule notification based on probability result: $shouldScheduleBasedOnProbability")
-            if (!shouldScheduleBasedOnProbability)
+            if (!shouldScheduleBasedOnProbability) {
                 return
+            }
 
             Timber.d("Schedule")
             val pendingIntent = createPendingIntent(context)

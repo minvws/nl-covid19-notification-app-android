@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 class ExposureCleanupWorker(
     context: Context,
     params: WorkerParameters,
-    private val repository: ExposureNotificationsRepository,
+    private val repository: ExposureNotificationsRepository
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {

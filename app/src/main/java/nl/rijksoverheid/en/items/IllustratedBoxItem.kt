@@ -30,7 +30,10 @@ open class IllustratedBoxItem(
     override fun getLayout() = R.layout.item_illustrated_box
     override fun bind(viewBinding: ItemIllustratedBoxBinding, position: Int) {
         viewBinding.viewState = ViewState(
-            title, subtitle, illustration, viewBinding.root.context.getColor(backgroundTint)
+            title,
+            subtitle,
+            illustration,
+            viewBinding.root.context.getColor(backgroundTint)
         )
         viewBinding.constraintLayout.clipToOutline = true
     }

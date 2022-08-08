@@ -180,6 +180,7 @@
     <plurals name="days_ago">
         <item quantity="one">il y a %d jour</item>
         <item quantity="other">il y a %d jours</item>
+        <item quantity="many">il y a %d jours</item>
     </plurals>
     <string name="dialog_error_api_not_available_title">Google Play Services a été mis à jour</string>
     <string name="dialog_error_api_not_available_message">Ce n\'est que si Google Play Services a été mis à jour que l\'on conserve les éventuels contacts avec le Covid-19. Veuillez réessayer plus tard.</string>
@@ -280,14 +281,17 @@
     <plurals name="pause_duration_hours_option_plurals">
         <item quantity="one">Mettre en pause pour %d heure</item>
         <item quantity="other">Mettre en pause pour %d heures</item>
+        <item quantity="many">Mettre en pause pour %d heures</item>
     </plurals>
     <plurals name="duration_hours_plurals">
         <item quantity="one">%d heure</item>
         <item quantity="other">%d heures</item>
+        <item quantity="many">%d heures</item>
     </plurals>
     <plurals name="duration_minutes_plurals">
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
+        <item quantity="many">%d minutes</item>
     </plurals>
     <string name="status_partly_active_headline">L\'application est partiellement activée.</string>
     <string name="status_error_sync_issues_wifi_only"><![CDATA[L\'application n\'a pas de connexion à Internet. Voilà pourquoi l\'application n\'a <b>pas</b>pu contrôler pendant 24 heures si les personnes que vous avez rencontrées se sont par la suite avérées avoir le Covid-19. L\'application enregistre toutefois <b>bien</b> vos rencontres.<br/><br/><b>Connectez-vous au Wifi ou indiquez que l\'application peut utiliser les données mobiles.</b>]]></string>

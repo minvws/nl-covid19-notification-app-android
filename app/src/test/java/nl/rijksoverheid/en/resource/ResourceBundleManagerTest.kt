@@ -375,7 +375,8 @@ class ResourceBundleManagerTest {
                 ResourceBundle.Guidance(
                     listOf(
                         ResourceBundle.Guidance.RelativeExposureDayLayout(
-                            null, null,
+                            null,
+                            null,
                             listOf(ResourceBundle.Guidance.Element.Paragraph("relative_layout_key", "relative_layout_key"))
                         )
                     ),
@@ -412,17 +413,20 @@ class ResourceBundleManagerTest {
                 ResourceBundle.Guidance(
                     listOf(
                         ResourceBundle.Guidance.RelativeExposureDayLayout(
-                            null, 3,
+                            null,
+                            3,
                             listOf(ResourceBundle.Guidance.Element.Paragraph("incorrect_key", "incorrect_key"))
                         ),
                         ResourceBundle.Guidance.RelativeExposureDayLayout(
-                            4, 10,
+                            4,
+                            10,
                             listOf(ResourceBundle.Guidance.Element.Paragraph("correct_key", "correct_key"))
                         ),
                         ResourceBundle.Guidance.RelativeExposureDayLayout(
-                            11, null,
+                            11,
+                            null,
                             listOf(ResourceBundle.Guidance.Element.Paragraph("incorrect_key", "incorrect_key"))
-                        ),
+                        )
                     ),
                     emptyList()
                 )
@@ -457,17 +461,20 @@ class ResourceBundleManagerTest {
                 ResourceBundle.Guidance(
                     listOf(
                         ResourceBundle.Guidance.RelativeExposureDayLayout(
-                            null, 3,
+                            null,
+                            3,
                             listOf(ResourceBundle.Guidance.Element.Paragraph("incorrect_key", "incorrect_key"))
                         ),
                         ResourceBundle.Guidance.RelativeExposureDayLayout(
-                            4, 10,
+                            4,
+                            10,
                             listOf(ResourceBundle.Guidance.Element.Paragraph("icorrect_key", "icorrect_key"))
                         ),
                         ResourceBundle.Guidance.RelativeExposureDayLayout(
-                            11, null,
+                            11,
+                            null,
                             listOf(ResourceBundle.Guidance.Element.Paragraph("correct_key", "correct_key"))
-                        ),
+                        )
                     ),
                     emptyList()
                 )
@@ -502,17 +509,20 @@ class ResourceBundleManagerTest {
                 ResourceBundle.Guidance(
                     listOf(
                         ResourceBundle.Guidance.RelativeExposureDayLayout(
-                            null, 3,
+                            null,
+                            3,
                             listOf(ResourceBundle.Guidance.Element.Paragraph("correct_key", "correct_key"))
                         ),
                         ResourceBundle.Guidance.RelativeExposureDayLayout(
-                            4, 10,
+                            4,
+                            10,
                             listOf(ResourceBundle.Guidance.Element.Paragraph("icorrect_key", "icorrect_key"))
                         ),
                         ResourceBundle.Guidance.RelativeExposureDayLayout(
-                            11, null,
+                            11,
+                            null,
                             listOf(ResourceBundle.Guidance.Element.Paragraph("incorrect_key", "incorrect_key"))
-                        ),
+                        )
                     ),
                     emptyList()
                 )
@@ -560,10 +570,11 @@ class ResourceBundleManagerTest {
             context,
             object : FakeResourceBundleCdnService(cacheBundle) {
                 override suspend fun getResourceBundle(id: String, cacheStrategy: CacheStrategy?): ResourceBundle {
-                    return if (cacheStrategy == CacheStrategy.CACHE_FIRST || cacheStrategy == CacheStrategy.CACHE_ONLY)
+                    return if (cacheStrategy == CacheStrategy.CACHE_FIRST || cacheStrategy == CacheStrategy.CACHE_ONLY) {
                         cacheBundle
-                    else
+                    } else {
                         updatedBundle
+                    }
                 }
             },
             useDefaultGuidance = false

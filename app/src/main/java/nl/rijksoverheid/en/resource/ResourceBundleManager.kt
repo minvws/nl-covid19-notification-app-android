@@ -34,10 +34,11 @@ class ResourceBundleManager(
     private suspend fun loadResourceBundle(
         refreshFromServer: Boolean = false
     ): ResourceBundle {
-        return if (useDefaultGuidance)
+        return if (useDefaultGuidance) {
             loadDefaultResourceBundle()
-        else
+        } else {
             getResourceBundleFromCacheOrNetwork(refreshFromServer) ?: loadDefaultResourceBundle()
+        }
     }
 
     private fun loadDefaultResourceBundle(): ResourceBundle {

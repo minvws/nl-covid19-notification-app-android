@@ -16,7 +16,6 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -103,10 +102,11 @@ class StatusViewModel(
 
     val lastKeysProcessed = exposureNotificationsRepository.lastKeyProcessed()
         .map {
-            if (it != null && it > 0)
+            if (it != null && it > 0) {
                 LocalDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneId.systemDefault())
-            else
+            } else {
                 null
+            }
         }.asLiveData(viewModelScope.coroutineContext)
 
     val exposureNotificationApiUpdateRequired = liveData {
@@ -138,10 +138,11 @@ class StatusViewModel(
 
     suspend fun getAppointmentInfo(context: Context): AppointmentInfo {
         val appConfig = appConfigManager.getCachedConfigOrDefault()
-        val phoneNumber = if (headerState.value is HeaderState.Exposed)
+        val phoneNumber = if (headerState.value is HeaderState.Exposed) {
             appConfig.appointmentPhoneNumber
-        else
+        } else {
             context.getString(R.string.request_test_phone_number)
+        }
         return AppointmentInfo(
             phoneNumber = phoneNumber,
             website = appConfig.coronaTestURL
@@ -227,14 +228,14 @@ class StatusViewModel(
         is StatusResult.Unavailable,
         is StatusResult.UnknownError -> NotificationState.Error.ConsentRequired
         StatusResult.BluetoothDisabled -> {
-            if (keyProcessingOverdue)
+            if (keyProcessingOverdue) {
                 NotificationState.Error.ConsentRequired
-            else NotificationState.Error.BluetoothDisabled
+            } else NotificationState.Error.BluetoothDisabled
         }
         StatusResult.LocationPreconditionNotSatisfied -> {
-            if (keyProcessingOverdue)
+            if (keyProcessingOverdue) {
                 NotificationState.Error.ConsentRequired
-            else NotificationState.Error.LocationDisabled
+            } else NotificationState.Error.LocationDisabled
         }
         StatusResult.Enabled -> {
             when {

@@ -1,11 +1,14 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: "kotlin-kapt"
-apply plugin: "androidx.navigation.safeargs.kotlin"
-apply plugin: "com.github.triplet.play"
-apply plugin: "com.osacky.fladle"
-apply plugin: 'com.google.firebase.appdistribution'
-apply plugin: 'ru.cian.huawei-publish'
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.navigation.safeargs)
+    alias(libs.plugins.tripletPlay)
+    alias(libs.plugins.fladle)
+    alias(libs.plugins.firebase.appdistribution)
+    id 'jacoco'
+}
+
 apply from: rootProject.file("jacoco.gradle")
 
 version = "2.6.0"
@@ -146,7 +149,7 @@ android {
     }
 
     kotlinOptions {
-        freeCompilerArgs += ["-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+        freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
     }
 }
 
@@ -154,15 +157,6 @@ play {
     enabled = System.getenv("PLAY_STORE_CREDENTIALS") != null
     serviceAccountCredentials = System.getenv("PLAY_STORE_CREDENTIALS") != null ? new File(System.getenv("PLAY_STORE_CREDENTIALS")) : null
     track = "internal"
-}
-
-huaweiPublish {
-    instances {
-        prodRelease {
-            buildFormat = "aab"
-            publish = false
-        }
-    }
 }
 
 fladle {
@@ -175,140 +169,57 @@ fladle {
     testTargets = ["notAnnotation nl.rijksoverheid.en.screenshots.StoreScreenshots"]
 }
 
-repositories {
-    maven {
-        url "https://jitpack.io"
-        content {
-            includeGroup "com.github.pandulapeter.beagle"
-            includeGroup "com.github.blipinsk"
-            includeGroup "com.github.lisawray.groupie"
-            includeGroup "com.github.PhilJay"
-        }
-    }
-}
-
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-
-    // Java 8+ API desugaring support
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
-
-    // Service Api
+    coreLibraryDesugaring libs.desugar
     implementation project(":api")
-    // ExposureNotificationApi
     implementation project(":en-api")
-    // ResponseSignatureValidator
     implementation project(":signing")
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.activity
+    implementation libs.androidx.fragment
+    implementation libs.androidx.core
+    implementation libs.androidx.core.splashscreen
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.browser
+    implementation libs.androidx.lifecycle.viewmodel
+    implementation libs.androidx.lifecycle.livedata
+    implementation libs.androidx.lifecycle.common.java8
+    implementation libs.androidx.lifecycle.process
+    implementation libs.androidx.work.runtime
+    implementation libs.androidx.preference
+    implementation libs.androidx.security.crypto
+    implementation libs.androidx.navigation.fragment
+    implementation libs.androidx.navigation.ui
+    androidTestImplementation libs.androidx.navigation.testing
+    implementation libs.timber
+    implementation libs.material
+    implementation libs.bundles.play.core
+    implementation libs.bundles.playServices
+    implementation libs.lottie
+    implementation libs.bundles.groupie
+    implementation libs.insetter
+    implementation libs.mpAndroidChart
 
-    // AndroidX
-    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
-    implementation "androidx.activity:activity-ktx:$androidx_activity_version"
-    implementation "androidx.fragment:fragment-ktx:$androidx_fragment_version"
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-
-    // Splashscreen
-    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
-
-    // ConstraintLayout
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-
-    // CustomTabs
-    implementation "androidx.browser:browser:1.4.0"
-
-    // Lifecycle components
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$androidx_lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$androidx_lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-process:$androidx_lifecycle_version"
-
-    // WorkManager (UI independent background tasks)
-    implementation "androidx.work:work-runtime-ktx:$androidx_work_version"
-
-    // SharedPreferences
-    implementation "androidx.preference:preference-ktx:1.2.0"
-    // EncryptedSharedPreferences
-    implementation "androidx.security:security-crypto:1.1.0-alpha03"
-
-    // Navigation components
-    implementation "androidx.navigation:navigation-fragment-ktx:$androidx_nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$androidx_nav_version"
-    androidTestImplementation "androidx.navigation:navigation-testing:$androidx_nav_version"
-
-
-    // Timber logger
-    implementation "com.jakewharton.timber:timber:$timber_version"
-
-    // Material components
-    implementation 'com.google.android.material:material:1.5.0'
-
-    // Google Play Core Library
-    implementation "com.google.android.play:core:1.10.3"
-    implementation "com.google.android.play:core-ktx:1.8.1"
-
-    // Google play services
-    implementation "com.google.android.gms:play-services-base:$play_services_base_version"
-    implementation "com.google.android.gms:play-services-basement:$play_services_base_version"
-    implementation "com.google.android.gms:play-services-tasks:$play_services_tasks_version"
-
-    // Lottie animations
-    implementation 'com.airbnb.android:lottie:4.2.2'
-
-    // Groupie (RecyclerView builder)
-    implementation "com.github.lisawray.groupie:groupie:$groupie_version"
-    implementation "com.github.lisawray.groupie:groupie-viewbinding:$groupie_version"
-
-    // Insetter (WindowInsets util)
-    implementation "dev.chrisbanes.insetter:insetter:$insetter_version"
-
-    // MPAndroidChart
-    implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
-
-    // UnitTest support classes
     testImplementation project(":test-support")
     debugImplementation project(":test-support")
     androidTestDebugImplementation project(":test-support")
-
-    // Unit testing
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "androidx.arch.core:core-testing:$arch_core_version"
-    testImplementation "androidx.work:work-testing:$androidx_work_version"
-
-    // Mockito
-    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitokotlin_version"
-    testImplementation "org.mockito:mockito-core:$mockito_version"
-    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
-    androidTestImplementation "org.mockito.kotlin:mockito-kotlin:$mockitokotlin_version"
-
-    // MockWebServer
-    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
-
-    // Coroutine testing util
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
-
-    // Roboelectric test runner
-    testImplementation "org.robolectric:robolectric:$robolectric_version"
-
-    // AndroidTests
-    androidTestImplementation "androidx.arch.core:core-testing:$arch_core_version"
-    androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext_junit_version"
-
-    // Espresso (Android UI tests)
-    androidTestImplementation "androidx.test.espresso:espresso-core:$androidx_espresso_version"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:$androidx_espresso_version"
-    androidTestImplementation "androidx.test.espresso:espresso-intents:$androidx_espresso_version"
-
-    // UI Automator
-    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
-
-    // JUnit TestRule for Android instrumented tests, which automatically disables and enables animations
-    androidTestImplementation 'com.github.blipinsk:disable-animations-rule:2.0.0'
-    // JUnit rule for specifying some of the UI demo commands and customize some part of the Status as well as the Navigation bar
-    androidTestImplementation 'com.vanniktech:junit4-android-integration-rules:0.3.0'
-
-    // Fastlane Screengrab: localized screenshots
-    androidTestImplementation 'tools.fastlane:screengrab:2.1.1'
-
-    // Beagle debug drawer
-    def beagleVersion = "2.5.1"
-    tstImplementation "com.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
+    testImplementation libs.junit
+    testImplementation libs.androidx.core.testing
+    testImplementation libs.androidx.work.testing
+    testImplementation libs.mockito.kotlin
+    testImplementation libs.mockito.core
+    androidTestImplementation libs.mockito.android
+    androidTestImplementation libs.mockito.kotlin
+    testImplementation libs.okhttp3.mockwebserver
+    testImplementation libs.kotlin.coroutines.testing
+    testImplementation libs.robolectric
+    androidTestImplementation libs.androidx.core.testing
+    androidTestImplementation libs.androidx.test.junit
+    androidTestImplementation libs.bundles.espresso
+    androidTestImplementation libs.androidx.test.uiautomator
+    // TODO check if this is needed; the test runner should already do this
+    androidTestImplementation libs.disableAnimationsRule
+    androidTestImplementation libs.junit4AndroidIntegrationRules
+    androidTestImplementation libs.fastlane.screengrab
+    tstImplementation libs.beagle.ui.drawer
 }

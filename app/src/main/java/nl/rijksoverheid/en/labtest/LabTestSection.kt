@@ -45,7 +45,7 @@ class LabTestSection(
                 LabTestStepItem(R.string.lab_test_step_1, 1, isFirstElement = true),
                 LabTestKeyItem(keyState, copy, retry),
                 LabTestStepItem(R.string.lab_test_step_2, 2),
-                LabTestStepItem(R.string.lab_test_step_3, 3, isLastElement = true),
+                LabTestStepItem(R.string.lab_test_step_3, 3, isLastElement = true)
             ).apply {
                 if (notificationsState is NotificationsState.Disabled || notificationsState is NotificationsState.Unavailable) {
                     add(

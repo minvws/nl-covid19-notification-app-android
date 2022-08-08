@@ -46,8 +46,9 @@ class AppLifecycleViewModel(
      * Check in app config for required [AppLifecycleStatus].
      */
     fun checkAppLifecycleStatus() {
-        if (checkForForcedAppUpdateJob?.isActive == true)
+        if (checkForForcedAppUpdateJob?.isActive == true) {
             return
+        }
 
         checkForForcedAppUpdateJob = viewModelScope.launch {
             try {

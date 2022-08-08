@@ -44,7 +44,8 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
 
             assertEquals(
                 "Pressing next button in first step of explanation navigates to second step",
-                R.id.explanationStep2, navController.currentDestination?.id
+                R.id.explanationStep2,
+                navController.currentDestination?.id
             )
         }
     }
@@ -66,7 +67,8 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
 
             assertEquals(
                 "Pressing next button in second step of explanation navigates to third step",
-                R.id.explanationStep3, navController.currentDestination?.id
+                R.id.explanationStep3,
+                navController.currentDestination?.id
             )
         }
     }
@@ -88,7 +90,8 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
 
             assertEquals(
                 "Pressing next button in third step of explanation navigates to first example screen",
-                R.id.explanationExample1, navController.currentDestination?.id
+                R.id.explanationExample1,
+                navController.currentDestination?.id
             )
         }
     }
@@ -110,7 +113,8 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
 
             assertEquals(
                 "Pressing next button in first example screen navigates to second example screen",
-                R.id.explanationExample2, navController.currentDestination?.id
+                R.id.explanationExample2,
+                navController.currentDestination?.id
             )
         }
     }
@@ -132,7 +136,8 @@ class ExplanationFragmentTest : BaseInstrumentationTest() {
 
             assertEquals(
                 "Pressing next button in second example screen navigates to consent screen",
-                R.id.nav_privacy_policy_consent, navController.currentDestination?.id
+                R.id.nav_privacy_policy_consent,
+                navController.currentDestination?.id
             )
         }
     }

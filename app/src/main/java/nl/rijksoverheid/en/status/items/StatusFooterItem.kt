@@ -17,12 +17,14 @@ class StatusFooterItem(private val lastKeysProcessed: LocalDateTime?) : BaseBind
     override fun getLayout() = R.layout.item_status_footer
 
     override fun bind(viewBinding: ItemStatusFooterBinding, position: Int) {
-        viewBinding.lastKeysSynced.text = if (lastKeysProcessed != null)
+        viewBinding.lastKeysSynced.text = if (lastKeysProcessed != null) {
             viewBinding.root.context.getString(
-                R.string.status_last_keys_processed, lastKeysProcessed.formatDateTime(viewBinding.root.context)
+                R.string.status_last_keys_processed,
+                lastKeysProcessed.formatDateTime(viewBinding.root.context)
             )
-        else
+        } else {
             viewBinding.root.context.getString(R.string.status_no_keys_processed)
+        }
 
         viewBinding.appVersion.text = viewBinding.root.context.getString(
             R.string.status_app_version,

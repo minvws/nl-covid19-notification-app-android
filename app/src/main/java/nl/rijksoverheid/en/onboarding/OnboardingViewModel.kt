@@ -27,8 +27,9 @@ class OnboardingViewModel(
     val isExposureNotificationApiUpToDate: LiveData<Boolean> = _isExposureNotificationApiUpToDate
 
     fun finishOnboarding() {
-        if (privacyPolicyConsentGiven.value != true)
+        if (privacyPolicyConsentGiven.value != true) {
             return
+        }
 
         onboardingRepository.setHasCompletedOnboarding(true)
         (onboardingComplete as MutableLiveData).value = Event(Unit)

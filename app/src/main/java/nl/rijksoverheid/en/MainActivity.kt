@@ -96,8 +96,9 @@ class MainActivity : AppCompatActivity() {
                 is AppLifecycleViewModel.AppLifecycleStatus.UnableToFetchAppConfig ->
                     handleUnableToFetchAppConfig()
                 else -> {
-                    if (!navController.isInitialised())
+                    if (!navController.isInitialised()) {
                         inflateNavGraph()
+                    }
                 }
             }
         }
@@ -109,12 +110,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleUpdateState(update: AppLifecycleManager.UpdateState) {
         if (update is AppLifecycleManager.UpdateState.InAppUpdate) {
-            if (!navController.isInitialised())
+            if (!navController.isInitialised()) {
                 inflateNavGraph()
+            }
 
             update.appUpdateManager.startUpdateFlow(
                 update.appUpdateInfo,
-                this, AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
+                this,
+                AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
             ).addOnCompleteListener { task ->
                 Timber.d("App update result: ${task.result}")
                 if (task.result != Activity.RESULT_OK) {
@@ -122,15 +125,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         } else {
-            if (!navController.isInitialised())
+            if (!navController.isInitialised()) {
                 inflateNavGraph(R.id.nav_app_update_required)
-            else {
-                val installerPackageName =
-                    (update as AppLifecycleManager.UpdateState.UpdateRequired).installerPackageName
+            } else {
                 navController.navigate(
-                    AppUpdateRequiredFragmentDirections.actionAppUpdateRequired(
-                        installerPackageName
-                    )
+                    AppUpdateRequiredFragmentDirections.actionAppUpdateRequired()
                 )
             }
         }
@@ -144,19 +143,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleEndOfLifeState() {
         viewModel.disableExposureNotifications()
-        if (!navController.isInitialised())
+        if (!navController.isInitialised()) {
             inflateNavGraph(R.id.nav_end_of_life)
-        else
+        } else {
             navController.navigate(EndOfLifeFragmentDirections.actionEndOfLife())
+        }
     }
 
     private fun handleUnableToFetchAppConfig() {
-        if (!navController.isInitialised())
+        if (!navController.isInitialised()) {
             inflateNavGraph(R.id.nav_no_internet)
-        else
+        } else {
             navController.navigate(
                 NoInternetFragmentDirections.actionNoInternet()
             )
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

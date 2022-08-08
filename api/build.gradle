@@ -1,6 +1,9 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    id 'jacoco'
+}
 apply from: rootProject.file("jacoco.gradle")
 
 ext.cdnEndpoint = ext.has("cdnEndpoint") ? ext.cdnEndpoint : "http://localhost/"
@@ -76,43 +79,23 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-
-    // ResponseSignatureValidator
     implementation project(":signing")
-
-    // Java 8+ API desugaring support
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
-
-    // Coroutines
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-
-    // Retrofit
-    api "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
-
-    // OkHttp
-    api "com.squareup.okhttp3:okhttp:$okhttp3_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
-
-    // Moshi Json parsing
-    implementation("com.squareup.moshi:moshi-kotlin:$moshi_version") {
+    coreLibraryDesugaring libs.desugar
+    api libs.kotlin.coroutines.android
+    api libs.retrofit2
+    implementation libs.retrofit2.converter.moshi
+    api libs.okhttp3
+    implementation libs.okhttp3.logging.interceptor
+    implementation(libs.moshi.kotlin) {
         exclude group: "org.jetbrains.kotlin", module: "kotlin-reflect"
     }
-    implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+    implementation libs.moshi.adapters
+    kapt libs.moshi.kotlin.codegen
+    implementation libs.timber
 
-    // Timber logger
-    implementation "com.jakewharton.timber:timber:$timber_version"
-
-    // JUnit
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "androidx.test:core:$androidx_test_core_version"
-
-    // OkHttp mock webserver
-    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
-    // OkHttp-TLS: Used by TLS related unit tests
-    testImplementation "com.squareup.okhttp3:okhttp-tls:$okhttp3_version"
-    // Roboelectr test runner
-    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    testImplementation libs.junit
+    testImplementation libs.androidx.test.core
+    testImplementation libs.okhttp3.mockwebserver
+    testImplementation libs.okhttp3.tls
+    testImplementation libs.robolectric
 }

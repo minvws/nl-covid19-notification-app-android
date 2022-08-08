@@ -163,7 +163,8 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         clock = clock
     )
     private val settingsRepository = SettingsRepository(
-        context, Settings(context, settingsPreferences)
+        context,
+        Settings(context, settingsPreferences)
     )
     private val dashboardRepository by lazy {
         DashboardRepository(service, Dispatchers.IO)

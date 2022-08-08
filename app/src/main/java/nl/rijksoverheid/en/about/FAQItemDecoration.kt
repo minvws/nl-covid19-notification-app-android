@@ -50,7 +50,9 @@ class FAQItemDecoration(context: Context, @Dimension val startOffset: Int) :
             left = parent.paddingLeft
             right = parent.width - parent.paddingRight
             canvas.clipRect(
-                left, parent.paddingTop, right,
+                left,
+                parent.paddingTop,
+                right,
                 parent.height - parent.paddingBottom
             )
         } else {

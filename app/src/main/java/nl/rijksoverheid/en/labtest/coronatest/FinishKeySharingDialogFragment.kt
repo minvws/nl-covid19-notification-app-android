@@ -25,7 +25,8 @@ class FinishKeySharingDialogFragment : DialogFragment() {
             .setMessage(getString(R.string.coronatest_finish_confirmation_text))
             .setPositiveButton(R.string.coronatest_finish_confirmation_accept) { _, _ ->
                 findNavController().currentBackStackEntry?.savedStateHandle?.set(
-                    FINISH_KEY_SHARING_RESULT, true
+                    FINISH_KEY_SHARING_RESULT,
+                    true
                 )
             }
             .setNegativeButton(R.string.coronatest_finish_confirmation_cancel, null)

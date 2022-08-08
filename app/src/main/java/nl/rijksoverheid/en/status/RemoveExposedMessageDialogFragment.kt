@@ -32,7 +32,8 @@ class RemoveExposedMessageDialogFragment : DialogFragment() {
             .setMessage(getString(R.string.status_dialog_remove_exposure_message))
             .setPositiveButton(R.string.status_dialog_remove_exposure_confirm) { _, _ ->
                 findNavController().currentBackStackEntry?.savedStateHandle?.set(
-                    REMOVE_EXPOSED_MESSAGE_RESULT, true
+                    REMOVE_EXPOSED_MESSAGE_RESULT,
+                    true
                 )
             }
             .setNegativeButton(R.string.status_dialog_remove_exposure_cancel, null)

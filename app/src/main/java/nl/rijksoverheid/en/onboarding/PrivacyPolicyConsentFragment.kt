@@ -66,7 +66,9 @@ class PrivacyPolicyConsentFragment : BaseFragment(R.layout.fragment_privacy_poli
                             binding.description.performClick()
                         }
                     },
-                    start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    start,
+                    end,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 setSpan(
                     TextAppearanceSpan(view.context, R.style.TextAppearance_App_Link),

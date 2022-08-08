@@ -20,10 +20,11 @@ class ParagraphItem(
 
     override fun bind(viewBinding: ItemParagraphBinding, position: Int) {
         viewBinding.content.setHtmlText(viewBinding.root.context.getString(text, *formatArgs))
-        if (clickable)
+        if (clickable) {
             viewBinding.content.enableCustomLinks {
                 viewBinding.root.callOnClick()
             }
+        }
     }
 
     override fun isClickable() = clickable

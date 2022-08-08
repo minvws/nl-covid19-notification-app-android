@@ -123,7 +123,8 @@ class HowItWorksFragmentTest : BaseInstrumentationTest() {
         AppConfigManager(service, { false }, { emptyList() })
     )
     private val settingsRepository = SettingsRepository(
-        context, nl.rijksoverheid.en.settings.Settings(context, settingsPreferences)
+        context,
+        nl.rijksoverheid.en.settings.Settings(context, settingsPreferences)
     )
     private val onboardingRepository = OnboardingRepository(onboardingPreferences) {
         true
@@ -158,7 +159,8 @@ class HowItWorksFragmentTest : BaseInstrumentationTest() {
 
             Assert.assertEquals(
                 "Pressing FAQ item navigates to detail page",
-                R.id.nav_how_it_works_detail, navController.currentDestination?.id
+                R.id.nav_how_it_works_detail,
+                navController.currentDestination?.id
             )
         }
     }

@@ -43,8 +43,9 @@ class GooglePlayServicesUpdateRequiredFragment :
         }
 
         viewModel.isExposureNotificationApiUpToDate.observe(viewLifecycleOwner) { upToDate ->
-            if (upToDate)
+            if (upToDate) {
                 findNavController().popBackStack()
+            }
         }
     }
 

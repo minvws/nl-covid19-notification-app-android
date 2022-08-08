@@ -42,12 +42,13 @@ class LabTestKeyItem(
             displayKey = (keyState as? KeyState.Success)?.displayKey,
             enabled = enabled,
             retry = retry,
-            keyContentDescription = if (enabled)
+            keyContentDescription = if (enabled) {
                 key?.lowercase(Locale.ROOT)
                     ?.replace(Regex("(.)"), "$1 ")
                     ?.trimEnd()
-            else
+            } else {
                 viewBinding.root.context.getString(R.string.lab_test_key_cd)
+            }
         )
 
         viewBinding.viewState = viewState

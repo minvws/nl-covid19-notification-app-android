@@ -44,7 +44,8 @@ class RemindExposureNotificationWorker(
     companion object {
         fun schedule(context: Context) {
             val request = PeriodicWorkRequestBuilder<RemindExposureNotificationWorker>(
-                REMINDER_INTERVAL_HOURS, TimeUnit.HOURS
+                REMINDER_INTERVAL_HOURS,
+                TimeUnit.HOURS
             )
                 .setInitialDelay(REMINDER_INTERVAL_HOURS, TimeUnit.HOURS)
                 .build()
