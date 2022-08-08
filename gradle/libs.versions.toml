@@ -12,6 +12,7 @@ androidx-work = "2.7.1"
 beagle = "2.7.3"
 bouncycastle = "1.70"
 groupie = "2.10.1"
+# @pin update manually
 kotlin = "1.7.10"
 kotlin-coroutines = "1.6.4"
 mockito = "4.6.1"
@@ -121,6 +122,8 @@ fladle = "com.osacky.fladle:0.17.4"
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+# @pin to kotlin version
+ksp = "com.google.devtools.ksp:1.7.10-1.0.6"
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidx-navigation" }
 spotless = "com.diffplug.spotless:6.9.0"
 tripletPlay = "com.github.triplet.play:3.7.0"
