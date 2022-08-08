@@ -6,9 +6,12 @@
  */
 package nl.rijksoverheid.en.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.accessibility.AccessibilityEvent
 import androidx.core.content.ContextCompat
 import androidx.core.view.AccessibilityDelegateCompat
@@ -142,6 +145,26 @@ class AccessibleLineChart : LineChart {
                     minValDate
                 )
             }
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        val handled = super.onTouchEvent(event)
+        if (event.action == MotionEvent.ACTION_CANCEL || event.action == MotionEvent.ACTION_UP) {
+            requestDisallowInterceptTouchEventFromParent(false)
+        } else if (handled) {
+            // prevent (scrolling) parents to intercept touch events while we're handling it
+            requestDisallowInterceptTouchEventFromParent(true)
+        }
+        return handled
+    }
+
+    private fun requestDisallowInterceptTouchEventFromParent(disallow: Boolean) {
+        var viewParent = parent as? ViewGroup
+        while (viewParent != null) {
+            parent.requestDisallowInterceptTouchEvent(disallow)
+            viewParent = viewParent.parent as? ViewGroup
         }
     }
 
