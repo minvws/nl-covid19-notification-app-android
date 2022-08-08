@@ -14,7 +14,6 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.nearby.Nearby
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import kotlinx.coroutines.Dispatchers
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.CdnService
@@ -165,7 +164,7 @@ object RepositoryFactory {
     }
 
     fun createDashboardRepository(context: Context): DashboardRepository {
-        return DashboardRepository(createCdnService(context), Dispatchers.IO)
+        return DashboardRepository(createCdnService(context))
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")

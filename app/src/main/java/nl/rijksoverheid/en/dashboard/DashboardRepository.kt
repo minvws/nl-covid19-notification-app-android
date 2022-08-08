@@ -6,11 +6,9 @@
  */
 package nl.rijksoverheid.en.dashboard
 
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.DashboardData
@@ -19,8 +17,7 @@ import nl.rijksoverheid.en.util.Resource
 import timber.log.Timber
 
 class DashboardRepository(
-    private val cdnService: CdnService,
-    private val dispatcher: CoroutineDispatcher
+    private val cdnService: CdnService
 ) {
 
     fun getDashboardData(): Flow<Resource<DashboardData>> = flow {
@@ -30,5 +27,5 @@ class DashboardRepository(
     }.catch { throwable ->
         Timber.w(throwable)
         emit(Resource.Error(DashboardServerError))
-    }.flowOn(dispatcher)
+    }
 }

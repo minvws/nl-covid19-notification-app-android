@@ -28,7 +28,6 @@ import com.vanniktech.junit4androidintegrationrules.NetworkCommand.Companion.net
 import com.vanniktech.junit4androidintegrationrules.NotificationsCommand.Companion.notifications
 import com.vanniktech.junit4androidintegrationrules.StatusCommand
 import com.vanniktech.junit4androidintegrationrules.StatusCommand.Companion.status
-import kotlinx.coroutines.Dispatchers
 import nl.rijksoverheid.en.BaseInstrumentationTest
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.ExposureNotificationsRepository
@@ -167,7 +166,7 @@ class StoreScreenshotsTest : BaseInstrumentationTest() {
         Settings(context, settingsPreferences)
     )
     private val dashboardRepository by lazy {
-        DashboardRepository(service, Dispatchers.IO)
+        DashboardRepository(service)
     }
 
     private val statusViewModel = StatusViewModel(
