@@ -62,14 +62,17 @@ class DashboardFragment : BaseFragment(R.layout.fragment_list) {
         binding.content.adapter = adapter
 
         viewModel.dashboardData.observe(viewLifecycleOwner) { dashboardData ->
-            dashboardData.data?.let {
-                section.updateDashboardData(
+            when (dashboardData) {
+                is DashboardDataResult.Success -> section.updateDashboardData(
                     requireContext(),
                     args.dashboardItemReference,
-                    it,
+                    dashboardData.data,
                     ::navigateToDashboardItem,
                     ::navigateToMoreInfo
                 )
+                else -> {
+                    // TODO error state
+                }
             }
         }
     }
@@ -83,7 +86,8 @@ class DashboardFragment : BaseFragment(R.layout.fragment_list) {
     }
 
     private fun navigateToMoreInfo() {
-        viewModel.dashboardData.value?.data?.getDashboardItem(args.dashboardItemReference)?.let {
+        val dashboardData = viewModel.dashboardData.value as? DashboardDataResult.Success
+        dashboardData?.data?.getDashboardItem(args.dashboardItemReference)?.let {
             val url = Uri.parse(it.moreInfoUrl)
             CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
         }

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.dashboard.DashboardDataResult
 import nl.rijksoverheid.en.dashboard.DashboardRepository
 import nl.rijksoverheid.en.dashboardTestData
 import nl.rijksoverheid.en.enapi.StatusResult
@@ -17,7 +18,6 @@ import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.settings.SettingsRepository
-import nl.rijksoverheid.en.util.Resource
 import nl.rijksoverheid.en.util.observeForTesting
 import org.junit.After
 import org.junit.Assert
@@ -576,7 +576,7 @@ class StatusViewModelTest {
             Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
                 .thenReturn(flowOf(true))
             Mockito.`when`(dashboardRepository.getDashboardData())
-                .thenReturn(flowOf(Resource.Success(dashboardTestData)))
+                .thenReturn(flowOf(DashboardDataResult.Success(dashboardTestData)))
 
             val statusViewModel = StatusViewModel(
                 onboardingRepository,
@@ -621,7 +621,7 @@ class StatusViewModelTest {
         Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
             .thenReturn(flowOf(true))
         Mockito.`when`(dashboardRepository.getDashboardData())
-            .thenReturn(flowOf(Resource.Success(dashboardTestData)))
+            .thenReturn(flowOf(DashboardDataResult.Success(dashboardTestData)))
 
         val statusViewModel = StatusViewModel(
             onboardingRepository,

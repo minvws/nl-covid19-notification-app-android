@@ -14,7 +14,7 @@ import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -26,13 +26,13 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.DashboardData
 import nl.rijksoverheid.en.api.model.FeatureFlagOption
 import nl.rijksoverheid.en.config.AppConfigManager
+import nl.rijksoverheid.en.dashboard.DashboardDataResult
 import nl.rijksoverheid.en.dashboard.DashboardRepository
 import nl.rijksoverheid.en.enapi.StatusResult
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.onboarding.OnboardingRepository
 import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.settings.SettingsRepository
-import nl.rijksoverheid.en.util.Resource
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDate
@@ -113,8 +113,14 @@ class StatusViewModel(
         emit(exposureNotificationsRepository.isExposureNotificationApiUpdateRequired())
     }
 
-    private var refreshDashboardDataJob: Job? = null
-    private val dashboardDataFlow: MutableStateFlow<Resource<DashboardData>> = MutableStateFlow(Resource.Loading())
+    private val refreshDashboardData = MutableSharedFlow<Unit>(replay = 1).apply {
+        tryEmit(Unit)
+    }
+
+    private val dashboardDataFlow = refreshDashboardData.flatMapLatest {
+        dashboardRepository.getDashboardData()
+    }
+
     val dashboardState: LiveData<DashboardState> = combine(
         dashboardDataFlow,
         headerState.asFlow(),
@@ -122,12 +128,12 @@ class StatusViewModel(
         settingsRepository.getDashboardEnabledFlow()
     ) { dashboardData, headerState, notificationState, enabled ->
         val showAsAction = headerState !is HeaderState.Active || notificationState.isNotEmpty()
-        val emptyDashboard = dashboardData is Resource.Success && dashboardData.data.items.isEmpty()
+        val emptyDashboard = dashboardData is DashboardDataResult.Success && dashboardData.data.items.isEmpty()
         when {
             !enabled || emptyDashboard -> DashboardState.Disabled
             showAsAction -> DashboardState.ShowAsAction
-            dashboardData is Resource.Success -> DashboardState.DashboardCards(dashboardData.data)
-            dashboardData is Resource.Error -> DashboardState.Error(dashboardData.error.peekContent().errorMessage)
+            dashboardData is DashboardDataResult.Success -> DashboardState.DashboardCards(dashboardData.data)
+            dashboardData is DashboardDataResult.Error -> DashboardState.Error(R.string.dashboard_server_error)
             else -> DashboardState.Loading
         }
     }.asLiveData(viewModelScope.coroutineContext)
@@ -261,20 +267,12 @@ class StatusViewModel(
     }
 
     fun refreshDashboardData() {
-        // Ignore if dashboard has been disabled or refresh job is still in progress
-        if (!settingsRepository.dashboardEnabled || refreshDashboardDataJob?.isActive == true) {
+        if (!settingsRepository.dashboardEnabled) {
             return
         }
 
-        refreshDashboardDataJob = viewModelScope.launch {
-            dashboardRepository.getDashboardData().collect {
-                // Ignore Loading state when we already have data to show
-                if (dashboardDataFlow.value is Resource.Success && it is Resource.Loading) {
-                    return@collect
-                }
-
-                dashboardDataFlow.emit(it)
-            }
+        if (dashboardState.value is DashboardState.Error) {
+            refreshDashboardData.tryEmit(Unit)
         }
     }
 
