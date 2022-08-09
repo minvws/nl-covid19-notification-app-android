@@ -10,8 +10,6 @@ import kotlinx.coroutines.test.runTest
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.dashboardTestData
-import nl.rijksoverheid.en.util.DashboardServerError
-import nl.rijksoverheid.en.util.Resource
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -46,32 +44,27 @@ class DashboardRepositoryTest {
     }
 
     @Test
-    fun `getDashboardData returns service call result as Success Resource`() = runTest {
+    fun `getDashboardData returns success result`() = runTest {
         `when`(cdnService.getDashboardData(CacheStrategy.CACHE_LAST))
             .thenReturn(dashboardTestData)
 
         val dashboardRepository = DashboardRepository(cdnService)
 
         dashboardRepository.getDashboardData().collect { dashboardResource ->
-            if (dashboardResource !is Resource.Loading) {
-                assertTrue(dashboardResource is Resource.Success)
-                assertEquals(dashboardTestData, dashboardResource.data)
-            }
+            assertTrue(dashboardResource is DashboardDataResult.Success)
+            assertEquals(dashboardTestData, (dashboardResource as DashboardDataResult.Success).data)
         }
     }
 
     @Test
-    fun `getDashboardData from cdnService failed returns DashboardServerError`() = runTest {
+    fun `getDashboardData from cdnService failed returns Error`() = runTest {
         `when`(cdnService.getDashboardData(CacheStrategy.CACHE_LAST))
             .thenThrow(httpException)
 
         val dashboardRepository = DashboardRepository(cdnService)
 
         dashboardRepository.getDashboardData().collect { dashboardResource ->
-            if (dashboardResource !is Resource.Loading) {
-                assertTrue(dashboardResource is Resource.Error)
-                assertEquals(dashboardResource.error?.peekContent(), DashboardServerError)
-            }
+            assertTrue(dashboardResource is DashboardDataResult.Error)
         }
     }
 }

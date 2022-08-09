@@ -56,9 +56,12 @@ class DashboardOverviewFragment : BaseFragment(R.layout.fragment_list) {
             }
         }
 
-        viewModel.dashboardData.observe(viewLifecycleOwner) { dashboardData ->
-            dashboardData.data?.let {
-                section.updateDashboardData(requireContext(), it, ::navigateToMoreInfo)
+        viewModel.dashboardData.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                DashboardDataResult.Error -> {
+                    // TODO error state
+                }
+                is DashboardDataResult.Success -> section.updateDashboardData(requireContext(), result.data, ::navigateToMoreInfo)
             }
         }
     }
@@ -71,7 +74,8 @@ class DashboardOverviewFragment : BaseFragment(R.layout.fragment_list) {
     }
 
     private fun navigateToMoreInfo() {
-        viewModel.dashboardData.value?.data?.moreInfoUrl?.let { moreInfoUrl ->
+        val result = viewModel.dashboardData.value as? DashboardDataResult.Success
+        result?.data?.moreInfoUrl?.let { moreInfoUrl ->
             val url = Uri.parse(moreInfoUrl)
             CustomTabsIntent.Builder().build().launchUrl(requireContext(), url)
         }

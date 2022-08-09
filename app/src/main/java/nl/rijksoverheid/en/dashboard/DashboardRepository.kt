@@ -12,20 +12,21 @@ import kotlinx.coroutines.flow.flow
 import nl.rijksoverheid.en.api.CacheStrategy
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.model.DashboardData
-import nl.rijksoverheid.en.util.DashboardServerError
-import nl.rijksoverheid.en.util.Resource
 import timber.log.Timber
 
 class DashboardRepository(
     private val cdnService: CdnService
 ) {
-
-    fun getDashboardData(): Flow<Resource<DashboardData>> = flow {
-        emit(Resource.Loading())
+    fun getDashboardData(): Flow<DashboardDataResult> = flow<DashboardDataResult> {
         val dashboardData = cdnService.getDashboardData(CacheStrategy.CACHE_LAST)
-        emit(Resource.Success(dashboardData))
+        emit(DashboardDataResult.Success(dashboardData))
     }.catch { throwable ->
         Timber.w(throwable)
-        emit(Resource.Error(DashboardServerError))
+        emit(DashboardDataResult.Error)
     }
+}
+
+sealed class DashboardDataResult {
+    data class Success(val data: DashboardData) : DashboardDataResult()
+    object Error : DashboardDataResult()
 }
