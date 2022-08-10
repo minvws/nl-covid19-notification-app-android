@@ -24,8 +24,11 @@ import nl.rijksoverheid.en.util.formatToString
 
 class DashboardSection : Section() {
 
+    private val dashboardItems = Section()
+
     init {
         setPlaceholder(LoadingItem())
+        add(dashboardItems)
     }
 
     fun updateDashboardData(
@@ -80,7 +83,7 @@ class DashboardSection : Section() {
             .filter { it.reference != selectedDashboardItem }
             .map { DashboardLinkItem(it, onDashboardLinkItemClicked) }
 
-        update(items)
+        dashboardItems.update(items)
     }
 
     private fun MovingAverage.toSummaryArgs(context: Context) = listOf(

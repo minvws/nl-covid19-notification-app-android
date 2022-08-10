@@ -19,8 +19,11 @@ import nl.rijksoverheid.en.status.items.LoadingItem
 
 class DashboardOverviewSection : Section() {
 
+    private val overviewItems = Section()
+
     init {
         setPlaceholder(LoadingItem())
+        add(overviewItems)
     }
 
     fun updateDashboardData(
@@ -32,7 +35,7 @@ class DashboardOverviewSection : Section() {
             .sortedBy { it.sortingValue }
             .map { dashboardItem -> DashboardCardItem(context, dashboardItem) }
 
-        update(
+        overviewItems.update(
             listOf(
                 HeaderItem(R.string.dashboard_header),
                 TagItem(R.string.dashboard_tag),
