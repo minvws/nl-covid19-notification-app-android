@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+  ~   Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+  ~
+  ~   SPDX-License-Identifier: EUPL-1.2
+  ~
+  -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_dashboard"
+    app:startDestination="@id/dashboardOverviewFragment">
+
+    <fragment
+        android:id="@+id/dashboardOverviewFragment"
+        android:name="nl.rijksoverheid.en.dashboard.DashboardOverviewFragment"
+        android:label="DashboardOverviewFragment"
+        tools:layout="@layout/fragment_list" >
+        <argument
+            android:name="dashboardItemReference"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_dashboard_fragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="nl.rijksoverheid.en.dashboard.DashboardFragment"
+        android:label="DashboardFragment"
+        tools:layout="@layout/fragment_list" >
+        <argument
+            android:name="dashboardItemReference"
+            app:argType="nl.rijksoverheid.en.api.model.DashboardItemRef" />
+        <argument
+            android:name="fromDeeplink"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="fromDashboardItem"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_dashboard_fragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@id/dashboardFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+</navigation>
