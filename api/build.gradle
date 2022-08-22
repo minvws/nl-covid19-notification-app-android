@@ -15,11 +15,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        // encoded query string for public read access on the cdn
-        buildConfigField "String", "CDN_BASE_URL", "\"https://test.coronamelder-dist.nl/\""
-        buildConfigField "String", "API_BASE_URL", "\"https://test.coronamelder-api.nl/\""
+        buildConfigField "String", "CDN_BASE_URL", "\"https://dist.test.coronamelder.nl/\""
+        buildConfigField "String", "API_BASE_URL", "\"https://api.test.coronamelder.nl/\""
         buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "true"
-        buildConfigField "boolean", "FEATURE_SSL_PINNING", "true"
     }
 
     testOptions {
@@ -52,7 +50,6 @@ android {
         dev {
             dimension "environment"
             buildConfigField "boolean", "FEATURE_RESPONSE_SIGNATURES", "false"
-            buildConfigField "boolean", "FEATURE_SSL_PINNING", "false"
             buildConfigField "String", "CDN_BASE_URL", "\"${cdnEndpoint}\""
             buildConfigField "String", "API_BASE_URL", "\"${apiEndpoint}\""
         }
@@ -61,17 +58,16 @@ android {
         }
         pentest {
             dimension "environment"
-            buildConfigField "boolean", "FEATURE_SSL_PINNING", "false"
         }
         acc {
             dimension "environment"
-            buildConfigField "String", "CDN_BASE_URL", "\"https://acceptatie.coronamelder-dist.nl/\""
-            buildConfigField "String", "API_BASE_URL", "\"https://acceptatie.coronamelder-api.nl/\""
+            buildConfigField "String", "CDN_BASE_URL", "\"https://dist.acc.coronamelder.nl/\""
+            buildConfigField "String", "API_BASE_URL", "\"https://api.acc.coronamelder.nl/\""
         }
         prod {
             dimension "environment"
-            buildConfigField "String", "CDN_BASE_URL", "\"https://productie.coronamelder-dist.nl/\""
-            buildConfigField "String", "API_BASE_URL", "\"https://coronamelder-api.nl/\""
+            buildConfigField "String", "CDN_BASE_URL", "\"https://dist.coronamelder.nl/\""
+            buildConfigField "String", "API_BASE_URL", "\"https://api.coronamelder.nl/\""
         }
     }
 
