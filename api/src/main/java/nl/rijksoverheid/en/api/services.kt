@@ -9,21 +9,17 @@
 package nl.rijksoverheid.en.api
 
 import android.content.Context
-import android.net.Uri
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import nl.rijksoverheid.en.api.model.ResourceBundle
 import nl.rijksoverheid.en.api.typeConverter.OffsetDateTimeConverter
 import okhttp3.Cache
-import okhttp3.CertificatePinner
 import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
 import java.io.File
-
-private const val SSL_PIN = "sha256/lR7gRvqDMW5nhsCMRPE7TKLq0tJkTWMxQ5HAzHCIfQ0="
 
 private var okHttpClient: OkHttpClient? = null
 
@@ -60,17 +56,11 @@ internal fun createOkHttpClient(context: Context, appVersionCode: Int): OkHttpCl
                 )
             }
             addInterceptor(CorruptedCacheInterceptor(cache))
-            if (BuildConfig.FEATURE_SSL_PINNING) {
+            if (BuildConfig.FLAVOR != "dev") {
                 connectionSpecs(
                     listOf(
                         ConnectionSpec.MODERN_TLS
                     )
-                )
-                certificatePinner(
-                    CertificatePinner.Builder()
-                        .add(Uri.parse(BuildConfig.CDN_BASE_URL).host!!, SSL_PIN)
-                        .add(Uri.parse(BuildConfig.API_BASE_URL).host!!, SSL_PIN)
-                        .build()
                 )
             }
         }.build().also { okHttpClient = it }
