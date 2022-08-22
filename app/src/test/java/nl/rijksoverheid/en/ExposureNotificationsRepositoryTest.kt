@@ -77,7 +77,8 @@ import retrofit2.Response
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.security.KeyStore
+import java.security.cert.CertificateFactory
+import java.security.cert.X509Certificate
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDate
@@ -87,8 +88,6 @@ import java.util.concurrent.atomic.AtomicReference
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
-import javax.net.ssl.TrustManagerFactory
-import javax.net.ssl.X509TrustManager
 
 private val MOCK_RISK_PARAMS_RESPONSE = MockResponse().setBody(
     """
@@ -549,7 +548,7 @@ class ExposureNotificationsRepositoryTest {
                 cdnService = service,
                 preferences = sharedPrefs,
                 signatureValidation = true,
-                signatureValidator = ResponseSignatureValidator(createTrustManager())
+                signatureValidator = ResponseSignatureValidator(rootCertificate = lazy { getCaRootCertificate() })
             )
 
             val result =
@@ -609,7 +608,7 @@ class ExposureNotificationsRepositoryTest {
                 api = api,
                 cdnService = service,
                 signatureValidation = true,
-                signatureValidator = ResponseSignatureValidator(createTrustManager())
+                signatureValidator = ResponseSignatureValidator(rootCertificate = lazy { getCaRootCertificate() })
             )
 
             val result =
@@ -2079,16 +2078,14 @@ class ExposureNotificationsRepositoryTest {
         }
     }
 
-    private fun createTrustManager() =
-        TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()).apply {
-            val keyStore = KeyStore.getInstance(KeyStore.getDefaultType())
-            // root key is on the device
-            keyStore.load(
-                ExposureNotificationsRepositoryTest::class.java.getResourceAsStream("/nl-root.jks"),
-                "test".toCharArray()
+    private fun getCaRootCertificate(): X509Certificate {
+        val cf: CertificateFactory = CertificateFactory.getInstance("X.509")
+        return cf.generateCertificate(
+            ExposureNotificationsRepositoryTest::class.java.getResourceAsStream(
+                "/testroot.pem"
             )
-            init(keyStore)
-        }.trustManagers[0] as X509TrustManager
+        ) as X509Certificate
+    }
 }
 
 private class TestLifecycleOwner(private val state: Lifecycle.State) : LifecycleOwner {
