@@ -8,8 +8,6 @@ package nl.rijksoverheid.en.signing
 
 import org.bouncycastle.asn1.x500.style.BCStyle
 import org.bouncycastle.asn1.x500.style.IETFUtils
-import org.bouncycastle.asn1.x509.Extension
-import org.bouncycastle.asn1.x509.SubjectKeyIdentifier
 import org.bouncycastle.cert.jcajce.JcaCertStoreBuilder
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder
 import org.bouncycastle.cms.CMSSignedDataParser
@@ -21,57 +19,40 @@ import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder
 import org.bouncycastle.util.encoders.Hex
 import java.io.BufferedInputStream
 import java.io.InputStream
-import java.security.KeyStore
 import java.security.cert.CertPathBuilder
 import java.security.cert.CertStore
+import java.security.cert.CertificateFactory
 import java.security.cert.PKIXBuilderParameters
 import java.security.cert.PKIXCertPathBuilderResult
 import java.security.cert.TrustAnchor
 import java.security.cert.X509CertSelector
 import java.security.cert.X509Certificate
-import javax.net.ssl.TrustManagerFactory
-import javax.net.ssl.X509TrustManager
-
-// The publicly known default SubjectKeyIdentifier for the root CA, retrieved from the device trust store
-private val DEFAULT_ANCHOR_SUBJECT_KEY_IDENTIFIER =
-    SubjectKeyIdentifier(Hex.decode("0414feab0090989e24fca9cc1a8afb27b8bf306ea83b"))
 
 // The publicly known default AuthorityKeyIdentifier for the issuer that issued the signing certificate
 private val DEFAULT_AUTHORITY_KEY_IDENTIFIER =
-    Hex.decode("30168014084aaabb99246fbe5b07f1a58a995b2d47efb93c")
+    Hex.decode("30168014b8d44c9fa85b6eda25a7688eef8c461afe1f5365")
+
+private val defaultRootCertificate: Lazy<X509Certificate> = lazy {
+    val cf: CertificateFactory = CertificateFactory.getInstance("X.509")
+    cf.generateCertificate(
+        ResponseSignatureValidator::class.java.getResourceAsStream(
+            "/PrivateRootCA-G1.cer"
+        )
+    ) as X509Certificate
+}
 
 class ResponseSignatureValidator(
-    trustManager: X509TrustManager = getDefaultTrustManager(),
-    trustAnchorSubjectKeyIdentifier: SubjectKeyIdentifier = DEFAULT_ANCHOR_SUBJECT_KEY_IDENTIFIER,
+    /* for testing */
+    private val rootCertificate: Lazy<X509Certificate> = defaultRootCertificate,
     private val authorityKeyIdentifier: ByteArray = DEFAULT_AUTHORITY_KEY_IDENTIFIER
 ) {
 
-    private val trustAnchor: TrustAnchor?
+    private val trustAnchor by lazy {
+        TrustAnchor(rootCertificate.value, null)
+    }
     private val provider = BouncyCastleProvider()
 
-    init {
-        trustAnchor = getCertificateForSubjectKeyIdentifier(
-            trustManager,
-            trustAnchorSubjectKeyIdentifier
-        )?.let {
-            TrustAnchor(it, null)
-        }
-    }
-
-    private fun getCertificateForSubjectKeyIdentifier(
-        trustManager: X509TrustManager,
-        subjectKeyIdentifier: SubjectKeyIdentifier
-    ): X509Certificate? {
-        return trustManager.acceptedIssuers.firstOrNull { certificate ->
-            val ski = certificate.getExtensionValue(Extension.subjectKeyIdentifier.id)
-                ?.let { SubjectKeyIdentifier.getInstance(it)?.keyIdentifier }
-            ski?.contentEquals(subjectKeyIdentifier.keyIdentifier) == true
-        }
-    }
-
     fun verifySignature(content: InputStream, signature: ByteArray) {
-        val trustAnchor = this.trustAnchor ?: throw SignatureValidationException()
-
         try {
             val sp = CMSSignedDataParser(
                 JcaDigestCalculatorProviderBuilder().setProvider(provider)
@@ -132,7 +113,7 @@ class ResponseSignatureValidator(
 
         params.addCertStore(certs)
         params.isRevocationEnabled = false
-        return pathBuilder.build(params) as PKIXCertPathBuilderResult
+        return pathBuilder.build(params) as? PKIXCertPathBuilderResult
     }
 
     private fun verifyCN(signingCertificate: X509Certificate): Boolean {
@@ -141,14 +122,6 @@ class ResponseSignatureValidator(
             cn.contains("CoronaMelder", true) && cn.endsWith(".nl")
         }
     }
-}
-
-private fun getDefaultTrustManager(): X509TrustManager {
-    val algorithm = TrustManagerFactory.getDefaultAlgorithm()
-    val tm = TrustManagerFactory.getInstance(algorithm)
-    @Suppress("CAST_NEVER_SUCCEEDS")
-    tm.init(null as? KeyStore)
-    return tm.trustManagers[0] as X509TrustManager
 }
 
 class SignatureValidationException : RuntimeException()
