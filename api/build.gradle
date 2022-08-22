@@ -61,13 +61,13 @@ android {
         }
         acc {
             dimension "environment"
-            buildConfigField "String", "CDN_BASE_URL", "\"https://dist.acceptatie.coronamelder.nl/\""
-            buildConfigField "String", "API_BASE_URL", "\"https://api.acceptatie.coronamelder.nl/\""
+            buildConfigField "String", "CDN_BASE_URL", "\"https://dist.acc.coronamelder.nl/\""
+            buildConfigField "String", "API_BASE_URL", "\"https://api.acc.coronamelder.nl/\""
         }
         prod {
             dimension "environment"
-            buildConfigField "String", "CDN_BASE_URL", "\"https://dist.productie.coronamelder.nl/\""
-            buildConfigField "String", "API_BASE_URL", "\"https://api.productie.coronamelder.nl/\""
+            buildConfigField "String", "CDN_BASE_URL", "\"https://dist.coronamelder.nl/\""
+            buildConfigField "String", "API_BASE_URL", "\"https://api.coronamelder.nl/\""
         }
     }
 
