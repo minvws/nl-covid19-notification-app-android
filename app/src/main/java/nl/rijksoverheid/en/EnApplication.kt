@@ -12,7 +12,7 @@ import android.util.Log
 import androidx.work.Configuration
 import androidx.work.Logger
 import androidx.work.WorkManager
-import nl.rijksoverheid.en.beagle.BeagleHelperImpl
+import nl.rijksoverheid.en.beagle.debugDrawer
 import nl.rijksoverheid.en.job.EnWorkerFactory
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import nl.rijksoverheid.en.util.LocaleHelper
@@ -33,7 +33,7 @@ class EnApplication : Application(), Configuration.Provider {
             Timber.d("onCreate")
         }
 
-        BeagleHelperImpl.initialize(this)
+        debugDrawer.initialize(this)
 
         WorkManager.initialize(this, workManagerConfiguration)
 

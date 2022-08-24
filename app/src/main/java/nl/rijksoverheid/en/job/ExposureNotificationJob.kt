@@ -15,6 +15,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import nl.rijksoverheid.en.AddExposureResult
 import nl.rijksoverheid.en.ExposureNotificationsRepository
+import nl.rijksoverheid.en.beagle.debugDrawer
 import nl.rijksoverheid.en.notifier.NotificationsRepository
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -34,7 +35,7 @@ class ExposureNotificationJob(
 
     override suspend fun doWork(): Result {
         val testExposure = inputData.getBoolean(KEY_TEST_EXPOSURE, false)
-        val result = repository.addExposure(testExposure)
+        val result = repository.addExposure(testExposure, debugDrawer.testExposureDaysAgo)
         Timber.d("Add exposure result is $result")
         return when (result) {
             is AddExposureResult.Notify -> {

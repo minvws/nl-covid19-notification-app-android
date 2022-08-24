@@ -7,12 +7,10 @@
 package nl.rijksoverheid.en.beagle
 
 import android.app.Application
+import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.api.model.FeatureFlag
 
-/**
- * BeagleHelper should be implemented in build flavor specific files that should include the debug drawer.
- */
-interface BeagleHelper {
+interface DebugDrawer {
 
     val useDefaultGuidance: Boolean
     val useDebugFeatureFlags: () -> Boolean
@@ -20,4 +18,22 @@ interface BeagleHelper {
     val getDebugFeatureFlags: () -> List<FeatureFlag>
 
     fun initialize(application: Application)
+}
+
+private class NoOpDebugDrawer : DebugDrawer {
+    override val useDefaultGuidance: Boolean = false
+    override val useDebugFeatureFlags = { false }
+    override val testExposureDaysAgo = 5
+    override val getDebugFeatureFlags = { emptyList<FeatureFlag>() }
+
+    override fun initialize(application: Application) {
+    }
+}
+
+val debugDrawer by lazy {
+    if (BuildConfig.FEATURE_DEBUG_DRAWER) {
+        DebugDrawerImpl()
+    } else {
+        NoOpDebugDrawer()
+    }
 }

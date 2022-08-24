@@ -22,7 +22,6 @@ import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.BuildConfig
 import nl.rijksoverheid.en.R
@@ -33,7 +32,11 @@ import nl.rijksoverheid.en.factory.RepositoryFactory.createLabTestRepository
 import nl.rijksoverheid.en.labtest.LabTestRepository
 import java.time.format.DateTimeFormatter
 
-object BeagleHelperImpl : BeagleHelper {
+private const val TEST_NOTIFICATION_EXPOSURE_DAYS_AGO_ID = "testNotificationExposureDaysAgo"
+private const val PREVIOUSLY_KNOWN_EXPOSURE_DATE_ID = "previouslyKnownExposureDate"
+private const val KEY_SHARING_HEADER_ID = "keySharingHeader"
+
+class DebugDrawerImpl : DebugDrawer {
 
     override var useDefaultGuidance: Boolean = false
         private set
@@ -46,10 +49,6 @@ object BeagleHelperImpl : BeagleHelper {
 
     private var debugFeatureFlags: List<FeatureFlag> = emptyList()
     override var getDebugFeatureFlags = { debugFeatureFlags }
-
-    private const val testNotificationExposureDaysAgoId = "testNotificationExposureDaysAgo"
-    private const val previouslyKnownExposureDateId = "previouslyKnownExposureDate"
-    private const val keySharingHeaderId = "keySharingHeader"
 
     override fun initialize(application: Application) {
         val labTestRepository = createLabTestRepository(application)
@@ -100,9 +99,9 @@ object BeagleHelperImpl : BeagleHelper {
                         testExposureDaysAgo = it.value
                     }
                 },
-                id = testNotificationExposureDaysAgoId
+                id = TEST_NOTIFICATION_EXPOSURE_DAYS_AGO_ID
             ),
-            TextModule("Key sharing", TextModule.Type.SECTION_HEADER, id = keySharingHeaderId),
+            TextModule("Key sharing", TextModule.Type.SECTION_HEADER, id = KEY_SHARING_HEADER_ID),
             TextModule("Clear key data", TextModule.Type.BUTTON) {
                 MainScope().launch {
                     labTestRepository.clearKeyData()
@@ -119,16 +118,16 @@ object BeagleHelperImpl : BeagleHelper {
         val exposureNotificationsRepository = createExposureNotificationsRepository(context)
         exposureNotificationsRepository.previouslyKnownExposureDate()
             .collect { previouslyKnownExposureDate ->
-                Beagle.remove(previouslyKnownExposureDateId)
+                Beagle.remove(PREVIOUSLY_KNOWN_EXPOSURE_DATE_ID)
                 Beagle.add(
                     TextModule(
                         "Previous exposure date: ${
                         previouslyKnownExposureDate?.format(DateTimeFormatter.ISO_LOCAL_DATE) ?: "none"
                         }",
                         TextModule.Type.NORMAL,
-                        id = previouslyKnownExposureDateId
+                        id = PREVIOUSLY_KNOWN_EXPOSURE_DATE_ID
                     ),
-                    placement = Placement.Below(testNotificationExposureDaysAgoId)
+                    placement = Placement.Below(TEST_NOTIFICATION_EXPOSURE_DAYS_AGO_ID)
                 )
             }
     }
