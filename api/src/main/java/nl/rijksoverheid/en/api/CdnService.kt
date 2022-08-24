@@ -22,30 +22,30 @@ import retrofit2.http.Streaming
 import retrofit2.http.Tag
 
 interface CdnService {
-    @GET("v5/exposurekeyset/{id}")
+    @GET("v6/exposurekeyset/{id}")
     @Streaming
     @CacheOverride("no-store")
     suspend fun getExposureKeySetFile(@Path("id") id: String): Response<ResponseBody>
 
-    @GET("v5/manifest")
+    @GET("v6/manifest")
     @SignedResponse
     suspend fun getManifest(@Tag cacheStrategy: CacheStrategy? = null): Manifest
 
-    @GET("v5/riskcalculationparameters/{id}")
+    @GET("v6/riskcalculationparameters/{id}")
     @SignedResponse
     suspend fun getRiskCalculationParameters(
         @Path("id") id: String,
         @Tag cacheStrategy: CacheStrategy? = null
     ): RiskCalculationParameters
 
-    @GET("v5/appconfig/{id}")
+    @GET("v6/appconfig/{id}")
     @SignedResponse
     suspend fun getAppConfig(
         @Path("id") id: String,
         @Tag cacheStrategy: CacheStrategy? = null
     ): AppConfig
 
-    @GET("v5/resourcebundle/{id}")
+    @GET("v6/resourcebundle/{id}")
     @SignedResponse
     suspend fun getResourceBundle(
         @Path("id") id: String,
