@@ -19,7 +19,7 @@ import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.LabTestService
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
-import nl.rijksoverheid.en.beagle.BeagleHelperImpl
+import nl.rijksoverheid.en.beagle.debugDrawer
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.nearby.NearbyExposureNotificationApi
 import nl.rijksoverheid.en.job.BackgroundWorkScheduler
@@ -89,8 +89,8 @@ object RepositoryFactory {
             statusCache,
             AppConfigManager(
                 service,
-                BeagleHelperImpl.useDebugFeatureFlags,
-                BeagleHelperImpl.getDebugFeatureFlags
+                debugDrawer.useDebugFeatureFlags,
+                debugDrawer.getDebugFeatureFlags
             )
         )
     }
@@ -137,8 +137,8 @@ object RepositoryFactory {
                 .also { cdnService = it }
         return AppConfigManager(
             service,
-            BeagleHelperImpl.useDebugFeatureFlags,
-            BeagleHelperImpl.getDebugFeatureFlags
+            debugDrawer.useDebugFeatureFlags,
+            debugDrawer.getDebugFeatureFlags
         )
     }
 
@@ -155,7 +155,7 @@ object RepositoryFactory {
             context,
             cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE)
                 .also { cdnService = it },
-            useDefaultGuidance = BeagleHelperImpl.useDefaultGuidance
+            useDefaultGuidance = debugDrawer.useDefaultGuidance
         )
     }
 

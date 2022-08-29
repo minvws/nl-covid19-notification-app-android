@@ -45,7 +45,6 @@ import nl.rijksoverheid.en.api.model.Manifest
 import nl.rijksoverheid.en.api.model.RiskCalculationParameters
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
 import nl.rijksoverheid.en.appmessage.AppMessageReceiver
-import nl.rijksoverheid.en.beagle.BeagleHelperImpl
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.DailyRiskScoresResult
 import nl.rijksoverheid.en.enapi.DiagnosisKeysResult
@@ -694,7 +693,7 @@ class ExposureNotificationsRepository(
         }
     }
 
-    suspend fun addExposure(testExposure: Boolean = false): AddExposureResult {
+    suspend fun addExposure(testExposure: Boolean = false, testExposureDaysAgo: Int = 0): AddExposureResult {
         Timber.d("New exposure detected")
 
         val riskCalculationParameters = getCachedRiskCalculationParameters()
@@ -718,7 +717,7 @@ class ExposureNotificationsRepository(
         }
 
         val newExposureDate = if (testExposure) {
-            LocalDate.now(clock).minusDays(BeagleHelperImpl.testExposureDaysAgo.toLong())
+            LocalDate.now(clock).minusDays(testExposureDaysAgo.toLong())
         } else {
             riskScores?.maxOfOrNull { it.daysSinceEpoch }?.let { LocalDate.ofEpochDay(it) }
         } ?: return AddExposureResult.Processed

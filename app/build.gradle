@@ -38,6 +38,7 @@ android {
 
         buildConfigField "boolean", "FEATURE_LOGGING", "false"
         buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "false"
+        buildConfigField "boolean", "FEATURE_DEBUG_DRAWER", "false"
         buildConfigField "boolean", "FEATURE_SECURE_SCREEN", "true"
     }
 
@@ -109,6 +110,7 @@ android {
             buildConfigField "boolean", "FEATURE_SECURE_SCREEN", "false"
             buildConfigField "boolean", "FEATURE_LOGGING", "true"
             buildConfigField "boolean", "FEATURE_DEBUG_NOTIFICATION", "true"
+            buildConfigField "boolean", "FEATURE_DEBUG_DRAWER", "true"
             versionNameSuffix "-tst"
         }
         pentest {
@@ -220,5 +222,5 @@ dependencies {
     androidTestImplementation libs.disableAnimationsRule
     androidTestImplementation libs.junit4AndroidIntegrationRules
     androidTestImplementation libs.fastlane.screengrab
-    tstImplementation libs.beagle.ui.drawer
+    implementation libs.beagle.ui.drawer
 }

@@ -32,3 +32,8 @@
 
 # Tink is used by androidx.security and its shaded protobufs needs to be kept
 -keep class * extends com.google.crypto.tink.shaded.protobuf.GeneratedMessageLite { *; }
+
+-dontwarn javax.naming.**
+-dontwarn org.conscrypt.**
+-dontwarn org.bouncycastle.jsse.**
+-dontwarn org.openjsse.**
