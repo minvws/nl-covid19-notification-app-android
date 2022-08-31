@@ -9,17 +9,7 @@ package nl.rijksoverheid.en.notifier
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleRegistry
-import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.test.core.app.ApplicationProvider
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.yield
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,76 +20,43 @@ import org.robolectric.Shadows.shadowOf
 class NotificationsRepositoryTest {
 
     @Test
-    fun `exposureNotificationsEnabled returns true when notifications are enabled`() =
-        runBlocking {
-            val context = ApplicationProvider.getApplicationContext<Application>()
-            val lifecycleOwner = ProcessLifecycleOwner.get()
-            val notificationManager = context.getSystemService(NotificationManager::class.java)
-            val repository = NotificationsRepository(
-                context,
-                lifecycleOwner = lifecycleOwner
-            )
-            shadowOf(notificationManager).setNotificationsEnabled(true)
-
-            assertEquals(true, repository.exposureNotificationsEnabled().first())
-        }
-
-    @Test
-    fun `exposureNotificationsEnabled returns false when all notifications for app are disabled`() =
-        runBlocking {
-            val context = ApplicationProvider.getApplicationContext<Application>()
-            val lifecycleOwner = ProcessLifecycleOwner.get()
-            val notificationManager = context.getSystemService(NotificationManager::class.java)
-            val repository = NotificationsRepository(
-                context,
-                lifecycleOwner = lifecycleOwner
-            )
-            shadowOf(notificationManager).setNotificationsEnabled(false)
-            assertEquals(false, repository.exposureNotificationsEnabled().first())
-        }
-
-    @Test
-    fun `exposureNotificationsEnabled returns false when exposure notifications channel is disabled`() =
-        runBlocking {
-            val context = ApplicationProvider.getApplicationContext<Application>()
-            val lifecycleOwner = ProcessLifecycleOwner.get()
-            val notificationManager = context.getSystemService(NotificationManager::class.java)
-            val repository = NotificationsRepository(
-                context,
-                lifecycleOwner = lifecycleOwner
-            )
-            repository.createOrUpdateNotificationChannels()
-            shadowOf(notificationManager).apply {
-                setNotificationsEnabled(true)
-                notificationChannels.map { it as NotificationChannel }
-                    .find { it.id == "exposure_notifications" }?.importance =
-                    NotificationManager.IMPORTANCE_NONE
-            }
-
-            assertEquals(false, repository.exposureNotificationsEnabled().first())
-        }
-
-    @Test
-    fun `exposureNotificationsEnabled refreshes when app is started`() = runTest {
+    fun `exposureNotificationsEnabled returns true when notifications are enabled`() {
         val context = ApplicationProvider.getApplicationContext<Application>()
-        val lifecycleOwner = ProcessLifecycleOwner.get()
         val notificationManager = context.getSystemService(NotificationManager::class.java)
         val repository = NotificationsRepository(
-            context,
-            lifecycleOwner = lifecycleOwner
+            context
+        )
+        shadowOf(notificationManager).setNotificationsEnabled(true)
+
+        assertEquals(true, repository.exposureNotificationChannelEnabled())
+    }
+
+    @Test
+    fun `exposureNotificationsEnabled returns false when all notifications for app are disabled`() {
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val notificationManager = context.getSystemService(NotificationManager::class.java)
+        val repository = NotificationsRepository(
+            context
+        )
+        shadowOf(notificationManager).setNotificationsEnabled(false)
+        assertEquals(false, repository.exposureNotificationChannelEnabled())
+    }
+
+    @Test
+    fun `exposureNotificationsEnabled returns false when exposure notifications channel is disabled`() {
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val notificationManager = context.getSystemService(NotificationManager::class.java)
+        val repository = NotificationsRepository(
+            context
         )
         repository.createOrUpdateNotificationChannels()
-        shadowOf(notificationManager).setNotificationsEnabled(false)
+        shadowOf(notificationManager).apply {
+            setNotificationsEnabled(true)
+            notificationChannels.map { it as NotificationChannel }
+                .find { it.id == "exposure_notifications" }?.importance =
+                NotificationManager.IMPORTANCE_NONE
+        }
 
-        val result = async { repository.exposureNotificationsEnabled().take(2).toList() }
-        yield()
-
-        shadowOf(notificationManager).setNotificationsEnabled(true)
-        (lifecycleOwner.lifecycle as LifecycleRegistry).handleLifecycleEvent(Lifecycle.Event.ON_START)
-
-        assertEquals(
-            listOf(false, true),
-            result.await()
-        )
+        assertEquals(false, repository.exposureNotificationChannelEnabled())
     }
 }

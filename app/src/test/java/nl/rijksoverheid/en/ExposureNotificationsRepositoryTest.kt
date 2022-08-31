@@ -181,6 +181,7 @@ private val MOCK_RISK_CALCULATION_PARAMS = RiskCalculationParameters(
     reportTypeWhenMissing = ReportType.CONFIRMED_TEST
 )
 
+@Suppress("DEPRECATION")
 @RunWith(RobolectricTestRunner::class)
 class ExposureNotificationsRepositoryTest {
     private lateinit var mockWebServer: MockWebServer

@@ -6,6 +6,7 @@
  */
 package nl.rijksoverheid.en.status
 
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import nl.rijksoverheid.en.ExposureNotificationsRepository
@@ -17,12 +18,12 @@ import nl.rijksoverheid.en.settings.Settings
 import nl.rijksoverheid.en.settings.SettingsRepository
 import nl.rijksoverheid.en.util.observeForTesting
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
@@ -67,22 +68,22 @@ class StatusViewModelTest {
     fun `headerState active with valid conditions`() = runBlocking {
         val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
-        Mockito.`when`(exposureNotificationsRepository.getStatus())
+        `when`(exposureNotificationsRepository.getStatus())
             .thenReturn(flowOf(StatusResult.Enabled))
-        Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+        `when`(settingsRepository.exposureNotificationsPausedState())
             .thenReturn(flowOf(Settings.PausedState.Enabled))
-        Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+        `when`(exposureNotificationsRepository.lastKeyProcessed())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+        `when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+        `when`(exposureNotificationsRepository.getLastExposureDate())
             .thenReturn(flowOf(null))
-        Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+        `when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
             .thenReturn(null)
-        Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+        `when`(exposureNotificationsRepository.keyProcessingOverdue())
             .thenReturn(false)
-        Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
-            .thenReturn(flowOf(true))
+        `when`(notificationsRepository.exposureNotificationChannelEnabled())
+            .thenReturn(true)
 
         val statusViewModel = StatusViewModel(
             onboardingRepository,
@@ -94,18 +95,13 @@ class StatusViewModelTest {
         )
 
         statusViewModel.headerState.observeForTesting {
-            Assert.assertEquals(
+            assertEquals(
                 StatusViewModel.HeaderState.Active,
                 it.values.first()
             )
         }
 
-        statusViewModel.notificationState.observeForTesting {
-            Assert.assertEquals(
-                emptyList<StatusViewModel.NotificationState>(),
-                it.values.first()
-            )
-        }
+        assertEquals(emptyList<StatusViewModel.NotificationState>(), statusViewModel.notificationState.first())
     }
 
     @Test
@@ -115,22 +111,22 @@ class StatusViewModelTest {
         val notificationReceivedDate = LocalDate.now()
         val pausedState = Settings.PausedState.Enabled
 
-        Mockito.`when`(exposureNotificationsRepository.getStatus())
+        `when`(exposureNotificationsRepository.getStatus())
             .thenReturn(flowOf(StatusResult.Enabled))
-        Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+        `when`(settingsRepository.exposureNotificationsPausedState())
             .thenReturn(flowOf(pausedState))
-        Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+        `when`(exposureNotificationsRepository.lastKeyProcessed())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+        `when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+        `when`(exposureNotificationsRepository.getLastExposureDate())
             .thenReturn(flowOf(exposureDate))
-        Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+        `when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
             .thenReturn(notificationReceivedDate)
-        Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+        `when`(exposureNotificationsRepository.keyProcessingOverdue())
             .thenReturn(false)
-        Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
-            .thenReturn(flowOf(true))
+        `when`(notificationsRepository.exposureNotificationChannelEnabled())
+            .thenReturn(true)
 
         val statusViewModel = StatusViewModel(
             onboardingRepository,
@@ -142,7 +138,7 @@ class StatusViewModelTest {
         )
 
         statusViewModel.headerState.observeForTesting {
-            Assert.assertEquals(
+            assertEquals(
                 StatusViewModel.HeaderState.Exposed(
                     exposureDate,
                     notificationReceivedDate,
@@ -152,35 +148,29 @@ class StatusViewModelTest {
             )
         }
 
-        statusViewModel.notificationState.observeForTesting {
-            Assert.assertEquals(
-                emptyList<StatusViewModel.NotificationState>(),
-                it.values.first()
-            )
-        }
+        assertEquals(emptyList<StatusViewModel.NotificationState>(), statusViewModel.notificationState.first())
     }
 
     @Test
     fun `NotificationsDisabled without being exposed `() = runBlocking {
         val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
-        val notificationsEnabled = false
 
-        Mockito.`when`(exposureNotificationsRepository.getStatus())
+        `when`(exposureNotificationsRepository.getStatus())
             .thenReturn(flowOf(StatusResult.Enabled))
-        Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+        `when`(settingsRepository.exposureNotificationsPausedState())
             .thenReturn(flowOf(Settings.PausedState.Enabled))
-        Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+        `when`(exposureNotificationsRepository.lastKeyProcessed())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+        `when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+        `when`(exposureNotificationsRepository.getLastExposureDate())
             .thenReturn(flowOf(null))
-        Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+        `when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
             .thenReturn(null)
-        Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+        `when`(exposureNotificationsRepository.keyProcessingOverdue())
             .thenReturn(false)
-        Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
-            .thenReturn(flowOf(notificationsEnabled))
+        `when`(notificationsRepository.exposureNotificationChannelEnabled())
+            .thenReturn(false)
 
         val statusViewModel = StatusViewModel(
             onboardingRepository,
@@ -192,18 +182,13 @@ class StatusViewModelTest {
         )
 
         statusViewModel.headerState.observeForTesting {
-            Assert.assertEquals(
+            assertEquals(
                 StatusViewModel.HeaderState.Active,
                 it.values.first()
             )
         }
 
-        statusViewModel.notificationState.observeForTesting {
-            Assert.assertEquals(
-                listOf(StatusViewModel.NotificationState.Error.NotificationsDisabled),
-                it.values.first()
-            )
-        }
+        assertEquals(listOf(StatusViewModel.NotificationState.Error.NotificationsDisabled), statusViewModel.notificationState.first())
     }
 
     @Test
@@ -213,22 +198,22 @@ class StatusViewModelTest {
         val notificationReceivedDate = LocalDate.now()
         val pausedState = Settings.PausedState.Enabled
 
-        Mockito.`when`(exposureNotificationsRepository.getStatus())
+        `when`(exposureNotificationsRepository.getStatus())
             .thenReturn(flowOf(StatusResult.Enabled))
-        Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+        `when`(settingsRepository.exposureNotificationsPausedState())
             .thenReturn(flowOf(pausedState))
-        Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+        `when`(exposureNotificationsRepository.lastKeyProcessed())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+        `when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+        `when`(exposureNotificationsRepository.getLastExposureDate())
             .thenReturn(flowOf(exposureDate))
-        Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+        `when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
             .thenReturn(notificationReceivedDate)
-        Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+        `when`(exposureNotificationsRepository.keyProcessingOverdue())
             .thenReturn(true)
-        Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
-            .thenReturn(flowOf(true))
+        `when`(notificationsRepository.exposureNotificationChannelEnabled())
+            .thenReturn(true)
 
         val statusViewModel = StatusViewModel(
             onboardingRepository,
@@ -240,7 +225,7 @@ class StatusViewModelTest {
         )
 
         statusViewModel.headerState.observeForTesting {
-            Assert.assertEquals(
+            assertEquals(
                 StatusViewModel.HeaderState.Exposed(
                     exposureDate,
                     notificationReceivedDate,
@@ -250,12 +235,7 @@ class StatusViewModelTest {
             )
         }
 
-        statusViewModel.notificationState.observeForTesting {
-            Assert.assertEquals(
-                listOf<StatusViewModel.NotificationState>(StatusViewModel.NotificationState.Error.SyncIssues),
-                it.values.first()
-            )
-        }
+        assertEquals(listOf<StatusViewModel.NotificationState>(StatusViewModel.NotificationState.Error.SyncIssues), statusViewModel.notificationState.first())
     }
 
     @Test
@@ -266,22 +246,22 @@ class StatusViewModelTest {
             val notificationReceivedDate = LocalDate.now(clock)
             val pausedState = Settings.PausedState.Paused(LocalDateTime.now(clock).plusDays(1))
 
-            Mockito.`when`(exposureNotificationsRepository.getStatus())
+            `when`(exposureNotificationsRepository.getStatus())
                 .thenReturn(flowOf(StatusResult.Disabled))
-            Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+            `when`(settingsRepository.exposureNotificationsPausedState())
                 .thenReturn(flowOf(pausedState))
-            Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+            `when`(exposureNotificationsRepository.lastKeyProcessed())
                 .thenReturn(flowOf(clock.millis()))
-            Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+            `when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
                 .thenReturn(flowOf(clock.millis()))
-            Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+            `when`(exposureNotificationsRepository.getLastExposureDate())
                 .thenReturn(flowOf(exposureDate))
-            Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+            `when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
                 .thenReturn(notificationReceivedDate)
-            Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+            `when`(exposureNotificationsRepository.keyProcessingOverdue())
                 .thenReturn(true)
-            Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
-                .thenReturn(flowOf(true))
+            `when`(notificationsRepository.exposureNotificationChannelEnabled())
+                .thenReturn(true)
 
             val statusViewModel = StatusViewModel(
                 onboardingRepository,
@@ -293,7 +273,7 @@ class StatusViewModelTest {
             )
 
             statusViewModel.headerState.observeForTesting {
-                Assert.assertEquals(
+                assertEquals(
                     StatusViewModel.HeaderState.Exposed(
                         exposureDate,
                         notificationReceivedDate,
@@ -303,16 +283,14 @@ class StatusViewModelTest {
                 )
             }
 
-            statusViewModel.notificationState.observeForTesting {
-                Assert.assertEquals(
-                    listOf<StatusViewModel.NotificationState>(
-                        StatusViewModel.NotificationState.Paused(
-                            pausedState.pausedUntil
-                        )
-                    ),
-                    it.values.first()
-                )
-            }
+            assertEquals(
+                listOf<StatusViewModel.NotificationState>(
+                    StatusViewModel.NotificationState.Paused(
+                        pausedState.pausedUntil
+                    )
+                ),
+                statusViewModel.notificationState.first()
+            )
         }
 
     @Test
@@ -322,22 +300,22 @@ class StatusViewModelTest {
         val notificationReceivedDate = LocalDate.now(clock)
         val pausedState = Settings.PausedState.Enabled
 
-        Mockito.`when`(exposureNotificationsRepository.getStatus())
+        `when`(exposureNotificationsRepository.getStatus())
             .thenReturn(flowOf(StatusResult.Disabled))
-        Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+        `when`(settingsRepository.exposureNotificationsPausedState())
             .thenReturn(flowOf(pausedState))
-        Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+        `when`(exposureNotificationsRepository.lastKeyProcessed())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+        `when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+        `when`(exposureNotificationsRepository.getLastExposureDate())
             .thenReturn(flowOf(exposureDate))
-        Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+        `when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
             .thenReturn(notificationReceivedDate)
-        Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+        `when`(exposureNotificationsRepository.keyProcessingOverdue())
             .thenReturn(false)
-        Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
-            .thenReturn(flowOf(true))
+        `when`(notificationsRepository.exposureNotificationChannelEnabled())
+            .thenReturn(true)
 
         val statusViewModel = StatusViewModel(
             onboardingRepository,
@@ -349,7 +327,7 @@ class StatusViewModelTest {
         )
 
         statusViewModel.headerState.observeForTesting {
-            Assert.assertEquals(
+            assertEquals(
                 StatusViewModel.HeaderState.Exposed(
                     exposureDate,
                     notificationReceivedDate,
@@ -359,34 +337,29 @@ class StatusViewModelTest {
             )
         }
 
-        statusViewModel.notificationState.observeForTesting {
-            Assert.assertEquals(
-                listOf<StatusViewModel.NotificationState>(StatusViewModel.NotificationState.Error.ConsentRequired),
-                it.values.first()
-            )
-        }
+        assertEquals(listOf<StatusViewModel.NotificationState>(StatusViewModel.NotificationState.Error.ConsentRequired), statusViewModel.notificationState.first())
     }
 
     @Test
     fun `headerState bluetooth disabled`() = runBlocking {
         val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
-        Mockito.`when`(exposureNotificationsRepository.getStatus())
+        `when`(exposureNotificationsRepository.getStatus())
             .thenReturn(flowOf(StatusResult.BluetoothDisabled))
-        Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+        `when`(settingsRepository.exposureNotificationsPausedState())
             .thenReturn(flowOf(Settings.PausedState.Enabled))
-        Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+        `when`(exposureNotificationsRepository.lastKeyProcessed())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+        `when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+        `when`(exposureNotificationsRepository.getLastExposureDate())
             .thenReturn(flowOf(null))
-        Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+        `when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
             .thenReturn(null)
-        Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+        `when`(exposureNotificationsRepository.keyProcessingOverdue())
             .thenReturn(false)
-        Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
-            .thenReturn(flowOf(true))
+        `when`(notificationsRepository.exposureNotificationChannelEnabled())
+            .thenReturn(true)
 
         val statusViewModel = StatusViewModel(
             onboardingRepository,
@@ -398,41 +371,36 @@ class StatusViewModelTest {
         )
 
         statusViewModel.headerState.observeForTesting {
-            Assert.assertEquals(
+            assertEquals(
                 StatusViewModel.HeaderState.BluetoothDisabled,
                 it.values.first()
             )
         }
 
-        statusViewModel.notificationState.observeForTesting {
-            Assert.assertEquals(
-                emptyList<StatusViewModel.NotificationState>(),
-                it.values.first()
-            )
-        }
+        assertEquals(emptyList<StatusViewModel.NotificationState>(), statusViewModel.notificationState.first())
     }
 
     @Test
     fun `headerState syncIssues wifi only`() = runBlocking {
         val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
-        Mockito.`when`(exposureNotificationsRepository.getStatus())
+        `when`(exposureNotificationsRepository.getStatus())
             .thenReturn(flowOf(StatusResult.Enabled))
-        Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+        `when`(settingsRepository.exposureNotificationsPausedState())
             .thenReturn(flowOf(Settings.PausedState.Enabled))
-        Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+        `when`(exposureNotificationsRepository.lastKeyProcessed())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+        `when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
             .thenReturn(flowOf(clock.millis()))
-        Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+        `when`(exposureNotificationsRepository.getLastExposureDate())
             .thenReturn(flowOf(null))
-        Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+        `when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
             .thenReturn(null)
-        Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+        `when`(exposureNotificationsRepository.keyProcessingOverdue())
             .thenReturn(true)
-        Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
-            .thenReturn(flowOf(true))
-        Mockito.`when`(settingsRepository.wifiOnly)
+        `when`(notificationsRepository.exposureNotificationChannelEnabled())
+            .thenReturn(true)
+        `when`(settingsRepository.wifiOnly)
             .thenReturn(true)
 
         val statusViewModel = StatusViewModel(
@@ -445,18 +413,13 @@ class StatusViewModelTest {
         )
 
         statusViewModel.headerState.observeForTesting {
-            Assert.assertEquals(
+            assertEquals(
                 StatusViewModel.HeaderState.SyncIssuesWifiOnly,
                 it.values.first()
             )
         }
 
-        statusViewModel.notificationState.observeForTesting {
-            Assert.assertEquals(
-                emptyList<StatusViewModel.NotificationState>(),
-                it.values.first()
-            )
-        }
+        assertEquals(emptyList<StatusViewModel.NotificationState>(), statusViewModel.notificationState.first())
     }
 
     @Test
@@ -464,22 +427,22 @@ class StatusViewModelTest {
         runBlocking {
             val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
-            Mockito.`when`(exposureNotificationsRepository.getStatus())
+            `when`(exposureNotificationsRepository.getStatus())
                 .thenReturn(flowOf(StatusResult.LocationPreconditionNotSatisfied))
-            Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+            `when`(settingsRepository.exposureNotificationsPausedState())
                 .thenReturn(flowOf(Settings.PausedState.Enabled))
-            Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+            `when`(exposureNotificationsRepository.lastKeyProcessed())
                 .thenReturn(flowOf(clock.millis()))
-            Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+            `when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
                 .thenReturn(flowOf(clock.millis()))
-            Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+            `when`(exposureNotificationsRepository.getLastExposureDate())
                 .thenReturn(flowOf(null))
-            Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+            `when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
                 .thenReturn(null)
-            Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+            `when`(exposureNotificationsRepository.keyProcessingOverdue())
                 .thenReturn(true)
-            Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
-                .thenReturn(flowOf(true))
+            `when`(notificationsRepository.exposureNotificationChannelEnabled())
+                .thenReturn(true)
 
             val statusViewModel = StatusViewModel(
                 onboardingRepository,
@@ -491,18 +454,13 @@ class StatusViewModelTest {
             )
 
             statusViewModel.headerState.observeForTesting {
-                Assert.assertEquals(
+                assertEquals(
                     StatusViewModel.HeaderState.Disabled,
                     it.values.first()
                 )
             }
 
-            statusViewModel.notificationState.observeForTesting {
-                Assert.assertEquals(
-                    emptyList<StatusViewModel.NotificationState>(),
-                    it.values.first()
-                )
-            }
+            assertEquals(emptyList<StatusViewModel.NotificationState>(), statusViewModel.notificationState.first())
         }
 
     @Test
@@ -510,22 +468,22 @@ class StatusViewModelTest {
         runBlocking {
             val clock = Clock.fixed(Instant.parse("2020-06-20T10:15:30.00Z"), ZoneId.of("UTC"))
 
-            Mockito.`when`(exposureNotificationsRepository.getStatus())
+            `when`(exposureNotificationsRepository.getStatus())
                 .thenReturn(flowOf(StatusResult.Enabled))
-            Mockito.`when`(settingsRepository.exposureNotificationsPausedState())
+            `when`(settingsRepository.exposureNotificationsPausedState())
                 .thenReturn(flowOf(Settings.PausedState.Enabled))
-            Mockito.`when`(exposureNotificationsRepository.lastKeyProcessed())
+            `when`(exposureNotificationsRepository.lastKeyProcessed())
                 .thenReturn(flowOf(clock.millis()))
-            Mockito.`when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
+            `when`(exposureNotificationsRepository.notificationsEnabledTimestamp())
                 .thenReturn(flowOf(clock.millis()))
-            Mockito.`when`(exposureNotificationsRepository.getLastExposureDate())
+            `when`(exposureNotificationsRepository.getLastExposureDate())
                 .thenReturn(flowOf(null))
-            Mockito.`when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
+            `when`(exposureNotificationsRepository.getLastNotificationReceivedDate())
                 .thenReturn(null)
-            Mockito.`when`(exposureNotificationsRepository.keyProcessingOverdue())
+            `when`(exposureNotificationsRepository.keyProcessingOverdue())
                 .thenReturn(false)
-            Mockito.`when`(notificationsRepository.exposureNotificationsEnabled())
-                .thenReturn(flowOf(true))
+            `when`(notificationsRepository.exposureNotificationChannelEnabled())
+                .thenReturn(true)
 
             val statusViewModel = StatusViewModel(
                 onboardingRepository,

@@ -39,8 +39,6 @@ android {
         }
 
         debug {
-            // Uncomment to disable pinning for all debug variants
-            // buildConfigField "boolean", "FEATURE_SSL_PINNING", "false"
         }
     }
 

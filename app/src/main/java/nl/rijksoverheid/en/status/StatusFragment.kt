@@ -21,11 +21,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
@@ -51,6 +55,22 @@ class StatusFragment @JvmOverloads constructor(
 
     private lateinit var section: StatusSection
     private val adapter = GroupAdapter<GroupieViewHolder>()
+    private val requestNotificationsPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        // notification channel could still be disabled or the permission could have been blocked
+        // from previous requests
+        if (!statusViewModel.notificationChannelEnabled ||
+            (
+                !granted &&
+                    !shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) &&
+                    !shouldShowNotificationPermissionRationale
+                )
+        ) {
+            // permission is probably blocked before, open notification settings
+            navigateToNotificationSettings()
+        }
+    }
+
+    private var shouldShowNotificationPermissionRationale = false
 
     private val requestBluetoothConnectPermission = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -110,7 +130,15 @@ class StatusFragment @JvmOverloads constructor(
         }
 
         statusViewModel.headerState.observe(viewLifecycleOwner, ::updateHeaderState)
-        statusViewModel.notificationState.observe(viewLifecycleOwner, ::updateNotificationState)
+
+        lifecycle.coroutineScope.launch {
+            repeatOnLifecycle(state = Lifecycle.State.RESUMED) {
+                statusViewModel.notificationState.collectLatest {
+                    updateNotificationState(it)
+                }
+            }
+        }
+
         statusViewModel.lastKeysProcessed.observe(viewLifecycleOwner) {
             section.lastKeysProcessed = it
         }
@@ -202,7 +230,14 @@ class StatusFragment @JvmOverloads constructor(
                 NotificationState.Error.BluetoothDisabled -> requestEnableBluetooth()
                 NotificationState.Error.ConsentRequired -> resetAndRequestEnableNotifications()
                 NotificationState.Error.LocationDisabled -> requestEnableLocationServices()
-                NotificationState.Error.NotificationsDisabled -> navigateToNotificationSettings()
+                NotificationState.Error.NotificationsDisabled -> {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                        navigateToNotificationSettings()
+                    } else {
+                        shouldShowNotificationPermissionRationale = shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)
+                        requestNotificationsPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    }
+                }
                 NotificationState.Error.SyncIssues -> statusViewModel.resetErrorState()
                 NotificationState.Error.SyncIssuesWifiOnly -> navigateToInternetRequiredFragment()
             }

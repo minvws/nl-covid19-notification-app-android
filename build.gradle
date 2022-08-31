@@ -35,10 +35,10 @@ allprojects {
 
         project.plugins.withId("com.android.base") {
             android {
-                compileSdkVersion 32
+                compileSdkVersion 33
                 defaultConfig {
                     minSdkVersion 23
-                    targetSdkVersion 32
+                    targetSdkVersion 33
                 }
                 compileOptions {
                     sourceCompatibility JavaVersion.VERSION_1_8
