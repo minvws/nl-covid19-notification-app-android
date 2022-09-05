@@ -14,6 +14,7 @@ import nl.rijksoverheid.en.factory.RepositoryFactory.createExposureNotifications
 import nl.rijksoverheid.en.factory.RepositoryFactory.createLabTestRepository
 import nl.rijksoverheid.en.factory.RepositoryFactory.createSettingsRepository
 import nl.rijksoverheid.en.notifier.NotificationsRepository
+import nl.rijksoverheid.en.util.withAppLocale
 
 /**
  * Factory for CoroutineWorkers classes.
@@ -29,20 +30,20 @@ class EnWorkerFactory : WorkerFactory() {
                 appContext,
                 workerParameters,
                 createExposureNotificationsRepository(appContext),
-                NotificationsRepository(appContext)
+                createNotificationsRepository(appContext)
             )
             CheckConnectionWorker::class.java.name -> CheckConnectionWorker(
                 appContext,
                 workerParameters,
                 createExposureNotificationsRepository(appContext),
-                NotificationsRepository(appContext),
+                createNotificationsRepository(appContext),
                 createSettingsRepository(appContext)
             )
             ExposureNotificationJob::class.java.name -> ExposureNotificationJob(
                 appContext,
                 workerParameters,
                 createExposureNotificationsRepository(appContext),
-                NotificationsRepository(appContext)
+                createNotificationsRepository(appContext)
             )
             UploadDiagnosisKeysJob::class.java.name -> UploadDiagnosisKeysJob(
                 appContext,
@@ -63,7 +64,7 @@ class EnWorkerFactory : WorkerFactory() {
                 appContext,
                 workerParameters,
                 createExposureNotificationsRepository(appContext),
-                NotificationsRepository(appContext)
+                createNotificationsRepository(appContext)
             )
             ExposureCleanupWorker::class.java.name -> ExposureCleanupWorker(
                 appContext,
@@ -73,4 +74,7 @@ class EnWorkerFactory : WorkerFactory() {
             else -> null
         }
     }
+
+    private fun createNotificationsRepository(context: Context) =
+        NotificationsRepository(context.withAppLocale())
 }

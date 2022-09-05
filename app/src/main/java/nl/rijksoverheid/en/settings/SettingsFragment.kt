@@ -32,7 +32,9 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
     private val settingsViewModel: SettingsViewModel by viewModels()
 
-    private val localeHelper = LocaleHelper.getInstance()
+    private val localeHelper by lazy {
+        LocaleHelper(requireContext())
+    }
 
     private lateinit var binding: FragmentSettingsBinding
 
@@ -47,10 +49,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         binding.isSystemLanguageDutch = localeHelper.isSystemLanguageDutch
         binding.useAppInDutchSwitch.isChecked = localeHelper.isAppSetToDutch
         binding.useAppInDutchSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (localeHelper.useAppInDutch(isChecked, requireContext())) {
-                // Ensure current fragment is updated after changing language
-                parentFragmentManager.beginTransaction().detach(this).commitAllowingStateLoss()
-                parentFragmentManager.beginTransaction().attach(this).commitAllowingStateLoss()
+            if (localeHelper.isAppSetToDutch != isChecked) {
+                localeHelper.useAppInDutch(isChecked)
             }
         }
 

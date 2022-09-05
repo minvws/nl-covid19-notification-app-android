@@ -6,69 +6,108 @@
  */
 package nl.rijksoverheid.en.util
 
+import android.app.Application
 import android.content.Context
+import android.os.Build
 import androidx.core.os.ConfigurationCompat
+import androidx.core.os.LocaleListCompat
 import androidx.test.core.app.ApplicationProvider
-import org.junit.Assert
+import nl.rijksoverheid.en.settings.Settings
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import java.util.Locale
+import java.util.concurrent.atomic.AtomicReference
+
+private val DUTCH_LOCALE = Locale("nl", "NL")
 
 @RunWith(RobolectricTestRunner::class)
 class LocaleHelperTest {
 
-    @Before
-    fun `setup and test that LocaleHelper getInstance throws exception before initialization`() {
-        val appContext = ApplicationProvider.getApplicationContext<Context>()
-        if (isInitialized) {
-            LocaleHelper.getInstance().useAppInDutch(false, appContext)
-        } else {
-            Assert.assertThrows(IllegalStateException::class.java) { LocaleHelper.getInstance() }
-            LocaleHelper.initialize(ApplicationProvider.getApplicationContext())
-            isInitialized = true
-        }
-    }
+    private lateinit var applicationContext: Context
 
-    @Test(expected = IllegalStateException::class)
-    fun `LocaleHelper throws exception on initialization when already initialized`() {
-        LocaleHelper.initialize(ApplicationProvider.getApplicationContext())
+    @Before
+    fun setup() {
+        applicationContext = ApplicationProvider.getApplicationContext()
     }
 
     @Test
     fun `LocaleHelper isAppSetToDutch is false by default`() {
-        val localeHelper = LocaleHelper.getInstance()
+        val localeHelper =
+            LocaleHelper(applicationContext) { /* dummy */ }
         assertFalse(localeHelper.isAppSetToDutch)
     }
 
     @Test
-    fun `LocaleHelper isSystemLanguageDutch is false by default`() {
-        val localeHelper = LocaleHelper.getInstance()
-        assertFalse(localeHelper.isSystemLanguageDutch)
+    fun `LocaleHelper applies locale`() {
+        val settings = Settings(ApplicationProvider.getApplicationContext())
+        val appliedLocales = AtomicReference(LocaleListCompat.getEmptyLocaleList())
+        val localeHelper = LocaleHelper(applicationContext, settings) { appliedLocales.set(it) }
+        val appContext = ApplicationProvider.getApplicationContext<Application>()
+
+        localeHelper.useAppInDutch(true)
+        assertEquals(LocaleListCompat.create(DUTCH_LOCALE), appliedLocales.get())
+        assertTrue(
+            ConfigurationCompat.getLocales(localeHelper.createContextForLocale(appContext).resources.configuration)[0] == Locale(
+                "nl",
+                "NL"
+            )
+        )
+        assertTrue(localeHelper.isAppSetToDutch)
+        // setting should be updated
+        assertTrue(settings.isAppSetToDutch)
     }
 
     @Test
-    fun `LocaleHelper useAppInDutch(true) sets provided context locale but not system locale to Dutch`() {
-        val localeHelper = LocaleHelper.getInstance()
+    fun `LocaleHelper restores default locale`() {
+        val settings = Settings(ApplicationProvider.getApplicationContext())
+        settings.isAppSetToDutch = true
+        val appliedLocales = AtomicReference(LocaleListCompat.create(DUTCH_LOCALE))
+        val localeHelper = LocaleHelper(applicationContext, settings) { appliedLocales.set(it) }
+
         val appContext = ApplicationProvider.getApplicationContext<Context>()
-        localeHelper.useAppInDutch(true, appContext)
-        assert(ConfigurationCompat.getLocales(appContext.resources.configuration)[0] == LocaleHelper.dutchLocale)
-        assert(localeHelper.isAppSetToDutch)
-        assert(!localeHelper.isSystemLanguageDutch)
+        val defaultLocale = ConfigurationCompat.getLocales(appContext.resources.configuration)
+
+        localeHelper.useAppInDutch(false)
+        assertEquals(LocaleListCompat.getEmptyLocaleList(), appliedLocales.get())
+
+        assertTrue(ConfigurationCompat.getLocales(localeHelper.createContextForLocale(appContext).resources.configuration) == defaultLocale)
     }
 
     @Test
-    fun `LocaleHelper useAppInDutch(false) sets provided context locale to system locale`() {
-        val localeHelper = LocaleHelper.getInstance()
-        val appContext = ApplicationProvider.getApplicationContext<Context>()
-        val initialLocale = ConfigurationCompat.getLocales(appContext.resources.configuration)[0]
-        localeHelper.useAppInDutch(false, appContext)
-        assert(ConfigurationCompat.getLocales(appContext.resources.configuration)[0] == initialLocale)
-        assert(localeHelper.isAppSetToDutch == localeHelper.isSystemLanguageDutch)
+    @Config(sdk = [Build.VERSION_CODES.S])
+    fun `LocaleHelper wraps locale when API level is lower than 33`() {
+        val settings = Settings(ApplicationProvider.getApplicationContext())
+        val localeHelper = LocaleHelper(applicationContext, settings) { /* nothing */ }
+        settings.isAppSetToDutch = true
+        val appContext = ApplicationProvider.getApplicationContext<Application>()
+        assertTrue(
+            ConfigurationCompat.getLocales(localeHelper.createContextForLocale(appContext).resources.configuration)[0] == Locale(
+                "nl",
+                "NL"
+            )
+        )
     }
 
-    companion object {
-        private var isInitialized = false
+    @Test
+    @Ignore("Tiramisu is not yet supported by Robolectric")
+    @Config(sdk = [Build.VERSION_CODES.TIRAMISU])
+    fun `LocaleHelper does not wrap locale when API level 33 or up`() {
+        val settings = Settings(ApplicationProvider.getApplicationContext())
+        val localeHelper = LocaleHelper(applicationContext, settings) { /* nothing */ }
+        settings.isAppSetToDutch = true
+        val appContext = ApplicationProvider.getApplicationContext<Application>()
+        val expectedLocales = appContext.resources.configuration.locales
+        assertTrue(
+            ConfigurationCompat.getLocales(localeHelper.createContextForLocale(appContext).resources.configuration) == LocaleListCompat.wrap(
+                expectedLocales
+            )
+        )
     }
 }

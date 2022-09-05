@@ -12,6 +12,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import nl.rijksoverheid.en.notifier.NotificationsRepository
+import nl.rijksoverheid.en.util.withAppLocale
 import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -22,7 +23,7 @@ import java.time.ZoneId
 class ExposureNotificationsPausedReminderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         Timber.d("onReceive")
-        NotificationsRepository(context).showAppPausedReminder()
+        NotificationsRepository(context.withAppLocale()).showAppPausedReminder()
     }
 
     companion object {
