@@ -8,7 +8,6 @@ package nl.rijksoverheid.en.onboarding
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -20,11 +19,9 @@ import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.about.FAQItem
 import nl.rijksoverheid.en.about.FAQItemDecoration
 import nl.rijksoverheid.en.databinding.FragmentListWithButtonBinding
-import nl.rijksoverheid.en.ignoreInitiallyEnabled
 import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.ext.setExitSlideTransition
-import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 
 class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
@@ -32,8 +29,7 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
 
     private val adapter = GroupAdapter<GroupieViewHolder>().apply { add(HowItWorksSection()) }
 
-    private val disableBatteryOptimizationsResultRegistration =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { onboardingViewModel.continueOnboarding() }
+    private val helper = OnboardingHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,11 +69,7 @@ class HowItWorksFragment : BaseFragment(R.layout.fragment_list_with_button) {
             setOnClickListener { viewModel.requestEnableNotificationsForcingConsent() }
         }
 
-        viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
-            if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
-                disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest { onboardingViewModel.continueOnboarding() }
-            }
-        }
+        helper.observeExposureNotificationsApiEnabled(viewLifecycleOwner)
 
         onboardingViewModel.continueOnboarding.observeEvent(viewLifecycleOwner) {
             findNavController().navigateCatchingErrors(

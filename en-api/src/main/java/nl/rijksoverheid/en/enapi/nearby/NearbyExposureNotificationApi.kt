@@ -8,6 +8,8 @@ package nl.rijksoverheid.en.enapi.nearby
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.nearby.exposurenotification.DailySummariesConfig
@@ -222,10 +224,18 @@ class NearbyExposureNotificationApi(
     }
 
     private fun isApiAvailable(): Boolean {
-        return context.packageManager.resolveActivity(
-            Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS),
-            0
-        ) != null
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            @Suppress("DEPRECATION")
+            context.packageManager.resolveActivity(
+                Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS),
+                0
+            )
+        } else {
+            context.packageManager.resolveActivity(
+                Intent(ExposureNotificationClient.ACTION_EXPOSURE_NOTIFICATION_SETTINGS),
+                PackageManager.ResolveInfoFlags.of(0)
+            )
+        } != null
     }
 
     override fun deviceSupportsLocationlessScanning(): Boolean {

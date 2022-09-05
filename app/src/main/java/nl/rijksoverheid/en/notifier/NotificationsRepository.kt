@@ -17,18 +17,10 @@ import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.text.HtmlCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.navigation.NavDeepLinkBuilder
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.api.model.AppMessage
 import nl.rijksoverheid.en.job.RemindExposureNotificationWorker
-import nl.rijksoverheid.en.lifecyle.asFlow
 import nl.rijksoverheid.en.util.formatDaysSince
 import java.time.Clock
 import java.time.LocalDate
@@ -48,25 +40,23 @@ private const val APP_MESSAGE_NOTIFICATION = 7
 
 class NotificationsRepository(
     private val context: Context,
-    private val clock: Clock = Clock.systemDefaultZone(),
-    lifecycleOwner: LifecycleOwner = ProcessLifecycleOwner.get()
+    private val clock: Clock = Clock.systemDefaultZone()
 ) {
 
-    private val refreshOnStart = lifecycleOwner.asFlow().filter { it == Lifecycle.State.STARTED }
-        .map { }.onStart { emit(Unit) }
-
-    fun exposureNotificationsEnabled(): Flow<Boolean> = refreshOnStart.map {
+    /**
+     * Exposure notifications are enabled if notifications are enabled and at least the notification
+     * channel for the exposure notification is enabled
+     */
+    fun exposureNotificationChannelEnabled(): Boolean {
         val allNotificationsEnabled =
             NotificationManagerCompat.from(context).areNotificationsEnabled()
-        val exposureNotificationsEnabled = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        return allNotificationsEnabled && if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManagerCompat.from(context)
                 .getNotificationChannel(EXPOSURE_NOTIFICATION_CHANNEL_ID)?.importance !=
                 NotificationManager.IMPORTANCE_NONE
         } else {
             true
         }
-
-        allNotificationsEnabled && exposureNotificationsEnabled
     }
 
     fun createOrUpdateNotificationChannels() {
@@ -114,14 +104,21 @@ class NotificationsRepository(
         NotificationManagerCompat.from(context).cancel(SYNC_ISSUES_NOTIFICATION_ID)
     }
 
-    fun showExposureNotification(lastExposureDate: LocalDate, notificationReceivedDate: LocalDate?, reminder: Boolean = false) {
+    fun showExposureNotification(
+        lastExposureDate: LocalDate,
+        notificationReceivedDate: LocalDate?,
+        reminder: Boolean = false
+    ) {
         val pendingIntent = NavDeepLinkBuilder(context)
             .setGraph(R.navigation.nav_main)
             .setDestination(R.id.nav_post_notification)
             .setArguments(
                 Bundle().apply {
                     putSerializable("lastExposureLocalDateString", lastExposureDate.toString())
-                    putSerializable("notificationReceivedLocalDateString", notificationReceivedDate?.toString())
+                    putSerializable(
+                        "notificationReceivedLocalDateString",
+                        notificationReceivedDate?.toString()
+                    )
                 }
             ).createPendingIntent()
         val message = context.getString(
@@ -274,7 +271,12 @@ class NotificationsRepository(
         @StringRes title: Int,
         @StringRes message: Int,
         autoCancel: Boolean = true
-    ) = createNotification(channelId, context.getString(title), context.getString(message), autoCancel)
+    ) = createNotification(
+        channelId,
+        context.getString(title),
+        context.getString(message),
+        autoCancel
+    )
 
     private fun createNotification(
         channel: String,

@@ -7,14 +7,15 @@
 package nl.rijksoverheid.en.status
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -72,12 +73,15 @@ class StatusViewModel(
     val exposureDetected: Boolean
         get() = headerState.value is HeaderState.Exposed
 
-    val notificationState: LiveData<List<NotificationState>> = combine(
+    val notificationChannelEnabled: Boolean
+        get() = notificationsRepository.exposureNotificationChannelEnabled()
+
+    val notificationState: Flow<List<NotificationState>> = combine(
         exposureNotificationsRepository.notificationsEnabledTimestamp()
             .flatMapLatest { exposureNotificationsRepository.getStatus() },
         settingsRepository.exposureNotificationsPausedState(),
         exposureNotificationsRepository.getLastExposureDate(),
-        notificationsRepository.exposureNotificationsEnabled(),
+        flow { emit(notificationChannelEnabled) },
         isIgnoringBatteryOptimizations
     ) { statusResult, pausedState, lastExposureDate, exposureNotificationsEnabled, isIgnoringBatteryOptimizations ->
         getNotificationStates(
@@ -94,7 +98,7 @@ class StatusViewModel(
                 )
             }
         )
-    }.asLiveData(viewModelScope.coroutineContext)
+    }
 
     val lastKeysProcessed = exposureNotificationsRepository.lastKeyProcessed()
         .map {

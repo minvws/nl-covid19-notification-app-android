@@ -8,7 +8,6 @@ package nl.rijksoverheid.en.onboarding
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -16,18 +15,15 @@ import nl.rijksoverheid.en.BaseFragment
 import nl.rijksoverheid.en.ExposureNotificationsViewModel
 import nl.rijksoverheid.en.R
 import nl.rijksoverheid.en.databinding.FragmentEnableApiBinding
-import nl.rijksoverheid.en.ignoreInitiallyEnabled
 import nl.rijksoverheid.en.lifecyle.observeEvent
 import nl.rijksoverheid.en.navigation.navigateCatchingErrors
 import nl.rijksoverheid.en.util.ext.setSlideTransition
-import nl.rijksoverheid.en.util.launchDisableBatteryOptimizationsRequest
 
 class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
     private val onboardingViewModel: OnboardingViewModel by activityViewModels()
     private val viewModel: ExposureNotificationsViewModel by activityViewModels()
 
-    private val disableBatteryOptimizationsResultRegistration =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { onboardingViewModel.continueOnboarding() }
+    private val helper = OnboardingHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,11 +43,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
             findNavController().navigateCatchingErrors(EnableApiFragmentDirections.actionExplain())
         }
 
-        viewModel.notificationState.ignoreInitiallyEnabled().observe(viewLifecycleOwner) {
-            if (it is ExposureNotificationsViewModel.NotificationsState.Enabled) {
-                disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest { onboardingViewModel.continueOnboarding() }
-            }
-        }
+        helper.observeExposureNotificationsApiEnabled(viewLifecycleOwner)
 
         onboardingViewModel.skipConsentConfirmation.observeEvent(viewLifecycleOwner) {
             findNavController().navigate(EnableApiFragmentDirections.actionSkipConsentConfirmation())
@@ -59,7 +51,7 @@ class EnableApiFragment : BaseFragment(R.layout.fragment_enable_api) {
                 SkipConsentConfirmationDialogFragment.SKIP_CONSENT_RESULT
             )?.observe(viewLifecycleOwner) { skip ->
                 if (skip) {
-                    disableBatteryOptimizationsResultRegistration.launchDisableBatteryOptimizationsRequest { onboardingViewModel.continueOnboarding() }
+                    helper.requestDisableBatteryOptimizations()
                 } else {
                     viewModel.requestEnableNotificationsForcingConsent()
                 }
