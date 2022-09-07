@@ -31,6 +31,7 @@ import nl.rijksoverheid.en.job.RemindExposureNotificationWorker
 import nl.rijksoverheid.en.lifecyle.EventObserver
 import nl.rijksoverheid.en.navigation.isInitialised
 import nl.rijksoverheid.en.notifier.NotificationsRepository
+import nl.rijksoverheid.en.util.LocaleHelper
 import timber.log.Timber
 
 private const val TAG_GENERIC_ERROR = "generic_error"
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
+        LocaleHelper(this).applyLocale()
         super.onCreate(savedInstanceState)
 
         splashScreen.setKeepOnScreenCondition {
