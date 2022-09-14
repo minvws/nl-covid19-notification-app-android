@@ -19,6 +19,7 @@ import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.LabTestService
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
+import nl.rijksoverheid.en.applifecycle.service.EndOfLifeCdnService
 import nl.rijksoverheid.en.beagle.debugDrawer
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.nearby.NearbyExposureNotificationApi
@@ -183,8 +184,6 @@ object RepositoryFactory {
     }
 
     private fun getCdnService(context: Context): CdnService {
-        return cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE).also {
-            cdnService = it
-        }
+        return EndOfLifeCdnService()
     }
 }
