@@ -109,10 +109,9 @@ class ResourceBundleManager(
         val language = context.getString(R.string.app_language)
         val localeMap = bundle.resources[language]
         val fallback = bundle.resources[DEFAULT_LANGUAGE]
-            ?: error("No resources for default language $DEFAULT_LANGUAGE")
 
-        val title = titleRef?.let { localeMap?.get(it) ?: fallback[it] } ?: context.getString(R.string.end_of_life_headline)
-        val body = bodyRef?.let { localeMap?.get(it) ?: fallback[it] } ?: context.getString(R.string.end_of_life_description)
+        val title = titleRef?.let { localeMap?.get(it) ?: fallback?.get(it) } ?: context.getString(R.string.end_of_life_headline)
+        val body = bodyRef?.let { localeMap?.get(it) ?: fallback?.get(it) } ?: context.getString(R.string.end_of_life_description)
 
         return Pair(title, body)
     }

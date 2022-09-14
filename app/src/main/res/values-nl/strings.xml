@@ -192,8 +192,8 @@
     <string name="upload_keys_failed_notification_paragraph">We hebben geprobeerd de melding te versturen, maar dit is niet gelukt. Bel de GGD om dit opnieuw te doen. Het is heel belangrijk dat je dit snel doet. Anders kunnen er meer mensen besmet raken.</string>
     <string name="upload_keys_failed_notification_toolbar_title">Bel de GGD</string>
     <string name="end_of_life_action">Lees meer</string>
-    <string name="end_of_life_description">CoronaMelder is op dit moment tijdelijk stopgezet. Je krijgt dus geen melding meer nadat je in de buurt bent geweest van iemand met corona.</string>
-    <string name="end_of_life_headline">CoronaMelder is tijdelijk gestopt</string>
+    <string name="end_of_life_description">Het Ministerie van Volksgezondheid, Welzijn en Sport heeft besloten dat de app niet meer nodig is. Je krijgt dus geen melding meer nadat je in de buurt bent geweest van iemand met corona.</string>
+    <string name="end_of_life_headline">CoronaMelder is gestopt</string>
     <string name="status_error_notifications_disabled">Je hebt je meldingen uitstaan. Je krijgt dus geen melding als je in de buurt bent geweest van iemand met corona.</string>
     <string name="status_error_action_notifications_disabled">Meldingen aanzetten</string>
     <string name="cd_status_active">Groen rondje met vinkje dat aangeeft dat de app goed staat ingesteld</string>
