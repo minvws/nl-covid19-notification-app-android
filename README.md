@@ -26,6 +26,9 @@ Other functions of the app that are automatically performed and are not availabl
 - **Contact Tracing** using the GAEN framework. The app regularly downloads published keys from a public API and checks if the user ever came into contact with the device from which these infectious keys originated. This work is performed in regularly scheduled background tasks.
 - **Decoy Traffic Generation**. Since the "Share GGD Key" functionality of the app sends data to the API, any network traffic coming from the app could be construed as a sign that the user was infected. Because this presents a potential breach of privacy, the app regularly schedules similar (decoy) calls to the API to mask this traffic.
 
+## Deactivation
+Currently the app has been deactivated, ceasing all server communications, revert [2ec9c476](2ec9c4763ed3a8c0aa6599abc9bce9a0213915ef) to enable communication with the CDN again.
+
 ## Supported devices
 
 The Android app is supported on devices with API level 23 and above, that is Android 6.0 and above, that include support for Bluetooth Low Energy.
