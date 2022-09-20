@@ -17,7 +17,7 @@ import retrofit2.Response
 
 /**
  * Stub implementation of [CdnService] that produces the appropriate response for the app
- * to show that is has been deactivated without hitting the server.
+ * to show that it has been deactivated without hitting the server.
  */
 class EndOfLifeCdnService : CdnService {
     override suspend fun getExposureKeySetFile(id: String): Response<ResponseBody> {
