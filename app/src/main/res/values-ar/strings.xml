@@ -200,8 +200,8 @@
     <string name="upload_keys_failed_notification_paragraph">حاولنا إرسالك إشعار إلا أننا لم ننجح في ذلك. اتصل بالـ GGD لتعاود المحاولة. من المهم جدًا أن تقوم بذلك بسرعة وإلا قد يصاب عدد أكبر من الأشخاص بالعدوى.</string>
     <string name="upload_keys_failed_notification_toolbar_title">اتصل بالـ GGD</string>
     <string name="end_of_life_action">إقرأ المزيد</string>
-    <string name="end_of_life_description">حاليًا، تم إيقاف كورونا ميلدر مؤقتًا. ولن تتلقى إشعارات بعد أن كنت بالقرب من شخص ثبتت إيجابية فحصه وإصابته بفيروس كورونا.</string>
-    <string name="end_of_life_headline">إيقاف كورونا ميلدر مؤقتًا</string>
+    <string name="end_of_life_description">قررت وزارة الصحة والرعاية والرياضة بأن التطبيق لم يعد ضروريًا. لذلك لن تتلقى إشعارات بعد تواجدك بالقرب من شخص مصاب بكورونا.</string>
+    <string name="end_of_life_headline">توقف CoronaMelder عن العمل</string>
     <string name="status_error_notifications_disabled">"لقد قمت بإيقاف استلام الإشعارات. لن تستلم إشعارات إذًا عند تواجدك بالقرب من شخص مصاب بكورونا. "</string>
     <string name="status_error_action_notifications_disabled">تشغيل الإشعارات</string>
     <string name="cd_status_active">دائرة خضراء مع علامة الصح تشير إلى أنه قد تم إعداد التطبيق بشكل صحيح</string>

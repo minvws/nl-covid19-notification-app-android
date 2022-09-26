@@ -19,6 +19,7 @@ import nl.rijksoverheid.en.ExposureNotificationsRepository
 import nl.rijksoverheid.en.api.CdnService
 import nl.rijksoverheid.en.api.LabTestService
 import nl.rijksoverheid.en.applifecycle.AppLifecycleManager
+import nl.rijksoverheid.en.applifecycle.service.EndOfLifeCdnService
 import nl.rijksoverheid.en.beagle.debugDrawer
 import nl.rijksoverheid.en.config.AppConfigManager
 import nl.rijksoverheid.en.enapi.nearby.NearbyExposureNotificationApi
@@ -55,9 +56,6 @@ object RepositoryFactory {
     private const val MINIMUM_PLAY_SERVICES_VERSION = 202665000
 
     fun createExposureNotificationsRepository(context: Context): ExposureNotificationsRepository {
-        val service =
-            cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE)
-                .also { cdnService = it }
         val statusCache = statusCache ?: StatusCache(
             context.getSharedPreferences("${BuildConfig.APPLICATION_ID}.cache", 0)
         ).also { statusCache = it }
@@ -68,7 +66,7 @@ object RepositoryFactory {
                 context,
                 Nearby.getExposureNotificationClient(context)
             ),
-            service,
+            getCdnService(context),
             createSecurePreferences(context),
             object : BackgroundWorkScheduler {
                 override fun schedule(intervalMinutes: Int) {
@@ -88,7 +86,7 @@ object RepositoryFactory {
             createAppLifecycleManager(context),
             statusCache,
             AppConfigManager(
-                service,
+                getCdnService(context),
                 debugDrawer.useDebugFeatureFlags,
                 debugDrawer.getDebugFeatureFlags
             )
@@ -132,11 +130,8 @@ object RepositoryFactory {
     }
 
     fun createAppConfigManager(context: Context): AppConfigManager {
-        val service =
-            cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE)
-                .also { cdnService = it }
         return AppConfigManager(
-            service,
+            getCdnService(context),
             debugDrawer.useDebugFeatureFlags,
             debugDrawer.getDebugFeatureFlags
         )
@@ -153,8 +148,7 @@ object RepositoryFactory {
     fun createResourceBundleManager(context: Context): ResourceBundleManager {
         return ResourceBundleManager(
             context,
-            cdnService ?: CdnService.create(context, BuildConfig.VERSION_CODE)
-                .also { cdnService = it },
+            getCdnService(context),
             useDefaultGuidance = debugDrawer.useDefaultGuidance
         )
     }
@@ -187,5 +181,9 @@ object RepositoryFactory {
                 create(fileName)
             }
         }.also { notificationPreferences = it }
+    }
+
+    private fun getCdnService(context: Context): CdnService {
+        return EndOfLifeCdnService()
     }
 }
