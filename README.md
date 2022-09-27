@@ -27,7 +27,7 @@ Other functions of the app that are automatically performed and are not availabl
 - **Decoy Traffic Generation**. Since the "Share GGD Key" functionality of the app sends data to the API, any network traffic coming from the app could be construed as a sign that the user was infected. Because this presents a potential breach of privacy, the app regularly schedules similar (decoy) calls to the API to mask this traffic.
 
 ## Deactivation
-Currently the app has been deactivated, ceasing all server communications, revert [2ec9c476](2ec9c4763ed3a8c0aa6599abc9bce9a0213915ef) to enable communication with the CDN again.
+Currently the app has been deactivated, ceasing all server communications, revert [2ec9c476](https://github.com/minvws/nl-covid19-notification-app-android/commit/2ec9c4763ed3a8c0aa6599abc9bce9a0213915ef) to enable communication with the CDN again.
 
 ## Supported devices
 
